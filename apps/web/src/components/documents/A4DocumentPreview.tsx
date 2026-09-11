@@ -1,4 +1,4 @@
-﻿"use client";
+"use client";
 
 import React, { useState } from 'react';
 import { Button } from '@/components/ui/button';
@@ -361,7 +361,7 @@ export const A4DocumentPreview: React.FC<A4DocumentPreviewProps> = ({ dossier, o
                 <div className="text-[12px] space-y-1.5 py-1">
                   <p>Công trình: <strong>{project.name}</strong></p>
                   <p>Kèm theo Văn bản số: <strong>{code ? code.replace('SXD-DB-', '') : '128'}/TB-SXD</strong></p>
-                  <p>Ngày tháng năm: <strong>{currentDate.toLocaleDateString('vi-VN')}</strong></p>
+                  <p>Ngày tháng năm: <strong>{formatDate(currentDate)}</strong></p>
                   <div className="flex justify-between pt-4 mt-2 border-t border-dashed border-red-300">
                     <div className="text-center w-1/2">
                       <p className="text-[11px] font-bold">NGƯỜI THẨM ĐỊNH</p>
