@@ -1,7 +1,7 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { FileText, Clock, AlertTriangle, CheckCircle } from "lucide-react";
-import Link from "next/link";
+import { EntityLink } from "@/components/ui/EntityLink";
 
 const mockDossiers = [
   { id: "HS-2025-001", name: "Trường Tiểu học Thanh Xương", type: "BCNCKT", status: "APPRAISING", sla: "3 ngày", date: "05/03/2025" },
@@ -77,10 +77,12 @@ export default function SpecialistDashboard() {
               <tbody>
                 {mockDossiers.map((d) => (
                   <tr key={d.id} className="border-b">
-                    <td className="px-4 py-3 font-medium text-primary">
-                      <Link href={`/dossiers/${d.id}`}>{d.id}</Link>
+                    <td className="px-4 py-3 font-medium">
+                      <EntityLink type="dossier" id={d.id}>{d.id}</EntityLink>
                     </td>
-                    <td className="px-4 py-3">{d.name}</td>
+                    <td className="px-4 py-3 font-medium">
+                      <EntityLink type="dossier" id={d.id}>{d.name}</EntityLink>
+                    </td>
                     <td className="px-4 py-3">{d.type}</td>
                     <td className="px-4 py-3">
                       <Badge variant={d.status === 'APPRAISING' ? 'info' : d.status === 'REVIEWING' ? 'warning' : 'success'}>

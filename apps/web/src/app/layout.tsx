@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import "./globals.css";
+import { AppProviders } from "@/components/providers/AppProviders";
 
 export const metadata: Metadata = {
   title: "BuildAppraisal AI - Sở Xây dựng Điện Biên",
@@ -14,8 +15,11 @@ export default function RootLayout({
   return (
     <html lang="vi">
       <body className="antialiased min-h-screen bg-slate-50 text-slate-900">
-        {children}
+        <AppProviders>
+          {children}
+        </AppProviders>
       </body>
     </html>
   );
 }
+
