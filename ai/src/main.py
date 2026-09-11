@@ -3,6 +3,9 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from src.legal_ai.router import router as legal_ai_router
+from src.compliance_ai.router import router as compliance_ai_router
+from src.estimate_ai.router import router as estimate_ai_router
+from src.document_ai.router import router as document_ai_router
 
 app = FastAPI(
     title="BuildAppraisal AI Workers",
@@ -21,6 +24,9 @@ app.add_middleware(
 
 # Register routers
 app.include_router(legal_ai_router)
+app.include_router(compliance_ai_router)
+app.include_router(estimate_ai_router)
+app.include_router(document_ai_router)
 
 
 @app.get(

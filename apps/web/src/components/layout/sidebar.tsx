@@ -1,11 +1,13 @@
 import Link from "next/link";
-import { LayoutDashboard, FolderOpen, FileText, MessageSquare, PieChart, Settings } from "lucide-react";
+import { LayoutDashboard, FolderOpen, FileText, MessageSquare, PieChart, Settings, ClipboardCheck, BarChart3 } from "lucide-react";
 
 export function Sidebar() {
   const menuItems = [
     { name: "Tổng quan", href: "/dashboard", icon: LayoutDashboard },
+    { name: "Dashboard Lãnh đạo", href: "/dashboard/executive", icon: BarChart3 },
     { name: "Hồ sơ thẩm định", href: "/dossiers", icon: FolderOpen },
     { name: "Cấp phép xây dựng", href: "/permits", icon: FileText },
+    { name: "Hậu kiểm xây dựng", href: "/inspections", icon: ClipboardCheck },
     { name: "Trợ lý pháp luật", href: "/assistant", icon: MessageSquare },
     { name: "Báo cáo", href: "/reports", icon: PieChart },
     { name: "Cài đặt", href: "/settings", icon: Settings },
