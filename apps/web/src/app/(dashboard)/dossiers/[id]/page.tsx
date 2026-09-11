@@ -2,13 +2,14 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { FileIcon, Clock, CheckCircle2 } from "lucide-react";
 
-export default function DossierDetailPage({ params }: { params: { id: string } }) {
+export default async function DossierDetailPage({ params }: { params: Promise<{ id: string }> }) {
+  const { id } = await params;
   return (
     <div className="space-y-6">
       <div className="flex items-center justify-between border-b pb-4">
         <div>
           <h2 className="text-2xl font-bold tracking-tight text-primary">Dự án Trường Tiểu học Thanh Xương</h2>
-          <p className="text-muted-foreground">Mã HS: {params.id} | Báo cáo Nghiên cứu Khả thi</p>
+          <p className="text-muted-foreground">Mã HS: {id} | Báo cáo Nghiên cứu Khả thi</p>
         </div>
         <div className="text-right">
           <Badge variant="info" className="mb-2">Đang thẩm định</Badge>

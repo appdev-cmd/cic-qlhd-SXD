@@ -1,24 +1,24 @@
 "use client";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardContent } from "@/components/ui/card";
 import { Send, Bot, User } from "lucide-react";
-import { useState } from "react";
+import { useState, useRef } from "react";
 
 export default function AssistantPage() {
   const [messages, setMessages] = useState([
-    { role: "assistant", content: "Chào bạn, tôi là Trợ lý AI Pháp luật Xây dựng. Tôi có thể giúp gì cho bạn hôm nay?", citations: [] },
-    { role: "user", content: "Quy định về thời gian thẩm định Báo cáo nghiên cứu khả thi dự án nhóm B?", citations: [] },
+    { role: "assistant", content: "Chào bạn, tôi là Trợ lý AI Pháp luật Xây dựng. Tôi có thể giúp gì cho bạn hôm nay?", citations: [] as string[] },
+    { role: "user", content: "Quy định về thời gian thẩm định Báo cáo nghiên cứu khả thi dự án nhóm B?", citations: [] as string[] },
     { role: "assistant", content: "Theo quy định hiện hành, thời gian thẩm định Báo cáo nghiên cứu khả thi đối với dự án nhóm B là không quá 20 ngày kể từ ngày nhận đủ hồ sơ hợp lệ.", citations: ["Khoản 2 Điều 59 Luật Xây dựng 2014", "Sửa đổi tại Luật Xây dựng 2020"] }
   ]);
-  const [input, setInput] = useState("");
+  const inputRef = useRef<HTMLInputElement>(null);
 
   const handleSend = (e: React.FormEvent) => {
     e.preventDefault();
-    if (!input.trim()) return;
-    setMessages([...messages, { role: "user", content: input, citations: [] }]);
-    setInput("");
-    // Simulate AI typing here...
+    const value = inputRef.current?.value?.trim();
+    if (!value) return;
+    setMessages([...messages, { role: "user", content: value, citations: [] }]);
+    if (inputRef.current) inputRef.current.value = "";
+    // TODO: Call AI backend here
   };
 
   return (
@@ -52,11 +52,11 @@ export default function AssistantPage() {
         </CardContent>
         <div className="p-4 border-t bg-background">
           <form onSubmit={handleSend} className="flex gap-2">
-            <Input 
-              value={input} 
-              onChange={(e) => setInput(e.target.value)} 
-              placeholder="Nhập câu hỏi về quy định, thủ tục xây dựng..." 
-              className="flex-1"
+            <input
+              ref={inputRef}
+              type="text"
+              placeholder="Nhập câu hỏi về quy định, thủ tục xây dựng..."
+              className="flex h-9 w-full flex-1 rounded-md border border-input bg-transparent px-3 py-1 text-sm shadow-sm transition-colors placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-primary"
             />
             <Button type="submit"><Send className="h-4 w-4" /></Button>
           </form>

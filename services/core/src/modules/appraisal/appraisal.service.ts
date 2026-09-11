@@ -1,4 +1,4 @@
-import { Injectable, BadRequestException } from '@nestjs/common';
+import { Injectable, BadRequestException, NotFoundException } from '@nestjs/common';
 import { PrismaService } from '../../prisma/prisma.service';
 import { SlaService } from './sla.service';
 import { DossierService } from '../dossier/dossier.service';
@@ -14,10 +14,15 @@ export class AppraisalService {
   async startAppraisal(dossierId: string, userId: string) {
     const dossier = await this.dossierService.findOne(dossierId);
     if (dossier.status !== 'ACCEPTED') {
-      throw new BadRequestException('Dossier must be in ACCEPTED status');
+      throw new BadRequestException('Hồ sơ phải ở trạng thái đã tiếp nhận (ACCEPTED)');
     }
 
-    const workingDays = 15; // Ví dụ mặc định
+    const workingDays = this.slaService.getSlaWorkingDays(
+      dossier.project?.projectGroup ?? 'GROUP_C',
+      dossier.project?.constructionGrade ?? 'GRADE_III',
+      dossier.type,
+    );
+
     const acceptedAt = new Date();
     const slaDeadline = this.slaService.addWorkingDays(acceptedAt, workingDays);
 
@@ -39,8 +44,11 @@ export class AppraisalService {
 
   async suspend(dossierId: string, reason: string, userId: string) {
     const appraisal = await this.prisma.appraisal.findUnique({ where: { dossierId } });
+    if (!appraisal) {
+      throw new NotFoundException('Không tìm thấy quy trình thẩm định');
+    }
     if (appraisal.slaSuspendCount >= 1) {
-      throw new BadRequestException('Can only suspend once');
+      throw new BadRequestException('Chỉ được tạm dừng tối đa 1 lần');
     }
 
     await this.prisma.appraisal.update({
@@ -56,12 +64,16 @@ export class AppraisalService {
 
   async resume(dossierId: string, userId: string) {
     const appraisal = await this.prisma.appraisal.findUnique({ where: { dossierId } });
+    if (!appraisal) {
+      throw new NotFoundException('Không tìm thấy quy trình thẩm định');
+    }
     if (!appraisal.slaSuspendedAt) {
-      throw new BadRequestException('Not currently suspended');
+      throw new BadRequestException('Hồ sơ chưa được tạm dừng');
     }
 
-    // Tính lại SLA deadline based on suspension time
-    const newDeadline = this.slaService.addWorkingDays(new Date(), appraisal.slaWorkingDays - appraisal.slaElapsedDays);
+    // Tính lại SLA deadline dựa trên số ngày LV còn lại
+    const remainingDays = (appraisal.slaWorkingDays ?? 15) - appraisal.slaElapsedDays;
+    const newDeadline = this.slaService.addWorkingDays(new Date(), remainingDays);
 
     await this.prisma.appraisal.update({
       where: { dossierId },
@@ -76,23 +88,32 @@ export class AppraisalService {
 
   async extend(dossierId: string, days: number, userId: string) {
     const appraisal = await this.prisma.appraisal.findUnique({ where: { dossierId } });
+    if (!appraisal) {
+      throw new NotFoundException('Không tìm thấy quy trình thẩm định');
+    }
     if (appraisal.slaExtendedOnce) {
-      throw new BadRequestException('Can only extend once');
+      throw new BadRequestException('Chỉ được gia hạn tối đa 1 lần');
     }
 
-    const newDeadline = this.slaService.addWorkingDays(appraisal.slaDeadline, days);
+    const currentDeadline = appraisal.slaDeadline ?? new Date();
+    const newDeadline = this.slaService.addWorkingDays(currentDeadline, days);
+    const currentWorkingDays = appraisal.slaWorkingDays ?? 15;
 
     await this.prisma.appraisal.update({
       where: { dossierId },
       data: {
         slaExtendedOnce: true,
         slaDeadline: newDeadline,
-        slaWorkingDays: appraisal.slaWorkingDays + days,
+        slaWorkingDays: currentWorkingDays + days,
       },
     });
   }
 
   async approve(dossierId: string, userId: string) {
+    await this.prisma.appraisal.update({
+      where: { dossierId },
+      data: { signedAt: new Date(), signedBy: userId },
+    });
     await this.dossierService.updateStatus(dossierId, 'APPROVED', userId);
   }
 

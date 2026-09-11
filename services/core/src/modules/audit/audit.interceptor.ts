@@ -20,10 +20,10 @@ export class AuditInterceptor implements NestInterceptor {
             'API',
             url,
             method,
-            null,
+            undefined,
             { body, response: data },
             user?.userId,
-            null,
+            undefined,
             ip,
             userAgent
           ).catch(console.error);

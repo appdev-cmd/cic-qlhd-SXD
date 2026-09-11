@@ -4,15 +4,15 @@ import { DossierType } from '@prisma/client';
 export class CreateDossierDto {
   @IsEnum(DossierType)
   @IsNotEmpty()
-  type: DossierType;
+  type!: DossierType;
 
   @IsString()
   @IsNotEmpty()
-  projectId: string;
+  projectId!: string;
 
   @IsString()
   @IsNotEmpty()
-  provinceId: string;
+  provinceId!: string;
 
   @IsString()
   @IsOptional()

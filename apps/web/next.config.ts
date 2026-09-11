@@ -1,8 +1,7 @@
 import type { NextConfig } from 'next';
 
 const nextConfig: NextConfig = {
-  output: 'standalone',
-  /* other config options here */
+  // output: 'standalone', // Bật khi deploy Docker production
 };
 
 export default nextConfig;
