@@ -1,0 +1,106 @@
+# PROJECT RULES
+
+## 1. Nguyên Tắc Cốt Lõi (Mandatory Rules)
+1.  **Giao tiếp (Languages):** BẮT BUỘC sử dụng **Tiếng Việt** trong mọi câu trả lời, giải thích và suy luận.
+2.  **Auto-Push Workflow:**
+    *   Sau mỗi lần chỉnh sửa code hoặc hoàn thành một task, **PHẢI** tự động đẩy code lên GitHub để lưu trữ.
+    *   Thực hiện chuỗi lệnh:
+        ```bash
+        git pull origin main
+        npm run release
+        git add .
+        git commit -m "update: mô tả ngắn gọn nội dung thay đổi"
+        git push origin main --tags
+        ```
+    *   *Lưu ý:* Nếu chưa có repo, hãy nhắc user chạy `/init` hoặc `git init` trước.
+
+---
+
+## 2. Hỗ trợ thông minh (Antigravity Workflows)
+Giữ lại các lệnh tắt này để Agent làm việc chuyên nghiệp hơn khi bạn cần:
+
+| Lệnh | Chức năng |
+|:---|:---|
+| `/plan` | Lập kế hoạch thiết kế tính năng chi tiết |
+| `/code` | Viết code và tự động kiểm tra lỗi |
+| `/debug` | Tìm và sửa lỗi code phức tạp |
+| `/test` | Chạy bộ kiểm thử (Unit Test) |
+| `/recap` | Tóm tắt lại dự án nếu bạn quên |
+
+## Resource Mapping
+- **Workflows:** `~/.gemini/antigravity/global_workflows/`
+- **Knowledge:** `~/.gemini/antigravity/knowledge/`
+
+(Mỗi khi user dùng lệnh có dấu `/`, hãy đọc file workflow tương ứng trong folder trên)
+
+---
+
+## 3. Auto-Run Commands Rule (BẮT BUỘC)
+> Để tối ưu hóa quy trình làm việc và giảm thiểu gián đoạn cho người dùng (không phải bấm nút RUN liên tục), bạn PHẢI tuân thủ:
+
+1. **Luôn thiết lập cờ tự động chạy (nếu có hỗ trợ)** hoặc chủ động chạy các lệnh an toàn, không có tính phá hủy (ví dụ: khởi chạy server `npm run dev`, git status, xem log, biên dịch thử, v.v.).
+# PROJECT RULES
+
+## 1. Nguyên Tắc Cốt Lõi (Mandatory Rules)
+1.  **Giao tiếp (Languages):** BẮT BUỘC sử dụng **Tiếng Việt** trong mọi câu trả lời, giải thích và suy luận.
+2.  **Auto-Push Workflow:**
+    *   Sau mỗi lần chỉnh sửa code hoặc hoàn thành một task, **PHẢI** tự động đẩy code lên GitHub để lưu trữ.
+    *   Thực hiện chuỗi lệnh:
+        ```bash
+        git add .
+        git commit -m "update: mô tả ngắn gọn nội dung thay đổi"
+        git push
+        ```
+    *   *Lưu ý:* Nếu chưa có repo, hãy nhắc user chạy `/init` hoặc `git init` trước.
+
+---
+
+## 2. Hỗ trợ thông minh (Antigravity Workflows)
+Giữ lại các lệnh tắt này để Agent làm việc chuyên nghiệp hơn khi bạn cần:
+
+| Lệnh | Chức năng |
+|:---|:---|
+| `/plan` | Lập kế hoạch thiết kế tính năng chi tiết |
+| `/code` | Viết code và tự động kiểm tra lỗi |
+| `/debug` | Tìm và sửa lỗi code phức tạp |
+| `/test` | Chạy bộ kiểm thử (Unit Test) |
+| `/recap` | Tóm tắt lại dự án nếu bạn quên |
+
+## Resource Mapping
+- **Workflows:** `~/.gemini/antigravity/global_workflows/`
+- **Knowledge:** `~/.gemini/antigravity/knowledge/`
+
+(Mỗi khi user dùng lệnh có dấu `/`, hãy đọc file workflow tương ứng trong folder trên)
+
+---
+
+## 3. Auto-Run Commands Rule (BẮT BUỘC)
+> Để tối ưu hóa quy trình làm việc và giảm thiểu gián đoạn cho người dùng (không phải bấm nút RUN liên tục), bạn PHẢI tuân thủ:
+
+1. **Luôn thiết lập cờ tự động chạy (nếu có hỗ trợ)** hoặc chủ động chạy các lệnh an toàn, không có tính phá hủy (ví dụ: khởi chạy server `npm run dev`, git status, xem log, biên dịch thử, v.v.).
+2. **Ưu tiên sử dụng API tools cụ thể** (như `view_file`, `replace_file_content`, `list_dir`, `grep_search`...) thay vì dùng shell commands để thao tác với file/thư mục, nhằm tránh việc IDE yêu cầu người dùng phê duyệt lệnh ở Terminal.
+3. **KHÔNG BAO GIỜ** tự động chạy các lệnh có nguy cơ phá hủy hoặc tác động tiêu cực chưa lường trước (như xóa file, drop database, cài đặt system dependencies lạ).
+
+---
+
+## 4. Unsaved Changes Guard Rule (BẮT BUỘC)
+> Tất cả các Form mở dưới dạng Slide Panel **BẮT BUỘC** quản lý trạng thái `isDirty` bằng cách so sánh trực tiếp dữ liệu hiện tại với dữ liệu ban đầu (`JSON.stringify(currentForm) !== JSON.stringify(initialForm)`).
+> ❌ **KHÔNG** quản lý thủ công theo nút bấm đơn lẻ. Bất kể tác nhân thay đổi từ đâu (gõ, paste, tra cứu API, AI fill, chọn dropdown...), có sự khác biệt dữ liệu là `isDirty = true`.
+> ✅ Khi `isDirty === true`, hệ thống tự động khóa panel (`lockPanel()`) và hiển thị dialog xác nhận trước khi cho phép đóng.
+
+---
+
+## 5. Supabase 1000-Row Limit Rule - Quy tắc Xử lý Giới hạn 1000 Dòng Supabase (BẮT BUỘC CHO TẤT CẢ AI)
+> Phía Supabase REST API (PostgREST) có giới hạn mặc định (Hard Limit) tối đa 1.000 bản ghi cho mỗi câu query không chỉ định phân trang. Nếu thực hiện query nạp dữ liệu lớn (> 1.000 dòng) mà không xử lý phân trang hoặc chunking, Supabase sẽ âm thầm cắt xén dữ liệu chỉ còn đúng 1.000 dòng, gây sai lệch số liệu báo cáo, tài chính, và danh sách.
+>
+> ❌ **CÁC HÀNH VI BỊ CẤM HOÀN TOÀN:**
+> 1. **Cấm `select('*')` không lọc**: Không thực hiện `select('*')` hoặc `select('id,...')` không có bộ lọc SQL mà kỳ vọng đọc được toàn bộ dữ liệu toàn công ty để tính toán ở Client.
+> 2. **Cấm `.limit(10000)` giả lập**: Không dùng `.limit(10000)` hoặc `pageSize: 10000` đơn lẻ để lấy dữ liệu lớn (vì Supabase REST vẫn sẽ băm nhỏ hoặc giới hạn ở 1.000 bản ghi).
+> 3. **Cấm lọc JS client-side**: Không tải toàn bộ bảng về Client rồi mới dùng `.filter()`, `.reduce()` của JS.
+>
+> ✅ **QUY TRÌNH BẮT BUỘC ÁP DỤNG KHI VIẾT/SỬA QUERY:**
+> 1. **Áp dụng Bộ lọc SQL (Database-level Filtering)**: Mọi query BẮT BUỘC truyền trực tiếp bộ lọc SQL (`.eq()`, `.in()`, `.gte()`, `.lte()`, `.or()`, `.ilike()`) cho Postgres xử lý trước khi trả kết quả về Client.
+> 2. **Vòng lặp Phân trang / Chunking (Khi bắt buộc lấy full dataset)**: Khi bắt buộc cần full dataset để tính tổng toán bộ hoặc Xuất Excel, **BẮT BUỘC** dùng vòng lặp range (`.range(from, to)`) với bước nhảy 1.000 dòng cho đến khi nạp hết toàn bộ bản ghi.
+> 3. **Ưu tiên RPC / SQL Aggregations**: Đối với các chỉ số báo cáo tổng hợp (Tổng doanh thu, tổng sản lượng, đếm số lượng), ưu tiên gọi RPC function (`supabase.rpc()`) hoặc dùng SQL aggregate functions (`COUNT`, `SUM`) để Postgres tính toán trực tiếp thay vì nạp raw rows về Client.
+> 4. **Phân trang UI chuẩn**: Trang danh sách UI phải hỗ trợ phân trang chuẩn (`page`, `pageSize`) kết hợp `.range()` và cờ `{ count: 'exact' }`.
+
