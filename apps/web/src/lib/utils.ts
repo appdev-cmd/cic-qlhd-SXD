@@ -46,3 +46,16 @@ export function parseFormattedNumber(val: string): number {
   return cleaned ? parseInt(cleaned, 10) : 0;
 }
 
+export function isAbortError(error: any): boolean {
+  if (!error) return false;
+  return (
+    error.name === 'AbortError' ||
+    error.name === 'CanceledError' ||
+    error.code === 'ERR_CANCELED' ||
+    error.code === 'ECONNABORTED' ||
+    error.message === 'canceled'
+  );
+}
+
+export * from "./formatters";
+

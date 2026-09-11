@@ -6,6 +6,7 @@
     "dev": "turbo dev",
     "build": "turbo build",
     "lint": "turbo lint",
+    "lint:ui": "node scripts/ui-rules-lint.cjs",
     "test": "turbo test",
     "db:generate": "pnpm --filter @ba/core prisma:generate",
     "db:push": "pnpm --filter @ba/core prisma:push",

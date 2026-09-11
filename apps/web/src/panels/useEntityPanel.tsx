@@ -3,6 +3,7 @@
 import React, { useCallback } from 'react';
 import { useSlidePanel } from '@/contexts/SlidePanelContext';
 import { DossierDetailPanel } from './DossierDetailPanel';
+import { CreateDossierPanel } from './CreateDossierPanel';
 
 export type EntityType = 'dossier' | 'project' | 'permit' | 'investor' | 'staff';
 
@@ -14,6 +15,24 @@ export interface EntityPanelOptions {
 
 export function useEntityPanel() {
   const { openPanel, closePanel, closeAllPanels } = useSlidePanel();
+
+  const openCreateDossier = useCallback((onSuccess?: () => void) => {
+    const panelId = 'create-dossier-panel';
+    return openPanel({
+      id: panelId,
+      title: 'Tiếp nhận hồ sơ mới',
+      component: (
+        <CreateDossierPanel
+          onClose={() => closePanel(panelId)}
+          onSuccess={() => {
+            closePanel(panelId);
+            if (onSuccess) onSuccess();
+          }}
+        />
+      ),
+      width: '680px',
+    });
+  }, [openPanel, closePanel]);
 
   const open = useCallback(
     (type: EntityType, options: EntityPanelOptions) => {
@@ -68,7 +87,8 @@ export function useEntityPanel() {
     [openPanel, closePanel]
   );
 
-  return { open, close: closePanel, closeAll: closeAllPanels };
+  return { open, openCreateDossier, close: closePanel, closeAll: closeAllPanels };
 }
 
 export default useEntityPanel;
+

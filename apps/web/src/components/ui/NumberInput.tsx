@@ -91,6 +91,7 @@ const NumberInput: React.FC<NumberInputProps> = ({
     );
 };
 
+export { NumberInput };
 export const CurrencyInput = NumberInput;
 export default NumberInput;
 
