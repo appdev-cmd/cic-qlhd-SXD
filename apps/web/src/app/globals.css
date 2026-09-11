@@ -1,4 +1,7 @@
 @import "tailwindcss";
+
+@custom-variant dark (&:where(.dark, .dark *));
+
 @import "../styles/tokens.css";
 @import "../styles/slide-panel.css";
 
@@ -6,12 +9,12 @@
   --color-primary: #003366;
   --color-accent: #0066CC;
   --color-background: #F8FAFC;
-  --font-sans: "Inter", "Noto Sans", sans-serif;
+  --font-sans: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
 }
 
 @layer base {
   :root {
-    --background: #ffffff;
+    --background: #f8fafc;
     --foreground: #0f172a;
     --card: #ffffff;
     --card-foreground: #0f172a;
@@ -24,10 +27,32 @@
     --muted: #f1f5f9;
     --muted-foreground: #64748b;
   }
+
+  .dark {
+    --background: #0b1120;
+    --foreground: #f8fafc;
+    --card: #151d2e;
+    --card-foreground: #f8fafc;
+    --border: #1e293b;
+    --input: #1e293b;
+    --primary: #38bdf8;
+    --primary-foreground: #0b1120;
+    --accent: #0284c7;
+    --accent-foreground: #ffffff;
+    --muted: #1e293b;
+    --muted-foreground: #94a3b8;
+  }
   
+  * {
+    border-color: var(--border);
+  }
+
   body {
     background-color: var(--background);
     color: var(--foreground);
     font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
   }
 }
