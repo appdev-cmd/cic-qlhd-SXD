@@ -1,0 +1,17 @@
+{
+  "code": "dien_bien",
+  "name": "Điện Biên",
+  "dvc_provider": "tan_dan",
+  "sla_config": {
+    "checking_days": 5,
+    "group_a_grade_i_plus": 25,
+    "group_a_other": 20,
+    "group_b_grade_i_plus": 20,
+    "group_b_other": 16,
+    "group_c_grade_i_plus": 15,
+    "group_c_other": 12,
+    "permit_gpxd": 20,
+    "supplement_max_days": 20,
+    "max_suspend_count": 1
+  }
+}

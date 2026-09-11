@@ -1,0 +1,315 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// ============= TỈNH / ĐỊA PHƯƠNG =============
+model Province {
+  id          String   @id @default(uuid())
+  code        String   @unique // VD: "dien_bien"
+  name        String   // "Điện Biên"
+  config      Json?    // Cấu hình riêng: đơn giá, quy hoạch...
+  isActive    Boolean  @default(true)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  users       User[]
+  projects    Project[]
+  dossiers    Dossier[]
+
+  @@map("provinces")
+}
+
+// ============= NGƯỜI DÙNG & PHÂN QUYỀN =============
+enum UserRole {
+  ADMIN              // Quản trị hệ thống
+  SPECIALIST         // Chuyên viên Phòng QLXD
+  DEPT_HEAD          // Trưởng phòng QLXD
+  DIRECTOR           // Lãnh đạo Sở (Giám đốc/Phó GĐ)
+  INVESTOR           // Chủ đầu tư
+}
+
+model User {
+  id            String    @id @default(uuid())
+  email         String    @unique
+  fullName      String
+  role          UserRole  @default(SPECIALIST)
+  phone         String?
+  position      String?   // Chức danh
+  department    String?   // Phòng ban
+  isActive      Boolean   @default(true)
+  passwordHash  String?
+  lastLoginAt   DateTime?
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+
+  provinceId    String?
+  province      Province? @relation(fields: [provinceId], references: [id])
+
+  assignedDossiers  DossierAssignment[]
+  auditLogs         AuditLog[]
+  aiLogs            AILog[]
+  appraisalActions  AppraisalAction[]
+
+  @@map("users")
+}
+
+// ============= DỰ ÁN ĐẦU TƯ XÂY DỰNG =============
+enum InvestmentType {
+  PUBLIC       // Đầu tư công
+  PPP          // Đối tác công tư
+  BUSINESS     // Đầu tư kinh doanh (Phụ lục IV)
+}
+
+enum ProjectGroup {
+  NATIONAL     // Quan trọng quốc gia
+  GROUP_A      // Nhóm A
+  GROUP_B      // Nhóm B
+  GROUP_C      // Nhóm C
+}
+
+enum ConstructionGrade {
+  SPECIAL      // Cấp đặc biệt
+  GRADE_I      // Cấp I
+  GRADE_II     // Cấp II
+  GRADE_III    // Cấp III
+  GRADE_IV     // Cấp IV
+}
+
+model Project {
+  id                String           @id @default(uuid())
+  name              String           // Tên dự án
+  investor          String           // Tên chủ đầu tư
+  investorAddress   String?
+  investorPhone     String?
+  investorEmail     String?
+  location          String           // Địa điểm xây dựng
+  investmentType    InvestmentType   @default(PUBLIC)
+  projectGroup      ProjectGroup?    // Nhóm dự án (A/B/C)
+  constructionGrade ConstructionGrade? // Cấp công trình
+  constructionType  String?          // Loại công trình: dân dụng, giao thông...
+  totalInvestment   Decimal?         // Tổng mức đầu tư (VND)
+  fundingSource     String?          // Nguồn vốn
+  description       String?
+  createdAt         DateTime         @default(now())
+  updatedAt         DateTime         @updatedAt
+
+  provinceId        String
+  province          Province @relation(fields: [provinceId], references: [id])
+
+  dossiers          Dossier[]
+
+  @@map("projects")
+}
+
+// ============= HỒ SƠ THẨM ĐỊNH / CẤP PHÉP =============
+enum DossierType {
+  APPRAISAL_BCNCKT   // Thẩm định BCNCKT
+  APPRAISAL_BCKTKT   // Thẩm định Báo cáo KT-KT
+  PERMIT_GPXD        // Cấp GPXD cấp I, II
+}
+
+enum DossierStatus {
+  DRAFT              // Nháp (chưa nộp)
+  SUBMITTED          // Đã nộp qua DVC
+  CHECKING           // Đang kiểm tra hợp lệ (5 ngày LV)
+  SUPPLEMENT_REQUIRED // Yêu cầu bổ sung
+  ACCEPTED           // Hồ sơ hợp lệ, bắt đầu thẩm định
+  APPRAISING         // Đang thẩm định
+  SUSPENDED          // Tạm dừng thẩm định (max 1 lần)
+  APPROVED           // Đã phê duyệt
+  REJECTED           // Từ chối
+  CANCELLED          // Hủy bỏ
+}
+
+model Dossier {
+  id                 String        @id @default(uuid())
+  code               String        @unique // Mã hồ sơ: SXD-DB-2026-0001
+  type               DossierType
+  status             DossierStatus @default(DRAFT)
+  receivedAt         DateTime?     // Ngày tiếp nhận
+  acceptedAt         DateTime?     // Ngày hồ sơ hợp lệ (bắt đầu đếm SLA)
+  completedAt        DateTime?     // Ngày hoàn thành
+  dvcSyncId          String?       // ID hồ sơ trên Cổng DVC Tân Dân
+  dvcStatus          String?       // Trạng thái đồng bộ DVC
+  qrCode             String?       // QR Code liên kết hồ sơ giấy
+  notes              String?
+  createdAt          DateTime      @default(now())
+  updatedAt          DateTime      @updatedAt
+
+  projectId          String
+  project            Project  @relation(fields: [projectId], references: [id])
+  provinceId         String
+  province           Province @relation(fields: [provinceId], references: [id])
+
+  documents          Document[]
+  appraisal          Appraisal?
+  permit             Permit?
+  assignments        DossierAssignment[]
+  auditLogs          AuditLog[]
+
+  @@map("dossiers")
+}
+
+model DossierAssignment {
+  id          String   @id @default(uuid())
+  dossierId   String
+  dossier     Dossier  @relation(fields: [dossierId], references: [id])
+  userId      String
+  user        User     @relation(fields: [userId], references: [id])
+  assignedAt  DateTime @default(now())
+  role        String   @default("reviewer") // reviewer, lead, approver
+
+  @@unique([dossierId, userId])
+  @@map("dossier_assignments")
+}
+
+// ============= TÀI LIỆU =============
+enum DocumentCategory {
+  APPLICATION_FORM   // Tờ trình Mẫu số 01
+  FEASIBILITY_REPORT // BCNCKT / Thuyết minh
+  DESIGN_DRAWING     // Bản vẽ thiết kế cơ sở
+  INVESTMENT_DECISION// QĐ chủ trương đầu tư
+  PLANNING_CERT      // Chứng chỉ quy hoạch
+  SURVEY_REPORT      // Hồ sơ khảo sát
+  REVIEW_REPORT      // Báo cáo thẩm tra
+  FIRE_SAFETY        // Văn bản thỏa thuận PCCC
+  ENVIRONMENT        // Hồ sơ môi trường
+  PERMIT_APPLICATION // Đơn đề nghị cấp GPXD
+  COST_ESTIMATE      // Dự toán / TMĐT
+  PROFESSIONAL_CERT  // Chứng chỉ hành nghề
+  OTHER              // Khác
+}
+
+model Document {
+  id            String           @id @default(uuid())
+  dossierId     String
+  dossier       Dossier          @relation(fields: [dossierId], references: [id])
+  category      DocumentCategory @default(OTHER)
+  fileName      String
+  fileSize      Int              // bytes
+  mimeType      String
+  storageKey    String           // MinIO object key
+  version       Int              @default(1)
+  checksum      String?          // SHA-256
+  aiClassified  Boolean          @default(false) // AI đã phân loại?
+  aiCategory    DocumentCategory? // AI gợi ý category
+  metadata      Json?            // Trích xuất metadata (tên dự án, quy mô...)
+  uploadedAt    DateTime         @default(now())
+  uploadedBy    String?
+
+  @@map("documents")
+}
+
+// ============= QUY TRÌNH THẨM ĐỊNH =============
+model Appraisal {
+  id               String    @id @default(uuid())
+  dossierId        String    @unique
+  dossier          Dossier   @relation(fields: [dossierId], references: [id])
+
+  // SLA theo NĐ 217/2026
+  slaDeadline      DateTime? // Hạn chót thẩm định (ngày LV)
+  slaWorkingDays   Int?      // Số ngày LV được phân bổ (25/20/16/15/12)
+  slaElapsedDays   Int       @default(0) // Số ngày LV đã dùng
+  slaSuspendedAt   DateTime? // Ngày tạm dừng
+  slaSuspendCount  Int       @default(0) // Số lần tạm dừng (max 1)
+  slaExtendedOnce  Boolean   @default(false) // Đã gia hạn 1 lần?
+
+  // Kết quả
+  resultDocKey     String?   // MinIO key cho Mẫu số 03
+  stampedDrawingKey String?  // MinIO key cho bản vẽ đóng dấu Mẫu số 14
+  digitalSignature Json?     // Thông tin ký số
+  signedAt         DateTime?
+  signedBy         String?
+
+  createdAt        DateTime  @default(now())
+  updatedAt        DateTime  @updatedAt
+
+  actions          AppraisalAction[]
+  aiLogs           AILog[]
+
+  @@map("appraisals")
+}
+
+model AppraisalAction {
+  id            String   @id @default(uuid())
+  appraisalId   String
+  appraisal     Appraisal @relation(fields: [appraisalId], references: [id])
+  userId        String
+  user          User     @relation(fields: [userId], references: [id])
+  action        String   // accept, reject, suspend, resume, extend, sign, comment
+  comment       String?
+  metadata      Json?    // Dữ liệu bổ sung
+  createdAt     DateTime @default(now())
+
+  @@map("appraisal_actions")
+}
+
+// ============= GIẤY PHÉP XÂY DỰNG =============
+model Permit {
+  id              String    @id @default(uuid())
+  dossierId       String    @unique
+  dossier         Dossier   @relation(fields: [dossierId], references: [id])
+  permitNumber    String?   // Số GPXD
+  issuedAt        DateTime?
+  validUntil      DateTime?
+  permitDocKey    String?   // MinIO key cho file GPXD
+  digitalSignature Json?
+  signedBy        String?
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @updatedAt
+
+  @@map("permits")
+}
+
+// ============= NHẬT KÝ KIỂM TOÁN =============
+model AuditLog {
+  id          String   @id @default(uuid())
+  entity      String   // Tên entity: Dossier, Appraisal, Document...
+  entityId    String   // ID của entity
+  action      String   // CREATE, UPDATE, DELETE, STATUS_CHANGE...
+  oldValue    Json?    // Giá trị cũ
+  newValue    Json?    // Giá trị mới
+  userId      String?
+  user        User?    @relation(fields: [userId], references: [id])
+  dossierId   String?
+  dossier     Dossier? @relation(fields: [dossierId], references: [id])
+  ipAddress   String?
+  userAgent   String?
+  createdAt   DateTime @default(now())
+
+  @@index([entity, entityId])
+  @@index([dossierId])
+  @@index([createdAt])
+  @@map("audit_logs")
+}
+
+// ============= NHẬT KÝ AI (Luật AI 2025) =============
+model AILog {
+  id              String    @id @default(uuid())
+  module          String    // legal_ai, compliance_ai, cost_ai, document_ai
+  action          String    // ask, classify, check_compliance, extract...
+  input           Json      // Đầu vào (câu hỏi, file...)
+  output          Json?     // Đầu ra (câu trả lời, kết quả)
+  modelName       String?   // Tên model AI đã dùng
+  modelVersion    String?   // Phiên bản model
+  promptVersion   String?   // Phiên bản prompt
+  kbVersion       String?   // Phiên bản Knowledge Base
+  confidence      Float?    // Độ tin cậy (0-1)
+  latencyMs       Int?      // Thời gian xử lý (ms)
+  userDecision    String?   // accepted, rejected, modified
+  userReason      String?   // Lý do chấp nhận/từ chối
+  userId          String?
+  user            User?     @relation(fields: [userId], references: [id])
+  appraisalId     String?
+  appraisal       Appraisal? @relation(fields: [appraisalId], references: [id])
+  createdAt       DateTime  @default(now())
+
+  @@index([module, action])
+  @@index([createdAt])
+  @@map("ai_logs")
+}

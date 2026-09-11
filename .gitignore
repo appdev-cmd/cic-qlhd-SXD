@@ -1,0 +1,17 @@
+node_modules/
+dist/
+.next/
+.turbo/
+*.tsbuildinfo
+.env
+.env.local
+.env.*.local
+__pycache__/
+*.pyc
+.venv/
+*.egg-info/
+.cache/
+coverage/
+*.log
+.DS_Store
+Thumbs.db
