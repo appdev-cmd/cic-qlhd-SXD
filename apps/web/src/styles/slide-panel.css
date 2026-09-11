@@ -1,0 +1,139 @@
+/* ═══════════════════════════════════════════════════════════════════════
+   Slide Panel – Bitrix24-style right-side sliding panel system
+   ═══════════════════════════════════════════════════════════════════════ */
+
+/* ─── Slide-in animation ────────────────────────────────────────────── */
+@keyframes slidePanelIn {
+  from {
+    transform: translateX(100%);
+    opacity: 0.5;
+  }
+
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+@keyframes slidePanelOut {
+  from {
+    transform: translateX(0);
+    opacity: 1;
+  }
+
+  to {
+    transform: translateX(100%);
+    opacity: 0.5;
+  }
+}
+
+/* ─── Backdrop fade animation ───────────────────────────────────────── */
+@keyframes slidePanelBackdropIn {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes slidePanelBackdropOut {
+  from {
+    opacity: 1;
+  }
+
+  to {
+    opacity: 0;
+  }
+}
+
+/* ─── Tab ear fade-in (opacity only, does NOT touch transform) ──────── */
+@keyframes slideTabFadeIn {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+/* ─── Panel enter ───────────────────────────────────────────────────── */
+.slide-panel-enter {
+  animation: slidePanelIn 280ms cubic-bezier(0.32, 0.72, 0, 1) forwards;
+}
+
+.slide-panel-exit {
+  animation: slidePanelOut 220ms cubic-bezier(0.32, 0.72, 0, 1) forwards;
+}
+
+.slide-panel-backdrop-enter {
+  animation: slidePanelBackdropIn 200ms ease-out forwards;
+}
+
+.slide-panel-backdrop-exit {
+  animation: slidePanelBackdropOut 180ms ease-in forwards;
+}
+
+/* ─── Panel shadow — prominent floating effect ─────────────────────── */
+.slide-panel-stacked {
+  box-shadow:
+    -16px 0 60px -12px rgba(0, 0, 0, 0.2),
+    -6px 0 24px -6px rgba(0, 0, 0, 0.14),
+    -2px 0 8px 0 rgba(0, 0, 0, 0.08),
+    0 0 0 1px rgba(0, 0, 0, 0.04);
+}
+
+.dark .slide-panel-stacked {
+  box-shadow:
+    -16px 0 60px -12px rgba(0, 0, 0, 0.7),
+    -6px 0 24px -6px rgba(0, 0, 0, 0.5),
+    -2px 0 8px 0 rgba(0, 0, 0, 0.4),
+    -1px 0 0 0 rgba(99, 102, 241, 0.25),
+    0 0 40px -10px rgba(99, 102, 241, 0.15);
+}
+
+/* ─── Tab Ear — attached to panel left edge, protrudes outside ──────── */
+.slide-panel-tab {
+  animation: slideTabFadeIn 250ms ease-out 200ms both;
+}
+
+/* ─── Prevent body scroll when panel is open ────────────────────────── */
+
+/* Luôn chừa sẵn rãnh scrollbar để khi mở/đóng panel (lúc khoá cuộn trang)
+   layout không bị giật ngang 8px. */
+html {
+  scrollbar-gutter: stable;
+}
+
+body.slide-panel-open {
+  overflow: hidden;
+}
+
+/* Khoá luôn thanh cuộn của <html> — vài trình duyệt vẫn giữ scrollbar viewport
+   dù <body> đã overflow:hidden, gây ra thanh cuộn thứ hai bên phải panel. */
+html:has(body.slide-panel-open) {
+  overflow: hidden;
+}
+
+/* Trang nền phía sau panel không được hiện thanh cuộn riêng.
+   <main> là nội dung trang; SlidePanelContainer nằm NGOÀI <main> nên
+   thanh cuộn của chính panel không bị ảnh hưởng.
+   Chỉ ẩn phần hiển thị — trang nền vốn đã bị backdrop chặn tương tác,
+   và vị trí cuộn hiện tại được giữ nguyên khi đóng panel. */
+body.slide-panel-open main,
+body.slide-panel-open main * {
+  scrollbar-width: none;        /* Firefox */
+  -ms-overflow-style: none;     /* IE/Edge cũ */
+}
+body.slide-panel-open main::-webkit-scrollbar,
+body.slide-panel-open main *::-webkit-scrollbar {
+  width: 0 !important;
+  height: 0 !important;
+  display: none;
+}
+/* --- Fix Sonner Toaster Overlapping Issue -------- */
+[data-sonner-toaster] {
+  z-index: 99999 !important;
+}

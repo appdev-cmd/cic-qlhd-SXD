@@ -1,4 +1,5 @@
 @import "tailwindcss";
+@import "../styles/slide-panel.css";
 
 @theme {
   --color-primary: #003366;

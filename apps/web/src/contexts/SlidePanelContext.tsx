@@ -22,9 +22,12 @@ export interface ConfirmState {
 
 interface SlidePanelContextType {
   panels: PanelEntry[];
+  hasOpenPanels: boolean;
+  closingPanels: Set<string>;
   openPanel: (entry: Omit<PanelEntry, 'id'> & { id?: string }) => string;
   closePanel: (id?: string) => boolean;
   closeAllPanels: () => boolean;
+  focusPanel: (id: string) => void;
   lockPanel: (id?: string) => void;
   unlockPanel: (id?: string) => void;
   isTopPanelLocked: boolean;
@@ -43,11 +46,22 @@ const SlidePanelContext = createContext<SlidePanelContextType | null>(null);
 
 export const SlidePanelProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [panels, setPanels] = useState<PanelEntry[]>([]);
+  const [closingPanels, setClosingPanels] = useState<Set<string>>(new Set());
   const [lockedPanelIds, setLockedPanelIds] = useState<Set<string>>(new Set());
   const [confirmState, setConfirmState] = useState<ConfirmState | null>(null);
   const onCloseBlockedCallbacks = useRef<Map<string, () => void>>(new Map());
 
+  const hasOpenPanels = panels.length > 0;
   const isTopPanelLocked = panels.length > 0 && lockedPanelIds.has(panels[panels.length - 1].id);
+
+  const focusPanel = useCallback((id: string) => {
+    setPanels((curr) => {
+      const idx = curr.findIndex((p) => p.id === id);
+      if (idx === -1) return curr;
+      return curr.slice(0, idx + 1);
+    });
+  }, []);
+
 
   const lockPanel = useCallback((id?: string) => {
     setPanels((curr) => {
@@ -192,9 +206,12 @@ export const SlidePanelProvider: React.FC<{ children: React.ReactNode }> = ({ ch
     <SlidePanelContext.Provider
       value={{
         panels,
+        hasOpenPanels,
+        closingPanels,
         openPanel,
         closePanel,
         closeAllPanels,
+        focusPanel,
         lockPanel,
         unlockPanel,
         isTopPanelLocked,
