@@ -1,108 +1,72 @@
-# BuildAppraisal AI - Phần mềm AI Hỗ trợ Thẩm định Dự án Xây dựng
+# BuildAppraisal AI — Phần mềm hỗ trợ thẩm định dự án xây dựng
 
-> **Dự án thí điểm tại:** Sở Xây dựng tỉnh Điện Biên  
-> **Mục tiêu:** Tự động hóa và hỗ trợ chuyên viên thẩm định hồ sơ dự án, thiết kế cơ sở, dự toán xây dựng công trình sử dụng công nghệ AI / RAG và kiểm tra quy chuẩn tự động.
+> **Thí điểm:** Sở Xây dựng tỉnh Điện Biên · **Giai đoạn:** phát triển (100% dữ liệu demo)
+> **Căn cứ nghiệp vụ:** Luật Xây dựng 135/2025/QH15, NĐ 217/2026/NĐ-CP, NĐ 206/2026/NĐ-CP, NĐ 207/2026/NĐ-CP, NĐ 30/2020/NĐ-CP (thể thức văn bản)
 
----
+Kế hoạch nâng cấp và lộ trình: xem [`implementation_plan.md`](implementation_plan.md).
 
-## 🏗️ Kiến trúc Hệ thống
+## Kiến trúc hiện tại
 
-Hệ thống được tổ chức dưới dạng **Turborepo Monorepo**, bao gồm:
+```
+Web SPA (Vite + React 19 + TypeScript strict, cổng 3008)
+ ├─ src/pages, src/components        Giao diện (UI kit chuẩn ERP: DataGrid, GridToolbar, Slide Panel, Modal…)
+ ├─ src/hooks/useData.ts             Hook TanStack Query (cache, loading, lỗi)
+ ├─ src/data-access/*                Lớp truy cập dữ liệu DUY NHẤT (Supabase ↔ kiểu miền; chế độ demo offline)
+ ├─ src/lib/sla.ts, workflow.ts,     Nghiệp vụ: ngày làm việc/SLA, quy trình NĐ 217, thẩm quyền,
+ │   jurisdiction.ts, documents/*     văn bản hành chính A4 (xem trước, in, DOCX)
+ └─ src/types/*                      Kiểu dữ liệu miền
 
-- **Web Frontend (`apps/web`):** Giao diện chuyên viên thẩm định và quản lý hồ sơ xây dựng trên nền tảng Next.js 15 (App Router, Tailwind CSS, Shadcn UI).
-- **Backend API (`services/api`):** API dịch vụ nghiệp vụ thẩm định, quản lý hồ sơ, workflow duyệt, tích hợp dữ liệu viết bằng NestJS và Prisma ORM.
-- **AI Worker (`services/ai-worker`):** Dịch vụ xử lý tài liệu, OCR bản vẽ/thuyết minh, vector hóa tri thức quy chuẩn Việt Nam (QCVN, TCVN) và RAG engine viết bằng Python FastAPI.
-- **Shared Packages (`packages/*`):** Chứa thư viện dùng chung:
-  - `@ba/core`: Định nghĩa Prisma schema, DB client, entities, types.
-  - `@ba/shared`: Tiện ích dùng chung, constants, validation schemas.
-  - `@ba/eslint-config`: Cấu hình linting chuẩn.
-  - `@ba/typescript-config`: Cấu hình TypeScript chuẩn.
+Supabase (PostgreSQL)
+ ├─ supabase/migrations/*.sql        Schema, RPC (dashboard, transition_dossier, refresh_sla_status),
+ │                                    trigger audit_logs, tìm kiếm không dấu (unaccent), lịch nghỉ lễ
+ └─ supabase/seed.sql                Sinh tự động từ src/data (không sửa tay)
+```
 
----
+Backend NestJS và AI worker (RAG pháp luật) **chưa triển khai** — nằm trong GĐ 5–6 của kế hoạch.
+Trợ lý AI hiện tại là **bản minh họa** (được gắn nhãn trên giao diện).
 
-## 🛠️ Công nghệ Sử dụng (Tech Stack)
+## Cài đặt & chạy
 
-| Thành phần | Công nghệ |
-| :--- | :--- |
-| **Monorepo Manager** | [Turborepo](https://turbo.build/) & [pnpm](https://pnpm.io/) |
-| **Backend Framework** | [NestJS](https://nestjs.com/) (TypeScript) |
-| **Frontend Framework** | [Next.js 15](https://nextjs.org/) (React 19, Tailwind CSS) |
-| **AI / Machine Learning** | Python [FastAPI](https://fastapi.tiangolo.com/), LangChain / LlamaIndex, OCR |
-| **Cơ sở dữ liệu chính & Vector** | [PostgreSQL 17](https://www.postgresql.org/) với extension [pgvector](https://github.com/pgvector/pgvector) |
-| **Caching & Job Queue** | [Redis 7](https://redis.io/) (BullMQ) |
-| **Lưu trữ hồ sơ (Object Storage)** | [MinIO](https://min.io/) (Tương thích S3 API) |
-| **ORM / Database Access** | [Prisma](https://www.prisma.io/) |
-| **Tích hợp ngoài** | DVC Dịch vụ công Tấn Dân (Mock/Thực tế) |
+Yêu cầu: Node.js ≥ 20, pnpm ≥ 10.
 
----
-
-## 🚀 Hướng dẫn Cài đặt & Khởi chạy
-
-### 1. Yêu cầu Tiên quyết
-- **Node.js**: >= 20.x
-- **pnpm**: 10.x (`npm i -g pnpm@10.26.0`)
-- **Docker** & **Docker Compose**
-- **Python**: >= 3.11 (cho AI Worker)
-
-### 2. Cài đặt Phụ thuộc
 ```bash
-# Cài đặt dependencies cho toàn bộ workspace
 pnpm install
+cp .env.example .env      # điền thông tin Supabase; bỏ trống → chạy chế độ demo offline
+pnpm dev                  # http://localhost:3008
 ```
 
-### 3. Khởi chạy Dịch vụ Hạ tầng (Docker)
-Khởi động cơ sở dữ liệu PostgreSQL (pgvector), Redis và MinIO:
+### Cơ sở dữ liệu (Supabase)
+
 ```bash
-# Khởi động containers
-docker compose up -d
-
-# Hoặc dùng lệnh script
-pnpm docker:up
+pnpm db:status            # xem migration đã/chưa áp dụng
+pnpm db:migrate           # áp dụng migration mới (theo dõi trong bảng schema_migrations)
+pnpm db:seed:generate     # sinh supabase/seed.sql từ bộ dữ liệu demo
+pnpm db:seed              # XÓA và nạp lại toàn bộ dữ liệu demo
+pnpm db:check             # kiểm tra truy cập bằng anon key (giống Web)
 ```
 
-### 4. Cấu hình Môi trường
-Tạo file `.env` từ file mẫu `.env.example`:
-```bash
-cp .env.example .env
-```
-Cập nhật các biến môi trường cấu hình kết nối DB, MinIO, API keys nếu cần.
+> ⚠️ Migration `20260926000002_dev_open_access.sql` mở quyền cho anon — **chỉ dùng khi phát triển**.
+> Trước khi nhập hồ sơ thật phải thay bằng đăng nhập + RLS theo vai trò/phòng ban và chuyển hạ tầng về trong nước.
 
-### 5. Khởi tạo Cơ sở dữ liệu
-```bash
-# Sinh Prisma Client
-pnpm db:generate
+## Kiểm tra chất lượng
 
-# Đẩy schema vào cơ sở dữ liệu PostgreSQL
-pnpm db:push
+| Lệnh | Nội dung |
+|---|---|
+| `pnpm typecheck` | TypeScript strict cho `src/` và `scripts/` |
+| `pnpm lint` | ESLint (react-hooks, cấm `alert`/`confirm`/`toLocaleDateString`) |
+| `pnpm lint:ui` | Quét quy chuẩn UI của dự án (Tooltip, SearchableSelect, DateInput, dark mode, không đọc mock…) |
+| `pnpm test` | Vitest: SLA ngày làm việc, thẩm quyền, tìm kiếm tiếng Việt, xuất DOCX |
+| `pnpm check` | Chạy toàn bộ các bước trên |
+| `pnpm build` | Build production (tách chunk theo trang & thư viện) |
 
-# Khởi tạo dữ liệu mẫu ban đầu
-pnpm db:seed
-```
+CI (GitHub Actions) chạy tất cả các bước trên cho mỗi push / pull request.
 
-### 6. Khởi chạy Chế độ Phát triển (Development)
-Chạy toàn bộ các ứng dụng và dịch vụ qua Turborepo:
-```bash
-pnpm dev
-```
+## Chạy thử quy trình theo vai trò
 
----
+Chưa có đăng nhập ở giai đoạn phát triển. Bấm avatar góc phải → **"Thao tác với vai trò"** để chuyển giữa
+Chuyên viên / Trưởng phòng / Lãnh đạo Sở; mọi thao tác được ghi vào `audit_logs` và `workflow_transitions`
+với đúng tên cán bộ.
 
-## 📜 Các Lệnh Thao tác Thường dùng
+## Quy tắc cho AI Assistant
 
-| Lệnh | Mô tả |
-| :--- | :--- |
-| `pnpm dev` | Chạy song song môi trường dev cho tất cả apps & services |
-| `pnpm build` | Build tất cả packages và apps |
-| `pnpm lint` | Chạy kiểm tra cú pháp và định dạng code |
-| `pnpm test` | Chạy kiểm thử tự động |
-| `pnpm db:generate` | Sinh Prisma client |
-| `pnpm db:push` | Đồng bộ cấu trúc schema lên CSDL PostgreSQL |
-| `pnpm db:seed` | Nạp dữ liệu mẫu ban đầu |
-| `pnpm docker:up` | Khởi động Postgres, Redis, MinIO |
-| `pnpm docker:down` | Dừng các container hạ tầng |
-
----
-
-## 🏢 Đơn vị Chủ trì & Phát triển
-- **Đơn vị ứng dụng:** Sở Xây dựng tỉnh Điện Biên
-- **Dự án:** Hệ thống Trợ lý Thẩm định Hồ sơ Xây dựng Thông minh (BuildAppraisal AI)
+`RULES.md` là nguồn duy nhất; sau khi sửa chạy `pnpm rules:sync` để cập nhật `CLAUDE.md`, `AGENTS.md`, `GEMINI.md`.

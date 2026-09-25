@@ -6,13 +6,15 @@
 ---
 
 ## 📌 Cấu hình Môi trường & Port (ĐẶC THÙ DỰ ÁN)
-- **Web Frontend (`apps/web`)**: Luôn sử dụng cổng **`3008`** (`http://localhost:3008`).
-  - Lệnh khởi động Web: `pnpm --filter @ba/web dev` (hoặc `pnpm dev` qua Turborepo).
-  - **CẤM** tự ý chuyển đổi port của Web về 3000 hay port khác trừ khi người dùng yêu cầu rõ ràng.
-- **Backend Core API (`services/core`)**: Luôn sử dụng cổng **`3001`** (`http://localhost:3001/api`).
-  - Swagger API Docs: `http://localhost:3001/api/docs`.
-- **Database**: Supabase PostgreSQL (Cloud) — Cấu hình qua connection pooler `DATABASE_URL` và `DIRECT_URL`.
-- **AI Worker (`ai/`)**: FastAPI trên cổng `8000` (`http://localhost:8000`).
+- **Web (Vite + React 19, thư mục gốc `src/`)**: Luôn sử dụng cổng **`3008`** (`http://localhost:3008`).
+  - Lệnh khởi động: `pnpm dev`. **CẤM** tự ý đổi port 3008 trừ khi người dùng yêu cầu rõ ràng.
+- **Database**: Supabase PostgreSQL (Cloud, giai đoạn phát triển, 100% dữ liệu demo) — `VITE_SUPABASE_URL`, `VITE_SUPABASE_ANON_KEY` cho Web; `DIRECT_URL` / `DATABASE_URL` cho script migrate/seed.
+  - Truy cập dữ liệu **chỉ qua `src/data-access/*`** + hook `src/hooks/useData.ts` (TanStack Query). CẤM trang/component đọc thẳng `src/data/mock*`.
+  - Thiếu biến môi trường → ứng dụng tự chạy **chế độ demo offline** (`VITE_DATA_MODE=demo`).
+  - Migration: `supabase/migrations/*.sql` (chỉ THÊM file mới, không sửa file đã áp dụng) → `pnpm db:migrate`. Seed: `pnpm db:seed:generate && pnpm db:seed`.
+- **Backend NestJS (`services/core`, cổng 3001) & AI Worker FastAPI (`ai/`, cổng 8000)**: CHƯA triển khai — dự kiến theo `implementation_plan.md` (GĐ 5–6).
+- **Kiểm tra trước khi bàn giao**: `pnpm check` (typecheck strict + ESLint + `lint:ui` + unit test) và `pnpm build`.
+- **File quy tắc**: `RULES.md` là nguồn duy nhất; sửa xong chạy `pnpm rules:sync` để cập nhật `CLAUDE.md`, `AGENTS.md`, `GEMINI.md`.
 
 ---
 

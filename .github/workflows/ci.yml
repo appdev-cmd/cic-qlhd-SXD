@@ -1,0 +1,45 @@
+name: CI
+
+on:
+  push:
+    branches: [main, 'feat/**']
+  pull_request:
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          lfs: false
+
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 12
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: pnpm
+
+      - run: pnpm install --frozen-lockfile
+
+      - name: Kiểm tra kiểu (strict)
+        run: pnpm typecheck
+
+      - name: ESLint
+        run: pnpm lint
+
+      - name: Quy chuẩn UI (lint:ui)
+        run: pnpm lint:ui
+
+      - name: Unit test
+        run: pnpm test
+
+      - name: Đồng bộ file quy tắc AI
+        run: pnpm rules:sync --check
+
+      - name: Build production (chế độ demo, không cần Supabase)
+        run: pnpm build
+        env:
+          VITE_DATA_MODE: demo

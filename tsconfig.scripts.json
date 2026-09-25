@@ -1,0 +1,8 @@
+{
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "types": ["node", "google.maps"],
+    "noEmit": true
+  },
+  "include": ["scripts", "src/types", "src/data", "src/lib", "src/vite-env.d.ts"]
+}
