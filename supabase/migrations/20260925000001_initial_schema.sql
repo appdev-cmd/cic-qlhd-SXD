@@ -98,7 +98,7 @@ create table if not exists public.projects (
     procedure_type text not null,
     status text not null default 'Tiếp nhận hồ sơ',
     sla_days integer default 30,
-    sla_status text default 'on_time' check (sla_status in ('on_time', 'near_deadline', 'overdue')),
+    sla_status text default 'dang_tham_dinh',
     progress integer default 0 check (progress between 0 and 100),
     submission_date date not null default current_date,
     deadline date not null,
@@ -192,9 +192,16 @@ begin
 end;
 $$ language plpgsql;
 
+drop trigger if exists tr_organizations_updated on public.organizations;
 create trigger tr_organizations_updated before update on public.organizations for each row execute function public.handle_updated_at();
+
+drop trigger if exists tr_personnel_updated on public.personnel;
 create trigger tr_personnel_updated before update on public.personnel for each row execute function public.handle_updated_at();
+
+drop trigger if exists tr_projects_updated on public.projects;
 create trigger tr_projects_updated before update on public.projects for each row execute function public.handle_updated_at();
+
+drop trigger if exists tr_disciplines_updated on public.appraisal_disciplines;
 create trigger tr_disciplines_updated before update on public.appraisal_disciplines for each row execute function public.handle_updated_at();
 
 -- 11. THIẾT LẬP ROW LEVEL SECURITY (RLS)
@@ -208,39 +215,51 @@ alter table public.ai_compliance_alerts enable row level security;
 alter table public.project_documents enable row level security;
 
 -- Policies đọc cơ bản
+drop policy if exists "Authenticated users can read organizations" on public.organizations;
 create policy "Authenticated users can read organizations"
 on public.organizations for select to authenticated using (true);
 
+drop policy if exists "Authenticated users can read personnel" on public.personnel;
 create policy "Authenticated users can read personnel"
 on public.personnel for select to authenticated using (true);
 
+drop policy if exists "Authenticated users can read projects" on public.projects;
 create policy "Authenticated users can read projects"
 on public.projects for select to authenticated using (true);
 
+drop policy if exists "Authenticated users can read disciplines" on public.appraisal_disciplines;
 create policy "Authenticated users can read disciplines"
 on public.appraisal_disciplines for select to authenticated using (true);
 
+drop policy if exists "Authenticated users can read checklists" on public.appraisal_checklists;
 create policy "Authenticated users can read checklists"
 on public.appraisal_checklists for select to authenticated using (true);
 
+drop policy if exists "Authenticated users can read alerts" on public.ai_compliance_alerts;
 create policy "Authenticated users can read alerts"
 on public.ai_compliance_alerts for select to authenticated using (true);
 
+drop policy if exists "Authenticated users can read documents" on public.project_documents;
 create policy "Authenticated users can read documents"
 on public.project_documents for select to authenticated using (true);
 
 -- Cán bộ Sở được toàn quyền ghi/chỉnh sửa
+drop policy if exists "Staff manage organizations" on public.organizations;
 create policy "Staff manage organizations"
 on public.organizations for all to authenticated using (true);
 
+drop policy if exists "Staff manage personnel" on public.personnel;
 create policy "Staff manage personnel"
 on public.personnel for all to authenticated using (true);
 
+drop policy if exists "Staff manage projects" on public.projects;
 create policy "Staff manage projects"
 on public.projects for all to authenticated using (true);
 
+drop policy if exists "Staff manage disciplines" on public.appraisal_disciplines;
 create policy "Staff manage disciplines"
 on public.appraisal_disciplines for all to authenticated using (true);
 
+drop policy if exists "Staff manage checklists" on public.appraisal_checklists;
 create policy "Staff manage checklists"
 on public.appraisal_checklists for all to authenticated using (true);

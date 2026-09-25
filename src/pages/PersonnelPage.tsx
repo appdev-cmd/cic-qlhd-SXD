@@ -3,21 +3,23 @@ import { MasterTable, type Column } from '../components/MasterTable';
 import { TableToolbar } from '../components/TableToolbar';
 import { StatusBadge } from '../components/ui/StatusBadge';
 import { SearchableSelect } from '../components/ui/SearchableSelect';
-import { MOCK_PERSONNEL, MOCK_PROJECTS, type Personnel } from '../data/mockData';
+import { MOCK_PROJECTS, type Personnel } from '../data/mockData';
+import { usePersonnel } from '../hooks/useSupabaseData';
 import { formatDate, cn } from '../lib/utils';
 import { useSlidePanel } from '../context/SlidePanelContext';
 import { matchesSmartSearch } from '../lib/smartSearch';
-import { UserCheck, ShieldAlert, Award, ExternalLink, Briefcase, FileBadge2 } from 'lucide-react';
+import { UserCheck, ShieldAlert, Award, ExternalLink, Briefcase, FileBadge2, Database } from 'lucide-react';
 import { Tooltip } from '../components/ui/Tooltip';
 
 export function PersonnelPage() {
   const { openPanel } = useSlidePanel();
+  const { personnel, isLiveDb } = usePersonnel();
   const [searchQuery, setSearchQuery] = useState('');
   const [gradeFilter, setGradeFilter] = useState('all');
   const [statusFilter, setStatusFilter] = useState('all');
 
   const filteredPersonnel = useMemo(() => {
-    return MOCK_PERSONNEL.filter((p) => {
+    return personnel.filter((p) => {
       const matchSearch =
         matchesSmartSearch(p.fullName, searchQuery) ||
         matchesSmartSearch(p.certNumber, searchQuery) ||

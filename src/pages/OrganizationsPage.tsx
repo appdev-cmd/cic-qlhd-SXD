@@ -3,21 +3,23 @@ import { MasterTable, type Column } from '../components/MasterTable';
 import { TableToolbar } from '../components/TableToolbar';
 import { StatusBadge } from '../components/ui/StatusBadge';
 import { SearchableSelect } from '../components/ui/SearchableSelect';
-import { MOCK_ORGANIZATIONS, MOCK_PROJECTS, MOCK_PERSONNEL, type Organization } from '../data/mockData';
+import { MOCK_PROJECTS, MOCK_PERSONNEL, type Organization } from '../data/mockData';
+import { useOrganizations } from '../hooks/useSupabaseData';
 import { formatDate, formatCurrency } from '../lib/utils';
 import { useSlidePanel } from '../context/SlidePanelContext';
 import { matchesSmartSearch } from '../lib/smartSearch';
-import { Building2, ShieldCheck, Briefcase, Users, Phone, MapPin, FileText, CheckCircle2 } from 'lucide-react';
+import { Building2, ShieldCheck, Briefcase, Users, Phone, MapPin, FileText, CheckCircle2, Database } from 'lucide-react';
 import { Tooltip } from '../components/ui/Tooltip';
 
 export function OrganizationsPage() {
   const { openPanel } = useSlidePanel();
+  const { organizations, isLiveDb } = useOrganizations();
   const [searchQuery, setSearchQuery] = useState('');
   const [typeFilter, setTypeFilter] = useState('all');
   const [statusFilter, setStatusFilter] = useState('all');
 
   const filteredOrgs = useMemo(() => {
-    return MOCK_ORGANIZATIONS.filter((org) => {
+    return organizations.filter((org) => {
       const matchSearch =
         matchesSmartSearch(org.name, searchQuery) ||
         matchesSmartSearch(org.code, searchQuery) ||
