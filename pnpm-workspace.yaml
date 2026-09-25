@@ -1,12 +1,2 @@
-packages:
-  - apps/*
-  - services/*
-  - packages/*
-
-ignoredBuiltDependencies:
-  - '@prisma/client'
-  - '@prisma/engines'
-  - '@scarf/scarf'
-  - msgpackr-extract
-  - prisma
-  - unrs-resolver
+allowBuilds:
+  esbuild: true

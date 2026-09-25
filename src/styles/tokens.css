@@ -1,0 +1,199 @@
+/* DESIGN TOKENS (CSS Variables) - Đồng bộ 100% cic-ibst */
+:root {
+  /* Primary Colors — New Palette (Accent #00668c) */
+  --color-primary-50: #f2f8fc;
+  --color-primary-100: #d4eaf7;
+  --color-primary-200: #b6ccd8;
+  --color-primary-300: #71c4ef;
+  --color-primary-400: #3995b8;
+  --color-primary-500: #00668c;
+  --color-primary-600: #005273;
+  --color-primary-700: #00415a;
+  --color-primary-800: #003047;
+  --color-primary-900: #001f30;
+
+  /* Accent Colors — Đỏ cờ (branding cơ quan nhà nước) */
+  --color-accent-100: #fde3e3;
+  --color-accent-200: #AE1E23;
+
+  /* Semantic Colors */
+  --color-success-50: #ecfdf5;
+  --color-success-100: #d1fae5;
+  --color-success-500: #10b981;
+  --color-success-600: #059669;
+
+  --color-warning-50: #fffbeb;
+  --color-warning-100: #fef3c7;
+  --color-warning-500: #f59e0b;
+  --color-warning-600: #d97706;
+
+  --color-danger-50: #fef2f2;
+  --color-danger-100: #fee2e2;
+  --color-danger-500: #ef4444;
+  --color-danger-600: #dc2626;
+
+  --color-info-50: #eff6ff;
+  --color-info-100: #dbeafe;
+  --color-info-500: #3b82f6;
+  --color-info-600: #2563eb;
+
+  /* Background Colors */
+  --color-bg-primary: #f8fafc;
+  --color-bg-secondary: #f1f5f9;
+  --color-bg-tertiary: #e2e8f0;
+  --color-bg-elevated: #ffffff;
+
+  /* Slate Scale */
+  --color-slate-50: #f8fafc;
+  --color-slate-100: #f1f5f9;
+  --color-slate-200: #e2e8f0;
+  --color-slate-300: #cbd5e1;
+  --color-slate-400: #94a3b8;
+  --color-slate-500: #64748b;
+  --color-slate-600: #475569;
+  --color-slate-700: #334155;
+  --color-slate-800: #1e293b;
+  --color-slate-900: #0f172a;
+  --color-slate-950: #020617;
+
+  /* RGB CHANNELS — cho Tailwind alpha (<alpha-value>) */
+  --color-primary-50-rgb: 242 248 252;
+  --color-primary-100-rgb: 212 234 247;
+  --color-primary-200-rgb: 182 204 216;
+  --color-primary-300-rgb: 113 196 239;
+  --color-primary-400-rgb: 57 149 184;
+  --color-primary-500-rgb: 0 102 140;
+  --color-primary-600-rgb: 0 82 115;
+  --color-primary-700-rgb: 0 65 90;
+  --color-primary-800-rgb: 0 48 71;
+  --color-primary-900-rgb: 0 31 48;
+
+  --color-slate-50-rgb: 248 250 252;
+  --color-slate-100-rgb: 241 245 249;
+  --color-slate-200-rgb: 226 232 240;
+  --color-slate-300-rgb: 203 213 225;
+  --color-slate-400-rgb: 148 163 184;
+  --color-slate-500-rgb: 100 116 139;
+  --color-slate-600-rgb: 71 85 105;
+  --color-slate-700-rgb: 51 65 85;
+  --color-slate-800-rgb: 30 41 59;
+  --color-slate-900-rgb: 15 23 42;
+  --color-slate-950-rgb: 2 6 23;
+
+  /* Typography */
+  --font-sans: 'Inter', system-ui, -apple-system, sans-serif;
+  --font-heading: 'Inter', system-ui, -apple-system, sans-serif;
+  --font-mono: 'JetBrains Mono', 'Fira Code', monospace;
+
+  /* Shadows */
+  --shadow-xs: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+  --shadow-sm: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
+  --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+  --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+  --shadow-xl: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
+  --shadow-card: 0 1px 2px 0 rgb(74 49 16 / 0.04), 0 1px 3px 0 rgb(74 49 16 / 0.06);
+  --shadow-card-hover: 0 8px 20px -4px rgb(74 49 16 / 0.10), 0 4px 8px -4px rgb(74 49 16 / 0.06);
+  --shadow-dropdown: 0 10px 15px -3px rgb(74 49 16 / 0.10), 0 4px 6px -4px rgb(74 49 16 / 0.06);
+
+  /* Fallback Surfaces — Nature Theme (Bảo vệ mắt, cát ấm dịu sáng thanh lịch) */
+  --bg-app: #F8F6F0;
+  --bg-surface: #FFFFFF;
+  --bg-subtle: #F5F2EB;
+  --bg-muted: #ECE8DF;
+  --bg-elevated: #FFFFFF;
+  --border-default: #E6E1D6;
+  --border-subtle: #EFEBE2;
+  --text-primary: #1d1c1c;
+  --text-secondary: #4a3426;
+  --text-muted: #6d665f;
+  --text-placeholder: #736b62;
+  --bg-hover-row: #F7F5EE;
+  --bg-active-row: #ECE8DF;
+  --bg-stripe: #FAF8F3;
+  --ring-focus: #00668c;
+}
+
+/* Light Theme Variables */
+.theme-light {
+  --bg-app: #f8fafc;
+  --bg-surface: #ffffff;
+  --bg-subtle: #f1f5f9;
+  --bg-muted: #e2e8f0;
+  --bg-elevated: #ffffff;
+  --border-default: #e2e8f0;
+  --border-subtle: #f1f5f9;
+  --text-primary: #0f172a;
+  --text-secondary: #334155;
+  --text-muted: #64748b;
+  --text-placeholder: #94a3b8;
+  --bg-hover-row: #f1f5f9;
+  --bg-active-row: #e2e8f0;
+  --bg-stripe: #f8fafc;
+}
+
+/* Dark Mode Variables — Fintech Matte Navy v2 */
+.dark, .theme-dark {
+  --color-slate-50: #f8fafc;
+  --color-slate-100: #f1f5f9;
+  --color-slate-200: #e2e8f0;
+  --color-slate-300: #cbd5e1;
+  --color-slate-400: #94a3b8;
+  --color-slate-500: #64748b;
+  --color-slate-600: #475569;
+  --color-slate-700: #293548;
+  --color-slate-800: #1e293b;
+  --color-slate-900: #151d2e;
+  --color-slate-950: #0b1120;
+
+  --bg-app: var(--color-slate-950);
+  --bg-surface: var(--color-slate-900);
+  --bg-subtle: var(--color-slate-800);
+  --bg-muted: var(--color-slate-700);
+  --bg-elevated: var(--color-slate-900);
+  --border-default: rgba(255, 255, 255, 0.16);
+  --border-subtle: rgba(255, 255, 255, 0.10);
+  --text-primary: #f8fafc;
+  --text-secondary: #e2e8f0;
+  --text-muted: #94a3b8;
+  --text-placeholder: #64748b;
+  --bg-hover-row: rgba(255, 255, 255, 0.05);
+  --bg-active-row: rgba(255, 255, 255, 0.08);
+  --bg-stripe: rgba(255, 255, 255, 0.02);
+}
+
+/* ─── Hiệu ứng Chữ Vàng Ánh Kim (UBND Tỉnh Điện Biên) ─── */
+.text-gold-metallic {
+  background: linear-gradient(135deg, #d97706 0%, #f59e0b 25%, #fef08a 50%, #d97706 75%, #b45309 100%);
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  filter: drop-shadow(0 1px 1px rgba(180, 83, 9, 0.25));
+}
+
+.dark .text-gold-metallic,
+.theme-dark .text-gold-metallic {
+  background: linear-gradient(135deg, #fbbf24 0%, #fef08a 35%, #ffffff 50%, #f59e0b 70%, #d97706 100%);
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  filter: drop-shadow(0 0 8px rgba(251, 191, 36, 0.35));
+}
+
+/* ─── Hiệu ứng Chữ Xanh Bộ Xây dựng (Chuẩn IBST) ─── */
+.text-teal-lustrous {
+  background: linear-gradient(135deg, #1d4ed8 0%, #38bdf8 30%, #60a5fa 55%, #1e40af 85%, #172554 100%);
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  filter: drop-shadow(0 1px 1px rgba(29, 78, 216, 0.25));
+}
+
+.dark .text-teal-lustrous,
+.theme-dark .text-teal-lustrous {
+  background: linear-gradient(135deg, #60a5fa 0%, #93c5fd 35%, #ffffff 50%, #38bdf8 70%, #2563eb 100%);
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  filter: drop-shadow(0 0 8px rgba(96, 165, 250, 0.35));
+}
+

@@ -1,0 +1,58 @@
+/* Styling cho Bản đồ GIS Google Maps & Leaflet */
+
+.leaflet-container {
+  font-family: inherit;
+  width: 100%;
+  height: 100%;
+  background: #020617 !important;
+}
+
+/* Custom Popup */
+.leaflet-popup-content-wrapper {
+  background: #ffffff !important;
+  color: #0f172a !important;
+  border-radius: 14px !important;
+  padding: 8px 12px !important;
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.25), 0 8px 10px -6px rgba(0, 0, 0, 0.15) !important;
+  border: 1px solid #e2e8f0 !important;
+}
+
+.dark .leaflet-popup-content-wrapper {
+  background: #0f172a !important;
+  color: #f8fafc !important;
+  border-color: #334155 !important;
+}
+
+.leaflet-popup-tip {
+  background: #ffffff !important;
+}
+
+.dark .leaflet-popup-tip {
+  background: #0f172a !important;
+}
+
+.leaflet-popup-content {
+  margin: 6px 4px !important;
+  line-height: 1.4 !important;
+}
+
+/* Custom Tooltip */
+.leaflet-custom-tooltip {
+  background: rgba(15, 23, 42, 0.92) !important;
+  color: #f8fafc !important;
+  border: 1px solid rgba(51, 65, 85, 0.8) !important;
+  border-radius: 8px !important;
+  padding: 6px 10px !important;
+  font-size: 11px !important;
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.3) !important;
+  backdrop-filter: blur(8px) !important;
+}
+
+.leaflet-custom-tooltip::before {
+  border-top-color: rgba(15, 23, 42, 0.92) !important;
+}
+
+/* Dark mode filter cho Google Roadmap Tiles */
+.dark .google-map-dark-tiles {
+  filter: brightness(0.85) invert(1) contrast(2.4) hue-rotate(200deg) saturate(0.25) brightness(0.65);
+}

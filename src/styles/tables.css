@@ -1,0 +1,40 @@
+/* Tables style - Đồng bộ 100% cic-ibst & ERP */
+
+.thead-sticky {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  background-color: var(--bg-subtle);
+  border-bottom: 1px solid var(--border-default);
+}
+
+.th-cell {
+  padding: 0.75rem 1rem;
+  font-size: 0.6875rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--text-secondary);
+  white-space: nowrap;
+  user-select: none;
+}
+
+.td-cell {
+  padding: 0.75rem 1rem;
+  font-size: 0.8125rem;
+  color: var(--text-primary);
+  border-bottom: 1px solid var(--border-subtle);
+  transition: background-color 150ms ease;
+}
+
+.tr-stripe:nth-child(even) {
+  background-color: var(--bg-stripe);
+}
+
+.tr-stripe:hover {
+  background-color: var(--bg-hover-row) !important;
+}
+
+.tr-active {
+  background-color: var(--bg-active-row) !important;
+}
