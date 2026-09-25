@@ -1,42 +1,33 @@
-import React, { useState, useMemo } from 'react';
+import { useState, useMemo } from 'react';
 import {
   Building2,
   MapPin,
-  Calendar,
   Layers,
   FileCheck2,
   Users,
   Search,
   CheckCircle2,
   AlertTriangle,
-  ExternalLink,
   Copy,
   Check,
-  ShieldCheck,
-  Award,
-  Briefcase,
-  Hash,
   Compass,
   FileText,
-  BadgeCheck,
-  TrendingDown,
   Building,
-  CheckCircle,
   Filter,
   Coins,
   Camera,
 } from 'lucide-react';
-import { cn, formatCurrency, formatDate } from '../../lib/utils';
+import { cn, formatCurrency } from '../../lib/utils';
 import { Tooltip } from '../../components/ui/Tooltip';
-import type { Project, ProjectTT39Data, ProjectMemberTT39, ProjectParticipantOrgTT39 } from '../../data/mockData';
-import { getProjectTT39Data } from '../../data/mockData';
+import { SearchableSelect } from '../../components/ui/SearchableSelect';
+import type { Project, ProjectTT39Data } from '../../types/domain';
 
 interface ProjectTT39InfoTabProps {
   project: Project;
+  tt39: ProjectTT39Data;
 }
 
-export function ProjectTT39InfoTab({ project }: ProjectTT39InfoTabProps) {
-  const tt39: ProjectTT39Data = useMemo(() => getProjectTT39Data(project), [project]);
+export function ProjectTT39InfoTab({ project, tt39 }: ProjectTT39InfoTabProps) {
 
   // Bộ lọc và tìm kiếm danh sách thành viên tham gia
   const [memberSearch, setMemberSearch] = useState('');
@@ -551,7 +542,7 @@ export function ProjectTT39InfoTab({ project }: ProjectTT39InfoTabProps) {
                 </div>
                 <div className="flex items-center justify-between">
                   <span className="text-ink-muted">Địa chỉ trụ sở:</span>
-                  <span className="text-ink-secondary truncate max-w-[200px]" title={org.address}>
+                  <span className="text-ink-secondary truncate max-w-[200px]">
                     {org.address}
                   </span>
                 </div>
@@ -619,18 +610,16 @@ export function ProjectTT39InfoTab({ project }: ProjectTT39InfoTabProps) {
 
             <div className="flex items-center gap-1.5">
               <Filter size={13} className="text-ink-muted" />
-              <select
-                value={selectedOrgFilter}
-                onChange={(e) => setSelectedOrgFilter(e.target.value)}
-                className="text-xs py-1.5 px-2.5 rounded-lg border border-border bg-surface text-ink focus:outline-none focus:ring-1 focus:ring-primary-500"
-              >
-                <option value="all">Tất cả đơn vị tham gia ({tt39.members.length})</option>
-                {tt39.participants.map((org) => (
-                  <option key={org.id} value={org.name}>
-                    {org.name}
-                  </option>
-                ))}
-              </select>
+              <div className="w-64">
+                <SearchableSelect
+                  value={selectedOrgFilter}
+                  onChange={setSelectedOrgFilter}
+                  options={[
+                    { value: 'all', label: `Tất cả đơn vị tham gia (${tt39.members.length})` },
+                    ...tt39.participants.map((org) => ({ value: org.name, label: org.name })),
+                  ]}
+                />
+              </div>
             </div>
           </div>
         </div>
@@ -715,7 +704,7 @@ export function ProjectTT39InfoTab({ project }: ProjectTT39InfoTabProps) {
                           Hạng {mem.certGrade}
                         </span>
                       </div>
-                      <span className="text-3xs text-ink-muted block mt-0.5 truncate max-w-[150px]" title={mem.certIssuer}>
+                      <span className="text-3xs text-ink-muted block mt-0.5 truncate max-w-[150px]">
                         {mem.certIssuer}
                       </span>
                     </td>

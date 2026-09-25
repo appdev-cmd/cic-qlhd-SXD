@@ -1,32 +1,19 @@
-import React, { useEffect, useRef, useState, useCallback } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
-import {
-  Layers,
-  MapPin,
-  ZoomIn,
-  ZoomOut,
-  Maximize2,
-  Minimize2,
-  Compass,
-  Navigation,
-  ExternalLink,
-  Shield,
-  Eye,
-  Info,
-} from 'lucide-react';
-import type { Project } from '../../data/mockData';
+import { ZoomIn, ZoomOut, Maximize2, Minimize2, Compass, Navigation } from 'lucide-react';
+import type { Project } from '../../types/domain';
 import {
   DIEN_BIEN_CENTER,
   DIEN_BIEN_DEFAULT_ZOOM,
   DIEN_BIEN_PROVINCE_BOUNDARY,
   DIEN_BIEN_ZONING_AREAS,
   GOOGLE_MAP_DARK_STYLES,
-  getProjectCoordinates,
+  getProjectLatLng,
   type LatLng,
 } from '../../lib/gisData';
 import { formatCurrency } from '../../lib/utils';
-import { loadGoogleMaps, isGoogleMapsLoaded } from '../../lib/googleMapsLoader';
+import { loadGoogleMaps } from '../../lib/googleMapsLoader';
 
 export type GoogleMapType = 'hybrid' | 'roadmap' | 'satellite' | 'terrain';
 
@@ -149,7 +136,7 @@ export function GoogleMapViewer({
       // Tạo markers cho Google Maps
       googleMarkersRef.current = {};
       projects.forEach((p) => {
-        const coords = getProjectCoordinates(p.id, p.location);
+        const coords = getProjectLatLng(p);
         const color =
           p.slaStatus === 'dang_tham_dinh'
             ? '#f59e0b'
@@ -355,7 +342,7 @@ export function GoogleMapViewer({
     // ── Markers các dự án ──
     leafletMarkersRef.current = {};
     projects.forEach((p) => {
-      const coords = getProjectCoordinates(p.id, p.location);
+      const coords = getProjectLatLng(p);
       const isSelected = selectedProject?.id === p.id;
 
       const color =
@@ -472,7 +459,7 @@ export function GoogleMapViewer({
   // ─── 4. BAY TỚI DỰ ÁN ĐƯỢC CHỌN (FLY TO SELECTED PROJECT) ───
   useEffect(() => {
     if (!selectedProject) return;
-    const coords = getProjectCoordinates(selectedProject.id, selectedProject.location);
+    const coords = getProjectLatLng(selectedProject);
 
     if (activeEngine === 'sdk' && googleMapRef.current) {
       googleMapRef.current.panTo({ lat: coords.lat, lng: coords.lng });

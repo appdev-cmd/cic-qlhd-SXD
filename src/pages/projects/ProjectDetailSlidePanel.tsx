@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import {
   FileText,
   ShieldCheck,
@@ -10,12 +10,8 @@ import {
   Flame,
   Users,
   History,
-  FileSpreadsheet,
-  Download,
   Printer,
   Sparkles,
-  ExternalLink,
-  ChevronRight,
   Split,
   Eye,
   Camera,
@@ -23,18 +19,96 @@ import {
 import { cn, formatCurrency, formatDate } from '../../lib/utils';
 import { StatusBadge } from '../../components/ui/StatusBadge';
 import { Tooltip } from '../../components/ui/Tooltip';
-import { A4DocumentPreview } from '../../components/documents/A4DocumentPreview';
+import { ProjectDocumentPreview } from '../../components/documents/ProjectDocumentPreview';
 import { ProjectTT39InfoTab } from './ProjectTT39InfoTab';
 import { ProjectGalleryTab } from './ProjectGalleryTab';
-import type { Project } from '../../data/mockData';
-import { getProjectAppraisalData } from '../../data/mockAppraisalData';
+import type { Project, ProjectTT39Data } from '../../types/domain';
+import type { ProjectAppraisalData } from '../../types/appraisal';
+import { useProjectDetail, usePersonnel } from '../../hooks/useData';
+import { PanelError, PanelLoading } from '../../components/entity/PanelState';
+import { EntityLink } from '../../components/ui/EntityLink';
+import { AuditHistoryTab } from '../../components/audit/AuditHistoryTab';
+import { AiDemoBadge } from '../../components/ai/AiDemoBadge';
+import { DossierWorkflowBar, WorkflowHistory } from './DossierWorkflowBar';
 
-export function ProjectDetailSlidePanel({ project }: { project: Project }) {
-  const [activeTab, setActiveTab] = useState<'info' | 'gallery' | 'bcnckt' | 'gpxd' | 'nghiem_thu' | 'entities' | 'audit'>('bcnckt');
+export type ProjectDetailTab = 'info' | 'gallery' | 'bcnckt' | 'gpxd' | 'nghiem_thu' | 'entities' | 'audit';
+
+export function ProjectDetailSlidePanel({
+  project,
+  initialTab = 'bcnckt',
+}: {
+  project: Project;
+  initialTab?: ProjectDetailTab;
+}) {
+  const { data, isLoading, error } = useProjectDetail(project);
+  if (isLoading) return <PanelLoading label="Đang tải hồ sơ thẩm định..." />;
+  if (error) return <PanelError error={error as Error} />;
+  return (
+    <ProjectDetailContent
+      project={project}
+      appraisal={data?.appraisal ?? null}
+      tt39={data?.tt39 ?? null}
+      initialTab={initialTab}
+    />
+  );
+}
+
+function NoAppraisalData() {
+  return (
+    <div className="p-6 rounded-xl border border-dashed border-border bg-subtle text-center text-xs text-ink-muted dark:border-slate-700 dark:bg-slate-800">
+      Hồ sơ chưa có dữ liệu thẩm định chuyên ngành. Nội dung sẽ hiển thị khi chuyên viên cập nhật kết quả rà soát.
+    </div>
+  );
+}
+
+/** Dòng đơn vị tham gia kèm tra cứu chứng chỉ thật của cá nhân chủ trì */
+function ContractorRow({ contractor: c }: { contractor: Project['contractors'][number] }) {
+  const { data: lead } = usePersonnel(c.leadPersonnelId || undefined);
+  const expired = lead ? lead.status === 'het_han' : false;
+  return (
+    <div className="p-3 rounded-lg border border-border bg-subtle flex items-center justify-between gap-3 dark:border-slate-800 dark:bg-slate-800">
+      <div className="min-w-0">
+        <span className="text-2xs font-semibold px-2 py-0.5 rounded bg-primary-50 text-primary-600 dark:bg-primary-900 dark:text-primary-200">
+          {c.role}
+        </span>
+        <div className="mt-1">
+          <EntityLink type="organization" id={c.orgId} name={c.orgName} className="font-bold text-ink text-xs" />
+        </div>
+        <p className="text-2xs text-ink-secondary mt-0.5 flex flex-wrap items-center gap-1.5">
+          <span>Chủ nhiệm / Chủ trì:</span>
+          {c.leadPersonnelId ? (
+            <EntityLink type="personnel" id={c.leadPersonnelId} name={c.leadPersonnelName} className="font-semibold text-ink" />
+          ) : (
+            <strong className="text-ink">{c.leadPersonnelName}</strong>
+          )}
+          {lead && (
+            <>
+              <span className={cn('w-1.5 h-1.5 rounded-full', expired ? 'bg-rose-500' : 'bg-emerald-500')} />
+              <span className={cn('font-medium', expired ? 'text-rose-600 dark:text-rose-400' : 'text-emerald-600 dark:text-emerald-400')}>
+                CCHN Hạng {lead.certGrade} ({expired ? 'đã hết hạn ngày' : 'còn hạn đến'} {formatDate(lead.certExpiry)})
+              </span>
+            </>
+          )}
+        </p>
+      </div>
+    </div>
+  );
+}
+
+function ProjectDetailContent({
+  project,
+  appraisal,
+  tt39,
+  initialTab,
+}: {
+  project: Project;
+  appraisal: ProjectAppraisalData | null;
+  tt39: ProjectTT39Data | null;
+  initialTab: ProjectDetailTab;
+}) {
+  const [activeTab, setActiveTab] = useState<ProjectDetailTab>(initialTab);
   const [bcncktSubTab, setBcncktSubTab] = useState<'planning' | 'compliance' | 'fire' | 'cost' | 'preview_a4'>('compliance');
   const [isDualSplit, setIsDualSplit] = useState(false);
-
-  const appraisal = getProjectAppraisalData(project);
 
   return (
     <div className="space-y-5">
@@ -42,10 +116,11 @@ export function ProjectDetailSlidePanel({ project }: { project: Project }) {
       <div className="p-4 rounded-xl border border-border bg-subtle/60 flex flex-wrap items-center justify-between gap-3">
         <div className="flex items-center gap-3.5">
           {project.coverImage && (
-            <div
+            <Tooltip content="Bấm để xem thư viện ảnh phối cảnh & thực địa" placement="bottom">
+            <button
+              type="button"
               onClick={() => setActiveTab('gallery')}
-              className="relative w-16 h-16 rounded-xl overflow-hidden shrink-0 border border-border/80 bg-slate-950 cursor-pointer group shadow-xs"
-              title="Bấm để xem thư viện ảnh phối cảnh & thực địa"
+              className="relative block w-16 h-16 rounded-xl overflow-hidden shrink-0 border border-border bg-slate-950 cursor-pointer group shadow-xs"
             >
               <img
                 src={project.coverImage}
@@ -61,7 +136,8 @@ export function ProjectDetailSlidePanel({ project }: { project: Project }) {
                   {project.images.length}
                 </span>
               )}
-            </div>
+            </button>
+            </Tooltip>
           )}
           <div className="flex flex-col">
             <div className="flex items-center gap-2">
@@ -75,7 +151,13 @@ export function ProjectDetailSlidePanel({ project }: { project: Project }) {
             </div>
             <h2 className="text-sm font-bold text-ink mt-1">{project.name}</h2>
             <p className="text-2xs text-ink-muted mt-0.5">
-              Chủ đầu tư: <strong>{project.investorName}</strong> • Địa điểm: {project.location}
+              Chủ đầu tư:{' '}
+              {project.investorId ? (
+                <EntityLink type="organization" id={project.investorId} name={project.investorName} className="font-bold" />
+              ) : (
+                <strong>{project.investorName}</strong>
+              )}{' '}
+              • Địa điểm: {project.location} • Chuyên viên thụ lý: <strong>{project.assignee || '—'}</strong>
             </p>
           </div>
         </div>
@@ -93,6 +175,9 @@ export function ProjectDetailSlidePanel({ project }: { project: Project }) {
           </div>
         </div>
       </div>
+
+      {/* ─── QUY TRÌNH GIẢI QUYẾT HỒ SƠ & SLA NGÀY LÀM VIỆC ─── */}
+      <DossierWorkflowBar project={project} onChanged={() => undefined} />
 
       {/* ─── HỆ THỐNG TABS THEO CÁC GIAI ĐOẠN & NỘI DUNG THẨM ĐỊNH ─── */}
       <div className="border-b border-border flex items-center gap-2 overflow-x-auto scrollbar-none">
@@ -178,7 +263,7 @@ export function ProjectDetailSlidePanel({ project }: { project: Project }) {
           )}
         >
           <History size={14} />
-          <span>6. Nhật ký AI Audit</span>
+          <span>6. Lịch sử & Nhật ký AI</span>
         </button>
 
         <button
@@ -199,10 +284,11 @@ export function ProjectDetailSlidePanel({ project }: { project: Project }) {
       {/* ─── NỘI DUNG TỪNG TAB ─── */}
 
       {/* TAB 1: THÔNG TIN CHUNG THEO THÔNG TƯ 39/2026/TT-BXD */}
-      {activeTab === 'info' && <ProjectTT39InfoTab project={project} />}
+      {activeTab === 'info' && (tt39 ? <ProjectTT39InfoTab project={project} tt39={tt39} /> : <NoAppraisalData />)}
 
       {/* TAB 2: THẨM ĐỊNH BCNCKT (TRỌNG TÂM CỦA SỞ XÂY DỰNG) */}
-      {activeTab === 'bcnckt' && (
+      {activeTab === 'bcnckt' && !appraisal && <NoAppraisalData />}
+      {activeTab === 'bcnckt' && appraisal && (
         <div className="space-y-4">
           {/* Sub-tabs của BCNCKT */}
           <div className="flex items-center justify-between gap-2 p-1.5 rounded-xl bg-subtle border border-border overflow-x-auto">
@@ -271,11 +357,12 @@ export function ProjectDetailSlidePanel({ project }: { project: Project }) {
           {/* Nội dung Sub-tab 1: Quy chuẩn & Kết cấu AI */}
           {bcncktSubTab === 'compliance' && (
             <div className="space-y-4 text-xs">
-              <div className="p-4 rounded-xl border border-emerald-300 bg-emerald-50/50 dark:bg-emerald-950/20 dark:border-emerald-800 flex items-start gap-3">
+              <div className="p-4 rounded-xl border border-emerald-300 bg-emerald-50/50 dark:bg-emerald-950 dark:border-emerald-800 flex items-start gap-3">
                 <CheckCircle2 size={18} className="text-emerald-600 mt-0.5 shrink-0" />
                 <div>
-                  <h4 className="font-bold text-emerald-900 dark:text-emerald-200">
+                  <h4 className="font-bold text-emerald-900 dark:text-emerald-200 flex flex-wrap items-center gap-2">
                     AI Compliance Checker: Danh mục Quy chuẩn Chuyên ngành Áp dụng Hợp lệ
+                    <AiDemoBadge />
                   </h4>
                   <p className="text-emerald-800 dark:text-emerald-300 mt-0.5">
                     Hồ sơ áp dụng đúng quy chuẩn chuyên ngành bắt buộc, tiêu chuẩn kết cấu mới nhất và điều kiện tự nhiên địa chấn cấp VII tại Điện Biên. Không phát hiện tiêu chuẩn hết hiệu lực.
@@ -309,7 +396,7 @@ export function ProjectDetailSlidePanel({ project }: { project: Project }) {
                         <td className="td-cell text-center">
                           <span className={cn(
                             'px-2 py-0.5 rounded-full font-bold text-2xs',
-                            c.aiVerdict === 'dat' ? 'bg-emerald-50 text-emerald-700 dark:bg-emerald-950/50 dark:text-emerald-300' : 'bg-amber-50 text-amber-700'
+                            c.aiVerdict === 'dat' ? 'bg-emerald-50 text-emerald-700 dark:bg-emerald-950 dark:text-emerald-300' : 'bg-amber-50 text-amber-700'
                           )}>
                             {c.aiVerdict === 'dat' ? 'ĐẠT' : 'LƯU Ý'}
                           </span>
@@ -344,7 +431,7 @@ export function ProjectDetailSlidePanel({ project }: { project: Project }) {
           {/* Nội dung Sub-tab 3: PCCC Checklist */}
           {bcncktSubTab === 'fire' && (
             <div className="space-y-3 text-xs">
-              <div className="p-3.5 rounded-xl border border-blue-300 bg-blue-50 dark:bg-blue-950/30 text-blue-900 dark:text-blue-200">
+              <div className="p-3.5 rounded-xl border border-blue-300 bg-blue-50 dark:bg-blue-950 text-blue-900 dark:text-blue-200">
                 <strong>Văn bản Thỏa thuận PCCC:</strong> Đã có Văn bản số {appraisal.fireSafety.agreementNumber} ngày {appraisal.fireSafety.agreementDate} của {appraisal.fireSafety.agency} về việc thỏa thuận địa điểm và giải pháp PCCC thiết kế cơ sở.
               </div>
               <div className="p-4 rounded-xl border border-border bg-surface space-y-2.5">
@@ -381,7 +468,7 @@ export function ProjectDetailSlidePanel({ project }: { project: Project }) {
                     <h4 className="font-bold text-ink">Thẩm tra 6 Khoản mục Chi phí Tổng mức đầu tư (NĐ 206/2026/NĐ-CP)</h4>
                     <p className="text-3xs text-ink-muted">So sánh giá trị Chủ đầu tư trình duyệt và giá trị sau khi Sở Xây dựng thẩm định</p>
                   </div>
-                  <span className="text-2xs font-semibold px-2.5 py-1 rounded-full bg-emerald-50 text-emerald-700 dark:bg-emerald-950/50 dark:text-emerald-300 border border-emerald-300 dark:border-emerald-800">
+                  <span className="text-2xs font-semibold px-2.5 py-1 rounded-full bg-emerald-50 text-emerald-700 dark:bg-emerald-950 dark:text-emerald-300 border border-emerald-300 dark:border-emerald-800">
                     Tiết giảm sau thẩm định: {formatCurrency(appraisal.costEvaluation.savingsTotal)}
                   </span>
                 </div>
@@ -427,42 +514,14 @@ export function ProjectDetailSlidePanel({ project }: { project: Project }) {
 
           {/* Nội dung Sub-tab 5: Dự thảo Mẫu số 03 Khổ A4 */}
           {bcncktSubTab === 'preview_a4' && (
-            <A4DocumentPreview
-              title="THÔNG BÁO KẾT QUẢ THẨM ĐỊNH"
-              documentNumber={appraisal.sample03Notice.docNumber}
-              projectName={project.name}
-              investorName={project.investorName}
-              date={appraisal.sample03Notice.docDate}
-              isSigned={true}
-              signerName={appraisal.sample03Notice.signerName}
-              signerTitle={appraisal.sample03Notice.signerTitle}
-              content={
-                <>
-                  <p>
-                    Căn cứ Luật Xây dựng số 135/2025/QH15; Nghị định số 217/2026/NĐ-CP của Chính phủ quy định chi tiết một số điều của Luật Xây dựng về quản lý dự án đầu tư xây dựng;
-                  </p>
-                  <p>
-                    Sau khi xem xét {appraisal.sample03Notice.submissionDoc} ngày {formatDate(appraisal.sample03Notice.submissionDate)} của {project.investorName} về việc đề nghị thẩm định Báo cáo nghiên cứu khả thi dự án {project.name};
-                  </p>
-                  <p className="font-bold">SỞ XÂY DỰNG TỈNH ĐIỆN BIÊN THÔNG BÁO KẾT QUẢ THẨM ĐỊNH NHƯ SAU:</p>
-                  <p>
-                    <strong>I. THÔNG TIN DỰ ÁN:</strong> Dự án nhóm {project.projectGroup}, công trình cấp {project.buildingGrade}; địa điểm tại {project.location}. Tổng mức đầu tư thẩm định là: <strong>{formatCurrency(project.totalInvestment)}</strong> (đã tiết giảm <strong>{formatCurrency(appraisal.costEvaluation.savingsTotal)}</strong> so với đề nghị ban đầu).
-                  </p>
-                  <p>
-                    <strong>II. KẾT QUẢ THẨM ĐỊNH CÁC NỘI DUNG:</strong> {appraisal.sample03Notice.evaluationSummary}
-                  </p>
-                  <p>
-                    <strong>III. KẾT LUẬN:</strong> Báo cáo nghiên cứu khả thi đầu tư xây dựng dự án <strong>{appraisal.sample03Notice.conclusion}</strong>. Yêu cầu Chủ đầu tư thực hiện bước thiết kế sau TKCS theo đúng khoản 5 Điều 26 Luật Xây dựng 2025.
-                  </p>
-                </>
-              }
-            />
+            <ProjectDocumentPreview project={project} appraisal={appraisal} template="mau_03" />
           )}
         </div>
       )}
 
       {/* TAB 3: CẤP GIẤY PHÉP XÂY DỰNG (ĐỐI CHIẾU DUAL SPLIT & THẨM ĐỊNH ĐIỀU KIỆN) */}
-      {activeTab === 'gpxd' && (
+      {activeTab === 'gpxd' && !appraisal && <NoAppraisalData />}
+      {activeTab === 'gpxd' && appraisal && (
         <div className="space-y-4 text-xs">
           <div className="p-4 rounded-xl border border-border bg-surface space-y-3">
             <div className="flex flex-wrap items-center justify-between gap-2">
@@ -582,7 +641,8 @@ export function ProjectDetailSlidePanel({ project }: { project: Project }) {
       )}
 
       {/* TAB 4: HẬU KIỂM & NGHIỆM THU (NĐ 207/2026/NĐ-CP) */}
-      {activeTab === 'nghiem_thu' && (
+      {activeTab === 'nghiem_thu' && !appraisal && <NoAppraisalData />}
+      {activeTab === 'nghiem_thu' && appraisal && (
         <div className="space-y-4 text-xs">
           {/* A. Điều kiện khởi công */}
           <div className="p-4 rounded-xl border border-border bg-surface space-y-3">
@@ -666,44 +726,27 @@ export function ProjectDetailSlidePanel({ project }: { project: Project }) {
       {/* TAB 5: CHỦ THỂ & ĐỘI NGŨ KỸ SƯ */}
       {activeTab === 'entities' && (
         <div className="space-y-3 text-xs">
-          <div className="rounded-xl border border-border bg-surface overflow-hidden shadow-xs">
-            <div className="p-3 border-b border-border bg-subtle/50 font-bold text-ink flex items-center justify-between">
-              <span>Danh sách Đơn vị Tư vấn & Kỹ sư Chủ nhiệm, Chủ trì Dự án</span>
-              <span className="text-3xs text-ink-muted">Tự động đối soát CSDL Chứng chỉ hành nghề</span>
+          <div className="rounded-xl border border-border bg-surface overflow-hidden shadow-xs dark:border-slate-800 dark:bg-slate-900">
+            <div className="p-3 border-b border-border bg-subtle font-bold text-ink flex items-center justify-between dark:border-slate-800 dark:bg-slate-800">
+              <span>Đơn vị tư vấn, nhà thầu & cá nhân chủ nhiệm, chủ trì</span>
+              <span className="text-3xs text-ink-muted font-normal">Đối soát CSDL chứng chỉ hành nghề của Sở</span>
             </div>
             <div className="p-3 space-y-3">
               {project.contractors.map((c, i) => (
-                <div key={i} className="p-3 rounded-lg border border-border bg-subtle/40 flex items-center justify-between">
-                  <div>
-                    <span className="text-2xs font-semibold px-2 py-0.5 rounded bg-primary-500/10 text-primary-600">
-                      {c.role}
-                    </span>
-                    <p className="font-bold text-ink text-xs mt-1">{c.orgName}</p>
-                    <p className="text-2xs text-ink-secondary mt-0.5 flex items-center gap-1.5">
-                      <span>Chủ nhiệm / Chủ trì:</span>
-                      <strong className="text-ink">{c.leadPersonnelName}</strong>
-                      <span className="w-1.5 h-1.5 rounded-full bg-emerald-500" />
-                      <span className="text-emerald-600 font-medium">CCHN Hạng I (Còn hạn đến 2029)</span>
-                    </p>
-                  </div>
-
-                  <Tooltip content="Tra cứu CSDL Bộ Xây dựng" placement="left">
-                    <button
-                      type="button"
-                      className="p-1.5 rounded-lg border border-border bg-surface hover:bg-subtle text-ink-muted hover:text-ink transition-colors"
-                    >
-                      <ExternalLink size={14} />
-                    </button>
-                  </Tooltip>
-                </div>
+                <ContractorRow key={`${c.orgId}-${i}`} contractor={c} />
               ))}
+              {project.contractors.length === 0 && (
+                <p className="text-2xs text-ink-muted italic">Chưa khai báo đơn vị tư vấn, nhà thầu tham gia.</p>
+              )}
             </div>
           </div>
         </div>
       )}
 
-      {/* TAB 6: NHẬT KÝ AI AUDIT TRAIL */}
-      {activeTab === 'audit' && (
+      {/* TAB 6: LỊCH SỬ THAY ĐỔI DỮ LIỆU + NHẬT KÝ AI */}
+      {activeTab === 'audit' && <WorkflowHistory projectId={project.id} />}
+      {activeTab === 'audit' && <AuditHistoryTab table="projects" recordId={project.id} />}
+      {activeTab === 'audit' && appraisal && (
         <div className="space-y-3 text-xs">
           <div className="p-4 rounded-xl border border-border bg-surface space-y-3">
             <div className="flex items-center justify-between pb-2 border-b border-border">
@@ -711,7 +754,7 @@ export function ProjectDetailSlidePanel({ project }: { project: Project }) {
                 <Sparkles size={14} className="text-primary-500" />
                 <span>Nhật ký Tác nghiệp & Trách nhiệm Giải trình AI (Luật AI 2025 & NĐ 217/2026)</span>
               </h4>
-              <span className="text-3xs text-ink-muted">Tự động ghi nhận Blockchain / Hash chữ ký số</span>
+              <AiDemoBadge />
             </div>
 
             <div className="space-y-3 border-l-2 border-primary-500/40 pl-4 py-1">

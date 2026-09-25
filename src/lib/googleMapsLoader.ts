@@ -43,17 +43,18 @@ export async function loadGoogleMaps(apiKeyOverride?: string): Promise<typeof go
   }
 
   if (!googleMapsPromise) {
-    activeLoader = new Loader({
+    const loader = new Loader({
       apiKey,
       version: 'weekly',
       libraries: ['places', 'geometry', 'marker'],
       language: 'vi',
       region: 'VN',
     });
+    activeLoader = loader;
 
-    googleMapsPromise = (activeLoader as any).load().then((google: any) => {
-      return google.maps;
-    });
+    const promise: Promise<typeof google.maps> = (loader as any).load().then((g: any) => g.maps);
+    googleMapsPromise = promise;
+    return promise;
   }
 
   return googleMapsPromise;

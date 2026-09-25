@@ -1,376 +1,423 @@
-import React, { useState, useMemo } from 'react';
-import {
-  LayoutGrid,
-  List,
-  Camera,
-  MapPin,
-  Building,
-  Calendar,
-  ArrowRight,
-  Eye,
-  Sparkles,
-  TrendingDown,
-  Coins,
-} from 'lucide-react';
-import { MasterTable, type Column } from '../components/MasterTable';
-import { TableToolbar } from '../components/TableToolbar';
-import { StatusBadge } from '../components/ui/StatusBadge';
+import { useMemo, useState } from 'react';
+import { LayoutGrid, List, Camera, MapPin, Building, ArrowRight, Eye, FileSpreadsheet, Plus, Loader2 } from 'lucide-react';
+import { DataGrid, useDataGrid, type GridColumn } from '../components/grid/DataGrid';
+import { DateRangeFilter, GridToolbar } from '../components/grid/GridToolbar';
+import { StatusBadge, STATUS_LABELS } from '../components/ui/StatusBadge';
 import { SearchableSelect } from '../components/ui/SearchableSelect';
 import { Tooltip } from '../components/ui/Tooltip';
-import { MOCK_PROJECTS, type Project } from '../data/mockData';
-import { cn, formatCurrency, formatDate } from '../lib/utils';
+import { EntityLink } from '../components/ui/EntityLink';
+import { useOrganizations, useProjects, useStaff } from '../hooks/useData';
+import { useFilterState } from '../hooks/useFilterState';
+import { useEntityPanel } from '../hooks/useEntityPanel';
+import { useDeepLinkPanel } from '../hooks/useDeepLinkPanel';
 import { useSlidePanel } from '../context/SlidePanelContext';
-import { ProjectDetailSlidePanel } from './projects/ProjectDetailSlidePanel';
-import { matchesSmartSearch } from '../lib/smartSearch';
+import { listAllProjects, type ProjectFilters, type ProjectSortKey } from '../data-access/projects';
+import { downloadCsv } from '../lib/exportCsv';
+import { cn, formatCurrency, formatDate } from '../lib/utils';
+import type { Project } from '../types/domain';
+import { DossierIntakeForm } from './projects/DossierIntakeForm';
+
+const FILTER_DEFAULTS = { q: '', stage: '', group: '', assignee: '', investor: '', sla: '', from: '', to: '', view: 'table' };
+
+const STAGE_LABEL: Record<Project['stage'], string> = {
+  bcnckt: 'BCNCKT',
+  gpxd: 'Cấp GPXD',
+  nghiem_thu: 'Nghiệm thu',
+  hoan_thanh: 'Hoàn thành',
+};
 
 export function ProjectsPage() {
+  useDeepLinkPanel('project');
+  const { open } = useEntityPanel();
   const { openPanel } = useSlidePanel();
-  const [searchQuery, setSearchQuery] = useState('');
-  const [groupFilter, setGroupFilter] = useState('all');
-  const [slaFilter, setSlaFilter] = useState('all');
-  const [stageFilter, setStageFilter] = useState('all');
-  const [viewMode, setViewMode] = useState<'table' | 'cards'>('table');
+  const { filters, setFilter, setFilters, resetFilters, activeCount } = useFilterState('projects', FILTER_DEFAULTS);
+  const { data: staff = [] } = useStaff();
+  const { data: organizations = [] } = useOrganizations({ type: 'investor' });
+  const [isExporting, setIsExporting] = useState(false);
 
-  const filteredProjects = useMemo(() => {
-    return MOCK_PROJECTS.filter((p) => {
-      // 1. Tìm kiếm thông minh
-      const matchSearch =
-        matchesSmartSearch(p.name, searchQuery) ||
-        matchesSmartSearch(p.code, searchQuery) ||
-        matchesSmartSearch(p.investorName, searchQuery) ||
-        matchesSmartSearch(p.location, searchQuery);
-
-      // 2. Lọc nhóm dự án
-      const matchGroup = groupFilter === 'all' || p.projectGroup === groupFilter;
-
-      // 3. Lọc trạng thái SLA
-      const matchSla = slaFilter === 'all' || p.slaStatus === slaFilter;
-
-      // 4. Lọc giai đoạn
-      const matchStage = stageFilter === 'all' || p.stage === stageFilter;
-
-      return matchSearch && matchGroup && matchSla && matchStage;
-    });
-  }, [searchQuery, groupFilter, slaFilter, stageFilter]);
-
-  const handleOpenDetail = (project: Project) => {
-    openPanel({
-      id: `project-${project.id}`,
-      title: project.name,
-      subtitle: `Mã: ${project.code} • ${project.investorName}`,
-      tabTitle: project.code,
-      icon: <Building size={14} />,
-      component: <ProjectDetailSlidePanel project={project} />,
-      storageKey: `slidepanel-project-${project.id}`,
-    });
-  };
-
-  const columns: Column<Project>[] = [
-    {
-      header: 'Mã & Tên Dự án',
-      accessor: (p) => (
-        <div className="flex items-center gap-3 py-1">
-          {p.coverImage && (
-            <div className="relative w-12 h-12 rounded-lg overflow-hidden shrink-0 border border-border/80 bg-slate-950 group/img shadow-xs">
-              <img
-                src={p.coverImage}
-                alt={p.name}
-                className="w-full h-full object-cover group-hover/img:scale-110 transition-transform duration-300"
-                loading="lazy"
-              />
-              {p.images && p.images.length > 0 && (
-                <span className="absolute bottom-0 right-0 bg-black/75 backdrop-blur-xs text-white text-[9px] px-1 py-0.2 rounded-tl font-mono flex items-center gap-0.5">
-                  <Camera size={8} />
-                  {p.images.length}
+  const columns = useMemo<GridColumn<Project, ProjectSortKey>[]>(
+    () => [
+      {
+        key: 'name',
+        header: 'Mã & Tên Dự án',
+        width: 400,
+        render: (p) => (
+          <div className="flex items-center gap-3 py-1 min-w-0">
+            {p.coverImage && (
+              <div className="relative w-11 h-11 rounded-lg overflow-hidden shrink-0 border border-border bg-slate-950 dark:border-slate-700">
+                <img src={p.coverImage} alt="" className="w-full h-full object-cover" loading="lazy" />
+                {p.images && p.images.length > 0 && (
+                  <span className="absolute bottom-0 right-0 bg-black/75 text-white text-[9px] px-1 rounded-tl font-mono flex items-center gap-0.5">
+                    <Camera size={8} />
+                    {p.images.length}
+                  </span>
+                )}
+              </div>
+            )}
+            <div className="flex flex-col min-w-0">
+              <EntityLink type="project" id={p.id} name={p.name} className="font-bold text-ink line-clamp-1" />
+              <div className="flex items-center gap-1.5 mt-0.5 text-3xs font-mono">
+                <span className="text-primary-600 dark:text-primary-400 font-bold">{p.code}</span>
+                <span className="text-ink-muted">•</span>
+                <span className="text-ink-secondary truncate">
+                  Nhóm {p.projectGroup} (Cấp {p.buildingGrade}) • {p.field}
                 </span>
-              )}
-            </div>
-          )}
-          <div className="flex flex-col min-w-0">
-            <span className="font-bold text-ink hover:text-primary-600 transition-colors line-clamp-1">
-              {p.name}
-            </span>
-            <div className="flex items-center gap-1.5 mt-0.5 text-3xs font-mono">
-              <span className="text-primary-600 dark:text-primary-400 font-bold">{p.code}</span>
-              <span className="text-ink-muted">•</span>
-              <span className="text-ink-secondary">Nhóm {p.projectGroup} (Cấp {p.buildingGrade})</span>
+              </div>
             </div>
           </div>
-        </div>
-      ),
-      width: '34%',
-    },
-    {
-      header: 'Chủ đầu tư / Ban QLDA',
-      accessor: (p) => (
-        <span className="text-ink-secondary line-clamp-1" title={p.investorName}>
-          {p.investorName}
-        </span>
-      ),
-      width: '20%',
-    },
-    {
-      header: 'Địa bàn (Huyện/Thị)',
-      accessor: (p) => <span className="text-ink-secondary truncate">{p.location}</span>,
-      width: '13%',
-    },
-    {
-      header: 'Tổng mức đầu tư',
-      accessor: (p) => (
-        <span className="font-mono font-bold text-ink text-right block">
-          {formatCurrency(p.totalInvestment)}
-        </span>
-      ),
-      className: 'text-right',
-      width: '13%',
-    },
-    {
-      header: 'Giai đoạn',
-      accessor: (p) => (
-        <div className="text-center">
-          <span className="px-2 py-0.5 rounded-md bg-subtle border border-border text-2xs font-semibold text-ink-secondary uppercase">
-            {p.stage === 'bcnckt' ? 'BCNCKT' : p.stage === 'gpxd' ? 'Cấp GPXD' : 'Nghiệm thu'}
+        ),
+      },
+      {
+        key: 'investorName',
+        header: 'Chủ đầu tư / Ban QLDA',
+        width: 230,
+        render: (p) =>
+          p.investorId ? (
+            <EntityLink type="organization" id={p.investorId} name={p.investorName} className="text-ink-secondary line-clamp-2" />
+          ) : (
+            <span className="text-ink-secondary line-clamp-2">{p.investorName}</span>
+          ),
+      },
+      {
+        key: 'assignee',
+        header: 'Chuyên viên thụ lý',
+        width: 170,
+        render: (p) => <span className="text-ink-secondary truncate block">{p.assignee || '—'}</span>,
+      },
+      {
+        key: 'location',
+        header: 'Địa bàn',
+        width: 150,
+        render: (p) => <span className="text-ink-secondary truncate block">{p.location}</span>,
+      },
+      {
+        key: 'totalInvestment',
+        header: 'Tổng mức đầu tư',
+        width: 170,
+        align: 'right',
+        render: (p) => <span className="font-mono font-bold text-ink">{formatCurrency(p.totalInvestment)}</span>,
+      },
+      {
+        key: 'stage',
+        header: 'Giai đoạn',
+        width: 110,
+        align: 'center',
+        render: (p) => (
+          <span className="px-2 py-0.5 rounded-md bg-subtle border border-border text-2xs font-semibold text-ink-secondary uppercase dark:bg-slate-800 dark:border-slate-700">
+            {STAGE_LABEL[p.stage]}
           </span>
-        </div>
-      ),
-      className: 'text-center',
-      width: '8%',
-    },
-    {
-      header: 'Trạng thái SLA',
-      accessor: (p) => (
-        <div className="text-center">
-          <StatusBadge status={p.slaStatus} />
-        </div>
-      ),
-      className: 'text-center',
-      width: '12%',
-    },
-  ];
+        ),
+      },
+      {
+        key: 'submissionDate',
+        header: 'Tiếp nhận',
+        width: 110,
+        align: 'center',
+        render: (p) => <span className="font-mono text-2xs">{formatDate(p.submissionDate)}</span>,
+      },
+      {
+        key: 'deadlineDate',
+        header: 'Hạn trả KQ',
+        width: 110,
+        align: 'center',
+        render: (p) => <span className="font-mono text-2xs font-semibold">{formatDate(p.deadlineDate)}</span>,
+      },
+      {
+        key: 'slaStatus',
+        header: 'Trạng thái SLA',
+        width: 150,
+        align: 'center',
+        render: (p) => <StatusBadge status={p.slaStatus} />,
+      },
+    ],
+    []
+  );
+
+  const grid = useDataGrid('projects', columns, { key: 'submissionDate', direction: 'desc' });
+
+  const queryFilters: ProjectFilters = {
+    search: filters.q || undefined,
+    stage: (filters.stage || undefined) as Project['stage'] | undefined,
+    projectGroup: (filters.group || undefined) as Project['projectGroup'] | undefined,
+    assigneeStaffId: filters.assignee || undefined,
+    investorId: filters.investor || undefined,
+    slaStatus: (filters.sla || undefined) as Project['slaStatus'] | undefined,
+    submittedFrom: filters.from || undefined,
+    submittedTo: filters.to || undefined,
+  };
+
+  const { data, isLoading, isFetching, error, refetch } = useProjects({
+    ...queryFilters,
+    sort: grid.sort ?? undefined,
+    pageSize: 500,
+  });
+  const projects = data?.rows ?? [];
+
+  const openDetail = (p: Project) => open('project', { id: p.id, label: p.name, subtitle: `Mã: ${p.code} • ${p.investorName}` });
+
+  const handleExport = async () => {
+    setIsExporting(true);
+    try {
+      const rows = await listAllProjects(queryFilters);
+      downloadCsv(`ho-so-tham-dinh-${new Date().toISOString().slice(0, 10)}`, rows, [
+        { header: 'Mã hồ sơ', value: (p) => p.code },
+        { header: 'Tên dự án', value: (p) => p.name },
+        { header: 'Chủ đầu tư', value: (p) => p.investorName },
+        { header: 'Nhóm', value: (p) => p.projectGroup },
+        { header: 'Cấp công trình', value: (p) => p.buildingGrade },
+        { header: 'Lĩnh vực', value: (p) => p.field },
+        { header: 'Địa bàn', value: (p) => p.location },
+        { header: 'Tổng mức đầu tư (VNĐ)', value: (p) => p.totalInvestment },
+        { header: 'Tiết giảm (VNĐ)', value: (p) => p.estimatedSavings },
+        { header: 'Giai đoạn', value: (p) => STATUS_LABELS[p.stage] },
+        { header: 'Trạng thái SLA', value: (p) => STATUS_LABELS[p.slaStatus] },
+        { header: 'Ngày tiếp nhận', value: (p) => formatDate(p.submissionDate) },
+        { header: 'Hạn trả kết quả', value: (p) => formatDate(p.deadlineDate) },
+        { header: 'Chuyên viên thụ lý', value: (p) => p.assignee },
+      ]);
+    } finally {
+      setIsExporting(false);
+    }
+  };
+
+  const openIntake = () =>
+    openPanel({
+      id: 'dossier-intake',
+      title: 'Tiếp nhận hồ sơ thẩm định mới',
+      subtitle: 'Nghị định 217/2026/NĐ-CP — Điều 35, 36',
+      tabTitle: 'Tiếp nhận mới',
+      icon: <Plus size={14} />,
+      component: <DossierIntakeForm />,
+      storageKey: 'slidepanel-dossier-intake',
+    });
 
   return (
     <div className="space-y-4">
-      {/* ─── THANH CÔNG CỤ LỌC CHUẨN 5 VỊ TRÍ + CHẾ ĐỘ XEM ─── */}
-      <TableToolbar
-        searchQuery={searchQuery}
-        onSearchChange={setSearchQuery}
-        searchPlaceholder="Tìm theo tên dự án, mã hồ sơ, chủ đầu tư, địa bàn..."
-        resultCount={filteredProjects.length}
-        onResetFilters={() => {
-          setSearchQuery('');
-          setGroupFilter('all');
-          setSlaFilter('all');
-          setStageFilter('all');
-        }}
-        addNewLabel="Tiếp nhận Hồ sơ Mới"
-        onAddNew={() => {
-          handleOpenDetail(MOCK_PROJECTS[0]);
-        }}
-        filters={
+      <GridToolbar
+        search={filters.q}
+        onSearchChange={(v) => setFilter('q', v)}
+        searchPlaceholder="Tìm theo tên dự án, mã hồ sơ, chủ đầu tư, địa bàn... (gõ không dấu, viết tắt)"
+        classification={
           <>
-            {/* Vị trí 2: Phân loại Giai đoạn thẩm định */}
-            <div className="w-36">
+            <div className="w-40">
               <SearchableSelect
-                value={stageFilter}
-                onChange={setStageFilter}
+                value={filters.stage}
+                onChange={(v) => setFilter('stage', v)}
                 options={[
-                  { value: 'all', label: 'Tất cả Giai đoạn' },
+                  { value: '', label: 'Tất cả Thủ tục' },
                   { value: 'bcnckt', label: 'Thẩm định BCNCKT' },
                   { value: 'gpxd', label: 'Cấp Giấy phép XD' },
                   { value: 'nghiem_thu', label: 'Kiểm tra Nghiệm thu' },
+                  { value: 'hoan_thanh', label: 'Hoàn thành' },
                 ]}
               />
             </div>
-
-            {/* Vị trí 2b: Nhóm dự án */}
-            <div className="w-32">
+            <div className="w-36">
               <SearchableSelect
-                value={groupFilter}
-                onChange={setGroupFilter}
+                value={filters.group}
+                onChange={(v) => setFilter('group', v)}
                 options={[
-                  { value: 'all', label: 'Tất cả Nhóm DA' },
+                  { value: '', label: 'Tất cả Nhóm DA' },
+                  { value: 'QG', label: 'Quan trọng quốc gia' },
                   { value: 'A', label: 'Dự án Nhóm A' },
                   { value: 'B', label: 'Dự án Nhóm B' },
                   { value: 'C', label: 'Dự án Nhóm C' },
                 ]}
               />
             </div>
-
-            {/* Vị trí 4: Trạng thái SLA */}
-            <div className="w-36">
+          </>
+        }
+        assignee={
+          <>
+            <div className="w-48">
               <SearchableSelect
-                value={slaFilter}
-                onChange={setSlaFilter}
+                value={filters.assignee}
+                onChange={(v) => setFilter('assignee', v)}
                 options={[
-                  { value: 'all', label: 'Tất cả Trạng thái' },
-                  { value: 'dang_tham_dinh', label: 'Đang thẩm định' },
-                  { value: 'yeu_cau_bo_sung', label: 'Yêu cầu bổ sung' },
-                  { value: 'da_tham_dinh', label: 'Đã có kết quả' },
-                  { value: 'qua_han', label: 'Quá hạn SLA' },
+                  { value: '', label: 'Tất cả Chuyên viên' },
+                  ...staff.filter((s) => s.role === 'officer').map((s) => ({ value: s.id, label: s.fullName, sublabel: s.department })),
                 ]}
               />
             </div>
-
-            {/* Chuyển đổi chế độ xem Bảng / Lưới thẻ phối cảnh */}
-            <div className="flex items-center p-0.5 rounded-lg border border-border bg-subtle">
-              <Tooltip content="Chế độ xem Bảng chi tiết" placement="top">
-                <button
-                  type="button"
-                  onClick={() => setViewMode('table')}
-                  className={cn(
-                    'p-1.5 rounded-md text-xs font-semibold transition-all',
-                    viewMode === 'table'
-                      ? 'bg-surface text-ink shadow-xs'
-                      : 'text-ink-muted hover:text-ink'
-                  )}
-                >
-                  <List size={15} />
-                </button>
-              </Tooltip>
-
-              <Tooltip content="Chế độ xem Lưới thẻ Phối cảnh & Hình ảnh" placement="top">
-                <button
-                  type="button"
-                  onClick={() => setViewMode('cards')}
-                  className={cn(
-                    'p-1.5 rounded-md text-xs font-semibold transition-all',
-                    viewMode === 'cards'
-                      ? 'bg-surface text-ink shadow-xs'
-                      : 'text-ink-muted hover:text-ink'
-                  )}
-                >
-                  <LayoutGrid size={15} />
-                </button>
-              </Tooltip>
+            <div className="w-56">
+              <SearchableSelect
+                value={filters.investor}
+                onChange={(v) => setFilter('investor', v)}
+                options={[
+                  { value: '', label: 'Tất cả Chủ đầu tư' },
+                  ...organizations.map((o) => ({ value: o.id, label: o.name, sublabel: o.code })),
+                ]}
+              />
             </div>
+          </>
+        }
+        status={
+          <div className="w-40">
+            <SearchableSelect
+              value={filters.sla}
+              onChange={(v) => setFilter('sla', v)}
+              options={[
+                { value: '', label: 'Tất cả Trạng thái' },
+                { value: 'tiep_nhan', label: 'Mới tiếp nhận' },
+                { value: 'dang_tham_dinh', label: 'Đang thẩm định' },
+                { value: 'yeu_cau_bo_sung', label: 'Yêu cầu bổ sung' },
+                { value: 'da_tham_dinh', label: 'Đã có kết quả' },
+                { value: 'qua_han', label: 'Quá hạn SLA' },
+              ]}
+            />
+          </div>
+        }
+        time={
+          <DateRangeFilter
+            label="Tiếp nhận:"
+            from={filters.from}
+            to={filters.to}
+            onChange={(from, to) => setFilters({ ...filters, from, to })}
+          />
+        }
+        extra={
+          <div className="flex items-center p-0.5 rounded-lg border border-border bg-subtle dark:border-slate-800 dark:bg-slate-800">
+            {(['table', 'cards'] as const).map((mode) => (
+              <Tooltip key={mode} content={mode === 'table' ? 'Xem dạng bảng' : 'Xem dạng thẻ ảnh phối cảnh'} placement="top">
+                <button
+                  type="button"
+                  onClick={() => setFilter('view', mode)}
+                  className={cn(
+                    'p-1.5 rounded-md transition-all',
+                    filters.view === mode ? 'bg-surface text-ink shadow-xs dark:bg-slate-900' : 'text-ink-muted hover:text-ink'
+                  )}
+                >
+                  {mode === 'table' ? <List size={15} /> : <LayoutGrid size={15} />}
+                </button>
+              </Tooltip>
+            ))}
+          </div>
+        }
+        onReset={() => {
+          resetFilters();
+          grid.resetLayout();
+        }}
+        activeFilterCount={activeCount - (filters.view !== 'table' ? 1 : 0)}
+        resultCount={data?.total ?? 0}
+        resultUnit="hồ sơ"
+        actions={
+          <>
+            <Tooltip content="Xuất toàn bộ kết quả lọc ra file Excel (CSV UTF-8)" placement="top">
+              <button
+                type="button"
+                onClick={handleExport}
+                disabled={isExporting}
+                className="flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg border border-border bg-surface hover:bg-subtle text-xs font-medium text-ink disabled:opacity-60 dark:border-slate-800 dark:bg-slate-900"
+              >
+                {isExporting ? (
+                  <Loader2 size={14} className="animate-spin" />
+                ) : (
+                  <FileSpreadsheet size={14} className="text-emerald-600 dark:text-emerald-400" />
+                )}
+                <span className="hidden sm:inline">Xuất Excel</span>
+              </button>
+            </Tooltip>
+            <button
+              type="button"
+              onClick={openIntake}
+              className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-primary-500 hover:bg-primary-600 text-white text-xs font-semibold shadow-sm"
+            >
+              <Plus size={14} />
+              <span>Tiếp nhận Hồ sơ Mới</span>
+            </button>
           </>
         }
       />
 
-      {/* ─── NỘI DUNG THEO CHẾ ĐỘ XEM ─── */}
-      {viewMode === 'table' ? (
-        <MasterTable
+      {filters.view !== 'cards' ? (
+        <DataGrid
           columns={columns}
-          data={filteredProjects}
-          onRowClick={handleOpenDetail}
-          onView={handleOpenDetail}
-          maxHeight="calc(100vh - 250px)"
+          rows={projects}
+          grid={grid}
+          sortMode="server"
+          getRowId={(p) => p.id}
+          onRowClick={openDetail}
+          isLoading={isLoading || isFetching}
+          error={error as Error | null}
+          onRetry={() => refetch()}
+          emptyMessage="Không có hồ sơ khớp bộ lọc"
+          rowActions={(p) => (
+            <Tooltip content="Xem chi tiết hồ sơ" placement="left">
+              <button
+                type="button"
+                onClick={() => openDetail(p)}
+                className="p-1.5 rounded-md hover:bg-subtle text-ink-muted hover:text-primary-600 dark:hover:bg-slate-800 dark:hover:text-primary-400"
+              >
+                <Eye size={14} />
+              </button>
+            </Tooltip>
+          )}
+          actionsWidth={72}
         />
       ) : (
-        /* CHẾ ĐỘ XEM LƯỚI THẺ ẢNH PHỐI CẢNH (CARDS VIEW) */
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
-          {filteredProjects.map((p) => {
-            return (
-              <div
-                key={p.id}
-                onClick={() => handleOpenDetail(p)}
-                className="group relative rounded-2xl border border-border bg-surface overflow-hidden shadow-xs hover:shadow-lg transition-all duration-300 flex flex-col cursor-pointer hover:border-primary-500/40"
-              >
-                {/* Ảnh bìa phối cảnh nổi bật */}
-                <div className="relative aspect-[16/10] overflow-hidden bg-slate-950">
+          {projects.map((p) => (
+            <div
+              key={p.id}
+              onClick={() => openDetail(p)}
+              className="group relative rounded-2xl border border-border bg-surface overflow-hidden shadow-xs hover:shadow-lg transition-all duration-300 flex flex-col cursor-pointer hover:border-primary-400 dark:border-slate-800 dark:bg-slate-900"
+            >
+              <div className="relative aspect-[16/10] overflow-hidden bg-slate-950">
+                {p.coverImage && (
                   <img
-                    src={p.coverImage || 'https://images.unsplash.com/photo-1541888946425-d0fbb186c5f7?auto=format&fit=crop&w=1200&q=80'}
+                    src={p.coverImage}
                     alt={p.name}
                     className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 ease-out"
                     loading="lazy"
                   />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-90 group-hover:opacity-75 transition-opacity" />
-
-                  {/* Header badges trên ảnh */}
-                  <div className="absolute top-3 left-3 right-3 flex items-center justify-between gap-2">
-                    <span className="px-2.5 py-1 rounded-lg text-3xs font-bold bg-black/60 text-white backdrop-blur-md border border-white/20 shadow-xs">
-                      Nhóm {p.projectGroup} • Cấp {p.buildingGrade}
-                    </span>
-                    <StatusBadge status={p.slaStatus} />
-                  </div>
-
-                  {/* Badge số lượng ảnh & Giai đoạn ở chân ảnh */}
-                  <div className="absolute bottom-3 left-3 right-3 flex items-center justify-between text-white text-2xs">
-                    <span className="font-mono text-3xs font-bold px-2 py-0.5 rounded-md bg-primary-600/90 backdrop-blur-xs">
-                      {p.code}
-                    </span>
-                    {p.images && p.images.length > 0 && (
-                      <span className="flex items-center gap-1 text-3xs font-medium px-2 py-0.5 rounded-md bg-black/60 backdrop-blur-xs border border-white/20">
-                        <Camera size={11} />
-                        <span>{p.images.length} hình ảnh</span>
-                      </span>
-                    )}
-                  </div>
+                )}
+                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
+                <div className="absolute top-3 left-3 right-3 flex items-center justify-between gap-2">
+                  <span className="px-2.5 py-1 rounded-lg text-3xs font-bold bg-black/60 text-white border border-white/20">
+                    Nhóm {p.projectGroup} • Cấp {p.buildingGrade}
+                  </span>
+                  <StatusBadge status={p.slaStatus} />
                 </div>
-
-                {/* Thông tin chi tiết dự án */}
-                <div className="p-4 flex-1 flex flex-col justify-between space-y-3.5">
-                  <div className="space-y-2">
-                    <h3 className="font-bold text-sm text-ink group-hover:text-primary-600 transition-colors line-clamp-2 leading-snug">
-                      {p.name}
-                    </h3>
-
-                    <div className="space-y-1.5 text-2xs text-ink-secondary">
-                      <div className="flex items-center gap-1.5">
-                        <Building size={13} className="text-ink-muted shrink-0" />
-                        <span className="truncate">{p.investorName}</span>
-                      </div>
-                      <div className="flex items-center gap-1.5">
-                        <MapPin size={13} className="text-ink-muted shrink-0" />
-                        <span className="truncate">{p.location}</span>
-                      </div>
-                    </div>
-                  </div>
-
-                  {/* Thư viện ảnh nhỏ xem nhanh (Mini Gallery Preview) */}
-                  {p.images && p.images.length > 1 && (
-                    <div className="pt-2 border-t border-border/60">
-                      <p className="text-3xs text-ink-muted uppercase font-semibold tracking-wider mb-1.5">
-                        Hình ảnh tư liệu khảo sát & phối cảnh:
-                      </p>
-                      <div className="grid grid-cols-4 gap-1.5">
-                        {p.images.slice(0, 4).map((subImg, sIdx) => (
-                          <div
-                            key={subImg.id || sIdx}
-                            className="aspect-video rounded-md overflow-hidden border border-border bg-slate-900 relative group/sub"
-                          >
-                            <img
-                              src={subImg.thumbnailUrl || subImg.url}
-                              alt={subImg.title}
-                              className="w-full h-full object-cover group-hover/sub:scale-110 transition-transform duration-200"
-                              loading="lazy"
-                            />
-                            {sIdx === 3 && p.images && p.images.length > 4 && (
-                              <div className="absolute inset-0 bg-black/75 flex items-center justify-center text-white text-[10px] font-bold">
-                                +{p.images.length - 4}
-                              </div>
-                            )}
-                          </div>
-                        ))}
-                      </div>
-                    </div>
+                <div className="absolute bottom-3 left-3 right-3 flex items-center justify-between text-white">
+                  <span className="font-mono text-3xs font-bold px-2 py-0.5 rounded-md bg-primary-600">{p.code}</span>
+                  {p.images && p.images.length > 0 && (
+                    <span className="flex items-center gap-1 text-3xs font-medium px-2 py-0.5 rounded-md bg-black/60 border border-white/20">
+                      <Camera size={11} />
+                      {p.images.length} hình ảnh
+                    </span>
                   )}
-
-                  {/* Chỉ số tài chính & Nút hành động */}
-                  <div className="pt-3 border-t border-border flex items-center justify-between gap-2">
-                    <div>
-                      <span className="text-3xs uppercase tracking-wider text-ink-muted block">Tổng mức đầu tư</span>
-                      <span className="font-mono font-bold text-xs text-emerald-600 dark:text-emerald-400">
-                        {formatCurrency(p.totalInvestment)}
-                      </span>
-                    </div>
-
-                    <button
-                      type="button"
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        handleOpenDetail(p);
-                      }}
-                      className="flex items-center gap-1 px-3 py-1.5 rounded-lg bg-primary-50 dark:bg-primary-950/40 text-primary-600 dark:text-primary-400 font-semibold text-2xs group-hover:bg-primary-600 group-hover:text-white transition-all shadow-xs"
-                    >
-                      <span>Xem hồ sơ</span>
-                      <ArrowRight size={13} />
-                    </button>
-                  </div>
                 </div>
               </div>
-            );
-          })}
+              <div className="p-4 flex-1 flex flex-col justify-between space-y-3">
+                <div className="space-y-2">
+                  <h3 className="font-bold text-sm text-ink group-hover:text-primary-600 dark:group-hover:text-primary-400 transition-colors line-clamp-2 leading-snug">
+                    {p.name}
+                  </h3>
+                  <div className="space-y-1.5 text-2xs text-ink-secondary">
+                    <div className="flex items-center gap-1.5 min-w-0">
+                      <Building size={13} className="text-ink-muted shrink-0" />
+                      <span className="truncate">{p.investorName}</span>
+                    </div>
+                    <div className="flex items-center gap-1.5 min-w-0">
+                      <MapPin size={13} className="text-ink-muted shrink-0" />
+                      <span className="truncate">{p.location}</span>
+                    </div>
+                  </div>
+                </div>
+                <div className="pt-3 border-t border-border flex items-center justify-between gap-2 dark:border-slate-800">
+                  <div>
+                    <span className="text-3xs uppercase tracking-wider text-ink-muted block">Tổng mức đầu tư</span>
+                    <span className="font-mono font-bold text-xs text-emerald-600 dark:text-emerald-400">
+                      {formatCurrency(p.totalInvestment)}
+                    </span>
+                  </div>
+                  <span className="flex items-center gap-1 px-3 py-1.5 rounded-lg bg-primary-50 text-primary-600 font-semibold text-2xs group-hover:bg-primary-600 group-hover:text-white transition-all dark:bg-primary-900 dark:text-primary-200">
+                    Xem hồ sơ <ArrowRight size={13} />
+                  </span>
+                </div>
+              </div>
+            </div>
+          ))}
         </div>
       )}
     </div>

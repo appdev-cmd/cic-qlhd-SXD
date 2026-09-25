@@ -2,7 +2,6 @@ import React, { useState, useMemo } from 'react';
 import {
   Image as ImageIcon,
   Plus,
-  Eye,
   Download,
   Calendar,
   User,
@@ -19,7 +18,7 @@ import {
 } from 'lucide-react';
 import { cn, formatDate } from '../../lib/utils';
 import { Tooltip } from '../../components/ui/Tooltip';
-import type { Project, ProjectImage } from '../../data/mockData';
+import type { Project, ProjectImage } from '../../types/domain';
 
 interface ProjectGalleryTabProps {
   project: Project;
@@ -92,7 +91,7 @@ export function ProjectGalleryTab({ project }: ProjectGalleryTabProps) {
       title: newTitle.trim(),
       category: newCategory,
       categoryLabel: categoryLabels[newCategory],
-      date: new Date().toLocaleDateString('vi-VN'),
+      date: formatDate(new Date()),
       author: newAuthor.trim() || 'Cán bộ thụ lý Sở Xây dựng',
       description: newDescription.trim() || 'Ảnh khảo sát bổ sung phục vụ công tác thẩm định dự án.',
     };

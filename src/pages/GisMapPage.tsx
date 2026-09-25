@@ -1,41 +1,26 @@
-import React, { useState, useMemo } from 'react';
-import {
-  MapPin,
-  Layers,
-  Filter,
-  Eye,
-  Building2,
-  Sparkles,
-  Navigation,
-  Key,
-  Search,
-  CheckCircle2,
-  Compass,
-  SlidersHorizontal,
-  ChevronRight,
-  Shield,
-  Map as MapIcon,
-  Maximize2,
-  Share2,
-} from 'lucide-react';
-import { MOCK_PROJECTS, type Project } from '../data/mockData';
+import { useState, useMemo } from 'react';
+import { MapPin, Layers, Eye, Navigation, Key, Search, ChevronRight, Shield } from 'lucide-react';
+import type { Project } from '../types/domain';
 import { formatCurrency } from '../lib/utils';
 import { StatusBadge } from '../components/ui/StatusBadge';
 import { Tooltip } from '../components/ui/Tooltip';
-import { useSlidePanel } from '../context/SlidePanelContext';
 import { useTheme } from '../context/ThemeContext';
-import { ProjectDetailSlidePanel } from './projects/ProjectDetailSlidePanel';
+import { useAllProjects } from '../hooks/useData';
+import { useEntityPanel } from '../hooks/useEntityPanel';
+import { matchesSmartSearch } from '../lib/smartSearch';
+import { PanelLoading } from '../components/entity/PanelState';
 import { GoogleMapViewer, type GoogleMapType } from '../components/gis/GoogleMapViewer';
 import { GoogleApiKeyModal } from '../components/gis/GoogleApiKeyModal';
 import { getStoredGoogleMapsApiKey } from '../lib/googleMapsLoader';
-import { getProjectCoordinates } from '../lib/gisData';
+import { getProjectLatLng } from '../lib/gisData';
 
 export function GisMapPage() {
-  const { openPanel } = useSlidePanel();
+  const { open } = useEntityPanel();
+  const { data: allProjects = [], isLoading } = useAllProjects();
   const { theme } = useTheme();
   const isDark = theme === 'dark';
 
-  const [selectedProject, setSelectedProject] = useState<Project>(MOCK_PROJECTS[0]);
+  const [selectedId, setSelectedId] = useState<string | null>(null);
   const [searchQuery, setSearchQuery] = useState('');
   const [statusFilter, setStatusFilter] = useState<'all' | Project['slaStatus']>('all');
   const [mapType, setMapType] = useState<GoogleMapType>('hybrid');
@@ -47,33 +32,25 @@ export function GisMapPage() {
   const [activeTab, setActiveTab] = useState<'detail' | 'list'>('detail');
 
   // Lọc danh sách dự án
+  // Bản đồ cần toàn bộ tọa độ dự án (tải phân khối 1000 dòng), lọc hiển thị tại client
   const filteredProjects = useMemo(() => {
-    return MOCK_PROJECTS.filter((p) => {
+    return allProjects.filter((p) => {
       const matchSearch =
-        searchQuery === '' ||
-        p.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        p.code.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        p.location.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        p.investorName.toLowerCase().includes(searchQuery.toLowerCase());
-
+        !searchQuery ||
+        [p.name, p.code, p.location, p.investorName].some((f) => matchesSmartSearch(f, searchQuery));
       const matchStatus = statusFilter === 'all' || p.slaStatus === statusFilter;
-
       return matchSearch && matchStatus;
     });
-  }, [searchQuery, statusFilter]);
+  }, [allProjects, searchQuery, statusFilter]);
 
-  const handleOpenDetail = (project: Project) => {
-    openPanel({
-      id: `project-${project.id}`,
-      title: project.name,
-      subtitle: `Mã: ${project.code} • ${project.investorName}`,
-      tabTitle: project.code,
-      component: <ProjectDetailSlidePanel project={project} />,
-      storageKey: `slidepanel-project-${project.id}`,
-    });
-  };
+  const setSelectedProject = (p: Project) => setSelectedId(p.id);
+  const handleOpenDetail = (project: Project) =>
+    open('project', { id: project.id, label: project.name, subtitle: `Mã: ${project.code} • ${project.investorName}` });
 
-  const selectedCoords = getProjectCoordinates(selectedProject.id, selectedProject.location);
+  const selectedProject = allProjects.find((p) => p.id === selectedId) ?? filteredProjects[0] ?? allProjects[0];
+  if (isLoading || !selectedProject) return <PanelLoading label="Đang tải dữ liệu bản đồ dự án..." />;
+
+  const selectedCoords = getProjectLatLng(selectedProject);
 
   return (
     <div className="h-[calc(100vh-100px)] flex flex-col gap-3">
@@ -93,7 +70,7 @@ export function GisMapPage() {
               </span>
             </div>
             <p className="text-3xs text-ink-muted mt-0.5">
-              Tọa độ VN-2000 • Tích hợp Google Maps vệ tinh, địa hình Tây Bắc và {MOCK_PROJECTS.length} dự án thẩm định
+              Tọa độ VN-2000 • Tích hợp Google Maps vệ tinh, địa hình Tây Bắc và {allProjects.length} dự án thẩm định
             </p>
           </div>
         </div>
@@ -316,7 +293,7 @@ export function GisMapPage() {
               </div>
 
               {/* Tọa độ GPS & Chỉ giới quy hoạch */}
-              <div className="p-2.5 rounded-xl bg-primary-50/70 dark:bg-primary-950/30 border border-primary-200/80 dark:border-primary-900/60 text-3xs flex items-center justify-between text-primary-900 dark:text-primary-200">
+              <div className="p-2.5 rounded-xl bg-primary-50/70 dark:bg-primary-950 border border-primary-200/80 dark:border-primary-900/60 text-3xs flex items-center justify-between text-primary-900 dark:text-primary-200">
                 <div className="flex items-center gap-2">
                   <Navigation size={13} className="text-primary-600 dark:text-primary-400 shrink-0" />
                   <span className="font-mono font-semibold">
@@ -376,7 +353,7 @@ export function GisMapPage() {
                     onClick={() => setSelectedProject(p)}
                     className={`w-full text-left p-2.5 rounded-xl border transition-all cursor-pointer flex items-center justify-between gap-2 ${
                       isSelected
-                        ? 'border-primary-500 bg-primary-50/50 dark:bg-primary-950/40 shadow-xs'
+                        ? 'border-primary-500 bg-primary-50/50 dark:bg-primary-950 shadow-xs'
                         : 'border-border bg-subtle hover:bg-surface'
                     }`}
                   >

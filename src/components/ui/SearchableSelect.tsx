@@ -1,7 +1,8 @@
-import React, { useState, useRef, useEffect } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import { ChevronDown, Check, Search, X } from 'lucide-react';
 import { cn } from '../../lib/utils';
 import { matchesSmartSearch } from '../../lib/smartSearch';
+import { useChildFormGuard } from '../../hooks/useGuards';
 
 export interface Option {
   value: string;
@@ -51,6 +52,20 @@ export function SearchableSelect({
     return () => document.removeEventListener('mousedown', handleOutsideClick);
   }, []);
 
+  // Dropdown đang mở là một lớp con: Esc chỉ đóng dropdown, không đóng Slide Panel
+  useChildFormGuard(isOpen);
+  useEffect(() => {
+    if (!isOpen) return;
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === 'Escape' && !e.defaultPrevented) {
+        e.preventDefault();
+        setIsOpen(false);
+      }
+    };
+    window.addEventListener('keydown', onKey);
+    return () => window.removeEventListener('keydown', onKey);
+  }, [isOpen]);
+
   useEffect(() => {
     if (isOpen && searchInputRef.current) {
       searchInputRef.current.focus();
@@ -66,8 +81,8 @@ export function SearchableSelect({
         disabled={disabled}
         onClick={() => setIsOpen(!isOpen)}
         className={cn(
-          'flex items-center justify-between w-full min-h-[38px] px-3 py-1.5 rounded-lg border text-left transition-all',
-          'bg-surface border-border hover:border-primary-500 focus:outline-none focus:ring-2 focus:ring-primary-500/20',
+          'flex items-center justify-between w-full min-h-[32px] px-3 py-1 text-xs rounded-lg border text-left transition-all',
+          'bg-surface border-border hover:border-primary-500 focus:outline-none focus:ring-2 focus:ring-primary-500/20 dark:bg-slate-900 dark:border-slate-700',
           disabled && 'opacity-50 cursor-not-allowed bg-subtle'
         )}
       >

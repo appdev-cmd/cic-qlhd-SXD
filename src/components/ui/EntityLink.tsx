@@ -1,38 +1,36 @@
 import React from 'react';
 import { cn } from '../../lib/utils';
-import { useSlidePanel } from '../../context/SlidePanelContext';
+import { useEntityPanel, type EntityType } from '../../hooks/useEntityPanel';
 
 export interface EntityLinkProps {
-  type: 'project' | 'organization' | 'personnel';
+  type: EntityType;
   id: string;
-  name: string;
+  /** Tên hiển thị (hoặc truyền children) */
+  name?: string;
+  children?: React.ReactNode;
   className?: string;
-  onClick?: () => void;
 }
 
-export function EntityLink({ type, id, name, className, onClick }: EntityLinkProps) {
-  const { openPanel } = useSlidePanel();
-
-  const handleClick = (e: React.MouseEvent) => {
-    e.stopPropagation();
-    if (onClick) {
-      onClick();
-      return;
-    }
-    // Mở nhanh panel tương ứng
-    // Các trang sẽ tự cung cấp panel chi tiết qua context hoặc custom action
-  };
+/**
+ * Hiển thị TÊN thực thể và mở Slide Panel chi tiết khi bấm (không điều hướng toàn trang).
+ * Kế thừa màu chữ xung quanh, hover đổi màu, không gạch chân.
+ */
+export function EntityLink({ type, id, name, children, className }: EntityLinkProps) {
+  const { open } = useEntityPanel();
 
   return (
     <button
       type="button"
-      onClick={handleClick}
+      onClick={(e) => {
+        e.stopPropagation();
+        open(type, { id, label: name });
+      }}
       className={cn(
-        'text-inherit hover:text-primary-600 dark:hover:text-primary-400 no-underline cursor-pointer font-medium text-left transition-colors truncate max-w-full',
+        'text-inherit hover:text-blue-600 dark:hover:text-blue-400 no-underline cursor-pointer text-left transition-colors max-w-full truncate align-baseline',
         className
       )}
     >
-      {name}
+      {children ?? name}
     </button>
   );
 }

@@ -1,25 +1,15 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { X, Layers, FileText, Maximize2, Minimize2 } from 'lucide-react';
 import { cn } from '../lib/utils';
-import { useSlidePanel, type SlidePanelEntry } from '../context/SlidePanelContext';
+import { PanelIdContext, useSlidePanel, type SlidePanelEntry } from '../context/SlidePanelContext';
+import { isModalLayerOpen } from '../lib/modalLayer';
 import { Tooltip } from './ui/Tooltip';
+import { ConfirmDialog } from './ui/Modal';
 
 // ─── Constants theo chuẩn qlda-ddcn-ht-selfhost ────────────────────────────────
 const TAB_WIDTH = 34;        // px — chiều rộng tai thỏ
 const TAB_LENGTH = 142;      // px — chiều cao tai thỏ
 const MIN_PANEL_WIDTH = 420; // px — chiều rộng tối thiểu của panel
-
-// Độ rộng Full màn hình: chiếm tối đa không gian, chừa vừa vặn lề cột tai thỏ (TAB_WIDTH + 8px = 42px)
-const getFullPanelWidth = () => {
-  if (typeof window === 'undefined') return 1400;
-  return Math.max(MIN_PANEL_WIDTH, window.innerWidth - TAB_WIDTH - 8);
-};
-
-// Độ rộng chuẩn (khi thu nhỏ về chế độ 60% để xem đồng thời bảng danh sách)
-const getStandardPanelWidth = () => {
-  if (typeof window === 'undefined') return 860;
-  return Math.max(MIN_PANEL_WIDTH, Math.min(1150, Math.round(window.innerWidth * 0.60)));
-};
 
 // ─── Viên tay cầm kéo dãn chiều rộng (Grab Handle Pill) ────────────────────────
 interface ResizeHandleProps {
@@ -30,7 +20,7 @@ interface ResizeHandleProps {
 const ResizeHandle: React.FC<ResizeHandleProps> = ({ onPointerDown, resizing }) => (
   <div
     onPointerDown={onPointerDown}
-    title="Kéo sang trái/phải để thay đổi chiều rộng"
+    aria-label="Kéo sang trái/phải để thay đổi chiều rộng"
     className="group pointer-events-auto absolute top-0 bottom-0 z-40 flex w-6 cursor-col-resize items-center justify-center touch-none select-none"
     style={{ left: -12 }}
   >
@@ -73,6 +63,21 @@ export function SlidePanelStack({ sidebarWidth: propSidebarWidth }: SlidePanelSt
   const [resizing, setResizing] = useState(false);
   const [, setWindowWidth] = useState<number>(typeof window !== 'undefined' ? window.innerWidth : 1440);
   const activePanelRef = useRef<SlidePanelEntry | null>(null);
+  // Panel đang chờ xác nhận đóng (có thay đổi chưa lưu)
+  const [pendingClose, setPendingClose] = useState<SlidePanelEntry | 'all' | null>(null);
+
+  /** Đóng panel theo quy chuẩn: bỏ qua khi có form con/modal; hỏi xác nhận khi có thay đổi chưa lưu. */
+  const requestClose = useCallback(
+    (panel: SlidePanelEntry | null | undefined) => {
+      if (!panel) return;
+      if (panel.hasUnsavedChanges) {
+        setPendingClose(panel);
+        return;
+      }
+      closePanel(panel.id);
+    },
+    [closePanel]
+  );
 
   const topPanel = stack.length > 0 ? stack[stack.length - 1] : null;
   activePanelRef.current = topPanel;
@@ -125,19 +130,18 @@ export function SlidePanelStack({ sidebarWidth: propSidebarWidth }: SlidePanelSt
     });
   }, [stack]);
 
-  // Đóng bằng phím Escape
+  // Đóng bằng phím Escape — lắng nghe ở pha capture để kiểm tra lớp con TRƯỚC khi modal con tự đóng
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
-      if (e.key === 'Escape' && stack.length > 0) {
-        const top = activePanelRef.current;
-        if (!top?.hasUnsavedChanges) {
-          closePanel(top?.id);
-        }
-      }
+      if (e.key !== 'Escape' || stack.length === 0 || pendingClose) return;
+      if (isModalLayerOpen()) return; // Esc chỉ dành cho form con / modal đang mở
+      // Đánh dấu đã xử lý: hộp xác nhận vừa mở không được nhận lại chính phím Esc này
+      e.preventDefault();
+      requestClose(activePanelRef.current);
     };
-    window.addEventListener('keydown', handleKeyDown);
-    return () => window.removeEventListener('keydown', handleKeyDown);
-  }, [stack.length, closePanel]);
+    window.addEventListener('keydown', handleKeyDown, true);
+    return () => window.removeEventListener('keydown', handleKeyDown, true);
+  }, [stack.length, requestClose, pendingClose]);
 
   // Toggle Phóng to (Full) / Thu nhỏ (60%)
   const toggleMaximize = useCallback((panelId: string) => {
@@ -201,9 +205,8 @@ export function SlidePanelStack({ sidebarWidth: propSidebarWidth }: SlidePanelSt
       {/* ─── Backdrop mờ nền: chỉ phủ lên vùng Main Content, để lộ thanh Sidebar hoàn toàn ─── */}
       <div
         onClick={() => {
-          if (!topPanel.hasUnsavedChanges) {
-            closePanel(topPanel.id);
-          }
+          if (isModalLayerOpen()) return;
+          requestClose(topPanel);
         }}
         className="absolute top-0 bottom-0 right-0 bg-black/40 dark:bg-black/55 backdrop-blur-xs pointer-events-auto transition-opacity duration-200 cursor-pointer"
         style={{ left: `${getSidebarWidth()}px` }}
@@ -240,7 +243,7 @@ export function SlidePanelStack({ sidebarWidth: propSidebarWidth }: SlidePanelSt
                   e.stopPropagation();
                   if (!isActive) bringToFront(panel.id);
                 }}
-                title={panel.title}
+                aria-label={panel.title}
                 className={cn(
                   'pointer-events-auto group flex flex-col items-center gap-1.5 rounded-l-xl border border-r-0 pb-2 pt-2.5 shadow-md transition-all duration-150 select-none cursor-pointer',
                   isActive
@@ -271,11 +274,9 @@ export function SlidePanelStack({ sidebarWidth: propSidebarWidth }: SlidePanelSt
                   <span
                     onClick={(e) => {
                       e.stopPropagation();
-                      if (!panel.hasUnsavedChanges) {
-                        closePanel(panel.id);
-                      }
+                      requestClose(panel);
                     }}
-                    title="Đóng panel này (Esc)"
+                    aria-label="Đóng panel này (Esc)"
                     className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full text-white/80 transition-colors hover:bg-white/25 hover:text-white cursor-pointer"
                   >
                     <X size={11} strokeWidth={2.5} />
@@ -284,11 +285,9 @@ export function SlidePanelStack({ sidebarWidth: propSidebarWidth }: SlidePanelSt
                   <span
                     onClick={(e) => {
                       e.stopPropagation();
-                      if (!panel.hasUnsavedChanges) {
-                        closePanel(panel.id);
-                      }
+                      requestClose(panel);
                     }}
-                    title="Đóng panel này"
+                    aria-label="Đóng panel này"
                     className="opacity-0 group-hover:opacity-100 flex h-4 w-4 shrink-0 items-center justify-center rounded-full text-ink-muted hover:bg-red-50 hover:text-red-500 dark:hover:bg-red-950/40 transition-all cursor-pointer"
                   >
                     <X size={10} strokeWidth={2} />
@@ -304,11 +303,12 @@ export function SlidePanelStack({ sidebarWidth: propSidebarWidth }: SlidePanelSt
               type="button"
               onClick={(e) => {
                 e.stopPropagation();
-                closeAllPanels();
+                if (stack.some((p) => p.hasUnsavedChanges)) setPendingClose('all');
+                else closeAllPanels();
               }}
-              className="pointer-events-auto group flex flex-col items-center gap-1 rounded-l-xl border border-r-0 pt-2 pb-1.5 bg-red-50/90 dark:bg-red-950/50 border-red-200 dark:border-red-800/80 text-red-500 dark:text-red-400 hover:bg-red-100 dark:hover:bg-red-900/50 shadow-sm transition-all hover:scale-[1.02] origin-right cursor-pointer"
+              className="pointer-events-auto group flex flex-col items-center gap-1 rounded-l-xl border border-r-0 pt-2 pb-1.5 bg-red-50/90 dark:bg-red-950 border-red-200 dark:border-red-800/80 text-red-500 dark:text-red-400 hover:bg-red-100 dark:hover:bg-red-900/50 shadow-sm transition-all hover:scale-[1.02] origin-right cursor-pointer"
               style={{ width: TAB_WIDTH }}
-              title="Đóng tất cả các panel"
+              aria-label="Đóng tất cả các panel"
             >
               <Layers size={13} className="shrink-0" />
               <span
@@ -369,7 +369,6 @@ export function SlidePanelStack({ sidebarWidth: propSidebarWidth }: SlidePanelSt
                         type="button"
                         onClick={() => toggleMaximize(panel.id)}
                         className="p-1.5 rounded-lg border border-border bg-surface hover:bg-subtle text-ink-muted hover:text-ink transition-colors cursor-pointer"
-                        title={isTopMaximized ? 'Thu nhỏ cửa sổ (60%)' : 'Mở rộng toàn màn hình (Full)'}
                       >
                         {isTopMaximized ? <Minimize2 size={15} /> : <Maximize2 size={15} />}
                       </button>
@@ -378,13 +377,8 @@ export function SlidePanelStack({ sidebarWidth: propSidebarWidth }: SlidePanelSt
                     <Tooltip content="Đóng panel (Esc)" placement="bottom">
                       <button
                         type="button"
-                        onClick={() => {
-                          if (!panel.hasUnsavedChanges) {
-                            closePanel(panel.id);
-                          }
-                        }}
+                        onClick={() => requestClose(panel)}
                         className="p-1.5 rounded-lg border border-border bg-surface hover:bg-subtle text-ink-muted hover:text-red-500 hover:border-red-300 dark:hover:border-red-800 transition-colors cursor-pointer"
-                        title="Đóng panel (Esc)"
                       >
                         <X size={15} />
                       </button>
@@ -394,13 +388,32 @@ export function SlidePanelStack({ sidebarWidth: propSidebarWidth }: SlidePanelSt
 
                 {/* Nội dung bên trong Panel */}
                 <div className="flex-1 overflow-y-auto p-5 overflow-x-hidden">
-                  {panel.component}
+                  <PanelIdContext.Provider value={panel.id}>{panel.component}</PanelIdContext.Provider>
                 </div>
               </div>
             );
           })}
         </div>
       </div>
+
+      <ConfirmDialog
+        open={pendingClose !== null}
+        tone="danger"
+        title="Có thay đổi chưa lưu"
+        message={
+          pendingClose === 'all'
+            ? 'Một số panel đang có dữ liệu nhập chưa lưu. Đóng tất cả và bỏ các thay đổi này?'
+            : 'Biểu mẫu trong panel này có dữ liệu chưa lưu. Đóng panel và bỏ các thay đổi?'
+        }
+        confirmLabel="Đóng & bỏ thay đổi"
+        cancelLabel="Tiếp tục chỉnh sửa"
+        onCancel={() => setPendingClose(null)}
+        onConfirm={() => {
+          if (pendingClose === 'all') closeAllPanels();
+          else if (pendingClose) closePanel(pendingClose.id);
+          setPendingClose(null);
+        }}
+      />
     </div>
   );
 }

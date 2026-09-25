@@ -1,7 +1,8 @@
-import React, { useState, useRef, useEffect } from 'react';
-import { Bot, Send, X, Maximize2, Minimize2, Sparkles, BookOpen, ExternalLink, RefreshCw } from 'lucide-react';
+import { useState, useRef, useEffect } from 'react';
+import { Bot, Send, X, Maximize2, Minimize2, Sparkles, BookOpen, RefreshCw } from 'lucide-react';
 import { cn } from '../../lib/utils';
 import { Tooltip } from '../ui/Tooltip';
+import { AiDemoBadge } from './AiDemoBadge';
 
 interface ChatMessage {
   id: string;
@@ -28,7 +29,7 @@ export function AiChatWidget() {
     {
       id: 'msg-1',
       sender: 'ai',
-      text: 'Xin chào đồng chí! Tôi là **Trợ lý AI Pháp luật Xây dựng** của Sở Xây dựng tỉnh Điện Biên. Tôi có thể hỗ trợ đồng chí tra cứu nhanh các quy định theo **Luật Xây dựng 2025**, **Nghị định 217/2026/NĐ-CP**, **Nghị định 206/2026/NĐ-CP**, **Nghị định 207/2026/NĐ-CP** và hệ thống quy chuẩn kỹ thuật (QCVN 01, QCVN 06...).',
+      text: 'Xin chào đồng chí! Tôi là **Trợ lý AI Pháp luật Xây dựng** của Sở Xây dựng tỉnh Điện Biên. (Phiên bản minh họa: câu trả lời đang được soạn sẵn theo từ khóa, chưa kết nối mô hình AI và kho văn bản — không dùng làm căn cứ pháp lý.) Tôi có thể hỗ trợ đồng chí tra cứu nhanh các quy định theo **Luật Xây dựng 2025**, **Nghị định 217/2026/NĐ-CP**, **Nghị định 206/2026/NĐ-CP**, **Nghị định 207/2026/NĐ-CP** và hệ thống quy chuẩn kỹ thuật (QCVN 01, QCVN 06...).',
       citations: [
         { source: 'Luật Xây dựng số 135/2025/QH15', article: 'Điều 27, Điều 46' },
         { source: 'Nghị định số 217/2026/NĐ-CP', article: 'Điều 32, 38, 53' },
@@ -163,7 +164,9 @@ export function AiChatWidget() {
                 <Sparkles size={16} />
               </div>
               <div className="truncate">
-                <h4 className="text-xs font-bold text-ink truncate">Trợ lý AI Pháp luật Xây dựng</h4>
+                <h4 className="text-xs font-bold text-ink truncate flex items-center gap-1.5">
+                  Trợ lý AI Pháp luật Xây dựng <AiDemoBadge label="Minh họa" />
+                </h4>
                 <p className="text-3xs text-ink-muted flex items-center gap-1">
                   <span className="w-1.5 h-1.5 rounded-full bg-emerald-500" />
                   RAG Pháp quy • NĐ 217/2026 & QCVN

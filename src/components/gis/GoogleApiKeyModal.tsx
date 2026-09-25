@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Key, X, CheckCircle2, AlertTriangle, ExternalLink, ShieldCheck, RefreshCw, Eye, EyeOff } from 'lucide-react';
+import { Key, X, CheckCircle2, AlertTriangle, ExternalLink, ShieldCheck, Eye, EyeOff } from 'lucide-react';
 import { getStoredGoogleMapsApiKey, setStoredGoogleMapsApiKey } from '../../lib/googleMapsLoader';
 
 export interface GoogleApiKeyModalProps {
@@ -120,7 +120,7 @@ export function GoogleApiKeyModal({ isOpen, onClose, onKeyUpdated }: GoogleApiKe
           </div>
 
           {/* Hướng dẫn lấy key */}
-          <div className="p-3.5 rounded-xl bg-blue-50/70 dark:bg-blue-950/30 border border-blue-200/80 dark:border-blue-900/60 space-y-2 text-2xs text-blue-900 dark:text-blue-200">
+          <div className="p-3.5 rounded-xl bg-blue-50/70 dark:bg-blue-950 border border-blue-200/80 dark:border-blue-900/60 space-y-2 text-2xs text-blue-900 dark:text-blue-200">
             <div className="flex items-center gap-1.5 font-bold">
               <ShieldCheck size={14} className="text-blue-600 dark:text-blue-400" />
               <span>Cách lấy Google Maps API Key miễn phí từ Google Cloud:</span>

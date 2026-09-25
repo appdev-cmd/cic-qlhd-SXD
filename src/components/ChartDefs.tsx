@@ -1,4 +1,3 @@
-import React from 'react';
 
 /**
  * Bộ lọc SVG Glow & Hiệu ứng Chiều sâu cho Recharts (Đồng bộ 100% cic-ibst)

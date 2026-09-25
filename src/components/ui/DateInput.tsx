@@ -30,6 +30,11 @@ export function DateInput({
     if (val.length > 10) val = val.substring(0, 10);
     setTextValue(val);
 
+    if (val === '') {
+      onChange('');
+      return;
+    }
+
     if (val.length === 10) {
       const parts = val.split('/');
       if (parts.length === 3) {

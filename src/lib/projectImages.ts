@@ -3,7 +3,7 @@
  * Tương thích và kế thừa giải pháp từ qlda-ddcn-ht-selfhost
  */
 
-import type { ProjectImage } from '../data/mockData';
+import type { ProjectImage } from '../types/domain';
 
 export interface ProjectImageContext {
   imageUrl?: string | null;

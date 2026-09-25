@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
-import { Bot, Search, BookOpen, Sparkles, ExternalLink, ShieldCheck, ArrowRight } from 'lucide-react';
-import { cn } from '../lib/utils';
+import { useState } from 'react';
+import { AiDemoBadge } from '../components/ai/AiDemoBadge';
+import { Search, BookOpen, Sparkles, ExternalLink } from 'lucide-react';
 
 export function LegalAiPage() {
   const [query, setQuery] = useState('');
@@ -38,6 +38,9 @@ export function LegalAiPage() {
         <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary-500/10 text-primary-600 dark:text-primary-400 text-xs font-bold border border-primary-500/20">
           <Sparkles size={14} />
           <span>Trợ lý RAG Pháp quy Xây dựng Thông minh</span>
+        </div>
+        <div className="flex justify-center">
+          <AiDemoBadge label="Bản minh họa — kết quả tĩnh, chưa kết nối AI" />
         </div>
 
         <h2 className="text-2xl font-bold text-ink">

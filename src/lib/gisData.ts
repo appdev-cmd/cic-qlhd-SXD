@@ -89,6 +89,14 @@ export function getProjectCoordinates(projectId: string, location?: string): Lat
   };
 }
 
+/** Tọa độ dự án: ưu tiên lat/lng lưu trong CSDL, sau đó mới suy ra theo mã / địa điểm. */
+export function getProjectLatLng(p: { id: string; location?: string; lat?: number; lng?: number }): LatLng {
+  if (typeof p.lat === 'number' && typeof p.lng === 'number' && !Number.isNaN(p.lat) && !Number.isNaN(p.lng)) {
+    return { lat: p.lat, lng: p.lng };
+  }
+  return getProjectCoordinates(p.id, p.location);
+}
+
 // Đường ranh giới hành chính Tỉnh Điện Biên (Polygon bao quanh)
 export const DIEN_BIEN_PROVINCE_BOUNDARY: [number, number][] = [
   [22.4200, 102.1500], // Cực Tây A Pa Chải (Mường Nhé - Ngã ba biên giới)

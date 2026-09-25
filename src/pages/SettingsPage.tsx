@@ -1,5 +1,4 @@
-import React from 'react';
-import { Settings, Shield, Users, Database, Sparkles, Lock, BellRing } from 'lucide-react';
+import { Settings, Shield, Database } from 'lucide-react';
 
 export function SettingsPage() {
   return (

@@ -23,9 +23,13 @@ interface SlidePanelContextType {
   closeAllPanels: () => void;
   bringToFront: (id: string) => void;
   updatePanelUnsavedStatus: (id: string, hasUnsaved: boolean) => void;
+  updatePanelMeta: (id: string, meta: Partial<Pick<SlidePanelEntry, 'title' | 'subtitle' | 'tabTitle'>>) => void;
 }
 
 const SlidePanelContext = createContext<SlidePanelContextType | undefined>(undefined);
+
+/** Mã panel đang bao bọc component (để form con tự đánh dấu "có thay đổi chưa lưu"). */
+export const PanelIdContext = createContext<string | null>(null);
 
 export function SlidePanelProvider({ children }: { children: React.ReactNode }) {
   const [stack, setStack] = useState<SlidePanelEntry[]>([]);
@@ -70,9 +74,23 @@ export function SlidePanelProvider({ children }: { children: React.ReactNode }) 
 
   const updatePanelUnsavedStatus = useCallback((id: string, hasUnsaved: boolean) => {
     setStack((prev) =>
-      prev.map((p) => (p.id === id ? { ...p, hasUnsavedChanges: hasUnsaved } : p))
+      prev.some((p) => p.id === id && Boolean(p.hasUnsavedChanges) !== hasUnsaved)
+        ? prev.map((p) => (p.id === id ? { ...p, hasUnsavedChanges: hasUnsaved } : p))
+        : prev
     );
   }, []);
+
+  const updatePanelMeta = useCallback(
+    (id: string, meta: Partial<Pick<SlidePanelEntry, 'title' | 'subtitle' | 'tabTitle'>>) => {
+      setStack((prev) => {
+        const target = prev.find((p) => p.id === id);
+        if (!target) return prev;
+        const changed = (Object.keys(meta) as (keyof typeof meta)[]).some((k) => target[k] !== meta[k]);
+        return changed ? prev.map((p) => (p.id === id ? { ...p, ...meta } : p)) : prev;
+      });
+    },
+    []
+  );
 
   const value = useMemo(
     () => ({
@@ -82,8 +100,9 @@ export function SlidePanelProvider({ children }: { children: React.ReactNode }) 
       closeAllPanels,
       bringToFront,
       updatePanelUnsavedStatus,
+      updatePanelMeta,
     }),
-    [stack, openPanel, closePanel, closeAllPanels, bringToFront, updatePanelUnsavedStatus]
+    [stack, openPanel, closePanel, closeAllPanels, bringToFront, updatePanelUnsavedStatus, updatePanelMeta]
   );
 
   return <SlidePanelContext.Provider value={value}>{children}</SlidePanelContext.Provider>;

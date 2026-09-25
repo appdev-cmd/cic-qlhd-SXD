@@ -8,119 +8,30 @@ import { formatCurrency } from '../lib/utils';
 
 // ─── Interfaces ──────────────────────────────────────────────────────────────
 
-export interface AppraisalChecklistItem {
-  category: string;
-  item: string;
-  standardRequired: string;
-  designApplied: string;
-  aiVerdict: 'dat' | 'can_bo_sung' | 'khong_dat';
-  aiNotes: string;
-}
-
-export interface PlanningMetricItem {
-  name: string;
-  designValue: string;
-  standardLimit: string;
-  isPassed: boolean;
-}
-
-export interface FireSafetyData {
-  agreementNumber: string;
-  agreementDate: string;
-  agency: string;
-  fireResistanceGrade: string;
-  evacuationDistance: string;
-  evacuationStaircases: string;
-  fireAccessRoad: string;
-  waterReserve: string;
-}
-
-export interface CostBreakdownRow {
-  name: string;
-  originalValue: number;
-  appraisedValue: number;
-  difference: number;
-  reason: string;
-}
-
-export interface CostEvaluationData {
-  originalTotal: number;
-  appraisedTotal: number;
-  savingsTotal: number;
-  items: CostBreakdownRow[];
-}
-
-export interface Sample03NoticeData {
-  docNumber: string;
-  docDate: string;
-  signerName: string;
-  signerTitle: string;
-  submissionDoc: string;
-  submissionDate: string;
-  evaluationSummary: string;
-  conclusion: string;
-}
-
-export interface LegalChecklistDoc {
-  name: string;
-  code: string;
-  status: 'hop_le' | 'thieu' | 'can_bo_sung';
-  note: string;
-}
-
-export interface PermitData {
-  status: 'da_cap' | 'dang_tham_tra' | 'cho_bo_sung' | 'mien_gpxd';
-  permitNumber: string;
-  permitDate: string;
-  checklistDocs: LegalChecklistDoc[];
-  technicalConditions: {
-    allowedGroundArea: string;
-    allowedTotalFloorArea: string;
-    allowedStories: string;
-    allowedHeight: string;
-    specialRequirements: string[];
-  };
-}
-
-export interface InspectionData {
-  groundBreakingConditions: {
-    item: string;
-    status: 'dat' | 'chua_dat';
-    verifyDate: string;
-  }[];
-  phaseInspections: {
-    phaseName: string;
-    inspectDate: string;
-    inspectTeam: string;
-    verdict: 'chap_thuan' | 'yeu_cau_khac_phuc';
-    findings: string;
-  }[];
-  finalNotice: {
-    noticeNumber: string;
-    issueDate: string;
-    result: string;
-    recommendations: string[];
-  };
-}
-
-export interface AiAuditLog {
-  timestamp: string;
-  actor: string;
-  action: string;
-  details: string;
-  badge: 'info' | 'success' | 'warning' | 'audit';
-}
-
-export interface ProjectAppraisalData {
-  complianceChecklist: AppraisalChecklistItem[];
-  planningMetrics: PlanningMetricItem[];
-  fireSafety: FireSafetyData;
-  costEvaluation: CostEvaluationData;
-  sample03Notice: Sample03NoticeData;
-  permit: PermitData;
-  inspection: InspectionData;
-  auditLogs: AiAuditLog[];
-}
+export type {
+  AppraisalChecklistItem,
+  PlanningMetricItem,
+  FireSafetyData,
+  CostBreakdownRow,
+  CostEvaluationData,
+  Sample03NoticeData,
+  LegalChecklistDoc,
+  PermitData,
+  InspectionData,
+  AiAuditLog,
+  ProjectAppraisalData,
+} from '../types/appraisal';
+import type {
+  AppraisalChecklistItem,
+  PlanningMetricItem,
+  FireSafetyData,
+  CostEvaluationData,
+  Sample03NoticeData,
+  PermitData,
+  InspectionData,
+  AiAuditLog,
+  ProjectAppraisalData,
+} from '../types/appraisal';
 
 // ─── Generator Thẩm định Thông minh theo Chuyên ngành Công trình ─────────────
 
@@ -131,15 +42,15 @@ export function getProjectAppraisalData(project: Project): ProjectAppraisalData 
   const original = total + savings;
 
   // 1. Phân loại chuyên ngành công trình
-  let isBridge = name.includes('cầu');
-  let isRoad = name.includes('đường') || name.includes('đại lộ') || name.includes('tuyến');
-  let isHospital = name.includes('bệnh viện') || name.includes('y tế');
-  let isSchool = name.includes('trường') || name.includes('mầm non') || name.includes('tiểu học');
-  let isWater = name.includes('cấp nước') || name.includes('thoát nước') || name.includes('nước thải');
-  let isSports = name.includes('thể thao') || name.includes('sân vận động');
-  let isCulture = name.includes('hội nghị') || name.includes('triển lãm') || name.includes('di tích') || name.includes('quảng trường');
-  let isHousing = name.includes('nhà ở') || name.includes('tái định cư') || name.includes('liền kề');
-  let isIndustrial = name.includes('nhà máy') || name.includes('cụm công nghiệp') || name.includes('nông lâm sản');
+  const isBridge = name.includes('cầu');
+  const isRoad = name.includes('đường') || name.includes('đại lộ') || name.includes('tuyến');
+  const isHospital = name.includes('bệnh viện') || name.includes('y tế');
+  const isSchool = name.includes('trường') || name.includes('mầm non') || name.includes('tiểu học');
+  const isWater = name.includes('cấp nước') || name.includes('thoát nước') || name.includes('nước thải');
+  const isSports = name.includes('thể thao') || name.includes('sân vận động');
+  const isCulture = name.includes('hội nghị') || name.includes('triển lãm') || name.includes('di tích') || name.includes('quảng trường');
+  const isHousing = name.includes('nhà ở') || name.includes('tái định cư') || name.includes('liền kề');
+  const isIndustrial = name.includes('nhà máy') || name.includes('cụm công nghiệp') || name.includes('nông lâm sản');
 
   // ─── A. Checklist Quy chuẩn Kết cấu AI theo Chuyên ngành ───
   let complianceChecklist: AppraisalChecklistItem[] = [];

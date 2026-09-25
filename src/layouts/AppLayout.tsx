@@ -19,15 +19,23 @@ import {
   Check,
   ZoomIn,
   ZoomOut,
-  LogOut,
   Building,
   Sliders,
+  Database,
+  FlaskConical,
+  UserCog,
 } from 'lucide-react';
+import { useQueryClient } from '@tanstack/react-query';
 import { cn } from '../lib/utils';
-import { useTheme, PRIMARY_COLORS, type Theme, type PrimaryColor } from '../context/ThemeContext';
+import { useTheme, PRIMARY_COLORS } from '../context/ThemeContext';
 import { SlidePanelStack } from '../components/SlidePanelStack';
 import { AiChatWidget } from '../components/ai/AiChatWidget';
 import { Tooltip } from '../components/ui/Tooltip';
+import { SearchableSelect } from '../components/ui/SearchableSelect';
+import { useCurrentUser, ROLE_LABELS } from '../context/CurrentUserContext';
+import { useDashboardSummary, useOrganizations, usePersonnelList } from '../hooks/useData';
+import { refreshSlaStatus } from '../data-access/dossiers';
+import { DATA_MODE } from '../lib/dataMode';
 
 interface NavItem {
   to: string;
@@ -42,9 +50,9 @@ interface NavItem {
 // Danh sách Menu chuẩn 9 phân hệ nghiệp vụ — đánh số thứ tự chuẩn chỉ theo mẫu quản trị
 const NAV_ITEMS: NavItem[] = [
   { to: '/dashboard', label: '1. Dashboard & Thống kê', shortLabel: 'Dashboard', icon: LayoutDashboard },
-  { to: '/projects', label: '2. Quản lý Dự án', shortLabel: 'Dự án', icon: FolderKanban, badge: '26' },
-  { to: '/organizations', label: '3. Tổ chức tham gia', shortLabel: 'Tổ chức', icon: Building2, badge: '32' },
-  { to: '/personnel', label: '4. Cá nhân hành nghề', shortLabel: 'Cá nhân', icon: UserCheck, badge: '40' },
+  { to: '/projects', label: '2. Quản lý Dự án', shortLabel: 'Dự án', icon: FolderKanban },
+  { to: '/organizations', label: '3. Tổ chức tham gia', shortLabel: 'Tổ chức', icon: Building2 },
+  { to: '/personnel', label: '4. Cá nhân hành nghề', shortLabel: 'Cá nhân', icon: UserCheck },
   { to: '/legal-ai', label: '5. Trợ lý AI Pháp luật', shortLabel: 'AI Luật', icon: Bot, isAi: true },
   { to: '/cost-database', label: '6. Giá & Định mức ĐB', shortLabel: 'Giá VLXD', icon: Coins },
   { to: '/gis-map', label: '7. Bản đồ Quy hoạch', shortLabel: 'Bản đồ GIS', icon: MapPin },
@@ -58,6 +66,36 @@ export function AppLayout() {
   const userMenuRef = useRef<HTMLDivElement>(null);
   const { theme, setTheme, primaryColor, setPrimaryColor, zoom, setZoom } = useTheme();
   const location = useLocation();
+  const queryClient = useQueryClient();
+  const { currentUser, staffList, switchUser } = useCurrentUser();
+  const initials = (currentUser?.fullName ?? '')
+    .replace(/^(KTS|KS|ThS|TS)\.\s*/, '')
+    .split(' ')
+    .filter(Boolean)
+    .slice(-2)
+    .map((w) => w[0])
+    .join('')
+    .toUpperCase();
+
+  // Số lượng thực tế trên menu (thay cho con số gán cứng)
+  const { data: summary } = useDashboardSummary();
+  const { data: orgs } = useOrganizations();
+  const { data: people } = usePersonnelList();
+  const navBadges: Record<string, number | undefined> = {
+    '/projects': summary?.totalProjects,
+    '/organizations': orgs?.length,
+    '/personnel': people?.length,
+  };
+
+  // Cập nhật trạng thái SLA (quá hạn theo ngày làm việc) mỗi lần mở ứng dụng
+  useEffect(() => {
+    refreshSlaStatus()
+      .then(() => Promise.all([
+        queryClient.invalidateQueries({ queryKey: ['projects'] }),
+        queryClient.invalidateQueries({ queryKey: ['dashboard'] }),
+      ]))
+      .catch(() => undefined);
+  }, [queryClient]);
 
   // Đóng popover profile khi click ra ngoài
   useEffect(() => {
@@ -115,27 +153,29 @@ export function AppLayout() {
               )}
             </div>
 
-            <button
-              type="button"
-              onClick={() => setIsCollapsed(!isCollapsed)}
-              title={isCollapsed ? 'Mở rộng menu' : 'Thu gọn menu'}
-              className="p-1.5 rounded-lg hover:bg-subtle text-ink-muted hover:text-ink transition-colors shrink-0"
-            >
-              {isCollapsed ? <ChevronRight size={16} /> : <ChevronLeft size={16} />}
-            </button>
+            <Tooltip content={isCollapsed ? 'Mở rộng menu' : 'Thu gọn menu'} placement="right">
+              <button
+                type="button"
+                onClick={() => setIsCollapsed(!isCollapsed)}
+                className="p-1.5 rounded-lg hover:bg-subtle text-ink-muted hover:text-ink transition-colors shrink-0"
+              >
+                {isCollapsed ? <ChevronRight size={16} /> : <ChevronLeft size={16} />}
+              </button>
+            </Tooltip>
           </div>
 
           {/* Menu Điều hướng với số thứ tự chuẩn mực */}
           <nav className="p-3 space-y-1 overflow-y-auto flex-1">
             {NAV_ITEMS.map((item) => {
               const Icon = item.icon;
-              const isActive = location.pathname === item.to;
+              const isActive = location.pathname === item.to || location.pathname.startsWith(`${item.to}/`);
+              const badge = navBadges[item.to];
 
               return (
                 <NavLink
                   key={item.to}
                   to={item.to}
-                  title={isCollapsed ? item.label : undefined}
+                  aria-label={item.label}
                   className={cn(
                     'flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-xs transition-all group relative border-l-[3.5px]',
                     isActive
@@ -160,7 +200,7 @@ export function AppLayout() {
                     <div className="flex items-center justify-between flex-1 truncate">
                       <span className="truncate">{item.label}</span>
                       <div className="flex items-center gap-1.5 ml-2">
-                        {item.badge && (
+                        {badge !== undefined && (
                           <span
                             className={cn(
                               'text-3xs font-bold px-1.5 py-0.5 rounded-full',
@@ -169,7 +209,7 @@ export function AppLayout() {
                                 : 'bg-subtle text-primary-600 border border-border'
                             )}
                           >
-                            {item.badge}
+                            {badge}
                           </span>
                         )}
                         {item.isNew && (
@@ -210,14 +250,30 @@ export function AppLayout() {
               <span>Hệ thống Nghiệp vụ Thẩm định</span>
               <span>/</span>
               <span className="text-ink font-bold">
-                {NAV_ITEMS.find((n) => n.to === location.pathname)?.label.replace(/^\d+\.\s*/, '') || 'Bàn điều hành'}
+                {NAV_ITEMS.find((n) => location.pathname === n.to || location.pathname.startsWith(`${n.to}/`))?.label.replace(/^\d+\.\s*/, '') || 'Bàn điều hành'}
               </span>
             </div>
 
-            <span className="hidden md:inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 text-3xs font-bold border border-emerald-500/20">
+            <span className="hidden md:inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-emerald-50 text-emerald-600 dark:bg-emerald-950 dark:text-emerald-400 text-3xs font-bold border border-emerald-200 dark:border-emerald-800">
               <ShieldCheck size={12} />
               Cấp phép & Thẩm định Cấp tỉnh
             </span>
+
+            {DATA_MODE === 'demo' ? (
+              <Tooltip content="Chưa cấu hình Supabase — ứng dụng đang dùng bộ dữ liệu mẫu offline, thay đổi không được lưu lâu dài." placement="bottom">
+                <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-amber-50 text-amber-700 dark:bg-amber-950 dark:text-amber-300 text-3xs font-bold border border-amber-300 dark:border-amber-800">
+                  <FlaskConical size={12} />
+                  DỮ LIỆU MẪU (OFFLINE)
+                </span>
+              </Tooltip>
+            ) : (
+              <Tooltip content="Đang kết nối CSDL Supabase — môi trường phát triển, dữ liệu demo." placement="bottom">
+                <span className="hidden lg:inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-primary-50 text-primary-700 dark:bg-primary-900 dark:text-primary-200 text-3xs font-bold border border-primary-200 dark:border-primary-800">
+                  <Database size={12} />
+                  CSDL phát triển
+                </span>
+              </Tooltip>
+            )}
           </div>
 
           {/* Công cụ góc phải: Avatar Profile với Popup Cài Đặt Cá Nhân */}
@@ -236,13 +292,13 @@ export function AppLayout() {
                   className="w-8 h-8 rounded-full flex items-center justify-center text-white font-bold text-xs shadow-xs"
                   style={{ backgroundColor: 'var(--color-primary, #00668c)' }}
                 >
-                  HP
+                  {initials}
                 </div>
                 <div className="hidden sm:block text-left text-xs leading-tight pr-1">
                   <p className="font-bold text-ink flex items-center gap-1.5">
-                    KTS. Lê Hồng Phong
+                    {currentUser?.fullName ?? '—'}
                   </p>
-                  <p className="text-3xs text-primary-600 dark:text-primary-400 font-medium">Chuyên viên Phòng QLXD</p>
+                  <p className="text-3xs text-primary-600 dark:text-primary-400 font-medium">{currentUser?.title ?? ''}</p>
                 </div>
               </button>
 
@@ -255,15 +311,35 @@ export function AppLayout() {
                       className="w-10 h-10 rounded-full flex items-center justify-center text-white font-bold text-sm shadow-sm shrink-0"
                       style={{ backgroundColor: 'var(--color-primary, #00668c)' }}
                     >
-                      HP
+                      {initials}
                     </div>
                     <div className="min-w-0 flex-1">
-                      <p className="font-bold text-ink truncate text-sm">KTS. Lê Hồng Phong</p>
+                      <p className="font-bold text-ink truncate text-sm">{currentUser?.fullName}</p>
                       <p className="text-3xs font-semibold text-primary-600 dark:text-primary-400 truncate">
-                        Chuyên viên Phòng QLXD
+                        {currentUser?.title} • {currentUser ? ROLE_LABELS[currentUser.role] : ''}
                       </p>
-                      <p className="text-3xs text-ink-muted truncate">lehongphong.sxd@dienbien.gov.vn</p>
+                      <p className="text-3xs text-ink-muted truncate">{currentUser?.email}</p>
                     </div>
+                  </div>
+
+                  {/* Chuyển cán bộ thao tác — giai đoạn phát triển (chưa có đăng nhập) */}
+                  <div className="space-y-1.5">
+                    <div className="flex items-center gap-1.5 text-2xs font-semibold text-ink-secondary">
+                      <UserCog size={12} />
+                      Thao tác với vai trò (chế độ phát triển)
+                    </div>
+                    <SearchableSelect
+                      value={currentUser?.id}
+                      onChange={(id) => {
+                        switchUser(id);
+                        queryClient.invalidateQueries({ queryKey: ['projects'] });
+                      }}
+                      options={staffList.map((s) => ({
+                        value: s.id,
+                        label: s.fullName,
+                        sublabel: `${ROLE_LABELS[s.role]} • ${s.department}`,
+                      }))}
+                    />
                   </div>
 
                   {/* Khối Cài Đặt Cá Nhân */}
@@ -334,7 +410,7 @@ export function AppLayout() {
                               key={id}
                               type="button"
                               onClick={() => setPrimaryColor(id)}
-                              title={name}
+                              aria-label={name}
                               className={cn(
                                 'relative w-5 h-5 rounded-full transition-transform hover:scale-115 cursor-pointer flex items-center justify-center',
                                 isCurrent && 'scale-110 ring-2 ring-offset-2 ring-offset-surface'
@@ -370,7 +446,7 @@ export function AppLayout() {
                           type="button"
                           onClick={() => setZoom(Math.max(90, zoom - 10))}
                           disabled={zoom <= 90}
-                          title="Giảm cỡ chữ 10%"
+                          aria-label="Giảm cỡ chữ 10%"
                           className="p-1 rounded-lg border border-border bg-subtle hover:bg-muted disabled:opacity-40 transition-colors cursor-pointer"
                         >
                           <ZoomOut size={12} />
@@ -390,7 +466,7 @@ export function AppLayout() {
                           type="button"
                           onClick={() => setZoom(Math.min(120, zoom + 10))}
                           disabled={zoom >= 120}
-                          title="Tăng cỡ chữ 10%"
+                          aria-label="Tăng cỡ chữ 10%"
                           className="p-1 rounded-lg border border-border bg-subtle hover:bg-muted disabled:opacity-40 transition-colors cursor-pointer"
                         >
                           <ZoomIn size={12} />
@@ -399,17 +475,6 @@ export function AppLayout() {
                     </div>
                   </div>
 
-                  {/* Nút Đăng xuất */}
-                  <div className="pt-2 border-t border-border">
-                    <button
-                      type="button"
-                      onClick={() => setUserMenuOpen(false)}
-                      className="w-full flex items-center justify-center gap-2 py-2 rounded-xl text-rose-600 hover:bg-rose-50 dark:hover:bg-rose-950/30 font-semibold transition-colors cursor-pointer"
-                    >
-                      <LogOut size={14} />
-                      Đăng xuất
-                    </button>
-                  </div>
                 </div>
               )}
             </div>
