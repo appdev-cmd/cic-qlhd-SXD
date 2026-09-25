@@ -1,6 +1,7 @@
 @import './styles/tokens.css';
 @import './styles/tables.css';
 @import './styles/gis.css';
+@import './styles/print.css';
 
 @tailwind base;
 @tailwind components;

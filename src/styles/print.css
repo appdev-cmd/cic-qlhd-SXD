@@ -1,0 +1,45 @@
+/* In ấn văn bản khổ A4 — chỉ in các trang .a4-page, ẩn toàn bộ giao diện ứng dụng */
+@page {
+  size: A4 portrait;
+  margin: 0; /* lề đã nằm trong padding của từng trang .a4-page (30/20/22/20 mm) */
+}
+
+@media print {
+  html,
+  body {
+    background: #fff !important;
+    height: auto !important;
+    overflow: visible !important;
+  }
+
+  body * {
+    visibility: hidden;
+  }
+
+  .a4-print-root,
+  .a4-print-root * {
+    visibility: visible;
+  }
+
+  .a4-print-root {
+    position: absolute;
+    left: 0;
+    top: 0;
+    gap: 0 !important;
+  }
+
+  .a4-page {
+    box-shadow: none !important;
+    border: none !important;
+    margin: 0 !important;
+    break-after: page;
+    page-break-after: always;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+
+  .a4-page:last-child {
+    break-after: auto;
+    page-break-after: auto;
+  }
+}
