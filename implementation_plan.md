@@ -22,6 +22,29 @@ Hiện tại dự án là một **bản demo giao diện (clickable prototype) c
 
 ---
 
+## ✅ TIẾN ĐỘ THỰC HIỆN (cập nhật 25/09/2026, nhánh `feat/nang-cap-toan-dien`)
+
+**Quyết định đã chốt:** Supabase-first + lớp `data-access` (Q1) · Giai đoạn phát triển dùng Supabase Cloud, dữ liệu 100% demo, **chưa làm bảo mật** (Q2 — theo yêu cầu người dùng) · Giữ chế độ demo có banner (Q4) · Bắt đầu từ GĐ 0 (Q5). **Còn chờ:** Q3 (nhà cung cấp LLM cho RAG).
+
+| GĐ | Trạng thái | Kết quả chính |
+|---|---|---|
+| 0 | ✅ Xong (trừ bảo mật — hoãn) | TS strict, ESLint, `lint:ui`, Vitest (31 test), CI; script `db:migrate/seed/check`; **sửa seed sai 26/26 dự án**; chống trắng trang khi thiếu `.env`; nhãn "AI minh họa"; README + đồng bộ file quy tắc |
+| 1 | ✅ Xong (trừ đăng nhập/RLS — hoãn) | Schema v2 (unaccent, staff_users, material_prices, holidays, audit_logs + trigger, ai_logs, RPC dashboard); `src/data-access` + TanStack Query; 9/9 trang đọc DB; lọc/sắp xếp/phân trang tại DB |
+| 2 | ✅ Xong | DataGrid (kéo cột, sắp xếp, lưu), GridToolbar 5 vị trí, useFilterState (URL + localStorage), useEntityPanel/EntityLink + deep link `/dossiers/{mã}`, Child-form & Unsaved guard, AutoTableTooltip, AuditHistoryTab; bundle đầu 392 → ~188 KB gzip; xóa 24 MB ảnh trùng |
+| 3 | ✅ Xong phần lõi | SLA ngày làm việc (trừ lễ Tết), thẩm quyền Điều 32, form tiếp nhận + checklist Điều 35, quy trình theo vai trò (RPC `transition_dossier`), bổ sung 01 lần, gia hạn, phân công, lịch sử xử lý, dashboard số liệu thật |
+| 4 | ✅ Xong | Mô hình văn bản NĐ 30, A4 tự phân trang, `print.css`, xuất DOCX, Mẫu 03 / GPXD / Yêu cầu bổ sung / Mẫu 14 dựng từ dữ liệu hồ sơ |
+| 5 | ⏳ Chờ Q3 | RAG pháp luật, Compliance L1, golden set |
+| 6 | ⏳ Chưa bắt đầu | Tân Dân, CSDL quốc gia, ký số, **bảo mật (Auth + RLS theo vai trò)**, hạ tầng trong nước |
+
+**Đính chính rà soát:** mục A4 ở bảng 1.4 ghi "class `font-a4` chưa định nghĩa" là **sai** — `tailwind.config.js` đã có `fontFamily.a4`. Các thiếu sót thật (phân trang, print CSS, cỡ chữ thể thức) đã xử lý ở GĐ 4.
+
+**Điểm cần lưu ý:**
+- Vị trí số trang: quy tắc dự án ghi "góc phải lề dưới", NĐ 30/2020 quy định "canh giữa lề trên, không hiện trang 1". Hiện theo quy tắc dự án + không hiện trang 1; đổi vị trí chỉ cần sửa `AdminDocumentView.tsx` / `docx.ts`.
+- Lịch nghỉ lễ 2026–2027 (`holidays`): ngày âm lịch / nghỉ bù đánh dấu `is_confirmed = false`, cần cán bộ xác nhận theo thông báo Bộ Nội vụ.
+- Thời hạn kiểm tra nghiệm thu (20 ngày LV) đánh dấu "cần pháp chế xác nhận".
+
+---
+
 ## 1. Kết quả rà soát chi tiết
 
 Mức độ: 🔴 **P0** nghiêm trọng (làm ngay) · 🟠 **P1** cao · 🟡 **P2** trung bình · ⚪ **P3** dọn dẹp.
@@ -266,5 +289,5 @@ Mức độ: 🔴 **P0** nghiêm trọng (làm ngay) · 🟠 **P1** cao · 🟡 
 
 ## 🛑 TRẠNG THÁI
 
-Theo **Plan-First Protocol**, tôi đã **dừng ở bước lập kế hoạch**. Chưa sửa dòng code nào (chỉ chuyển bản kế hoạch cũ vào thư mục lưu trữ).
-Kế hoạch đã sẵn sàng. Tôi đang chờ anh/chị trả lời các câu hỏi Q1–Q5 và **phê duyệt trực tiếp qua tin nhắn chat** để bắt đầu thực thi.
+Kế hoạch đã được phê duyệt ngày 25/09/2026 và GĐ 0–4 đã triển khai (xem mục **Tiến độ thực hiện** ở đầu tài liệu).
+GĐ 5 chờ chốt nhà cung cấp LLM (Q3); GĐ 6 phụ thuộc đối tác tích hợp.
