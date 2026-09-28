@@ -91,9 +91,9 @@ def dashboard(s,kind='all'):
     if MODE=='demo':raise HTTPException(422,'Dashboard tập trung yêu cầu đăng nhập cloud.')
     where=" where coalesce((payload->>'sample')::boolean,false)="+('true' if kind=='sample' else 'false') if kind in ('sample','real') else ''
     with connection(s.actor['id']) as con:
-        cases=con.execute("select count(*) as total,count(*) filter(where coalesce((payload->>'sample')::boolean,false)) as samples,coalesce(sum(jsonb_array_length(payload->'documents')),0) as documents,count(*) filter(where payload->>'status'='reviewed') as reviewed,count(*) filter(where payload->>'status'='request_supplement') as supplements from public.appraisal_cases"+where).fetchone()
-        projects=con.execute('select count(*) as total,coalesce(sum(investment_cost),0) as investment from public.projects').fetchone()
+        cases=con.execute("select count(*) as total,count(*) filter(where payload->>'status' in ('intake','analyzing','analyzed')) as in_progress,coalesce(sum(jsonb_array_length(payload->'documents')),0) as documents,count(*) filter(where payload->>'status'='reviewed') as reviewed,count(*) filter(where payload->>'status'='request_supplement') as supplements from public.appraisal_cases"+where).fetchone()
+        projects=con.execute('select count(*) as total from public.projects').fetchone()
         procedures=con.execute("select procedure as id,count(*) as total from public.appraisal_cases"+where+' group by procedure order by procedure').fetchall()
-        months=con.execute("select to_char(created_at,'YYYY-MM') as id,count(*) as total from public.appraisal_cases"+where+" group by 1 order by 1 desc limit 12").fetchall()
+        months=con.execute("select to_char(coalesce(nullif(payload->>'createdAt','')::timestamptz::date,created_at::date),'YYYY-MM') as id,count(*) as total from public.appraisal_cases"+where+" group by 1 order by 1 asc").fetchall()
         pending=con.execute("select id,payload->>'name' as name,payload->>'projectName' as project_name,project_id,payload->>'status' as status from public.appraisal_cases"+where+' order by updated_at desc,id limit 10').fetchall()
     return {'cases':cases,'projects':projects,'procedures':procedures,'months':months,'recent':pending}

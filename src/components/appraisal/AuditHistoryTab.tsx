@@ -13,7 +13,6 @@ export function AuditHistoryTab({projectId}:{projectId:string}){
   const button='rounded-lg border border-border dark:border-border p-2 text-ink dark:text-ink disabled:opacity-50';
   return <section className="space-y-4 text-sm text-ink dark:text-ink">
     <h3 className="font-semibold">Lịch sử các hồ sơ thuộc dự án</h3>
-    <p className="text-ink-muted dark:text-ink-muted">Các sự kiện đã lưu khi xử lý hồ sơ; bao gồm lịch sử dữ liệu mẫu đã chuyển sang cloud.</p>
     {error&&<p role="alert" className="text-red-700 dark:text-red-300">{error}</p>}
     <DossierGrid storageKey="project-submission-audit" rows={result?.items||[]} columns={[
       {label:'Thời gian',value:r=>r.at,render:r=>formatDateTime(r.at),width:170},

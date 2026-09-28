@@ -2,15 +2,12 @@ import React, { useEffect, useMemo, useState } from 'react';
 import { apiRequest } from '../../services/apiClient';
 import { DossierGrid } from './DossierGrid';
 import { EntityLink } from '../ui/EntityLink';
-import { SearchableSelect } from '../ui/SearchableSelect';
-import { useFilterState } from '../../hooks/useFilterState';
-import { formatCurrency } from '../../lib/utils';
 import { PROJECT_PROCEDURES } from '../../lib/projectProcedures';
 import { Bar, BarChart, CartesianGrid, LabelList, ResponsiveContainer, XAxis, YAxis } from 'recharts';
 
 type Summary = {
-  cases: { total: number; samples: number; documents: number; reviewed: number; supplements: number };
-  projects: { total: number; investment: number };
+  cases: { total: number; in_progress: number; documents: number; reviewed: number; supplements: number };
+  projects: { total: number };
   procedures: { id: string; total: number }[];
   months: { id: string; total: number }[];
   recent: { id: string; name: string; project_id: string; project_name: string; status: string }[];
@@ -29,7 +26,6 @@ const chartGrid = 'var(--border-default)';
 const chartColor = 'var(--ring-focus)';
 
 export function CloudDashboard() {
-  const [filters, setFilters] = useFilterState('dashboard-v2', { kind: 'all' });
   const [data, setData] = useState<Summary | null>(null);
   const [error, setError] = useState('');
   const [version, setVersion] = useState(0);
@@ -37,7 +33,7 @@ export function CloudDashboard() {
   useEffect(() => {
     let active = true;
     setError('');
-    apiRequest<Summary>('/dashboard?kind=' + filters.kind)
+    apiRequest<Summary>('/dashboard')
       .then((summary) => { if (active) setData(summary); })
       .catch((cause) => {
         if (active) {
@@ -46,7 +42,7 @@ export function CloudDashboard() {
         }
       });
     return () => { active = false; };
-  }, [filters.kind, version]);
+  }, [version]);
 
   useEffect(() => {
     const refresh = () => setVersion((current) => current + 1);
@@ -64,27 +60,17 @@ export function CloudDashboard() {
   })), [data]);
 
   const button = 'rounded-lg border border-border dark:border-border px-3 text-sm';
-
   return (
     <div className="space-y-6 text-ink dark:text-ink">
       <div className="flex flex-wrap items-center justify-between gap-3">
         <h1 className="text-2xl font-bold">Dashboard &amp; Thống kê</h1>
         <div className="flex gap-3">
-          <SearchableSelect
-            value={filters.kind}
-            onChange={(kind) => setFilters({ kind })}
-            options={[
-              { value: 'all', label: 'Tất cả hồ sơ' },
-              { value: 'real', label: 'Hồ sơ tự tạo' },
-              { value: 'sample', label: 'Hồ sơ mô phỏng' },
-            ]}
-          />
           <button type="button" className={`${button} min-w-[84px] shrink-0 whitespace-nowrap py-2`} onClick={() => setVersion((current) => current + 1)}>Tải lại</button>
         </div>
       </div>
 
       <p className="text-sm text-ink-muted dark:text-ink-muted">
-        Thống kê trực tiếp từ dữ liệu được phân quyền. Các chỉ số hồ sơ tính theo lần nộp; số dự án và tổng mức đầu tư tính trên toàn bộ dự án trong phạm vi quyền.
+        Thống kê hồ sơ và dự án trong phạm vi quyền của bạn.
       </p>
       {error && <p role="alert" className="text-red-700 dark:text-red-300">{error}</p>}
       {!data && !error && <p>Đang tổng hợp dữ liệu…</p>}
@@ -95,10 +81,9 @@ export function CloudDashboard() {
             ['Dự án', data.projects.total],
             ['Lần nộp hồ sơ', data.cases.total],
             ['Tài liệu', data.cases.documents],
+            ['Đang xử lý', data.cases.in_progress],
             ['Đã rà soát nội bộ', data.cases.reviewed],
             ['Hồ sơ cần bổ sung', data.cases.supplements],
-            ['Lần nộp mô phỏng', data.cases.samples],
-            ['Tổng mức đầu tư', formatCurrency(Number(data.projects.investment))],
           ].map(([label, value]) => (
             <section key={label} className="rounded-xl border border-border dark:border-border bg-surface dark:bg-surface p-5">
               <h2 className="text-sm text-ink-muted dark:text-ink-muted">{label}</h2>

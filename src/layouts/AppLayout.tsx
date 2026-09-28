@@ -67,7 +67,7 @@ export function AppLayout() {
   const {profile,mode,signOut}=useAuth();
   const [authError,setAuthError]=useState('');
   const userName=profile?.full_name||'Chuyên viên mẫu';
-  const userDepartment=profile?.department||'Môi trường dùng thử';
+  const userDepartment=profile?.department||'Phòng Quản lý Xây dựng';
   const initials=userName.split(' ').slice(-2).map(s=>s[0]).join('');
   const [isCollapsed, setIsCollapsed] = useState(false);
   const [userMenuOpen, setUserMenuOpen] = useState(false);
@@ -250,7 +250,7 @@ export function AppLayout() {
                       <p className="text-3xs font-semibold text-primary-600 dark:text-primary-400 truncate">
                         {userDepartment}
                       </p>
-                      <p className="text-3xs text-ink-muted truncate">{profile?.email||'Tài khoản mô phỏng'}</p>
+                      <p className="text-3xs text-ink-muted truncate">{profile?.email||'Chuyên viên'}</p>
                     </div>
                   </div>
 

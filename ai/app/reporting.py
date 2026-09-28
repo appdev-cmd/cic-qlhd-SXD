@@ -49,7 +49,6 @@ def document_bytes(title,blocks,format='pdf',sample=True):
         if blocks and blocks[0].get('letterhead'):
             title_paragraph.alignment=1
             for run in title_paragraph.runs:run.font.size=Pt(14);run.bold=True
-        doc.add_paragraph('DỮ LIỆU MÔ PHỎNG — KHÔNG CÓ GIÁ TRỊ PHÁP LÝ' if sample else 'DỰ THẢO — CHƯA KÝ, CHƯA BAN HÀNH')
         for b in blocks:
             if b.get('heading'):doc.add_paragraph(b['heading'],style='Heading 2')
             for i,t in enumerate(b.get('text',[])):
@@ -96,7 +95,7 @@ def document_bytes(title,blocks,format='pdf',sample=True):
         title_style.fontSize=14;title_style.leading=18;title_style.alignment=TA_CENTER
     out=io.BytesIO()
     doc=SimpleDocTemplate(out,pagesize=(210*mm,297*mm),leftMargin=30*mm,rightMargin=20*mm,topMargin=22*mm,bottomMargin=20*mm)
-    story=[Paragraph(escape(title),title_style),Paragraph('DỮ LIỆU MÔ PHỎNG — KHÔNG CÓ GIÁ TRỊ PHÁP LÝ' if sample else 'DỰ THẢO — CHƯA KÝ, CHƯA BAN HÀNH',small),Spacer(1,8)]
+    story=[Paragraph(escape(title),title_style),Spacer(1,8)]
     if blocks and blocks[0].get('nationalOnly'):
         story.insert(0,Paragraph('CỘNG HÒA XÃ HỘI CHỦ NGHĨA VIỆT NAM<br/>Độc lập - Tự do - Hạnh phúc',header_style))
     elif blocks and blocks[0].get('letterhead'):
@@ -120,7 +119,6 @@ def document_bytes(title,blocks,format='pdf',sample=True):
     def footer(canvas,doc):
         canvas.setFont('AppraisalSerif',9)
         canvas.drawRightString(190*mm,12*mm,f'Trang {doc.page}')
-        canvas.drawString(30*mm,12*mm,'Hồ sơ mô phỏng' if sample else 'Dự thảo chưa ban hành')
     doc.build(story,onFirstPage=footer,onLaterPages=footer)
     return out.getvalue()
 

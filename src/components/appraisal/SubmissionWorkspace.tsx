@@ -33,7 +33,6 @@ export function SubmissionWorkspace({dossierId}:{dossierId:string}) {
     <ProcedureReview dossier={d} onChange={setD}/>
     <OcrPanel dossier={d} onChange={setD}/>
       <div className="flex gap-3">{['pdf','docx'].map(format=><button key={format} className={button} disabled={busy} onClick={()=>action(()=>api.download(`/cases/${d.id}/internal-record/${format}`,`phieu-xu-ly.${format}`))}>Phiếu xử lý {format.toUpperCase()}</button>)}</div>
-      {d.sample&&<div className="rounded-lg border border-amber-200 dark:border-amber-800 bg-amber-50 dark:bg-slate-800 p-4 text-sm text-amber-900 dark:text-amber-200"><strong>Hồ sơ mô phỏng{d.submissionRound?' · Lần '+d.submissionRound:''}</strong><p className="mt-1">{d.sampleScenario||'Tài liệu mẫu phục vụ trải nghiệm phần mềm; không phải hồ sơ chính thức.'}</p></div>}
       <div className="flex gap-3"><button className={button} aria-pressed={tab==='documents'} onClick={()=>setTab('documents')}>Tài liệu đã nộp ({d.documents.length})</button><button className={button} aria-pressed={tab==='audit'} onClick={()=>setTab('audit')}>Lịch sử xử lý</button><button className={button} disabled={busy} onClick={()=>action(async()=>setD(await api.get(d.id)))}>Tải lại</button></div>
       {tab==='documents'?<>
         <button className={button} disabled={busy||d.readOnly||!!d.finalReview} onClick={()=>{setConsultation({text:'',response:''});setConsultationOpen(true);}}>Ghi ý kiến / giải trình</button>
