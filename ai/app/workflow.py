@@ -22,6 +22,18 @@ LABELS={'start':'Bắt đầu xử lý','request_supplement':'Yêu cầu bổ su
 def state(case):
     return case.get('workflow',{}).get('state') or ('reviewed' if case.get('finalReview',{} ) and case['finalReview']['decision']=='reviewed' else 'received')
 
+def derive_status(case):
+    """Single source for the list status: workflow outcome first, then analysis progress."""
+    decision=(case.get('finalReview') or {}).get('decision')
+    if decision in ('reviewed','request_supplement'):return decision
+    current=state(case)
+    if current=='reviewed':return 'reviewed'
+    if current=='awaiting_supplement':return 'request_supplement'
+    job=case.get('job') or {}
+    if job.get('status')=='running' and job.get('mode')!='ocr':return 'analyzing'
+    runs=case.get('runs') or []
+    return 'analyzed' if runs and not runs[-1].get('stale') else 'intake'
+
 def options(case,actor):
     current=state(case)
     assigned=case.get('workflow',{}).get('assigneeId')
@@ -57,9 +69,6 @@ def apply(case,actor,action,note,visit_date=None):
     history=workflow.get('history',[])+[{'from':source,'to':target,'action':LABELS[action],'note':note,'actor':actor['name'],'at':now()}]
     case['workflow']={**workflow,'state':target,'history':history}
     if visit_date:case['workflow']['visitDate']=visit_date
-    if action=='request_supplement':case['status']='request_supplement'
-    if action=='return':case['status']='intake'
     if action=='approve':
-        case['status']='reviewed'
         case['finalReview']={'decision':'reviewed','note':note,'actor':actor['name'],'at':now(),'simulation':bool(case.get('sample'))}
     return LABELS[action]

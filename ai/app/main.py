@@ -306,8 +306,9 @@ def project_audit(id:str,offset:int=Query(default=0,ge=0),limit:int=Query(defaul
 @app.get('/v1/submissions')
 def submissions(s:Store=Depends(store),offset:int=Query(default=0,ge=0),limit:int=Query(default=50,ge=1,le=100),
         procedure:Literal['bcnckt','gpxd','nghiem_thu']|None=None,projectId:str|None=Query(default=None,max_length=100),
-        search:str=Query(default='',max_length=200),kind:str='',status:str='',dateFrom:str='',dateTo:str='',sort:str='updatedAt',direction:str='desc'):
-    return s.page(offset,limit,procedure,projectId,search,kind,status,dateFrom,dateTo,sort,direction)
+        search:str=Query(default='',max_length=200),kind:str='',status:str='',dateFrom:str='',dateTo:str='',sort:str='updatedAt',direction:str='desc',
+        sla:str=Query(default='',max_length=30)):
+    return s.page(offset,limit,procedure,projectId,search,kind,status,dateFrom,dateTo,sort,direction,sla=sla)
 
 @app.post('/v1/model/check')
 def model_check(s:Store=Depends(store)):
@@ -358,10 +359,12 @@ def link_project(id:str,body:ProjectLink,s:Store=Depends(store)):
 
 @app.get('/v1/cases/{id}')
 def get_case(id:str,s:Store=Depends(store)):
+    from .sla import evaluate
     case=s.get(id)
     case['readOnly']=s.has_successor(id)
     for run in case['runs']:
         if run['ruleVersion']!=RULE_VERSION:run['stale']=True
+    case['slaState']=evaluate(case.get('sla'),s.calendar(),case['readOnly'])
     return case
 
 @app.get('/v1/cases/{id}/submissions')
@@ -588,14 +591,14 @@ def run_analysis(s,id,job_id,mode,use_model,snapshot=None):
         current=s.get(id)
         if current['revision']!=expected or current.get('job',{}).get('id')!=job_id or current.get('job',{}).get('status')!='running':
             return
-        current['runs'].append(result);current['status']='analyzed'
+        current['runs'].append(result)
         current['job'].update(status='completed',finishedAt=now())
         save(s,current,expected,'Hoàn tất kiểm tra',f"{len(result['findings'])} nhận xét; {result['aiStatus']}")
     except Exception:
         try:
             case=s.get(id)
             if case.get('job',{}).get('id')==job_id:
-                expected=case['revision'];case['job']['status']='failed';case['status']='intake'
+                expected=case['revision'];case['job']['status']='failed'
                 save(s,case,expected,'Kiểm tra thất bại','Chưa ghi kết quả mới. Có thể chạy lại.')
         except Exception: pass
 
@@ -629,7 +632,7 @@ def start_analysis(id:str,body:RunRequest,s:Store=Depends(store)):
     if case.get('job',{}).get('status')=='running':
         raise HTTPException(409,'Hồ sơ đang được kiểm tra.')
     job_id=uid()
-    case['job']={'id':job_id,'status':'running','startedAt':now(),'mode':body.mode,'useModel':body.useModel};case['status']='analyzing'
+    case['job']={'id':job_id,'status':'running','startedAt':now(),'mode':body.mode,'useModel':body.useModel}
     saved=save(s,case,body.revision,'Bắt đầu kiểm tra',f'Phạm vi {body.mode}; mô hình: {body.useModel}')
     start_queue()
     return saved
@@ -638,7 +641,6 @@ def start_analysis(id:str,body:RunRequest,s:Store=Depends(store)):
 def cancel(id:str,body:Mutation,s:Store=Depends(store)):
     case=edit(s,id,body.revision)
     if case.get('job'): case['job']['status']='cancelled'
-    case['status']='intake'
     result=save(s,case,body.revision,'Hủy kiểm tra','Kết quả của lượt đang chạy sẽ không được ghi.')
     if case.get('job',{}).get('mode')=='ocr':
         from .ocr_jobs import spool
@@ -686,10 +688,12 @@ def final_review(id:str,body:FinalReview,s:Store=Depends(store)):
     if not case['runs'] or case['runs'][-1]['stale'] or case['runs'][-1]['ruleVersion']!=RULE_VERSION: raise HTTPException(409,'Cần kết quả kiểm tra theo bộ quy tắc hiện tại.')
     if body.decision=='reviewed':
         validate_final_review(case)
+    from .workflow import state
     case['finalReview']={'decision':body.decision,'note':body.note,'actor':s.actor['name'],'at':now(),
                          'simulation':bool(case.get('sample')) or MODE=='demo'}
-    case['status']=body.decision
-    case['workflow']={**case.get('workflow',{}),'state':'reviewed' if body.decision=='reviewed' else 'awaiting_supplement'}
+    workflow=case.get('workflow',{});target='reviewed' if body.decision=='reviewed' else 'awaiting_supplement'
+    case['workflow']={**workflow,'state':target,'history':workflow.get('history',[])+[{'from':state(case),'to':target,
+        'action':'Hoàn tất rà soát nội bộ' if target=='reviewed' else 'Yêu cầu bổ sung','note':body.note,'actor':s.actor['name'],'at':now()}]}
     return save(s,case,body.revision,'Hoàn tất rà soát nội bộ',body.note)
 
 @app.post('/v1/cases/{id}/reopen')
@@ -705,7 +709,7 @@ def reopen_review(id:str,body:ReopenReview,s:Store=Depends(store)):
     invalidate(case)
     workflow=case.get('workflow',{})
     case['workflow']={**workflow,'state':'processing','history':workflow.get('history',[])+[
-        {'action':'Mở lại để rà soát','actor':s.actor['name'],'at':now(),'note':body.note}]}
+        {'from':workflow.get('state'),'to':'processing','action':'Mở lại để rà soát','actor':s.actor['name'],'at':now(),'note':body.note}]}
     return save(s,case,body.revision,'Mở lại hồ sơ để rà soát',body.note)
 
 @app.get('/v1/cases/{id}/export/{kind}/{format}')
@@ -768,7 +772,6 @@ def import_sample(scenario:Literal['initial','revised'],s:Store=Depends(store)):
         for spec,data in sample_documents(scenario):
             attach(s,case,spec['requirementId'],spec['filename'],data)
         case['runs'].append(analyze(case))
-        case['status']='analyzed'
         return save(s,case,1,'Nạp bộ mẫu',f'Kịch bản {scenario}; đọc và kiểm tra lại tài liệu bằng cùng quy trình upload.')
     except Exception as exc:
         raise HTTPException(500,'Không tạo được bộ mẫu; kiểm tra bộ sinh tài liệu.') from exc

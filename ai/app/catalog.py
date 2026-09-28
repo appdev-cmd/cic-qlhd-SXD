@@ -92,7 +92,7 @@ def page(s,kind,search='',category='',status='',offset=0,limit=50,sort='',direct
 def dashboard(s,kind='all'):
     if MODE=='demo':
         from .demo_catalog import dashboard as demo_dashboard
-        return demo_dashboard(kind)
+        return {**demo_dashboard(kind),'sla':s.sla_counts(kind)}
     where=" where coalesce((payload->>'sample')::boolean,false)="+('true' if kind=='sample' else 'false') if kind in ('sample','real') else ''
     with connection(s.actor['id']) as con:
         cases=con.execute("select count(*) as total,count(distinct dossier_id) as dossiers,count(*) filter(where payload->>'status' in ('intake','analyzing','analyzed')) as in_progress,coalesce(sum(jsonb_array_length(payload->'documents')),0) as documents,count(*) filter(where payload->>'status'='reviewed') as reviewed,count(*) filter(where payload->>'status'='request_supplement') as supplements from public.appraisal_cases"+where).fetchone()
@@ -106,4 +106,4 @@ def dashboard(s,kind='all'):
     for row in month_rows:
         month=months.setdefault(row['id'],{'id':row['id'],'total':0,'procedures':{}})
         month['total']+=row['total'];month['procedures'][row['procedure']]=row['total']
-    return {'cases':cases,'projects':projects,'procedures':procedures,'months':list(months.values()),'statuses':statuses,'top_projects':top_projects,'recent':pending}
+    return {'cases':cases,'projects':projects,'procedures':procedures,'months':list(months.values()),'statuses':statuses,'top_projects':top_projects,'recent':pending,'sla':s.sla_counts(kind)}

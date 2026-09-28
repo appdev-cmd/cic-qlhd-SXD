@@ -1,0 +1,21 @@
+{
+  "version": "vn-holidays-2026.09",
+  "note": "Demo calendar. Fixed solar-date holidays follow Labour Code 2019 Art. 112; lunar-date spans and substitute days must be confirmed against the annual Ministry of Home Affairs notice before production use. Cloud mode reads public.holidays instead.",
+  "days": [
+    {"date": "2026-01-01", "name": "Tết Dương lịch", "kind": "le_tet", "confirmed": true},
+    {"date": "2026-02-16", "name": "Tết Nguyên đán (29 tháng Chạp)", "kind": "le_tet", "confirmed": false},
+    {"date": "2026-02-17", "name": "Tết Nguyên đán (mùng 1)", "kind": "le_tet", "confirmed": false},
+    {"date": "2026-02-18", "name": "Tết Nguyên đán (mùng 2)", "kind": "le_tet", "confirmed": false},
+    {"date": "2026-02-19", "name": "Tết Nguyên đán (mùng 3)", "kind": "le_tet", "confirmed": false},
+    {"date": "2026-02-20", "name": "Tết Nguyên đán (mùng 4)", "kind": "le_tet", "confirmed": false},
+    {"date": "2026-04-27", "name": "Nghỉ bù Giỗ Tổ Hùng Vương (26/4 là Chủ nhật)", "kind": "nghi_bu", "confirmed": false},
+    {"date": "2026-04-30", "name": "Ngày Chiến thắng", "kind": "le_tet", "confirmed": true},
+    {"date": "2026-05-01", "name": "Quốc tế Lao động", "kind": "le_tet", "confirmed": true},
+    {"date": "2026-09-01", "name": "Quốc khánh (ngày liền kề)", "kind": "le_tet", "confirmed": false},
+    {"date": "2026-09-02", "name": "Quốc khánh", "kind": "le_tet", "confirmed": true},
+    {"date": "2027-01-01", "name": "Tết Dương lịch", "kind": "le_tet", "confirmed": true},
+    {"date": "2027-04-30", "name": "Ngày Chiến thắng", "kind": "le_tet", "confirmed": true},
+    {"date": "2027-05-01", "name": "Quốc tế Lao động", "kind": "le_tet", "confirmed": true},
+    {"date": "2027-09-02", "name": "Quốc khánh", "kind": "le_tet", "confirmed": true}
+  ]
+}

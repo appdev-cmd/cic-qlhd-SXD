@@ -379,18 +379,18 @@ CREATE OR REPLACE FUNCTION public.add_working_days(p_start date, p_days integer)
  RETURNS date
  LANGUAGE plpgsql
  STABLE
-AS $function$
-declare
-    d date := p_start;
-    remaining integer := p_days;
-begin
-    while remaining > 0 loop
-        d := d + 1;
-        if public.is_working_day(d) then
-            remaining := remaining - 1;
-        end if;
-    end loop;
-    return d;
+AS $function$
+declare
+    d date := p_start;
+    remaining integer := p_days;
+begin
+    while remaining > 0 loop
+        d := d + 1;
+        if public.is_working_day(d) then
+            remaining := remaining - 1;
+        end if;
+    end loop;
+    return d;
 end $function$;
 
 CREATE OR REPLACE FUNCTION public.app_has_scope(p_province text, p_department text DEFAULT NULL::text)
@@ -500,86 +500,86 @@ CREATE OR REPLACE FUNCTION public.dashboard_by_investment_form(p_province text D
  RETURNS TABLE(investment_form text, project_count bigint, total_investment numeric)
  LANGUAGE sql
  STABLE
-AS $function$
-    select investment_form, count(*), coalesce(sum(investment_cost), 0)
-    from public.projects
-    where province_code = p_province
-    group by investment_form
-    order by count(*) desc
+AS $function$
+    select investment_form, count(*), coalesce(sum(investment_cost), 0)
+    from public.projects
+    where province_code = p_province
+    group by investment_form
+    order by count(*) desc
 $function$;
 
 CREATE OR REPLACE FUNCTION public.dashboard_monthly(p_year integer DEFAULT (EXTRACT(year FROM CURRENT_DATE))::integer, p_province text DEFAULT 'DB'::text)
  RETURNS TABLE(month_no integer, received bigint, completed bigint, on_time_rate numeric, investment_billion numeric)
  LANGUAGE sql
  STABLE
-AS $function$
-    with months as (select generate_series(1, 12) as m),
-    agg as (
-        select
-            extract(month from submission_date)::int as m,
-            count(*) as received,
-            count(*) filter (where sla_status = 'da_tham_dinh') as completed,
-            count(*) filter (where sla_status <> 'qua_han') as on_time,
-            sum(investment_cost) as investment
-        from public.projects
-        where extract(year from submission_date) = p_year and province_code = p_province
-        group by 1
-    )
-    select
-        months.m,
-        coalesce(agg.received, 0),
-        coalesce(agg.completed, 0),
-        case when coalesce(agg.received, 0) = 0 then null else round(100.0 * agg.on_time / agg.received, 1) end,
-        round(coalesce(agg.investment, 0) / 1e9, 1)
-    from months left join agg on agg.m = months.m
-    where months.m <= case when p_year = extract(year from current_date) then extract(month from current_date)::int else 12 end
-    order by months.m
+AS $function$
+    with months as (select generate_series(1, 12) as m),
+    agg as (
+        select
+            extract(month from submission_date)::int as m,
+            count(*) as received,
+            count(*) filter (where sla_status = 'da_tham_dinh') as completed,
+            count(*) filter (where sla_status <> 'qua_han') as on_time,
+            sum(investment_cost) as investment
+        from public.projects
+        where extract(year from submission_date) = p_year and province_code = p_province
+        group by 1
+    )
+    select
+        months.m,
+        coalesce(agg.received, 0),
+        coalesce(agg.completed, 0),
+        case when coalesce(agg.received, 0) = 0 then null else round(100.0 * agg.on_time / agg.received, 1) end,
+        round(coalesce(agg.investment, 0) / 1e9, 1)
+    from months left join agg on agg.m = months.m
+    where months.m <= case when p_year = extract(year from current_date) then extract(month from current_date)::int else 12 end
+    order by months.m
 $function$;
 
 CREATE OR REPLACE FUNCTION public.dashboard_summary(p_province text DEFAULT 'DB'::text)
  RETURNS TABLE(total_projects bigint, active_appraisals bigint, overdue_count bigint, completed_count bigint, supplement_count bigint, on_time_rate numeric, total_investment numeric, total_savings numeric, approaching_deadline_count bigint)
  LANGUAGE sql
  STABLE
-AS $function$
-    select
-        count(*),
-        count(*) filter (where sla_status in ('tiep_nhan', 'dang_tham_dinh', 'yeu_cau_bo_sung')),
-        count(*) filter (where sla_status = 'qua_han'),
-        count(*) filter (where sla_status = 'da_tham_dinh'),
-        count(*) filter (where sla_status = 'yeu_cau_bo_sung'),
-        case when count(*) = 0 then 0
-             else round(100.0 * count(*) filter (where sla_status <> 'qua_han') / count(*), 1) end,
-        coalesce(sum(investment_cost), 0),
-        coalesce(sum(estimated_savings), 0),
-        count(*) filter (
-            where sla_status in ('tiep_nhan', 'dang_tham_dinh')
-              and deadline between current_date and current_date + 7
-        )
-    from public.projects
-    where province_code = p_province
+AS $function$
+    select
+        count(*),
+        count(*) filter (where sla_status in ('tiep_nhan', 'dang_tham_dinh', 'yeu_cau_bo_sung')),
+        count(*) filter (where sla_status = 'qua_han'),
+        count(*) filter (where sla_status = 'da_tham_dinh'),
+        count(*) filter (where sla_status = 'yeu_cau_bo_sung'),
+        case when count(*) = 0 then 0
+             else round(100.0 * count(*) filter (where sla_status <> 'qua_han') / count(*), 1) end,
+        coalesce(sum(investment_cost), 0),
+        coalesce(sum(estimated_savings), 0),
+        count(*) filter (
+            where sla_status in ('tiep_nhan', 'dang_tham_dinh')
+              and deadline between current_date and current_date + 7
+        )
+    from public.projects
+    where province_code = p_province
 $function$;
 
 CREATE OR REPLACE FUNCTION public.derive_sla_status(p_state text, p_deadline date)
  RETURNS text
  LANGUAGE sql
  STABLE
-AS $function$
-    select case
-        when p_state = 'tiep_nhan' then 'tiep_nhan'
-        when p_state = 'yeu_cau_bo_sung' then 'yeu_cau_bo_sung'
-        when p_state = 'da_phat_hanh' then 'da_tham_dinh'
-        when p_state = 'tra_ho_so' then 'tra_ho_so'
-        when p_deadline < current_date then 'qua_han'
-        else 'dang_tham_dinh'
-    end
+AS $function$
+    select case
+        when p_state = 'tiep_nhan' then 'tiep_nhan'
+        when p_state = 'yeu_cau_bo_sung' then 'yeu_cau_bo_sung'
+        when p_state = 'da_phat_hanh' then 'da_tham_dinh'
+        when p_state = 'tra_ho_so' then 'tra_ho_so'
+        when p_deadline < current_date then 'qua_han'
+        else 'dang_tham_dinh'
+    end
 $function$;
 
 CREATE OR REPLACE FUNCTION public.f_search_text(VARIADIC parts text[])
  RETURNS text
  LANGUAGE sql
  IMMUTABLE PARALLEL SAFE
-AS $function$
-    select lower(public.f_unaccent(concat_ws(' ', variadic parts)))
+AS $function$
+    select lower(public.f_unaccent(concat_ws(' ', variadic parts)))
 $function$;
 
 CREATE OR REPLACE FUNCTION public.f_unaccent(text)
@@ -616,9 +616,9 @@ CREATE OR REPLACE FUNCTION public.is_working_day(p_date date)
  RETURNS boolean
  LANGUAGE sql
  STABLE
-AS $function$
-    select extract(isodow from p_date) < 6
-       and not exists (select 1 from public.holidays h where h.holiday_date = p_date and h.kind <> 'lam_bu')
+AS $function$
+    select extract(isodow from p_date) < 6
+       and not exists (select 1 from public.holidays h where h.holiday_date = p_date and h.kind <> 'lam_bu')
 $function$;
 
 CREATE OR REPLACE FUNCTION public.persist_appraisal_case(case_id uuid, expected_revision integer, new_payload jsonb)
@@ -731,16 +731,16 @@ CREATE OR REPLACE FUNCTION public.refresh_sla_status()
  LANGUAGE plpgsql
  SECURITY DEFINER
  SET search_path TO 'public'
-AS $function$
-declare
-    affected integer;
-begin
-    perform set_config('app.skip_audit', 'on', true);
-    update public.projects
-    set sla_status = public.derive_sla_status(workflow_state, deadline)
-    where sla_status is distinct from public.derive_sla_status(workflow_state, deadline);
-    get diagnostics affected = row_count;
-    return affected;
+AS $function$
+declare
+    affected integer;
+begin
+    perform set_config('app.skip_audit', 'on', true);
+    update public.projects
+    set sla_status = public.derive_sla_status(workflow_state, deadline)
+    where sla_status is distinct from public.derive_sla_status(workflow_state, deadline);
+    get diagnostics affected = row_count;
+    return affected;
 end $function$;
 
 CREATE OR REPLACE FUNCTION public.renew_appraisal_job(job_id uuid, worker_id text)
@@ -912,43 +912,43 @@ $function$;
 CREATE OR REPLACE FUNCTION public.tg_material_prices_search_text()
  RETURNS trigger
  LANGUAGE plpgsql
-AS $function$
-begin
-    new.search_text := public.f_search_text(new.code, new.name, new.region, new.supplier);
-    return new;
+AS $function$
+begin
+    new.search_text := public.f_search_text(new.code, new.name, new.region, new.supplier);
+    return new;
 end $function$;
 
 CREATE OR REPLACE FUNCTION public.tg_organizations_search_text()
  RETURNS trigger
  LANGUAGE plpgsql
-AS $function$
-begin
-    new.search_text := public.f_search_text(
-        new.code, new.name, new.short_name, new.tax_code, new.address, new.legal_rep, new.cert_number
-    );
-    return new;
+AS $function$
+begin
+    new.search_text := public.f_search_text(
+        new.code, new.name, new.short_name, new.tax_code, new.address, new.legal_rep, new.cert_number
+    );
+    return new;
 end $function$;
 
 CREATE OR REPLACE FUNCTION public.tg_personnel_search_text()
  RETURNS trigger
  LANGUAGE plpgsql
-AS $function$
-begin
-    new.search_text := public.f_search_text(
-        new.code, new.full_name, new.cert_number, new.org_name, array_to_string(new.specialties, ' ')
-    );
-    return new;
+AS $function$
+begin
+    new.search_text := public.f_search_text(
+        new.code, new.full_name, new.cert_number, new.org_name, array_to_string(new.specialties, ' ')
+    );
+    return new;
 end $function$;
 
 CREATE OR REPLACE FUNCTION public.tg_projects_search_text()
  RETURNS trigger
  LANGUAGE plpgsql
-AS $function$
-begin
-    new.search_text := public.f_search_text(
-        new.code, new.title, new.investor_name, new.location_district, new.lead_reviewer_name, new.field
-    );
-    return new;
+AS $function$
+begin
+    new.search_text := public.f_search_text(
+        new.code, new.title, new.investor_name, new.location_district, new.lead_reviewer_name, new.field
+    );
+    return new;
 end $function$;
 
 CREATE OR REPLACE FUNCTION public.transition_dossier(p_project_id text, p_action text, p_note text DEFAULT NULL::text, p_deadline date DEFAULT NULL::date, p_assignee_staff_id text DEFAULT NULL::text)
@@ -956,105 +956,105 @@ CREATE OR REPLACE FUNCTION public.transition_dossier(p_project_id text, p_action
  LANGUAGE plpgsql
  SECURITY DEFINER
  SET search_path TO 'public'
-AS $function$
-declare
-    v_project public.projects;
-    v_actor text;
-    v_role text;
-    v_headers jsonb;
-    v_to text;
-    v_from text;
-    v_allowed_from text[];
-    v_allowed_roles text[];
-    v_assignee public.staff_users;
-begin
-    begin
-        v_headers := nullif(current_setting('request.headers', true), '')::jsonb;
-    exception when others then
-        v_headers := null;
-    end;
-    v_actor := coalesce(v_headers ->> 'x-actor-id', 'system');
-    select role into v_role from public.staff_users where id = v_actor;
-
-    select * into v_project from public.projects where id = p_project_id for update;
-    if not found then
-        raise exception 'Không tìm thấy hồ sơ %', p_project_id;
-    end if;
-    v_from := v_project.workflow_state;
-
-    case p_action
-        when 'xac_nhan_hop_le' then v_allowed_from := array['tiep_nhan']; v_to := 'dang_tham_dinh'; v_allowed_roles := array['officer', 'head_of_department'];
-        when 'yeu_cau_bo_sung' then v_allowed_from := array['tiep_nhan', 'dang_tham_dinh']; v_to := 'yeu_cau_bo_sung'; v_allowed_roles := array['officer', 'head_of_department'];
-        when 'nhan_bo_sung' then v_allowed_from := array['yeu_cau_bo_sung']; v_to := 'dang_tham_dinh'; v_allowed_roles := array['officer', 'head_of_department'];
-        when 'trinh_truong_phong' then v_allowed_from := array['dang_tham_dinh']; v_to := 'cho_truong_phong'; v_allowed_roles := array['officer'];
-        when 'tra_lai_chuyen_vien' then v_allowed_from := array['cho_truong_phong']; v_to := 'dang_tham_dinh'; v_allowed_roles := array['head_of_department'];
-        when 'trinh_lanh_dao' then v_allowed_from := array['cho_truong_phong']; v_to := 'cho_lanh_dao'; v_allowed_roles := array['head_of_department'];
-        when 'tra_lai_truong_phong' then v_allowed_from := array['cho_lanh_dao']; v_to := 'cho_truong_phong'; v_allowed_roles := array['director'];
-        when 'ky_phat_hanh' then v_allowed_from := array['cho_lanh_dao']; v_to := 'da_phat_hanh'; v_allowed_roles := array['director'];
-        when 'tra_ho_so' then v_allowed_from := array['tiep_nhan', 'yeu_cau_bo_sung']; v_to := 'tra_ho_so'; v_allowed_roles := array['officer', 'head_of_department', 'director'];
-        when 'gia_han' then v_allowed_from := array['dang_tham_dinh', 'cho_truong_phong', 'cho_lanh_dao']; v_to := v_project.workflow_state; v_allowed_roles := array['head_of_department', 'director'];
-        when 'phan_cong' then v_allowed_from := array['tiep_nhan', 'yeu_cau_bo_sung', 'dang_tham_dinh', 'cho_truong_phong']; v_to := v_project.workflow_state; v_allowed_roles := array['head_of_department', 'director'];
-        else raise exception 'Thao tác không hợp lệ: %', p_action;
-    end case;
-
-    if not (v_project.workflow_state = any (v_allowed_from)) then
-        raise exception 'Không thể thực hiện "%" khi hồ sơ đang ở bước "%"', p_action, v_project.workflow_state;
-    end if;
-    if coalesce(v_role, '') <> 'admin' and not (coalesce(v_role, '') = any (v_allowed_roles)) then
-        raise exception 'Vai trò hiện tại không được phép thực hiện thao tác này';
-    end if;
-
-    if p_action = 'yeu_cau_bo_sung' and v_project.supplement_count >= 1 then
-        raise exception 'Theo Điều 36 NĐ 217/2026/NĐ-CP, cơ quan thẩm định chỉ được yêu cầu bổ sung hồ sơ 01 lần';
-    end if;
-    if p_action = 'gia_han' and v_project.extension_count >= 1 then
-        raise exception 'Hồ sơ đã được gia hạn 01 lần — không được gia hạn thêm';
-    end if;
-    if p_action in ('xac_nhan_hop_le', 'nhan_bo_sung', 'gia_han') and p_deadline is null then
-        raise exception 'Thiếu hạn trả kết quả mới cho thao tác "%"', p_action;
-    end if;
-    if p_action in ('yeu_cau_bo_sung', 'tra_ho_so', 'tra_lai_chuyen_vien', 'tra_lai_truong_phong', 'gia_han') and coalesce(trim(p_note), '') = '' then
-        raise exception 'Vui lòng nhập lý do / nội dung cho thao tác này';
-    end if;
-
-    if p_action = 'phan_cong' then
-        select * into v_assignee from public.staff_users where id = p_assignee_staff_id and role = 'officer';
-        if not found then
-            raise exception 'Cán bộ được phân công không hợp lệ';
-        end if;
-    end if;
-
-    update public.projects set
-        workflow_state = v_to,
-        received_date = case when p_action in ('xac_nhan_hop_le', 'nhan_bo_sung') then current_date else received_date end,
-        deadline = coalesce(p_deadline, deadline),
-        supplement_count = supplement_count + case when p_action = 'yeu_cau_bo_sung' then 1 else 0 end,
-        extension_count = extension_count + case when p_action = 'gia_han' then 1 else 0 end,
-        paused_at = case when p_action = 'yeu_cau_bo_sung' then current_date when p_action = 'nhan_bo_sung' then null else paused_at end,
-        lead_reviewer_staff_id = case when p_action = 'phan_cong' then v_assignee.id else lead_reviewer_staff_id end,
-        lead_reviewer_name = case when p_action = 'phan_cong' then v_assignee.full_name else lead_reviewer_name end,
-        department = case when p_action = 'phan_cong' then v_assignee.department else department end,
-        sla_status = public.derive_sla_status(v_to, coalesce(p_deadline, deadline)),
-        status = public.derive_sla_status(v_to, coalesce(p_deadline, deadline))
-    where id = p_project_id
-    returning * into v_project;
-
-    insert into public.workflow_transitions (project_id, action, from_state, to_state, note, actor_id)
-    values (p_project_id, p_action, v_from, v_to, p_note, v_actor);
-
-    return v_project;
+AS $function$
+declare
+    v_project public.projects;
+    v_actor text;
+    v_role text;
+    v_headers jsonb;
+    v_to text;
+    v_from text;
+    v_allowed_from text[];
+    v_allowed_roles text[];
+    v_assignee public.staff_users;
+begin
+    begin
+        v_headers := nullif(current_setting('request.headers', true), '')::jsonb;
+    exception when others then
+        v_headers := null;
+    end;
+    v_actor := coalesce(v_headers ->> 'x-actor-id', 'system');
+    select role into v_role from public.staff_users where id = v_actor;
+
+    select * into v_project from public.projects where id = p_project_id for update;
+    if not found then
+        raise exception 'Không tìm thấy hồ sơ %', p_project_id;
+    end if;
+    v_from := v_project.workflow_state;
+
+    case p_action
+        when 'xac_nhan_hop_le' then v_allowed_from := array['tiep_nhan']; v_to := 'dang_tham_dinh'; v_allowed_roles := array['officer', 'head_of_department'];
+        when 'yeu_cau_bo_sung' then v_allowed_from := array['tiep_nhan', 'dang_tham_dinh']; v_to := 'yeu_cau_bo_sung'; v_allowed_roles := array['officer', 'head_of_department'];
+        when 'nhan_bo_sung' then v_allowed_from := array['yeu_cau_bo_sung']; v_to := 'dang_tham_dinh'; v_allowed_roles := array['officer', 'head_of_department'];
+        when 'trinh_truong_phong' then v_allowed_from := array['dang_tham_dinh']; v_to := 'cho_truong_phong'; v_allowed_roles := array['officer'];
+        when 'tra_lai_chuyen_vien' then v_allowed_from := array['cho_truong_phong']; v_to := 'dang_tham_dinh'; v_allowed_roles := array['head_of_department'];
+        when 'trinh_lanh_dao' then v_allowed_from := array['cho_truong_phong']; v_to := 'cho_lanh_dao'; v_allowed_roles := array['head_of_department'];
+        when 'tra_lai_truong_phong' then v_allowed_from := array['cho_lanh_dao']; v_to := 'cho_truong_phong'; v_allowed_roles := array['director'];
+        when 'ky_phat_hanh' then v_allowed_from := array['cho_lanh_dao']; v_to := 'da_phat_hanh'; v_allowed_roles := array['director'];
+        when 'tra_ho_so' then v_allowed_from := array['tiep_nhan', 'yeu_cau_bo_sung']; v_to := 'tra_ho_so'; v_allowed_roles := array['officer', 'head_of_department', 'director'];
+        when 'gia_han' then v_allowed_from := array['dang_tham_dinh', 'cho_truong_phong', 'cho_lanh_dao']; v_to := v_project.workflow_state; v_allowed_roles := array['head_of_department', 'director'];
+        when 'phan_cong' then v_allowed_from := array['tiep_nhan', 'yeu_cau_bo_sung', 'dang_tham_dinh', 'cho_truong_phong']; v_to := v_project.workflow_state; v_allowed_roles := array['head_of_department', 'director'];
+        else raise exception 'Thao tác không hợp lệ: %', p_action;
+    end case;
+
+    if not (v_project.workflow_state = any (v_allowed_from)) then
+        raise exception 'Không thể thực hiện "%" khi hồ sơ đang ở bước "%"', p_action, v_project.workflow_state;
+    end if;
+    if coalesce(v_role, '') <> 'admin' and not (coalesce(v_role, '') = any (v_allowed_roles)) then
+        raise exception 'Vai trò hiện tại không được phép thực hiện thao tác này';
+    end if;
+
+    if p_action = 'yeu_cau_bo_sung' and v_project.supplement_count >= 1 then
+        raise exception 'Theo Điều 36 NĐ 217/2026/NĐ-CP, cơ quan thẩm định chỉ được yêu cầu bổ sung hồ sơ 01 lần';
+    end if;
+    if p_action = 'gia_han' and v_project.extension_count >= 1 then
+        raise exception 'Hồ sơ đã được gia hạn 01 lần — không được gia hạn thêm';
+    end if;
+    if p_action in ('xac_nhan_hop_le', 'nhan_bo_sung', 'gia_han') and p_deadline is null then
+        raise exception 'Thiếu hạn trả kết quả mới cho thao tác "%"', p_action;
+    end if;
+    if p_action in ('yeu_cau_bo_sung', 'tra_ho_so', 'tra_lai_chuyen_vien', 'tra_lai_truong_phong', 'gia_han') and coalesce(trim(p_note), '') = '' then
+        raise exception 'Vui lòng nhập lý do / nội dung cho thao tác này';
+    end if;
+
+    if p_action = 'phan_cong' then
+        select * into v_assignee from public.staff_users where id = p_assignee_staff_id and role = 'officer';
+        if not found then
+            raise exception 'Cán bộ được phân công không hợp lệ';
+        end if;
+    end if;
+
+    update public.projects set
+        workflow_state = v_to,
+        received_date = case when p_action in ('xac_nhan_hop_le', 'nhan_bo_sung') then current_date else received_date end,
+        deadline = coalesce(p_deadline, deadline),
+        supplement_count = supplement_count + case when p_action = 'yeu_cau_bo_sung' then 1 else 0 end,
+        extension_count = extension_count + case when p_action = 'gia_han' then 1 else 0 end,
+        paused_at = case when p_action = 'yeu_cau_bo_sung' then current_date when p_action = 'nhan_bo_sung' then null else paused_at end,
+        lead_reviewer_staff_id = case when p_action = 'phan_cong' then v_assignee.id else lead_reviewer_staff_id end,
+        lead_reviewer_name = case when p_action = 'phan_cong' then v_assignee.full_name else lead_reviewer_name end,
+        department = case when p_action = 'phan_cong' then v_assignee.department else department end,
+        sla_status = public.derive_sla_status(v_to, coalesce(p_deadline, deadline)),
+        status = public.derive_sla_status(v_to, coalesce(p_deadline, deadline))
+    where id = p_project_id
+    returning * into v_project;
+
+    insert into public.workflow_transitions (project_id, action, from_state, to_state, note, actor_id)
+    values (p_project_id, p_action, v_from, v_to, p_note, v_actor);
+
+    return v_project;
 end $function$;
 
 CREATE OR REPLACE FUNCTION public.working_days_between(p_from date, p_to date)
  RETURNS integer
  LANGUAGE sql
  STABLE
-AS $function$
-    select case
-        when p_to = p_from then 0
-        when p_to > p_from then (select count(*)::int from generate_series(p_from + 1, p_to, interval '1 day') g(d) where public.is_working_day(g.d::date))
-        else -(select count(*)::int from generate_series(p_to + 1, p_from, interval '1 day') g(d) where public.is_working_day(g.d::date))
-    end
+AS $function$
+    select case
+        when p_to = p_from then 0
+        when p_to > p_from then (select count(*)::int from generate_series(p_from + 1, p_to, interval '1 day') g(d) where public.is_working_day(g.d::date))
+        else -(select count(*)::int from generate_series(p_to + 1, p_from, interval '1 day') g(d) where public.is_working_day(g.d::date))
+    end
 $function$;
 
 alter table profiles add constraint "profiles_email_key" UNIQUE (email);
@@ -1254,6 +1254,8 @@ CREATE UNIQUE INDEX appraisal_previous_unique ON public.appraisal_cases USING bt
 CREATE INDEX appraisal_project_page ON public.appraisal_cases USING btree (province_id, project_id, procedure, created_at DESC, id);
 
 CREATE INDEX appraisal_status_page ON public.appraisal_cases USING btree (province_id, department, ((payload ->> 'status'::text)), created_at DESC, id);
+
+CREATE INDEX appraisal_sla_due_page ON public.appraisal_cases USING btree (province_id, department, ((payload -> 'sla'::text) ->> 'dueDate'::text)), id);
 
 CREATE INDEX idx_ai_logs_project ON public.ai_logs USING btree (project_id, created_at DESC);
 

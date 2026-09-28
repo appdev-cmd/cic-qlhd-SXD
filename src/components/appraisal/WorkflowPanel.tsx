@@ -7,6 +7,7 @@ import {SearchableSelect} from '../ui/SearchableSelect';
 import {DateInput} from '../ui/DateInput';
 import {DossierGrid} from './DossierGrid';
 import {formatDate,formatDateTime} from '../../lib/utils';
+import {SlaSummary} from './SlaBadge';
 type Info={state:string;label:string;actions:{id:string;label:string}[];canAssign:boolean;canReopen:boolean;reviewers:{id:string;full_name:string;role:string}[];workflow:{assigneeName?:string;deadline?:string;deadlineBasis?:string;visitDate?:string;history?:{action:string;actor:string;at:string;note:string}[]}};
 const button='rounded-lg border border-border dark:border-border bg-surface dark:bg-surface px-3 py-2 text-sm text-ink dark:text-ink disabled:opacity-50';
 export function WorkflowPanel({dossier:d,onChange}:{dossier:Dossier;onChange:(d:Dossier)=>void}){
@@ -20,6 +21,7 @@ export function WorkflowPanel({dossier:d,onChange}:{dossier:Dossier;onChange:(d:
   }catch(e){setError((e as Error).message);}finally{setBusy(false);}};
   return <section className="rounded-xl border border-border dark:border-border bg-surface dark:bg-surface p-4 space-y-3 text-ink dark:text-ink"><div className="flex flex-wrap justify-between gap-3"><h3 className="font-semibold">Quy trình xử lý · {info?.label||'Đang tải…'}</h3><button className={button} onClick={()=>setHistory(!history)}>{history?'Ẩn lịch sử':'Lịch sử quy trình'}</button></div>
     <div className="flex flex-wrap gap-4 text-sm text-ink-muted dark:text-ink-muted"><p>Phụ trách: {info?.workflow.assigneeName||'Chưa phân công'}</p><p>Hạn nội bộ: {info?.workflow.deadline?formatDate(info.workflow.deadline):'Chưa xác nhận'}</p>{info?.workflow.visitDate&&<p>Kiểm tra hiện trường: {formatDate(info.workflow.visitDate)}</p>}</div>
+    <SlaSummary facts={d.sla} state={d.slaState}/>
     {info?.workflow.deadlineBasis&&<p className="text-xs text-ink-muted dark:text-ink-muted">Ghi chú phân công/hạn xử lý: {info.workflow.deadlineBasis}</p>}
     <div className="flex flex-wrap gap-2">{info?.canAssign&&<button className={button} onClick={()=>open({id:'assign',label:'Phân công xử lý'})}>Phân công</button>}{info?.canReopen&&<button className={button} onClick={()=>open({id:'reopen',label:'Mở lại để rà soát'})}>Mở lại để rà soát</button>}{info?.actions.map(a=><button key={a.id} disabled={busy||d.job?.status==='running'} className={button} onClick={()=>open(a)}>{a.label}</button>)}</div>
     <p className="text-xs text-ink-muted dark:text-ink-muted">Luồng xử lý nội bộ phục vụ rà soát. Hoàn tất bước này chưa ký hoặc ban hành giấy phép/thông báo nghiệm thu. Hạn nội bộ do người phụ trách xác nhận.</p>

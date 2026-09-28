@@ -97,7 +97,6 @@ def invalidate(case):
     if case.get('procedureReview'):
         case.setdefault('procedureReviewHistory',[]).append(case['procedureReview'])
         case['procedureReview']=None
-    case['status'] = 'intake'
     if case.get('job', {}).get('status') == 'running':
         case['job']['status'] = 'cancelled'
     case['finalReview'] = None

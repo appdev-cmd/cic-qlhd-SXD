@@ -123,11 +123,32 @@ class Store:
                 row=con.execute('select public.read_appraisal_job(%s) as job',(job['id'],)).fetchone()['job']
                 state=row['status'] if row else 'stale'
         if state in ('stale','failed','cancelled'):
+            from .workflow import derive_status
             case['job']={**job,'status':'interrupted' if state=='stale' else state}
-            case['status']='intake'
+            case['status']=derive_status(case)
+        return case
+
+    def calendar(self):
+        from .sla import load_calendar
+        return load_calendar(self.actor['id'],MODE!='demo')
+
+    def classification(self,case):
+        """Project group/grade used for statutory deadlines; empty when unknown."""
+        if not case.get('projectId'):return {}
+        try:project=self.project(case['projectId'])
+        except HTTPException:return {}
+        return {'group':project.get('group_type',project.get('projectGroup')),'grade':project.get('grade',project.get('buildingGrade'))}
+
+    def derive(self,case):
+        """Recompute derived fields (status, SLA) so every write path stays consistent."""
+        from .workflow import derive_status
+        from .sla import compute
+        case['status']=derive_status(case)
+        case['sla']=compute(case,self.calendar(),self.classification(case))
         return case
 
     def save(self,case,expected=None):
+        self.derive(case)
         if MODE=='demo':
             with db() as con:
                 con.execute('BEGIN IMMEDIATE')
@@ -281,14 +302,64 @@ class Store:
             items=[{**r['event'],'caseName':r['name'],'caseId':r['case_id']} for r in rows]
         return {'items':items,'total':total,'offset':offset,'limit':limit}
 
-    def page(self,offset=0,limit=50,procedure=None,project_id=None,search='',kind='',status='',date_from='',date_to='',sort='updatedAt',direction='desc',dossier_id=None):
+    def _summary_sql(self):
+        """Column accessors for the list projection (SQLite summary table or cloud JSONB payload)."""
+        nested={'slaDueDate':"payload->'sla'->>'dueDate'",'slaPaused':"(payload->'sla'->>'paused')::boolean",
+                'slaCompletedAt':"payload->'sla'->>'completedAt'",'workflowState':"payload->'workflow'->>'state'"}
+        if MODE=='demo':
+            return (lambda key:'"'+key+'"'),'exists(select 1 from case_summaries n where n."previousSubmissionId"=case_summaries.id)',nested
+        return ((lambda key:nested.get(key,"payload->>'"+key+"'")),
+                'exists(select 1 from public.appraisal_cases n where n.previous_submission_id=appraisal_cases.id)',nested)
+
+    def _sla_conditions(self,calendar,today):
+        """SQL predicate and parameters per SLA state, evaluated against today's date."""
+        from .sla import soon_limit
+        field,successor,_=self._summary_sql()
+        sqlite=MODE=='demo'; mark='?' if sqlite else '%s'
+        done=field('slaCompletedAt')+' is not null'
+        paused=('coalesce('+field('slaPaused')+',0)=1') if sqlite else 'coalesce('+field('slaPaused')+',false)'
+        running='not ('+done+') and not '+successor+' and not '+paused
+        due=field('slaDueDate'); soon=soon_limit(calendar,today).isoformat(); now=today.isoformat()
+        return {'completed':(done+' and ('+due+' is null or '+field('slaCompletedAt')+'<='+due+')',[]),
+            'completed_late':(done+' and '+field('slaCompletedAt')+'>'+due,[]),
+            'superseded':('not ('+done+') and '+successor,[]),
+            'paused':('not ('+done+') and not '+successor+' and '+paused,[]),
+            'unconfigured':(running+' and '+due+' is null',[]),
+            'overdue':(running+' and '+due+'<'+mark,[now]),
+            'due_soon':(running+' and '+due+'>='+mark+' and '+due+'<='+mark,[now,soon]),
+            'on_track':(running+' and '+due+'>'+mark,[soon])}
+
+    def sla_counts(self,kind='all'):
+        """Submission counts per SLA state in one aggregate query (dashboard)."""
+        from .sla import date
+        conditions=self._sla_conditions(self.calendar(),date.today())
+        sqlite=MODE=='demo'
+        select=','.join('coalesce(sum(case when '+sql+' then 1 else 0 end),0) as n'+str(i) for i,(sql,_) in enumerate(conditions.values()))
+        values=[v for _,params in conditions.values() for v in params]
+        where=''
+        if kind in ('sample','real'):
+            where=(' where coalesce(sample,0)='+('1' if kind=='sample' else '0') if sqlite
+                   else " where coalesce((payload->>'sample')::boolean,false)="+('true' if kind=='sample' else 'false'))
+        if sqlite:
+            with db() as con:row=con.execute('select '+select+' from case_summaries'+where,values).fetchone()
+        else:
+            with connection(self.actor['id']) as con:row=list(con.execute('select '+select+' from public.appraisal_cases'+where,values).fetchone().values())
+        return [{'id':key,'total':int(row[i])} for i,key in enumerate(conditions)]
+
+    def page(self,offset=0,limit=50,procedure=None,project_id=None,search='',kind='',status='',date_from='',date_to='',sort='updatedAt',direction='desc',dossier_id=None,sla=''):
+        from . import sla as deadlines
         fields=['id','name','province','department','projectId','projectName','projectCode','sample',
-                'submissionCode','submissionRound','dossierId','previousSubmissionId','sampleScenario','legalDate','createdAt','updatedAt','status','revision']
+                'submissionCode','submissionRound','dossierId','previousSubmissionId','sampleScenario','legalDate','createdAt','updatedAt','status','revision',
+                'slaDueDate','slaPaused','slaCompletedAt','workflowState']
         sort=sort if sort in fields+['documentCount','procedure'] else 'updatedAt'
         direction='asc' if direction=='asc' else 'desc'
         sqlite=MODE=='demo'; mark='?' if sqlite else '%s'
-        field=lambda key: '"'+key+'"' if sqlite else "payload->>'"+key+"'"
+        field,successor,nested=self._summary_sql()
         clauses=[]; values=[]
+        calendar=self.calendar(); today=deadlines.date.today()
+        if sla in deadlines.STATES:
+            condition=self._sla_conditions(calendar,today)[sla]
+            clauses.append('('+condition[0]+')');values.extend(condition[1])
         if dossier_id:
             if sqlite:
                 clauses.append("""id in (with recursive family(id,depth) as (
@@ -316,15 +387,18 @@ class Store:
         sort_expr=count_expr if sort=='documentCount' else field(sort)
         if sort=='submissionRound':sort_expr='cast(coalesce('+field(sort)+",'1') as integer)"
         if sqlite:
-            projection="json_object("+','.join("'"+k+"',"+field(k) for k in fields)+",'procedure',coalesce("+field('procedure')+",'bcnckt'),'documentCount',"+count_expr+')'
+            projection="json_object("+','.join("'"+k+"',"+field(k) for k in fields)+",'procedure',coalesce("+field('procedure')+",'bcnckt'),'documentCount',"+count_expr+",'hasSuccessor',"+successor+')'
             with db() as con:
                 total=con.execute('select count(*) from case_summaries'+where,values).fetchone()[0]
                 rows=[json.loads(r[0]) for r in con.execute('select '+projection+' from case_summaries'+where+' order by '+sort_expr+' '+direction+',id '+direction+' limit ? offset ?',values+[limit,offset])]
         else:
-            projection="jsonb_build_object("+','.join("'"+k+"',payload->'"+k+"'" for k in fields)+",'procedure',coalesce(payload->>'procedure','bcnckt'),'documentCount',"+count_expr+') as summary'
+            projection="jsonb_build_object("+','.join("'"+k+"',"+(field(k) if k in nested else "payload->'"+k+"'") for k in fields)+",'procedure',coalesce(payload->>'procedure','bcnckt'),'documentCount',"+count_expr+",'hasSuccessor',"+successor+') as summary'
             with connection(self.actor['id']) as con:
                 total=con.execute('select count(*) as n from public.appraisal_cases'+where,values).fetchone()['n']
                 rows=[r['summary'] for r in con.execute('select '+projection+' from public.appraisal_cases'+where+' order by '+sort_expr+' '+direction+' nulls last,id '+direction+' limit %s offset %s',values+[limit,offset])]
+        for row in rows:
+            row['slaState']=deadlines.evaluate({'dueDate':row.get('slaDueDate'),'paused':bool(row.get('slaPaused')),
+                'completedAt':row.get('slaCompletedAt')},calendar,bool(row.pop('hasSuccessor',False)),today)
         return {'items':rows,'total':total,'offset':offset,'limit':limit}
 
     def put_file(self,case_id,id,data):
