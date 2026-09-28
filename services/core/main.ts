@@ -2,11 +2,12 @@ import 'reflect-metadata';
 import { Module } from '@nestjs/common';
 import { NestFactory } from '@nestjs/core';
 import express from 'express';
+import ports from '../../config/runtime-ports.json' with {type:'json'};
 
 class CoreModule {}
 Module({})(CoreModule);
 const secret = process.env.APPRAISAL_INTERNAL_TOKEN;
-if (!secret) throw new Error('Use pnpm dev:appraisal to start the services.');
+if (!secret) throw new Error('Dùng pnpm dev để khởi động cả bộ dịch vụ.');
 const app = await NestFactory.create(CoreModule, { bodyParser: false });
 app.use('/api/appraisal', express.raw({ type: '*/*', limit: '27mb' }));
 app.use('/api/appraisal', async (req: express.Request, res: express.Response) => {
@@ -20,12 +21,13 @@ app.use('/api/appraisal', async (req: express.Request, res: express.Response) =>
   if ((process.env.APPRAISAL_MODE || 'demo') === 'demo' && !['localhost', '127.0.0.1'].includes(host)) {
     res.status(403).json({ detail: 'Môi trường dùng thử chỉ cho phép truy cập từ máy cục bộ.' }); return;
   }
-  if (origin && !['http://localhost:3008', 'http://127.0.0.1:3008', process.env.APPRAISAL_ORIGIN].filter(Boolean).includes(origin)) {
+  if (origin && ![`http://localhost:${ports.web}`, `http://127.0.0.1:${ports.web}`, process.env.APPRAISAL_ORIGIN].filter(Boolean).includes(origin)) {
     res.status(403).json({ detail: 'Nguồn yêu cầu không được phép.' }); return;
   }
   if (!['GET', 'POST', 'PATCH'].includes(req.method)) { res.sendStatus(405); return; }
+  const workerPort = ports.worker;
   try {
-    const response = await fetch(`http://127.0.0.1:8000/v1${req.url}`, {
+    const response = await fetch(`http://127.0.0.1:${workerPort}/v1${req.url}`, {
       method: req.method,
       headers: { 'x-internal-token': secret, 'Content-Type': 'application/json',
         ...(testLoginPath&&localTestLogin?{'x-local-test-login':'true'}:{}),
@@ -40,7 +42,7 @@ app.use('/api/appraisal', async (req: express.Request, res: express.Response) =>
     res.setHeader('Cache-Control', 'no-store');
     res.send(Buffer.from(await response.arrayBuffer()));
   } catch {
-    res.status(503).json({ detail: 'Dịch vụ xử lý tài liệu chưa sẵn sàng. Kiểm tra AI Worker cổng 8000.' });
+    res.status(503).json({ detail: `Dịch vụ xử lý tài liệu chưa sẵn sàng. Kiểm tra AI Worker cổng ${workerPort}.` });
   }
 });
-await app.listen(3001, '127.0.0.1');
+await app.listen(ports.core, '127.0.0.1');
