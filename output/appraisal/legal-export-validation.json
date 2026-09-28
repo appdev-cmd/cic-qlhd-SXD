@@ -1,0 +1,122 @@
+{
+  "files": [
+    {
+      "file": "gpxd-application.pdf",
+      "pages": 2,
+      "a4": true
+    },
+    {
+      "file": "gpxd-draft.pdf",
+      "pages": 2,
+      "a4": true
+    },
+    {
+      "file": "gpxd-review.pdf",
+      "pages": 2,
+      "a4": true
+    },
+    {
+      "file": "ho-so-scan-mau.pdf",
+      "pages": 1,
+      "a4": true
+    },
+    {
+      "file": "nghiem_thu-application.pdf",
+      "pages": 2,
+      "a4": true
+    },
+    {
+      "file": "nghiem_thu-draft.pdf",
+      "pages": 2,
+      "a4": true
+    },
+    {
+      "file": "nghiem_thu-minutes.pdf",
+      "pages": 2,
+      "a4": true
+    },
+    {
+      "file": "nghiem_thu-review.pdf",
+      "pages": 3,
+      "a4": true
+    },
+    {
+      "file": "gpxd-application.docx",
+      "a4": true,
+      "marginsMm": [
+        30,
+        20,
+        22,
+        20
+      ],
+      "visualRender": "unavailable_bundled_libreoffice_missing"
+    },
+    {
+      "file": "gpxd-draft.docx",
+      "a4": true,
+      "marginsMm": [
+        30,
+        20,
+        22,
+        20
+      ],
+      "visualRender": "unavailable_bundled_libreoffice_missing"
+    },
+    {
+      "file": "gpxd-review.docx",
+      "a4": true,
+      "marginsMm": [
+        30,
+        20,
+        22,
+        20
+      ],
+      "visualRender": "unavailable_bundled_libreoffice_missing"
+    },
+    {
+      "file": "nghiem_thu-application.docx",
+      "a4": true,
+      "marginsMm": [
+        30,
+        20,
+        22,
+        20
+      ],
+      "visualRender": "unavailable_bundled_libreoffice_missing"
+    },
+    {
+      "file": "nghiem_thu-draft.docx",
+      "a4": true,
+      "marginsMm": [
+        30,
+        20,
+        22,
+        20
+      ],
+      "visualRender": "unavailable_bundled_libreoffice_missing"
+    },
+    {
+      "file": "nghiem_thu-minutes.docx",
+      "a4": true,
+      "marginsMm": [
+        30,
+        20,
+        22,
+        20
+      ],
+      "visualRender": "unavailable_bundled_libreoffice_missing"
+    },
+    {
+      "file": "nghiem_thu-review.docx",
+      "a4": true,
+      "marginsMm": [
+        30,
+        20,
+        22,
+        20
+      ],
+      "visualRender": "unavailable_bundled_libreoffice_missing"
+    }
+  ],
+  "docxVisualLimitation": "Bundled LibreOffice missing; DOCX XML verified. PDF rendered separately."
+}

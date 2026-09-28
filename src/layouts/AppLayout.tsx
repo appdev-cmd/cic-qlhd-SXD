@@ -12,6 +12,8 @@ import {
   Settings,
   ChevronLeft,
   ChevronRight,
+  ChevronDown,
+  FileCheck,
   Sun,
   Moon,
   Leaf,
@@ -28,6 +30,10 @@ import { useTheme, PRIMARY_COLORS, type Theme, type PrimaryColor } from '../cont
 import { SlidePanelStack } from '../components/SlidePanelStack';
 import { AiChatWidget } from '../components/ai/AiChatWidget';
 import { Tooltip } from '../components/ui/Tooltip';
+import { useSlidePanel } from '../context/SlidePanelContext';
+
+import {useAuth} from '../context/AuthContext';
+import { PROJECT_PROCEDURES } from '../lib/projectProcedures';
 
 interface NavItem {
   to: string;
@@ -37,14 +43,19 @@ interface NavItem {
   badge?: string;
   isAi?: boolean;
   isNew?: boolean;
+  children?:NavItem[];
 }
 
 // Danh sách Menu chuẩn 9 phân hệ nghiệp vụ — đánh số thứ tự chuẩn chỉ theo mẫu quản trị
 const NAV_ITEMS: NavItem[] = [
   { to: '/dashboard', label: '1. Dashboard & Thống kê', shortLabel: 'Dashboard', icon: LayoutDashboard },
-  { to: '/projects', label: '2. Quản lý Dự án', shortLabel: 'Dự án', icon: FolderKanban, badge: '26' },
-  { to: '/organizations', label: '3. Tổ chức tham gia', shortLabel: 'Tổ chức', icon: Building2, badge: '32' },
-  { to: '/personnel', label: '4. Cá nhân hành nghề', shortLabel: 'Cá nhân', icon: UserCheck, badge: '40' },
+  { to: '/projects', label: '2. Quản lý Dự án', shortLabel: 'Dự án', icon: FolderKanban,  children:[
+    {to:PROJECT_PROCEDURES.bcnckt.path,label:PROJECT_PROCEDURES.bcnckt.label,shortLabel:'BCNCKT',icon:ShieldCheck},
+    {to:PROJECT_PROCEDURES.gpxd.path,label:PROJECT_PROCEDURES.gpxd.label,shortLabel:'GPXD',icon:FileText},
+    {to:PROJECT_PROCEDURES.nghiem_thu.path,label:PROJECT_PROCEDURES.nghiem_thu.label,shortLabel:'Nghiệm thu',icon:FileCheck},
+  ] },
+  { to: '/organizations', label: '3. Tổ chức tham gia', shortLabel: 'Tổ chức', icon: Building2 },
+  { to: '/personnel', label: '4. Cá nhân hành nghề', shortLabel: 'Cá nhân', icon: UserCheck },
   { to: '/legal-ai', label: '5. Trợ lý AI Pháp luật', shortLabel: 'AI Luật', icon: Bot, isAi: true },
   { to: '/cost-database', label: '6. Giá & Định mức ĐB', shortLabel: 'Giá VLXD', icon: Coins },
   { to: '/gis-map', label: '7. Bản đồ Quy hoạch', shortLabel: 'Bản đồ GIS', icon: MapPin },
@@ -53,11 +64,29 @@ const NAV_ITEMS: NavItem[] = [
 ];
 
 export function AppLayout() {
+  const {profile,mode,signOut}=useAuth();
+  const [authError,setAuthError]=useState('');
+  const userName=profile?.full_name||'Chuyên viên mẫu';
+  const userDepartment=profile?.department||'Môi trường dùng thử';
+  const initials=userName.split(' ').slice(-2).map(s=>s[0]).join('');
   const [isCollapsed, setIsCollapsed] = useState(false);
   const [userMenuOpen, setUserMenuOpen] = useState(false);
   const userMenuRef = useRef<HTMLDivElement>(null);
   const { theme, setTheme, primaryColor, setPrimaryColor, zoom, setZoom } = useTheme();
+  const { closeAllPanels } = useSlidePanel();
   const location = useLocation();
+  const modulePath = location.pathname.startsWith('/projects') || location.pathname.startsWith('/dossiers/')
+    ? 'projects'
+    : location.pathname.split('/')[1] || 'dashboard';
+  const previousModulePath = useRef(modulePath);
+  const [projectsExpanded,setProjectsExpanded]=useState(true);
+  useEffect(()=>{
+    if (previousModulePath.current !== modulePath) {
+      closeAllPanels();
+      previousModulePath.current = modulePath;
+    }
+  },[modulePath,closeAllPanels]);
+  useEffect(()=>{if(location.pathname.startsWith('/projects')||location.pathname.startsWith('/dossiers/'))setProjectsExpanded(true);},[location.pathname]);
 
   // Đóng popover profile khi click ra ngoài
   useEffect(() => {
@@ -118,7 +147,7 @@ export function AppLayout() {
             <button
               type="button"
               onClick={() => setIsCollapsed(!isCollapsed)}
-              title={isCollapsed ? 'Mở rộng menu' : 'Thu gọn menu'}
+              aria-label={isCollapsed ? 'Mở rộng menu' : 'Thu gọn menu'}
               className="p-1.5 rounded-lg hover:bg-subtle text-ink-muted hover:text-ink transition-colors shrink-0"
             >
               {isCollapsed ? <ChevronRight size={16} /> : <ChevronLeft size={16} />}
@@ -127,74 +156,33 @@ export function AppLayout() {
 
           {/* Menu Điều hướng với số thứ tự chuẩn mực */}
           <nav className="p-3 space-y-1 overflow-y-auto flex-1">
-            {NAV_ITEMS.map((item) => {
-              const Icon = item.icon;
-              const isActive = location.pathname === item.to;
-
-              return (
-                <NavLink
-                  key={item.to}
-                  to={item.to}
-                  title={isCollapsed ? item.label : undefined}
-                  className={cn(
-                    'flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-xs transition-all group relative border-l-[3.5px]',
-                    isActive
-                      ? 'border-l-primary-600 bg-primary-500/10 text-primary-700 dark:text-primary-300 font-bold shadow-xs'
-                      : 'border-l-transparent text-ink-secondary hover:bg-subtle hover:text-ink font-medium',
-                    isCollapsed && 'justify-center px-0'
-                  )}
-                >
-                  <Icon
-                    size={18}
-                    className={cn(
-                      'shrink-0 transition-colors',
-                      isActive
-                        ? 'text-primary-600 dark:text-primary-400'
-                        : item.isAi
-                        ? 'text-primary-500'
-                        : 'text-ink-muted group-hover:text-ink'
-                    )}
-                  />
-
-                  {!isCollapsed && (
-                    <div className="flex items-center justify-between flex-1 truncate">
-                      <span className="truncate">{item.label}</span>
-                      <div className="flex items-center gap-1.5 ml-2">
-                        {item.badge && (
-                          <span
-                            className={cn(
-                              'text-3xs font-bold px-1.5 py-0.5 rounded-full',
-                              isActive
-                                ? 'bg-primary-500/20 text-primary-700 dark:text-primary-300'
-                                : 'bg-subtle text-primary-600 border border-border'
-                            )}
-                          >
-                            {item.badge}
-                          </span>
-                        )}
-                        {item.isNew && (
-                          <span className="text-3xs font-bold px-1.5 py-0.5 rounded bg-amber-500 text-white uppercase shadow-2xs">
-                            Mới
-                          </span>
-                        )}
-                      </div>
-                    </div>
-                  )}
-
-                  {/* Dot indicator khi sidebar thu gọn */}
-                  {isCollapsed && isActive && (
-                    <span className="absolute right-1.5 top-1.5 w-2 h-2 rounded-full bg-primary-600 ring-2 ring-primary-100" />
-                  )}
-                </NavLink>
-              );
+            {NAV_ITEMS.map(item=>{
+              const Icon=item.icon;
+              const active=location.pathname===item.to;
+              const parentActive=!!item.children&&(location.pathname.startsWith('/projects')||location.pathname.startsWith('/dossiers/'));
+              return <div key={item.to}>
+                <div className="flex items-center gap-1 [&>div:first-child]:flex-1 [&>div:first-child]:min-w-0">
+                  <Tooltip content={item.label} placement="right">
+                    <NavLink to={item.to} end aria-label={item.label} className={cn('flex flex-1 items-center gap-3 px-3 py-2.5 rounded-xl text-xs transition-colors',active||parentActive?'bg-primary-50 dark:bg-slate-800 text-primary-800 dark:text-primary-300 font-semibold':'text-ink-secondary dark:text-ink-secondary hover:bg-subtle dark:hover:bg-subtle',isCollapsed&&'justify-center px-1')}>
+                      <Icon size={18} className="shrink-0"/>
+                      {!isCollapsed&&<span className="flex-1">{item.label}</span>}
+                      {!isCollapsed&&item.badge&&<span className="text-[10px] rounded-full bg-slate-100 dark:bg-slate-700 px-1.5">{item.badge}</span>}
+                    </NavLink>
+                  </Tooltip>
+                  {item.children&&!isCollapsed&&<Tooltip content={projectsExpanded?'Thu gọn phân hệ dự án':'Mở phân hệ dự án'} placement="right"><button type="button" aria-label="Các phân hệ quản lý dự án" aria-expanded={projectsExpanded} onClick={()=>setProjectsExpanded(!projectsExpanded)} className="p-1.5 rounded-lg text-ink-secondary dark:text-ink-secondary hover:bg-subtle dark:hover:bg-subtle">{projectsExpanded?<ChevronDown size={14}/>:<ChevronRight size={14}/>}</button></Tooltip>}
+                </div>
+                {item.children&&(projectsExpanded||isCollapsed)&&<div className={cn('space-y-1 mt-1 [&>div]:block',!isCollapsed&&'ml-5 pl-2 border-l border-border dark:border-border')}>
+                  {item.children.map(child=>{const ChildIcon=child.icon;const selected=location.pathname===child.to;return <Tooltip key={child.to} content={child.label} placement="right"><NavLink to={child.to} aria-label={child.label} className={cn('flex items-center gap-2 rounded-lg px-2 py-2.5 text-xs',selected?'bg-primary-100 dark:bg-primary-900 text-primary-800 dark:text-primary-200 font-semibold':'text-ink-secondary dark:text-ink-secondary hover:bg-subtle dark:hover:bg-subtle',isCollapsed&&'justify-center')}><ChildIcon size={15} className="shrink-0"/>{!isCollapsed&&<span>{child.label}</span>}</NavLink></Tooltip>;})}
+                </div>}
+              </div>;
             })}
           </nav>
 
           {/* Footer Sidebar (Thông tin quy định pháp lý) */}
           {!isCollapsed && (
             <div className="p-3.5 border-t border-border bg-subtle/50 text-3xs text-ink-muted leading-tight shrink-0">
-              <p className="font-bold text-ink">Áp dụng: Luật XD 2025 & NĐ 217/2026</p>
-              <p className="mt-0.5">Tích hợp Cổng DVC Tỉnh & QCVN 2026</p>
+              <p className="font-bold text-ink">BCNCKT: căn cứ theo thời điểm hồ sơ</p>
+              <p className="mt-0.5">Kết quả tự động cần chuyên viên rà soát</p>
             </div>
           )}
         </div>
@@ -210,7 +198,7 @@ export function AppLayout() {
               <span>Hệ thống Nghiệp vụ Thẩm định</span>
               <span>/</span>
               <span className="text-ink font-bold">
-                {NAV_ITEMS.find((n) => n.to === location.pathname)?.label.replace(/^\d+\.\s*/, '') || 'Bàn điều hành'}
+                {(location.pathname.startsWith('/projects/')?'Quản lý Dự án / ':'')+(NAV_ITEMS.flatMap(n=>[n,...(n.children||[])]).find(n=>n.to===location.pathname)?.label.replace(/^\d+\.\s*/, '') || (location.pathname.startsWith('/dossiers/')?'Quản lý Dự án / Hồ sơ nộp':'Bàn điều hành'))}
               </span>
             </div>
 
@@ -236,13 +224,13 @@ export function AppLayout() {
                   className="w-8 h-8 rounded-full flex items-center justify-center text-white font-bold text-xs shadow-xs"
                   style={{ backgroundColor: 'var(--color-primary, #00668c)' }}
                 >
-                  HP
+                  {initials}
                 </div>
                 <div className="hidden sm:block text-left text-xs leading-tight pr-1">
                   <p className="font-bold text-ink flex items-center gap-1.5">
-                    KTS. Lê Hồng Phong
+                    {userName}
                   </p>
-                  <p className="text-3xs text-primary-600 dark:text-primary-400 font-medium">Chuyên viên Phòng QLXD</p>
+                  <p className="text-3xs text-primary-600 dark:text-primary-400 font-medium">{userDepartment}</p>
                 </div>
               </button>
 
@@ -255,14 +243,14 @@ export function AppLayout() {
                       className="w-10 h-10 rounded-full flex items-center justify-center text-white font-bold text-sm shadow-sm shrink-0"
                       style={{ backgroundColor: 'var(--color-primary, #00668c)' }}
                     >
-                      HP
+                      {initials}
                     </div>
                     <div className="min-w-0 flex-1">
-                      <p className="font-bold text-ink truncate text-sm">KTS. Lê Hồng Phong</p>
+                      <p className="font-bold text-ink truncate text-sm">{userName}</p>
                       <p className="text-3xs font-semibold text-primary-600 dark:text-primary-400 truncate">
-                        Chuyên viên Phòng QLXD
+                        {userDepartment}
                       </p>
-                      <p className="text-3xs text-ink-muted truncate">lehongphong.sxd@dienbien.gov.vn</p>
+                      <p className="text-3xs text-ink-muted truncate">{profile?.email||'Tài khoản mô phỏng'}</p>
                     </div>
                   </div>
 
@@ -403,7 +391,7 @@ export function AppLayout() {
                   <div className="pt-2 border-t border-border">
                     <button
                       type="button"
-                      onClick={() => setUserMenuOpen(false)}
+                      onClick={() => {setUserMenuOpen(false);void signOut().catch(e=>setAuthError(e.message));}}
                       className="w-full flex items-center justify-center gap-2 py-2 rounded-xl text-rose-600 hover:bg-rose-50 dark:hover:bg-rose-950/30 font-semibold transition-colors cursor-pointer"
                     >
                       <LogOut size={14} />
@@ -418,7 +406,7 @@ export function AppLayout() {
 
         {/* Nội dung Màn hình thay đổi theo Route */}
         <main className="flex-1 overflow-y-auto p-6 bg-page">
-          <Outlet />
+              {authError&&<p role="alert" className="text-red-700 dark:text-red-300 p-3">{authError}</p>}<Outlet />
         </main>
       </div>
 

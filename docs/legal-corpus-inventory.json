@@ -1,0 +1,1944 @@
+{
+  "reviewDate": "2026-09-27",
+  "scope": "Kiểm kê tệp; chỉ nghiên cứu điều khoản trọng tâm trong báo cáo kèm theo. Không tự xác nhận hiệu lực.",
+  "totalFiles": 187,
+  "flagCounts": {
+    "converted_text_requires_original": 122,
+    "draft_candidate": 3,
+    "filename_topic_mismatch": 1
+  },
+  "files": [
+    {
+      "path": "01_luat/02. Luật Xây dựng (thay thế)_HopCP_1209.pdf",
+      "sha256": "0631c47aa09f5ed1e7be6dcc4f5f2e8e6a88545cbe78ac402fe7e9bfbb404e67",
+      "bytes": 610253,
+      "reviewedSelectedSections": false,
+      "flags": [],
+      "autoApprovedLegalAuthority": false,
+      "identicalCopies": 1
+    },
+    {
+      "path": "01_luat/112_2025_QH15_586814.docx.md",
+      "sha256": "7b314b877a29ad41e162490be25b95516e65d9fca676d7cdf631d5d2bc9c45c0",
+      "bytes": 151568,
+      "reviewedSelectedSections": false,
+      "flags": [
+        "converted_text_requires_original"
+      ],
+      "autoApprovedLegalAuthority": false,
+      "identicalCopies": 2
+    },
+    {
+      "path": "01_luat/135_2025_QH15_675213.docx.md",
+      "sha256": "9504a75e72bd7aa52045e0d67dd299ceef358095d2b901b67e06c09fadf54bfb",
+      "bytes": 182548,
+      "reviewedSelectedSections": false,
+      "flags": [
+        "converted_text_requires_original"
+      ],
+      "autoApprovedLegalAuthority": false,
+      "identicalCopies": 1
+    },
+    {
+      "path": "01_luat/143_2025_QH15_681550.docx.md",
+      "sha256": "1017ad28ce5437e651e0663ab40827b73a7b6176aa9b80a3d256243784a62783",
+      "bytes": 174199,
+      "reviewedSelectedSections": false,
+      "flags": [
+        "converted_text_requires_original"
+      ],
+      "autoApprovedLegalAuthority": false,
+      "identicalCopies": 2
+    },
+    {
+      "path": "01_luat/27_2026_QH16_704651.docx.md",
+      "sha256": "af63f16d7fab9585f655fd07c571fba7cc2b39d163a0b279b6165c4dec885bc3",
+      "bytes": 35176,
+      "reviewedSelectedSections": false,
+      "flags": [
+        "converted_text_requires_original"
+      ],
+      "autoApprovedLegalAuthority": false,
+      "identicalCopies": 2
+    },
+    {
+      "path": "01_luat/58_2024_QH15_621645.docx.md",
+      "sha256": "fa45e61afb9fe84b30f849b365fc967ab815a32a495f58c3624a7335aed676e6",
+      "bytes": 198052,
+      "reviewedSelectedSections": false,
+      "flags": [
+        "converted_text_requires_original"
+      ],
+      "autoApprovedLegalAuthority": false,
+      "identicalCopies": 3
+    },
+    {
+      "path": "01_luat/90_2025_QH15_m_662379.docx.md",
+      "sha256": "c6ec6730810328b5b0fe6941fcd69eb4b55ef6e6bc8579f76de241ce973ce35d",
+      "bytes": 194982,
+      "reviewedSelectedSections": false,
+      "flags": [
+        "converted_text_requires_original"
+      ],
+      "autoApprovedLegalAuthority": false,
+      "identicalCopies": 3
+    },
+    {
+      "path": "01_luat/luat112-QH-2025.pdf",
+      "sha256": "329892cb890b78e969505ce43b76a72e185b461727c7bf059755ef708b0e1255",
+      "bytes": 5115246,
+      "reviewedSelectedSections": false,
+      "flags": [],
+      "autoApprovedLegalAuthority": false,
+      "identicalCopies": 1
+    },
+    {
+      "path": "01_luat/luat134-TTNT-2025.pdf",
+      "sha256": "ea93a8bd6ad0b7195c9045f836845ec875322ef3a8e55e18bcf8001ff6b60c19",
+      "bytes": 2174952,
+      "reviewedSelectedSections": false,
+      "flags": [],
+      "autoApprovedLegalAuthority": false,
+      "identicalCopies": 1
+    },
+    {
+      "path": "01_luat/luat135-XD-2025.pdf",
+      "sha256": "3f4615874b8922eb05a3e955d05084ae0d9bedb399c7f59e76c15eea112f5885",
+      "bytes": 4366296,
+      "reviewedSelectedSections": false,
+      "flags": [],
+      "autoApprovedLegalAuthority": false,
+      "identicalCopies": 1
+    },
+    {
+      "path": "01_luat/luat148-CĐS-2025.pdf",
+      "sha256": "f78bde9d2e0c6f992480711c6ffe0fab0923922ba90bdae8b5eb58d4f75efc59",
+      "bytes": 2579241,
+      "reviewedSelectedSections": false,
+      "flags": [],
+      "autoApprovedLegalAuthority": false,
+      "identicalCopies": 1
+    },
+    {
+      "path": "01_luat/luat93-KHCN-2025.pdf",
+      "sha256": "2569bebf0c76d579ba5a307c73d3815a97542493a905daf5a59ee3aa90477a90",
+      "bytes": 5970117,
+      "reviewedSelectedSections": false,
+      "flags": [],
+      "autoApprovedLegalAuthority": false,
+      "identicalCopies": 1
+    },
+    {
+      "path": "01_luat/Luật đầu tư công.pdf",
+      "sha256": "0be95f71f981cd738d445526fbb2d22bb2156e41562e926665d023dd4937d1e4",
+      "bytes": 13189647,
+      "reviewedSelectedSections": false,
+      "flags": [],
+      "autoApprovedLegalAuthority": false,
+      "identicalCopies": 1
+    },
+    {
+      "path": "02_nghi_dinh/0000_VB_K_57_nq.pdf",
+      "sha256": "652dfdfdca2791e7ea29e50399a5e6fe6663e89f65e3ac94d07c6e10619f6548",
+      "bytes": 7052437,
+      "reviewedSelectedSections": false,
+      "flags": [],
+      "autoApprovedLegalAuthority": false,
+      "identicalCopies": 1
+    },
+    {
+      "path": "02_nghi_dinh/02. Dự thảo NGHỊ ĐỊNH về HĐXD 04.3.2026.docx",
+      "sha256": "cd03f249ab1d7cebf795662133ca5f7a54c0c8f2f388622a2815424c0cdd5773",
+      "bytes": 2625678,
+      "reviewedSelectedSections": false,
+      "flags": [
+        "draft_candidate"
+      ],
+      "autoApprovedLegalAuthority": false,
+      "identicalCopies": 1
+    },
+    {
+      "path": "02_nghi_dinh/175_2024_ND-CP_.docx.md",
+      "sha256": "f32b45e2b9744627b20e139a5f04c4e887cdd06600d1ef4ad3ef590c0a5b059b",
+      "bytes": 646861,
+      "reviewedSelectedSections": false,
+      "flags": [
+        "converted_text_requires_original"
+      ],
+      "autoApprovedLegalAuthority": false,
+      "identicalCopies": 2
+    },
+    {
+      "path": "02_nghi_dinh/193_2026_ND-CP_709388.docx.md",
+      "sha256": "d18b85479feb4d106a0e710ef08b6ead3f81913a7d8a5f70204ebd76c43fa991",
+      "bytes": 98146,
+      "reviewedSelectedSections": false,
+      "flags": [
+        "converted_text_requires_original"
+      ],
+      "autoApprovedLegalAuthority": false,
+      "identicalCopies": 2
+    },
+    {
+      "path": "02_nghi_dinh/206_2026_ND-CP_457659.docx.md",
+      "sha256": "07fb5d819ee1f5c1d3b41f7db62f696d63fc60978c11a5f77e520865747e30be",
+      "bytes": 106867,
+      "reviewedSelectedSections": false,
+      "flags": [
+        "converted_text_requires_original"
+      ],
+      "autoApprovedLegalAuthority": false,
+      "identicalCopies": 1
+    },
+    {
+      "path": "02_nghi_dinh/207_2026_ND-CP_701883.docx.md",
+      "sha256": "aa1c1ba8176d9e1ec74c960a375bdd93a85f4eba2b83269ee076d4297db57414",
+      "bytes": 276040,
+      "reviewedSelectedSections": false,
+      "flags": [
+        "converted_text_requires_original"
+      ],
+      "autoApprovedLegalAuthority": false,
+      "identicalCopies": 1
+    },
+    {
+      "path": "02_nghi_dinh/209_2026_ND-CP_288496.docx.md",
+      "sha256": "1bfd86cdf2f43928452f4f46f6a3f3a14631967e5da356c8a94efb59c902db72",
+      "bytes": 28638,
+      "reviewedSelectedSections": false,
+      "flags": [
+        "converted_text_requires_original"
+      ],
+      "autoApprovedLegalAuthority": false,
+      "identicalCopies": 1
+    },
+    {
+      "path": "02_nghi_dinh/210_2026_ND-CP_696691.docx.md",
+      "sha256": "1c83ac63965105e814b575649e41763f57aa12ea7558efa9ac90770b51694498",
+      "bytes": 211526,
+      "reviewedSelectedSections": false,
+      "flags": [
+        "converted_text_requires_original"
+      ],
+      "autoApprovedLegalAuthority": false,
+      "identicalCopies": 1
+    },
+    {
+      "path": "02_nghi_dinh/212_2026_ND-CP_697287.docx.md",
+      "sha256": "70c0c2c84819fc6f8d058f10fc74132d72e7c3bff53a46769a1e332751e711d3",
+      "bytes": 447538,
+      "reviewedSelectedSections": false,
+      "flags": [
+        "converted_text_requires_original"
+      ],
+      "autoApprovedLegalAuthority": false,
+      "identicalCopies": 2
+    },
+    {
+      "path": "02_nghi_dinh/217_2026_ND-CP_696494.docx.md",
+      "sha256": "b2924c663f655f9f51f0aad8b2b1df9589ff5cb2b0715bc27ace11f30296a7d2",
+      "bytes": 252630,
+      "reviewedSelectedSections": false,
+      "flags": [
+        "converted_text_requires_original"
+      ],
+      "autoApprovedLegalAuthority": false,
+      "identicalCopies": 1
+    },
+    {
+      "path": "02_nghi_dinh/233_2026_ND-CP_712593.docx.md",
+      "sha256": "10da209b3504c5f4db2655aed532b067aa46de760abeb7d7fca01ce9611d4c4f",
+      "bytes": 58837,
+      "reviewedSelectedSections": false,
+      "flags": [
+        "converted_text_requires_original"
+      ],
+      "autoApprovedLegalAuthority": false,
+      "identicalCopies": 2
+    },
+    {
+      "path": "02_nghi_dinh/275_2025_ND-CP_677980.docx.md",
+      "sha256": "eaec0eec8108e216d7d952a1b7b05fbb80eab0766fab308d128e4e803ab8944b",
+      "bytes": 46981,
+      "reviewedSelectedSections": false,
+      "flags": [
+        "converted_text_requires_original"
+      ],
+      "autoApprovedLegalAuthority": false,
+      "identicalCopies": 2
+    },
+    {
+      "path": "02_nghi_dinh/85_2025_ND-CP_651162.docx.md",
+      "sha256": "ac3c0ab82f4b2d0120d6a7f98583e250ebe4e9123783e4982321efca51614e4d",
+      "bytes": 195948,
+      "reviewedSelectedSections": false,
+      "flags": [
+        "converted_text_requires_original"
+      ],
+      "autoApprovedLegalAuthority": false,
+      "identicalCopies": 2
+    },
+    {
+      "path": "02_nghi_dinh/96_2026_ND-CP_690303.docx.md",
+      "sha256": "ec9500a56a2d6ad237c23290f9599955ad3437773e2e71ccfc9e255e8a26abc5",
+      "bytes": 448743,
+      "reviewedSelectedSections": false,
+      "flags": [
+        "converted_text_requires_original"
+      ],
+      "autoApprovedLegalAuthority": false,
+      "identicalCopies": 2
+    },
+    {
+      "path": "02_nghi_dinh/BieuMau_NghiDinh254/Mau_01.a.nn_PB.docx",
+      "sha256": "21171dd0aabe7764b038c4ff3d2cea25aaa0c688c780be49689f5157e43d5c80",
+      "bytes": 39411,
+      "reviewedSelectedSections": false,
+      "flags": [],
+      "autoApprovedLegalAuthority": false,
+      "identicalCopies": 1
+    },
+    {
+      "path": "02_nghi_dinh/BieuMau_NghiDinh254/Mau_01.a_PB.docx",
+      "sha256": "12c3491e20b7436bd80c6634deb2b11b8941c6bb36a6e992450e0d98ec837b0a",
+      "bytes": 38468,
+      "reviewedSelectedSections": false,
+      "flags": [],
+      "autoApprovedLegalAuthority": false,
+      "identicalCopies": 1
+    },
+    {
+      "path": "02_nghi_dinh/BieuMau_NghiDinh254/Mau_01.b.nn_PB.docx",
+      "sha256": "e644a174b4f1ede4fb3428f46278c1ad07108eb4bf3cd6766847070205e6fe8d",
+      "bytes": 36585,
+      "reviewedSelectedSections": false,
+      "flags": [],
+      "autoApprovedLegalAuthority": false,
+      "identicalCopies": 1
+    },
+    {
+      "path": "02_nghi_dinh/BieuMau_NghiDinh254/Mau_01.b_PB.docx",
+      "sha256": "cc180356d9d2e36bb8368684020af4b978b0650fc85cd96a9514932432a3e6a9",
+      "bytes": 43009,
+      "reviewedSelectedSections": false,
+      "flags": [],
+      "autoApprovedLegalAuthority": false,
+      "identicalCopies": 1
+    },
+    {
+      "path": "02_nghi_dinh/BieuMau_NghiDinh254/Mau_02.a_TT.docx",
+      "sha256": "a9f71420e72300057445990988d8c788198ab503c9a14fba09d2dfa2610498f0",
+      "bytes": 13705,
+      "reviewedSelectedSections": false,
+      "flags": [],
+      "autoApprovedLegalAuthority": false,
+      "identicalCopies": 1
+    },
+    {
+      "path": "02_nghi_dinh/BieuMau_NghiDinh254/Mau_02.b_TT.docx",
+      "sha256": "0e267cdbf25ff7102e0b1674f3f3a6690f19050b2092908d78e31b4da06a14ed",
+      "bytes": 14480,
+      "reviewedSelectedSections": false,
+      "flags": [],
+      "autoApprovedLegalAuthority": false,
+      "identicalCopies": 1
+    },
+    {
+      "path": "02_nghi_dinh/BieuMau_NghiDinh254/Mau_02.c_TT.docx",
+      "sha256": "b7ccace245242c7685ba0b3a78184e0ad38072f78f419870e0949c7399f1fa3a",
+      "bytes": 15245,
+      "reviewedSelectedSections": false,
+      "flags": [],
+      "autoApprovedLegalAuthority": false,
+      "identicalCopies": 1
+    },
+    {
+      "path": "02_nghi_dinh/BieuMau_NghiDinh254/Mau_03.a_TT.docx",
+      "sha256": "4962ac6bbd3539cf65e24f460bcac29eec71d248e63810fab97b6496aadd88c1",
+      "bytes": 16523,
+      "reviewedSelectedSections": false,
+      "flags": [],
+      "autoApprovedLegalAuthority": false,
+      "identicalCopies": 1
+    },
+    {
+      "path": "02_nghi_dinh/BieuMau_NghiDinh254/Mau_03.b_TT.docx",
+      "sha256": "4eb2f38a1cdfac5aed01e9ae1fb757764f581320d43f8b096ad432d78450d261",
+      "bytes": 15033,
+      "reviewedSelectedSections": false,
+      "flags": [],
+      "autoApprovedLegalAuthority": false,
+      "identicalCopies": 1
+    },
+    {
+      "path": "02_nghi_dinh/BieuMau_NghiDinh254/Mau_03.C_QT.docx",
+      "sha256": "b7ec0cec59552f5d00fe8fd223e5618624a67fac8f6a93213cfc6c164e8ebcad",
+      "bytes": 14672,
+      "reviewedSelectedSections": false,
+      "flags": [],
+      "autoApprovedLegalAuthority": false,
+      "identicalCopies": 1
+    },
+    {
+      "path": "02_nghi_dinh/BieuMau_NghiDinh254/Mau_03a_TT..docx",
+      "sha256": "0cd27f6cfc5cce5f4947b43cee4e1fdeeefb99ff403434de5b330bf9fd24c6ac",
+      "bytes": 11981,
+      "reviewedSelectedSections": false,
+      "flags": [],
+      "autoApprovedLegalAuthority": false,
+      "identicalCopies": 1
+    },
+    {
+      "path": "02_nghi_dinh/BieuMau_NghiDinh254/Mau_03a_TT.docx",
+      "sha256": "6475595743194f820929f9cd1ac46013582ba25c62a9e525cd5f8593b89e1e57",
+      "bytes": 12310,
+      "reviewedSelectedSections": false,
+      "flags": [],
+      "autoApprovedLegalAuthority": false,
+      "identicalCopies": 1
+    },
+    {
+      "path": "02_nghi_dinh/BieuMau_NghiDinh254/Mau_03a_TT_1.docx",
+      "sha256": "a6b7599eb11addb205dfb9e417667834e2f4cb75e68c77c513979d217dffa210",
+      "bytes": 11773,
+      "reviewedSelectedSections": false,
+      "flags": [],
+      "autoApprovedLegalAuthority": false,
+      "identicalCopies": 1
+    },
+    {
+      "path": "02_nghi_dinh/BieuMau_NghiDinh254/Mau_03a_TT_2.docx",
+      "sha256": "bdf6e257b070a57f76cc41b5f2590480588201bb74d6c7567751132ca54a462f",
+      "bytes": 12486,
+      "reviewedSelectedSections": false,
+      "flags": [],
+      "autoApprovedLegalAuthority": false,
+      "identicalCopies": 1
+    },
+    {
+      "path": "02_nghi_dinh/BieuMau_NghiDinh254/Mau_03a_TT_3.docx",
+      "sha256": "5f0c12267ac1a2c3c562bef92c2c0a7e23ff3da7b0ca207875ebf5772919544a",
+      "bytes": 12310,
+      "reviewedSelectedSections": false,
+      "flags": [],
+      "autoApprovedLegalAuthority": false,
+      "identicalCopies": 1
+    },
+    {
+      "path": "02_nghi_dinh/BieuMau_NghiDinh254/Mau_03a_TT_4.docx",
+      "sha256": "794de9da9631eab33e702079c2c9b914df10b69ff1d983edf772c8d0e0d7e071",
+      "bytes": 12028,
+      "reviewedSelectedSections": false,
+      "flags": [],
+      "autoApprovedLegalAuthority": false,
+      "identicalCopies": 1
+    },
+    {
+      "path": "02_nghi_dinh/BieuMau_NghiDinh254/Mau_03a_TT_5.docx",
+      "sha256": "f18edb50e61ffa1a7ec0b6548271ce81bc0ed0843110467a01b3e0afe4085b8f",
+      "bytes": 11791,
+      "reviewedSelectedSections": false,
+      "flags": [],
+      "autoApprovedLegalAuthority": false,
+      "identicalCopies": 1
+    },
+    {
+      "path": "02_nghi_dinh/BieuMau_NghiDinh254/Mau_03a_TT_6.docx",
+      "sha256": "edb6e53cae30d9628dd5de439b78a2c3b6635e9379eba9a11bde12f058e483c6",
+      "bytes": 11544,
+      "reviewedSelectedSections": false,
+      "flags": [],
+      "autoApprovedLegalAuthority": false,
+      "identicalCopies": 1
+    },
+    {
+      "path": "02_nghi_dinh/BieuMau_NghiDinh254/Mau_03a_TT_7.docx",
+      "sha256": "e7d279d4897ae05d83dbfd5dab2da97ca493ef9bfaa06789be9800f6f49ef464",
+      "bytes": 11705,
+      "reviewedSelectedSections": false,
+      "flags": [],
+      "autoApprovedLegalAuthority": false,
+      "identicalCopies": 1
+    },
+    {
+      "path": "02_nghi_dinh/BieuMau_NghiDinh254/Mau_04.a.nn_TT.docx",
+      "sha256": "dc0e7eed41bb13310238f76a248cd6214b4f39f38552bcc82a2cade92903a00c",
+      "bytes": 14113,
+      "reviewedSelectedSections": false,
+      "flags": [],
+      "autoApprovedLegalAuthority": false,
+      "identicalCopies": 1
+    },
+    {
+      "path": "02_nghi_dinh/BieuMau_NghiDinh254/Mau_04.a_TT.docx",
+      "sha256": "20ddae591d236acabe58ad16690cdb54f3061a99c6be51be784c09caba597bf8",
+      "bytes": 14318,
+      "reviewedSelectedSections": false,
+      "flags": [],
+      "autoApprovedLegalAuthority": false,
+      "identicalCopies": 1
+    },
+    {
+      "path": "02_nghi_dinh/BieuMau_NghiDinh254/Mau_04.b.nn_TT.docx",
+      "sha256": "a247f49cab08d02d520888db3ccaf16f6f43c752d821e0ad5f48cdd5ad3a730c",
+      "bytes": 14042,
+      "reviewedSelectedSections": false,
+      "flags": [],
+      "autoApprovedLegalAuthority": false,
+      "identicalCopies": 1
+    },
+    {
+      "path": "02_nghi_dinh/BieuMau_NghiDinh254/Mau_04.b_TT.docx",
+      "sha256": "36811508788ba03dbb9e5d4ba36bcfb57af1d07785fc04ea6c79c0e64769b959",
+      "bytes": 13169,
+      "reviewedSelectedSections": false,
+      "flags": [],
+      "autoApprovedLegalAuthority": false,
+      "identicalCopies": 1
+    },
+    {
+      "path": "02_nghi_dinh/BieuMau_NghiDinh254/Mau_04.c_TT.docx",
+      "sha256": "abe23a12021afc4fa9f9b94f0d6e13ee228e0ec6cddb42743cefc5441a740c34",
+      "bytes": 13018,
+      "reviewedSelectedSections": false,
+      "flags": [],
+      "autoApprovedLegalAuthority": false,
+      "identicalCopies": 1
+    },
+    {
+      "path": "02_nghi_dinh/BieuMau_NghiDinh254/Mau_04.d_TT.docx",
+      "sha256": "f2eab0b37dd3971b6ed203fd165fd622b331cc9d08314c680018f0a31887b16f",
+      "bytes": 14879,
+      "reviewedSelectedSections": false,
+      "flags": [],
+      "autoApprovedLegalAuthority": false,
+      "identicalCopies": 1
+    },
+    {
+      "path": "02_nghi_dinh/BieuMau_NghiDinh254/Mau_05.a_TT.docx",
+      "sha256": "f6887bfd53122ac8964c1bda656d113deefbfa45669292b3201f9c8fb754903a",
+      "bytes": 16151,
+      "reviewedSelectedSections": false,
+      "flags": [],
+      "autoApprovedLegalAuthority": false,
+      "identicalCopies": 1
+    },
+    {
+      "path": "02_nghi_dinh/BieuMau_NghiDinh254/Mau_05.b_TT.docx",
+      "sha256": "d1e61590c543b7123b33c438b3992ca2b43cfeb7bd27c9a0fa676cfd8fb26fa8",
+      "bytes": 14842,
+      "reviewedSelectedSections": false,
+      "flags": [],
+      "autoApprovedLegalAuthority": false,
+      "identicalCopies": 1
+    },
+    {
+      "path": "02_nghi_dinh/BieuMau_NghiDinh254/Mau_05.c_TT.docx",
+      "sha256": "e04b0ba56427e048dfa74817f82e80be44e2306b984192678528382e8bc6f190",
+      "bytes": 15046,
+      "reviewedSelectedSections": false,
+      "flags": [],
+      "autoApprovedLegalAuthority": false,
+      "identicalCopies": 1
+    },
+    {
+      "path": "02_nghi_dinh/BieuMau_NghiDinh254/Mau_05.d_TT.docx",
+      "sha256": "90c9239711c9658c016149dcd3df45f8edc1d90be529171fd7209cc7a6bca94a",
+      "bytes": 16811,
+      "reviewedSelectedSections": false,
+      "flags": [],
+      "autoApprovedLegalAuthority": false,
+      "identicalCopies": 1
+    },
+    {
+      "path": "02_nghi_dinh/BieuMau_NghiDinh254/Mau_05.e_TT.docx",
+      "sha256": "e74a47bca8efd12726b07cb4d7c1d1b35baf976e509cd72f5f71046e6b4d146a",
+      "bytes": 11837,
+      "reviewedSelectedSections": false,
+      "flags": [],
+      "autoApprovedLegalAuthority": false,
+      "identicalCopies": 1
+    },
+    {
+      "path": "02_nghi_dinh/BieuMau_NghiDinh254/Mau_06_TT.docx",
+      "sha256": "73fe8056c2b312d10063070b380ebd17282b51ac9d2c7b8c5a302cef3437c6bd",
+      "bytes": 11842,
+      "reviewedSelectedSections": false,
+      "flags": [],
+      "autoApprovedLegalAuthority": false,
+      "identicalCopies": 1
+    },
+    {
+      "path": "02_nghi_dinh/BieuMau_NghiDinh254/Mau_07_TT.docx",
+      "sha256": "698f343dcffeb77f50bb13638ddb67fa4a6cf95b2cc229c9c908086b7e771d41",
+      "bytes": 11840,
+      "reviewedSelectedSections": false,
+      "flags": [],
+      "autoApprovedLegalAuthority": false,
+      "identicalCopies": 1
+    },
+    {
+      "path": "02_nghi_dinh/BieuMau_NghiDinh254/Mau_08.a_SDT.docx",
+      "sha256": "a917074c2ade5b11b9f3e9735b25effce2db7b0d5292eac16f8e6bc72edbef78",
+      "bytes": 11841,
+      "reviewedSelectedSections": false,
+      "flags": [],
+      "autoApprovedLegalAuthority": false,
+      "identicalCopies": 1
+    },
+    {
+      "path": "02_nghi_dinh/BieuMau_NghiDinh254/Mau_08.b_SDT.docx",
+      "sha256": "da5c03d741b95afcc834e50232b2c82f70427ad5273931a9cae48a390a2f85c2",
+      "bytes": 11838,
+      "reviewedSelectedSections": false,
+      "flags": [],
+      "autoApprovedLegalAuthority": false,
+      "identicalCopies": 1
+    },
+    {
+      "path": "02_nghi_dinh/BieuMau_NghiDinh254/Mau_09_QLDA.docx",
+      "sha256": "4225849ddc91fb4c78b782bf05e3c5dd840aecd788401403b0f031120d64cb9b",
+      "bytes": 11838,
+      "reviewedSelectedSections": false,
+      "flags": [],
+      "autoApprovedLegalAuthority": false,
+      "identicalCopies": 1
+    },
+    {
+      "path": "02_nghi_dinh/BieuMau_NghiDinh254/Mau_10_CT.docx",
+      "sha256": "4821a3c95ccddad962ccdea064d59ed5729bc6ede6607ccbecc65eaca4d118a4",
+      "bytes": 11840,
+      "reviewedSelectedSections": false,
+      "flags": [],
+      "autoApprovedLegalAuthority": false,
+      "identicalCopies": 1
+    },
+    {
+      "path": "02_nghi_dinh/BieuMau_NghiDinh85/Mau1_ToTrinhBaoCaoNCKT.docx",
+      "sha256": "a18ab9724ba4aab5a4012266e44e955c4652ba13774e322d078023eaf57a70a3",
+      "bytes": 19131,
+      "reviewedSelectedSections": false,
+      "flags": [],
+      "autoApprovedLegalAuthority": false,
+      "identicalCopies": 1
+    },
+    {
+      "path": "02_nghi_dinh/BieuMau_NghiDinh85/Mau2_BCNCKT_NhomA.docx",
+      "sha256": "2ee6420332af7b21dbb37a1c843312f464a437df9b312032e04b10b5edc14575",
+      "bytes": 19214,
+      "reviewedSelectedSections": false,
+      "flags": [],
+      "autoApprovedLegalAuthority": false,
+      "identicalCopies": 1
+    },
+    {
+      "path": "02_nghi_dinh/BieuMau_NghiDinh85/Mau3_BaoCaoDeXuatChuTruong.docx",
+      "sha256": "78a505e6e4319b0b52098646933076251f74c49bbb6bb716fe4f80d9e38e4062",
+      "bytes": 19173,
+      "reviewedSelectedSections": false,
+      "flags": [],
+      "autoApprovedLegalAuthority": false,
+      "identicalCopies": 1
+    },
+    {
+      "path": "02_nghi_dinh/BieuMau_NghiDinh85/Mau4_BaoCaoThamDinh.docx",
+      "sha256": "58b54c2067e553c74a85f71f7bdd2b3ad52a4083c8a05c60766e245c03355bf2",
+      "bytes": 19043,
+      "reviewedSelectedSections": false,
+      "flags": [],
+      "autoApprovedLegalAuthority": false,
+      "identicalCopies": 1
+    },
+    {
+      "path": "02_nghi_dinh/BieuMau_NghiDinh85/Mau5_ToTrinhQuyetDinhChuTruong.docx",
+      "sha256": "7d4e49ff49b60229440604ef509087ff1b6b19a808c2f218855d119d3a8d9777",
+      "bytes": 19332,
+      "reviewedSelectedSections": false,
+      "flags": [],
+      "autoApprovedLegalAuthority": false,
+      "identicalCopies": 1
+    },
+    {
+      "path": "02_nghi_dinh/ND175.docx",
+      "sha256": "d52fea0a1a1024468eb19e4399f3964563e07f8b7605f43da12f3dedd92b506d",
+      "bytes": 579097,
+      "reviewedSelectedSections": false,
+      "flags": [],
+      "autoApprovedLegalAuthority": false,
+      "identicalCopies": 1
+    },
+    {
+      "path": "02_nghi_dinh/ND254.docx",
+      "sha256": "adba0f2bc941abd9568f6f8aea43ad99f8798d4ad6e562b770bb2c25e19010d8",
+      "bytes": 145626,
+      "reviewedSelectedSections": false,
+      "flags": [],
+      "autoApprovedLegalAuthority": false,
+      "identicalCopies": 1
+    },
+    {
+      "path": "02_nghi_dinh/ND85.docx",
+      "sha256": "a7e1a71845da477aafe8a412f6b2f04a46606af74bc4a74bd945e612d55d2229",
+      "bytes": 59513,
+      "reviewedSelectedSections": false,
+      "flags": [],
+      "autoApprovedLegalAuthority": false,
+      "identicalCopies": 1
+    },
+    {
+      "path": "02_nghi_dinh/Nghi_dinh_140_2025_ND-CP_cua_Chinh_phu_quy_dinh_ve_phan_dinh_tham_quyen_cua_chinh_quyen_dia_phuong_02_cap_trong_linh_vuc_quan_ly_Nha_nuoc_cua_Bo_Xay_dung_1749785465897.pdf",
+      "sha256": "bbb9a59e5ef2b19d64cc393e3243a397a00e4004a27d3bf1598850c761fe59bc",
+      "bytes": 15363749,
+      "reviewedSelectedSections": false,
+      "flags": [],
+      "autoApprovedLegalAuthority": false,
+      "identicalCopies": 1
+    },
+    {
+      "path": "02_nghi_dinh/Nghi_dinh_144_2025_ND-CP_cua_Chinh_phu_quy_dinh_ve_phan_quyen,_phan_cap_trong_linh_vuc_quan_ly_Nha_nuoc_cua_Bo_Xay_dung_1749785955601.pdf",
+      "sha256": "c5866294dd7e76de80afc9681495435de5bcfae7e5c382a42f94c8327540cffa",
+      "bytes": 16424453,
+      "reviewedSelectedSections": false,
+      "flags": [],
+      "autoApprovedLegalAuthority": false,
+      "identicalCopies": 1
+    },
+    {
+      "path": "02_nghi_dinh/NĐ 175.pdf",
+      "sha256": "ddf8bedb79550dfe099c0b408e40ffe9000aa474d97ea2b9ea6e45821eeccc2f",
+      "bytes": 26142010,
+      "reviewedSelectedSections": false,
+      "flags": [],
+      "autoApprovedLegalAuthority": false,
+      "identicalCopies": 1
+    },
+    {
+      "path": "02_nghi_dinh/NĐ111.pdf",
+      "sha256": "bf91f8f5993fc9403312f41b392e1a2d1ff6fd0af704dda27ec0d5d9b8e03c4a",
+      "bytes": 1441983,
+      "reviewedSelectedSections": false,
+      "flags": [],
+      "autoApprovedLegalAuthority": false,
+      "identicalCopies": 1
+    },
+    {
+      "path": "03_thong_tu_quy_dinh/0.  Thong tu QLCP.md",
+      "sha256": "7ddcc6f334de930fa38465f1bf4b8ee85544aa3ef86c3fdd262bdc7596d29532",
+      "bytes": 48286,
+      "reviewedSelectedSections": false,
+      "flags": [
+        "converted_text_requires_original"
+      ],
+      "autoApprovedLegalAuthority": false,
+      "identicalCopies": 2
+    },
+    {
+      "path": "03_thong_tu_quy_dinh/0000_VB_K_1644_qd_bxd.pdf",
+      "sha256": "e279f5a66764e152526c87cc176b9acc3168fc821678e512b42986a475a15d8c",
+      "bytes": 7327224,
+      "reviewedSelectedSections": false,
+      "flags": [],
+      "autoApprovedLegalAuthority": false,
+      "identicalCopies": 1
+    },
+    {
+      "path": "03_thong_tu_quy_dinh/02_2025_TT-BXD_651206.docx.md",
+      "sha256": "426c1a417a3970c64beb750844bbd82e289f37674033fe4656b8400ae2a92f2d",
+      "bytes": 35776,
+      "reviewedSelectedSections": false,
+      "flags": [
+        "converted_text_requires_original"
+      ],
+      "autoApprovedLegalAuthority": false,
+      "identicalCopies": 2
+    },
+    {
+      "path": "03_thong_tu_quy_dinh/1. Thông tư CP Bảo trì.md",
+      "sha256": "75dfb1fdd106adc525594e5dd1e96e27f146d3e68790465a308f7da8a5a63351",
+      "bytes": 33868,
+      "reviewedSelectedSections": false,
+      "flags": [
+        "converted_text_requires_original"
+      ],
+      "autoApprovedLegalAuthority": false,
+      "identicalCopies": 2
+    },
+    {
+      "path": "03_thong_tu_quy_dinh/1. Thông tư hướng dẫn một số nội dung chi tiết trong hệ thống thông tin CSDL quốc gia.md",
+      "sha256": "f4fd6fab7015d5cad3148641ce76509f2158f86612083076bad6ba881979fde7",
+      "bytes": 124961,
+      "reviewedSelectedSections": false,
+      "flags": [
+        "converted_text_requires_original"
+      ],
+      "autoApprovedLegalAuthority": false,
+      "identicalCopies": 1
+    },
+    {
+      "path": "03_thong_tu_quy_dinh/2. 260624 -3. Dự thảo Thông tư.md",
+      "sha256": "7f37997c4e61c5bde5d15acf961876f28154196316d68cf11f78c56817cedd94",
+      "bytes": 4684,
+      "reviewedSelectedSections": false,
+      "flags": [
+        "draft_candidate",
+        "converted_text_requires_original"
+      ],
+      "autoApprovedLegalAuthority": false,
+      "identicalCopies": 2
+    },
+    {
+      "path": "03_thong_tu_quy_dinh/2_ Khung KTCPS 4_0 BXD.pdf",
+      "sha256": "40ce234fa08549c7cdeee8845093da6778064c770041cb5494c2da800214c9fc",
+      "bytes": 4460231,
+      "reviewedSelectedSections": false,
+      "flags": [],
+      "autoApprovedLegalAuthority": false,
+      "identicalCopies": 1
+    },
+    {
+      "path": "03_thong_tu_quy_dinh/305_QD-BXD_696328.docx.md",
+      "sha256": "d75bb839baa1ac96acf9228ddcf835094b4210f85e5b992f50539297578b4138",
+      "bytes": 2173326,
+      "reviewedSelectedSections": false,
+      "flags": [
+        "converted_text_requires_original"
+      ],
+      "autoApprovedLegalAuthority": false,
+      "identicalCopies": 2
+    },
+    {
+      "path": "03_thong_tu_quy_dinh/34_2026_TT-BXD.docx.md",
+      "sha256": "c78780e07ea2d4fa67e3771fe9b26ff38123f02aa4a86f12f45586553af79698",
+      "bytes": 170060,
+      "reviewedSelectedSections": false,
+      "flags": [
+        "converted_text_requires_original"
+      ],
+      "autoApprovedLegalAuthority": false,
+      "identicalCopies": 1
+    },
+    {
+      "path": "03_thong_tu_quy_dinh/38.2026.TT-BXD ban hanh DMXD.md",
+      "sha256": "dc171a2d0150637316d8816c25b15155d05ba8e48f86631961460e20c813698e",
+      "bytes": 339269,
+      "reviewedSelectedSections": false,
+      "flags": [
+        "converted_text_requires_original"
+      ],
+      "autoApprovedLegalAuthority": false,
+      "identicalCopies": 1
+    },
+    {
+      "path": "03_thong_tu_quy_dinh/942_QD-BXD_710947.docx.md",
+      "sha256": "80edc27d2a36ecfcb8006f4ae89195f1ef575dc61fcd863a6578baf3095f79a7",
+      "bytes": 2329945,
+      "reviewedSelectedSections": false,
+      "flags": [
+        "converted_text_requires_original"
+      ],
+      "autoApprovedLegalAuthority": false,
+      "identicalCopies": 2
+    },
+    {
+      "path": "03_thong_tu_quy_dinh/943_QD-BXD_710989.docx.md",
+      "sha256": "74d5206b8c09b220d919f7c79a5c3b82cceb803f8fe589026d9dd10ff150a34d",
+      "bytes": 26672,
+      "reviewedSelectedSections": false,
+      "flags": [
+        "converted_text_requires_original"
+      ],
+      "autoApprovedLegalAuthority": false,
+      "identicalCopies": 2
+    },
+    {
+      "path": "03_thong_tu_quy_dinh/945_QD-BXD_710948.docx.md",
+      "sha256": "7901836afd652473bd40c40c9abac52cfeb7ba79e619d05e5c490893c465350a",
+      "bytes": 97831,
+      "reviewedSelectedSections": false,
+      "flags": [
+        "converted_text_requires_original"
+      ],
+      "autoApprovedLegalAuthority": false,
+      "identicalCopies": 2
+    },
+    {
+      "path": "03_thong_tu_quy_dinh/946_QD-BXD_710990.docx.md",
+      "sha256": "8611da0905d21e0b8969beef4d8c81e8e8161f31ae35af59b6e50ec36f212757",
+      "bytes": 91683,
+      "reviewedSelectedSections": false,
+      "flags": [
+        "converted_text_requires_original"
+      ],
+      "autoApprovedLegalAuthority": false,
+      "identicalCopies": 2
+    },
+    {
+      "path": "03_thong_tu_quy_dinh/QĐ 409 Suất vốn đầu tư 2025.pdf",
+      "sha256": "fc5b406b0346922543ffe6e81e4bf78b06107bc0063dff3b3db8f24eef793c42",
+      "bytes": 28206020,
+      "reviewedSelectedSections": false,
+      "flags": [],
+      "autoApprovedLegalAuthority": false,
+      "identicalCopies": 1
+    },
+    {
+      "path": "03_thong_tu_quy_dinh/So tay dau tu cong - Hai duong - 2025.pdf",
+      "sha256": "b0373a1d84d63475878aaad19cd15779cf725a82a24d40d72ef6fdd316f45fb9",
+      "bytes": 1451303,
+      "reviewedSelectedSections": false,
+      "flags": [],
+      "autoApprovedLegalAuthority": false,
+      "identicalCopies": 1
+    },
+    {
+      "path": "03_thong_tu_quy_dinh/TT06-2021.pdf",
+      "sha256": "25faf0fcfe57e62ab25d607ea4ce9a7cde0ab08be05e5930d61ca1914a0ce077",
+      "bytes": 8949431,
+      "reviewedSelectedSections": false,
+      "flags": [],
+      "autoApprovedLegalAuthority": false,
+      "identicalCopies": 1
+    },
+    {
+      "path": "03_thong_tu_quy_dinh/TT22.docx",
+      "sha256": "dd6e5c67e8d6499860bd039079dd4fb54d78c94fd643964fd217bc50f4d28125",
+      "bytes": 150348,
+      "reviewedSelectedSections": false,
+      "flags": [],
+      "autoApprovedLegalAuthority": false,
+      "identicalCopies": 1
+    },
+    {
+      "path": "04_quy_chuan/QCVN PCCC.pdf",
+      "sha256": "581e4ead9d2da2f9297c45bc3300e02d15b40a184774b065a997026a0c034a11",
+      "bytes": 1933325,
+      "reviewedSelectedSections": false,
+      "flags": [],
+      "autoApprovedLegalAuthority": false,
+      "identicalCopies": 1
+    },
+    {
+      "path": "409_QD-BXD_651677.docx.md",
+      "sha256": "4f453be12b40a0c415d2d45017394e4d8fced2d20f744a4067d1694ef20ade10",
+      "bytes": 329703,
+      "reviewedSelectedSections": false,
+      "flags": [
+        "converted_text_requires_original"
+      ],
+      "autoApprovedLegalAuthority": false,
+      "identicalCopies": 1
+    },
+    {
+      "path": "47_2026_tt-bca_705214.md",
+      "sha256": "8b65e7c9c57031ad1ae8aec779596339245e7dee4171cfc2087c2a2392d9d8fd",
+      "bytes": 149225,
+      "reviewedSelectedSections": false,
+      "flags": [
+        "converted_text_requires_original"
+      ],
+      "autoApprovedLegalAuthority": false,
+      "identicalCopies": 1
+    },
+    {
+      "path": "58_2024_QH15_621645.docx.md",
+      "sha256": "fa45e61afb9fe84b30f849b365fc967ab815a32a495f58c3624a7335aed676e6",
+      "bytes": 198052,
+      "reviewedSelectedSections": false,
+      "flags": [
+        "converted_text_requires_original"
+      ],
+      "autoApprovedLegalAuthority": false,
+      "identicalCopies": 3
+    },
+    {
+      "path": "73_2026_TT-BTC_712590.md",
+      "sha256": "32b28d64b66f5dcf78639188c532d1f3210b2011f5eb839cd797c288eb310b9f",
+      "bytes": 57904,
+      "reviewedSelectedSections": false,
+      "flags": [
+        "converted_text_requires_original"
+      ],
+      "autoApprovedLegalAuthority": false,
+      "identicalCopies": 1
+    },
+    {
+      "path": "dt_tt_bxd_2024_huong_dan_quan_ly_chi_phi.md",
+      "sha256": "7f37997c4e61c5bde5d15acf961876f28154196316d68cf11f78c56817cedd94",
+      "bytes": 4684,
+      "reviewedSelectedSections": false,
+      "flags": [
+        "draft_candidate",
+        "converted_text_requires_original"
+      ],
+      "autoApprovedLegalAuthority": false,
+      "identicalCopies": 2
+    },
+    {
+      "path": "luat_qh14_54_2019_nay_quy_dinh_cac_hoat_dong_ve_chung.md",
+      "sha256": "30af7c0622686e6225ce1132ea3b52fbecfded8b946d3c4c638fc3b955464fa8",
+      "bytes": 285003,
+      "reviewedSelectedSections": false,
+      "flags": [
+        "converted_text_requires_original"
+      ],
+      "autoApprovedLegalAuthority": false,
+      "identicalCopies": 1
+    },
+    {
+      "path": "luat_qh15_112_2025_quy_hoach.md",
+      "sha256": "7b314b877a29ad41e162490be25b95516e65d9fca676d7cdf631d5d2bc9c45c0",
+      "bytes": 151568,
+      "reviewedSelectedSections": false,
+      "flags": [
+        "converted_text_requires_original"
+      ],
+      "autoApprovedLegalAuthority": false,
+      "identicalCopies": 2
+    },
+    {
+      "path": "luat_qh15_135_2025_xay_dung.md",
+      "sha256": "89e00d45d8742910d182b4fa1350aa2e5204d1b15bd5a4a0159615a7fe49f689",
+      "bytes": 181983,
+      "reviewedSelectedSections": true,
+      "flags": [
+        "converted_text_requires_original"
+      ],
+      "autoApprovedLegalAuthority": false,
+      "identicalCopies": 1
+    },
+    {
+      "path": "luat_qh15_143_2025_dau_tu.md",
+      "sha256": "1017ad28ce5437e651e0663ab40827b73a7b6176aa9b80a3d256243784a62783",
+      "bytes": 174199,
+      "reviewedSelectedSections": false,
+      "flags": [
+        "converted_text_requires_original"
+      ],
+      "autoApprovedLegalAuthority": false,
+      "identicalCopies": 2
+    },
+    {
+      "path": "luat_qh15_22_2023_nay_quy_dinh_ve_quan_ly_nha_nuoc.md",
+      "sha256": "098a145e8288104c996e6ef678c9d8121b7af771e39b822811e6af226fac82ae",
+      "bytes": 238774,
+      "reviewedSelectedSections": false,
+      "flags": [
+        "converted_text_requires_original"
+      ],
+      "autoApprovedLegalAuthority": false,
+      "identicalCopies": 1
+    },
+    {
+      "path": "luat_qh15_56_2024_chung_khoan_so_54_2019_qh14_luat_ke.md",
+      "sha256": "7d7e67081c13d08fa1cd80aa8272ac6ab86dd2ccdb112f9f89ac15110126ba03",
+      "bytes": 85068,
+      "reviewedSelectedSections": false,
+      "flags": [
+        "converted_text_requires_original"
+      ],
+      "autoApprovedLegalAuthority": false,
+      "identicalCopies": 1
+    },
+    {
+      "path": "luat_qh15_58_2024_nay_quy_dinh_viec_quan_ly_nha_nuoc.md",
+      "sha256": "fa45e61afb9fe84b30f849b365fc967ab815a32a495f58c3624a7335aed676e6",
+      "bytes": 198052,
+      "reviewedSelectedSections": false,
+      "flags": [
+        "converted_text_requires_original"
+      ],
+      "autoApprovedLegalAuthority": false,
+      "identicalCopies": 3
+    },
+    {
+      "path": "luat_qh15_68_2025_quan_ly_von_nha_nuoc_tai_doanh_nghiep.md",
+      "sha256": "dab70af4dd1559f732ffa0f5f719d5c31bc7b50e3f1d2e65ddc750b836b3a0b8",
+      "bytes": 96695,
+      "reviewedSelectedSections": false,
+      "flags": [
+        "converted_text_requires_original"
+      ],
+      "autoApprovedLegalAuthority": false,
+      "identicalCopies": 1
+    },
+    {
+      "path": "luat_qh15_76_2025_doanh_nghiep_so_59_2020_qh14_da_duoc.md",
+      "sha256": "09359ed87189ea15728116e82a87413225a0e40f1bd4b0345abb1048a78681f6",
+      "bytes": 20007,
+      "reviewedSelectedSections": false,
+      "flags": [
+        "converted_text_requires_original"
+      ],
+      "autoApprovedLegalAuthority": false,
+      "identicalCopies": 1
+    },
+    {
+      "path": "luat_qh15_90_2025_dau_thau_so_22_2023_qh15_da_duoc.md",
+      "sha256": "c6ec6730810328b5b0fe6941fcd69eb4b55ef6e6bc8579f76de241ce973ce35d",
+      "bytes": 194982,
+      "reviewedSelectedSections": false,
+      "flags": [
+        "converted_text_requires_original"
+      ],
+      "autoApprovedLegalAuthority": false,
+      "identicalCopies": 3
+    },
+    {
+      "path": "luat_qh16_27_2026_va_y_kien_dai_bieu_quoc_hoi.md",
+      "sha256": "af63f16d7fab9585f655fd07c571fba7cc2b39d163a0b279b6165c4dec885bc3",
+      "bytes": 35176,
+      "reviewedSelectedSections": false,
+      "flags": [
+        "converted_text_requires_original"
+      ],
+      "autoApprovedLegalAuthority": false,
+      "identicalCopies": 2
+    },
+    {
+      "path": "nd_cp_155_2020_ngay_19_thang_6_nam_2015_luat_sua.md",
+      "sha256": "0e7c30e860adf4c4cb14e0f3fabc7e9bbe5e64c72e06dc741e8fe4984afcf518",
+      "bytes": 776301,
+      "reviewedSelectedSections": false,
+      "flags": [
+        "converted_text_requires_original"
+      ],
+      "autoApprovedLegalAuthority": false,
+      "identicalCopies": 1
+    },
+    {
+      "path": "nd_cp_175_2024_ve_quan_ly_du_an_dau_tu_xay_dung.md",
+      "sha256": "f32b45e2b9744627b20e139a5f04c4e887cdd06600d1ef4ad3ef590c0a5b059b",
+      "bytes": 646861,
+      "reviewedSelectedSections": false,
+      "flags": [
+        "converted_text_requires_original"
+      ],
+      "autoApprovedLegalAuthority": false,
+      "identicalCopies": 2
+    },
+    {
+      "path": "nd_cp_181_2026_so_59_2020_qh14_duoc_sua_doi_bo.md",
+      "sha256": "1db1a59ae985ec38e1c0a23e395ad2d19251c5513875e0281551e1cac42733ec",
+      "bytes": 94554,
+      "reviewedSelectedSections": false,
+      "flags": [
+        "converted_text_requires_original"
+      ],
+      "autoApprovedLegalAuthority": false,
+      "identicalCopies": 1
+    },
+    {
+      "path": "nd_cp_193_2026_quyet_toan_von_dau_tu_du_an.md",
+      "sha256": "d18b85479feb4d106a0e710ef08b6ead3f81913a7d8a5f70204ebd76c43fa991",
+      "bytes": 98146,
+      "reviewedSelectedSections": false,
+      "flags": [
+        "converted_text_requires_original"
+      ],
+      "autoApprovedLegalAuthority": false,
+      "identicalCopies": 2
+    },
+    {
+      "path": "nd_cp_206_2026_quan_ly_chi_phi_dau_tu_xay_dung.md",
+      "sha256": "fb1a99d4c542b0f0f45e6ec6c86384e813375d15fef99c29e892d7cd90edfb6a",
+      "bytes": 106588,
+      "reviewedSelectedSections": true,
+      "flags": [
+        "converted_text_requires_original"
+      ],
+      "autoApprovedLegalAuthority": false,
+      "identicalCopies": 1
+    },
+    {
+      "path": "nd_cp_207_2026_quan_ly_chat_luong_thi_cong_xay_dung_va_bao_tri_cong_trinh_xay_dung.md",
+      "sha256": "d845f81d3657ad093fa16077a72bb64eaf691893209eea538d6172c8a2a6715b",
+      "bytes": 208493,
+      "reviewedSelectedSections": true,
+      "flags": [
+        "converted_text_requires_original"
+      ],
+      "autoApprovedLegalAuthority": false,
+      "identicalCopies": 1
+    },
+    {
+      "path": "nd_cp_207_2026_quan_ly_chat_luong_thi_cong_xay_dung_va_bao_tri_cong_trinh_xay_dung_phu_luc_i.md",
+      "sha256": "c56b6007d5a6a9b3004298f68842a33f076a62177ea075e7f0ae328cec594d77",
+      "bytes": 66065,
+      "reviewedSelectedSections": false,
+      "flags": [
+        "converted_text_requires_original"
+      ],
+      "autoApprovedLegalAuthority": false,
+      "identicalCopies": 1
+    },
+    {
+      "path": "nd_cp_209_2026_quan_ly_vat_lieu_xay_dung.md",
+      "sha256": "abf7adcae63d211155ded24e1ffd56751a666c41485891fda57aff1721aa8b44",
+      "bytes": 28680,
+      "reviewedSelectedSections": false,
+      "flags": [
+        "converted_text_requires_original"
+      ],
+      "autoApprovedLegalAuthority": false,
+      "identicalCopies": 1
+    },
+    {
+      "path": "nd_cp_210_2026_quan_ly_hop_dong_xay_dung.md",
+      "sha256": "7ff76c317e347a78c72a144ae8d71ea2d7e4dd6f27d68189aa38ec945968e931",
+      "bytes": 125226,
+      "reviewedSelectedSections": false,
+      "flags": [
+        "converted_text_requires_original"
+      ],
+      "autoApprovedLegalAuthority": false,
+      "identicalCopies": 1
+    },
+    {
+      "path": "nd_cp_212_2026_he_thong_thong_tin_co_so_du_lieu.docx.md",
+      "sha256": "ec805a757cd25ded0b3d9b7bff44c32fb1475a8600d8d5d7a997eeda6b6c7f03",
+      "bytes": 139913,
+      "reviewedSelectedSections": true,
+      "flags": [
+        "converted_text_requires_original"
+      ],
+      "autoApprovedLegalAuthority": false,
+      "identicalCopies": 1
+    },
+    {
+      "path": "nd_cp_212_2026_he_thong_thong_tin_co_so_du_lieu_phu_luc.md",
+      "sha256": "d7b106ed5ba787b42567412b755035ad72a15c2321597506417f0f076f629f58",
+      "bytes": 76760,
+      "reviewedSelectedSections": false,
+      "flags": [
+        "converted_text_requires_original"
+      ],
+      "autoApprovedLegalAuthority": false,
+      "identicalCopies": 1
+    },
+    {
+      "path": "nd_cp_214_2025_thi_hanh_luat_dau_thau_ve_lua_chon.md",
+      "sha256": "d470c33b593d5e403129c83a2c0d7e9125c0e82779a746bc42b77271ca3767e3",
+      "bytes": 632157,
+      "reviewedSelectedSections": false,
+      "flags": [
+        "converted_text_requires_original"
+      ],
+      "autoApprovedLegalAuthority": false,
+      "identicalCopies": 1
+    },
+    {
+      "path": "nd_cp_217_2026_quan_ly_hoat_dong_xay_dung.md",
+      "sha256": "c4a0dce47e79f3af75a6e6061b49f82dae56965f345a5f145f7a87eedcc3f43d",
+      "bytes": 252358,
+      "reviewedSelectedSections": true,
+      "flags": [
+        "converted_text_requires_original"
+      ],
+      "autoApprovedLegalAuthority": false,
+      "identicalCopies": 1
+    },
+    {
+      "path": "nd_cp_217_2026_quan_ly_hoat_dong_xay_dung_phu_luc_i.md",
+      "sha256": "a24dc440d0e126862f98f888c0cbded405174c26b80d748fae70df757e77c45d",
+      "bytes": 103175,
+      "reviewedSelectedSections": true,
+      "flags": [
+        "converted_text_requires_original"
+      ],
+      "autoApprovedLegalAuthority": false,
+      "identicalCopies": 1
+    },
+    {
+      "path": "nd_cp_220_2026_bao_hiem_bat_buoc_trong_hoat_dong_dau_tu_xay_dung.md",
+      "sha256": "d7db464422b6c5fefc8645a05ac1a1b5a31a9ac78177a4dd64c2c9c242a2f7ef",
+      "bytes": 16067,
+      "reviewedSelectedSections": false,
+      "flags": [
+        "converted_text_requires_original"
+      ],
+      "autoApprovedLegalAuthority": false,
+      "identicalCopies": 1
+    },
+    {
+      "path": "nd_cp_220_2026_bao_hiem_bat_buoc_trong_hoat_dong_dau_tu_xay_dung_phu_luc.md",
+      "sha256": "c8daacee91e07a6f37f9673b263b3b7c6e225c9380e939c488b3226419391df1",
+      "bytes": 50242,
+      "reviewedSelectedSections": false,
+      "flags": [
+        "converted_text_requires_original"
+      ],
+      "autoApprovedLegalAuthority": false,
+      "identicalCopies": 1
+    },
+    {
+      "path": "nd_cp_225_2025_can_cu_luat_sua_doi_bo_sung_mot.md",
+      "sha256": "3fa6b8634023a87c4043bd7b20581368648f8484cbb4ccc2bc502fc7ae64313b",
+      "bytes": 107194,
+      "reviewedSelectedSections": false,
+      "flags": [
+        "converted_text_requires_original"
+      ],
+      "autoApprovedLegalAuthority": false,
+      "identicalCopies": 1
+    },
+    {
+      "path": "nd_cp_233_2026_danh_gia_xep_loai_chat_luong_doi_voi.md",
+      "sha256": "10da209b3504c5f4db2655aed532b067aa46de760abeb7d7fca01ce9611d4c4f",
+      "bytes": 58837,
+      "reviewedSelectedSections": false,
+      "flags": [
+        "converted_text_requires_original"
+      ],
+      "autoApprovedLegalAuthority": false,
+      "identicalCopies": 2
+    },
+    {
+      "path": "nd_cp_245_2025_so_155_2020_nd_cp_ngay_31_thang.md",
+      "sha256": "9031ce978277d5b010aa98de82004ea10afcf9badcc84ae48627aeed84278655",
+      "bytes": 170497,
+      "reviewedSelectedSections": false,
+      "flags": [
+        "converted_text_requires_original"
+      ],
+      "autoApprovedLegalAuthority": false,
+      "identicalCopies": 1
+    },
+    {
+      "path": "nd_cp_275_2025_so_85_2025_nd_cp_ngay_08_thang.md",
+      "sha256": "eaec0eec8108e216d7d952a1b7b05fbb80eab0766fab308d128e4e803ab8944b",
+      "bytes": 46981,
+      "reviewedSelectedSections": false,
+      "flags": [
+        "converted_text_requires_original"
+      ],
+      "autoApprovedLegalAuthority": false,
+      "identicalCopies": 2
+    },
+    {
+      "path": "nd_cp_365_2025_can_cu_luat_sua_doi_bo_sung_mot.md",
+      "sha256": "cd3a6f16fb3610d0c7c5ef11624b653c76edcb28494569a44687c24d69ffe298",
+      "bytes": 120539,
+      "reviewedSelectedSections": false,
+      "flags": [
+        "converted_text_requires_original"
+      ],
+      "autoApprovedLegalAuthority": false,
+      "identicalCopies": 1
+    },
+    {
+      "path": "nd_cp_366_2025_chinh_phu_ban_hanh_nghi_dinh_ve_quan.md",
+      "sha256": "1de6537722dca7b565f74c0a52f21c7d6e78aab444892e03253ef224416fe48c",
+      "bytes": 147381,
+      "reviewedSelectedSections": false,
+      "flags": [
+        "converted_text_requires_original"
+      ],
+      "autoApprovedLegalAuthority": false,
+      "identicalCopies": 1
+    },
+    {
+      "path": "nd_cp_57_2026_so_59_2020_qh14_duoc_sua_doi_bo.md",
+      "sha256": "b23ae2ae096a35cdcb5765ece9812b8dcfa9c399b35571a8440c9318259534d9",
+      "bytes": 443034,
+      "reviewedSelectedSections": false,
+      "flags": [
+        "converted_text_requires_original"
+      ],
+      "autoApprovedLegalAuthority": false,
+      "identicalCopies": 1
+    },
+    {
+      "path": "nd_cp_85_2025_chinh_phu_ban_hanh_nghi_dinh_quy_dinh.md",
+      "sha256": "ac3c0ab82f4b2d0120d6a7f98583e250ebe4e9123783e4982321efca51614e4d",
+      "bytes": 195948,
+      "reviewedSelectedSections": false,
+      "flags": [
+        "converted_text_requires_original"
+      ],
+      "autoApprovedLegalAuthority": false,
+      "identicalCopies": 2
+    },
+    {
+      "path": "nd_cp_96_2026_so_59_2020_qh14_duoc_sua_doi_bo.md",
+      "sha256": "ec9500a56a2d6ad237c23290f9599955ad3437773e2e71ccfc9e255e8a26abc5",
+      "bytes": 448743,
+      "reviewedSelectedSections": false,
+      "flags": [
+        "converted_text_requires_original"
+      ],
+      "autoApprovedLegalAuthority": false,
+      "identicalCopies": 2
+    },
+    {
+      "path": "qcvn_bca_10_2025_xay_dung_cong_trinh_dam_bao_nguoi_khuyet_tat_tiep_can_su_dung.md",
+      "sha256": "95b13e3cf7107572bdcdad909fe3cdd75f7e5c7940f5a32b688f9bad6c7a47d5",
+      "bytes": 480167,
+      "reviewedSelectedSections": false,
+      "flags": [
+        "filename_topic_mismatch",
+        "converted_text_requires_original"
+      ],
+      "autoApprovedLegalAuthority": false,
+      "identicalCopies": 1
+    },
+    {
+      "path": "qcvn_bxd_01_2021_quy_hoach_xay_dung.md",
+      "sha256": "64c1a6c4cd72fbb67e0d293aec778991e7dda11de74a328bcf87a923df90487b",
+      "bytes": 149682,
+      "reviewedSelectedSections": false,
+      "flags": [
+        "converted_text_requires_original"
+      ],
+      "autoApprovedLegalAuthority": false,
+      "identicalCopies": 1
+    },
+    {
+      "path": "qcvn_bxd_02_2022_so_lieu_dieu_kien_tu_nhien_dung_trong_xay_dung.md",
+      "sha256": "9f20cc29aa5e420171a345d7e0c054b755cacf661c260e544df5c4247910903e",
+      "bytes": 8455804,
+      "reviewedSelectedSections": false,
+      "flags": [
+        "converted_text_requires_original"
+      ],
+      "autoApprovedLegalAuthority": false,
+      "identicalCopies": 1
+    },
+    {
+      "path": "qcvn_bxd_03_2022_phan_cap_cong_trinh_xay_dung.md",
+      "sha256": "46472e01ac9138990e033bb42ffb4058b4c6cbdba3c5e689d64f88b254b6900c",
+      "bytes": 18688,
+      "reviewedSelectedSections": false,
+      "flags": [
+        "converted_text_requires_original"
+      ],
+      "autoApprovedLegalAuthority": false,
+      "identicalCopies": 1
+    },
+    {
+      "path": "qcvn_bxd_04_2021_sua_doi_01_2026_nha_chung_cu.md",
+      "sha256": "485b1339bfeb6ec162d41ad4c8976e67def24aa1b3c26292ee6c9c55cf43169b",
+      "bytes": 29462,
+      "reviewedSelectedSections": false,
+      "flags": [
+        "converted_text_requires_original"
+      ],
+      "autoApprovedLegalAuthority": false,
+      "identicalCopies": 1
+    },
+    {
+      "path": "qcvn_bxd_06_2022_an_toan_chay_cho_nha_va_cong_trinh.md",
+      "sha256": "26211e1098c63e4fa685bb11e7f7d9667a965158bb42348f90854fee48be4c3f",
+      "bytes": 3643919,
+      "reviewedSelectedSections": false,
+      "flags": [
+        "converted_text_requires_original"
+      ],
+      "autoApprovedLegalAuthority": false,
+      "identicalCopies": 1
+    },
+    {
+      "path": "qcvn_bxd_09_2017_cac_cong_trinh_xay_dung_su_dung_nang_luong_hieu_qua.md",
+      "sha256": "39f5e863a418b73cc6760405292e5af64746cd30f935ef5c31746acfb0eb5341",
+      "bytes": 54905,
+      "reviewedSelectedSections": false,
+      "flags": [
+        "converted_text_requires_original"
+      ],
+      "autoApprovedLegalAuthority": false,
+      "identicalCopies": 1
+    },
+    {
+      "path": "qcvn_bxd_10_2014_xay_dung_cong_trinh_dam_bao_nguoi_khuyet_tat_tiep_can_su_dung.md",
+      "sha256": "cabc232b28556b750c8bda80309eaafb661745fb9f705c45706e3b8b9d040675",
+      "bytes": 84541,
+      "reviewedSelectedSections": false,
+      "flags": [
+        "converted_text_requires_original"
+      ],
+      "autoApprovedLegalAuthority": false,
+      "identicalCopies": 1
+    },
+    {
+      "path": "qcvn_bxd_18_2021_an_toan_trong_thi_cong_xay_dung.md",
+      "sha256": "9b00e06c60c903fd1385a82aed5074e39f172bd5ca9d84cfaa4fba5e3e7d31a3",
+      "bytes": 405562,
+      "reviewedSelectedSections": false,
+      "flags": [
+        "converted_text_requires_original"
+      ],
+      "autoApprovedLegalAuthority": false,
+      "identicalCopies": 1
+    },
+    {
+      "path": "qd-671-btttt-1716430013526346989684.pdf",
+      "sha256": "6dc0e58cacd990bccb22c5125b258892c52285aef1653f3c0fd64e26c76d0c8e",
+      "bytes": 1495570,
+      "reviewedSelectedSections": false,
+      "flags": [],
+      "autoApprovedLegalAuthority": false,
+      "identicalCopies": 1
+    },
+    {
+      "path": "qd_bxd_2026_danh_muc_du_lieu_goc_chu_chuyen_nganh_xay_dung.md",
+      "sha256": "8611da0905d21e0b8969beef4d8c81e8e8161f31ae35af59b6e50ec36f212757",
+      "bytes": 91683,
+      "reviewedSelectedSections": false,
+      "flags": [
+        "converted_text_requires_original"
+      ],
+      "autoApprovedLegalAuthority": false,
+      "identicalCopies": 2
+    },
+    {
+      "path": "qd_bxd_2026_danh_muc_ke_hoach_cung_cap_du_lieu_mo_bxd.md",
+      "sha256": "74d5206b8c09b220d919f7c79a5c3b82cceb803f8fe589026d9dd10ff150a34d",
+      "bytes": 26672,
+      "reviewedSelectedSections": false,
+      "flags": [
+        "converted_text_requires_original"
+      ],
+      "autoApprovedLegalAuthority": false,
+      "identicalCopies": 2
+    },
+    {
+      "path": "qd_bxd_2026_khung_kien_truc_quan_tri_du_lieu_bxd.md",
+      "sha256": "80edc27d2a36ecfcb8006f4ae89195f1ef575dc61fcd863a6578baf3095f79a7",
+      "bytes": 2329945,
+      "reviewedSelectedSections": false,
+      "flags": [
+        "converted_text_requires_original"
+      ],
+      "autoApprovedLegalAuthority": false,
+      "identicalCopies": 2
+    },
+    {
+      "path": "qd_bxd_2026_khung_kien_truc_so_bxd_v4.md",
+      "sha256": "d75bb839baa1ac96acf9228ddcf835094b4210f85e5b992f50539297578b4138",
+      "bytes": 2173326,
+      "reviewedSelectedSections": false,
+      "flags": [
+        "converted_text_requires_original"
+      ],
+      "autoApprovedLegalAuthority": false,
+      "identicalCopies": 2
+    },
+    {
+      "path": "qd_bxd_2026_tu_dien_du_lieu_dung_chung_nganh_xay_dung.md",
+      "sha256": "7901836afd652473bd40c40c9abac52cfeb7ba79e619d05e5c490893c465350a",
+      "bytes": 97831,
+      "reviewedSelectedSections": false,
+      "flags": [
+        "converted_text_requires_original"
+      ],
+      "autoApprovedLegalAuthority": false,
+      "identicalCopies": 2
+    },
+    {
+      "path": "tai_lieu_bo_tai_chinh_cong_hoa_xa_hoi_chu.md",
+      "sha256": "1c9492fbf31962faa1f150d0d12e4ea505411d56ee2244e3f399af126f233faa",
+      "bytes": 112528,
+      "reviewedSelectedSections": false,
+      "flags": [
+        "converted_text_requires_original"
+      ],
+      "autoApprovedLegalAuthority": false,
+      "identicalCopies": 2
+    },
+    {
+      "path": "tai_lieu_bo_xay_dung_cong_hoa_xa_hoi_chu.md",
+      "sha256": "26a8e672348230587ffe92502945bcae10e28b29c33dc4aa3a51f902cfb6ceb3",
+      "bytes": 16178,
+      "reviewedSelectedSections": false,
+      "flags": [
+        "converted_text_requires_original"
+      ],
+      "autoApprovedLegalAuthority": false,
+      "identicalCopies": 1
+    },
+    {
+      "path": "tai_lieu_chinh_phu_cong_hoa_xa_hoi_chu_nghia.md",
+      "sha256": "70c0c2c84819fc6f8d058f10fc74132d72e7c3bff53a46769a1e332751e711d3",
+      "bytes": 447538,
+      "reviewedSelectedSections": false,
+      "flags": [
+        "converted_text_requires_original"
+      ],
+      "autoApprovedLegalAuthority": false,
+      "identicalCopies": 2
+    },
+    {
+      "path": "tai_lieu_quoc_hoi_cong_hoa_xa_hoi_chu_nghia.md",
+      "sha256": "c6ec6730810328b5b0fe6941fcd69eb4b55ef6e6bc8579f76de241ce973ce35d",
+      "bytes": 194982,
+      "reviewedSelectedSections": false,
+      "flags": [
+        "converted_text_requires_original"
+      ],
+      "autoApprovedLegalAuthority": false,
+      "identicalCopies": 3
+    },
+    {
+      "path": "tt_btc_116_2020_quan_tri_cong_ty_ap_dung_doi_voi.md",
+      "sha256": "bfbd7b4b05c423554cb6a5cc849066d784d821a2c56848ff74064818bdb56986",
+      "bytes": 259423,
+      "reviewedSelectedSections": false,
+      "flags": [
+        "converted_text_requires_original"
+      ],
+      "autoApprovedLegalAuthority": false,
+      "identicalCopies": 1
+    },
+    {
+      "path": "tt_btc_31_2026_huong_dan_hanh_chinh.md",
+      "sha256": "1c9492fbf31962faa1f150d0d12e4ea505411d56ee2244e3f399af126f233faa",
+      "bytes": 112528,
+      "reviewedSelectedSections": false,
+      "flags": [
+        "converted_text_requires_original"
+      ],
+      "autoApprovedLegalAuthority": false,
+      "identicalCopies": 2
+    },
+    {
+      "path": "tt_bxd_01_2021_huong_dan_quan_ly_chi_phi_dau_tu_xay_dung.md",
+      "sha256": "7ddcc6f334de930fa38465f1bf4b8ee85544aa3ef86c3fdd262bdc7596d29532",
+      "bytes": 48286,
+      "reviewedSelectedSections": false,
+      "flags": [
+        "converted_text_requires_original"
+      ],
+      "autoApprovedLegalAuthority": false,
+      "identicalCopies": 2
+    },
+    {
+      "path": "tt_bxd_01_2021_sua_doi_bo_sung_mot_so_dieu_cua.md",
+      "sha256": "386d0848e32010b09f7df8cb2082bfa3eebb9e9911df721125fefcead856f46d",
+      "bytes": 152391,
+      "reviewedSelectedSections": false,
+      "flags": [
+        "converted_text_requires_original"
+      ],
+      "autoApprovedLegalAuthority": false,
+      "identicalCopies": 1
+    },
+    {
+      "path": "tt_bxd_02_2021_huong_dan_bao_tri_cong_trinh_xay_dung.md",
+      "sha256": "75dfb1fdd106adc525594e5dd1e96e27f146d3e68790465a308f7da8a5a63351",
+      "bytes": 33868,
+      "reviewedSelectedSections": false,
+      "flags": [
+        "converted_text_requires_original"
+      ],
+      "autoApprovedLegalAuthority": false,
+      "identicalCopies": 2
+    },
+    {
+      "path": "tt_bxd_02_2025_quy_dinh.md",
+      "sha256": "426c1a417a3970c64beb750844bbd82e289f37674033fe4656b8400ae2a92f2d",
+      "bytes": 35776,
+      "reviewedSelectedSections": false,
+      "flags": [
+        "converted_text_requires_original"
+      ],
+      "autoApprovedLegalAuthority": false,
+      "identicalCopies": 2
+    },
+    {
+      "path": "tt_bxd_24_2025_huong_dan_co_so_du_lieu_hoat_dong_xay_dung.md",
+      "sha256": "c29c18ceab6c9ff4b5d30c4128dfad488fe26fcf978b49ad2f8335a617fe0b6e",
+      "bytes": 169807,
+      "reviewedSelectedSections": false,
+      "flags": [
+        "converted_text_requires_original"
+      ],
+      "autoApprovedLegalAuthority": false,
+      "identicalCopies": 1
+    },
+    {
+      "path": "tt_bxd_31_2026_dinh_muc_xay_dung.md",
+      "sha256": "5d77771230dbc300a57df610bfab3567f88acf11167a025619397ddaea49d53f",
+      "bytes": 32840,
+      "reviewedSelectedSections": false,
+      "flags": [
+        "converted_text_requires_original"
+      ],
+      "autoApprovedLegalAuthority": false,
+      "identicalCopies": 1
+    },
+    {
+      "path": "tt_bxd_32_2026_so_207_2026_nd_cp_ngay_15_thang.docx.md",
+      "sha256": "25292b85fe062862cfc286067938ceb7d893d49869b89c85629f8a88deb76ebb",
+      "bytes": 15323,
+      "reviewedSelectedSections": false,
+      "flags": [
+        "converted_text_requires_original"
+      ],
+      "autoApprovedLegalAuthority": false,
+      "identicalCopies": 1
+    },
+    {
+      "path": "tt_bxd_32_2026_so_207_2026_nd_cp_ngay_15_thang_phu_luc.md",
+      "sha256": "ba73dca1e1597e58334ce908b233d3f258251fb44698e485c2e6d3ba4e73ca19",
+      "bytes": 1652,
+      "reviewedSelectedSections": false,
+      "flags": [
+        "converted_text_requires_original"
+      ],
+      "autoApprovedLegalAuthority": false,
+      "identicalCopies": 1
+    },
+    {
+      "path": "tt_bxd_33_2026_quy_dinh_chi_tiet_mot_so_noi_dung.docx.md",
+      "sha256": "6680dc15e94cf5758abb6e0985675300c24990e033869c7206f9e7f234f962b8",
+      "bytes": 20271,
+      "reviewedSelectedSections": false,
+      "flags": [
+        "converted_text_requires_original"
+      ],
+      "autoApprovedLegalAuthority": false,
+      "identicalCopies": 1
+    },
+    {
+      "path": "tt_bxd_34_2026_quy_dinh_chi_tiet_cap_cong_trinh_xay_dung.md",
+      "sha256": "45f990e3143dc3c1c9e2b07938a35ad53b958bd390bd4bd0a26c298c5c1a5b0f",
+      "bytes": 16422,
+      "reviewedSelectedSections": true,
+      "flags": [
+        "converted_text_requires_original"
+      ],
+      "autoApprovedLegalAuthority": false,
+      "identicalCopies": 1
+    },
+    {
+      "path": "tt_bxd_34_2026_quy_dinh_chi_tiet_cap_cong_trinh_xay_dung_phu_luc.md",
+      "sha256": "8abb139692d168adbc50e97ca2e381d6645c7030c30c9d3048de24d45ea10b7a",
+      "bytes": 196812,
+      "reviewedSelectedSections": false,
+      "flags": [
+        "converted_text_requires_original"
+      ],
+      "autoApprovedLegalAuthority": false,
+      "identicalCopies": 1
+    },
+    {
+      "path": "tt_bxd_36_2026_huong_dan_mot_so_noi_dung_phuong_phap.docx.md",
+      "sha256": "2833e7365930d8699a18506b48792d008f74a2805c5e814b78f41be96d807cc4",
+      "bytes": 47171,
+      "reviewedSelectedSections": true,
+      "flags": [
+        "converted_text_requires_original"
+      ],
+      "autoApprovedLegalAuthority": false,
+      "identicalCopies": 1
+    },
+    {
+      "path": "tt_bxd_36_2026_huong_dan_mot_so_noi_dung_phuong_phap_phu_luc.md",
+      "sha256": "4e242eae9e9931340bbb2dc264e68c0038d84dcd26672be8fd4d29694a1d0d9f",
+      "bytes": 201445,
+      "reviewedSelectedSections": false,
+      "flags": [
+        "converted_text_requires_original"
+      ],
+      "autoApprovedLegalAuthority": false,
+      "identicalCopies": 1
+    },
+    {
+      "path": "tt_bxd_37_2026_huong_dan_phuong_phap_xac_dinh_dinh_muc.docx.md",
+      "sha256": "22abdafdbf81b42f1521c85f294448a4432b74bde7bfe8e9726434d599658d59",
+      "bytes": 536784,
+      "reviewedSelectedSections": false,
+      "flags": [
+        "converted_text_requires_original"
+      ],
+      "autoApprovedLegalAuthority": false,
+      "identicalCopies": 1
+    },
+    {
+      "path": "tt_bxd_37_2026_xac_dinh_dinh_muc_du_toan_va_chi_tieu_ktkt.md",
+      "sha256": "447aa49340128f71c69b25997b5087b779b6ea2bbf238ec5ac27adb93867310b",
+      "bytes": 4998,
+      "reviewedSelectedSections": true,
+      "flags": [
+        "converted_text_requires_original"
+      ],
+      "autoApprovedLegalAuthority": false,
+      "identicalCopies": 1
+    },
+    {
+      "path": "tt_bxd_37_2026_xac_dinh_dinh_muc_du_toan_va_chi_tieu_ktkt_phu_luc.md",
+      "sha256": "f07e80ef818a2d2b7cc14df07538aaa5a97e14b3d5c4ac710288c0fab491a184",
+      "bytes": 283629,
+      "reviewedSelectedSections": false,
+      "flags": [
+        "converted_text_requires_original"
+      ],
+      "autoApprovedLegalAuthority": false,
+      "identicalCopies": 1
+    },
+    {
+      "path": "tt_bxd_38_2026_ban_hanh_dinh_muc_xay_dung.md",
+      "sha256": "26d01dd92223b0353ea74753bbcb2f6b5f2dd810e0c63d81c8ea67b21a86276a",
+      "bytes": 3728,
+      "reviewedSelectedSections": true,
+      "flags": [
+        "converted_text_requires_original"
+      ],
+      "autoApprovedLegalAuthority": false,
+      "identicalCopies": 1
+    },
+    {
+      "path": "tt_bxd_38_2026_ban_hanh_dinh_muc_xay_dung_phu_luc_i.md",
+      "sha256": "219e6295c5dac8a8e63421ef7fe71fe7950cf30ead6c39642df14d96a7fd646c",
+      "bytes": 3313,
+      "reviewedSelectedSections": false,
+      "flags": [
+        "converted_text_requires_original"
+      ],
+      "autoApprovedLegalAuthority": false,
+      "identicalCopies": 1
+    },
+    {
+      "path": "tt_bxd_38_2026_ban_hanh_dinh_muc_xay_dung_phu_luc_ii.md",
+      "sha256": "3653ecc401b018af51063aea58c7078fd2072f6d257ce4cd27f80f3f5cb1c95a",
+      "bytes": 3234,
+      "reviewedSelectedSections": false,
+      "flags": [
+        "converted_text_requires_original"
+      ],
+      "autoApprovedLegalAuthority": false,
+      "identicalCopies": 1
+    },
+    {
+      "path": "tt_bxd_38_2026_ban_hanh_dinh_muc_xay_dung_phu_luc_iii.md",
+      "sha256": "f8c5b3db35303a33c1cda215fc8fe70da88f98e5186e2081ee20d01b384a1eed",
+      "bytes": 2873,
+      "reviewedSelectedSections": false,
+      "flags": [
+        "converted_text_requires_original"
+      ],
+      "autoApprovedLegalAuthority": false,
+      "identicalCopies": 1
+    },
+    {
+      "path": "tt_bxd_38_2026_ban_hanh_dinh_muc_xay_dung_phu_luc_iv.md",
+      "sha256": "62855e5cedf64c2d816e95cdc8cdb6f820bd175a2702cf5b91a01e39795e03d6",
+      "bytes": 2928,
+      "reviewedSelectedSections": false,
+      "flags": [
+        "converted_text_requires_original"
+      ],
+      "autoApprovedLegalAuthority": false,
+      "identicalCopies": 1
+    },
+    {
+      "path": "tt_bxd_38_2026_ban_hanh_dinh_muc_xay_dung_phu_luc_v.md",
+      "sha256": "9c601c3076e34f36eb75bb5623b1ce4d82ce8857462e59397dd31b636d20fddb",
+      "bytes": 2663,
+      "reviewedSelectedSections": false,
+      "flags": [
+        "converted_text_requires_original"
+      ],
+      "autoApprovedLegalAuthority": false,
+      "identicalCopies": 1
+    },
+    {
+      "path": "tt_bxd_38_2026_ban_hanh_dinh_muc_xay_dung_phu_luc_vi.md",
+      "sha256": "8c094c06e2de5cacfac9972f392ada4e4da61cfcbbf5960e850875f2b2e6da01",
+      "bytes": 2655,
+      "reviewedSelectedSections": false,
+      "flags": [
+        "converted_text_requires_original"
+      ],
+      "autoApprovedLegalAuthority": false,
+      "identicalCopies": 1
+    },
+    {
+      "path": "tt_bxd_38_2026_ban_hanh_dinh_muc_xay_dung_phu_luc_vii.md",
+      "sha256": "2a540e7f3c5f9eb01cd2701bb7928878a07eb7c0deed0c42ec800bdc6f172368",
+      "bytes": 2845,
+      "reviewedSelectedSections": false,
+      "flags": [
+        "converted_text_requires_original"
+      ],
+      "autoApprovedLegalAuthority": false,
+      "identicalCopies": 1
+    },
+    {
+      "path": "tt_bxd_38_2026_ban_hanh_dinh_muc_xay_dung_phu_luc_viii.md",
+      "sha256": "7dbc26eda93285ee950d89976686a63d742fbe89a90e245457b747431a3c988c",
+      "bytes": 3638,
+      "reviewedSelectedSections": false,
+      "flags": [
+        "converted_text_requires_original"
+      ],
+      "autoApprovedLegalAuthority": false,
+      "identicalCopies": 1
+    },
+    {
+      "path": "tt_bxd_39_2026_huong_dan_he_thong_thong_tin_co_so_du_lieu_xay_dung.md",
+      "sha256": "9ca38cd1d80072203a9ed02af55b77a7336da58dbe868f45f08775bba47d8d8f",
+      "bytes": 36183,
+      "reviewedSelectedSections": true,
+      "flags": [
+        "converted_text_requires_original"
+      ],
+      "autoApprovedLegalAuthority": false,
+      "identicalCopies": 1
+    },
+    {
+      "path": "tt_bxd_39_2026_huong_dan_he_thong_thong_tin_co_so_du_lieu_xay_dung_phu_luc.md",
+      "sha256": "557907cfd2a60e1cedd0a103065833e41e86df21f69d1427c928e69fc1a99260",
+      "bytes": 126206,
+      "reviewedSelectedSections": false,
+      "flags": [
+        "converted_text_requires_original"
+      ],
+      "autoApprovedLegalAuthority": false,
+      "identicalCopies": 1
+    },
+    {
+      "path": "tt_bxd_40_2026_huong_dan_xac_dinh_chi_phi_bao_tri.docx.md",
+      "sha256": "ed393d7ac1495c70758032af62bc546570dc70450aa50c6d3aa6db37ac3e35fb",
+      "bytes": 49451,
+      "reviewedSelectedSections": false,
+      "flags": [
+        "converted_text_requires_original"
+      ],
+      "autoApprovedLegalAuthority": false,
+      "identicalCopies": 1
+    },
+    {
+      "path": "tt_bxd_40_2026_xac_dinh_chi_phi_bao_tri_cong_trinh_xay_dung.md",
+      "sha256": "ff1983da8a2a409412d16113ec3f1384feff022d2abbab59c2541767134b8396",
+      "bytes": 11983,
+      "reviewedSelectedSections": false,
+      "flags": [
+        "converted_text_requires_original"
+      ],
+      "autoApprovedLegalAuthority": false,
+      "identicalCopies": 1
+    },
+    {
+      "path": "tt_bxd_40_2026_xac_dinh_chi_phi_bao_tri_cong_trinh_xay_dung_phu_luc.md",
+      "sha256": "435ad7c742d5682c1234f20c52411a8147b4c0391e26e4918b7ec93ea01c8ca4",
+      "bytes": 22302,
+      "reviewedSelectedSections": false,
+      "flags": [
+        "converted_text_requires_original"
+      ],
+      "autoApprovedLegalAuthority": false,
+      "identicalCopies": 1
+    },
+    {
+      "path": "tt_bxd_41_2026_quan_ly_chat_luong_san_pham_hang_hoa_vat_lieu_xay_dung.docx.md",
+      "sha256": "a6cb1b186beaa7438dc55c77fb25f94098a991c69c89ebae085deb64a0cb77a0",
+      "bytes": 54464,
+      "reviewedSelectedSections": false,
+      "flags": [
+        "converted_text_requires_original"
+      ],
+      "autoApprovedLegalAuthority": false,
+      "identicalCopies": 1
+    }
+  ]
+}

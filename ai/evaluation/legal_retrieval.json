@@ -1,0 +1,86 @@
+[
+  {
+    "id": "GPXD-NEW",
+    "question": "Hồ sơ đề nghị cấp giấy phép xây dựng mới theo Nghị định 217/2026 gồm những gì?",
+    "source": "NĐ 217/2026/NĐ-CP",
+    "heading": "Điều 57."
+  },
+  {
+    "id": "GPXD-HOUSE",
+    "question": "Hồ sơ đề nghị cấp giấy phép xây dựng công trình nhà ở riêng lẻ theo Nghị định 217/2026?",
+    "source": "NĐ 217/2026/NĐ-CP",
+    "heading": "Điều 60."
+  },
+  {
+    "id": "GPXD-REPAIR",
+    "question": "Hồ sơ đề nghị cấp giấy phép sửa chữa cải tạo di dời công trình theo Nghị định 217/2026?",
+    "source": "NĐ 217/2026/NĐ-CP",
+    "heading": "Điều 61."
+  },
+  {
+    "id": "GPXD-TEMP",
+    "question": "Hồ sơ đề nghị cấp giấy phép xây dựng có thời hạn theo Nghị định 217/2026?",
+    "source": "NĐ 217/2026/NĐ-CP",
+    "heading": "Điều 62."
+  },
+  {
+    "id": "GPXD-EXTEND",
+    "question": "Điều chỉnh gia hạn giấy phép xây dựng theo Nghị định 217/2026 cần những điều kiện và tài liệu nào?",
+    "source": "NĐ 217/2026/NĐ-CP",
+    "heading": "Điều 63."
+  },
+  {
+    "id": "GPXD-REISSUE",
+    "question": "Cấp lại giấy phép xây dựng bị mất theo Nghị định 217/2026?",
+    "source": "NĐ 217/2026/NĐ-CP",
+    "heading": "Điều 64."
+  },
+  {
+    "id": "DESIGN-FORMAT",
+    "question": "Quy cách hồ sơ thiết kế xây dựng theo Nghị định 217/2026?",
+    "source": "NĐ 217/2026/NĐ-CP",
+    "heading": "Điều 18."
+  },
+  {
+    "id": "FS-PREPARE",
+    "question": "Lập báo cáo nghiên cứu khả thi báo cáo kinh tế kỹ thuật theo Nghị định 217/2026?",
+    "source": "NĐ 217/2026/NĐ-CP",
+    "heading": "Điều 27."
+  },
+  {
+    "id": "ACCEPTANCE-CHECK",
+    "question": "Nội dung trình tự kiểm tra công tác nghiệm thu theo Nghị định 207/2026?",
+    "source": "NĐ 207/2026/NĐ-CP",
+    "heading": "Điều 27."
+  },
+  {
+    "id": "ACCEPTANCE-ARCHIVE",
+    "question": "Lập lưu trữ hồ sơ hoàn thành công trình theo Nghị định 207/2026?",
+    "source": "NĐ 207/2026/NĐ-CP",
+    "heading": "Điều 28."
+  },
+  {
+    "id": "AUTHORITY",
+    "question": "Thẩm quyền cấp giấy phép xây dựng cấp III cấp IV Sở Xây dựng cấp xã theo Nghị định 217?",
+    "source": "NĐ 217/2026/NĐ-CP",
+    "heading": "Điều 53."
+  },
+  {
+    "id": "CONDITIONAL",
+    "question": "Nghiệm thu có điều kiện tồn tại không ảnh hưởng khả năng chịu lực thời hạn sử dụng công năng theo Nghị định 207?",
+    "source": "NĐ 207/2026/NĐ-CP",
+    "heading": "Điều 24."
+  },
+  {
+    "id": "HANDOVER",
+    "question": "Bàn giao hồ sơ phục vụ quản lý sử dụng công trình xây dựng theo Nghị định 207?",
+    "source": "NĐ 207/2026/NĐ-CP",
+    "heading": "Điều 30."
+  },
+  {
+    "id": "INSPECTION-TT32",
+    "question": "Kiểm định xây dựng theo Thông tư 32/2026/TT-BXD yêu cầu như thế nào?",
+    "source": "TT 32/2026/TT-BXD",
+    "heading": "Điều 4."
+  }
+]

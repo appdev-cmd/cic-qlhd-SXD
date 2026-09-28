@@ -1,9 +1,9 @@
 import React from 'react';
 import { cn } from '../../lib/utils';
-import { useSlidePanel } from '../../context/SlidePanelContext';
+import { useEntityPanel } from '../../hooks/useEntityPanel';
 
 export interface EntityLinkProps {
-  type: 'project' | 'organization' | 'personnel';
+  type: 'project' | 'organization' | 'personnel' | 'dossier';
   id: string;
   name: string;
   className?: string;
@@ -11,7 +11,7 @@ export interface EntityLinkProps {
 }
 
 export function EntityLink({ type, id, name, className, onClick }: EntityLinkProps) {
-  const { openPanel } = useSlidePanel();
+  const { open } = useEntityPanel();
 
   const handleClick = (e: React.MouseEvent) => {
     e.stopPropagation();
@@ -19,8 +19,7 @@ export function EntityLink({ type, id, name, className, onClick }: EntityLinkPro
       onClick();
       return;
     }
-    // Mở nhanh panel tương ứng
-    // Các trang sẽ tự cung cấp panel chi tiết qua context hoặc custom action
+    open(type,{id,name});
   };
 
   return (

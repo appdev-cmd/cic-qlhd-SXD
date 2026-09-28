@@ -1,0 +1,317 @@
+{
+  "version": "2026-07.v2",
+  "results": [
+    {
+      "id": "98d572a3-1db3-5b4e-8aa7-8cea7b4a01d3",
+      "procedure": "gpxd",
+      "status": "already_current",
+      "subtype": "new"
+    },
+    {
+      "id": "68134fdd-fc1c-5247-b22c-16c53335d8e4",
+      "procedure": "gpxd",
+      "status": "already_current",
+      "subtype": "stage"
+    },
+    {
+      "id": "9392f224-07d6-5baa-8239-190958a05a19",
+      "procedure": "gpxd",
+      "status": "already_current",
+      "subtype": "group"
+    },
+    {
+      "id": "c2b4b963-cb4f-5227-bd12-7f8a16d13234",
+      "procedure": "gpxd",
+      "subtype": "house",
+      "status": "updated"
+    },
+    {
+      "id": "a61e50eb-21c6-5641-8448-5515eb402cff",
+      "procedure": "gpxd",
+      "subtype": "repair",
+      "status": "updated"
+    },
+    {
+      "id": "df1587de-b087-50f5-90be-886ec8726ffe",
+      "procedure": "gpxd",
+      "subtype": "relocation",
+      "status": "updated"
+    },
+    {
+      "id": "de2f9b7a-4305-5a4c-9dba-dcb154ea73f8",
+      "procedure": "gpxd",
+      "subtype": "temporary",
+      "status": "updated"
+    },
+    {
+      "id": "3395e916-022b-5a13-be4b-cb1692369518",
+      "procedure": "gpxd",
+      "subtype": "amendment",
+      "status": "updated"
+    },
+    {
+      "id": "8049ce12-7885-53fa-8b43-eb16aefecaf2",
+      "procedure": "gpxd",
+      "subtype": "extension",
+      "status": "updated"
+    },
+    {
+      "id": "1ae49bc0-5697-545b-817b-7163debdaff9",
+      "procedure": "gpxd",
+      "subtype": "reissue",
+      "status": "updated"
+    },
+    {
+      "id": "dd5dda3d-093a-57cd-88d1-c6c8a96c0822",
+      "procedure": "gpxd",
+      "subtype": "new",
+      "status": "updated"
+    },
+    {
+      "id": "ca6bd3b7-f572-547d-949c-e3b4062e54b8",
+      "procedure": "gpxd",
+      "subtype": "stage",
+      "status": "updated"
+    },
+    {
+      "id": "18ecaf92-f7df-56de-a98e-aa19ffb164e8",
+      "procedure": "gpxd",
+      "subtype": "group",
+      "status": "updated"
+    },
+    {
+      "id": "8c85741d-deda-5c58-b7ac-7420b885901e",
+      "procedure": "gpxd",
+      "subtype": "house",
+      "status": "updated"
+    },
+    {
+      "id": "0fa7313d-8553-5edd-96f3-1aa8bf1f38e9",
+      "procedure": "gpxd",
+      "subtype": "repair",
+      "status": "updated"
+    },
+    {
+      "id": "b96013cd-bc41-59a9-91d6-68f30d936772",
+      "procedure": "gpxd",
+      "subtype": "relocation",
+      "status": "updated"
+    },
+    {
+      "id": "d62ad2d5-dacc-5ebe-82fb-1c6f61e2d01c",
+      "procedure": "gpxd",
+      "subtype": "temporary",
+      "status": "updated"
+    },
+    {
+      "id": "6021fb9d-7f8d-54b1-9fac-26b18b25534d",
+      "procedure": "gpxd",
+      "subtype": "amendment",
+      "status": "updated"
+    },
+    {
+      "id": "75ae72a8-49cf-5138-bcdc-00bf3e565e33",
+      "procedure": "gpxd",
+      "subtype": "extension",
+      "status": "updated"
+    },
+    {
+      "id": "ed9b3437-9d8f-516b-a2d0-283d79713845",
+      "procedure": "gpxd",
+      "subtype": "reissue",
+      "status": "updated"
+    },
+    {
+      "id": "09e51a35-bd00-57ce-8046-5384e43fb3a6",
+      "procedure": "gpxd",
+      "subtype": "new",
+      "status": "updated"
+    },
+    {
+      "id": "279592d4-06bc-5931-a840-8d75eb6e7d18",
+      "procedure": "gpxd",
+      "subtype": "stage",
+      "status": "updated"
+    },
+    {
+      "id": "2135df6d-f2bc-564f-b4cb-00d5fe290328",
+      "procedure": "gpxd",
+      "subtype": "group",
+      "status": "updated"
+    },
+    {
+      "id": "3fa68667-10e6-5b85-9b2d-b509ae8337f8",
+      "procedure": "gpxd",
+      "subtype": "house",
+      "status": "updated"
+    },
+    {
+      "id": "4f5f4591-4182-506e-bf66-a4921a96e2d8",
+      "procedure": "gpxd",
+      "subtype": "repair",
+      "status": "updated"
+    },
+    {
+      "id": "222e592d-4d82-5380-917f-6f110b5f7f55",
+      "procedure": "gpxd",
+      "subtype": "relocation",
+      "status": "updated"
+    },
+    {
+      "id": "38a27909-bb65-5d16-9c89-d3c43d741e53",
+      "procedure": "nghiem_thu",
+      "subtype": "complete",
+      "status": "updated"
+    },
+    {
+      "id": "81bddf90-e51a-580e-ba45-fa4864b644ae",
+      "procedure": "nghiem_thu",
+      "subtype": "conditional",
+      "status": "updated"
+    },
+    {
+      "id": "56d397ed-9d06-583e-98b7-2ec9a75919ea",
+      "procedure": "nghiem_thu",
+      "subtype": "partial",
+      "status": "updated"
+    },
+    {
+      "id": "c5594b24-bfd7-57b3-b9c1-b9f47d403fed",
+      "procedure": "nghiem_thu",
+      "subtype": "complete",
+      "status": "updated"
+    },
+    {
+      "id": "be86a388-7c07-5a7f-9aaa-306a9a7553eb",
+      "procedure": "nghiem_thu",
+      "subtype": "conditional",
+      "status": "updated"
+    },
+    {
+      "id": "00affb55-ee43-59c4-b260-c75c8500fcf0",
+      "procedure": "nghiem_thu",
+      "subtype": "partial",
+      "status": "updated"
+    },
+    {
+      "id": "8990189f-1251-5dc8-b518-ee0e8638a725",
+      "procedure": "nghiem_thu",
+      "subtype": "complete",
+      "status": "updated"
+    },
+    {
+      "id": "0ffb5e1b-a252-5442-aefe-fce868a34dcf",
+      "procedure": "nghiem_thu",
+      "subtype": "conditional",
+      "status": "updated"
+    },
+    {
+      "id": "c95152a2-f0b1-5639-88c3-b8d020d3cd83",
+      "procedure": "nghiem_thu",
+      "subtype": "partial",
+      "status": "updated"
+    },
+    {
+      "id": "67536404-0b14-5e8d-b157-1f1c0683c3bd",
+      "procedure": "nghiem_thu",
+      "subtype": "complete",
+      "status": "updated"
+    },
+    {
+      "id": "58700699-834c-5635-b109-72b1c114f95f",
+      "procedure": "nghiem_thu",
+      "subtype": "conditional",
+      "status": "updated"
+    },
+    {
+      "id": "415d50b4-85b2-5791-ac11-24881e62eacf",
+      "procedure": "nghiem_thu",
+      "subtype": "partial",
+      "status": "updated"
+    },
+    {
+      "id": "645ae3e5-d1f3-57c7-b1e5-1fadf1ea1c66",
+      "procedure": "nghiem_thu",
+      "subtype": "complete",
+      "status": "updated"
+    },
+    {
+      "id": "b0917c0a-a9dd-5759-b342-8e9f65b90213",
+      "procedure": "nghiem_thu",
+      "subtype": "conditional",
+      "status": "updated"
+    },
+    {
+      "id": "71133d58-f982-5084-b5dc-ad6fd7285357",
+      "procedure": "nghiem_thu",
+      "subtype": "partial",
+      "status": "updated"
+    },
+    {
+      "id": "83090655-7a57-5dc5-b8e7-13f0f3e0bb86",
+      "procedure": "nghiem_thu",
+      "subtype": "complete",
+      "status": "updated"
+    },
+    {
+      "id": "50fdc87e-28b4-53fd-be4e-f3fad6804484",
+      "procedure": "nghiem_thu",
+      "subtype": "conditional",
+      "status": "updated"
+    },
+    {
+      "id": "db4517c2-bc9c-54b0-8d7a-bc4cc5c9b8df",
+      "procedure": "nghiem_thu",
+      "subtype": "partial",
+      "status": "updated"
+    },
+    {
+      "id": "fe5ffe24-30bc-594a-936f-5e39167d6c6a",
+      "procedure": "nghiem_thu",
+      "subtype": "complete",
+      "status": "updated"
+    },
+    {
+      "id": "a1895ee3-e38c-5203-b916-d2cf70a1e25c",
+      "procedure": "nghiem_thu",
+      "subtype": "conditional",
+      "status": "updated"
+    },
+    {
+      "id": "767655a1-1c83-5e48-ae02-ea6aedb0b2d3",
+      "procedure": "nghiem_thu",
+      "subtype": "partial",
+      "status": "updated"
+    },
+    {
+      "id": "94ccbcb1-a4b3-541a-a7f6-22bfbf08d3f7",
+      "procedure": "nghiem_thu",
+      "subtype": "complete",
+      "status": "updated"
+    },
+    {
+      "id": "8258d5bf-aa33-542c-bb12-e347cb814aff",
+      "procedure": "nghiem_thu",
+      "subtype": "conditional",
+      "status": "updated"
+    },
+    {
+      "id": "eeb439e3-e0a0-5718-ac37-a12d53c05772",
+      "procedure": "nghiem_thu",
+      "subtype": "partial",
+      "status": "updated"
+    },
+    {
+      "id": "4aaea6d3-600d-509e-af94-f02bdbf714dc",
+      "procedure": "nghiem_thu",
+      "subtype": "complete",
+      "status": "updated"
+    },
+    {
+      "id": "7902d830-095c-5e5d-b95b-ee5a4e85ba04",
+      "procedure": "nghiem_thu",
+      "subtype": "conditional",
+      "status": "updated"
+    }
+  ]
+}

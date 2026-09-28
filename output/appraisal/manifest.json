@@ -1,0 +1,407 @@
+{
+  "synthetic": true,
+  "files": [
+    {
+      "path": "dau-vao/01-lan-dau/TTR_v1.docx",
+      "requirementId": "TTR",
+      "version": 1,
+      "sha256": "f254d61d82eb3762c40bb333e3c74a4abbf8b9f72ba125527b5e26021529d16c",
+      "size": 39420
+    },
+    {
+      "path": "dau-vao/01-lan-dau/TTR_v1.pdf",
+      "requirementId": "TTR",
+      "version": 1,
+      "sha256": "0ade7f08e56aacbab572540d97c5b42fecceae6cd1ec243db0b21f897393ebd6",
+      "size": 105825
+    },
+    {
+      "path": "dau-vao/01-lan-dau/PL01_v1.docx",
+      "requirementId": "PL01",
+      "version": 1,
+      "sha256": "4bbfb7af821a129b1cee02b632739273f235f040a439415ca62da0577449c167",
+      "size": 37685
+    },
+    {
+      "path": "dau-vao/01-lan-dau/PL01_v1.pdf",
+      "requirementId": "PL01",
+      "version": 1,
+      "sha256": "ed463bfc1090607a71b0f47903d58be7f2582fb0ab5a64bd998ca8b745affe9a",
+      "size": 97788
+    },
+    {
+      "path": "dau-vao/01-lan-dau/PL02_v1.docx",
+      "requirementId": "PL02",
+      "version": 1,
+      "sha256": "97044fdb6e34235955b8290a53eec923a526e6f351659932d9259daee775fa54",
+      "size": 37683
+    },
+    {
+      "path": "dau-vao/01-lan-dau/PL02_v1.pdf",
+      "requirementId": "PL02",
+      "version": 1,
+      "sha256": "da86bb0ab1f10928473a33c6cc4350f7af70bc23c687ce3f4fb58a039d78508d",
+      "size": 97853
+    },
+    {
+      "path": "dau-vao/01-lan-dau/PL03_v1.docx",
+      "requirementId": "PL03",
+      "version": 1,
+      "sha256": "c456333070f2c95f83070dfc35176e9169ec9897f44c40dded1ce0f1e0055e22",
+      "size": 37641
+    },
+    {
+      "path": "dau-vao/01-lan-dau/PL03_v1.pdf",
+      "requirementId": "PL03",
+      "version": 1,
+      "sha256": "079e302d8914a115cf1f47cc77413065676d673521447dcc78dae138608502cb",
+      "size": 97642
+    },
+    {
+      "path": "dau-vao/01-lan-dau/PL04_v1.docx",
+      "requirementId": "PL04",
+      "version": 1,
+      "sha256": "c6307e5290023cf4132540605d11ed26d1630802113f6ca81c04a81daeb42ded",
+      "size": 37682
+    },
+    {
+      "path": "dau-vao/01-lan-dau/PL04_v1.pdf",
+      "requirementId": "PL04",
+      "version": 1,
+      "sha256": "1a19f1eb451d864df5fe6a82f1c0d4f37cd7fee3f559e53622efe89e65795a1e",
+      "size": 97874
+    },
+    {
+      "path": "dau-vao/01-lan-dau/PL05_v1.docx",
+      "requirementId": "PL05",
+      "version": 1,
+      "sha256": "7eccd4ef15e6187316f9d7a78a6d762ed09c4e9d3d852cec356e7fca37120cb0",
+      "size": 37686
+    },
+    {
+      "path": "dau-vao/01-lan-dau/PL05_v1.pdf",
+      "requirementId": "PL05",
+      "version": 1,
+      "sha256": "c31cd831e7d5c1ec4e42bd4693e6ad05f57a36612b70eb6261d1f1f8b69079e6",
+      "size": 98025
+    },
+    {
+      "path": "dau-vao/01-lan-dau/PL06_v1.docx",
+      "requirementId": "PL06",
+      "version": 1,
+      "sha256": "1e59311ffd7848f12616940343f9c38adc9b52969a9f19988187dd8ff0d3800d",
+      "size": 37696
+    },
+    {
+      "path": "dau-vao/01-lan-dau/PL06_v1.pdf",
+      "requirementId": "PL06",
+      "version": 1,
+      "sha256": "947c6bd198f220be4189289276c03d67acaea50a74e516ce5b8ab4f465fb08b5",
+      "size": 97665
+    },
+    {
+      "path": "dau-vao/01-lan-dau/PL07_v1.docx",
+      "requirementId": "PL07",
+      "version": 1,
+      "sha256": "e6a2e185316467f11ecfbe36bc05498e7553c1ec85c234f8d5e5283a7429d469",
+      "size": 37707
+    },
+    {
+      "path": "dau-vao/01-lan-dau/PL07_v1.pdf",
+      "requirementId": "PL07",
+      "version": 1,
+      "sha256": "9099605b2c4b5f34784c95aa87224b388ef1b4157776e4606432cf338d42b606",
+      "size": 98038
+    },
+    {
+      "path": "dau-vao/01-lan-dau/KT01_v1.docx",
+      "requirementId": "KT01",
+      "version": 1,
+      "sha256": "56087a0a3946889997565c13c9898b7c8c983f358d2d10d724b4d8e94d2aa87b",
+      "size": 37761
+    },
+    {
+      "path": "dau-vao/01-lan-dau/KT01_v1.pdf",
+      "requirementId": "KT01",
+      "version": 1,
+      "sha256": "238ea40515be241c4bed9058f6e1b4220e597ea46489a2a7f9db23243c6c259b",
+      "size": 98048
+    },
+    {
+      "path": "dau-vao/01-lan-dau/KT02_v1.docx",
+      "requirementId": "KT02",
+      "version": 1,
+      "sha256": "72fe14b153daae1a136c93c6b17a0db5e99f8fe8e22b8e6e80e6f60e59423c5b",
+      "size": 37727
+    },
+    {
+      "path": "dau-vao/01-lan-dau/KT02_v1.pdf",
+      "requirementId": "KT02",
+      "version": 1,
+      "sha256": "c053098de764d54d22835160cf77ec9aeea1b73364027395814125b10e189d84",
+      "size": 97850
+    },
+    {
+      "path": "dau-vao/01-lan-dau/KT03_v1.docx",
+      "requirementId": "KT03",
+      "version": 1,
+      "sha256": "999c03530fba48a71ad4057bcfec8572ce6b809c6226e67fcbaec8489d7ed123",
+      "size": 37889
+    },
+    {
+      "path": "dau-vao/01-lan-dau/KT03_v1.pdf",
+      "requirementId": "KT03",
+      "version": 1,
+      "sha256": "e6c3f124a2ddbf741b58f21993061db604d7e45c871db5dce04d207e7ddaec46",
+      "size": 98089
+    },
+    {
+      "path": "dau-vao/01-lan-dau/KT04_v1.docx",
+      "requirementId": "KT04",
+      "version": 1,
+      "sha256": "7ac3ad04370d7016e019ed1d4c7aa56673564bc52e4fbacabfd8f7e2c9a35e3b",
+      "size": 37862
+    },
+    {
+      "path": "dau-vao/01-lan-dau/KT04_v1.pdf",
+      "requirementId": "KT04",
+      "version": 1,
+      "sha256": "b939e654eb0b46a90d58f06e77693754a3c25001d80acc650971681646336823",
+      "size": 98438
+    },
+    {
+      "path": "dau-vao/01-lan-dau/KT05_v1.docx",
+      "requirementId": "KT05",
+      "version": 1,
+      "sha256": "9f769beeca85217ed6dae4e5bad1da8fe2fe2391e912fa64ec408c3f871f5bf9",
+      "size": 37766
+    },
+    {
+      "path": "dau-vao/01-lan-dau/KT05_v1.pdf",
+      "requirementId": "KT05",
+      "version": 1,
+      "sha256": "e061c1911e9ff39fea27ed927b225b8d0c4838589760c0fda1f0e679f5afde67",
+      "size": 98221
+    },
+    {
+      "path": "dau-vao/01-lan-dau/NL01_v1.docx",
+      "requirementId": "NL01",
+      "version": 1,
+      "sha256": "2f05286c3f53bd06945359354e366ad0f5def953041e4ab4cb27d9c173593af9",
+      "size": 37748
+    },
+    {
+      "path": "dau-vao/01-lan-dau/NL01_v1.pdf",
+      "requirementId": "NL01",
+      "version": 1,
+      "sha256": "090ea2ee212e397f496fc81c02c25e69ee65115808a519fd950c7f9be3cad26c",
+      "size": 97650
+    },
+    {
+      "path": "dau-vao/02-bo-sung/KT03_v2.docx",
+      "requirementId": "KT03",
+      "version": 2,
+      "sha256": "f983f41faaa50187a318a97c874a2bea7ea7cce7e767c618b951b802e7d1faae",
+      "size": 37890
+    },
+    {
+      "path": "dau-vao/02-bo-sung/KT03_v2.pdf",
+      "requirementId": "KT03",
+      "version": 2,
+      "sha256": "6fd129acf7efeaed7f167d1cc32700857846167d50252463dbb6a6243023d4a6",
+      "size": 98089
+    },
+    {
+      "path": "dau-vao/02-bo-sung/KT05_v2.docx",
+      "requirementId": "KT05",
+      "version": 2,
+      "sha256": "0931ee0fd7cafcdd8d3323cced6ea48735f27d090c73e323df21c6aaad9186d2",
+      "size": 37757
+    },
+    {
+      "path": "dau-vao/02-bo-sung/KT05_v2.pdf",
+      "requirementId": "KT05",
+      "version": 2,
+      "sha256": "6d62c6bc48aa4416ad1d258651f36aec93d7891af7ef85452f5f66c99264f882",
+      "size": 98283
+    },
+    {
+      "path": "dau-vao/02-bo-sung/NL01_v2.docx",
+      "requirementId": "NL01",
+      "version": 2,
+      "sha256": "9433b58bb0f9c1e4326b93fa2a90a167fec5208b5924fcdb55176b5aee6240fd",
+      "size": 37748
+    },
+    {
+      "path": "dau-vao/02-bo-sung/NL01_v2.pdf",
+      "requirementId": "NL01",
+      "version": 2,
+      "sha256": "145903ad299631d2ccec1e5a088ddbcd99e7cd2e4e31fa5525d11d6fb73fab18",
+      "size": 97650
+    },
+    {
+      "path": "dau-ra/01-lan-dau/report.docx",
+      "sha256": "bf5202c3c71c2146bae06632451cb312313f4e47014f1effc01a5da804d3de90",
+      "size": 41559
+    },
+    {
+      "path": "dau-ra/01-lan-dau/report.pdf",
+      "sha256": "80ed3e9a62567611dc8d1d3f2336ca48f2ceaa8164d08ba34440d562bd8d65a0",
+      "size": 117969
+    },
+    {
+      "path": "dau-ra/01-lan-dau/supplement.docx",
+      "sha256": "9563d57bcc54d2140416707140c933e72afb99ed1344fd886d14d3fd611677ce",
+      "size": 39259
+    },
+    {
+      "path": "dau-ra/01-lan-dau/supplement.pdf",
+      "sha256": "0535e240edb56983285e9fb1d4dde62aaabc9ad4a6c82711e4a7c35fab1a9193",
+      "size": 104487
+    },
+    {
+      "path": "dau-ra/01-lan-dau/suspension.docx",
+      "sha256": "23c2f076ceda5d4fc586c4819cfaaadbbddb7825e6d63af1776f7a18a351e687",
+      "size": 38954
+    },
+    {
+      "path": "dau-ra/01-lan-dau/suspension.pdf",
+      "sha256": "7c7471e0f85de9ad102f7b261600d3ad9e95775225644d9df1951e88ba6c6af5",
+      "size": 104109
+    },
+    {
+      "path": "dau-ra/01-lan-dau/notice.docx",
+      "sha256": "bdcadfadf4f903ef0c0a82ec44bdf4ff7baf8ace452817b854c2f707515debdf",
+      "size": 40771
+    },
+    {
+      "path": "dau-ra/01-lan-dau/notice.pdf",
+      "sha256": "b7021bb21be3355baf645389ef12f7d425d2b0ae181af129ec85056d114db4e3",
+      "size": 112354
+    },
+    {
+      "path": "dau-ra/01-lan-dau/decision.docx",
+      "sha256": "9c52d610eeeb85b9a5e48a77649a16eddc31fa8779cd0fe280bda094c1667160",
+      "size": 38922
+    },
+    {
+      "path": "dau-ra/01-lan-dau/decision.pdf",
+      "sha256": "71a2fd7f4ec0b1ff873711381d144f04a21bb1bd1e237bc75fb2210dea8425f4",
+      "size": 103363
+    },
+    {
+      "path": "dau-ra/02-sau-bo-sung/report.docx",
+      "sha256": "37f31dc68b877bc8d6551cd15308471b09ad025ce404c1a616466638e44975cf",
+      "size": 41780
+    },
+    {
+      "path": "dau-ra/02-sau-bo-sung/report.pdf",
+      "sha256": "3b436f25cc4e9557a9a72da715d21b947f51320b3df14efd4986612adee3689f",
+      "size": 117931
+    },
+    {
+      "path": "dau-ra/02-sau-bo-sung/supplement.docx",
+      "sha256": "9563d57bcc54d2140416707140c933e72afb99ed1344fd886d14d3fd611677ce",
+      "size": 39259
+    },
+    {
+      "path": "dau-ra/02-sau-bo-sung/supplement.pdf",
+      "sha256": "78aaf3eac2058db2f3d400ecf77a4665de19cb8458665d89cc7849b86f8cb4e5",
+      "size": 104487
+    },
+    {
+      "path": "dau-ra/02-sau-bo-sung/suspension.docx",
+      "sha256": "77d128e012182c604d9cf2e5c5e2f3d705a6f25b21319601e429ef8f6716d0fc",
+      "size": 38637
+    },
+    {
+      "path": "dau-ra/02-sau-bo-sung/suspension.pdf",
+      "sha256": "eba087dc400ff8ccd4fe937f3d19353bda11b83c06f1c80d5bba3778c0757dfa",
+      "size": 102554
+    },
+    {
+      "path": "dau-ra/02-sau-bo-sung/notice.docx",
+      "sha256": "a698ed6c753d825225d091a05fb1d4994a171bbb70d4681edc8d40cd5be0d573",
+      "size": 40479
+    },
+    {
+      "path": "dau-ra/02-sau-bo-sung/notice.pdf",
+      "sha256": "0933f7f4b34452c4e8319fb1573cd818b4aeb3076fb6b46e83ddea2161ab9035",
+      "size": 111120
+    },
+    {
+      "path": "dau-ra/02-sau-bo-sung/decision.docx",
+      "sha256": "3fc103d5aa2839e3aa0f1a16be4e92e1d14f43836c79c2a3f13a87c5173a268f",
+      "size": 38922
+    },
+    {
+      "path": "dau-ra/02-sau-bo-sung/decision.pdf",
+      "sha256": "d7b318c56b27190d2e20dbdbea987ecd842ee278a180ba3c67bff992165a6d76",
+      "size": 103363
+    }
+  ],
+  "results": {
+    "01-lan-dau": {
+      "documents": 14,
+      "facts": 87,
+      "findings": 45,
+      "costComparison": null,
+      "areaCheck": "17551 − 17140 = 411 m²"
+    },
+    "02-sau-bo-sung": {
+      "documents": 17,
+      "facts": 115,
+      "findings": 41,
+      "costComparison": {
+        "before": "217230000000",
+        "after": "217230000000",
+        "netSavings": "0",
+        "items": [
+          {
+            "name": "Chi phí GPMB",
+            "before": "9000000000",
+            "after": "14352000000",
+            "difference": "5352000000"
+          },
+          {
+            "name": "Chi phí xây dựng",
+            "before": "170129000000",
+            "after": "173075000000",
+            "difference": "2946000000"
+          },
+          {
+            "name": "Chi phí thiết bị",
+            "before": "10744000000",
+            "after": "6033000000",
+            "difference": "-4711000000"
+          },
+          {
+            "name": "Chi phí quản lý dự án",
+            "before": "3090000000",
+            "after": "3101000000",
+            "difference": "11000000"
+          },
+          {
+            "name": "Chi phí tư vấn",
+            "before": "9530000000",
+            "after": "9391000000",
+            "difference": "-139000000"
+          },
+          {
+            "name": "Chi phí khác",
+            "before": "1587000000",
+            "after": "1194000000",
+            "difference": "-393000000"
+          },
+          {
+            "name": "Chi phí dự phòng",
+            "before": "13150000000",
+            "after": "10084000000",
+            "difference": "-3066000000"
+          }
+        ]
+      },
+      "areaCheck": "17551 − 17551 = 0 m²"
+    }
+  }
+}

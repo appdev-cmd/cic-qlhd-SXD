@@ -1,0 +1,27 @@
+{
+  "cases": 52,
+  "version": "2026-07.v2",
+  "procedures": {
+    "gpxd": 26,
+    "nghiem_thu": 26
+  },
+  "subtypes": [
+    "gpxd:amendment",
+    "gpxd:extension",
+    "gpxd:group",
+    "gpxd:house",
+    "gpxd:new",
+    "gpxd:reissue",
+    "gpxd:relocation",
+    "gpxd:repair",
+    "gpxd:stage",
+    "gpxd:temporary",
+    "nghiem_thu:complete",
+    "nghiem_thu:conditional",
+    "nghiem_thu:partial"
+  ],
+  "originalsAndProjectLinksPreserved": true,
+  "previousReviewsArchived": true,
+  "auditedRevisions": true,
+  "conclusions": "pending"
+}

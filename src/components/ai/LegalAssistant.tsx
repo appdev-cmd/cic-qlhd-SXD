@@ -1,0 +1,24 @@
+import React,{useEffect,useState} from 'react';
+import {apiRequest} from '../../services/apiClient';
+import {ReviewModal} from '../appraisal/ReviewModal';
+import {useUnsavedChangesGuard} from '../../hooks/useUnsavedChangesGuard';
+type Source={id:string;document:string;heading:string;text:string;line:number;url:string;sha256:string};
+type Answer={paragraphs:{text:string;citations:{id:string;quote:string}[]}[];sources:Source[];model:string|null;status:string;notice:string;elapsedMs?:number};
+const button='rounded-lg border border-border dark:border-border bg-surface dark:bg-surface p-3 text-sm text-ink dark:text-ink disabled:opacity-50';
+export function LegalAssistant({onDirtyChange}:{onDirtyChange?:(dirty:boolean)=>void}={}){
+  const [question,setQuestion]=useState('');const [useModel,setUseModel]=useState(true);const [busy,setBusy]=useState(false);const [error,setError]=useState('');const [answer,setAnswer]=useState<Answer|null>(null);const [source,setSource]=useState<Source|null>(null);
+  const [submitted,setSubmitted]=useState('');
+  const dirty=busy||JSON.stringify(question)!==JSON.stringify(submitted);
+  useUnsavedChangesGuard(dirty);
+  useEffect(()=>{onDirtyChange?.(dirty);return()=>onDirtyChange?.(false);},[dirty,onDirtyChange]);
+  const ask=async(e:React.FormEvent)=>{e.preventDefault();setBusy(true);setError('');setAnswer(null);try{setAnswer(await apiRequest<Answer>('/legal-assistant',{method:'POST',body:JSON.stringify({question:question.trim(),useModel})}));setSubmitted(question);}catch(e){setError((e as Error).message);}finally{setBusy(false);}};
+  return <div className="space-y-5 text-ink dark:text-ink"><form onSubmit={ask} className="space-y-3"><label className="block font-semibold">Câu hỏi pháp luật xây dựng<textarea required minLength={5} maxLength={2000} rows={3} disabled={busy} className={button+' w-full mt-2'} value={question} onChange={e=>setQuestion(e.target.value)} placeholder="Ví dụ: Hồ sơ trình thẩm định BCNCKT gồm những tài liệu gì theo NĐ 217/2026?"/></label>
+    <div className="flex flex-wrap gap-4 items-center"><label className="flex items-center gap-2 text-sm"><input type="checkbox" checked={useModel} disabled={busy} onChange={e=>setUseModel(e.target.checked)} className="accent-primary-500 dark:accent-primary-400"/>Dùng Gemini 3.8 Flash tổng hợp câu trả lời</label><button disabled={busy||question.trim().length<5} className={button+' !bg-primary-500 dark:!bg-primary-500 !text-white dark:!text-white'}>{busy?'Đang tra cứu…':'Tra cứu'}</button></div>
+    <p className="text-xs text-ink-muted dark:text-ink-muted">Khi bật AI, câu hỏi và trích đoạn pháp luật công khai được gửi đến Vertex AI. Kho demo gồm Luật 135, NĐ 217 và Phụ lục I, NĐ 206, NĐ 207; phạm vi từ 01/07/2026.</p></form>
+    {error&&<p role="alert" className="text-red-700 dark:text-red-300">{error}</p>}
+    {answer&&<><div className="rounded-lg border border-primary-200 dark:border-primary-800 bg-primary-50 dark:bg-slate-800 p-4 text-sm"><p>{answer.notice}</p><p className="mt-2">{answer.status==='unverified_ai'?`Đề xuất từ ${answer.model} · Cần chuyên viên rà soát`:answer.status==='retrieval_only'?'Kết quả tra cứu văn bản · Chưa dùng mô hình':answer.status==='insufficient_sources'?'Chưa đủ nguồn để trả lời câu hỏi':'Chưa có câu trả lời AI'}</p></div>
+      {answer.paragraphs.map((p,i)=><article key={i} className="rounded-xl border border-border dark:border-border bg-surface dark:bg-surface p-4 space-y-3"><p className="text-sm whitespace-pre-wrap leading-relaxed">{p.text}</p><div className="flex flex-wrap gap-2">{p.citations.map((c,j)=>{const ref=answer.sources.find(x=>x.id===c.id);return ref&&<button key={j} className={button} onClick={()=>setSource(ref)}>{ref.document} · {ref.heading}</button>;})}</div></article>)}
+      <h3 className="font-semibold">Trích đoạn đối chiếu ({answer.sources.length})</h3>{answer.sources.map(s=><article key={s.id} className="rounded-xl border border-border dark:border-border bg-surface dark:bg-surface p-4 space-y-2"><button className="text-left font-semibold text-primary-700 dark:text-primary-400" onClick={()=>setSource(s)}>{s.document} · {s.heading}</button><p className="text-xs text-ink-muted dark:text-ink-muted">Từ dòng {s.line} của bản chuyển đổi trong kho</p><p className="text-sm whitespace-pre-wrap line-clamp-4">{s.text}</p><a className="inline-block text-sm text-primary-700 dark:text-primary-400" href={s.url} target="_blank" rel="noreferrer">Mở nguồn chính thức</a></article>)}</>}
+    {source&&<ReviewModal heading={source.document+' · '+source.heading} onClose={()=>setSource(null)}><p className="whitespace-pre-wrap text-sm leading-relaxed">{source.text}</p><a className="mt-4 inline-block text-primary-700 dark:text-primary-400" href={source.url} target="_blank" rel="noreferrer">Đối chiếu bản chính thức</a></ReviewModal>}
+  </div>;
+}

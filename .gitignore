@@ -17,3 +17,9 @@ coverage/
 Thumbs.db
 ~$*
 *.tmp
+ai/.deps/
+.appraisal-data/
+output/appraisal/qa/
+tmp/pdfs/
+gcp-sa-key.json
+*-sa-key.json

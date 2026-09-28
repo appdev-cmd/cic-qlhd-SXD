@@ -1,0 +1,4691 @@
+{
+  "id": "6901a669-00ab-4429-bcc4-cfe2dc67f672",
+  "projectId": null,
+  "name": "Trường liên cấp Hương Xuân — hồ sơ mô phỏng",
+  "province": "Hà Tĩnh",
+  "tenantId": "demo",
+  "department": "Phòng thẩm định mẫu",
+  "assignee": "Chuyên viên mẫu",
+  "createdAt": "2026-09-27T03:19:53.168957+00:00",
+  "updatedAt": "2026-09-27T03:19:53.168957+00:00",
+  "legalDate": "2026-09-27",
+  "sample": true,
+  "revision": 15,
+  "legalContext": {
+    "submissionDate": "2026-09-27",
+    "scope": "construction",
+    "stage": "original",
+    "priorStatus": "unknown",
+    "note": "",
+    "confirmedBy": null
+  },
+  "legalRequirements": {},
+  "requirements": [
+    {
+      "id": "TTR",
+      "name": "Tờ trình thẩm định BCNCKT",
+      "category": "Tiếp nhận",
+      "required": true,
+      "status": "submitted",
+      "note": "",
+      "verifiedBy": null
+    },
+    {
+      "id": "PL01",
+      "name": "Thông báo 81-TB/TW về trường xã biên giới",
+      "category": "Pháp lý",
+      "required": true,
+      "status": "submitted",
+      "note": "",
+      "verifiedBy": null
+    },
+    {
+      "id": "PL02",
+      "name": "Nghị quyết 298/NQ-CP",
+      "category": "Pháp lý",
+      "required": true,
+      "status": "submitted",
+      "note": "",
+      "verifiedBy": null
+    },
+    {
+      "id": "PL03",
+      "name": "Kế hoạch 564/KH-UBND của Hà Tĩnh",
+      "category": "Pháp lý",
+      "required": true,
+      "status": "submitted",
+      "note": "",
+      "verifiedBy": null
+    },
+    {
+      "id": "PL04",
+      "name": "Quyết định 539/QĐ-UBND giao chủ đầu tư",
+      "category": "Pháp lý",
+      "required": true,
+      "status": "submitted",
+      "note": "",
+      "verifiedBy": null
+    },
+    {
+      "id": "PL05",
+      "name": "Văn bản 1989/BGDĐT-KHTC",
+      "category": "Pháp lý",
+      "required": true,
+      "status": "submitted",
+      "note": "",
+      "verifiedBy": null
+    },
+    {
+      "id": "PL06",
+      "name": "Quyết định 119/QĐ-BQLDA và đề cương",
+      "category": "Pháp lý",
+      "required": true,
+      "status": "submitted",
+      "note": "",
+      "verifiedBy": null
+    },
+    {
+      "id": "PL07",
+      "name": "Văn bản 545/UBND-KT và tổng mặt bằng",
+      "category": "Pháp lý",
+      "required": true,
+      "status": "submitted",
+      "note": "",
+      "verifiedBy": null
+    },
+    {
+      "id": "KT01",
+      "name": "Hồ sơ khảo sát địa hình",
+      "category": "Khảo sát",
+      "required": true,
+      "status": "submitted",
+      "note": "",
+      "verifiedBy": null
+    },
+    {
+      "id": "KT02",
+      "name": "Hồ sơ khảo sát địa chất",
+      "category": "Khảo sát",
+      "required": true,
+      "status": "submitted",
+      "note": "",
+      "verifiedBy": null
+    },
+    {
+      "id": "KT03",
+      "name": "Thuyết minh BCNCKT",
+      "category": "Thiết kế",
+      "required": true,
+      "status": "submitted",
+      "note": "",
+      "verifiedBy": null
+    },
+    {
+      "id": "KT04",
+      "name": "Hồ sơ thiết kế cơ sở",
+      "category": "Thiết kế",
+      "required": true,
+      "status": "submitted",
+      "note": "",
+      "verifiedBy": null
+    },
+    {
+      "id": "KT05",
+      "name": "Tổng mức đầu tư và bảng tính",
+      "category": "Chi phí",
+      "required": true,
+      "status": "submitted",
+      "note": "",
+      "verifiedBy": null
+    },
+    {
+      "id": "NL01",
+      "name": "Năng lực tổ chức và nhân sự chủ chốt",
+      "category": "Năng lực",
+      "required": true,
+      "status": "submitted",
+      "note": "",
+      "verifiedBy": null
+    }
+  ],
+  "documents": [
+    {
+      "id": "94023b62-4a0f-4bff-b178-aa8a9e95a2e3",
+      "requirementId": "TTR",
+      "name": "TTR_v1.docx",
+      "version": 1,
+      "role": "submission",
+      "hash": "f254d61d82eb3762c40bb333e3c74a4abbf8b9f72ba125527b5e26021529d16c",
+      "size": 39420,
+      "uploadedAt": "2026-09-27T03:19:53.647790+00:00",
+      "segments": [
+        {
+          "id": "c078b948-6d6a-4fa1-aa62-f239c8ee0868",
+          "locator": "Khối 1, dòng 1",
+          "page": null,
+          "text": "CƠ QUAN CHUẨN BỊ DỰ ÁN MÔ PHỎNGSố: [chưa cấp] | CỘNG HÒA XÃ HỘI CHỦ NGHĨA VIỆT NAMĐộc lập - Tự do - Hạnh phúc[Địa danh, ngày ban hành chưa xác nhận]"
+        },
+        {
+          "id": "00192bd7-3889-4b67-ae20-ce63b5934c8c",
+          "locator": "Khối 3, dòng 1",
+          "page": null,
+          "text": "Tờ trình thẩm định BCNCKT mô phỏng"
+        },
+        {
+          "id": "bdf561c6-2c50-483f-aff1-4bd3106c9567",
+          "locator": "Khối 4, dòng 1",
+          "page": null,
+          "text": "DỮ LIỆU MÔ PHỎNG — KHÔNG CÓ GIÁ TRỊ PHÁP LÝ"
+        },
+        {
+          "id": "263da445-ef4d-4d47-988c-a54894ae3c56",
+          "locator": "Khối 5, dòng 1",
+          "page": null,
+          "text": "Bản mô phỏng phục vụ phát triển và kiểm thử phần mềm. Không phải bản sao đầy đủ văn bản chính thức; không có chữ ký, con dấu hoặc giá trị chứng minh pháp lý."
+        },
+        {
+          "id": "cdb3cd4f-5bb0-45d7-a3ce-dea663bc3565",
+          "locator": "Khối 6, dòng 1",
+          "page": null,
+          "text": "Tên dự án: Trường liên cấp Hương Xuân — hồ sơ mô phỏng"
+        },
+        {
+          "id": "93a51747-3fbb-45af-aaa9-0278e848cd52",
+          "locator": "Khối 7, dòng 1",
+          "page": null,
+          "text": "Địa phương công trình: Hà Tĩnh"
+        },
+        {
+          "id": "9e0939b0-9a17-4cde-b7a9-32631a50499a",
+          "locator": "Khối 8, dòng 1",
+          "page": null,
+          "text": "I. THÔNG TIN CHUNG DỰ ÁN — khung Mẫu số 01"
+        },
+        {
+          "id": "3d3d8dd3-8601-4cc6-b213-cf8979607e05",
+          "locator": "Khối 9, dòng 1",
+          "page": null,
+          "text": "Kính gửi: [Cơ quan chuyên môn có thẩm quyền — chưa xác nhận]."
+        },
+        {
+          "id": "3a90283e-5fef-4612-becb-755d33352591",
+          "locator": "Khối 10, dòng 1",
+          "page": null,
+          "text": "Căn cứ quy trình: Luật 135/2025/QH15; Nghị định 217/2026/NĐ-CP. Căn cứ riêng của dự án phải kiểm tra bản chính thức."
+        },
+        {
+          "id": "2fa59391-0fda-42fa-a43e-76eecaa0d9d8",
+          "locator": "Khối 11, dòng 1",
+          "page": null,
+          "text": "1. Tên dự án: Trường liên cấp Hương Xuân — hồ sơ mô phỏng"
+        },
+        {
+          "id": "f1add10a-a6cb-4fb5-a7e9-c8cdf2c4ebe0",
+          "locator": "Khối 12, dòng 1",
+          "page": null,
+          "text": "2. Nhóm B; công trình dân dụng; cấp III giả lập, cần kiểm tra TT 34/2026. Thời hạn sử dụng thiết kế: chưa xác nhận."
+        },
+        {
+          "id": "7cf1705e-c1bd-48d2-abf4-3d3a536126bb",
+          "locator": "Khối 13, dòng 1",
+          "page": null,
+          "text": "3. Mã định danh: chưa có mã chính thức."
+        },
+        {
+          "id": "bce71fb6-6fce-4cc0-95c5-d2900680480b",
+          "locator": "Khối 14, dòng 1",
+          "page": null,
+          "text": "4. Quy mô giả lập: 37 lớp; đất 46.694 m²; tối đa 3 tầng; giải pháp kỹ thuật xem tài liệu KT03/KT04."
+        },
+        {
+          "id": "b1ae6514-f695-4d8a-af80-4906371ab360",
+          "locator": "Khối 15, dòng 1",
+          "page": null,
+          "text": "5. Phạm vi giả lập: toàn bộ dự án. Cấp từng công trình và thời hạn sử dụng: cần xác nhận."
+        },
+        {
+          "id": "e9e54bac-e2ef-438a-90a1-0a61fa55ed4f",
+          "locator": "Khối 16, dòng 1",
+          "page": null,
+          "text": "6. Người quyết định đầu tư: chưa xác nhận."
+        },
+        {
+          "id": "03e910e9-a91c-43a1-b7aa-c3847c8e258d",
+          "locator": "Khối 17, dòng 1",
+          "page": null,
+          "text": "7. Cơ quan chuẩn bị dự án: Ban quản lý dự án mẫu; địa chỉ, điện thoại chưa cung cấp."
+        },
+        {
+          "id": "d944f2a3-1f45-4410-9419-a9f142b89334",
+          "locator": "Khối 18, dòng 1",
+          "page": null,
+          "text": "8. Địa điểm nghiên cứu: Hương Xuân, Hà Tĩnh; ranh giới và địa danh hành chính hiện hành cần xác nhận."
+        },
+        {
+          "id": "82c6c5df-5fcb-43ba-8e8a-dec2381efd8d",
+          "locator": "Khối 19, dòng 1",
+          "page": null,
+          "text": "9. Tổng mức đầu tư: 217.230.000.000 đồng"
+        },
+        {
+          "id": "f734baf2-6879-4d48-bd2d-18d88975b745",
+          "locator": "Khối 20, dòng 1",
+          "page": null,
+          "text": "10. Nguồn vốn: đầu tư công trong kịch bản giả lập, chưa có xác nhận bố trí vốn."
+        },
+        {
+          "id": "43000132-78cf-47da-9860-257210c534fc",
+          "locator": "Khối 21, dòng 1",
+          "page": null,
+          "text": "11. Thời gian giả lập: 2026–2027; không chia phân kỳ trong kịch bản này."
+        },
+        {
+          "id": "dd3d66fb-877e-4dca-a818-3448c4b17983",
+          "locator": "Khối 22, dòng 1",
+          "page": null,
+          "text": "12. Danh mục quy chuẩn/tiêu chuẩn: các dòng bên dưới chỉ phục vụ đối chiếu; cần hoàn thiện phiên bản và phạm vi áp dụng."
+        },
+        {
+          "id": "fc243489-c56c-4c75-b266-8031e6140a3f",
+          "locator": "Khối 23, dòng 1",
+          "page": null,
+          "text": "13. Nhà thầu lập BCNCKT/thiết kế: đơn vị mẫu trong NL01; không có mã doanh nghiệp thật."
+        },
+        {
+          "id": "6817d66f-855a-448a-b85c-5fc4edbef9b5",
+          "locator": "Khối 24, dòng 1",
+          "page": null,
+          "text": "14. Nhà thầu khảo sát: đơn vị mẫu trong NL01; không có mã doanh nghiệp thật."
+        },
+        {
+          "id": "e92032a1-a873-44f9-a98f-47d317250e44",
+          "locator": "Khối 25, dòng 1",
+          "page": null,
+          "text": "15. Nhà thầu thẩm tra: chưa cung cấp; cần xác định điều kiện bắt buộc thẩm tra."
+        },
+        {
+          "id": "cac90b98-09d8-43f8-ab4c-d099ab34d484",
+          "locator": "Khối 26, dòng 1",
+          "page": null,
+          "text": "16. Thông tin khác: đây là bộ mẫu cố ý có thiếu sót để kiểm tra quy trình bổ sung."
+        },
+        {
+          "id": "4216a82a-3fca-4028-aa51-d54f0cb0d74f",
+          "locator": "Khối 27, dòng 1",
+          "page": null,
+          "text": "II. DANH MỤC HỒ SƠ VÀ DỮ LIỆU ĐỐI CHIẾU"
+        },
+        {
+          "id": "7be92dbd-1332-479a-beeb-1ba6545331e9",
+          "locator": "Khối 28, dòng 1",
+          "page": null,
+          "text": "Ngày trình giả lập: 27/09/2026. Áp dụng quy trình sau 01/07/2026 theo Nghị định 217/2026/NĐ-CP."
+        },
+        {
+          "id": "8d1a57e7-8055-47a9-a20e-084ceb1e7896",
+          "locator": "Khối 29, dòng 1",
+          "page": null,
+          "text": "Kịch bản mới phục vụ thử nghiệm; không thay đổi ngày tháng hoặc kết quả hồ sơ Hương Xuân gốc."
+        },
+        {
+          "id": "95b20b2d-696a-42c5-99fe-f3ad01305dc7",
+          "locator": "Khối 30, dòng 1",
+          "page": null,
+          "text": "Cấp công trình: III"
+        },
+        {
+          "id": "25f6438e-21e7-4f37-bcf8-4d686bbdf3c3",
+          "locator": "Khối 31, dòng 1",
+          "page": null,
+          "text": "Tổng mức đầu tư: 217.230.000.000 đồng"
+        },
+        {
+          "id": "986da039-35a9-4873-a884-93d55765d4fb",
+          "locator": "Khối 32, dòng 1",
+          "page": null,
+          "text": "Chi phí GPMB: 9.000.000.000 đồng"
+        },
+        {
+          "id": "7903e56f-00c4-44e6-abcf-7c190d45b1ad",
+          "locator": "Khối 33, dòng 1",
+          "page": null,
+          "text": "Chi phí xây dựng: 170.129.000.000 đồng"
+        },
+        {
+          "id": "f6fe0585-76e4-4669-89ce-f26fd0812861",
+          "locator": "Khối 34, dòng 1",
+          "page": null,
+          "text": "Chi phí thiết bị: 10.744.000.000 đồng"
+        },
+        {
+          "id": "815eb4d0-e2fc-43bd-9392-7619515c9562",
+          "locator": "Khối 35, dòng 1",
+          "page": null,
+          "text": "Chi phí quản lý dự án: 3.090.000.000 đồng"
+        },
+        {
+          "id": "e0d65b52-28b2-4859-bf0f-3d903ddb360f",
+          "locator": "Khối 36, dòng 1",
+          "page": null,
+          "text": "Chi phí tư vấn: 9.530.000.000 đồng"
+        },
+        {
+          "id": "f47c1ccc-b521-4b54-b21f-51c45c570166",
+          "locator": "Khối 37, dòng 1",
+          "page": null,
+          "text": "Chi phí khác: 1.587.000.000 đồng"
+        },
+        {
+          "id": "ffbf5902-7a3f-47cb-b259-4d16d9e1d972",
+          "locator": "Khối 38, dòng 1",
+          "page": null,
+          "text": "Chi phí dự phòng: 13.150.000.000 đồng"
+        },
+        {
+          "id": "7218ed9e-9a76-4d3c-b8fd-8acd9e6f1a85",
+          "locator": "Khối 39, dòng 1",
+          "page": null,
+          "text": "Chứng chỉ chủ trì MEP: SAMPLE-MEP-001"
+        },
+        {
+          "id": "897e7fbf-f8e1-47c9-8b33-d7d066a76b18",
+          "locator": "Khối 40, dòng 1",
+          "page": null,
+          "text": "Chứng chỉ chủ trì khảo sát: SAMPLE-KS-001"
+        },
+        {
+          "id": "f2b5d387-e2d3-4165-9103-0635f624305f",
+          "locator": "Khối 41, dòng 1",
+          "page": null,
+          "text": "Tiêu chuẩn trường tiểu học: TCVN 8793:2011"
+        },
+        {
+          "id": "2f7446ce-9b7a-4d24-8130-bc6393a2868f",
+          "locator": "Khối 42, dòng 1",
+          "page": null,
+          "text": "Tiêu chuẩn trường trung học: TCVN 8794:2011"
+        },
+        {
+          "id": "3568607d-b245-447c-9330-779a8c563dc1",
+          "locator": "Khối 43, dòng 1",
+          "page": null,
+          "text": "Danh mục hồ sơ gửi kèm:"
+        },
+        {
+          "id": "9d9f0f22-b83d-4d29-af6b-61444fbac2e0",
+          "locator": "Khối 44, dòng 1",
+          "page": null,
+          "text": "PL01: Thông báo 81-TB/TW về trường xã biên giới"
+        },
+        {
+          "id": "3b92111c-fc11-4856-b468-7f184ef1687b",
+          "locator": "Khối 45, dòng 1",
+          "page": null,
+          "text": "PL02: Nghị quyết 298/NQ-CP"
+        },
+        {
+          "id": "94d855a7-974b-4041-962b-61f9ae24a7c0",
+          "locator": "Khối 46, dòng 1",
+          "page": null,
+          "text": "PL03: Kế hoạch 564/KH-UBND của Hà Tĩnh"
+        },
+        {
+          "id": "e5f8e535-f7b0-4250-85e5-cae85bdddd5d",
+          "locator": "Khối 47, dòng 1",
+          "page": null,
+          "text": "PL04: Quyết định 539/QĐ-UBND giao chủ đầu tư"
+        },
+        {
+          "id": "3fd65f4e-de63-4389-9929-bafcf9a7695b",
+          "locator": "Khối 48, dòng 1",
+          "page": null,
+          "text": "PL05: Văn bản 1989/BGDĐT-KHTC"
+        },
+        {
+          "id": "ab072584-cdfd-46df-b881-97fe2c9e5752",
+          "locator": "Khối 49, dòng 1",
+          "page": null,
+          "text": "PL06: Quyết định 119/QĐ-BQLDA và đề cương"
+        },
+        {
+          "id": "15837688-768b-4d2d-991b-5ee5865fe089",
+          "locator": "Khối 50, dòng 1",
+          "page": null,
+          "text": "PL07: Văn bản 545/UBND-KT và tổng mặt bằng"
+        },
+        {
+          "id": "02e042ba-5a4c-49f2-b87b-bf109ad00260",
+          "locator": "Khối 51, dòng 1",
+          "page": null,
+          "text": "KT01: Hồ sơ khảo sát địa hình"
+        },
+        {
+          "id": "7aa84115-5594-4693-83fe-86ecb9512569",
+          "locator": "Khối 52, dòng 1",
+          "page": null,
+          "text": "KT02: Hồ sơ khảo sát địa chất"
+        },
+        {
+          "id": "4cbc5e9f-c643-475c-b12c-2232ba544107",
+          "locator": "Khối 53, dòng 1",
+          "page": null,
+          "text": "KT03: Thuyết minh BCNCKT"
+        },
+        {
+          "id": "608bb837-63d0-4973-8417-d5de1760fa44",
+          "locator": "Khối 54, dòng 1",
+          "page": null,
+          "text": "KT04: Hồ sơ thiết kế cơ sở"
+        },
+        {
+          "id": "572d96a5-0b19-465e-91fb-d939aa6c5294",
+          "locator": "Khối 55, dòng 1",
+          "page": null,
+          "text": "KT05: Tổng mức đầu tư và bảng tính"
+        },
+        {
+          "id": "a02a2016-dc23-444f-803d-d14a51746b28",
+          "locator": "Khối 56, dòng 1",
+          "page": null,
+          "text": "NL01: Năng lực tổ chức và nhân sự chủ chốt"
+        },
+        {
+          "id": "bd10f5b2-00cc-4f79-ad9f-595735973ffc",
+          "locator": "Khối 57, dòng 1",
+          "page": null,
+          "text": "Các mã SAMPLE là định danh giả lập, không phải chứng chỉ hành nghề."
+        },
+        {
+          "id": "6fa6a3bd-594e-41d8-8cec-4abe50f6f5ba",
+          "locator": "Khối 58, dòng 1",
+          "page": null,
+          "text": "Danh sách mã chứng chỉ hành nghề chủ nhiệm/chủ trì: tham chiếu NL01; các mã SAMPLE không có giá trị tra cứu năng lực."
+        },
+        {
+          "id": "42f3b017-fb18-40a0-a4aa-08bdea302e2e",
+          "locator": "Khối 59, dòng 1",
+          "page": null,
+          "text": "Nơi nhận: [theo thẩm quyền được xác nhận]; lưu hồ sơ mẫu."
+        },
+        {
+          "id": "321def14-93f0-48a0-abd2-5f6b2dde94dd",
+          "locator": "Khối 60, dòng 1",
+          "page": null,
+          "text": "CƠ QUAN CHUẨN BỊ DỰ ÁN — không ký, không đóng dấu trong bộ mẫu."
+        }
+      ],
+      "warnings": [],
+      "signature": "not_checked"
+    },
+    {
+      "id": "e76281a8-23c9-4973-8457-36f81d4d537f",
+      "requirementId": "PL01",
+      "name": "PL01_v1.docx",
+      "version": 1,
+      "role": "submission",
+      "hash": "4bbfb7af821a129b1cee02b632739273f235f040a439415ca62da0577449c167",
+      "size": 37685,
+      "uploadedAt": "2026-09-27T03:19:53.730374+00:00",
+      "segments": [
+        {
+          "id": "e578a91d-55d0-460d-a8d0-2afce1887c6d",
+          "locator": "Khối 1, dòng 1",
+          "page": null,
+          "text": "Phiếu dữ liệu pháp lý mô phỏng PL01"
+        },
+        {
+          "id": "0ad645fc-136d-4c43-88ca-058c837a6ea4",
+          "locator": "Khối 2, dòng 1",
+          "page": null,
+          "text": "DỮ LIỆU MÔ PHỎNG — KHÔNG CÓ GIÁ TRỊ PHÁP LÝ"
+        },
+        {
+          "id": "83bc84fb-7901-4799-8e59-85b43c59288f",
+          "locator": "Khối 3, dòng 1",
+          "page": null,
+          "text": "Bản mô phỏng phục vụ phát triển và kiểm thử phần mềm. Không phải bản sao đầy đủ văn bản chính thức; không có chữ ký, con dấu hoặc giá trị chứng minh pháp lý."
+        },
+        {
+          "id": "953b408e-df7f-4f95-9ee3-fdd82fc2112a",
+          "locator": "Khối 4, dòng 1",
+          "page": null,
+          "text": "Tên dự án: Trường liên cấp Hương Xuân — hồ sơ mô phỏng"
+        },
+        {
+          "id": "641d15e8-05e0-49d6-af0b-e1a17588eec8",
+          "locator": "Khối 5, dòng 1",
+          "page": null,
+          "text": "Địa phương công trình: Hà Tĩnh"
+        },
+        {
+          "id": "b413dd58-c324-4ad7-b70f-1d66b2e5be4e",
+          "locator": "Khối 6, dòng 1",
+          "page": null,
+          "text": "Nội dung phục vụ kiểm tra"
+        },
+        {
+          "id": "372aab69-95dc-40fd-9cc5-f61e89d07257",
+          "locator": "Khối 7, dòng 1",
+          "page": null,
+          "text": "Tham chiếu nghiên cứu: Thông báo 81-TB/TW ngày 18/07/2025."
+        },
+        {
+          "id": "3ce106d8-c935-471a-8cf8-6cc8ef2b0ceb",
+          "locator": "Khối 8, dòng 1",
+          "page": null,
+          "text": "Tình huống mô phỏng: xây dựng trường nội trú liên cấp phục vụ địa bàn biên giới."
+        },
+        {
+          "id": "eb859b45-ead2-43ac-b306-dce1721a438d",
+          "locator": "Khối 9, dòng 1",
+          "page": null,
+          "text": "Cần văn bản chính thức và danh mục để xác nhận đối tượng."
+        }
+      ],
+      "warnings": [],
+      "signature": "not_checked"
+    },
+    {
+      "id": "8e9d521b-76b7-496c-bdff-ab0368a500e0",
+      "requirementId": "PL02",
+      "name": "PL02_v1.docx",
+      "version": 1,
+      "role": "submission",
+      "hash": "97044fdb6e34235955b8290a53eec923a526e6f351659932d9259daee775fa54",
+      "size": 37683,
+      "uploadedAt": "2026-09-27T03:19:53.803648+00:00",
+      "segments": [
+        {
+          "id": "428ae60b-0f86-42e7-abe5-487f5711b45c",
+          "locator": "Khối 1, dòng 1",
+          "page": null,
+          "text": "Phiếu dữ liệu pháp lý mô phỏng PL02"
+        },
+        {
+          "id": "6d2a643d-3386-4909-8bae-cb160773ae22",
+          "locator": "Khối 2, dòng 1",
+          "page": null,
+          "text": "DỮ LIỆU MÔ PHỎNG — KHÔNG CÓ GIÁ TRỊ PHÁP LÝ"
+        },
+        {
+          "id": "6235cd51-0808-4a9d-9673-6328b533d77d",
+          "locator": "Khối 3, dòng 1",
+          "page": null,
+          "text": "Bản mô phỏng phục vụ phát triển và kiểm thử phần mềm. Không phải bản sao đầy đủ văn bản chính thức; không có chữ ký, con dấu hoặc giá trị chứng minh pháp lý."
+        },
+        {
+          "id": "bbb60945-0cc1-4c81-bb49-c556e48fe466",
+          "locator": "Khối 4, dòng 1",
+          "page": null,
+          "text": "Tên dự án: Trường liên cấp Hương Xuân — hồ sơ mô phỏng"
+        },
+        {
+          "id": "3844fc09-ed32-417c-959e-164e65b4aea1",
+          "locator": "Khối 5, dòng 1",
+          "page": null,
+          "text": "Địa phương công trình: Hà Tĩnh"
+        },
+        {
+          "id": "146b8420-19ef-4673-ae98-759c63d56e1e",
+          "locator": "Khối 6, dòng 1",
+          "page": null,
+          "text": "Nội dung phục vụ kiểm tra"
+        },
+        {
+          "id": "034f657e-fc09-4373-b191-919c9bb8d3ae",
+          "locator": "Khối 7, dòng 1",
+          "page": null,
+          "text": "Tham chiếu nghiên cứu: Nghị quyết 298/NQ-CP ngày 26/09/2025."
+        },
+        {
+          "id": "2f868000-9c82-40b8-9c47-5f5f713e7bfd",
+          "locator": "Khối 8, dòng 1",
+          "page": null,
+          "text": "Kế hoạch mô phỏng: chuẩn bị và thực hiện dự án giai đoạn 2026–2027."
+        },
+        {
+          "id": "91b2be21-dfe7-483a-9a08-2747ea84550a",
+          "locator": "Khối 9, dòng 1",
+          "page": null,
+          "text": "Chưa chứng minh nguồn vốn đã được bố trí."
+        }
+      ],
+      "warnings": [],
+      "signature": "not_checked"
+    },
+    {
+      "id": "3f96dd29-05c6-439c-8ff1-d7a944231169",
+      "requirementId": "PL03",
+      "name": "PL03_v1.docx",
+      "version": 1,
+      "role": "submission",
+      "hash": "c456333070f2c95f83070dfc35176e9169ec9897f44c40dded1ce0f1e0055e22",
+      "size": 37641,
+      "uploadedAt": "2026-09-27T03:19:53.888049+00:00",
+      "segments": [
+        {
+          "id": "bd0aaf8d-0085-476c-ac0c-e4593398297d",
+          "locator": "Khối 1, dòng 1",
+          "page": null,
+          "text": "Phiếu dữ liệu pháp lý mô phỏng PL03"
+        },
+        {
+          "id": "08608ffc-c660-472f-bafe-485b419f06f3",
+          "locator": "Khối 2, dòng 1",
+          "page": null,
+          "text": "DỮ LIỆU MÔ PHỎNG — KHÔNG CÓ GIÁ TRỊ PHÁP LÝ"
+        },
+        {
+          "id": "eeaa9376-7404-4d6f-b45c-70c9f157e716",
+          "locator": "Khối 3, dòng 1",
+          "page": null,
+          "text": "Bản mô phỏng phục vụ phát triển và kiểm thử phần mềm. Không phải bản sao đầy đủ văn bản chính thức; không có chữ ký, con dấu hoặc giá trị chứng minh pháp lý."
+        },
+        {
+          "id": "636b0c23-908e-402e-bf0e-eae6206e1999",
+          "locator": "Khối 4, dòng 1",
+          "page": null,
+          "text": "Tên dự án: Trường liên cấp Hương Xuân — hồ sơ mô phỏng"
+        },
+        {
+          "id": "6ffaf07b-b4fd-4e2c-9e41-4f698d6e94bf",
+          "locator": "Khối 5, dòng 1",
+          "page": null,
+          "text": "Địa phương công trình: Hà Tĩnh"
+        },
+        {
+          "id": "d3b2ac67-937f-4ab4-8748-338b000c305f",
+          "locator": "Khối 6, dòng 1",
+          "page": null,
+          "text": "Nội dung phục vụ kiểm tra"
+        },
+        {
+          "id": "9ecb7a75-00c8-4986-8892-f6e2b03a712c",
+          "locator": "Khối 7, dòng 1",
+          "page": null,
+          "text": "Tham chiếu nghiên cứu: Kế hoạch 564/KH-UBND ngày 20/10/2025."
+        },
+        {
+          "id": "97d2096b-7291-4a47-ab50-5e33d0fc905b",
+          "locator": "Khối 8, dòng 1",
+          "page": null,
+          "text": "Tên trường và địa phương cần được đối chiếu phụ lục kế hoạch tỉnh."
+        }
+      ],
+      "warnings": [],
+      "signature": "not_checked"
+    },
+    {
+      "id": "72d09fec-fc25-4a9b-927e-9e21a7e6e3ae",
+      "requirementId": "PL04",
+      "name": "PL04_v1.docx",
+      "version": 1,
+      "role": "submission",
+      "hash": "c6307e5290023cf4132540605d11ed26d1630802113f6ca81c04a81daeb42ded",
+      "size": 37682,
+      "uploadedAt": "2026-09-27T03:19:53.961428+00:00",
+      "segments": [
+        {
+          "id": "5dc962f9-522e-40c7-a623-dfdb9c74bb9a",
+          "locator": "Khối 1, dòng 1",
+          "page": null,
+          "text": "Phiếu dữ liệu pháp lý mô phỏng PL04"
+        },
+        {
+          "id": "accf450a-fd9e-4cf0-ad30-52d9f6acc46b",
+          "locator": "Khối 2, dòng 1",
+          "page": null,
+          "text": "DỮ LIỆU MÔ PHỎNG — KHÔNG CÓ GIÁ TRỊ PHÁP LÝ"
+        },
+        {
+          "id": "68250dba-f2b9-4e2d-a655-f25799d60551",
+          "locator": "Khối 3, dòng 1",
+          "page": null,
+          "text": "Bản mô phỏng phục vụ phát triển và kiểm thử phần mềm. Không phải bản sao đầy đủ văn bản chính thức; không có chữ ký, con dấu hoặc giá trị chứng minh pháp lý."
+        },
+        {
+          "id": "b9bdac51-b231-461b-b6ce-d3a0799d3b68",
+          "locator": "Khối 4, dòng 1",
+          "page": null,
+          "text": "Tên dự án: Trường liên cấp Hương Xuân — hồ sơ mô phỏng"
+        },
+        {
+          "id": "e5432d49-07f5-4824-ab85-346dffa08c1b",
+          "locator": "Khối 5, dòng 1",
+          "page": null,
+          "text": "Địa phương công trình: Hà Tĩnh"
+        },
+        {
+          "id": "fd28218e-4150-4b87-b4a5-bcf28b292c91",
+          "locator": "Khối 6, dòng 1",
+          "page": null,
+          "text": "Nội dung phục vụ kiểm tra"
+        },
+        {
+          "id": "431d0927-7339-4085-80a0-08fad5a330df",
+          "locator": "Khối 7, dòng 1",
+          "page": null,
+          "text": "Tham chiếu nghiên cứu: Quyết định 539/QĐ-UBND ngày 04/03/2026."
+        },
+        {
+          "id": "79fb47e4-3057-4c25-b2af-1ca0478ecb3a",
+          "locator": "Khối 8, dòng 1",
+          "page": null,
+          "text": "Chủ đầu tư mô phỏng: Ban quản lý dự án mẫu."
+        },
+        {
+          "id": "b7efcd9a-29e8-4688-91d8-1981451f1be1",
+          "locator": "Khối 9, dòng 1",
+          "page": null,
+          "text": "Phạm vi mô phỏng: tổ chức chuẩn bị đầu tư và tiếp nhận tư vấn."
+        }
+      ],
+      "warnings": [],
+      "signature": "not_checked"
+    },
+    {
+      "id": "695914f4-6c66-40e7-a8e3-469ed322ddf9",
+      "requirementId": "PL05",
+      "name": "PL05_v1.docx",
+      "version": 1,
+      "role": "submission",
+      "hash": "7eccd4ef15e6187316f9d7a78a6d762ed09c4e9d3d852cec356e7fca37120cb0",
+      "size": 37686,
+      "uploadedAt": "2026-09-27T03:19:54.051127+00:00",
+      "segments": [
+        {
+          "id": "c897edb3-abb3-4b99-849a-1a88f274f40a",
+          "locator": "Khối 1, dòng 1",
+          "page": null,
+          "text": "Phiếu dữ liệu pháp lý mô phỏng PL05"
+        },
+        {
+          "id": "253ccc26-4246-444a-a3aa-d19ca867ec82",
+          "locator": "Khối 2, dòng 1",
+          "page": null,
+          "text": "DỮ LIỆU MÔ PHỎNG — KHÔNG CÓ GIÁ TRỊ PHÁP LÝ"
+        },
+        {
+          "id": "15275f5e-54f1-47d0-a8ec-764ca58a2bdf",
+          "locator": "Khối 3, dòng 1",
+          "page": null,
+          "text": "Bản mô phỏng phục vụ phát triển và kiểm thử phần mềm. Không phải bản sao đầy đủ văn bản chính thức; không có chữ ký, con dấu hoặc giá trị chứng minh pháp lý."
+        },
+        {
+          "id": "1eecdd3e-15d7-444b-acda-a4d4358fca6f",
+          "locator": "Khối 4, dòng 1",
+          "page": null,
+          "text": "Tên dự án: Trường liên cấp Hương Xuân — hồ sơ mô phỏng"
+        },
+        {
+          "id": "3f8f5e73-7af6-492e-bc4c-e78bfd7ebdd3",
+          "locator": "Khối 5, dòng 1",
+          "page": null,
+          "text": "Địa phương công trình: Hà Tĩnh"
+        },
+        {
+          "id": "1cbd8a46-43a6-42d0-9162-78b1ec30e027",
+          "locator": "Khối 6, dòng 1",
+          "page": null,
+          "text": "Nội dung phục vụ kiểm tra"
+        },
+        {
+          "id": "f63c25b5-6609-4f63-8799-838a017f04e6",
+          "locator": "Khối 7, dòng 1",
+          "page": null,
+          "text": "Tham chiếu nghiên cứu: Văn bản 1989/BGDĐT-KHTC ngày 17/04/2026."
+        },
+        {
+          "id": "064b6594-793e-4541-bafd-49ca31cfaeb5",
+          "locator": "Khối 8, dòng 1",
+          "page": null,
+          "text": "Tổng số lớp: 37"
+        },
+        {
+          "id": "5bfe8382-be36-45c0-a781-dad3d0ed7432",
+          "locator": "Khối 9, dòng 1",
+          "page": null,
+          "text": "Số lớp tiểu học: 19"
+        },
+        {
+          "id": "383d7929-558c-41c2-a719-18347e5a03f4",
+          "locator": "Khối 10, dòng 1",
+          "page": null,
+          "text": "Số lớp THCS: 18"
+        },
+        {
+          "id": "9d143fcc-eacc-4589-83b1-e49561d016a7",
+          "locator": "Khối 11, dòng 1",
+          "page": null,
+          "text": "Số học sinh và chỗ nội trú chưa được xác nhận."
+        }
+      ],
+      "warnings": [],
+      "signature": "not_checked"
+    },
+    {
+      "id": "d81915f2-9693-4f1b-bba9-4039dc597271",
+      "requirementId": "PL06",
+      "name": "PL06_v1.docx",
+      "version": 1,
+      "role": "submission",
+      "hash": "1e59311ffd7848f12616940343f9c38adc9b52969a9f19988187dd8ff0d3800d",
+      "size": 37696,
+      "uploadedAt": "2026-09-27T03:19:54.124126+00:00",
+      "segments": [
+        {
+          "id": "58be21fa-ac9f-4d31-92c7-1dba43e12840",
+          "locator": "Khối 1, dòng 1",
+          "page": null,
+          "text": "Phiếu dữ liệu pháp lý mô phỏng PL06"
+        },
+        {
+          "id": "ae4857cd-8ac7-430b-a320-31de3761d157",
+          "locator": "Khối 2, dòng 1",
+          "page": null,
+          "text": "DỮ LIỆU MÔ PHỎNG — KHÔNG CÓ GIÁ TRỊ PHÁP LÝ"
+        },
+        {
+          "id": "ce5b93fc-e358-456a-b10d-99ae0af64a56",
+          "locator": "Khối 3, dòng 1",
+          "page": null,
+          "text": "Bản mô phỏng phục vụ phát triển và kiểm thử phần mềm. Không phải bản sao đầy đủ văn bản chính thức; không có chữ ký, con dấu hoặc giá trị chứng minh pháp lý."
+        },
+        {
+          "id": "2a6e51e8-cac3-43ee-b229-09427498090d",
+          "locator": "Khối 4, dòng 1",
+          "page": null,
+          "text": "Tên dự án: Trường liên cấp Hương Xuân — hồ sơ mô phỏng"
+        },
+        {
+          "id": "39631e13-c175-4d67-99d0-4fca357702a1",
+          "locator": "Khối 5, dòng 1",
+          "page": null,
+          "text": "Địa phương công trình: Hà Tĩnh"
+        },
+        {
+          "id": "f2cc9891-0feb-44cd-881d-2627dfeee95b",
+          "locator": "Khối 6, dòng 1",
+          "page": null,
+          "text": "Nội dung phục vụ kiểm tra"
+        },
+        {
+          "id": "eb9b1e73-981a-4608-af38-689389fe1757",
+          "locator": "Khối 7, dòng 1",
+          "page": null,
+          "text": "Tham chiếu nghiên cứu: Quyết định 119/QĐ-BQLDA ngày 20/04/2026."
+        },
+        {
+          "id": "3a1ed060-f9a8-4d51-9e19-193d0a73b359",
+          "locator": "Khối 8, dòng 1",
+          "page": null,
+          "text": "Đề cương mô phỏng: khảo sát địa hình, địa chất và lập BCNCKT."
+        },
+        {
+          "id": "43be914d-9588-40ac-99bc-421a97905b23",
+          "locator": "Khối 9, dòng 1",
+          "page": null,
+          "text": "Phụ lục nhiệm vụ/thí nghiệm chính thức phải được chuyên viên kiểm tra."
+        }
+      ],
+      "warnings": [],
+      "signature": "not_checked"
+    },
+    {
+      "id": "6ce60a4e-046f-4a2a-bea2-9b114d60bbcf",
+      "requirementId": "PL07",
+      "name": "PL07_v1.docx",
+      "version": 1,
+      "role": "submission",
+      "hash": "e6a2e185316467f11ecfbe36bc05498e7553c1ec85c234f8d5e5283a7429d469",
+      "size": 37707,
+      "uploadedAt": "2026-09-27T03:19:54.191054+00:00",
+      "segments": [
+        {
+          "id": "a4d6e7ff-bd92-4379-8fc4-5d90870c5ec5",
+          "locator": "Khối 1, dòng 1",
+          "page": null,
+          "text": "Phiếu dữ liệu pháp lý mô phỏng PL07"
+        },
+        {
+          "id": "eab9d587-fdef-4ff1-9aa8-6401fc20fa17",
+          "locator": "Khối 2, dòng 1",
+          "page": null,
+          "text": "DỮ LIỆU MÔ PHỎNG — KHÔNG CÓ GIÁ TRỊ PHÁP LÝ"
+        },
+        {
+          "id": "8766233a-c289-4db0-9396-84c166eb14c8",
+          "locator": "Khối 3, dòng 1",
+          "page": null,
+          "text": "Bản mô phỏng phục vụ phát triển và kiểm thử phần mềm. Không phải bản sao đầy đủ văn bản chính thức; không có chữ ký, con dấu hoặc giá trị chứng minh pháp lý."
+        },
+        {
+          "id": "14711ff0-d072-4baf-acb1-305efc9beee7",
+          "locator": "Khối 4, dòng 1",
+          "page": null,
+          "text": "Tên dự án: Trường liên cấp Hương Xuân — hồ sơ mô phỏng"
+        },
+        {
+          "id": "c86cdaaa-9ce1-410e-9315-286c5ef2975b",
+          "locator": "Khối 5, dòng 1",
+          "page": null,
+          "text": "Địa phương công trình: Hà Tĩnh"
+        },
+        {
+          "id": "ac14e934-430a-40fc-8564-38dc8060b1b1",
+          "locator": "Khối 6, dòng 1",
+          "page": null,
+          "text": "Nội dung phục vụ kiểm tra"
+        },
+        {
+          "id": "744a6ecd-e953-4641-bce2-b504ec016e88",
+          "locator": "Khối 7, dòng 1",
+          "page": null,
+          "text": "Tham chiếu nghiên cứu: Văn bản 545/UBND-KT ngày 15/05/2026."
+        },
+        {
+          "id": "dd4746a8-e00a-4c22-8588-3bd79d6bb283",
+          "locator": "Khối 8, dòng 1",
+          "page": null,
+          "text": "Diện tích khu đất: 46.694 m²"
+        },
+        {
+          "id": "277e03eb-5bd1-4bc0-a31f-d9a66b91ed04",
+          "locator": "Khối 9, dòng 1",
+          "page": null,
+          "text": "Diện tích xây dựng: 8.338 m²"
+        },
+        {
+          "id": "2ecf241e-19b8-4afa-b609-715a6852cb37",
+          "locator": "Khối 10, dòng 1",
+          "page": null,
+          "text": "Số tầng tối đa: 3 tầng"
+        },
+        {
+          "id": "1077816d-fe4e-4360-9d08-5cd63c314f32",
+          "locator": "Khối 11, dòng 1",
+          "page": null,
+          "text": "Chưa có bản đồ được cơ quan có thẩm quyền đóng dấu."
+        }
+      ],
+      "warnings": [],
+      "signature": "not_checked"
+    },
+    {
+      "id": "6fa14cae-7fe2-4d25-b3df-83b930613b24",
+      "requirementId": "KT01",
+      "name": "KT01_v1.docx",
+      "version": 1,
+      "role": "submission",
+      "hash": "56087a0a3946889997565c13c9898b7c8c983f358d2d10d724b4d8e94d2aa87b",
+      "size": 37761,
+      "uploadedAt": "2026-09-27T03:19:54.289868+00:00",
+      "segments": [
+        {
+          "id": "a18ca7a8-18c8-4322-8d87-c3d1be8d166f",
+          "locator": "Khối 1, dòng 1",
+          "page": null,
+          "text": "Báo cáo khảo sát địa hình mô phỏng"
+        },
+        {
+          "id": "6a90c3d7-547a-48dc-a20a-34ed110b8e2b",
+          "locator": "Khối 2, dòng 1",
+          "page": null,
+          "text": "DỮ LIỆU MÔ PHỎNG — KHÔNG CÓ GIÁ TRỊ PHÁP LÝ"
+        },
+        {
+          "id": "732457fa-d53d-4114-b7b0-68a3939770aa",
+          "locator": "Khối 3, dòng 1",
+          "page": null,
+          "text": "Bản mô phỏng phục vụ phát triển và kiểm thử phần mềm. Không phải bản sao đầy đủ văn bản chính thức; không có chữ ký, con dấu hoặc giá trị chứng minh pháp lý."
+        },
+        {
+          "id": "255764a4-5483-4372-8f52-76cd9bf63a45",
+          "locator": "Khối 4, dòng 1",
+          "page": null,
+          "text": "Tên dự án: Trường liên cấp Hương Xuân — hồ sơ mô phỏng"
+        },
+        {
+          "id": "0c3ef62f-3b3a-497c-bca1-87d0fd30c537",
+          "locator": "Khối 5, dòng 1",
+          "page": null,
+          "text": "Địa phương công trình: Hà Tĩnh"
+        },
+        {
+          "id": "a9ec1219-34ae-4072-a9a9-68449e8e2452",
+          "locator": "Khối 6, dòng 1",
+          "page": null,
+          "text": "Nội dung phục vụ kiểm tra"
+        },
+        {
+          "id": "4e5cb552-8cac-49ba-ad8d-45cf2ee9142f",
+          "locator": "Khối 7, dòng 1",
+          "page": null,
+          "text": "Diện tích khu đất: 46.694 m²"
+        },
+        {
+          "id": "283dec36-c177-4f88-b2af-c3fe300ab231",
+          "locator": "Khối 8, dòng 1",
+          "page": null,
+          "text": "Cao độ mô phỏng từ +97,50 m đến +100,55 m."
+        },
+        {
+          "id": "6107473d-a528-46b4-90b3-eba4148d9e3d",
+          "locator": "Khối 9, dòng 1",
+          "page": null,
+          "text": "Hệ tọa độ dự kiến VN-2000; chưa xác minh kinh tuyến trục và múi chiếu."
+        },
+        {
+          "id": "03e27316-e6b0-4aeb-bbd5-9a4082dc8af8",
+          "locator": "Khối 10, dòng 1",
+          "page": null,
+          "text": "Dữ liệu mô phỏng không đại diện kết quả đo thực địa. Cần bảng tọa độ, lưới khống chế và nghiệm thu trước khi sử dụng thiết kế."
+        }
+      ],
+      "warnings": [],
+      "signature": "not_checked"
+    },
+    {
+      "id": "67615cb9-7eff-4099-89c5-4cc0cc879bff",
+      "requirementId": "KT02",
+      "name": "KT02_v1.docx",
+      "version": 1,
+      "role": "submission",
+      "hash": "72fe14b153daae1a136c93c6b17a0db5e99f8fe8e22b8e6e80e6f60e59423c5b",
+      "size": 37727,
+      "uploadedAt": "2026-09-27T03:19:54.366830+00:00",
+      "segments": [
+        {
+          "id": "074953ba-edca-4053-8c9a-cfd16cb22590",
+          "locator": "Khối 1, dòng 1",
+          "page": null,
+          "text": "Báo cáo khảo sát địa chất mô phỏng"
+        },
+        {
+          "id": "e0ec3a7d-aad6-48c9-b2e7-a89177b58602",
+          "locator": "Khối 2, dòng 1",
+          "page": null,
+          "text": "DỮ LIỆU MÔ PHỎNG — KHÔNG CÓ GIÁ TRỊ PHÁP LÝ"
+        },
+        {
+          "id": "8b591b09-6369-4a47-b6ac-bcc6128c3e6e",
+          "locator": "Khối 3, dòng 1",
+          "page": null,
+          "text": "Bản mô phỏng phục vụ phát triển và kiểm thử phần mềm. Không phải bản sao đầy đủ văn bản chính thức; không có chữ ký, con dấu hoặc giá trị chứng minh pháp lý."
+        },
+        {
+          "id": "be8112d4-d6df-4908-8fe2-50f21db5b077",
+          "locator": "Khối 4, dòng 1",
+          "page": null,
+          "text": "Tên dự án: Trường liên cấp Hương Xuân — hồ sơ mô phỏng"
+        },
+        {
+          "id": "5107a007-3905-4996-a7f8-1c53d4c40419",
+          "locator": "Khối 5, dòng 1",
+          "page": null,
+          "text": "Địa phương công trình: Hà Tĩnh"
+        },
+        {
+          "id": "446e9ec0-8b6e-431b-8118-ab5bdb2a66f8",
+          "locator": "Khối 6, dòng 1",
+          "page": null,
+          "text": "Nội dung phục vụ kiểm tra"
+        },
+        {
+          "id": "648d1f73-df4e-4edf-8ce2-954da51f59f2",
+          "locator": "Khối 7, dòng 1",
+          "page": null,
+          "text": "Tình huống giả lập có lớp đất đắp và lớp đất chịu lực; chưa cung cấp số liệu thí nghiệm."
+        },
+        {
+          "id": "79162e48-baa9-41a8-b6a3-b1fb426707b1",
+          "locator": "Khối 8, dòng 1",
+          "page": null,
+          "text": "Đề xuất kiểm tra: A1–A4 móng băng; A5, A6, B, C móng cọc; D móng đơn."
+        },
+        {
+          "id": "6b8efde7-d92b-42ef-b9b1-ab614f2825be",
+          "locator": "Khối 9, dòng 1",
+          "page": null,
+          "text": "Chưa có cơ sở tính sức chịu tải, độ lún hoặc xác nhận giải pháp móng."
+        }
+      ],
+      "warnings": [],
+      "signature": "not_checked"
+    },
+    {
+      "id": "1f6190aa-a638-4ebf-a42b-107fae1620e5",
+      "requirementId": "KT03",
+      "name": "KT03_v1.docx",
+      "version": 1,
+      "role": "submission",
+      "hash": "999c03530fba48a71ad4057bcfec8572ce6b809c6226e67fcbaec8489d7ed123",
+      "size": 37889,
+      "uploadedAt": "2026-09-27T03:19:54.467987+00:00",
+      "segments": [
+        {
+          "id": "6dec6589-fbe7-4fbf-927c-0161a52e338e",
+          "locator": "Khối 1, dòng 1",
+          "page": null,
+          "text": "Thuyết minh BCNCKT mô phỏng"
+        },
+        {
+          "id": "98e53569-b1bc-4c7a-8877-534162d5abe2",
+          "locator": "Khối 2, dòng 1",
+          "page": null,
+          "text": "DỮ LIỆU MÔ PHỎNG — KHÔNG CÓ GIÁ TRỊ PHÁP LÝ"
+        },
+        {
+          "id": "6e2608bc-3e2c-430c-941f-e95273608ea7",
+          "locator": "Khối 3, dòng 1",
+          "page": null,
+          "text": "Bản mô phỏng phục vụ phát triển và kiểm thử phần mềm. Không phải bản sao đầy đủ văn bản chính thức; không có chữ ký, con dấu hoặc giá trị chứng minh pháp lý."
+        },
+        {
+          "id": "6a4c7dfa-63ac-43be-bce1-9713ab2cec4e",
+          "locator": "Khối 4, dòng 1",
+          "page": null,
+          "text": "Tên dự án: Trường liên cấp Hương Xuân — hồ sơ mô phỏng"
+        },
+        {
+          "id": "396ba1bb-935e-4cf1-b161-a9706408bfa1",
+          "locator": "Khối 5, dòng 1",
+          "page": null,
+          "text": "Địa phương công trình: Hà Tĩnh"
+        },
+        {
+          "id": "70a092d3-3ef2-4206-95bb-ffc94c81e601",
+          "locator": "Khối 6, dòng 1",
+          "page": null,
+          "text": "Nội dung phục vụ kiểm tra"
+        },
+        {
+          "id": "550a4828-a8d7-47de-b333-84d13ffc80c9",
+          "locator": "Khối 7, dòng 1",
+          "page": null,
+          "text": "Cấp công trình: III"
+        },
+        {
+          "id": "6c3249cc-05da-4bbc-a5e6-3d1262206035",
+          "locator": "Khối 8, dòng 1",
+          "page": null,
+          "text": "Tổng mức đầu tư: 217.230.000.000 đồng"
+        },
+        {
+          "id": "6d6681a9-e606-47ee-bfe4-9c9e26d9681b",
+          "locator": "Khối 9, dòng 1",
+          "page": null,
+          "text": "Diện tích khu đất: 46.694 m²"
+        },
+        {
+          "id": "856d2a5c-080a-45bf-9f0b-f6a72f3137d7",
+          "locator": "Khối 10, dòng 1",
+          "page": null,
+          "text": "Diện tích xây dựng: 8.338 m²"
+        },
+        {
+          "id": "5b27ea4e-f19e-4369-9774-31893b8e1e20",
+          "locator": "Khối 11, dòng 1",
+          "page": null,
+          "text": "Tổng diện tích sàn: 17.140 m²"
+        },
+        {
+          "id": "28065170-4cbf-40f6-a999-cbdf286ca076",
+          "locator": "Khối 12, dòng 1",
+          "page": null,
+          "text": "Mật độ xây dựng: 17,9 %"
+        },
+        {
+          "id": "1001bc29-3359-46cc-ac5b-83a4d45304f0",
+          "locator": "Khối 13, dòng 1",
+          "page": null,
+          "text": "Hệ số sử dụng đất: 0,37 lần"
+        },
+        {
+          "id": "5691c334-1a4e-47b0-8507-fbe43b70e570",
+          "locator": "Khối 14, dòng 1",
+          "page": null,
+          "text": "Tổng số lớp: 37"
+        },
+        {
+          "id": "ffcb2a5a-3c63-4872-8604-9df7cc7792ae",
+          "locator": "Khối 15, dòng 1",
+          "page": null,
+          "text": "Số lớp tiểu học: 19"
+        },
+        {
+          "id": "dd7df58b-42fc-4dcb-8644-e3edae72ec75",
+          "locator": "Khối 16, dòng 1",
+          "page": null,
+          "text": "Số lớp THCS: 18"
+        },
+        {
+          "id": "92013c15-7609-4780-a40c-354e4eadb312",
+          "locator": "Khối 17, dòng 1",
+          "page": null,
+          "text": "Tiêu chuẩn trường tiểu học: TCVN 8793:2021"
+        },
+        {
+          "id": "7f7c1abf-2f01-4dc1-afaa-1b9eb2c0e582",
+          "locator": "Khối 18, dòng 1",
+          "page": null,
+          "text": "Tiêu chuẩn trường trung học: TCVN 8794:2021"
+        },
+        {
+          "id": "bc542ebb-7294-4517-b0fc-e18e3b3554fe",
+          "locator": "Khối 19, dòng 1",
+          "page": null,
+          "text": "Mục tiêu mô phỏng: cơ sở học tập và nội trú. Chưa xác nhận sĩ số, số chỗ nội trú và phương án vận hành."
+        },
+        {
+          "id": "82da051d-2977-492c-a9a0-1b6c690d0a10",
+          "locator": "Khối 20, dòng 1",
+          "page": null,
+          "text": "Bản v2 chỉ minh họa phản hồi kiểm tra, không sửa số liệu hồ sơ Hương Xuân thực tế."
+        }
+      ],
+      "warnings": [],
+      "signature": "not_checked"
+    },
+    {
+      "id": "e5f4543f-c4d3-4f3a-8cec-58b3835bac08",
+      "requirementId": "KT04",
+      "name": "KT04_v1.docx",
+      "version": 1,
+      "role": "submission",
+      "hash": "7ac3ad04370d7016e019ed1d4c7aa56673564bc52e4fbacabfd8f7e2c9a35e3b",
+      "size": 37862,
+      "uploadedAt": "2026-09-27T03:19:54.557772+00:00",
+      "segments": [
+        {
+          "id": "a8558f7a-de05-4eaa-9c4f-92fbded20ff3",
+          "locator": "Khối 1, dòng 1",
+          "page": null,
+          "text": "Thuyết minh thiết kế cơ sở mô phỏng"
+        },
+        {
+          "id": "f65eadf4-4d66-4e97-a897-d773bff24291",
+          "locator": "Khối 2, dòng 1",
+          "page": null,
+          "text": "DỮ LIỆU MÔ PHỎNG — KHÔNG CÓ GIÁ TRỊ PHÁP LÝ"
+        },
+        {
+          "id": "46a68726-757b-48cd-8057-4707b42f6228",
+          "locator": "Khối 3, dòng 1",
+          "page": null,
+          "text": "Bản mô phỏng phục vụ phát triển và kiểm thử phần mềm. Không phải bản sao đầy đủ văn bản chính thức; không có chữ ký, con dấu hoặc giá trị chứng minh pháp lý."
+        },
+        {
+          "id": "1135bd48-34ab-4f4f-bf73-53ce65042f60",
+          "locator": "Khối 4, dòng 1",
+          "page": null,
+          "text": "Tên dự án: Trường liên cấp Hương Xuân — hồ sơ mô phỏng"
+        },
+        {
+          "id": "3f1dd8ab-dbf3-4bef-ab53-18c36503d75f",
+          "locator": "Khối 5, dòng 1",
+          "page": null,
+          "text": "Địa phương công trình: Hà Tĩnh"
+        },
+        {
+          "id": "651a636f-83df-4a26-846b-b4ac9de52ed9",
+          "locator": "Khối 6, dòng 1",
+          "page": null,
+          "text": "Nội dung phục vụ kiểm tra"
+        },
+        {
+          "id": "e283b2cc-f528-4617-b7e8-785c4bd1d5e2",
+          "locator": "Khối 7, dòng 1",
+          "page": null,
+          "text": "Diện tích sàn A1: 1.800 m²"
+        },
+        {
+          "id": "f7cd6035-f848-4670-9f7c-6e6be4fd653d",
+          "locator": "Khối 8, dòng 1",
+          "page": null,
+          "text": "Diện tích sàn A2: 1.343 m²"
+        },
+        {
+          "id": "4f615909-b1a1-42d4-8f93-768e572d21c8",
+          "locator": "Khối 9, dòng 1",
+          "page": null,
+          "text": "Diện tích sàn A3: 2.006 m²"
+        },
+        {
+          "id": "99e8a201-30e3-4d7d-a80c-4d283b32f504",
+          "locator": "Khối 10, dòng 1",
+          "page": null,
+          "text": "Diện tích sàn A4: 1.712 m²"
+        },
+        {
+          "id": "fbe49b6d-afa8-4d57-ad2e-4253c5ad72a8",
+          "locator": "Khối 11, dòng 1",
+          "page": null,
+          "text": "Diện tích sàn A5: 2.200 m²"
+        },
+        {
+          "id": "933baf15-c785-4e10-9503-98af5416c0e8",
+          "locator": "Khối 12, dòng 1",
+          "page": null,
+          "text": "Diện tích sàn A6: 2.175 m²"
+        },
+        {
+          "id": "7cb3910c-688f-4e58-a8d4-74f95586e120",
+          "locator": "Khối 13, dòng 1",
+          "page": null,
+          "text": "Diện tích sàn B: 2.357 m²"
+        },
+        {
+          "id": "eaab156f-f441-4642-9d4d-499eae1e9007",
+          "locator": "Khối 14, dòng 1",
+          "page": null,
+          "text": "Diện tích sàn C: 1.658 m²"
+        },
+        {
+          "id": "5c47bee9-3775-4335-80c9-678aaa732b00",
+          "locator": "Khối 15, dòng 1",
+          "page": null,
+          "text": "Diện tích sàn D: 1.577 m²"
+        },
+        {
+          "id": "ddbc41e9-3039-449f-8bd8-e3f2fb2ad63f",
+          "locator": "Khối 16, dòng 1",
+          "page": null,
+          "text": "Diện tích sàn G1: 503 m²"
+        },
+        {
+          "id": "8c558a5b-102b-4592-81ea-730ca9d564be",
+          "locator": "Khối 17, dòng 1",
+          "page": null,
+          "text": "Diện tích sàn G2: 220 m²"
+        },
+        {
+          "id": "36f91c1f-6a79-4c7d-be24-cc8681b03599",
+          "locator": "Khối 18, dòng 1",
+          "page": null,
+          "text": "Dung tích bể hữu ích: 45 m³"
+        },
+        {
+          "id": "1eab36b3-6d2c-4248-a209-48233f7a5992",
+          "locator": "Khối 19, dòng 1",
+          "page": null,
+          "text": "Chiều dài ngoài bể: 7,12 m"
+        },
+        {
+          "id": "96ebfea5-3534-4de7-baa5-a0092b8f928c",
+          "locator": "Khối 20, dòng 1",
+          "page": null,
+          "text": "Chiều rộng ngoài bể: 5,35 m"
+        },
+        {
+          "id": "17e4049e-2155-45b5-82d6-a1cd1f14c1d0",
+          "locator": "Khối 21, dòng 1",
+          "page": null,
+          "text": "Chiều cao ngoài bể: 2,25 m"
+        },
+        {
+          "id": "988f451b-5007-4ffa-b959-46e2a4736e37",
+          "locator": "Khối 22, dòng 1",
+          "page": null,
+          "text": "Bố trí khối học, hiệu bộ, nội trú, bếp ăn và hành lang cầu theo tình huống minh họa."
+        },
+        {
+          "id": "76a10463-2e58-481e-b508-517d17748891",
+          "locator": "Khối 23, dòng 1",
+          "page": null,
+          "text": "Chưa có bản vẽ đủ tỷ lệ, bảng tính kết cấu, thoát nạn và chữa cháy; không dùng để thi công."
+        }
+      ],
+      "warnings": [],
+      "signature": "not_checked"
+    },
+    {
+      "id": "d6a42845-15c1-483c-9c02-a7f8d16b559c",
+      "requirementId": "KT05",
+      "name": "KT05_v1.docx",
+      "version": 1,
+      "role": "submission",
+      "hash": "9f769beeca85217ed6dae4e5bad1da8fe2fe2391e912fa64ec408c3f871f5bf9",
+      "size": 37766,
+      "uploadedAt": "2026-09-27T03:19:54.644268+00:00",
+      "segments": [
+        {
+          "id": "6513b230-d5ab-4fb4-bfbc-572de7420536",
+          "locator": "Khối 1, dòng 1",
+          "page": null,
+          "text": "Bảng tổng mức đầu tư mô phỏng lần đầu"
+        },
+        {
+          "id": "0e89f2df-a8b5-4762-a46d-52f9e9ba548a",
+          "locator": "Khối 2, dòng 1",
+          "page": null,
+          "text": "DỮ LIỆU MÔ PHỎNG — KHÔNG CÓ GIÁ TRỊ PHÁP LÝ"
+        },
+        {
+          "id": "0edd7cce-0278-48d4-a592-4e5b567258e4",
+          "locator": "Khối 3, dòng 1",
+          "page": null,
+          "text": "Bản mô phỏng phục vụ phát triển và kiểm thử phần mềm. Không phải bản sao đầy đủ văn bản chính thức; không có chữ ký, con dấu hoặc giá trị chứng minh pháp lý."
+        },
+        {
+          "id": "7c1df8de-dc67-4522-8e99-9f4cc5ac1f37",
+          "locator": "Khối 4, dòng 1",
+          "page": null,
+          "text": "Tên dự án: Trường liên cấp Hương Xuân — hồ sơ mô phỏng"
+        },
+        {
+          "id": "7fbc3705-7b0f-48b1-977d-979871768d8a",
+          "locator": "Khối 5, dòng 1",
+          "page": null,
+          "text": "Địa phương công trình: Hà Tĩnh"
+        },
+        {
+          "id": "6a012442-fae7-49dc-9aa8-59296c4646b8",
+          "locator": "Khối 6, dòng 1",
+          "page": null,
+          "text": "Nội dung phục vụ kiểm tra"
+        },
+        {
+          "id": "ddc095ee-a730-4a67-9d9b-66c1ee094592",
+          "locator": "Khối 7, dòng 1",
+          "page": null,
+          "text": "Tổng mức đầu tư: 217.230.000.000 đồng"
+        },
+        {
+          "id": "6f872757-889f-4821-bd13-b10124303184",
+          "locator": "Khối 8, dòng 1",
+          "page": null,
+          "text": "Chi phí GPMB: 9.000.000.000 đồng"
+        },
+        {
+          "id": "b93ed5fd-a1a4-48e0-95a4-85dca02fb3d3",
+          "locator": "Khối 9, dòng 1",
+          "page": null,
+          "text": "Chi phí xây dựng: 170.129.000.000 đồng"
+        },
+        {
+          "id": "a3185d83-7a5d-4b47-a0fa-ff7b8a9a4d62",
+          "locator": "Khối 10, dòng 1",
+          "page": null,
+          "text": "Chi phí thiết bị: 10.744.000.000 đồng"
+        },
+        {
+          "id": "dd2eafdf-14cd-4345-af86-1a61b1fc8adc",
+          "locator": "Khối 11, dòng 1",
+          "page": null,
+          "text": "Chi phí quản lý dự án: 3.090.000.000 đồng"
+        },
+        {
+          "id": "2ab37134-0081-41d2-be86-dad798bd97f0",
+          "locator": "Khối 12, dòng 1",
+          "page": null,
+          "text": "Chi phí tư vấn: 9.530.000.000 đồng"
+        },
+        {
+          "id": "d0dd98c4-6e5f-4be8-a4bb-514b05251343",
+          "locator": "Khối 13, dòng 1",
+          "page": null,
+          "text": "Chi phí khác: 1.587.000.000 đồng"
+        },
+        {
+          "id": "feea4920-73e5-4122-9210-fc7ff745d0fe",
+          "locator": "Khối 14, dòng 1",
+          "page": null,
+          "text": "Chi phí dự phòng: 13.150.000.000 đồng"
+        },
+        {
+          "id": "aeb5b239-484c-4a25-abca-1f9c3525af3a",
+          "locator": "Khối 15, dòng 1",
+          "page": null,
+          "text": "Đơn vị: đồng Việt Nam. Dữ liệu tổng hợp dùng kiểm tra số học, chưa kèm khối lượng và căn cứ đơn giá."
+        }
+      ],
+      "warnings": [],
+      "signature": "not_checked"
+    },
+    {
+      "id": "3f26f494-0a29-484f-9976-bc4973901102",
+      "requirementId": "NL01",
+      "name": "NL01_v1.docx",
+      "version": 1,
+      "role": "submission",
+      "hash": "2f05286c3f53bd06945359354e366ad0f5def953041e4ab4cb27d9c173593af9",
+      "size": 37748,
+      "uploadedAt": "2026-09-27T03:19:54.722354+00:00",
+      "segments": [
+        {
+          "id": "c43c39a6-5faf-4d4a-9b79-2f3b13c79470",
+          "locator": "Khối 1, dòng 1",
+          "page": null,
+          "text": "Danh mục năng lực mô phỏng"
+        },
+        {
+          "id": "a90bc2c0-8db2-4cf2-988e-701a4426c895",
+          "locator": "Khối 2, dòng 1",
+          "page": null,
+          "text": "DỮ LIỆU MÔ PHỎNG — KHÔNG CÓ GIÁ TRỊ PHÁP LÝ"
+        },
+        {
+          "id": "c0718598-9d11-4344-919d-3bb3c3f81cc5",
+          "locator": "Khối 3, dòng 1",
+          "page": null,
+          "text": "Bản mô phỏng phục vụ phát triển và kiểm thử phần mềm. Không phải bản sao đầy đủ văn bản chính thức; không có chữ ký, con dấu hoặc giá trị chứng minh pháp lý."
+        },
+        {
+          "id": "47faea32-1b1a-4aa8-a258-be464eced43f",
+          "locator": "Khối 4, dòng 1",
+          "page": null,
+          "text": "Tên dự án: Trường liên cấp Hương Xuân — hồ sơ mô phỏng"
+        },
+        {
+          "id": "18b3a106-f5e9-4b39-8455-5ed4347648d6",
+          "locator": "Khối 5, dòng 1",
+          "page": null,
+          "text": "Địa phương công trình: Hà Tĩnh"
+        },
+        {
+          "id": "11242980-19ca-4752-9ea7-e03b3886a801",
+          "locator": "Khối 6, dòng 1",
+          "page": null,
+          "text": "Nội dung phục vụ kiểm tra"
+        },
+        {
+          "id": "ed5eb885-9e04-447b-9863-17d04b87664e",
+          "locator": "Khối 7, dòng 1",
+          "page": null,
+          "text": "Đơn vị tư vấn mẫu A: SAMPLE-ORG-001; đơn vị tư vấn mẫu B: SAMPLE-ORG-002."
+        },
+        {
+          "id": "c834d4d0-d8ce-4552-80ed-c6df4665fd31",
+          "locator": "Khối 8, dòng 1",
+          "page": null,
+          "text": "Nhân sự mẫu A — chủ nhiệm; B — kiến trúc; C — kết cấu; D — MEP; E — chi phí; F — khảo sát."
+        },
+        {
+          "id": "cce7fd7f-4128-4529-9bcb-74d0d5c88167",
+          "locator": "Khối 9, dòng 1",
+          "page": null,
+          "text": "Chứng chỉ chủ trì MEP: SAMPLE-MEP-002"
+        },
+        {
+          "id": "cd552a0e-026e-485c-a86e-03ca960c6fe8",
+          "locator": "Khối 10, dòng 1",
+          "page": null,
+          "text": "Chứng chỉ chủ trì khảo sát: SAMPLE-KS-002"
+        },
+        {
+          "id": "d4cb7f5a-977f-477f-862c-63e2b0d000c0",
+          "locator": "Khối 11, dòng 1",
+          "page": null,
+          "text": "Không sử dụng tên/chứng chỉ cá nhân thật. Chưa có chứng chỉ có giá trị pháp lý hoặc kết quả tra cứu."
+        }
+      ],
+      "warnings": [],
+      "signature": "not_checked"
+    }
+  ],
+  "facts": [
+    {
+      "id": "129e4012-821b-4ba6-8c9d-d1b3dceaf2e2",
+      "key": "project_name",
+      "label": "Tên dự án",
+      "value": "Trường liên cấp Hương Xuân — hồ sơ mô phỏng",
+      "rawValue": "Trường liên cấp Hương Xuân — hồ sơ mô phỏng",
+      "unit": "",
+      "documentId": "94023b62-4a0f-4bff-b178-aa8a9e95a2e3",
+      "segmentId": "cdb3cd4f-5bb0-45d7-a3ce-dea663bc3565",
+      "locator": "Khối 6, dòng 1",
+      "quote": "Tên dự án: Trường liên cấp Hương Xuân — hồ sơ mô phỏng",
+      "method": "label_parser",
+      "reviewStatus": "pending",
+      "reviewedBy": null,
+      "reviewNote": ""
+    },
+    {
+      "id": "612de3a3-2e9d-4cc1-b288-bc56393922c1",
+      "key": "province",
+      "label": "Địa phương công trình",
+      "value": "Hà Tĩnh",
+      "rawValue": "Hà Tĩnh",
+      "unit": "",
+      "documentId": "94023b62-4a0f-4bff-b178-aa8a9e95a2e3",
+      "segmentId": "93a51747-3fbb-45af-aaa9-0278e848cd52",
+      "locator": "Khối 7, dòng 1",
+      "quote": "Địa phương công trình: Hà Tĩnh",
+      "method": "label_parser",
+      "reviewStatus": "pending",
+      "reviewedBy": null,
+      "reviewNote": ""
+    },
+    {
+      "id": "28469b56-874a-4efa-92c1-cb16b2112690",
+      "key": "project_name",
+      "label": "Tên dự án",
+      "value": "Trường liên cấp Hương Xuân — hồ sơ mô phỏng",
+      "rawValue": "Trường liên cấp Hương Xuân — hồ sơ mô phỏng",
+      "unit": "",
+      "documentId": "94023b62-4a0f-4bff-b178-aa8a9e95a2e3",
+      "segmentId": "2fa59391-0fda-42fa-a43e-76eecaa0d9d8",
+      "locator": "Khối 11, dòng 1",
+      "quote": "1. Tên dự án: Trường liên cấp Hương Xuân — hồ sơ mô phỏng",
+      "method": "label_parser",
+      "reviewStatus": "pending",
+      "reviewedBy": null,
+      "reviewNote": ""
+    },
+    {
+      "id": "27a5bd7b-3df9-4275-bc7f-4be4c95f7e46",
+      "key": "total",
+      "label": "Tổng mức đầu tư",
+      "value": "217230000000",
+      "rawValue": "217.230.000.000 đồng",
+      "unit": "VNĐ",
+      "documentId": "94023b62-4a0f-4bff-b178-aa8a9e95a2e3",
+      "segmentId": "82c6c5df-5fcb-43ba-8e8a-dec2381efd8d",
+      "locator": "Khối 19, dòng 1",
+      "quote": "9. Tổng mức đầu tư: 217.230.000.000 đồng",
+      "method": "label_parser",
+      "reviewStatus": "pending",
+      "reviewedBy": null,
+      "reviewNote": ""
+    },
+    {
+      "id": "031a8b6f-7795-47dc-acfc-1762abeddff0",
+      "key": "building_grade",
+      "label": "Cấp công trình",
+      "value": "III",
+      "rawValue": "III",
+      "unit": "",
+      "documentId": "94023b62-4a0f-4bff-b178-aa8a9e95a2e3",
+      "segmentId": "95b20b2d-696a-42c5-99fe-f3ad01305dc7",
+      "locator": "Khối 30, dòng 1",
+      "quote": "Cấp công trình: III",
+      "method": "label_parser",
+      "reviewStatus": "pending",
+      "reviewedBy": null,
+      "reviewNote": ""
+    },
+    {
+      "id": "dd2ec8c9-5668-4530-9a44-e76a2e72ed4e",
+      "key": "total",
+      "label": "Tổng mức đầu tư",
+      "value": "217230000000",
+      "rawValue": "217.230.000.000 đồng",
+      "unit": "VNĐ",
+      "documentId": "94023b62-4a0f-4bff-b178-aa8a9e95a2e3",
+      "segmentId": "25f6438e-21e7-4f37-bcf8-4d686bbdf3c3",
+      "locator": "Khối 31, dòng 1",
+      "quote": "Tổng mức đầu tư: 217.230.000.000 đồng",
+      "method": "label_parser",
+      "reviewStatus": "pending",
+      "reviewedBy": null,
+      "reviewNote": ""
+    },
+    {
+      "id": "64c282e0-9927-41c1-bf4c-0d40565723c7",
+      "key": "cost.land",
+      "label": "Chi phí GPMB",
+      "value": "9000000000",
+      "rawValue": "9.000.000.000 đồng",
+      "unit": "VNĐ",
+      "documentId": "94023b62-4a0f-4bff-b178-aa8a9e95a2e3",
+      "segmentId": "986da039-35a9-4873-a884-93d55765d4fb",
+      "locator": "Khối 32, dòng 1",
+      "quote": "Chi phí GPMB: 9.000.000.000 đồng",
+      "method": "label_parser",
+      "reviewStatus": "pending",
+      "reviewedBy": null,
+      "reviewNote": ""
+    },
+    {
+      "id": "b32c3d39-1207-4d16-8318-681be10928e3",
+      "key": "cost.construction",
+      "label": "Chi phí xây dựng",
+      "value": "170129000000",
+      "rawValue": "170.129.000.000 đồng",
+      "unit": "VNĐ",
+      "documentId": "94023b62-4a0f-4bff-b178-aa8a9e95a2e3",
+      "segmentId": "7903e56f-00c4-44e6-abcf-7c190d45b1ad",
+      "locator": "Khối 33, dòng 1",
+      "quote": "Chi phí xây dựng: 170.129.000.000 đồng",
+      "method": "label_parser",
+      "reviewStatus": "pending",
+      "reviewedBy": null,
+      "reviewNote": ""
+    },
+    {
+      "id": "734ed3ab-b7a5-4e58-abe0-38b38c9bda1a",
+      "key": "cost.equipment",
+      "label": "Chi phí thiết bị",
+      "value": "10744000000",
+      "rawValue": "10.744.000.000 đồng",
+      "unit": "VNĐ",
+      "documentId": "94023b62-4a0f-4bff-b178-aa8a9e95a2e3",
+      "segmentId": "f6fe0585-76e4-4669-89ce-f26fd0812861",
+      "locator": "Khối 34, dòng 1",
+      "quote": "Chi phí thiết bị: 10.744.000.000 đồng",
+      "method": "label_parser",
+      "reviewStatus": "pending",
+      "reviewedBy": null,
+      "reviewNote": ""
+    },
+    {
+      "id": "85b3af26-76fc-44a8-9c38-e970ded24799",
+      "key": "cost.management",
+      "label": "Chi phí quản lý dự án",
+      "value": "3090000000",
+      "rawValue": "3.090.000.000 đồng",
+      "unit": "VNĐ",
+      "documentId": "94023b62-4a0f-4bff-b178-aa8a9e95a2e3",
+      "segmentId": "815eb4d0-e2fc-43bd-9392-7619515c9562",
+      "locator": "Khối 35, dòng 1",
+      "quote": "Chi phí quản lý dự án: 3.090.000.000 đồng",
+      "method": "label_parser",
+      "reviewStatus": "pending",
+      "reviewedBy": null,
+      "reviewNote": ""
+    },
+    {
+      "id": "615ed955-a41a-47d4-86d0-e10961c58557",
+      "key": "cost.consulting",
+      "label": "Chi phí tư vấn",
+      "value": "9530000000",
+      "rawValue": "9.530.000.000 đồng",
+      "unit": "VNĐ",
+      "documentId": "94023b62-4a0f-4bff-b178-aa8a9e95a2e3",
+      "segmentId": "e0d65b52-28b2-4859-bf0f-3d903ddb360f",
+      "locator": "Khối 36, dòng 1",
+      "quote": "Chi phí tư vấn: 9.530.000.000 đồng",
+      "method": "label_parser",
+      "reviewStatus": "pending",
+      "reviewedBy": null,
+      "reviewNote": ""
+    },
+    {
+      "id": "0962c236-3828-4b5e-a8ce-3d6f8de82339",
+      "key": "cost.other",
+      "label": "Chi phí khác",
+      "value": "1587000000",
+      "rawValue": "1.587.000.000 đồng",
+      "unit": "VNĐ",
+      "documentId": "94023b62-4a0f-4bff-b178-aa8a9e95a2e3",
+      "segmentId": "f47c1ccc-b521-4b54-b21f-51c45c570166",
+      "locator": "Khối 37, dòng 1",
+      "quote": "Chi phí khác: 1.587.000.000 đồng",
+      "method": "label_parser",
+      "reviewStatus": "pending",
+      "reviewedBy": null,
+      "reviewNote": ""
+    },
+    {
+      "id": "52439207-3a98-43f8-a759-3b437c765ace",
+      "key": "cost.contingency",
+      "label": "Chi phí dự phòng",
+      "value": "13150000000",
+      "rawValue": "13.150.000.000 đồng",
+      "unit": "VNĐ",
+      "documentId": "94023b62-4a0f-4bff-b178-aa8a9e95a2e3",
+      "segmentId": "ffbf5902-7a3f-47cb-b259-4d16d9e1d972",
+      "locator": "Khối 38, dòng 1",
+      "quote": "Chi phí dự phòng: 13.150.000.000 đồng",
+      "method": "label_parser",
+      "reviewStatus": "pending",
+      "reviewedBy": null,
+      "reviewNote": ""
+    },
+    {
+      "id": "25dcd48f-f194-4ba4-ac0f-4b7c30bfc55b",
+      "key": "mep_certificate",
+      "label": "Chứng chỉ chủ trì MEP",
+      "value": "SAMPLE-MEP-001",
+      "rawValue": "SAMPLE-MEP-001",
+      "unit": "",
+      "documentId": "94023b62-4a0f-4bff-b178-aa8a9e95a2e3",
+      "segmentId": "7218ed9e-9a76-4d3c-b8fd-8acd9e6f1a85",
+      "locator": "Khối 39, dòng 1",
+      "quote": "Chứng chỉ chủ trì MEP: SAMPLE-MEP-001",
+      "method": "label_parser",
+      "reviewStatus": "pending",
+      "reviewedBy": null,
+      "reviewNote": ""
+    },
+    {
+      "id": "3257f797-3ac5-459b-8f34-6e8f552fac76",
+      "key": "survey_certificate",
+      "label": "Chứng chỉ chủ trì khảo sát",
+      "value": "SAMPLE-KS-001",
+      "rawValue": "SAMPLE-KS-001",
+      "unit": "",
+      "documentId": "94023b62-4a0f-4bff-b178-aa8a9e95a2e3",
+      "segmentId": "897e7fbf-f8e1-47c9-8b33-d7d066a76b18",
+      "locator": "Khối 40, dòng 1",
+      "quote": "Chứng chỉ chủ trì khảo sát: SAMPLE-KS-001",
+      "method": "label_parser",
+      "reviewStatus": "pending",
+      "reviewedBy": null,
+      "reviewNote": ""
+    },
+    {
+      "id": "94cd91e0-c0a9-4935-a86d-1b147046e073",
+      "key": "standard_primary",
+      "label": "Tiêu chuẩn trường tiểu học",
+      "value": "TCVN 8793:2011",
+      "rawValue": "TCVN 8793:2011",
+      "unit": "",
+      "documentId": "94023b62-4a0f-4bff-b178-aa8a9e95a2e3",
+      "segmentId": "f2b5d387-e2d3-4165-9103-0635f624305f",
+      "locator": "Khối 41, dòng 1",
+      "quote": "Tiêu chuẩn trường tiểu học: TCVN 8793:2011",
+      "method": "label_parser",
+      "reviewStatus": "pending",
+      "reviewedBy": null,
+      "reviewNote": ""
+    },
+    {
+      "id": "a9b6270a-370b-4569-a28d-4ac24958b815",
+      "key": "standard_secondary",
+      "label": "Tiêu chuẩn trường trung học",
+      "value": "TCVN 8794:2011",
+      "rawValue": "TCVN 8794:2011",
+      "unit": "",
+      "documentId": "94023b62-4a0f-4bff-b178-aa8a9e95a2e3",
+      "segmentId": "2f7446ce-9b7a-4d24-8130-bc6393a2868f",
+      "locator": "Khối 42, dòng 1",
+      "quote": "Tiêu chuẩn trường trung học: TCVN 8794:2011",
+      "method": "label_parser",
+      "reviewStatus": "pending",
+      "reviewedBy": null,
+      "reviewNote": ""
+    },
+    {
+      "id": "3bc17614-7a35-43b9-91bf-73a542108412",
+      "key": "project_name",
+      "label": "Tên dự án",
+      "value": "Trường liên cấp Hương Xuân — hồ sơ mô phỏng",
+      "rawValue": "Trường liên cấp Hương Xuân — hồ sơ mô phỏng",
+      "unit": "",
+      "documentId": "e76281a8-23c9-4973-8457-36f81d4d537f",
+      "segmentId": "953b408e-df7f-4f95-9ee3-fdd82fc2112a",
+      "locator": "Khối 4, dòng 1",
+      "quote": "Tên dự án: Trường liên cấp Hương Xuân — hồ sơ mô phỏng",
+      "method": "label_parser",
+      "reviewStatus": "pending",
+      "reviewedBy": null,
+      "reviewNote": ""
+    },
+    {
+      "id": "8df19941-de37-469a-9199-46ea2d8079a4",
+      "key": "province",
+      "label": "Địa phương công trình",
+      "value": "Hà Tĩnh",
+      "rawValue": "Hà Tĩnh",
+      "unit": "",
+      "documentId": "e76281a8-23c9-4973-8457-36f81d4d537f",
+      "segmentId": "641d15e8-05e0-49d6-af0b-e1a17588eec8",
+      "locator": "Khối 5, dòng 1",
+      "quote": "Địa phương công trình: Hà Tĩnh",
+      "method": "label_parser",
+      "reviewStatus": "pending",
+      "reviewedBy": null,
+      "reviewNote": ""
+    },
+    {
+      "id": "8ccfdaae-fc96-40e0-8f16-a555c57d58de",
+      "key": "project_name",
+      "label": "Tên dự án",
+      "value": "Trường liên cấp Hương Xuân — hồ sơ mô phỏng",
+      "rawValue": "Trường liên cấp Hương Xuân — hồ sơ mô phỏng",
+      "unit": "",
+      "documentId": "8e9d521b-76b7-496c-bdff-ab0368a500e0",
+      "segmentId": "bbb60945-0cc1-4c81-bb49-c556e48fe466",
+      "locator": "Khối 4, dòng 1",
+      "quote": "Tên dự án: Trường liên cấp Hương Xuân — hồ sơ mô phỏng",
+      "method": "label_parser",
+      "reviewStatus": "pending",
+      "reviewedBy": null,
+      "reviewNote": ""
+    },
+    {
+      "id": "3aa397db-7d5d-477b-a7f8-a21e7f37dbde",
+      "key": "province",
+      "label": "Địa phương công trình",
+      "value": "Hà Tĩnh",
+      "rawValue": "Hà Tĩnh",
+      "unit": "",
+      "documentId": "8e9d521b-76b7-496c-bdff-ab0368a500e0",
+      "segmentId": "3844fc09-ed32-417c-959e-164e65b4aea1",
+      "locator": "Khối 5, dòng 1",
+      "quote": "Địa phương công trình: Hà Tĩnh",
+      "method": "label_parser",
+      "reviewStatus": "pending",
+      "reviewedBy": null,
+      "reviewNote": ""
+    },
+    {
+      "id": "5d3071de-c960-421d-b3e2-18f2cd106be9",
+      "key": "project_name",
+      "label": "Tên dự án",
+      "value": "Trường liên cấp Hương Xuân — hồ sơ mô phỏng",
+      "rawValue": "Trường liên cấp Hương Xuân — hồ sơ mô phỏng",
+      "unit": "",
+      "documentId": "3f96dd29-05c6-439c-8ff1-d7a944231169",
+      "segmentId": "636b0c23-908e-402e-bf0e-eae6206e1999",
+      "locator": "Khối 4, dòng 1",
+      "quote": "Tên dự án: Trường liên cấp Hương Xuân — hồ sơ mô phỏng",
+      "method": "label_parser",
+      "reviewStatus": "pending",
+      "reviewedBy": null,
+      "reviewNote": ""
+    },
+    {
+      "id": "f621f1ac-61c6-4b4d-b3a2-500dc9fadd56",
+      "key": "province",
+      "label": "Địa phương công trình",
+      "value": "Hà Tĩnh",
+      "rawValue": "Hà Tĩnh",
+      "unit": "",
+      "documentId": "3f96dd29-05c6-439c-8ff1-d7a944231169",
+      "segmentId": "6ffaf07b-b4fd-4e2c-9e41-4f698d6e94bf",
+      "locator": "Khối 5, dòng 1",
+      "quote": "Địa phương công trình: Hà Tĩnh",
+      "method": "label_parser",
+      "reviewStatus": "pending",
+      "reviewedBy": null,
+      "reviewNote": ""
+    },
+    {
+      "id": "43fdbd00-bf45-472f-a13e-d9f419376561",
+      "key": "project_name",
+      "label": "Tên dự án",
+      "value": "Trường liên cấp Hương Xuân — hồ sơ mô phỏng",
+      "rawValue": "Trường liên cấp Hương Xuân — hồ sơ mô phỏng",
+      "unit": "",
+      "documentId": "72d09fec-fc25-4a9b-927e-9e21a7e6e3ae",
+      "segmentId": "b9bdac51-b231-461b-b6ce-d3a0799d3b68",
+      "locator": "Khối 4, dòng 1",
+      "quote": "Tên dự án: Trường liên cấp Hương Xuân — hồ sơ mô phỏng",
+      "method": "label_parser",
+      "reviewStatus": "pending",
+      "reviewedBy": null,
+      "reviewNote": ""
+    },
+    {
+      "id": "7d6b3148-b83c-4878-b978-3531761de4c7",
+      "key": "province",
+      "label": "Địa phương công trình",
+      "value": "Hà Tĩnh",
+      "rawValue": "Hà Tĩnh",
+      "unit": "",
+      "documentId": "72d09fec-fc25-4a9b-927e-9e21a7e6e3ae",
+      "segmentId": "e5432d49-07f5-4824-ab85-346dffa08c1b",
+      "locator": "Khối 5, dòng 1",
+      "quote": "Địa phương công trình: Hà Tĩnh",
+      "method": "label_parser",
+      "reviewStatus": "pending",
+      "reviewedBy": null,
+      "reviewNote": ""
+    },
+    {
+      "id": "c9872852-92a6-4f26-8c90-e6a32bf66713",
+      "key": "project_name",
+      "label": "Tên dự án",
+      "value": "Trường liên cấp Hương Xuân — hồ sơ mô phỏng",
+      "rawValue": "Trường liên cấp Hương Xuân — hồ sơ mô phỏng",
+      "unit": "",
+      "documentId": "695914f4-6c66-40e7-a8e3-469ed322ddf9",
+      "segmentId": "1eecdd3e-15d7-444b-acda-a4d4358fca6f",
+      "locator": "Khối 4, dòng 1",
+      "quote": "Tên dự án: Trường liên cấp Hương Xuân — hồ sơ mô phỏng",
+      "method": "label_parser",
+      "reviewStatus": "pending",
+      "reviewedBy": null,
+      "reviewNote": ""
+    },
+    {
+      "id": "560e4e42-a61d-4f8c-a8cd-8d2d4c9e4012",
+      "key": "province",
+      "label": "Địa phương công trình",
+      "value": "Hà Tĩnh",
+      "rawValue": "Hà Tĩnh",
+      "unit": "",
+      "documentId": "695914f4-6c66-40e7-a8e3-469ed322ddf9",
+      "segmentId": "3f8f5e73-7af6-492e-bc4c-e78bfd7ebdd3",
+      "locator": "Khối 5, dòng 1",
+      "quote": "Địa phương công trình: Hà Tĩnh",
+      "method": "label_parser",
+      "reviewStatus": "pending",
+      "reviewedBy": null,
+      "reviewNote": ""
+    },
+    {
+      "id": "1843e4f8-e0da-49a8-882a-52e799dfa30f",
+      "key": "class_count",
+      "label": "Tổng số lớp",
+      "value": "37",
+      "rawValue": "37",
+      "unit": "lớp",
+      "documentId": "695914f4-6c66-40e7-a8e3-469ed322ddf9",
+      "segmentId": "064b6594-793e-4541-bafd-49ca31cfaeb5",
+      "locator": "Khối 8, dòng 1",
+      "quote": "Tổng số lớp: 37",
+      "method": "label_parser",
+      "reviewStatus": "pending",
+      "reviewedBy": null,
+      "reviewNote": ""
+    },
+    {
+      "id": "db710e96-6da6-4608-ad63-a3a87bf30f5c",
+      "key": "primary_classes",
+      "label": "Số lớp tiểu học",
+      "value": "19",
+      "rawValue": "19",
+      "unit": "lớp",
+      "documentId": "695914f4-6c66-40e7-a8e3-469ed322ddf9",
+      "segmentId": "5bfe8382-be36-45c0-a781-dad3d0ed7432",
+      "locator": "Khối 9, dòng 1",
+      "quote": "Số lớp tiểu học: 19",
+      "method": "label_parser",
+      "reviewStatus": "pending",
+      "reviewedBy": null,
+      "reviewNote": ""
+    },
+    {
+      "id": "d4af191f-dbf3-4886-b0cf-d93fa4e74ad1",
+      "key": "secondary_classes",
+      "label": "Số lớp THCS",
+      "value": "18",
+      "rawValue": "18",
+      "unit": "lớp",
+      "documentId": "695914f4-6c66-40e7-a8e3-469ed322ddf9",
+      "segmentId": "383d7929-558c-41c2-a719-18347e5a03f4",
+      "locator": "Khối 10, dòng 1",
+      "quote": "Số lớp THCS: 18",
+      "method": "label_parser",
+      "reviewStatus": "pending",
+      "reviewedBy": null,
+      "reviewNote": ""
+    },
+    {
+      "id": "ec0a87e1-c455-43ba-b6ee-5a409942bc9a",
+      "key": "project_name",
+      "label": "Tên dự án",
+      "value": "Trường liên cấp Hương Xuân — hồ sơ mô phỏng",
+      "rawValue": "Trường liên cấp Hương Xuân — hồ sơ mô phỏng",
+      "unit": "",
+      "documentId": "d81915f2-9693-4f1b-bba9-4039dc597271",
+      "segmentId": "2a6e51e8-cac3-43ee-b229-09427498090d",
+      "locator": "Khối 4, dòng 1",
+      "quote": "Tên dự án: Trường liên cấp Hương Xuân — hồ sơ mô phỏng",
+      "method": "label_parser",
+      "reviewStatus": "pending",
+      "reviewedBy": null,
+      "reviewNote": ""
+    },
+    {
+      "id": "c96cd860-c32d-4ed4-b45c-d331ae45e2df",
+      "key": "province",
+      "label": "Địa phương công trình",
+      "value": "Hà Tĩnh",
+      "rawValue": "Hà Tĩnh",
+      "unit": "",
+      "documentId": "d81915f2-9693-4f1b-bba9-4039dc597271",
+      "segmentId": "39631e13-c175-4d67-99d0-4fca357702a1",
+      "locator": "Khối 5, dòng 1",
+      "quote": "Địa phương công trình: Hà Tĩnh",
+      "method": "label_parser",
+      "reviewStatus": "pending",
+      "reviewedBy": null,
+      "reviewNote": ""
+    },
+    {
+      "id": "27851efd-433b-417f-a143-a99133a7d8e3",
+      "key": "project_name",
+      "label": "Tên dự án",
+      "value": "Trường liên cấp Hương Xuân — hồ sơ mô phỏng",
+      "rawValue": "Trường liên cấp Hương Xuân — hồ sơ mô phỏng",
+      "unit": "",
+      "documentId": "6ce60a4e-046f-4a2a-bea2-9b114d60bbcf",
+      "segmentId": "14711ff0-d072-4baf-acb1-305efc9beee7",
+      "locator": "Khối 4, dòng 1",
+      "quote": "Tên dự án: Trường liên cấp Hương Xuân — hồ sơ mô phỏng",
+      "method": "label_parser",
+      "reviewStatus": "pending",
+      "reviewedBy": null,
+      "reviewNote": ""
+    },
+    {
+      "id": "89783e13-acd7-45ae-92f8-678650105491",
+      "key": "province",
+      "label": "Địa phương công trình",
+      "value": "Hà Tĩnh",
+      "rawValue": "Hà Tĩnh",
+      "unit": "",
+      "documentId": "6ce60a4e-046f-4a2a-bea2-9b114d60bbcf",
+      "segmentId": "c86cdaaa-9ce1-410e-9315-286c5ef2975b",
+      "locator": "Khối 5, dòng 1",
+      "quote": "Địa phương công trình: Hà Tĩnh",
+      "method": "label_parser",
+      "reviewStatus": "pending",
+      "reviewedBy": null,
+      "reviewNote": ""
+    },
+    {
+      "id": "b1f1813b-5db6-4814-a3c8-7dbb915e07c9",
+      "key": "land_area",
+      "label": "Diện tích khu đất",
+      "value": "46694",
+      "rawValue": "46.694 m²",
+      "unit": "m²",
+      "documentId": "6ce60a4e-046f-4a2a-bea2-9b114d60bbcf",
+      "segmentId": "dd4746a8-e00a-4c22-8588-3bd79d6bb283",
+      "locator": "Khối 8, dòng 1",
+      "quote": "Diện tích khu đất: 46.694 m²",
+      "method": "label_parser",
+      "reviewStatus": "pending",
+      "reviewedBy": null,
+      "reviewNote": ""
+    },
+    {
+      "id": "c1fdf526-561e-473e-9924-2dc3e341d726",
+      "key": "footprint",
+      "label": "Diện tích xây dựng",
+      "value": "8338",
+      "rawValue": "8.338 m²",
+      "unit": "m²",
+      "documentId": "6ce60a4e-046f-4a2a-bea2-9b114d60bbcf",
+      "segmentId": "277e03eb-5bd1-4bc0-a31f-d9a66b91ed04",
+      "locator": "Khối 9, dòng 1",
+      "quote": "Diện tích xây dựng: 8.338 m²",
+      "method": "label_parser",
+      "reviewStatus": "pending",
+      "reviewedBy": null,
+      "reviewNote": ""
+    },
+    {
+      "id": "0fd2da21-edb0-44f1-a12d-0960d6825353",
+      "key": "max_floors",
+      "label": "Số tầng tối đa",
+      "value": "3",
+      "rawValue": "3 tầng",
+      "unit": "tầng",
+      "documentId": "6ce60a4e-046f-4a2a-bea2-9b114d60bbcf",
+      "segmentId": "2ecf241e-19b8-4afa-b609-715a6852cb37",
+      "locator": "Khối 10, dòng 1",
+      "quote": "Số tầng tối đa: 3 tầng",
+      "method": "label_parser",
+      "reviewStatus": "pending",
+      "reviewedBy": null,
+      "reviewNote": ""
+    },
+    {
+      "id": "8fcfa67e-db72-49e8-b442-ec4177877b04",
+      "key": "project_name",
+      "label": "Tên dự án",
+      "value": "Trường liên cấp Hương Xuân — hồ sơ mô phỏng",
+      "rawValue": "Trường liên cấp Hương Xuân — hồ sơ mô phỏng",
+      "unit": "",
+      "documentId": "6fa14cae-7fe2-4d25-b3df-83b930613b24",
+      "segmentId": "255764a4-5483-4372-8f52-76cd9bf63a45",
+      "locator": "Khối 4, dòng 1",
+      "quote": "Tên dự án: Trường liên cấp Hương Xuân — hồ sơ mô phỏng",
+      "method": "label_parser",
+      "reviewStatus": "pending",
+      "reviewedBy": null,
+      "reviewNote": ""
+    },
+    {
+      "id": "16ed0594-f58a-49c7-99d3-2a6c4fdd860d",
+      "key": "province",
+      "label": "Địa phương công trình",
+      "value": "Hà Tĩnh",
+      "rawValue": "Hà Tĩnh",
+      "unit": "",
+      "documentId": "6fa14cae-7fe2-4d25-b3df-83b930613b24",
+      "segmentId": "0c3ef62f-3b3a-497c-bca1-87d0fd30c537",
+      "locator": "Khối 5, dòng 1",
+      "quote": "Địa phương công trình: Hà Tĩnh",
+      "method": "label_parser",
+      "reviewStatus": "pending",
+      "reviewedBy": null,
+      "reviewNote": ""
+    },
+    {
+      "id": "945e47d6-7f90-4103-af67-848975974487",
+      "key": "land_area",
+      "label": "Diện tích khu đất",
+      "value": "46694",
+      "rawValue": "46.694 m²",
+      "unit": "m²",
+      "documentId": "6fa14cae-7fe2-4d25-b3df-83b930613b24",
+      "segmentId": "4e5cb552-8cac-49ba-ad8d-45cf2ee9142f",
+      "locator": "Khối 7, dòng 1",
+      "quote": "Diện tích khu đất: 46.694 m²",
+      "method": "label_parser",
+      "reviewStatus": "pending",
+      "reviewedBy": null,
+      "reviewNote": ""
+    },
+    {
+      "id": "5f17945e-c9d3-434c-85cd-810286a93d9f",
+      "key": "project_name",
+      "label": "Tên dự án",
+      "value": "Trường liên cấp Hương Xuân — hồ sơ mô phỏng",
+      "rawValue": "Trường liên cấp Hương Xuân — hồ sơ mô phỏng",
+      "unit": "",
+      "documentId": "67615cb9-7eff-4099-89c5-4cc0cc879bff",
+      "segmentId": "be8112d4-d6df-4908-8fe2-50f21db5b077",
+      "locator": "Khối 4, dòng 1",
+      "quote": "Tên dự án: Trường liên cấp Hương Xuân — hồ sơ mô phỏng",
+      "method": "label_parser",
+      "reviewStatus": "pending",
+      "reviewedBy": null,
+      "reviewNote": ""
+    },
+    {
+      "id": "9bef0775-ffae-4e12-99a1-71383745027f",
+      "key": "province",
+      "label": "Địa phương công trình",
+      "value": "Hà Tĩnh",
+      "rawValue": "Hà Tĩnh",
+      "unit": "",
+      "documentId": "67615cb9-7eff-4099-89c5-4cc0cc879bff",
+      "segmentId": "5107a007-3905-4996-a7f8-1c53d4c40419",
+      "locator": "Khối 5, dòng 1",
+      "quote": "Địa phương công trình: Hà Tĩnh",
+      "method": "label_parser",
+      "reviewStatus": "pending",
+      "reviewedBy": null,
+      "reviewNote": ""
+    },
+    {
+      "id": "6c531c48-66ca-4f24-af71-b0ef7007e753",
+      "key": "project_name",
+      "label": "Tên dự án",
+      "value": "Trường liên cấp Hương Xuân — hồ sơ mô phỏng",
+      "rawValue": "Trường liên cấp Hương Xuân — hồ sơ mô phỏng",
+      "unit": "",
+      "documentId": "1f6190aa-a638-4ebf-a42b-107fae1620e5",
+      "segmentId": "6a4c7dfa-63ac-43be-bce1-9713ab2cec4e",
+      "locator": "Khối 4, dòng 1",
+      "quote": "Tên dự án: Trường liên cấp Hương Xuân — hồ sơ mô phỏng",
+      "method": "label_parser",
+      "reviewStatus": "pending",
+      "reviewedBy": null,
+      "reviewNote": ""
+    },
+    {
+      "id": "4c81215b-3f5e-46d6-b14e-60f9b7553b42",
+      "key": "province",
+      "label": "Địa phương công trình",
+      "value": "Hà Tĩnh",
+      "rawValue": "Hà Tĩnh",
+      "unit": "",
+      "documentId": "1f6190aa-a638-4ebf-a42b-107fae1620e5",
+      "segmentId": "396ba1bb-935e-4cf1-b161-a9706408bfa1",
+      "locator": "Khối 5, dòng 1",
+      "quote": "Địa phương công trình: Hà Tĩnh",
+      "method": "label_parser",
+      "reviewStatus": "pending",
+      "reviewedBy": null,
+      "reviewNote": ""
+    },
+    {
+      "id": "3d8049b9-36c2-4184-a11d-306c35438982",
+      "key": "building_grade",
+      "label": "Cấp công trình",
+      "value": "III",
+      "rawValue": "III",
+      "unit": "",
+      "documentId": "1f6190aa-a638-4ebf-a42b-107fae1620e5",
+      "segmentId": "550a4828-a8d7-47de-b333-84d13ffc80c9",
+      "locator": "Khối 7, dòng 1",
+      "quote": "Cấp công trình: III",
+      "method": "label_parser",
+      "reviewStatus": "pending",
+      "reviewedBy": null,
+      "reviewNote": ""
+    },
+    {
+      "id": "afd1ddaa-2b32-45ba-9fb5-5b7426ce3627",
+      "key": "total",
+      "label": "Tổng mức đầu tư",
+      "value": "217230000000",
+      "rawValue": "217.230.000.000 đồng",
+      "unit": "VNĐ",
+      "documentId": "1f6190aa-a638-4ebf-a42b-107fae1620e5",
+      "segmentId": "6c3249cc-05da-4bbc-a5e6-3d1262206035",
+      "locator": "Khối 8, dòng 1",
+      "quote": "Tổng mức đầu tư: 217.230.000.000 đồng",
+      "method": "label_parser",
+      "reviewStatus": "pending",
+      "reviewedBy": null,
+      "reviewNote": ""
+    },
+    {
+      "id": "24a00a47-dab6-4929-b815-eececba05bb4",
+      "key": "land_area",
+      "label": "Diện tích khu đất",
+      "value": "46694",
+      "rawValue": "46.694 m²",
+      "unit": "m²",
+      "documentId": "1f6190aa-a638-4ebf-a42b-107fae1620e5",
+      "segmentId": "6d6681a9-e606-47ee-bfe4-9c9e26d9681b",
+      "locator": "Khối 9, dòng 1",
+      "quote": "Diện tích khu đất: 46.694 m²",
+      "method": "label_parser",
+      "reviewStatus": "pending",
+      "reviewedBy": null,
+      "reviewNote": ""
+    },
+    {
+      "id": "6a74398b-196b-4243-a3af-63897933b099",
+      "key": "footprint",
+      "label": "Diện tích xây dựng",
+      "value": "8338",
+      "rawValue": "8.338 m²",
+      "unit": "m²",
+      "documentId": "1f6190aa-a638-4ebf-a42b-107fae1620e5",
+      "segmentId": "856d2a5c-080a-45bf-9f0b-f6a72f3137d7",
+      "locator": "Khối 10, dòng 1",
+      "quote": "Diện tích xây dựng: 8.338 m²",
+      "method": "label_parser",
+      "reviewStatus": "pending",
+      "reviewedBy": null,
+      "reviewNote": ""
+    },
+    {
+      "id": "2b83dda5-6cd5-45ac-9458-bf7a4a660137",
+      "key": "floor_area",
+      "label": "Tổng diện tích sàn",
+      "value": "17140",
+      "rawValue": "17.140 m²",
+      "unit": "m²",
+      "documentId": "1f6190aa-a638-4ebf-a42b-107fae1620e5",
+      "segmentId": "5b27ea4e-f19e-4369-9774-31893b8e1e20",
+      "locator": "Khối 11, dòng 1",
+      "quote": "Tổng diện tích sàn: 17.140 m²",
+      "method": "label_parser",
+      "reviewStatus": "pending",
+      "reviewedBy": null,
+      "reviewNote": ""
+    },
+    {
+      "id": "127723a2-0455-423d-9a1c-e773cf75618e",
+      "key": "density",
+      "label": "Mật độ xây dựng",
+      "value": "17.9",
+      "rawValue": "17,9 %",
+      "unit": "%",
+      "documentId": "1f6190aa-a638-4ebf-a42b-107fae1620e5",
+      "segmentId": "28065170-4cbf-40f6-a999-cbdf286ca076",
+      "locator": "Khối 12, dòng 1",
+      "quote": "Mật độ xây dựng: 17,9 %",
+      "method": "label_parser",
+      "reviewStatus": "pending",
+      "reviewedBy": null,
+      "reviewNote": ""
+    },
+    {
+      "id": "ffb5578c-fb5e-47a1-b770-e43bd75d94af",
+      "key": "far",
+      "label": "Hệ số sử dụng đất",
+      "value": "0.37",
+      "rawValue": "0,37 lần",
+      "unit": "lần",
+      "documentId": "1f6190aa-a638-4ebf-a42b-107fae1620e5",
+      "segmentId": "1001bc29-3359-46cc-ac5b-83a4d45304f0",
+      "locator": "Khối 13, dòng 1",
+      "quote": "Hệ số sử dụng đất: 0,37 lần",
+      "method": "label_parser",
+      "reviewStatus": "pending",
+      "reviewedBy": null,
+      "reviewNote": ""
+    },
+    {
+      "id": "032b50f9-9759-4c0a-ad2a-ba6037f00409",
+      "key": "class_count",
+      "label": "Tổng số lớp",
+      "value": "37",
+      "rawValue": "37",
+      "unit": "lớp",
+      "documentId": "1f6190aa-a638-4ebf-a42b-107fae1620e5",
+      "segmentId": "5691c334-1a4e-47b0-8507-fbe43b70e570",
+      "locator": "Khối 14, dòng 1",
+      "quote": "Tổng số lớp: 37",
+      "method": "label_parser",
+      "reviewStatus": "pending",
+      "reviewedBy": null,
+      "reviewNote": ""
+    },
+    {
+      "id": "e9d895f2-6c80-4649-8dfe-7be8563f4af5",
+      "key": "primary_classes",
+      "label": "Số lớp tiểu học",
+      "value": "19",
+      "rawValue": "19",
+      "unit": "lớp",
+      "documentId": "1f6190aa-a638-4ebf-a42b-107fae1620e5",
+      "segmentId": "ffcb2a5a-3c63-4872-8604-9df7cc7792ae",
+      "locator": "Khối 15, dòng 1",
+      "quote": "Số lớp tiểu học: 19",
+      "method": "label_parser",
+      "reviewStatus": "pending",
+      "reviewedBy": null,
+      "reviewNote": ""
+    },
+    {
+      "id": "e708e56c-ff5d-4aa4-b4b4-595bf1fb8aa8",
+      "key": "secondary_classes",
+      "label": "Số lớp THCS",
+      "value": "18",
+      "rawValue": "18",
+      "unit": "lớp",
+      "documentId": "1f6190aa-a638-4ebf-a42b-107fae1620e5",
+      "segmentId": "dd7df58b-42fc-4dcb-8644-e3edae72ec75",
+      "locator": "Khối 16, dòng 1",
+      "quote": "Số lớp THCS: 18",
+      "method": "label_parser",
+      "reviewStatus": "pending",
+      "reviewedBy": null,
+      "reviewNote": ""
+    },
+    {
+      "id": "332665cf-a5f9-4f58-9624-b89b68ec971b",
+      "key": "standard_primary",
+      "label": "Tiêu chuẩn trường tiểu học",
+      "value": "TCVN 8793:2021",
+      "rawValue": "TCVN 8793:2021",
+      "unit": "",
+      "documentId": "1f6190aa-a638-4ebf-a42b-107fae1620e5",
+      "segmentId": "92013c15-7609-4780-a40c-354e4eadb312",
+      "locator": "Khối 17, dòng 1",
+      "quote": "Tiêu chuẩn trường tiểu học: TCVN 8793:2021",
+      "method": "label_parser",
+      "reviewStatus": "pending",
+      "reviewedBy": null,
+      "reviewNote": ""
+    },
+    {
+      "id": "db60b725-0a7e-45d8-b103-8bde0ca660b2",
+      "key": "standard_secondary",
+      "label": "Tiêu chuẩn trường trung học",
+      "value": "TCVN 8794:2021",
+      "rawValue": "TCVN 8794:2021",
+      "unit": "",
+      "documentId": "1f6190aa-a638-4ebf-a42b-107fae1620e5",
+      "segmentId": "7f7c1abf-2f01-4dc1-afaa-1b9eb2c0e582",
+      "locator": "Khối 18, dòng 1",
+      "quote": "Tiêu chuẩn trường trung học: TCVN 8794:2021",
+      "method": "label_parser",
+      "reviewStatus": "pending",
+      "reviewedBy": null,
+      "reviewNote": ""
+    },
+    {
+      "id": "6ea3072b-913c-4da8-9204-1bda449e41eb",
+      "key": "project_name",
+      "label": "Tên dự án",
+      "value": "Trường liên cấp Hương Xuân — hồ sơ mô phỏng",
+      "rawValue": "Trường liên cấp Hương Xuân — hồ sơ mô phỏng",
+      "unit": "",
+      "documentId": "e5f4543f-c4d3-4f3a-8cec-58b3835bac08",
+      "segmentId": "1135bd48-34ab-4f4f-bf73-53ce65042f60",
+      "locator": "Khối 4, dòng 1",
+      "quote": "Tên dự án: Trường liên cấp Hương Xuân — hồ sơ mô phỏng",
+      "method": "label_parser",
+      "reviewStatus": "pending",
+      "reviewedBy": null,
+      "reviewNote": ""
+    },
+    {
+      "id": "37672b81-7ed0-4e28-9662-c3655aeb9b06",
+      "key": "province",
+      "label": "Địa phương công trình",
+      "value": "Hà Tĩnh",
+      "rawValue": "Hà Tĩnh",
+      "unit": "",
+      "documentId": "e5f4543f-c4d3-4f3a-8cec-58b3835bac08",
+      "segmentId": "3f1dd8ab-dbf3-4bef-ab53-18c36503d75f",
+      "locator": "Khối 5, dòng 1",
+      "quote": "Địa phương công trình: Hà Tĩnh",
+      "method": "label_parser",
+      "reviewStatus": "pending",
+      "reviewedBy": null,
+      "reviewNote": ""
+    },
+    {
+      "id": "71f88210-c87f-4423-809c-2be82cf57fdc",
+      "key": "floor.A1",
+      "label": "Diện tích sàn A1",
+      "value": "1800",
+      "rawValue": "1.800 m²",
+      "unit": "m²",
+      "documentId": "e5f4543f-c4d3-4f3a-8cec-58b3835bac08",
+      "segmentId": "e283b2cc-f528-4617-b7e8-785c4bd1d5e2",
+      "locator": "Khối 7, dòng 1",
+      "quote": "Diện tích sàn A1: 1.800 m²",
+      "method": "label_parser",
+      "reviewStatus": "pending",
+      "reviewedBy": null,
+      "reviewNote": ""
+    },
+    {
+      "id": "17acdfb8-e947-45b0-83f3-06f11e8f3b25",
+      "key": "floor.A2",
+      "label": "Diện tích sàn A2",
+      "value": "1343",
+      "rawValue": "1.343 m²",
+      "unit": "m²",
+      "documentId": "e5f4543f-c4d3-4f3a-8cec-58b3835bac08",
+      "segmentId": "f7cd6035-f848-4670-9f7c-6e6be4fd653d",
+      "locator": "Khối 8, dòng 1",
+      "quote": "Diện tích sàn A2: 1.343 m²",
+      "method": "label_parser",
+      "reviewStatus": "pending",
+      "reviewedBy": null,
+      "reviewNote": ""
+    },
+    {
+      "id": "4ac0c27f-8e12-4ab7-b54f-0ee53b2c5536",
+      "key": "floor.A3",
+      "label": "Diện tích sàn A3",
+      "value": "2006",
+      "rawValue": "2.006 m²",
+      "unit": "m²",
+      "documentId": "e5f4543f-c4d3-4f3a-8cec-58b3835bac08",
+      "segmentId": "4f615909-b1a1-42d4-8f93-768e572d21c8",
+      "locator": "Khối 9, dòng 1",
+      "quote": "Diện tích sàn A3: 2.006 m²",
+      "method": "label_parser",
+      "reviewStatus": "pending",
+      "reviewedBy": null,
+      "reviewNote": ""
+    },
+    {
+      "id": "e6cdef8e-1d67-4def-83dc-da816e5c3b6a",
+      "key": "floor.A4",
+      "label": "Diện tích sàn A4",
+      "value": "1712",
+      "rawValue": "1.712 m²",
+      "unit": "m²",
+      "documentId": "e5f4543f-c4d3-4f3a-8cec-58b3835bac08",
+      "segmentId": "99e8a201-30e3-4d7d-a80c-4d283b32f504",
+      "locator": "Khối 10, dòng 1",
+      "quote": "Diện tích sàn A4: 1.712 m²",
+      "method": "label_parser",
+      "reviewStatus": "pending",
+      "reviewedBy": null,
+      "reviewNote": ""
+    },
+    {
+      "id": "bbc4c7a4-8ddb-485a-b379-f39cf10d7f2e",
+      "key": "floor.A5",
+      "label": "Diện tích sàn A5",
+      "value": "2200",
+      "rawValue": "2.200 m²",
+      "unit": "m²",
+      "documentId": "e5f4543f-c4d3-4f3a-8cec-58b3835bac08",
+      "segmentId": "fbe49b6d-afa8-4d57-ad2e-4253c5ad72a8",
+      "locator": "Khối 11, dòng 1",
+      "quote": "Diện tích sàn A5: 2.200 m²",
+      "method": "label_parser",
+      "reviewStatus": "pending",
+      "reviewedBy": null,
+      "reviewNote": ""
+    },
+    {
+      "id": "67628c1d-5e14-4d02-bf5e-2a1c7f34a500",
+      "key": "floor.A6",
+      "label": "Diện tích sàn A6",
+      "value": "2175",
+      "rawValue": "2.175 m²",
+      "unit": "m²",
+      "documentId": "e5f4543f-c4d3-4f3a-8cec-58b3835bac08",
+      "segmentId": "933baf15-c785-4e10-9503-98af5416c0e8",
+      "locator": "Khối 12, dòng 1",
+      "quote": "Diện tích sàn A6: 2.175 m²",
+      "method": "label_parser",
+      "reviewStatus": "pending",
+      "reviewedBy": null,
+      "reviewNote": ""
+    },
+    {
+      "id": "b1bed4ba-865c-4adb-ac9d-4a4ecaf01bb9",
+      "key": "floor.B",
+      "label": "Diện tích sàn B",
+      "value": "2357",
+      "rawValue": "2.357 m²",
+      "unit": "m²",
+      "documentId": "e5f4543f-c4d3-4f3a-8cec-58b3835bac08",
+      "segmentId": "7cb3910c-688f-4e58-a8d4-74f95586e120",
+      "locator": "Khối 13, dòng 1",
+      "quote": "Diện tích sàn B: 2.357 m²",
+      "method": "label_parser",
+      "reviewStatus": "pending",
+      "reviewedBy": null,
+      "reviewNote": ""
+    },
+    {
+      "id": "b1d72852-8179-48f6-af02-61fe7c873448",
+      "key": "floor.C",
+      "label": "Diện tích sàn C",
+      "value": "1658",
+      "rawValue": "1.658 m²",
+      "unit": "m²",
+      "documentId": "e5f4543f-c4d3-4f3a-8cec-58b3835bac08",
+      "segmentId": "eaab156f-f441-4642-9d4d-499eae1e9007",
+      "locator": "Khối 14, dòng 1",
+      "quote": "Diện tích sàn C: 1.658 m²",
+      "method": "label_parser",
+      "reviewStatus": "pending",
+      "reviewedBy": null,
+      "reviewNote": ""
+    },
+    {
+      "id": "6ad1ec7c-7e21-410b-a998-e49d3950e512",
+      "key": "floor.D",
+      "label": "Diện tích sàn D",
+      "value": "1577",
+      "rawValue": "1.577 m²",
+      "unit": "m²",
+      "documentId": "e5f4543f-c4d3-4f3a-8cec-58b3835bac08",
+      "segmentId": "5c47bee9-3775-4335-80c9-678aaa732b00",
+      "locator": "Khối 15, dòng 1",
+      "quote": "Diện tích sàn D: 1.577 m²",
+      "method": "label_parser",
+      "reviewStatus": "pending",
+      "reviewedBy": null,
+      "reviewNote": ""
+    },
+    {
+      "id": "fed5740a-6e1a-4413-b8ba-396966941d57",
+      "key": "floor.G1",
+      "label": "Diện tích sàn G1",
+      "value": "503",
+      "rawValue": "503 m²",
+      "unit": "m²",
+      "documentId": "e5f4543f-c4d3-4f3a-8cec-58b3835bac08",
+      "segmentId": "ddbc41e9-3039-449f-8bd8-e3f2fb2ad63f",
+      "locator": "Khối 16, dòng 1",
+      "quote": "Diện tích sàn G1: 503 m²",
+      "method": "label_parser",
+      "reviewStatus": "pending",
+      "reviewedBy": null,
+      "reviewNote": ""
+    },
+    {
+      "id": "d0c2ef2d-40c4-4ec5-9b3a-2a7fc20e77b4",
+      "key": "floor.G2",
+      "label": "Diện tích sàn G2",
+      "value": "220",
+      "rawValue": "220 m²",
+      "unit": "m²",
+      "documentId": "e5f4543f-c4d3-4f3a-8cec-58b3835bac08",
+      "segmentId": "8c558a5b-102b-4592-81ea-730ca9d564be",
+      "locator": "Khối 17, dòng 1",
+      "quote": "Diện tích sàn G2: 220 m²",
+      "method": "label_parser",
+      "reviewStatus": "pending",
+      "reviewedBy": null,
+      "reviewNote": ""
+    },
+    {
+      "id": "cc2ff5c7-055a-46ff-bd74-13e4fe7c6cdd",
+      "key": "tank_capacity",
+      "label": "Dung tích bể hữu ích",
+      "value": "45",
+      "rawValue": "45 m³",
+      "unit": "m³",
+      "documentId": "e5f4543f-c4d3-4f3a-8cec-58b3835bac08",
+      "segmentId": "36f91c1f-6a79-4c7d-be24-cc8681b03599",
+      "locator": "Khối 18, dòng 1",
+      "quote": "Dung tích bể hữu ích: 45 m³",
+      "method": "label_parser",
+      "reviewStatus": "pending",
+      "reviewedBy": null,
+      "reviewNote": ""
+    },
+    {
+      "id": "08cb4b9c-c137-47c0-b61d-5812b07c21a3",
+      "key": "tank_length",
+      "label": "Chiều dài ngoài bể",
+      "value": "7.12",
+      "rawValue": "7,12 m",
+      "unit": "m",
+      "documentId": "e5f4543f-c4d3-4f3a-8cec-58b3835bac08",
+      "segmentId": "1eab36b3-6d2c-4248-a209-48233f7a5992",
+      "locator": "Khối 19, dòng 1",
+      "quote": "Chiều dài ngoài bể: 7,12 m",
+      "method": "label_parser",
+      "reviewStatus": "pending",
+      "reviewedBy": null,
+      "reviewNote": ""
+    },
+    {
+      "id": "02e1847f-5ef4-4e9d-b11c-64b46cb0f26e",
+      "key": "tank_width",
+      "label": "Chiều rộng ngoài bể",
+      "value": "5.35",
+      "rawValue": "5,35 m",
+      "unit": "m",
+      "documentId": "e5f4543f-c4d3-4f3a-8cec-58b3835bac08",
+      "segmentId": "96ebfea5-3534-4de7-baa5-a0092b8f928c",
+      "locator": "Khối 20, dòng 1",
+      "quote": "Chiều rộng ngoài bể: 5,35 m",
+      "method": "label_parser",
+      "reviewStatus": "pending",
+      "reviewedBy": null,
+      "reviewNote": ""
+    },
+    {
+      "id": "39e3dc69-5d59-4419-b32b-7109617daf6a",
+      "key": "tank_height",
+      "label": "Chiều cao ngoài bể",
+      "value": "2.25",
+      "rawValue": "2,25 m",
+      "unit": "m",
+      "documentId": "e5f4543f-c4d3-4f3a-8cec-58b3835bac08",
+      "segmentId": "17e4049e-2155-45b5-82d6-a1cd1f14c1d0",
+      "locator": "Khối 21, dòng 1",
+      "quote": "Chiều cao ngoài bể: 2,25 m",
+      "method": "label_parser",
+      "reviewStatus": "pending",
+      "reviewedBy": null,
+      "reviewNote": ""
+    },
+    {
+      "id": "be86ef1a-3fd6-4553-9d9f-78bd845b523b",
+      "key": "project_name",
+      "label": "Tên dự án",
+      "value": "Trường liên cấp Hương Xuân — hồ sơ mô phỏng",
+      "rawValue": "Trường liên cấp Hương Xuân — hồ sơ mô phỏng",
+      "unit": "",
+      "documentId": "d6a42845-15c1-483c-9c02-a7f8d16b559c",
+      "segmentId": "7c1df8de-dc67-4522-8e99-9f4cc5ac1f37",
+      "locator": "Khối 4, dòng 1",
+      "quote": "Tên dự án: Trường liên cấp Hương Xuân — hồ sơ mô phỏng",
+      "method": "label_parser",
+      "reviewStatus": "pending",
+      "reviewedBy": null,
+      "reviewNote": ""
+    },
+    {
+      "id": "aeaeedf1-e8b0-4a57-9785-1fb0fcd70af3",
+      "key": "province",
+      "label": "Địa phương công trình",
+      "value": "Hà Tĩnh",
+      "rawValue": "Hà Tĩnh",
+      "unit": "",
+      "documentId": "d6a42845-15c1-483c-9c02-a7f8d16b559c",
+      "segmentId": "7fbc3705-7b0f-48b1-977d-979871768d8a",
+      "locator": "Khối 5, dòng 1",
+      "quote": "Địa phương công trình: Hà Tĩnh",
+      "method": "label_parser",
+      "reviewStatus": "pending",
+      "reviewedBy": null,
+      "reviewNote": ""
+    },
+    {
+      "id": "323b2db8-ac90-4037-9319-a7433a7d9492",
+      "key": "total",
+      "label": "Tổng mức đầu tư",
+      "value": "217230000000",
+      "rawValue": "217.230.000.000 đồng",
+      "unit": "VNĐ",
+      "documentId": "d6a42845-15c1-483c-9c02-a7f8d16b559c",
+      "segmentId": "ddc095ee-a730-4a67-9d9b-66c1ee094592",
+      "locator": "Khối 7, dòng 1",
+      "quote": "Tổng mức đầu tư: 217.230.000.000 đồng",
+      "method": "label_parser",
+      "reviewStatus": "pending",
+      "reviewedBy": null,
+      "reviewNote": ""
+    },
+    {
+      "id": "d64a8998-5634-4e71-a742-9a1622235595",
+      "key": "cost.land",
+      "label": "Chi phí GPMB",
+      "value": "9000000000",
+      "rawValue": "9.000.000.000 đồng",
+      "unit": "VNĐ",
+      "documentId": "d6a42845-15c1-483c-9c02-a7f8d16b559c",
+      "segmentId": "6f872757-889f-4821-bd13-b10124303184",
+      "locator": "Khối 8, dòng 1",
+      "quote": "Chi phí GPMB: 9.000.000.000 đồng",
+      "method": "label_parser",
+      "reviewStatus": "pending",
+      "reviewedBy": null,
+      "reviewNote": ""
+    },
+    {
+      "id": "31eaef32-10d7-4fb4-9684-294f944c01e4",
+      "key": "cost.construction",
+      "label": "Chi phí xây dựng",
+      "value": "170129000000",
+      "rawValue": "170.129.000.000 đồng",
+      "unit": "VNĐ",
+      "documentId": "d6a42845-15c1-483c-9c02-a7f8d16b559c",
+      "segmentId": "b93ed5fd-a1a4-48e0-95a4-85dca02fb3d3",
+      "locator": "Khối 9, dòng 1",
+      "quote": "Chi phí xây dựng: 170.129.000.000 đồng",
+      "method": "label_parser",
+      "reviewStatus": "pending",
+      "reviewedBy": null,
+      "reviewNote": ""
+    },
+    {
+      "id": "a902dddd-0a3e-41ed-9750-59f92ec97ee6",
+      "key": "cost.equipment",
+      "label": "Chi phí thiết bị",
+      "value": "10744000000",
+      "rawValue": "10.744.000.000 đồng",
+      "unit": "VNĐ",
+      "documentId": "d6a42845-15c1-483c-9c02-a7f8d16b559c",
+      "segmentId": "a3185d83-7a5d-4b47-a0fa-ff7b8a9a4d62",
+      "locator": "Khối 10, dòng 1",
+      "quote": "Chi phí thiết bị: 10.744.000.000 đồng",
+      "method": "label_parser",
+      "reviewStatus": "pending",
+      "reviewedBy": null,
+      "reviewNote": ""
+    },
+    {
+      "id": "637c3e28-ec39-4504-88b6-d4124b8668ad",
+      "key": "cost.management",
+      "label": "Chi phí quản lý dự án",
+      "value": "3090000000",
+      "rawValue": "3.090.000.000 đồng",
+      "unit": "VNĐ",
+      "documentId": "d6a42845-15c1-483c-9c02-a7f8d16b559c",
+      "segmentId": "dd2eafdf-14cd-4345-af86-1a61b1fc8adc",
+      "locator": "Khối 11, dòng 1",
+      "quote": "Chi phí quản lý dự án: 3.090.000.000 đồng",
+      "method": "label_parser",
+      "reviewStatus": "pending",
+      "reviewedBy": null,
+      "reviewNote": ""
+    },
+    {
+      "id": "9a472e64-bd4f-40ab-b05c-b4c45158d6f9",
+      "key": "cost.consulting",
+      "label": "Chi phí tư vấn",
+      "value": "9530000000",
+      "rawValue": "9.530.000.000 đồng",
+      "unit": "VNĐ",
+      "documentId": "d6a42845-15c1-483c-9c02-a7f8d16b559c",
+      "segmentId": "2ab37134-0081-41d2-be86-dad798bd97f0",
+      "locator": "Khối 12, dòng 1",
+      "quote": "Chi phí tư vấn: 9.530.000.000 đồng",
+      "method": "label_parser",
+      "reviewStatus": "pending",
+      "reviewedBy": null,
+      "reviewNote": ""
+    },
+    {
+      "id": "e5dc5fcf-a990-4ef0-a90c-126255790ff3",
+      "key": "cost.other",
+      "label": "Chi phí khác",
+      "value": "1587000000",
+      "rawValue": "1.587.000.000 đồng",
+      "unit": "VNĐ",
+      "documentId": "d6a42845-15c1-483c-9c02-a7f8d16b559c",
+      "segmentId": "d0dd98c4-6e5f-4be8-a4bb-514b05251343",
+      "locator": "Khối 13, dòng 1",
+      "quote": "Chi phí khác: 1.587.000.000 đồng",
+      "method": "label_parser",
+      "reviewStatus": "pending",
+      "reviewedBy": null,
+      "reviewNote": ""
+    },
+    {
+      "id": "51a4aedc-a949-498e-a09a-77fb5d317df3",
+      "key": "cost.contingency",
+      "label": "Chi phí dự phòng",
+      "value": "13150000000",
+      "rawValue": "13.150.000.000 đồng",
+      "unit": "VNĐ",
+      "documentId": "d6a42845-15c1-483c-9c02-a7f8d16b559c",
+      "segmentId": "feea4920-73e5-4122-9210-fc7ff745d0fe",
+      "locator": "Khối 14, dòng 1",
+      "quote": "Chi phí dự phòng: 13.150.000.000 đồng",
+      "method": "label_parser",
+      "reviewStatus": "pending",
+      "reviewedBy": null,
+      "reviewNote": ""
+    },
+    {
+      "id": "0928e123-a8fc-4762-a32f-489fbb2e6aaa",
+      "key": "project_name",
+      "label": "Tên dự án",
+      "value": "Trường liên cấp Hương Xuân — hồ sơ mô phỏng",
+      "rawValue": "Trường liên cấp Hương Xuân — hồ sơ mô phỏng",
+      "unit": "",
+      "documentId": "3f26f494-0a29-484f-9976-bc4973901102",
+      "segmentId": "47faea32-1b1a-4aa8-a258-be464eced43f",
+      "locator": "Khối 4, dòng 1",
+      "quote": "Tên dự án: Trường liên cấp Hương Xuân — hồ sơ mô phỏng",
+      "method": "label_parser",
+      "reviewStatus": "pending",
+      "reviewedBy": null,
+      "reviewNote": ""
+    },
+    {
+      "id": "10618061-f66f-4257-bbef-c86a1c3a5a67",
+      "key": "province",
+      "label": "Địa phương công trình",
+      "value": "Hà Tĩnh",
+      "rawValue": "Hà Tĩnh",
+      "unit": "",
+      "documentId": "3f26f494-0a29-484f-9976-bc4973901102",
+      "segmentId": "18b3a106-f5e9-4b39-8455-5ed4347648d6",
+      "locator": "Khối 5, dòng 1",
+      "quote": "Địa phương công trình: Hà Tĩnh",
+      "method": "label_parser",
+      "reviewStatus": "pending",
+      "reviewedBy": null,
+      "reviewNote": ""
+    },
+    {
+      "id": "3b6e40b4-042f-4340-9f16-ccea67fdff84",
+      "key": "mep_certificate",
+      "label": "Chứng chỉ chủ trì MEP",
+      "value": "SAMPLE-MEP-002",
+      "rawValue": "SAMPLE-MEP-002",
+      "unit": "",
+      "documentId": "3f26f494-0a29-484f-9976-bc4973901102",
+      "segmentId": "cce7fd7f-4128-4529-9bcb-74d0d5c88167",
+      "locator": "Khối 9, dòng 1",
+      "quote": "Chứng chỉ chủ trì MEP: SAMPLE-MEP-002",
+      "method": "label_parser",
+      "reviewStatus": "pending",
+      "reviewedBy": null,
+      "reviewNote": ""
+    },
+    {
+      "id": "ce14c13e-ff22-4db4-8eeb-3023b7038cfd",
+      "key": "survey_certificate",
+      "label": "Chứng chỉ chủ trì khảo sát",
+      "value": "SAMPLE-KS-002",
+      "rawValue": "SAMPLE-KS-002",
+      "unit": "",
+      "documentId": "3f26f494-0a29-484f-9976-bc4973901102",
+      "segmentId": "cd552a0e-026e-485c-a86e-03ca960c6fe8",
+      "locator": "Khối 10, dòng 1",
+      "quote": "Chứng chỉ chủ trì khảo sát: SAMPLE-KS-002",
+      "method": "label_parser",
+      "reviewStatus": "pending",
+      "reviewedBy": null,
+      "reviewNote": ""
+    }
+  ],
+  "runs": [
+    {
+      "id": "c2df9c23-2bdd-49bd-b4cf-7d1497871b22",
+      "createdAt": "2026-09-27T03:19:54.734893+00:00",
+      "ruleVersion": "bcnckt-1.1.0-nd217",
+      "mode": "intake",
+      "documentIds": [
+        "67615cb9-7eff-4099-89c5-4cc0cc879bff",
+        "d81915f2-9693-4f1b-bba9-4039dc597271",
+        "d6a42845-15c1-483c-9c02-a7f8d16b559c",
+        "6fa14cae-7fe2-4d25-b3df-83b930613b24",
+        "8e9d521b-76b7-496c-bdff-ab0368a500e0",
+        "e5f4543f-c4d3-4f3a-8cec-58b3835bac08",
+        "3f96dd29-05c6-439c-8ff1-d7a944231169",
+        "3f26f494-0a29-484f-9976-bc4973901102",
+        "695914f4-6c66-40e7-a8e3-469ed322ddf9",
+        "94023b62-4a0f-4bff-b178-aa8a9e95a2e3",
+        "e76281a8-23c9-4973-8457-36f81d4d537f",
+        "72d09fec-fc25-4a9b-927e-9e21a7e6e3ae",
+        "1f6190aa-a638-4ebf-a42b-107fae1620e5",
+        "6ce60a4e-046f-4a2a-bea2-9b114d60bbcf"
+      ],
+      "stale": false,
+      "findings": [
+        {
+          "id": "3c8d5945-18a7-4a2d-bfba-e69979bdca48",
+          "code": "INPUT.TTR",
+          "category": "Hồ sơ đầu vào",
+          "title": "Tờ trình thẩm định BCNCKT",
+          "result": "consistent",
+          "explanation": "Đã có tệp đọc được. Chuyên viên cần kiểm tra nội dung và phụ lục; đây chưa phải xác nhận hợp lệ.",
+          "sources": [
+            {
+              "documentId": "94023b62-4a0f-4bff-b178-aa8a9e95a2e3",
+              "segmentId": "c078b948-6d6a-4fa1-aa62-f239c8ee0868",
+              "locator": "Khối 1, dòng 1",
+              "quote": "CƠ QUAN CHUẨN BỊ DỰ ÁN MÔ PHỎNGSố: [chưa cấp] | CỘNG HÒA XÃ HỘI CHỦ NGHĨA VIỆT NAMĐộc lập - Tự do - Hạnh phúc[Địa danh, ngày ban hành chưa xác nhận]"
+            }
+          ],
+          "missingEvidence": [],
+          "calculation": "",
+          "legalRefs": [],
+          "review": null,
+          "severity": "info"
+        },
+        {
+          "id": "b0ad2b99-d957-4c42-aa37-ba75f8b7d1fe",
+          "code": "INPUT.PL01",
+          "category": "Hồ sơ đầu vào",
+          "title": "Thông báo 81-TB/TW về trường xã biên giới",
+          "result": "consistent",
+          "explanation": "Đã có tệp đọc được. Chuyên viên cần kiểm tra nội dung và phụ lục; đây chưa phải xác nhận hợp lệ.",
+          "sources": [
+            {
+              "documentId": "e76281a8-23c9-4973-8457-36f81d4d537f",
+              "segmentId": "e578a91d-55d0-460d-a8d0-2afce1887c6d",
+              "locator": "Khối 1, dòng 1",
+              "quote": "Phiếu dữ liệu pháp lý mô phỏng PL01"
+            }
+          ],
+          "missingEvidence": [],
+          "calculation": "",
+          "legalRefs": [],
+          "review": null,
+          "severity": "info"
+        },
+        {
+          "id": "34a201e0-d8ca-4875-b837-ed8025dc5c0f",
+          "code": "INPUT.PL02",
+          "category": "Hồ sơ đầu vào",
+          "title": "Nghị quyết 298/NQ-CP",
+          "result": "consistent",
+          "explanation": "Đã có tệp đọc được. Chuyên viên cần kiểm tra nội dung và phụ lục; đây chưa phải xác nhận hợp lệ.",
+          "sources": [
+            {
+              "documentId": "8e9d521b-76b7-496c-bdff-ab0368a500e0",
+              "segmentId": "428ae60b-0f86-42e7-abe5-487f5711b45c",
+              "locator": "Khối 1, dòng 1",
+              "quote": "Phiếu dữ liệu pháp lý mô phỏng PL02"
+            }
+          ],
+          "missingEvidence": [],
+          "calculation": "",
+          "legalRefs": [],
+          "review": null,
+          "severity": "info"
+        },
+        {
+          "id": "d3fad33d-db06-4c79-9324-765254c42f85",
+          "code": "INPUT.PL03",
+          "category": "Hồ sơ đầu vào",
+          "title": "Kế hoạch 564/KH-UBND của Hà Tĩnh",
+          "result": "consistent",
+          "explanation": "Đã có tệp đọc được. Chuyên viên cần kiểm tra nội dung và phụ lục; đây chưa phải xác nhận hợp lệ.",
+          "sources": [
+            {
+              "documentId": "3f96dd29-05c6-439c-8ff1-d7a944231169",
+              "segmentId": "bd0aaf8d-0085-476c-ac0c-e4593398297d",
+              "locator": "Khối 1, dòng 1",
+              "quote": "Phiếu dữ liệu pháp lý mô phỏng PL03"
+            }
+          ],
+          "missingEvidence": [],
+          "calculation": "",
+          "legalRefs": [],
+          "review": null,
+          "severity": "info"
+        },
+        {
+          "id": "ec1aed64-7f66-4140-a280-1ed56d8212fc",
+          "code": "INPUT.PL04",
+          "category": "Hồ sơ đầu vào",
+          "title": "Quyết định 539/QĐ-UBND giao chủ đầu tư",
+          "result": "consistent",
+          "explanation": "Đã có tệp đọc được. Chuyên viên cần kiểm tra nội dung và phụ lục; đây chưa phải xác nhận hợp lệ.",
+          "sources": [
+            {
+              "documentId": "72d09fec-fc25-4a9b-927e-9e21a7e6e3ae",
+              "segmentId": "5dc962f9-522e-40c7-a623-dfdb9c74bb9a",
+              "locator": "Khối 1, dòng 1",
+              "quote": "Phiếu dữ liệu pháp lý mô phỏng PL04"
+            }
+          ],
+          "missingEvidence": [],
+          "calculation": "",
+          "legalRefs": [],
+          "review": null,
+          "severity": "info"
+        },
+        {
+          "id": "e734cbf2-97c7-4451-a6c7-2ee2599c6836",
+          "code": "INPUT.PL05",
+          "category": "Hồ sơ đầu vào",
+          "title": "Văn bản 1989/BGDĐT-KHTC",
+          "result": "consistent",
+          "explanation": "Đã có tệp đọc được. Chuyên viên cần kiểm tra nội dung và phụ lục; đây chưa phải xác nhận hợp lệ.",
+          "sources": [
+            {
+              "documentId": "695914f4-6c66-40e7-a8e3-469ed322ddf9",
+              "segmentId": "c897edb3-abb3-4b99-849a-1a88f274f40a",
+              "locator": "Khối 1, dòng 1",
+              "quote": "Phiếu dữ liệu pháp lý mô phỏng PL05"
+            }
+          ],
+          "missingEvidence": [],
+          "calculation": "",
+          "legalRefs": [],
+          "review": null,
+          "severity": "info"
+        },
+        {
+          "id": "9fb63308-ebd6-4c4b-94f0-cc4cbe39220b",
+          "code": "INPUT.PL06",
+          "category": "Hồ sơ đầu vào",
+          "title": "Quyết định 119/QĐ-BQLDA và đề cương",
+          "result": "consistent",
+          "explanation": "Đã có tệp đọc được. Chuyên viên cần kiểm tra nội dung và phụ lục; đây chưa phải xác nhận hợp lệ.",
+          "sources": [
+            {
+              "documentId": "d81915f2-9693-4f1b-bba9-4039dc597271",
+              "segmentId": "58be21fa-ac9f-4d31-92c7-1dba43e12840",
+              "locator": "Khối 1, dòng 1",
+              "quote": "Phiếu dữ liệu pháp lý mô phỏng PL06"
+            }
+          ],
+          "missingEvidence": [],
+          "calculation": "",
+          "legalRefs": [],
+          "review": null,
+          "severity": "info"
+        },
+        {
+          "id": "85d07f6e-2b92-433f-97b2-9ab256697464",
+          "code": "INPUT.PL07",
+          "category": "Hồ sơ đầu vào",
+          "title": "Văn bản 545/UBND-KT và tổng mặt bằng",
+          "result": "consistent",
+          "explanation": "Đã có tệp đọc được. Chuyên viên cần kiểm tra nội dung và phụ lục; đây chưa phải xác nhận hợp lệ.",
+          "sources": [
+            {
+              "documentId": "6ce60a4e-046f-4a2a-bea2-9b114d60bbcf",
+              "segmentId": "a4d6e7ff-bd92-4379-8fc4-5d90870c5ec5",
+              "locator": "Khối 1, dòng 1",
+              "quote": "Phiếu dữ liệu pháp lý mô phỏng PL07"
+            }
+          ],
+          "missingEvidence": [],
+          "calculation": "",
+          "legalRefs": [],
+          "review": null,
+          "severity": "info"
+        },
+        {
+          "id": "c19a89c3-1c4a-4dd3-b4b4-741d6e442007",
+          "code": "INPUT.KT01",
+          "category": "Hồ sơ đầu vào",
+          "title": "Hồ sơ khảo sát địa hình",
+          "result": "consistent",
+          "explanation": "Đã có tệp đọc được. Chuyên viên cần kiểm tra nội dung và phụ lục; đây chưa phải xác nhận hợp lệ.",
+          "sources": [
+            {
+              "documentId": "6fa14cae-7fe2-4d25-b3df-83b930613b24",
+              "segmentId": "a18ca7a8-18c8-4322-8d87-c3d1be8d166f",
+              "locator": "Khối 1, dòng 1",
+              "quote": "Báo cáo khảo sát địa hình mô phỏng"
+            }
+          ],
+          "missingEvidence": [],
+          "calculation": "",
+          "legalRefs": [],
+          "review": null,
+          "severity": "info"
+        },
+        {
+          "id": "7d9a4f18-508c-424b-9ec3-f22de3e78f03",
+          "code": "INPUT.KT02",
+          "category": "Hồ sơ đầu vào",
+          "title": "Hồ sơ khảo sát địa chất",
+          "result": "consistent",
+          "explanation": "Đã có tệp đọc được. Chuyên viên cần kiểm tra nội dung và phụ lục; đây chưa phải xác nhận hợp lệ.",
+          "sources": [
+            {
+              "documentId": "67615cb9-7eff-4099-89c5-4cc0cc879bff",
+              "segmentId": "074953ba-edca-4053-8c9a-cfd16cb22590",
+              "locator": "Khối 1, dòng 1",
+              "quote": "Báo cáo khảo sát địa chất mô phỏng"
+            }
+          ],
+          "missingEvidence": [],
+          "calculation": "",
+          "legalRefs": [],
+          "review": null,
+          "severity": "info"
+        },
+        {
+          "id": "e7d0d1cc-9b23-4056-a49f-10633ba82e2b",
+          "code": "INPUT.KT03",
+          "category": "Hồ sơ đầu vào",
+          "title": "Thuyết minh BCNCKT",
+          "result": "consistent",
+          "explanation": "Đã có tệp đọc được. Chuyên viên cần kiểm tra nội dung và phụ lục; đây chưa phải xác nhận hợp lệ.",
+          "sources": [
+            {
+              "documentId": "1f6190aa-a638-4ebf-a42b-107fae1620e5",
+              "segmentId": "6dec6589-fbe7-4fbf-927c-0161a52e338e",
+              "locator": "Khối 1, dòng 1",
+              "quote": "Thuyết minh BCNCKT mô phỏng"
+            }
+          ],
+          "missingEvidence": [],
+          "calculation": "",
+          "legalRefs": [],
+          "review": null,
+          "severity": "info"
+        },
+        {
+          "id": "994e8459-1c6a-4b60-8ff2-a9e2f2c61425",
+          "code": "INPUT.KT04",
+          "category": "Hồ sơ đầu vào",
+          "title": "Hồ sơ thiết kế cơ sở",
+          "result": "consistent",
+          "explanation": "Đã có tệp đọc được. Chuyên viên cần kiểm tra nội dung và phụ lục; đây chưa phải xác nhận hợp lệ.",
+          "sources": [
+            {
+              "documentId": "e5f4543f-c4d3-4f3a-8cec-58b3835bac08",
+              "segmentId": "a8558f7a-de05-4eaa-9c4f-92fbded20ff3",
+              "locator": "Khối 1, dòng 1",
+              "quote": "Thuyết minh thiết kế cơ sở mô phỏng"
+            }
+          ],
+          "missingEvidence": [],
+          "calculation": "",
+          "legalRefs": [],
+          "review": null,
+          "severity": "info"
+        },
+        {
+          "id": "fcfef8d2-4c10-41d3-a6c4-6eccd6083c83",
+          "code": "INPUT.KT05",
+          "category": "Hồ sơ đầu vào",
+          "title": "Tổng mức đầu tư và bảng tính",
+          "result": "consistent",
+          "explanation": "Đã có tệp đọc được. Chuyên viên cần kiểm tra nội dung và phụ lục; đây chưa phải xác nhận hợp lệ.",
+          "sources": [
+            {
+              "documentId": "d6a42845-15c1-483c-9c02-a7f8d16b559c",
+              "segmentId": "6513b230-d5ab-4fb4-bfbc-572de7420536",
+              "locator": "Khối 1, dòng 1",
+              "quote": "Bảng tổng mức đầu tư mô phỏng lần đầu"
+            }
+          ],
+          "missingEvidence": [],
+          "calculation": "",
+          "legalRefs": [],
+          "review": null,
+          "severity": "info"
+        },
+        {
+          "id": "e091a749-f04f-4b57-a869-37f2a8ac74ef",
+          "code": "INPUT.NL01",
+          "category": "Hồ sơ đầu vào",
+          "title": "Năng lực tổ chức và nhân sự chủ chốt",
+          "result": "consistent",
+          "explanation": "Đã có tệp đọc được. Chuyên viên cần kiểm tra nội dung và phụ lục; đây chưa phải xác nhận hợp lệ.",
+          "sources": [
+            {
+              "documentId": "3f26f494-0a29-484f-9976-bc4973901102",
+              "segmentId": "c43c39a6-5faf-4d4a-9b79-2f3b13c79470",
+              "locator": "Khối 1, dòng 1",
+              "quote": "Danh mục năng lực mô phỏng"
+            }
+          ],
+          "missingEvidence": [],
+          "calculation": "",
+          "legalRefs": [],
+          "review": null,
+          "severity": "info"
+        },
+        {
+          "id": "e31f4f6a-ebcb-42ca-9855-a6d02657b554",
+          "code": "CROSS.mep_certificate",
+          "category": "Nhất quán",
+          "title": "Chứng chỉ chủ trì MEP khác nhau giữa tài liệu",
+          "result": "inconsistent",
+          "explanation": "Cần xác minh bản gốc hoặc giải trình phiên bản; chưa xác định giá trị nào đúng.",
+          "sources": [
+            {
+              "documentId": "94023b62-4a0f-4bff-b178-aa8a9e95a2e3",
+              "segmentId": "7218ed9e-9a76-4d3c-b8fd-8acd9e6f1a85",
+              "locator": "Khối 39, dòng 1",
+              "quote": "Chứng chỉ chủ trì MEP: SAMPLE-MEP-001"
+            },
+            {
+              "documentId": "3f26f494-0a29-484f-9976-bc4973901102",
+              "segmentId": "cce7fd7f-4128-4529-9bcb-74d0d5c88167",
+              "locator": "Khối 9, dòng 1",
+              "quote": "Chứng chỉ chủ trì MEP: SAMPLE-MEP-002"
+            }
+          ],
+          "missingEvidence": [],
+          "calculation": "",
+          "legalRefs": [],
+          "review": null,
+          "severity": "warning"
+        },
+        {
+          "id": "c818f1f2-d503-4c80-ab3b-ed744dcb5a7e",
+          "code": "CROSS.survey_certificate",
+          "category": "Nhất quán",
+          "title": "Chứng chỉ chủ trì khảo sát khác nhau giữa tài liệu",
+          "result": "inconsistent",
+          "explanation": "Cần xác minh bản gốc hoặc giải trình phiên bản; chưa xác định giá trị nào đúng.",
+          "sources": [
+            {
+              "documentId": "94023b62-4a0f-4bff-b178-aa8a9e95a2e3",
+              "segmentId": "897e7fbf-f8e1-47c9-8b33-d7d066a76b18",
+              "locator": "Khối 40, dòng 1",
+              "quote": "Chứng chỉ chủ trì khảo sát: SAMPLE-KS-001"
+            },
+            {
+              "documentId": "3f26f494-0a29-484f-9976-bc4973901102",
+              "segmentId": "cd552a0e-026e-485c-a86e-03ca960c6fe8",
+              "locator": "Khối 10, dòng 1",
+              "quote": "Chứng chỉ chủ trì khảo sát: SAMPLE-KS-002"
+            }
+          ],
+          "missingEvidence": [],
+          "calculation": "",
+          "legalRefs": [],
+          "review": null,
+          "severity": "warning"
+        },
+        {
+          "id": "997644af-e83b-4105-a00a-4bf53e99334f",
+          "code": "CROSS.standard_primary",
+          "category": "Nhất quán",
+          "title": "Tiêu chuẩn trường tiểu học khác nhau giữa tài liệu",
+          "result": "inconsistent",
+          "explanation": "Cần xác minh bản gốc hoặc giải trình phiên bản; chưa xác định giá trị nào đúng.",
+          "sources": [
+            {
+              "documentId": "94023b62-4a0f-4bff-b178-aa8a9e95a2e3",
+              "segmentId": "f2b5d387-e2d3-4165-9103-0635f624305f",
+              "locator": "Khối 41, dòng 1",
+              "quote": "Tiêu chuẩn trường tiểu học: TCVN 8793:2011"
+            },
+            {
+              "documentId": "1f6190aa-a638-4ebf-a42b-107fae1620e5",
+              "segmentId": "92013c15-7609-4780-a40c-354e4eadb312",
+              "locator": "Khối 17, dòng 1",
+              "quote": "Tiêu chuẩn trường tiểu học: TCVN 8793:2021"
+            }
+          ],
+          "missingEvidence": [],
+          "calculation": "",
+          "legalRefs": [],
+          "review": null,
+          "severity": "warning"
+        },
+        {
+          "id": "d385172d-c424-4d59-a642-57f8c1c5987c",
+          "code": "CROSS.standard_secondary",
+          "category": "Nhất quán",
+          "title": "Tiêu chuẩn trường trung học khác nhau giữa tài liệu",
+          "result": "inconsistent",
+          "explanation": "Cần xác minh bản gốc hoặc giải trình phiên bản; chưa xác định giá trị nào đúng.",
+          "sources": [
+            {
+              "documentId": "94023b62-4a0f-4bff-b178-aa8a9e95a2e3",
+              "segmentId": "2f7446ce-9b7a-4d24-8130-bc6393a2868f",
+              "locator": "Khối 42, dòng 1",
+              "quote": "Tiêu chuẩn trường trung học: TCVN 8794:2011"
+            },
+            {
+              "documentId": "1f6190aa-a638-4ebf-a42b-107fae1620e5",
+              "segmentId": "7f7c1abf-2f01-4dc1-afaa-1b9eb2c0e582",
+              "locator": "Khối 18, dòng 1",
+              "quote": "Tiêu chuẩn trường trung học: TCVN 8794:2021"
+            }
+          ],
+          "missingEvidence": [],
+          "calculation": "",
+          "legalRefs": [],
+          "review": null,
+          "severity": "warning"
+        },
+        {
+          "id": "4137b53d-a083-48e5-b1b3-2e54f99f56a1",
+          "code": "COST.SUM",
+          "category": "Chi phí",
+          "title": "Tổng 7 khoản mục chi phí",
+          "result": "consistent",
+          "explanation": "Kiểm tra số học trên giá trị được trích xuất. Chưa xác nhận khối lượng, đơn giá hoặc tính hợp pháp.",
+          "sources": [
+            {
+              "documentId": "d6a42845-15c1-483c-9c02-a7f8d16b559c",
+              "segmentId": "6f872757-889f-4821-bd13-b10124303184",
+              "locator": "Khối 8, dòng 1",
+              "quote": "Chi phí GPMB: 9.000.000.000 đồng"
+            },
+            {
+              "documentId": "d6a42845-15c1-483c-9c02-a7f8d16b559c",
+              "segmentId": "b93ed5fd-a1a4-48e0-95a4-85dca02fb3d3",
+              "locator": "Khối 9, dòng 1",
+              "quote": "Chi phí xây dựng: 170.129.000.000 đồng"
+            },
+            {
+              "documentId": "d6a42845-15c1-483c-9c02-a7f8d16b559c",
+              "segmentId": "a3185d83-7a5d-4b47-a0fa-ff7b8a9a4d62",
+              "locator": "Khối 10, dòng 1",
+              "quote": "Chi phí thiết bị: 10.744.000.000 đồng"
+            },
+            {
+              "documentId": "d6a42845-15c1-483c-9c02-a7f8d16b559c",
+              "segmentId": "dd2eafdf-14cd-4345-af86-1a61b1fc8adc",
+              "locator": "Khối 11, dòng 1",
+              "quote": "Chi phí quản lý dự án: 3.090.000.000 đồng"
+            },
+            {
+              "documentId": "d6a42845-15c1-483c-9c02-a7f8d16b559c",
+              "segmentId": "2ab37134-0081-41d2-be86-dad798bd97f0",
+              "locator": "Khối 12, dòng 1",
+              "quote": "Chi phí tư vấn: 9.530.000.000 đồng"
+            },
+            {
+              "documentId": "d6a42845-15c1-483c-9c02-a7f8d16b559c",
+              "segmentId": "d0dd98c4-6e5f-4be8-a4bb-514b05251343",
+              "locator": "Khối 13, dòng 1",
+              "quote": "Chi phí khác: 1.587.000.000 đồng"
+            },
+            {
+              "documentId": "d6a42845-15c1-483c-9c02-a7f8d16b559c",
+              "segmentId": "feea4920-73e5-4122-9210-fc7ff745d0fe",
+              "locator": "Khối 14, dòng 1",
+              "quote": "Chi phí dự phòng: 13.150.000.000 đồng"
+            },
+            {
+              "documentId": "d6a42845-15c1-483c-9c02-a7f8d16b559c",
+              "segmentId": "ddc095ee-a730-4a67-9d9b-66c1ee094592",
+              "locator": "Khối 7, dòng 1",
+              "quote": "Tổng mức đầu tư: 217.230.000.000 đồng"
+            }
+          ],
+          "missingEvidence": [],
+          "calculation": "217,230,000,000 VNĐ so với tổng công bố 217,230,000,000 VNĐ",
+          "legalRefs": [],
+          "review": null,
+          "severity": "info"
+        },
+        {
+          "id": "bd061356-e8eb-4225-9203-1c6f4f553ea7",
+          "code": "PLAN.MATH",
+          "category": "Quy hoạch",
+          "title": "Mật độ và hệ số sử dụng đất",
+          "result": "consistent",
+          "explanation": "Kiểm tra số học và làm tròn; cần bản quy hoạch được chấp thuận để kết luận phù hợp.",
+          "sources": [
+            {
+              "documentId": "1f6190aa-a638-4ebf-a42b-107fae1620e5",
+              "segmentId": "6d6681a9-e606-47ee-bfe4-9c9e26d9681b",
+              "locator": "Khối 9, dòng 1",
+              "quote": "Diện tích khu đất: 46.694 m²"
+            },
+            {
+              "documentId": "1f6190aa-a638-4ebf-a42b-107fae1620e5",
+              "segmentId": "856d2a5c-080a-45bf-9f0b-f6a72f3137d7",
+              "locator": "Khối 10, dòng 1",
+              "quote": "Diện tích xây dựng: 8.338 m²"
+            },
+            {
+              "documentId": "1f6190aa-a638-4ebf-a42b-107fae1620e5",
+              "segmentId": "5b27ea4e-f19e-4369-9774-31893b8e1e20",
+              "locator": "Khối 11, dòng 1",
+              "quote": "Tổng diện tích sàn: 17.140 m²"
+            },
+            {
+              "documentId": "1f6190aa-a638-4ebf-a42b-107fae1620e5",
+              "segmentId": "28065170-4cbf-40f6-a999-cbdf286ca076",
+              "locator": "Khối 12, dòng 1",
+              "quote": "Mật độ xây dựng: 17,9 %"
+            },
+            {
+              "documentId": "1f6190aa-a638-4ebf-a42b-107fae1620e5",
+              "segmentId": "1001bc29-3359-46cc-ac5b-83a4d45304f0",
+              "locator": "Khối 13, dòng 1",
+              "quote": "Hệ số sử dụng đất: 0,37 lần"
+            }
+          ],
+          "missingEvidence": [],
+          "calculation": "8338/46694 × 100 = 17.8567%; 17140/46694 = 0.36707",
+          "legalRefs": [],
+          "review": null,
+          "severity": "info"
+        },
+        {
+          "id": "56660c5f-ccbf-48bf-87c4-1ecfb4cd5056",
+          "code": "AREA.SUM",
+          "category": "Thiết kế",
+          "title": "Đối chiếu diện tích sàn các hạng mục",
+          "result": "inconsistent",
+          "explanation": "Giả thiết cộng A1–A6, B, C, D, G1, G2; cần xác nhận phạm vi tính diện tích, bán hầm và hành lang.",
+          "sources": [
+            {
+              "documentId": "1f6190aa-a638-4ebf-a42b-107fae1620e5",
+              "segmentId": "5b27ea4e-f19e-4369-9774-31893b8e1e20",
+              "locator": "Khối 11, dòng 1",
+              "quote": "Tổng diện tích sàn: 17.140 m²"
+            },
+            {
+              "documentId": "e5f4543f-c4d3-4f3a-8cec-58b3835bac08",
+              "segmentId": "e283b2cc-f528-4617-b7e8-785c4bd1d5e2",
+              "locator": "Khối 7, dòng 1",
+              "quote": "Diện tích sàn A1: 1.800 m²"
+            },
+            {
+              "documentId": "e5f4543f-c4d3-4f3a-8cec-58b3835bac08",
+              "segmentId": "f7cd6035-f848-4670-9f7c-6e6be4fd653d",
+              "locator": "Khối 8, dòng 1",
+              "quote": "Diện tích sàn A2: 1.343 m²"
+            },
+            {
+              "documentId": "e5f4543f-c4d3-4f3a-8cec-58b3835bac08",
+              "segmentId": "4f615909-b1a1-42d4-8f93-768e572d21c8",
+              "locator": "Khối 9, dòng 1",
+              "quote": "Diện tích sàn A3: 2.006 m²"
+            },
+            {
+              "documentId": "e5f4543f-c4d3-4f3a-8cec-58b3835bac08",
+              "segmentId": "99e8a201-30e3-4d7d-a80c-4d283b32f504",
+              "locator": "Khối 10, dòng 1",
+              "quote": "Diện tích sàn A4: 1.712 m²"
+            },
+            {
+              "documentId": "e5f4543f-c4d3-4f3a-8cec-58b3835bac08",
+              "segmentId": "fbe49b6d-afa8-4d57-ad2e-4253c5ad72a8",
+              "locator": "Khối 11, dòng 1",
+              "quote": "Diện tích sàn A5: 2.200 m²"
+            },
+            {
+              "documentId": "e5f4543f-c4d3-4f3a-8cec-58b3835bac08",
+              "segmentId": "933baf15-c785-4e10-9503-98af5416c0e8",
+              "locator": "Khối 12, dòng 1",
+              "quote": "Diện tích sàn A6: 2.175 m²"
+            },
+            {
+              "documentId": "e5f4543f-c4d3-4f3a-8cec-58b3835bac08",
+              "segmentId": "7cb3910c-688f-4e58-a8d4-74f95586e120",
+              "locator": "Khối 13, dòng 1",
+              "quote": "Diện tích sàn B: 2.357 m²"
+            },
+            {
+              "documentId": "e5f4543f-c4d3-4f3a-8cec-58b3835bac08",
+              "segmentId": "eaab156f-f441-4642-9d4d-499eae1e9007",
+              "locator": "Khối 14, dòng 1",
+              "quote": "Diện tích sàn C: 1.658 m²"
+            },
+            {
+              "documentId": "e5f4543f-c4d3-4f3a-8cec-58b3835bac08",
+              "segmentId": "5c47bee9-3775-4335-80c9-678aaa732b00",
+              "locator": "Khối 15, dòng 1",
+              "quote": "Diện tích sàn D: 1.577 m²"
+            },
+            {
+              "documentId": "e5f4543f-c4d3-4f3a-8cec-58b3835bac08",
+              "segmentId": "ddbc41e9-3039-449f-8bd8-e3f2fb2ad63f",
+              "locator": "Khối 16, dòng 1",
+              "quote": "Diện tích sàn G1: 503 m²"
+            },
+            {
+              "documentId": "e5f4543f-c4d3-4f3a-8cec-58b3835bac08",
+              "segmentId": "8c558a5b-102b-4592-81ea-730ca9d564be",
+              "locator": "Khối 17, dòng 1",
+              "quote": "Diện tích sàn G2: 220 m²"
+            }
+          ],
+          "missingEvidence": [],
+          "calculation": "17551 − 17140 = 411 m²",
+          "legalRefs": [],
+          "review": null,
+          "severity": "warning"
+        },
+        {
+          "id": "59cda5c5-5374-4dba-82a6-5d16f0888a90",
+          "code": "FIRE.TANK",
+          "category": "PCCC và môi trường",
+          "title": "Dung tích bể và kích thước ngoài",
+          "result": "requires_specialist",
+          "explanation": "Kích thước ngoài không phải dung tích hữu ích. Cần mặt cắt, ngăn bể, mực nước và tính toán chữa cháy.",
+          "sources": [
+            {
+              "documentId": "e5f4543f-c4d3-4f3a-8cec-58b3835bac08",
+              "segmentId": "36f91c1f-6a79-4c7d-be24-cc8681b03599",
+              "locator": "Khối 18, dòng 1",
+              "quote": "Dung tích bể hữu ích: 45 m³"
+            },
+            {
+              "documentId": "e5f4543f-c4d3-4f3a-8cec-58b3835bac08",
+              "segmentId": "1eab36b3-6d2c-4248-a209-48233f7a5992",
+              "locator": "Khối 19, dòng 1",
+              "quote": "Chiều dài ngoài bể: 7,12 m"
+            },
+            {
+              "documentId": "e5f4543f-c4d3-4f3a-8cec-58b3835bac08",
+              "segmentId": "96ebfea5-3534-4de7-baa5-a0092b8f928c",
+              "locator": "Khối 20, dòng 1",
+              "quote": "Chiều rộng ngoài bể: 5,35 m"
+            },
+            {
+              "documentId": "e5f4543f-c4d3-4f3a-8cec-58b3835bac08",
+              "segmentId": "17e4049e-2155-45b5-82d6-a1cd1f14c1d0",
+              "locator": "Khối 21, dòng 1",
+              "quote": "Chiều cao ngoài bể: 2,25 m"
+            }
+          ],
+          "missingEvidence": [
+            "Bản vẽ chi tiết bể và tính toán lưu lượng"
+          ],
+          "calculation": "7.12 × 5.35 × 2.25 = 85.707000 m³; dung tích hữu ích ghi 45 m³",
+          "legalRefs": [],
+          "review": null,
+          "severity": "info"
+        },
+        {
+          "id": "41a008e9-3cc7-4656-bdc1-4e1553f23e6e",
+          "code": "SCOPE.LEGAL",
+          "category": "Pháp lý và năng lực",
+          "title": "Lập dự án, chủ trương và năng lực",
+          "result": "requires_specialist",
+          "explanation": "Cần chuyên viên đánh giá căn cứ và phạm vi; kiểm tra tự động chưa thay thế thẩm định nội dung này.",
+          "sources": [],
+          "missingEvidence": [
+            "Bản pháp lý chính thức, phạm vi chứng chỉ, quy định chuyển tiếp"
+          ],
+          "calculation": "",
+          "legalRefs": [],
+          "review": null,
+          "severity": "info"
+        },
+        {
+          "id": "562a6256-e034-492f-99f9-c5515b5f133a",
+          "code": "SCOPE.PLANNING",
+          "category": "Quy hoạch",
+          "title": "TKCS với quy hoạch được chấp thuận",
+          "result": "requires_specialist",
+          "explanation": "Cần chuyên viên đánh giá căn cứ và phạm vi; kiểm tra tự động chưa thay thế thẩm định nội dung này.",
+          "sources": [],
+          "missingEvidence": [
+            "Bản đồ/phụ lục chỉ tiêu được cơ quan có thẩm quyền xác nhận"
+          ],
+          "calculation": "",
+          "legalRefs": [],
+          "review": null,
+          "severity": "info"
+        },
+        {
+          "id": "4ca9ee7d-e5a4-4fec-970c-b83c5f49a7b6",
+          "code": "SCOPE.STRUCT",
+          "category": "Khảo sát và kết cấu",
+          "title": "An toàn nền móng và kết cấu",
+          "result": "requires_specialist",
+          "explanation": "Cần chuyên viên đánh giá căn cứ và phạm vi; kiểm tra tự động chưa thay thế thẩm định nội dung này.",
+          "sources": [],
+          "missingEvidence": [
+            "Báo cáo khảo sát, bảng tính thiết kế và thẩm tra chuyên ngành"
+          ],
+          "calculation": "",
+          "legalRefs": [],
+          "review": null,
+          "severity": "info"
+        },
+        {
+          "id": "0a86cf77-992b-4f3f-acca-84ccbd6f065a",
+          "code": "SCOPE.INFRA",
+          "category": "Hạ tầng",
+          "title": "Khả năng đấu nối điện, nước, giao thông",
+          "result": "requires_specialist",
+          "explanation": "Cần chuyên viên đánh giá căn cứ và phạm vi; kiểm tra tự động chưa thay thế thẩm định nội dung này.",
+          "sources": [],
+          "missingEvidence": [
+            "Thỏa thuận đấu nối, nhu cầu và công suất được xác nhận"
+          ],
+          "calculation": "",
+          "legalRefs": [],
+          "review": null,
+          "severity": "info"
+        },
+        {
+          "id": "5336917c-4bcd-4960-883d-9a97b3a93103",
+          "code": "SCOPE.FIRE",
+          "category": "PCCC và môi trường",
+          "title": "An toàn cháy và môi trường",
+          "result": "requires_specialist",
+          "explanation": "Cần chuyên viên đánh giá căn cứ và phạm vi; kiểm tra tự động chưa thay thế thẩm định nội dung này.",
+          "sources": [],
+          "missingEvidence": [
+            "Hồ sơ PCCC/môi trường, các tính toán và ý kiến chuyên ngành"
+          ],
+          "calculation": "",
+          "legalRefs": [],
+          "review": null,
+          "severity": "info"
+        },
+        {
+          "id": "712d5b7b-4dab-424b-bf3e-c45b87982085",
+          "code": "SCOPE.STANDARD",
+          "category": "Quy chuẩn",
+          "title": "Danh mục và điều kiện áp dụng tiêu chuẩn",
+          "result": "requires_specialist",
+          "explanation": "Cần chuyên viên đánh giá căn cứ và phạm vi; kiểm tra tự động chưa thay thế thẩm định nội dung này.",
+          "sources": [],
+          "missingEvidence": [
+            "Danh mục chính thức, toàn văn điều khoản, thời điểm và ngoại lệ"
+          ],
+          "calculation": "",
+          "legalRefs": [],
+          "review": null,
+          "severity": "info"
+        },
+        {
+          "id": "21809b64-0939-4cc0-82a3-92d0a35eeee3",
+          "code": "SCOPE.COST",
+          "category": "Chi phí",
+          "title": "Khối lượng, giá và cơ sở tổng mức đầu tư",
+          "result": "requires_specialist",
+          "explanation": "Cần chuyên viên đánh giá căn cứ và phạm vi; kiểm tra tự động chưa thay thế thẩm định nội dung này.",
+          "sources": [],
+          "missingEvidence": [
+            "Bảng khối lượng, nguồn giá địa phương đúng kỳ, cơ sở GPMB và dự phòng"
+          ],
+          "calculation": "",
+          "legalRefs": [],
+          "review": null,
+          "severity": "info"
+        },
+        {
+          "id": "beb27067-1f93-4acc-98e7-9a76cf182319",
+          "code": "LAW.TIME",
+          "category": "Pháp lý và năng lực",
+          "title": "Chế độ pháp lý và phạm vi thẩm định",
+          "result": "requires_specialist",
+          "explanation": "NĐ 217/2026. Hồ sơ trình từ 01/07/2026; xét NĐ 217/2026 và các điều kiện phạm vi, thẩm quyền. Phạm vi: Cơ quan chuyên môn về xây dựng. Chưa có xác nhận của chuyên viên.",
+          "sources": [],
+          "missingEvidence": [],
+          "calculation": "",
+          "legalRefs": [
+            {
+              "label": "Điều 75; khoản 1, 2, 7–9 Điều 76 NĐ 217/2026",
+              "url": "https://vanban.chinhphu.vn/?classid=1&docid=218509&pageid=27160&typegroupid=4"
+            }
+          ],
+          "review": null,
+          "severity": "info"
+        },
+        {
+          "id": "525f869a-048f-462d-b9e5-b17568f78baa",
+          "code": "LAW.INPUT.nd217.policy",
+          "category": "Thành phần theo pháp luật",
+          "title": "Chủ trương / thông tin dự án / đề án du lịch rừng",
+          "result": "insufficient_evidence",
+          "explanation": "Chưa xác định có thuộc trường hợp áp dụng. Xác định loại văn bản phù hợp trường hợp dự án",
+          "sources": [],
+          "missingEvidence": [
+            "Chủ trương / thông tin dự án / đề án du lịch rừng"
+          ],
+          "calculation": "",
+          "legalRefs": [
+            {
+              "label": "điểm a khoản 2 Điều 35 NĐ 217/2026",
+              "url": "https://vanban.chinhphu.vn/?classid=1&docid=218509&pageid=27160&typegroupid=4"
+            }
+          ],
+          "review": null,
+          "severity": "warning"
+        },
+        {
+          "id": "7afa6aa8-eb55-4933-ab77-328472ce8ba8",
+          "code": "LAW.INPUT.nd217.investment_transition",
+          "category": "Thành phần theo pháp luật",
+          "title": "Giấy tờ đầu tư chuyển tiếp",
+          "result": "insufficient_evidence",
+          "explanation": "Chưa xác định có thuộc trường hợp áp dụng. Dự án chuyển tiếp không phải chấp thuận chủ trương",
+          "sources": [],
+          "missingEvidence": [
+            "Giấy tờ đầu tư chuyển tiếp"
+          ],
+          "calculation": "",
+          "legalRefs": [
+            {
+              "label": "điểm b khoản 2 Điều 35 NĐ 217/2026",
+              "url": "https://vanban.chinhphu.vn/?classid=1&docid=218509&pageid=27160&typegroupid=4"
+            }
+          ],
+          "review": null,
+          "severity": "warning"
+        },
+        {
+          "id": "53ff1196-0838-481d-86e0-ce756ae5344f",
+          "code": "LAW.INPUT.nd217.architecture",
+          "category": "Thành phần theo pháp luật",
+          "title": "Phương án kiến trúc và bản vẽ được lựa chọn",
+          "result": "insufficient_evidence",
+          "explanation": "Chưa xác định có thuộc trường hợp áp dụng. Thuộc diện thi tuyển kiến trúc",
+          "sources": [],
+          "missingEvidence": [
+            "Phương án kiến trúc và bản vẽ được lựa chọn"
+          ],
+          "calculation": "",
+          "legalRefs": [
+            {
+              "label": "điểm c khoản 2 Điều 35 NĐ 217/2026",
+              "url": "https://vanban.chinhphu.vn/?classid=1&docid=218509&pageid=27160&typegroupid=4"
+            }
+          ],
+          "review": null,
+          "severity": "warning"
+        },
+        {
+          "id": "06ee4a7a-9594-415f-9639-97bdbe447718",
+          "code": "LAW.INPUT.nd217.planning",
+          "category": "Thành phần theo pháp luật",
+          "title": "Văn bản và bản vẽ quy hoạch làm căn cứ lập dự án",
+          "result": "insufficient_evidence",
+          "explanation": "Chưa liên kết tệp chứng cứ. Thành phần cơ bản theo điều khoản",
+          "sources": [],
+          "missingEvidence": [
+            "Văn bản và bản vẽ quy hoạch làm căn cứ lập dự án"
+          ],
+          "calculation": "",
+          "legalRefs": [
+            {
+              "label": "điểm d khoản 2 Điều 35 NĐ 217/2026",
+              "url": "https://vanban.chinhphu.vn/?classid=1&docid=218509&pageid=27160&typegroupid=4"
+            }
+          ],
+          "review": null,
+          "severity": "warning"
+        },
+        {
+          "id": "0a010d75-d0c0-4b2e-8387-47ea32d0e335",
+          "code": "LAW.INPUT.nd217.connections",
+          "category": "Thành phần theo pháp luật",
+          "title": "Thỏa thuận đấu nối hạ tầng",
+          "result": "insufficient_evidence",
+          "explanation": "Chưa xác định có thuộc trường hợp áp dụng. Có yêu cầu đấu nối và văn bản tương ứng",
+          "sources": [],
+          "missingEvidence": [
+            "Thỏa thuận đấu nối hạ tầng"
+          ],
+          "calculation": "",
+          "legalRefs": [
+            {
+              "label": "điểm đ khoản 2 Điều 35 NĐ 217/2026",
+              "url": "https://vanban.chinhphu.vn/?classid=1&docid=218509&pageid=27160&typegroupid=4"
+            }
+          ],
+          "review": null,
+          "severity": "warning"
+        },
+        {
+          "id": "10b07dcc-c627-4640-9e1e-2d18794fd172",
+          "code": "LAW.INPUT.nd217.height",
+          "category": "Thành phần theo pháp luật",
+          "title": "Chấp thuận độ cao công trình",
+          "result": "insufficient_evidence",
+          "explanation": "Chưa xác định có thuộc trường hợp áp dụng. Thuộc trường hợp phải chấp thuận độ cao, xét ngoại lệ đã có ý kiến khi duyệt quy hoạch",
+          "sources": [],
+          "missingEvidence": [
+            "Chấp thuận độ cao công trình"
+          ],
+          "calculation": "",
+          "legalRefs": [
+            {
+              "label": "điểm đ khoản 2 Điều 35 NĐ 217/2026",
+              "url": "https://vanban.chinhphu.vn/?classid=1&docid=218509&pageid=27160&typegroupid=4"
+            }
+          ],
+          "review": null,
+          "severity": "warning"
+        },
+        {
+          "id": "1cccd692-01c7-4b47-a94e-24137c12b437",
+          "code": "LAW.INPUT.nd217.other_legal",
+          "category": "Thành phần theo pháp luật",
+          "title": "Tài liệu pháp lý khác liên quan",
+          "result": "insufficient_evidence",
+          "explanation": "Chưa xác định có thuộc trường hợp áp dụng. Có yêu cầu theo quy định chuyên ngành hoặc trường hợp dự án",
+          "sources": [],
+          "missingEvidence": [
+            "Tài liệu pháp lý khác liên quan"
+          ],
+          "calculation": "",
+          "legalRefs": [
+            {
+              "label": "điểm e khoản 2 Điều 35 NĐ 217/2026",
+              "url": "https://vanban.chinhphu.vn/?classid=1&docid=218509&pageid=27160&typegroupid=4"
+            }
+          ],
+          "review": null,
+          "severity": "warning"
+        },
+        {
+          "id": "4f65cda9-1e68-4ac6-85c7-27e0c61becdf",
+          "code": "LAW.INPUT.nd217.design_review",
+          "category": "Thành phần theo pháp luật",
+          "title": "Báo cáo thẩm tra thiết kế theo Mẫu số 02",
+          "result": "insufficient_evidence",
+          "explanation": "Chưa xác định có thuộc trường hợp áp dụng. Xét khoản 5 Điều 26 Luật 135/2025 và trường hợp yêu cầu thẩm tra",
+          "sources": [],
+          "missingEvidence": [
+            "Báo cáo thẩm tra thiết kế theo Mẫu số 02"
+          ],
+          "calculation": "",
+          "legalRefs": [
+            {
+              "label": "điểm h khoản 2 Điều 35 NĐ 217/2026",
+              "url": "https://vanban.chinhphu.vn/?classid=1&docid=218509&pageid=27160&typegroupid=4"
+            }
+          ],
+          "review": null,
+          "severity": "warning"
+        },
+        {
+          "id": "57c39166-0c59-44d1-b662-be409fa11743",
+          "code": "LAW.INPUT.nd217.rail_standards",
+          "category": "Thành phần theo pháp luật",
+          "title": "Chấp thuận danh mục tiêu chuẩn đường sắt",
+          "result": "insufficient_evidence",
+          "explanation": "Chưa xác định có thuộc trường hợp áp dụng. Dự án đường sắt có yêu cầu chấp thuận",
+          "sources": [],
+          "missingEvidence": [
+            "Chấp thuận danh mục tiêu chuẩn đường sắt"
+          ],
+          "calculation": "",
+          "legalRefs": [
+            {
+              "label": "điểm i khoản 2 Điều 35 NĐ 217/2026",
+              "url": "https://vanban.chinhphu.vn/?classid=1&docid=218509&pageid=27160&typegroupid=4"
+            }
+          ],
+          "review": null,
+          "severity": "warning"
+        },
+        {
+          "id": "35339d45-04c3-454b-8382-5febbb084f30",
+          "code": "LAW.INPUT.nd217.cost",
+          "category": "Thành phần theo pháp luật",
+          "title": "TMĐT và dữ liệu giá, định mức, báo giá, thẩm định giá nếu có",
+          "result": "insufficient_evidence",
+          "explanation": "Chưa xác định có thuộc trường hợp áp dụng. Dự án tại điểm a, b, c khoản 1 Điều 17 Luật 135/2025",
+          "sources": [],
+          "missingEvidence": [
+            "TMĐT và dữ liệu giá, định mức, báo giá, thẩm định giá nếu có"
+          ],
+          "calculation": "",
+          "legalRefs": [
+            {
+              "label": "điểm k khoản 2 Điều 35 NĐ 217/2026",
+              "url": "https://vanban.chinhphu.vn/?classid=1&docid=218509&pageid=27160&typegroupid=4"
+            }
+          ],
+          "review": null,
+          "severity": "warning"
+        },
+        {
+          "id": "c4848641-3404-416c-af46-6c1d756e793f",
+          "code": "LAW.INPUT.nd217.violation",
+          "category": "Thành phần theo pháp luật",
+          "title": "Báo cáo hiện trạng, xử phạt và kiểm định chịu lực",
+          "result": "insufficient_evidence",
+          "explanation": "Chưa xác định có thuộc trường hợp áp dụng. Khắc phục vi phạm hành chính có yêu cầu thẩm định",
+          "sources": [],
+          "missingEvidence": [
+            "Báo cáo hiện trạng, xử phạt và kiểm định chịu lực"
+          ],
+          "calculation": "",
+          "legalRefs": [
+            {
+              "label": "điểm l khoản 2 Điều 35 NĐ 217/2026",
+              "url": "https://vanban.chinhphu.vn/?classid=1&docid=218509&pageid=27160&typegroupid=4"
+            }
+          ],
+          "review": null,
+          "severity": "warning"
+        },
+        {
+          "id": "b5d74799-770e-4507-bb23-2496389f0bfb",
+          "code": "LAW.INPUT.nd217.renovation",
+          "category": "Thành phần theo pháp luật",
+          "title": "Khảo sát hiện trạng và kiểm định khi sửa chữa",
+          "result": "insufficient_evidence",
+          "explanation": "Chưa xác định có thuộc trường hợp áp dụng. Sửa chữa/cải tạo; kiểm định khi liên quan chịu lực",
+          "sources": [],
+          "missingEvidence": [
+            "Khảo sát hiện trạng và kiểm định khi sửa chữa"
+          ],
+          "calculation": "",
+          "legalRefs": [
+            {
+              "label": "điểm m khoản 2 Điều 35 NĐ 217/2026",
+              "url": "https://vanban.chinhphu.vn/?classid=1&docid=218509&pageid=27160&typegroupid=4"
+            }
+          ],
+          "review": null,
+          "severity": "warning"
+        },
+        {
+          "id": "1fba57e7-5c29-411f-907c-0cb48c65043d",
+          "code": "LAW.SCOPE",
+          "category": "Phạm vi thẩm định",
+          "title": "Phân biệt nhiệm vụ cơ quan chuyên môn và người quyết định đầu tư",
+          "result": "requires_specialist",
+          "explanation": "CQ chuyên môn: Điều 27 Luật 135/2025, Điều 38 NĐ 217; quy hoạch, đấu nối, quy chuẩn/tiêu chuẩn, an toàn/PCCC, chi phí trong phạm vi quy định. Đơn vị của người quyết định đầu tư: Điều 26 Luật 135/2025; tổng hợp chủ trương, khả thi/hiệu quả, môi trường, quản lý và các nội dung thuộc nhiệm vụ được giao. Chi phí: tách khoản 2–3 và khoản 5 Điều 7 NĐ 206. Cộng số học hoặc chênh lệch tổng không phải kết luận chấp thuận/cắt giảm chi phí.",
+          "sources": [],
+          "missingEvidence": [],
+          "calculation": "",
+          "legalRefs": [
+            {
+              "label": "Điều 26–27 Luật 135/2025",
+              "url": "https://vanban.chinhphu.vn/?classid=1&docid=216514&orggroupid=1&pageid=27160"
+            },
+            {
+              "label": "Điều 38 NĐ 217/2026",
+              "url": "https://vanban.chinhphu.vn/?classid=1&docid=218509&pageid=27160&typegroupid=4"
+            },
+            {
+              "label": "Điều 7 NĐ 206/2026",
+              "url": "https://vanban.chinhphu.vn/?docid=218454&orggroupid=2&pageid=27160"
+            }
+          ],
+          "review": null,
+          "severity": "info"
+        },
+        {
+          "id": "7608bab6-5100-49b6-afd9-11a3fb7fa4f5",
+          "code": "LAW.AUTHORITY",
+          "category": "Pháp lý và năng lực",
+          "title": "Xác định đúng cơ quan có thẩm quyền",
+          "result": "requires_specialist",
+          "explanation": "Cần loại, nhóm, cấp công trình chính, người quyết định đầu tư, địa bàn, phân cấp và lịch sử thẩm định; không suy ra chỉ từ tên tỉnh.",
+          "sources": [],
+          "missingEvidence": [
+            "Căn cứ xác định thẩm quyền cụ thể"
+          ],
+          "calculation": "",
+          "legalRefs": [
+            {
+              "label": "Điều 32–33; khoản 7–9 Điều 76 NĐ 217/2026",
+              "url": "https://vanban.chinhphu.vn/?classid=1&docid=218509&pageid=27160&typegroupid=4"
+            }
+          ],
+          "review": null,
+          "severity": "info"
+        },
+        {
+          "id": "c24b33ef-cbd9-4d3b-bdc7-5a94b1cf4ade",
+          "code": "DATA.REVIEW",
+          "category": "Dữ liệu",
+          "title": "Dữ liệu cần chuyên viên xác nhận",
+          "result": "insufficient_evidence",
+          "explanation": "Còn 87 trường dữ liệu chưa xác nhận. Các phép kiểm tra hiện là kết quả sơ bộ.",
+          "sources": [],
+          "missingEvidence": [
+            "Xác nhận các trường dữ liệu quan trọng"
+          ],
+          "calculation": "",
+          "legalRefs": [],
+          "review": null,
+          "severity": "warning"
+        }
+      ],
+      "costVersions": [
+        {
+          "documentId": "d6a42845-15c1-483c-9c02-a7f8d16b559c",
+          "name": "KT05_v1.docx",
+          "version": 1,
+          "total": "217230000000",
+          "sum": "217230000000",
+          "items": [
+            {
+              "key": "land",
+              "name": "Chi phí GPMB",
+              "value": "9000000000"
+            },
+            {
+              "key": "construction",
+              "name": "Chi phí xây dựng",
+              "value": "170129000000"
+            },
+            {
+              "key": "equipment",
+              "name": "Chi phí thiết bị",
+              "value": "10744000000"
+            },
+            {
+              "key": "management",
+              "name": "Chi phí quản lý dự án",
+              "value": "3090000000"
+            },
+            {
+              "key": "consulting",
+              "name": "Chi phí tư vấn",
+              "value": "9530000000"
+            },
+            {
+              "key": "other",
+              "name": "Chi phí khác",
+              "value": "1587000000"
+            },
+            {
+              "key": "contingency",
+              "name": "Chi phí dự phòng",
+              "value": "13150000000"
+            }
+          ]
+        }
+      ],
+      "costComparison": null,
+      "provider": "deterministic",
+      "aiStatus": "Chưa gọi mô hình AI; kết quả kiểm tra bằng quy tắc.",
+      "legalDate": "2026-09-27",
+      "legalOverview": {
+        "profile": {
+          "code": "nd217",
+          "reason": "Hồ sơ trình từ 01/07/2026; xét NĐ 217/2026 và các điều kiện phạm vi, thẩm quyền.",
+          "scope": "construction",
+          "scopeLabel": "Cơ quan chuyên môn về xây dựng",
+          "confirmed": false,
+          "context": {
+            "submissionDate": "2026-09-27",
+            "scope": "construction",
+            "stage": "original",
+            "priorStatus": "unknown",
+            "note": "",
+            "confirmedBy": null
+          },
+          "label": "NĐ 217/2026",
+          "refs": [
+            {
+              "label": "Điều 75; khoản 1, 2, 7–9 Điều 76 NĐ 217/2026",
+              "url": "https://vanban.chinhphu.vn/?classid=1&docid=218509&pageid=27160&typegroupid=4"
+            }
+          ],
+          "templates": {
+            "submission": "01",
+            "notice": "03",
+            "decision": "09",
+            "supplement": "15",
+            "suspension": "16"
+          }
+        },
+        "checklist": [
+          {
+            "id": "nd217.submission",
+            "name": "Tờ trình theo Mẫu số 01",
+            "condition": "Thành phần cơ bản theo điều khoản",
+            "conditional": false,
+            "applicability": "required",
+            "state": "attached",
+            "requirementIds": [
+              "TTR"
+            ],
+            "documentIds": [
+              "94023b62-4a0f-4bff-b178-aa8a9e95a2e3"
+            ],
+            "note": "",
+            "reviewedBy": null,
+            "legalRef": {
+              "label": "khoản 2 Điều 35 NĐ 217/2026",
+              "url": "https://vanban.chinhphu.vn/?classid=1&docid=218509&pageid=27160&typegroupid=4"
+            }
+          },
+          {
+            "id": "nd217.policy",
+            "name": "Chủ trương / thông tin dự án / đề án du lịch rừng",
+            "condition": "Xác định loại văn bản phù hợp trường hợp dự án",
+            "conditional": true,
+            "applicability": "unknown",
+            "state": "unknown",
+            "requirementIds": [],
+            "documentIds": [],
+            "note": "",
+            "reviewedBy": null,
+            "legalRef": {
+              "label": "điểm a khoản 2 Điều 35 NĐ 217/2026",
+              "url": "https://vanban.chinhphu.vn/?classid=1&docid=218509&pageid=27160&typegroupid=4"
+            }
+          },
+          {
+            "id": "nd217.investment_transition",
+            "name": "Giấy tờ đầu tư chuyển tiếp",
+            "condition": "Dự án chuyển tiếp không phải chấp thuận chủ trương",
+            "conditional": true,
+            "applicability": "unknown",
+            "state": "unknown",
+            "requirementIds": [],
+            "documentIds": [],
+            "note": "",
+            "reviewedBy": null,
+            "legalRef": {
+              "label": "điểm b khoản 2 Điều 35 NĐ 217/2026",
+              "url": "https://vanban.chinhphu.vn/?classid=1&docid=218509&pageid=27160&typegroupid=4"
+            }
+          },
+          {
+            "id": "nd217.architecture",
+            "name": "Phương án kiến trúc và bản vẽ được lựa chọn",
+            "condition": "Thuộc diện thi tuyển kiến trúc",
+            "conditional": true,
+            "applicability": "unknown",
+            "state": "unknown",
+            "requirementIds": [],
+            "documentIds": [],
+            "note": "",
+            "reviewedBy": null,
+            "legalRef": {
+              "label": "điểm c khoản 2 Điều 35 NĐ 217/2026",
+              "url": "https://vanban.chinhphu.vn/?classid=1&docid=218509&pageid=27160&typegroupid=4"
+            }
+          },
+          {
+            "id": "nd217.planning",
+            "name": "Văn bản và bản vẽ quy hoạch làm căn cứ lập dự án",
+            "condition": "Thành phần cơ bản theo điều khoản",
+            "conditional": false,
+            "applicability": "required",
+            "state": "missing",
+            "requirementIds": [],
+            "documentIds": [],
+            "note": "",
+            "reviewedBy": null,
+            "legalRef": {
+              "label": "điểm d khoản 2 Điều 35 NĐ 217/2026",
+              "url": "https://vanban.chinhphu.vn/?classid=1&docid=218509&pageid=27160&typegroupid=4"
+            }
+          },
+          {
+            "id": "nd217.connections",
+            "name": "Thỏa thuận đấu nối hạ tầng",
+            "condition": "Có yêu cầu đấu nối và văn bản tương ứng",
+            "conditional": true,
+            "applicability": "unknown",
+            "state": "unknown",
+            "requirementIds": [],
+            "documentIds": [],
+            "note": "",
+            "reviewedBy": null,
+            "legalRef": {
+              "label": "điểm đ khoản 2 Điều 35 NĐ 217/2026",
+              "url": "https://vanban.chinhphu.vn/?classid=1&docid=218509&pageid=27160&typegroupid=4"
+            }
+          },
+          {
+            "id": "nd217.height",
+            "name": "Chấp thuận độ cao công trình",
+            "condition": "Thuộc trường hợp phải chấp thuận độ cao, xét ngoại lệ đã có ý kiến khi duyệt quy hoạch",
+            "conditional": true,
+            "applicability": "unknown",
+            "state": "unknown",
+            "requirementIds": [],
+            "documentIds": [],
+            "note": "",
+            "reviewedBy": null,
+            "legalRef": {
+              "label": "điểm đ khoản 2 Điều 35 NĐ 217/2026",
+              "url": "https://vanban.chinhphu.vn/?classid=1&docid=218509&pageid=27160&typegroupid=4"
+            }
+          },
+          {
+            "id": "nd217.other_legal",
+            "name": "Tài liệu pháp lý khác liên quan",
+            "condition": "Có yêu cầu theo quy định chuyên ngành hoặc trường hợp dự án",
+            "conditional": true,
+            "applicability": "unknown",
+            "state": "unknown",
+            "requirementIds": [],
+            "documentIds": [],
+            "note": "",
+            "reviewedBy": null,
+            "legalRef": {
+              "label": "điểm e khoản 2 Điều 35 NĐ 217/2026",
+              "url": "https://vanban.chinhphu.vn/?classid=1&docid=218509&pageid=27160&typegroupid=4"
+            }
+          },
+          {
+            "id": "nd217.survey",
+            "name": "Hồ sơ khảo sát xây dựng được phê duyệt",
+            "condition": "Thành phần cơ bản theo điều khoản",
+            "conditional": false,
+            "applicability": "required",
+            "state": "attached",
+            "requirementIds": [
+              "KT01",
+              "KT02"
+            ],
+            "documentIds": [
+              "6fa14cae-7fe2-4d25-b3df-83b930613b24",
+              "67615cb9-7eff-4099-89c5-4cc0cc879bff"
+            ],
+            "note": "",
+            "reviewedBy": null,
+            "legalRef": {
+              "label": "điểm g khoản 2 Điều 35 NĐ 217/2026",
+              "url": "https://vanban.chinhphu.vn/?classid=1&docid=218509&pageid=27160&typegroupid=4"
+            }
+          },
+          {
+            "id": "nd217.feasibility",
+            "name": "Thuyết minh BCNCKT và hồ sơ thiết kế được lựa chọn",
+            "condition": "Thành phần cơ bản theo điều khoản",
+            "conditional": false,
+            "applicability": "required",
+            "state": "attached",
+            "requirementIds": [
+              "KT03",
+              "KT04"
+            ],
+            "documentIds": [
+              "1f6190aa-a638-4ebf-a42b-107fae1620e5",
+              "e5f4543f-c4d3-4f3a-8cec-58b3835bac08"
+            ],
+            "note": "",
+            "reviewedBy": null,
+            "legalRef": {
+              "label": "điểm h khoản 2 Điều 35 NĐ 217/2026",
+              "url": "https://vanban.chinhphu.vn/?classid=1&docid=218509&pageid=27160&typegroupid=4"
+            }
+          },
+          {
+            "id": "nd217.design_review",
+            "name": "Báo cáo thẩm tra thiết kế theo Mẫu số 02",
+            "condition": "Xét khoản 5 Điều 26 Luật 135/2025 và trường hợp yêu cầu thẩm tra",
+            "conditional": true,
+            "applicability": "unknown",
+            "state": "unknown",
+            "requirementIds": [],
+            "documentIds": [],
+            "note": "",
+            "reviewedBy": null,
+            "legalRef": {
+              "label": "điểm h khoản 2 Điều 35 NĐ 217/2026",
+              "url": "https://vanban.chinhphu.vn/?classid=1&docid=218509&pageid=27160&typegroupid=4"
+            }
+          },
+          {
+            "id": "nd217.capacity",
+            "name": "Danh sách mã chứng chỉ hành nghề các chức danh chủ nhiệm, chủ trì",
+            "condition": "Thành phần cơ bản theo điều khoản",
+            "conditional": false,
+            "applicability": "required",
+            "state": "attached",
+            "requirementIds": [
+              "NL01"
+            ],
+            "documentIds": [
+              "3f26f494-0a29-484f-9976-bc4973901102"
+            ],
+            "note": "",
+            "reviewedBy": null,
+            "legalRef": {
+              "label": "Mẫu 01, mục II.3 Phụ lục I NĐ 217/2026",
+              "url": "https://vanban.chinhphu.vn/?classid=1&docid=218509&pageid=27160&typegroupid=4"
+            }
+          },
+          {
+            "id": "nd217.rail_standards",
+            "name": "Chấp thuận danh mục tiêu chuẩn đường sắt",
+            "condition": "Dự án đường sắt có yêu cầu chấp thuận",
+            "conditional": true,
+            "applicability": "unknown",
+            "state": "unknown",
+            "requirementIds": [],
+            "documentIds": [],
+            "note": "",
+            "reviewedBy": null,
+            "legalRef": {
+              "label": "điểm i khoản 2 Điều 35 NĐ 217/2026",
+              "url": "https://vanban.chinhphu.vn/?classid=1&docid=218509&pageid=27160&typegroupid=4"
+            }
+          },
+          {
+            "id": "nd217.cost",
+            "name": "TMĐT và dữ liệu giá, định mức, báo giá, thẩm định giá nếu có",
+            "condition": "Dự án tại điểm a, b, c khoản 1 Điều 17 Luật 135/2025",
+            "conditional": true,
+            "applicability": "unknown",
+            "state": "unknown",
+            "requirementIds": [
+              "KT05"
+            ],
+            "documentIds": [
+              "d6a42845-15c1-483c-9c02-a7f8d16b559c"
+            ],
+            "note": "",
+            "reviewedBy": null,
+            "legalRef": {
+              "label": "điểm k khoản 2 Điều 35 NĐ 217/2026",
+              "url": "https://vanban.chinhphu.vn/?classid=1&docid=218509&pageid=27160&typegroupid=4"
+            }
+          },
+          {
+            "id": "nd217.violation",
+            "name": "Báo cáo hiện trạng, xử phạt và kiểm định chịu lực",
+            "condition": "Khắc phục vi phạm hành chính có yêu cầu thẩm định",
+            "conditional": true,
+            "applicability": "unknown",
+            "state": "unknown",
+            "requirementIds": [],
+            "documentIds": [],
+            "note": "",
+            "reviewedBy": null,
+            "legalRef": {
+              "label": "điểm l khoản 2 Điều 35 NĐ 217/2026",
+              "url": "https://vanban.chinhphu.vn/?classid=1&docid=218509&pageid=27160&typegroupid=4"
+            }
+          },
+          {
+            "id": "nd217.renovation",
+            "name": "Khảo sát hiện trạng và kiểm định khi sửa chữa",
+            "condition": "Sửa chữa/cải tạo; kiểm định khi liên quan chịu lực",
+            "conditional": true,
+            "applicability": "unknown",
+            "state": "unknown",
+            "requirementIds": [],
+            "documentIds": [],
+            "note": "",
+            "reviewedBy": null,
+            "legalRef": {
+              "label": "điểm m khoản 2 Điều 35 NĐ 217/2026",
+              "url": "https://vanban.chinhphu.vn/?classid=1&docid=218509&pageid=27160&typegroupid=4"
+            }
+          }
+        ],
+        "warnings": [
+          "Nộp tệp chưa chứng minh tính hợp lệ, phê duyệt khảo sát, chữ ký số hoặc đủ bản vẽ.",
+          "Thẩm quyền phải kiểm tra Điều 32–33 và chuyển tiếp Điều 76; địa phương công trình không tự quyết định cơ quan thẩm định.",
+          "QCVN 10:2025/BCA trong thư mục bị đặt tên nhầm: nội dung về trang bị PCCC, không phải tiếp cận sử dụng. Kiểm tra QCVN 10:2024/BXD và chuyển tiếp.",
+          "Bản dự thảo và bản chuyển đổi chưa đối chiếu nguyên bản không được dùng làm căn cứ kết luận."
+        ],
+        "scopeNotes": [
+          "CQ chuyên môn: Điều 27 Luật 135/2025, Điều 38 NĐ 217; quy hoạch, đấu nối, quy chuẩn/tiêu chuẩn, an toàn/PCCC, chi phí trong phạm vi quy định.",
+          "Đơn vị của người quyết định đầu tư: Điều 26 Luật 135/2025; tổng hợp chủ trương, khả thi/hiệu quả, môi trường, quản lý và các nội dung thuộc nhiệm vụ được giao.",
+          "Chi phí: tách khoản 2–3 và khoản 5 Điều 7 NĐ 206. Cộng số học hoặc chênh lệch tổng không phải kết luận chấp thuận/cắt giảm chi phí."
+        ]
+      },
+      "revision": 15,
+      "aiNotes": []
+    }
+  ],
+  "consultations": [],
+  "audit": [
+    {
+      "id": "af065d18-662a-4b22-b08e-bbc54bc144ef",
+      "at": "2026-09-27T03:19:53.661358+00:00",
+      "actor": "Chuyên viên mẫu",
+      "action": "Nộp tài liệu mẫu",
+      "detail": "TTR_v1.docx"
+    },
+    {
+      "id": "89b00a20-2637-4a21-8c4b-2cb367127542",
+      "at": "2026-09-27T03:19:53.731375+00:00",
+      "actor": "Chuyên viên mẫu",
+      "action": "Nộp tài liệu mẫu",
+      "detail": "PL01_v1.docx"
+    },
+    {
+      "id": "c2ab9437-1225-4784-9463-8fe4d17dd5cb",
+      "at": "2026-09-27T03:19:53.804646+00:00",
+      "actor": "Chuyên viên mẫu",
+      "action": "Nộp tài liệu mẫu",
+      "detail": "PL02_v1.docx"
+    },
+    {
+      "id": "9ca9f962-ef9f-4221-903a-419b5f82fe7e",
+      "at": "2026-09-27T03:19:53.890028+00:00",
+      "actor": "Chuyên viên mẫu",
+      "action": "Nộp tài liệu mẫu",
+      "detail": "PL03_v1.docx"
+    },
+    {
+      "id": "4c1aa75c-6b26-4ada-8215-21a26718be48",
+      "at": "2026-09-27T03:19:53.963426+00:00",
+      "actor": "Chuyên viên mẫu",
+      "action": "Nộp tài liệu mẫu",
+      "detail": "PL04_v1.docx"
+    },
+    {
+      "id": "26bc11bd-d651-48d3-bff7-934c4b9d2004",
+      "at": "2026-09-27T03:19:54.054123+00:00",
+      "actor": "Chuyên viên mẫu",
+      "action": "Nộp tài liệu mẫu",
+      "detail": "PL05_v1.docx"
+    },
+    {
+      "id": "668a9eae-e1d4-4029-a965-5e4c5a20f985",
+      "at": "2026-09-27T03:19:54.125111+00:00",
+      "actor": "Chuyên viên mẫu",
+      "action": "Nộp tài liệu mẫu",
+      "detail": "PL06_v1.docx"
+    },
+    {
+      "id": "93e5c8b0-8945-4b27-b392-f7287fbc2939",
+      "at": "2026-09-27T03:19:54.192058+00:00",
+      "actor": "Chuyên viên mẫu",
+      "action": "Nộp tài liệu mẫu",
+      "detail": "PL07_v1.docx"
+    },
+    {
+      "id": "13795890-fd21-4f59-a195-3e350eeca14d",
+      "at": "2026-09-27T03:19:54.290881+00:00",
+      "actor": "Chuyên viên mẫu",
+      "action": "Nộp tài liệu mẫu",
+      "detail": "KT01_v1.docx"
+    },
+    {
+      "id": "ebbfec4e-0919-4e8e-a156-b00f5262f32d",
+      "at": "2026-09-27T03:19:54.368839+00:00",
+      "actor": "Chuyên viên mẫu",
+      "action": "Nộp tài liệu mẫu",
+      "detail": "KT02_v1.docx"
+    },
+    {
+      "id": "932638e3-9c79-4fdb-a5dc-84ebb3ca6e1b",
+      "at": "2026-09-27T03:19:54.471007+00:00",
+      "actor": "Chuyên viên mẫu",
+      "action": "Nộp tài liệu mẫu",
+      "detail": "KT03_v1.docx"
+    },
+    {
+      "id": "c3061b3b-0741-4cb1-8fff-f44a84dbe1f3",
+      "at": "2026-09-27T03:19:54.561768+00:00",
+      "actor": "Chuyên viên mẫu",
+      "action": "Nộp tài liệu mẫu",
+      "detail": "KT04_v1.docx"
+    },
+    {
+      "id": "e0eb669a-6eec-4d96-8b3e-883d6ceb7436",
+      "at": "2026-09-27T03:19:54.646777+00:00",
+      "actor": "Chuyên viên mẫu",
+      "action": "Nộp tài liệu mẫu",
+      "detail": "KT05_v1.docx"
+    },
+    {
+      "id": "cc240d40-db62-47f4-8857-1166c4901d54",
+      "at": "2026-09-27T03:19:54.725358+00:00",
+      "actor": "Chuyên viên mẫu",
+      "action": "Nộp tài liệu mẫu",
+      "detail": "NL01_v1.docx"
+    }
+  ],
+  "status": "analyzed",
+  "finalReview": null,
+  "checklistCandidates": [
+    {
+      "id": "674013db-f2ba-4309-a2f1-7ed7ae84412c",
+      "requirementId": "PL01",
+      "name": "Thông báo 81-TB/TW về trường xã biên giới",
+      "category": "Pháp lý",
+      "documentId": "94023b62-4a0f-4bff-b178-aa8a9e95a2e3",
+      "segmentId": "9d9f0f22-b83d-4d29-af6b-61444fbac2e0",
+      "locator": "Khối 44, dòng 1",
+      "quote": "PL01: Thông báo 81-TB/TW về trường xã biên giới",
+      "accepted": false
+    },
+    {
+      "id": "75e5c901-78f6-4564-9e46-cee4aad37d69",
+      "requirementId": "PL02",
+      "name": "Nghị quyết 298/NQ-CP",
+      "category": "Pháp lý",
+      "documentId": "94023b62-4a0f-4bff-b178-aa8a9e95a2e3",
+      "segmentId": "3b92111c-fc11-4856-b468-7f184ef1687b",
+      "locator": "Khối 45, dòng 1",
+      "quote": "PL02: Nghị quyết 298/NQ-CP",
+      "accepted": false
+    },
+    {
+      "id": "9c4e03c2-415f-479c-8de7-8490639cec15",
+      "requirementId": "PL03",
+      "name": "Kế hoạch 564/KH-UBND của Hà Tĩnh",
+      "category": "Pháp lý",
+      "documentId": "94023b62-4a0f-4bff-b178-aa8a9e95a2e3",
+      "segmentId": "94d855a7-974b-4041-962b-61f9ae24a7c0",
+      "locator": "Khối 46, dòng 1",
+      "quote": "PL03: Kế hoạch 564/KH-UBND của Hà Tĩnh",
+      "accepted": false
+    },
+    {
+      "id": "f9def420-e8ee-49cf-806a-063ce032e969",
+      "requirementId": "PL04",
+      "name": "Quyết định 539/QĐ-UBND giao chủ đầu tư",
+      "category": "Pháp lý",
+      "documentId": "94023b62-4a0f-4bff-b178-aa8a9e95a2e3",
+      "segmentId": "e5f8e535-f7b0-4250-85e5-cae85bdddd5d",
+      "locator": "Khối 47, dòng 1",
+      "quote": "PL04: Quyết định 539/QĐ-UBND giao chủ đầu tư",
+      "accepted": false
+    },
+    {
+      "id": "3dee34f1-17c3-443f-85fc-b6b840327a59",
+      "requirementId": "PL05",
+      "name": "Văn bản 1989/BGDĐT-KHTC",
+      "category": "Pháp lý",
+      "documentId": "94023b62-4a0f-4bff-b178-aa8a9e95a2e3",
+      "segmentId": "3fd65f4e-de63-4389-9929-bafcf9a7695b",
+      "locator": "Khối 48, dòng 1",
+      "quote": "PL05: Văn bản 1989/BGDĐT-KHTC",
+      "accepted": false
+    },
+    {
+      "id": "2ca864e3-5876-4160-a061-c0497ec3ffcf",
+      "requirementId": "PL06",
+      "name": "Quyết định 119/QĐ-BQLDA và đề cương",
+      "category": "Pháp lý",
+      "documentId": "94023b62-4a0f-4bff-b178-aa8a9e95a2e3",
+      "segmentId": "ab072584-cdfd-46df-b881-97fe2c9e5752",
+      "locator": "Khối 49, dòng 1",
+      "quote": "PL06: Quyết định 119/QĐ-BQLDA và đề cương",
+      "accepted": false
+    },
+    {
+      "id": "e5f543e0-903a-47d7-ade7-a16a4d60415b",
+      "requirementId": "PL07",
+      "name": "Văn bản 545/UBND-KT và tổng mặt bằng",
+      "category": "Pháp lý",
+      "documentId": "94023b62-4a0f-4bff-b178-aa8a9e95a2e3",
+      "segmentId": "15837688-768b-4d2d-991b-5ee5865fe089",
+      "locator": "Khối 50, dòng 1",
+      "quote": "PL07: Văn bản 545/UBND-KT và tổng mặt bằng",
+      "accepted": false
+    }
+  ]
+}

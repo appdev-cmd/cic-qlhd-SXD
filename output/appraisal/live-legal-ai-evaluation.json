@@ -1,0 +1,422 @@
+{
+  "notice": "Kiểm tra kết nối, cấu trúc, truy hồi và trích dẫn nguyên văn; nội dung diễn giải cần chuyên viên duyệt.",
+  "items": [
+    {
+      "case": "GPXD sửa chữa",
+      "question": "Hồ sơ đề nghị cấp giấy phép sửa chữa, cải tạo gồm những gì theo Điều 61 Nghị định 217/2026/NĐ-CP?",
+      "sourceQuoteCheck": true,
+      "answer": {
+        "paragraphs": [
+          {
+            "text": "Theo Điều 61 Nghị định 217/2026/NĐ-CP, hồ sơ đề nghị cấp giấy phép sửa chữa, cải tạo công trình gồm có Đơn đề nghị cấp giấy phép sửa chữa, cải tạo công trình, di dời công trình theo Mẫu số 01 Phụ lục II ban hành kèm theo Nghị định này.",
+            "citations": [
+              {
+                "id": "nd217:1236",
+                "quote": "1. Đơn đề nghị cấp giấy phép sửa chữa, cải tạo công trình, di dời công trình theo Mẫu số 01 Phụ lục II ban hành kèm theo Nghị định này."
+              }
+            ]
+          },
+          {
+            "text": "Bên cạnh đó, hồ sơ đối với trường hợp sửa chữa, cải tạo bao gồm các thành phần: một trong các loại giấy tờ hợp pháp về đất đai để cấp giấy phép xây dựng theo quy định tại Điều 55 Nghị định này; bản vẽ hiện trạng của các bộ phận công trình dự kiến sửa chữa, cải tạo đã được phê duyệt theo quy định có tỷ lệ tương ứng với tỷ lệ các bản vẽ của hồ sơ đề nghị cấp phép sửa chữa, cải tạo và ảnh chụp (kích thước tối thiểu 10x15 cm) hiện trạng công trình và công trình lân cận trước khi sửa chữa, cải tạo; hồ sơ thiết kế sửa chữa, cải tạo, di dời tương ứng với mỗi loại công trình theo quy định tại Điều 57 Nghị định này.",
+            "citations": [
+              {
+                "id": "nd217:1236",
+                "quote": "2. Đối với trường hợp sửa chữa, cải tạo gồm các thành phần sau:\n- a) Một trong các loại giấy tờ hợp pháp về đất đai để cấp giấy phép xây dựng theo quy định tại Điều 55 Nghị định này;\n- b) Bản vẽ hiện trạng của các bộ phận công trình dự kiến sửa chữa, cải tạo đã được phê duyệt theo quy định có tỷ lệ tương ứng với tỷ lệ các bản vẽ của hồ sơ đề nghị cấp phép sửa chữa, cải tạo và ảnh chụp (kích thước tối thiểu 10x15 cm) hiện trạng công trình và công trình lân cận trước khi sửa chữa, cải tạo;\n- c) Hồ sơ thiết kế sửa chữa, cải tạo, di dời tương ứng với mỗi loại công trình theo quy định tại Điều 57 Nghị định này."
+              }
+            ]
+          }
+        ],
+        "sources": [
+          {
+            "id": "nd217:1236",
+            "document": "NĐ 217/2026/NĐ-CP",
+            "heading": "Điều 61. Hồ sơ đề nghị cấp giấy phép sửa chữa, cải tạo, di dời công trình",
+            "line": 1236,
+            "text": "### Điều 61. Hồ sơ đề nghị cấp giấy phép sửa chữa, cải tạo, di dời công trình\n\n\n1. Đơn đề nghị cấp giấy phép sửa chữa, cải tạo công trình, di dời công trình theo Mẫu số 01 Phụ lục II ban hành kèm theo Nghị định này.\n\n2. Đối với trường hợp sửa chữa, cải tạo gồm các thành phần sau:\n- a) Một trong các loại giấy tờ hợp pháp về đất đai để cấp giấy phép xây dựng theo quy định tại Điều 55 Nghị định này;\n- b) Bản vẽ hiện trạng của các bộ phận công trình dự kiến sửa chữa, cải tạo đã được phê duyệt theo quy định có tỷ lệ tương ứng với tỷ lệ các bản vẽ của hồ sơ đề nghị cấp phép sửa chữa, cải tạo và ảnh chụp (kích thước tối thiểu 10x15 cm) hiện trạng công trình và công trình lân cận trước khi sửa chữa, cải tạo;\n- c) Hồ sơ thiết kế sửa chữa, cải tạo, di dời tương ứng với mỗi loại công trình theo quy định tại Điều 57 Nghị định này.\n\n3. Đối với trường hợp di dời công trình gồm các thành phần sau:\n- a) Bản sao giấy tờ chứng minh quyền sử dụng đất nơi công trình sẽ di dời đến và giấy tờ hợp pháp về sở hữu công trình theo quy định của pháp luật;\n- b) Bản vẽ hoàn công công trình (nếu có) hoặc bản vẽ thiết kế mô tả thực trạng công trình được di dời, gồm mặt bằng, mặt cắt móng và bản vẽ kết cấu chịu lực chính; bản vẽ tổng mặt bằng địa điểm công trình sẽ được di dời tới; bản vẽ mặt bằng, mặt cắt móng tại địa điểm công trình sẽ di dời đến;\n- c) Báo cáo kết quả khảo sát đánh giá chất lượng hiện trạng của công trình do tổ chức có chức năng về thiết kế hoặc kiểm định thực hiện;\n- d) Phương án di dời do tổ chức có chức năng về thiết kế hoặc kiểm định thực hiện gồm phần thuyết minh về hiện trạng công trình và khu vực công trình sẽ được di dời đến; giải pháp di dời, phương án bố trí sử dụng phương tiện, thiết bị, nhân lực; giải pháp bảo đảm an toàn cho công trình, người, máy móc, thiết bị và công trình lân cận; bảo đảm vệ sinh môi trường; tiến độ di dời; tổ chức, cá nhân thực hiện di dời công trình; bản vẽ biện pháp thi công di dời công trình.",
+            "url": "https://vanban.chinhphu.vn/?classid=1&docid=218509&pageid=27160&typegroupid=4",
+            "sha256": "866e2ef741bdbad9293eb86c7364ccbfeda6c23442b230454c487b765ea398c2"
+          },
+          {
+            "id": "nd217:1056",
+            "document": "NĐ 217/2026/NĐ-CP",
+            "heading": "Điều 51. Điều kiện cấp giấy phép xây dựng sửa chữa, cải tạo, di dời công trình",
+            "line": 1056,
+            "text": "### Điều 51. Điều kiện cấp giấy phép xây dựng sửa chữa, cải tạo, di dời công trình\n\n\n1. Phù hợp điều kiện để cấp giấy phép xây dựng theo quy định tại các khoản 1, 2, 3 và 4 Điều 50 Nghị định này; riêng trường hợp sửa chữa, cải tạo giữ nguyên quy mô, chức năng hiện hữu của công trình cần đảm bảo quy định tại các khoản 1, 3 và 4 Điều 50 Nghị định này.\n\n2. Phương án di dời công trình phải bảo đảm các biện pháp an toàn lao động, an toàn đối với công trình được di dời và các công trình lân cận, bảo vệ môi trường và hệ thống hạ tầng kỹ thuật.\n\n3. Hồ sơ đề nghị cấp giấy phép xây dựng sửa chữa, cải tạo, di dời công trình theo quy định tại Điều 61 Nghị định này.",
+            "url": "https://vanban.chinhphu.vn/?classid=1&docid=218509&pageid=27160&typegroupid=4",
+            "sha256": "866e2ef741bdbad9293eb86c7364ccbfeda6c23442b230454c487b765ea398c2"
+          },
+          {
+            "id": "nd217:1252",
+            "document": "NĐ 217/2026/NĐ-CP",
+            "heading": "Điều 62. Hồ sơ đề nghị cấp giấy phép xây dựng có thời hạn",
+            "line": 1252,
+            "text": "### Điều 62. Hồ sơ đề nghị cấp giấy phép xây dựng có thời hạn\n\n\n1. Trên cơ sở kế hoạch thực hiện quy hoạch đô thị và nông thôn, vị trí xây dựng công trình, Ủy ban nhân dân cấp tỉnh ban hành quy định cụ thể về quy mô, chiều cao đối với công trình xây dựng mới và công trình đề nghị cấp giấy phép sửa chữa, cải tạo; thời hạn tồn tại của công trình để làm căn cứ cấp giấy phép xây dựng có thời hạn.\n\n2. Hồ sơ đề nghị cấp giấy phép xây dựng có thời hạn như quy định đối với từng loại công trình, công trình nhà ở riêng lẻ quy định tại Điều 57 Nghị định này. Riêng tiêu đề của đơn được đổi thành “Đơn đề nghị cấp giấy phép xây dựng có thời hạn”.",
+            "url": "https://vanban.chinhphu.vn/?classid=1&docid=218509&pageid=27160&typegroupid=4",
+            "sha256": "866e2ef741bdbad9293eb86c7364ccbfeda6c23442b230454c487b765ea398c2"
+          },
+          {
+            "id": "nd217:1169",
+            "document": "NĐ 217/2026/NĐ-CP",
+            "heading": "Điều 56. Quy định chung về hồ sơ đề nghị cấp giấy phép xây dựng",
+            "line": 1169,
+            "text": "### Điều 56. Quy định chung về hồ sơ đề nghị cấp giấy phép xây dựng\n\n\n1. Nguyên tắc thực hiện thủ tục cấp giấy phép xây dựng thực hiện theo quy định tại Điều 7 Nghị định này. Hồ sơ cấp phép xây dựng thực hiện theo quy định cấp giấy phép trực tuyến toàn trình tại cổng Dịch vụ công quốc gia; trường hợp do sự cố khách quan, đột xuất không thể thực hiện trên môi trường điện tử, cơ quan có thẩm quyền cấp giấy phép xây dựng được thực hiện theo hình thức trực tiếp tại Bộ phận Một cửa hoặc thông qua dịch vụ bưu chính công ích.\n\n2. Các văn bản, giấy tờ, bản vẽ thiết kế trong hồ sơ đề nghị cấp phép xây dựng là bản chính hoặc bản sao có chứng thực hoặc bản sao điện tử có giá trị pháp lý. Chủ đầu tư không phải nộp các loại giấy tờ hợp pháp về đất đai để cấp giấy phép xây dựng đã có trên cơ sở dữ liệu quốc gia.\n\n3. Bản vẽ thiết kế xây dựng trong hồ sơ đề nghị cấp giấy phép xây dựng phải tuân thủ quy định về quy cách hồ sơ thiết kế xây dựng và có chữ ký số của tổ chức, cá nhân thiết kế theo quy định tại Điều 18 Nghị định này.\n\n4. Báo cáo kết quả thẩm tra (nếu có).\n\n5. Chủ đầu tư nộp bộ hồ sơ đầy đủ thành phần tương ứng theo quy định tại các Điều 57, 58, 59, 60, 61 và 62 Nghị định này.",
+            "url": "https://vanban.chinhphu.vn/?classid=1&docid=218509&pageid=27160&typegroupid=4",
+            "sha256": "866e2ef741bdbad9293eb86c7364ccbfeda6c23442b230454c487b765ea398c2"
+          },
+          {
+            "id": "nd217:1182",
+            "document": "NĐ 217/2026/NĐ-CP",
+            "heading": "Điều 57. Hồ sơ đề nghị cấp giấy phép xây dựng mới",
+            "line": 1182,
+            "text": "### Điều 57. Hồ sơ đề nghị cấp giấy phép xây dựng mới\n\n\n1. Đối với công trình theo tuyến hoặc công trình không theo tuyến:\n- a) Đơn đề nghị cấp giấy phép xây dựng theo quy định tại Mẫu số 01 Phụ lục II ban hành kèm theo Nghị định này;\n- b) Một trong các loại giấy tờ hợp pháp về đất đai để cấp giấy phép xây dựng theo quy định tại Điều 55 Nghị định này hoặc văn bản chấp thuận của cơ quan có thẩm quyền về vị trí và phương án tuyến hoặc Quyết định thu hồi đất của cơ quan có thẩm quyền theo quy định của pháp luật về đất đai;\n- c) Quyết định phê duyệt dự án; Báo cáo kết quả thẩm tra thiết kế xây dựng theo quy định tại Nghị định này (nếu có); kết quả thực hiện thủ tục hành chính theo quy định của pháp luật về phòng cháy, chữa cháy và cứu nạn, cứu hộ đối với hồ sơ thiết kế đề nghị cấp giấy phép xây dựng (nếu có yêu cầu); kết quả thực hiện thủ tục hành chính về bảo vệ môi trường theo quy định của pháp luật về bảo vệ môi trường (nếu có yêu cầu); văn bản ý kiến của cơ quan chuyên môn về văn hóa cấp tỉnh (nếu có yêu cầu).\n- d) Bộ bản vẽ thiết kế xây dựng trong hồ sơ thiết kế xây dựng triển khai sau khi dự án được phê duyệt hoặc thiết kế bản vẽ thi công đối với dự án chỉ yêu cầu lập Báo cáo kinh tế - kỹ thuật được phê duyệt hoặc đóng dấu xác nhận theo quy định của pháp luật về xây dựng, gồm: bản vẽ tổng mặt bằng toàn dự án, mặt bằng định vị công trình trên lô đất, bản vẽ kiến trúc các mặt bằng, các mặt đứng và mặt cắt chủ yếu của công trình (đối với công trình không theo tuyến) hoặc sơ đồ vị trí tuyến công trình, bản vẽ mặt bằng tổng thể hoặc bản vẽ bình đồ công trình, bản vẽ các mặt cắt dọc và mặt cắt ngang chủ yếu của tuyến công trình (đối với công trình theo tuyến); bản vẽ mặt bằng, mặt cắt móng; các bản vẽ thể hiện giải pháp kết cấu chính của công trình; bản vẽ mặt bằng đấu nối với hệ thống hạ tầng kỹ thuật bên ngoài công trình, dự án.\n\n2. Đối với công trình tín ngưỡng, tôn giáo và phụ trợ:\n- a) Hồ sơ đề nghị cấp giấy phép xây dựng công trình tôn giáo gồm các tài liệu như quy định tại khoản 1 Điều này và văn bản chấp thuận về sự cần thiết xây dựng và quy mô công trình của cơ quan chuyên môn về tín ngưỡng, tôn giáo thuộc Ủy ban nhân dân cấp tỉnh;\n- b) Hồ sơ đề nghị cấp giấy phép xây dựng công trình tín ngưỡng gồm các tài liệu như quy định tại khoản 1, khoản 2 và điểm a khoản 3 Điều 60 Nghị định này, văn bản chấp thuận về sự cần thiết xây dựng và quy mô công trình của cơ quan chuyên môn về tín ngưỡng, tôn giáo thuộc Ủy ban nhân dân cấp tỉnh; Báo cáo kết quả thẩm tra thiết kế xây dựng đối với các công trình tín ngưỡng ảnh hưởng lớn đến an toàn, lợi ích cộng đồng.\n\n3. Đối với công trình tượng đài, tranh hoành tráng:\nHồ sơ đề nghị cấp giấy phép xây dựng gồm các tài liệu như quy định tại khoản 1 Điều này và văn bản của cơ quan quản lý nhà nước về văn hóa có thẩm quyền theo quy định của pháp luật về hoạt động mỹ thuật.\n\n4. Đối với công trình quảng cáo, thực hiện theo quy định của pháp luật về quảng cáo.\n\n5. Đối với công trình của các cơ quan ngoại giao và tổ chức quốc tế:\nHồ sơ đề nghị cấp giấy phép xây dựng đối với công trình của các cơ quan ngoại giao, tổ chức quốc tế và cơ quan nước ngoài đầu tư tại Việt Nam được thực hiện theo quy định tương ứng tại khoản 1 Điều này và các điều khoản quy định của Hiệp định hoặc thỏa thuận đã được ký kết với Chính phủ Việt Nam.",
+            "url": "https://vanban.chinhphu.vn/?classid=1&docid=218509&pageid=27160&typegroupid=4",
+            "sha256": "866e2ef741bdbad9293eb86c7364ccbfeda6c23442b230454c487b765ea398c2"
+          },
+          {
+            "id": "nd217:1225",
+            "document": "NĐ 217/2026/NĐ-CP",
+            "heading": "Điều 60. Hồ sơ đề nghị cấp giấy phép xây dựng đối với công trình nhà ở riêng lẻ",
+            "line": 1225,
+            "text": "### Điều 60. Hồ sơ đề nghị cấp giấy phép xây dựng đối với công trình nhà ở riêng lẻ\n\n\n1. Đơn đề nghị cấp giấy phép xây dựng theo quy định tại Mẫu số 01 Phụ lục II ban hành kèm theo Nghị định này.\n\n2. Một trong các loại giấy tờ hợp pháp về đất đai để cấp giấy phép xây dựng theo quy định tại Điều 55 Nghị định này; văn bản ý kiến của cơ quan chuyên môn về văn hóa cấp tỉnh (trường hợp pháp luật về di sản văn hóa có yêu cầu).\n\n3. Hồ sơ thiết kế xây dựng:\n- a) Đối với công trình nhà ở riêng lẻ của hộ gia đình, cá nhân: bộ bản vẽ thiết kế xây dựng kèm theo; kết quả thực hiện thủ tục hành chính theo quy định của pháp luật về phòng cháy, chữa cháy và cứu nạn, cứu hộ (nếu có yêu cầu); Báo cáo kết quả thẩm tra thiết kế xây dựng trong trường hợp pháp luật về xây dựng có yêu cầu, gồm: bản vẽ mặt bằng công trình trên lô đất kèm theo sơ đồ vị trí công trình; bản vẽ mặt bằng các tầng, các mặt đứng và mặt cắt chính của công trình; bản vẽ mặt bằng móng và mặt cắt móng kèm theo sơ đồ đấu nối hệ thống hạ tầng kỹ thuật bên ngoài công trình gồm cấp nước, thoát nước, cấp điện; bản cam kết bảo đảm an toàn đối với công trình liền kề;\n- b) Đối với công trình nhà ở riêng lẻ của tổ chức: bộ bản vẽ thiết kế xây dựng trong hồ sơ thiết kế xây dựng triển khai sau khi dự án được phê duyệt hoặc thiết kế bản vẽ thi công đối với dự án chỉ yêu cầu lập Báo cáo kinh tế - kỹ thuật được phê duyệt theo quy định của pháp luật về xây dựng kèm theo kết quả thực hiện thủ tục hành chính theo quy định của pháp luật về phòng cháy, chữa cháy và cứu nạn, cứu hộ (nếu có yêu cầu); Báo cáo kết quả thẩm tra thiết kế xây dựng trong trường hợp pháp luật về xây dựng có yêu cầu, gồm: bản vẽ mặt bằng công trình trên lô đất kèm theo sơ đồ vị trí công trình; bản vẽ mặt bằng các tầng, các mặt đứng và mặt cắt chính của công trình; bản vẽ mặt bằng móng và mặt cắt móng kèm theo sơ đồ đấu nối hệ thống hạ tầng kỹ thuật bên ngoài công trình gồm cấp nước, thoát nước, cấp điện; bản cam kết bảo đảm an toàn đối với công trình liền kề.",
+            "url": "https://vanban.chinhphu.vn/?classid=1&docid=218509&pageid=27160&typegroupid=4",
+            "sha256": "866e2ef741bdbad9293eb86c7364ccbfeda6c23442b230454c487b765ea398c2"
+          }
+        ],
+        "registry": [
+          {
+            "id": "nd217",
+            "title": "NĐ 217/2026/NĐ-CP",
+            "url": "https://vanban.chinhphu.vn/?classid=1&docid=218509&pageid=27160&typegroupid=4",
+            "sha256": "866e2ef741bdbad9293eb86c7364ccbfeda6c23442b230454c487b765ea398c2",
+            "effectiveFrom": "2026-07-01",
+            "status": "converted_requires_review"
+          },
+          {
+            "id": "pl217",
+            "title": "Phụ lục I NĐ 217/2026/NĐ-CP",
+            "url": "https://datafiles.chinhphu.vn/cpp/files/vbpq/2026/6/pl217.pdf",
+            "sha256": "6e5c8f9b25df3c87267133acd78d43acbc0251c65ab2ed5cc6f1b2976e9ab0dd",
+            "effectiveFrom": "2026-07-01",
+            "status": "converted_requires_review"
+          },
+          {
+            "id": "nd206",
+            "title": "NĐ 206/2026/NĐ-CP",
+            "url": "https://vanban.chinhphu.vn/?docid=218454&orggroupid=2&pageid=27160",
+            "sha256": "7f8cd038776ab8f8315458f61a72f76a95e3337dfcb327b5111f2e9133fd1522",
+            "effectiveFrom": "2026-07-01",
+            "status": "converted_requires_review"
+          },
+          {
+            "id": "nd207",
+            "title": "NĐ 207/2026/NĐ-CP",
+            "url": "https://xaydungchinhsach.chinhphu.vn/nghi-dinh-so-207-2026-nd-cp-ve-quan-ly-chat-iuong-thi-cong-bao-tri-cong-trinh-xay-dung-119260616081951719.htm",
+            "sha256": "176aa60e95b50b53306762f21d927fe131925d928520d746a9c6d4c44fb981a6",
+            "effectiveFrom": "2026-07-01",
+            "status": "converted_requires_review"
+          },
+          {
+            "id": "luat135",
+            "title": "Luật 135/2025/QH15",
+            "url": "https://vanban.chinhphu.vn/?classid=1&docid=216514&orggroupid=1&pageid=27160",
+            "sha256": "443f4960d5d91fd83fa8a0d6d83be9f2f5fa925a140b5f46daef7e30cdc50daa",
+            "effectiveFrom": "2026-07-01",
+            "status": "converted_requires_review"
+          }
+        ],
+        "model": "gemini-3.8-flash",
+        "status": "unverified_ai",
+        "notice": "Bản chuyển đổi trong kho tài liệu; cần đối chiếu bản chính thức và rà soát điều kiện áp dụng. Phạm vi tra cứu từ 01/07/2026.",
+        "elapsedMs": 4922
+      }
+    },
+    {
+      "case": "Nghiệm thu",
+      "question": "Nội dung, trình tự kiểm tra công tác nghiệm thu theo Điều 27 Nghị định 207/2026/NĐ-CP thực hiện thế nào?",
+      "sourceQuoteCheck": true,
+      "answer": {
+        "paragraphs": [
+          {
+            "text": "Theo Điều 27 Nghị định 207/2026/NĐ-CP, việc kiểm tra công tác nghiệm thu gồm hai nội dung chính: (1) Kiểm tra sự tuân thủ các quy định về quản lý chất lượng, quản lý an toàn của chủ đầu tư và các nhà thầu từ khi khởi công đến khi nghiệm thu hoàn thành công trình (đối với thiết bị công trình, kiểm tra sự tuân thủ về việc nghiệm thu lắp đặt, chạy thử thiết bị); và (2) Kiểm tra các điều kiện nghiệm thu hoàn thành công trình. Cơ quan chuyên môn về xây dựng không kiểm tra đối với phần dây chuyền và thiết bị công nghệ theo thiết kế công nghệ.",
+            "citations": [
+              {
+                "id": "nd207:632",
+                "quote": "1. Việc kiểm tra công tác nghiệm thu bao gồm những nội dung sau:\n- a) Kiểm tra sự tuân thủ các quy định về quản lý chất lượng, quản lý an toàn của chủ đầu tư và các nhà thầu tham gia hoạt động xây dựng trong thi công xây dựng, từ khi khởi công xây dựng đến khi nghiệm thu hoàn thành công trình theo quy định của Nghị định này. Riêng đối với thiết bị công trình, cơ quan chuyên môn về xây dựng thực hiện kiểm tra sự tuân thủ về việc nghiệm thu lắp đặt, chạy thử thiết bị của chủ đầu tư và các nhà thầu có liên quan;\n- b) Kiểm tra các điều kiện nghiệm thu hoàn thành công trình.\n\n2. Cơ quan chuyên môn về xây dựng không thực hiện kiểm tra đối với phần dây chuyền và thiết bị công nghệ theo thiết kế công nghệ."
+              }
+            ]
+          },
+          {
+            "text": "Trình tự kiểm tra trong quá trình thi công xây dựng được quy định: cơ quan chuyên môn về xây dựng kiểm tra không quá 03 lần đối với công trình cấp đặc biệt và cấp I, không quá 02 lần đối với các công trình còn lại, trừ trường hợp có sự cố chất lượng hoặc nghiệm thu theo khoản 2, khoản 3 Điều 24 Nghị định 207/2026/NĐ-CP. Căn cứ thông tin khởi công trên cơ sở dữ liệu quốc gia về hoạt động xây dựng, cơ quan này quyết định thời điểm kiểm tra, thông báo kế hoạch cho chủ đầu tư, tổ chức kiểm tra và ra văn bản thông báo kết quả kiểm tra gửi chủ đầu tư trong thời hạn không quá 10 ngày làm việc kể từ ngày tổ chức kiểm tra.",
+            "citations": [
+              {
+                "id": "nd207:632",
+                "quote": "3. Trình tự kiểm tra công tác nghiệm thu trong quá trình thi công xây dựng công trình của cơ quan chuyên môn về xây dựng:\n- a) Cơ quan chuyên môn về xây dựng thực hiện kiểm tra không quá 03 lần đối với công trình cấp đặc biệt và công trình cấp I, không quá 02 lần đối với các công trình còn lại trong quá trình từ khi khởi công xây dựng đến khi hoàn thành công trình, trừ trường hợp công trình có sự cố về chất lượng trong quá trình thi công xây dựng hoặc trường hợp chủ đầu tư tổ chức nghiệm thu theo quy định tại khoản 2, khoản 3 Điều 24 Nghị định này;\n- b) Căn cứ thông tin khởi công công trình trên cơ sở dữ liệu quốc gia về hoạt động xây dựng, cơ quan chuyên môn về xây dựng quyết định thời điểm tổ chức kiểm tra và thông báo cho chủ đầu tư kế hoạch kiểm tra; tổ chức thực hiện kiểm tra theo nội dung quy định tại điểm a khoản 1 Điều này và ra văn bản thông báo kết quả kiểm tra trong quá trình thi công xây dựng công trình gửi chủ đầu tư; thời hạn ra văn bản không quá 10 ngày làm việc kể từ ngày tổ chức kiểm tra."
+              }
+            ]
+          },
+          {
+            "text": "Đối với trình tự kiểm tra khi hoàn thành công trình, chủ đầu tư gửi 01 báo cáo hoàn thành thi công (theo Phụ lục VI) tới cơ quan chuyên môn về xây dựng. Cơ quan này tiến hành kiểm tra điều kiện nghiệm thu hoàn thành (hoặc kiểm tra toàn bộ nội dung khoản 1 nếu công trình chưa được kiểm tra trong quá trình thi công) và ra văn bản thông báo kết quả (theo Phụ lục VIII) nêu rõ chấp thuận/không chấp thuận, các tồn tại hoặc công việc phải tiếp tục thực hiện. Thời hạn ra văn bản không quá 16 ngày làm việc đối với công trình cấp I, cấp đặc biệt và 12 ngày làm việc đối với công trình còn lại kể từ khi nhận đủ hồ sơ đề nghị.",
+            "citations": [
+              {
+                "id": "nd207:632",
+                "quote": "4. Trình tự kiểm tra công tác nghiệm thu hoàn thành công trình của cơ quan chuyên môn về xây dựng:\n- a) Chủ đầu tư gửi 01 báo cáo hoàn thành thi công xây dựng hạng mục công trình, công trình xây dựng theo quy định tại Phụ lục VI Nghị định này tới cơ quan chuyên môn về xây dựng để được kiểm tra công tác nghiệm thu hoàn thành công trình quy định tại Điều 24 Nghị định này;\n- b) Cơ quan chuyên môn về xây dựng thực hiện kiểm tra theo nội dung quy định tại điểm b khoản 1 Điều này, trường hợp công trình không được kiểm tra trong quá trình thi công theo quy định tại khoản 3 Điều này thì thực hiện kiểm tra theo các nội dung quy định tại khoản 1 Điều này; ra văn bản thông báo kết quả kiểm tra công tác nghiệm thu hoàn thành hạng mục công trình, công trình xây dựng theo quy định tại Phụ lục VIII Nghị định này trong đó nêu rõ việc chấp thuận hoặc không chấp thuận kết quả nghiệm thu của chủ đầu tư, các tồn tại cần được khắc phục hoặc các công việc phải tiếp tục thực hiện (nếu có). Thời hạn ra văn bản của cơ quan chuyên môn về xây dựng không quá 16 ngày làm việc đối với công trình cấp I, cấp đặc biệt và 12 ngày làm việc đối với công trình còn lại kể từ khi nhận được hồ sơ đề nghị kiểm tra công tác nghiệm thu."
+              }
+            ]
+          },
+          {
+            "text": "Trong trường hợp công trình đã được chấp thuận kết quả nghiệm thu có điều kiện, chủ đầu tư phải nộp báo cáo kèm theo báo cáo của các nhà thầu liên quan về kết quả thực hiện các nội dung quy định tại khoản 3 Điều 24 Nghị định này đến cơ quan chuyên môn về xây dựng để được xem xét, kiểm tra.",
+            "citations": [
+              {
+                "id": "nd207:632",
+                "quote": "5. Trường hợp công trình đã được chấp thuận kết quả nghiệm thu có điều kiện, chủ đầu tư phải báo cáo kèm theo báo cáo của các nhà thầu có liên quan về kết quả thực hiện các nội dung quy định tại khoản 3 Điều 24 Nghị định này đến cơ quan chuyên môn về xây dựng để được xem xét, kiểm tra công tác nghiệm thu hoàn thành công trình xây dựng."
+              }
+            ]
+          }
+        ],
+        "sources": [
+          {
+            "id": "nd207:632",
+            "document": "NĐ 207/2026/NĐ-CP",
+            "heading": "Điều 27. Nội dung, trình tự kiểm tra công tác nghiệm thu công trình xây dựng",
+            "line": 632,
+            "text": "### Điều 27. Nội dung, trình tự kiểm tra công tác nghiệm thu công trình xây dựng\n\n\n1. Việc kiểm tra công tác nghiệm thu bao gồm những nội dung sau:\n- a) Kiểm tra sự tuân thủ các quy định về quản lý chất lượng, quản lý an toàn của chủ đầu tư và các nhà thầu tham gia hoạt động xây dựng trong thi công xây dựng, từ khi khởi công xây dựng đến khi nghiệm thu hoàn thành công trình theo quy định của Nghị định này. Riêng đối với thiết bị công trình, cơ quan chuyên môn về xây dựng thực hiện kiểm tra sự tuân thủ về việc nghiệm thu lắp đặt, chạy thử thiết bị của chủ đầu tư và các nhà thầu có liên quan;\n- b) Kiểm tra các điều kiện nghiệm thu hoàn thành công trình.\n\n2. Cơ quan chuyên môn về xây dựng không thực hiện kiểm tra đối với phần dây chuyền và thiết bị công nghệ theo thiết kế công nghệ.\n\n3. Trình tự kiểm tra công tác nghiệm thu trong quá trình thi công xây dựng công trình của cơ quan chuyên môn về xây dựng:\n- a) Cơ quan chuyên môn về xây dựng thực hiện kiểm tra không quá 03 lần đối với công trình cấp đặc biệt và công trình cấp I, không quá 02 lần đối với các công trình còn lại trong quá trình từ khi khởi công xây dựng đến khi hoàn thành công trình, trừ trường hợp công trình có sự cố về chất lượng trong quá trình thi công xây dựng hoặc trường hợp chủ đầu tư tổ chức nghiệm thu theo quy định tại khoản 2, khoản 3 Điều 24 Nghị định này;\n- b) Căn cứ thông tin khởi công công trình trên cơ sở dữ liệu quốc gia về hoạt động xây dựng, cơ quan chuyên môn về xây dựng quyết định thời điểm tổ chức kiểm tra và thông báo cho chủ đầu tư kế hoạch kiểm tra; tổ chức thực hiện kiểm tra theo nội dung quy định tại điểm a khoản 1 Điều này và ra văn bản thông báo kết quả kiểm tra trong quá trình thi công xây dựng công trình gửi chủ đầu tư; thời hạn ra văn bản không quá 10 ngày làm việc kể từ ngày tổ chức kiểm tra.\n\n4. Trình tự kiểm tra công tác nghiệm thu hoàn thành công trình của cơ quan chuyên môn về xây dựng:\n- a) Chủ đầu tư gửi 01 báo cáo hoàn thành thi công xây dựng hạng mục công trình, công trình xây dựng theo quy định tại Phụ lục VI Nghị định này tới cơ quan chuyên môn về xây dựng để được kiểm tra công tác nghiệm thu hoàn thành công trình quy định tại Điều 24 Nghị định này;\n- b) Cơ quan chuyên môn về xây dựng thực hiện kiểm tra theo nội dung quy định tại điểm b khoản 1 Điều này, trường hợp công trình không được kiểm tra trong quá trình thi công theo quy định tại khoản 3 Điều này thì thực hiện kiểm tra theo các nội dung quy định tại khoản 1 Điều này; ra văn bản thông báo kết quả kiểm tra công tác nghiệm thu hoàn thành hạng mục công trình, công trình xây dựng theo quy định tại Phụ lục VIII Nghị định này trong đó nêu rõ việc chấp thuận hoặc không chấp thuận kết quả nghiệm thu của chủ đầu tư, các tồn tại cần được khắc phục hoặc các công việc phải tiếp tục thực hiện (nếu có). Thời hạn ra văn bản của cơ quan chuyên môn về xây dựng không quá 16 ngày làm việc đối với công trình cấp I, cấp đặc biệt và 12 ngày làm việc đối với công trình còn lại kể từ khi nhận được hồ sơ đề nghị kiểm tra công tác nghiệm thu.\n\n5. Trường hợp công trình đã được chấp thuận kết quả nghiệm thu có điều kiện, chủ đầu tư phải báo cáo kèm theo báo cáo của các nhà thầu có liên quan về kết quả thực hiện các nội dung quy định tại khoản 3 Điều 24 Nghị định này đến cơ quan chuyên môn về xây dựng để được xem xét, kiểm tra công tác nghiệm thu hoàn thành công trình xây dựng.",
+            "url": "https://xaydungchinhsach.chinhphu.vn/nghi-dinh-so-207-2026-nd-cp-ve-quan-ly-chat-iuong-thi-cong-bao-tri-cong-trinh-xay-dung-119260616081951719.htm",
+            "sha256": "176aa60e95b50b53306762f21d927fe131925d928520d746a9c6d4c44fb981a6"
+          },
+          {
+            "id": "nd207:590",
+            "document": "NĐ 207/2026/NĐ-CP",
+            "heading": "Điều 25. Kiểm tra công tác nghiệm thu công trình xây dựng",
+            "line": 590,
+            "text": "### Điều 25. Kiểm tra công tác nghiệm thu công trình xây dựng\n\n\n1. Công trình xây dựng phải được cơ quan nhà nước có thẩm quyền kiểm tra công tác nghiệm thu trong quá trình thi công và khi hoàn thành thi công xây dựng công trình theo quy định tại khoản 4 Điều 57 Luật Xây dựng số 135/2025/QH15 (trừ các công trình thuộc dự án đầu tư xây dựng công trình đặc thù quy định tại điểm a khoản 1 Điều 69, các điều 70, 71 và 72 Luật Xây dựng số 135/2025/QH15), bao gồm:\n- a) Công trình thuộc dự án quan trọng quốc gia, công trình có quy mô lớn, kỹ thuật phức tạp theo quy định tại Phụ lục IX Nghị định này;\n- b) Công trình có ảnh hưởng lớn đến an toàn, lợi ích cộng đồng theo quy định của Chính phủ về quản lý hoạt động xây dựng, trừ các công trình đã nêu tại điểm a khoản này;\n- c) Trường hợp dự án đầu tư xây dựng có nhiều công trình, tổ hợp công trình hoặc một dây chuyền công nghệ gồm nhiều hạng mục công trình theo quy định tại điểm b khoản 1 Điều 3 Nghị định này, cơ quan nhà nước có thẩm quyền quy định tại khoản 4 Điều 57 Luật Xây dựng số 135/2025/QH15 chỉ thực hiện kiểm tra đối với các hạng mục công trình, công trình xây dựng quy định tại điểm a, điểm b khoản này.\n\n2. Thẩm quyền, trình tự, nội dung, chi phí kiểm tra công trình phục vụ quốc phòng, an ninh; công trình quy định tại điểm b khoản 1 Điều 69 Luật Xây dựng số 135/2025/QH15 theo quy định của Bộ trưởng Bộ Quốc phòng, Bộ trưởng Bộ Công an.\n\n3. Trình tự, nội dung, chi phí kiểm tra công tác nghiệm thu trong quá trình thi công và khi hoàn thành thi công xây dựng của Hội đồng kiểm tra nhà nước về công tác nghiệm thu công trình xây dựng đối với công trình quy định tại điểm a khoản 1 Điều này được thực hiện theo Quyết định của Thủ tướng Chính phủ quy định tại khoản 5 Điều 57 Luật Xây dựng số 135/2025/QH15.\n\n4. Quyền, trách nhiệm của cơ quan có thẩm quyền quy định tại khoản 4 Điều 57 Luật Xây dựng số 135/2025/QH15 trong việc kiểm tra công tác nghiệm thu công trình xây dựng:\n- a) Trong quá trình kiểm tra, cơ quan có thẩm quyền được quyền yêu cầu chủ đầu tư và các bên có liên quan giải trình, khắc phục các tồn tại (nếu có) và yêu cầu thực hiện thí nghiệm đối chứng, kiểm định xây dựng, thử nghiệm khả năng chịu lực của kết cấu công trình theo quy định tại Điều 8 Nghị định này;\n- b) Cơ quan có thẩm quyền được mời các cá nhân có năng lực phù hợp tham gia thực hiện việc kiểm tra công tác nghiệm thu;\n- c) Cơ quan có thẩm quyền chịu trách nhiệm về nội dung, kết quả kiểm tra thuộc phạm vi, thẩm quyền theo quy định của pháp luật; không chịu trách nhiệm về quy trình thực hiện, nội dung, kết quả thực hiện của các văn bản pháp lý có liên quan được cơ quan, người có thẩm quyền khác chấp thuận, thẩm định, phê duyệt hoặc giải quyết; không chịu trách nhiệm việc chủ đầu tư, cơ quan có liên quan thực hiện các bước tiếp theo không đúng với nội dung, yêu cầu đã nêu tại kết quả kiểm tra;\n- d) Việc kiểm tra công tác nghiệm thu của cơ quan có thẩm quyền không thay thế, không làm giảm trách nhiệm của chủ đầu tư, các nhà thầu tham gia xây dựng công trình theo quy định của pháp luật về xây dựng và pháp luật khác có liên quan.\n\n5. Chi phí cho việc kiểm tra công tác nghiệm thu trong quá trình thi công và khi hoàn thành thi công xây dựng do chủ đầu tư lập dự toán, thẩm định, phê duyệt và được tính trong tổng mức đầu tư xây dựng công trình theo quy định của Chính phủ về quản lý chi phí đầu tư xây dựng.",
+            "url": "https://xaydungchinhsach.chinhphu.vn/nghi-dinh-so-207-2026-nd-cp-ve-quan-ly-chat-iuong-thi-cong-bao-tri-cong-trinh-xay-dung-119260616081951719.htm",
+            "sha256": "176aa60e95b50b53306762f21d927fe131925d928520d746a9c6d4c44fb981a6"
+          },
+          {
+            "id": "nd207:610",
+            "document": "NĐ 207/2026/NĐ-CP",
+            "heading": "Điều 26. Thẩm quyền kiểm tra công tác nghiệm thu công trình xây dựng",
+            "line": 610,
+            "text": "### Điều 26. Thẩm quyền kiểm tra công tác nghiệm thu công trình xây dựng\n\n\n1. Thẩm quyền kiểm tra của cơ quan nhà nước có thẩm quyền quy định tại khoản 4 Điều 57 Luật Xây dựng số 135/2025/QH15 được quy định như sau:\n- a) Hội đồng kiểm tra nhà nước về công tác nghiệm thu công trình xây dựng kiểm tra đối với công trình quy định tại điểm a khoản 1 Điều 25 Nghị định này;\n- b) Cơ quan chuyên môn về xây dựng thuộc bộ quản lý công trình xây dựng chuyên ngành kiểm tra đối với công trình do Thủ tướng Chính phủ giao, công trình cấp đặc biệt thuộc chuyên ngành quản lý; công trình được xây dựng trên địa bàn hành chính từ hai tỉnh, thành phố trở lên;\n- c) Cơ quan chuyên môn về xây dựng thuộc Ủy ban nhân dân cấp tỉnh kiểm tra các loại công trình xây dựng trên địa bàn thuộc phạm vi quản lý, trừ các công trình quy định tại các điểm a và b khoản này.\n\n2. Riêng đối với một số trường hợp cụ thể quy định tại khoản này, thẩm quyền kiểm tra của cơ quan chuyên môn về xây dựng không thực hiện theo khoản 1 Điều này mà được quy định như sau:\n- a) Cơ quan chuyên môn về xây dựng thuộc bộ quản lý công trình xây dựng chuyên ngành kiểm tra đối với các công trình do bộ quản lý công trình xây dựng chuyên ngành quyết định đầu tư thuộc chuyên ngành quản lý;\n- b) Cơ quan chuyên môn về xây dựng thuộc Bộ Xây dựng kiểm tra đối với các công trình thuộc lĩnh vực hàng không, đường sắt quốc gia và hàng hải; trừ công trình quy định tại điểm đ khoản này;\n- c) Cơ quan chuyên môn về xây dựng thuộc Bộ Nông nghiệp và Môi trường kiểm tra đối với các công trình thủy lợi, đê điều có mục tiêu đầu tư và phạm vi khai thác, bảo vệ liên quan từ 02 tỉnh trở lên;\n- d) Cơ quan chuyên môn về xây dựng thuộc Bộ Công Thương kiểm tra đối với công trình theo chức năng quản lý được xây dựng trên biển theo pháp luật về biển và pháp luật chuyên ngành nằm ngoài phạm vi quản lý của Ủy ban nhân dân cấp tỉnh;\nđ) Cơ quan chuyên môn về xây dựng thuộc Bộ Quốc phòng, Bộ Công an thực hiện kiểm tra đối với các công trình phục vụ quốc phòng, an ninh và công trình quy định tại điểm b khoản 1 Điều 69 Luật Xây dựng số 135/2025/QH15;\n- e) Cơ quan chuyên môn về xây dựng thuộc Ủy ban nhân dân cấp tỉnh kiểm tra đối với công trình thuộc dự án do Ủy ban nhân dân cấp tỉnh là cơ quan chủ quản theo pháp luật về đầu tư công hoặc là cơ quan có thẩm quyền theo pháp luật về đầu tư theo phương thức đối tác công tư; trừ công trình do Thủ tướng Chính phủ giao cho cơ quan chuyên môn về xây dựng thuộc bộ quản lý công trình xây dựng chuyên ngành kiểm tra và công trình quy định tại các điểm b, c và d khoản này;\n- g) Cơ quan chuyên môn về xây dựng thuộc Ủy ban nhân dân thành phố Hà Nội, thành phố Hồ Chí Minh kiểm tra đối với các công trình được đầu tư xây dựng trên địa bàn hành chính của mình, trừ công trình quy định tại các điểm a, b, c, d khoản này và công trình cấp đặc biệt do người đứng đầu cơ quan trung ương của tổ chức chính trị, Viện kiểm sát nhân dân tối cao, Tòa án nhân dân tối cao, Kiểm toán nhà nước, Văn phòng Chủ tịch nước, Văn phòng Quốc hội, bộ, cơ quan ngang bộ, cơ quan trung ương của Mặt trận Tổ quốc Việt Nam và của tổ chức chính trị - xã hội quyết định đầu tư;\n- h) Thẩm quyền kiểm tra công trình hoặc hạng mục công trình lấn biển của dự án đầu tư lấn biển được thực hiện theo quy định pháp luật về đất đai. Thẩm quyền kiểm tra đối với hạng mục công trình, công trình xây dựng còn lại của dự án đầu tư lấn biển thực hiện theo quy định tại Nghị định này.\n\n3. Đối với dự án đầu tư xây dựng công trình hoặc dự án đầu tư xây dựng công trình được phân chia thành các dự án thành phần gồm nhiều công trình có loại và cấp khác nhau thì cơ quan có thẩm quyền kiểm tra đối với các công trình thuộc dự án là cơ quan có thẩm quyền kiểm tra đối với công trình chính có cấp cao nhất của dự án đầu tư xây dựng công trình hoặc công trình chính có cấp cao nhất của dự án thành phần; trường hợp gồm nhiều công trình chính có cùng một cấp cao nhất, cơ quan có thẩm quyền kiểm tra đối với các công trình thuộc dự án là cơ quan có thẩm quyền kiểm tra đối với công trình chính đã được lựa chọn để xác định cơ quan chủ trì thẩm định báo cáo nghiên cứu khả thi đầu tư xây dựng.",
+            "url": "https://xaydungchinhsach.chinhphu.vn/nghi-dinh-so-207-2026-nd-cp-ve-quan-ly-chat-iuong-thi-cong-bao-tri-cong-trinh-xay-dung-119260616081951719.htm",
+            "sha256": "176aa60e95b50b53306762f21d927fe131925d928520d746a9c6d4c44fb981a6"
+          },
+          {
+            "id": "nd207:629",
+            "document": "NĐ 207/2026/NĐ-CP",
+            "heading": "Điều 26. Thẩm quyền kiểm tra công tác nghiệm thu công trình xây dựng",
+            "line": 629,
+            "text": "4. Trường hợp công trình được xây dựng trên địa bàn hành chính từ 02 tỉnh trở lên không thuộc thẩm quyền kiểm tra của cơ quan chuyên môn về xây dựng thuộc bộ quản lý công trình xây dựng chuyên ngành, chủ đầu tư gửi thông báo khởi công xây dựng công trình và báo cáo hoàn thành thi công xây dựng hạng mục công trình, công trình xây dựng tới cơ quan chuyên môn về xây dựng thuộc Ủy ban nhân dân cấp tỉnh đã thực hiện thẩm định báo cáo nghiên cứu khả thi đầu tư xây dựng để được cơ quan này thực hiện kiểm tra.",
+            "url": "https://xaydungchinhsach.chinhphu.vn/nghi-dinh-so-207-2026-nd-cp-ve-quan-ly-chat-iuong-thi-cong-bao-tri-cong-trinh-xay-dung-119260616081951719.htm",
+            "sha256": "176aa60e95b50b53306762f21d927fe131925d928520d746a9c6d4c44fb981a6"
+          },
+          {
+            "id": "nd207:174",
+            "document": "NĐ 207/2026/NĐ-CP",
+            "heading": "Điều 8. Thí nghiệm đối chứng, kiểm định xây dựng, thử nghiệm khả năng chịu lực của kết cấu công trình",
+            "line": 174,
+            "text": "### Điều 8. Thí nghiệm đối chứng, kiểm định xây dựng, thử nghiệm khả năng chịu lực của kết cấu công trình\n\n\n1. Thí nghiệm đối chứng trong quá trình thi công xây dựng được thực hiện trong các trường hợp sau:\n- a) Được quy định trong chỉ dẫn kỹ thuật, hồ sơ thiết kế xây dựng được phê duyệt, hợp đồng xây dựng;\n- b) Khi vật liệu, sản phẩm xây dựng, thiết bị lắp đặt vào công trình hoặc công trình được thi công xây dựng có dấu hiệu không bảo đảm chất lượng theo yêu cầu của hồ sơ thiết kế.\n\n2. Kiểm định xây dựng, thử nghiệm khả năng chịu lực của kết cấu công trình được thực hiện trong các trường hợp sau:\n- a) Được quy định trong chỉ dẫn kỹ thuật, hồ sơ thiết kế xây dựng được phê duyệt, hợp đồng xây dựng;\n- b) Khi công trình, bộ phận công trình đã được thi công xây dựng có dấu hiệu không bảo đảm chất lượng theo yêu cầu của thiết kế hoặc không đủ các căn cứ để đánh giá chất lượng, nghiệm thu hoặc xảy ra sự cố công trình;\n- c) Theo yêu cầu của cơ quan có thẩm quyền ký hợp đồng dự án PPP;\n- d) Phục vụ cải tạo, nâng cấp công trình xây dựng;\nđ) Phục vụ công tác bảo trì công trình xây dựng theo quy định tại khoản 5 Điều 36 Nghị định này.\n\n3. Chi phí thí nghiệm đối chứng, kiểm định xây dựng và thử nghiệm khả năng chịu lực của kết cấu công trình được xác định bằng cách lập dự toán theo quy định của Chính phủ về quản lý chi phí đầu tư xây dựng và các quy định của pháp luật khác có liên quan phù hợp với nội dung, khối lượng công việc theo hợp đồng được ký kết giữa các bên hoặc đề cương được phê duyệt.\n\n4. Trong quá trình thi công xây dựng, nhà thầu thiết kế xây dựng, nhà thầu thi công xây dựng, nhà thầu cung ứng, sản xuất sản phẩm xây dựng và các nhà thầu khác có liên quan phải chịu chi phí thực hiện kiểm định xây dựng nếu kết quả kiểm định xây dựng liên quan đến công việc do mình thực hiện chứng minh được lỗi của các nhà thầu này. Đối với các trường hợp còn lại, chi phí thực hiện kiểm định xây dựng được tính vào tổng mức đầu tư xây dựng công trình.\n\n5. Chủ sở hữu hoặc chủ quản lý, sử dụng công trình có trách nhiệm chi trả chi phí thực hiện kiểm định xây dựng trong quá trình khai thác, sử dụng. Trường hợp kết quả kiểm định xây dựng chứng minh được lỗi thuộc trách nhiệm của tổ chức, cá nhân nào có liên quan thì các tổ chức, cá nhân đó phải chịu chi phí kiểm định xây dựng tương ứng với lỗi do mình gây ra.\n\n6. Nội dung, trình tự, đề cương và báo cáo kết quả kiểm định xây dựng theo quy định của Bộ trưởng Bộ Xây dựng.",
+            "url": "https://xaydungchinhsach.chinhphu.vn/nghi-dinh-so-207-2026-nd-cp-ve-quan-ly-chat-iuong-thi-cong-bao-tri-cong-trinh-xay-dung-119260616081951719.htm",
+            "sha256": "176aa60e95b50b53306762f21d927fe131925d928520d746a9c6d4c44fb981a6"
+          },
+          {
+            "id": "nd207:546",
+            "document": "NĐ 207/2026/NĐ-CP",
+            "heading": "Điều 23. Nghiệm thu giai đoạn thi công xây dựng hoặc bộ phận công trình xây dựng",
+            "line": 546,
+            "text": "### Điều 23. Nghiệm thu giai đoạn thi công xây dựng hoặc bộ phận công trình xây dựng\n\n\n1. Căn cứ vào điều kiện cụ thể của từng công trình, chủ đầu tư và các nhà thầu có liên quan được tự thỏa thuận về việc tổ chức nghiệm thu giai đoạn thi công xây dựng hoặc bộ phận công trình xây dựng trong các trường hợp sau:\n- a) Khi kết thúc một giai đoạn thi công hoặc một bộ phận công trình cần phải thực hiện kiểm tra, nghiệm thu để đánh giá chất lượng trước khi chuyển sang giai đoạn thi công tiếp theo;\n- b) Khi kết thúc một gói thầu xây dựng.\n\n2. Việc nghiệm thu giai đoạn thi công xây dựng hoặc bộ phận công trình xây dựng được thực hiện trên cơ sở xem xét kết quả các công việc đã được nghiệm thu theo quy định tại Điều 22 Nghị định này, các kết quả thí nghiệm, kiểm tra, kiểm định, thử nghiệm, chạy thử bảo đảm các yêu cầu kỹ thuật theo quy định của thiết kế xây dựng và các văn bản pháp lý theo quy định của pháp luật có liên quan trong giai đoạn thi công xây dựng để đánh giá các điều kiện nghiệm thu theo thỏa thuận giữa các bên.\n\n3. Chủ đầu tư và các nhà thầu có liên quan được tự thỏa thuận về thời điểm tổ chức nghiệm thu, trình tự, nội dung, điều kiện nghiệm thu; thành phần tham gia nghiệm thu bao gồm giám sát trưởng và các thành phần khác do chủ đầu tư và các nhà thầu có liên quan tự thỏa thuận; kết quả nghiệm thu được xác nhận bằng biên bản.",
+            "url": "https://xaydungchinhsach.chinhphu.vn/nghi-dinh-so-207-2026-nd-cp-ve-quan-ly-chat-iuong-thi-cong-bao-tri-cong-trinh-xay-dung-119260616081951719.htm",
+            "sha256": "176aa60e95b50b53306762f21d927fe131925d928520d746a9c6d4c44fb981a6"
+          }
+        ],
+        "registry": [
+          {
+            "id": "nd217",
+            "title": "NĐ 217/2026/NĐ-CP",
+            "url": "https://vanban.chinhphu.vn/?classid=1&docid=218509&pageid=27160&typegroupid=4",
+            "sha256": "866e2ef741bdbad9293eb86c7364ccbfeda6c23442b230454c487b765ea398c2",
+            "effectiveFrom": "2026-07-01",
+            "status": "converted_requires_review"
+          },
+          {
+            "id": "pl217",
+            "title": "Phụ lục I NĐ 217/2026/NĐ-CP",
+            "url": "https://datafiles.chinhphu.vn/cpp/files/vbpq/2026/6/pl217.pdf",
+            "sha256": "6e5c8f9b25df3c87267133acd78d43acbc0251c65ab2ed5cc6f1b2976e9ab0dd",
+            "effectiveFrom": "2026-07-01",
+            "status": "converted_requires_review"
+          },
+          {
+            "id": "nd206",
+            "title": "NĐ 206/2026/NĐ-CP",
+            "url": "https://vanban.chinhphu.vn/?docid=218454&orggroupid=2&pageid=27160",
+            "sha256": "7f8cd038776ab8f8315458f61a72f76a95e3337dfcb327b5111f2e9133fd1522",
+            "effectiveFrom": "2026-07-01",
+            "status": "converted_requires_review"
+          },
+          {
+            "id": "nd207",
+            "title": "NĐ 207/2026/NĐ-CP",
+            "url": "https://xaydungchinhsach.chinhphu.vn/nghi-dinh-so-207-2026-nd-cp-ve-quan-ly-chat-iuong-thi-cong-bao-tri-cong-trinh-xay-dung-119260616081951719.htm",
+            "sha256": "176aa60e95b50b53306762f21d927fe131925d928520d746a9c6d4c44fb981a6",
+            "effectiveFrom": "2026-07-01",
+            "status": "converted_requires_review"
+          },
+          {
+            "id": "luat135",
+            "title": "Luật 135/2025/QH15",
+            "url": "https://vanban.chinhphu.vn/?classid=1&docid=216514&orggroupid=1&pageid=27160",
+            "sha256": "443f4960d5d91fd83fa8a0d6d83be9f2f5fa925a140b5f46daef7e30cdc50daa",
+            "effectiveFrom": "2026-07-01",
+            "status": "converted_requires_review"
+          }
+        ],
+        "model": "gemini-3.8-flash",
+        "status": "unverified_ai",
+        "notice": "Bản chuyển đổi trong kho tài liệu; cần đối chiếu bản chính thức và rà soát điều kiện áp dụng. Phạm vi tra cứu từ 01/07/2026.",
+        "elapsedMs": 10235
+      }
+    },
+    {
+      "case": "Thiếu dữ liệu hồ sơ",
+      "question": "Tôi chưa nộp hồ sơ công trình. Chỉ dựa vào Nghị định 217/2026/NĐ-CP, bạn có thể xác nhận dự án của tôi đủ điều kiện cấp giấy phép xây dựng không?",
+      "sourceQuoteCheck": true,
+      "answer": {
+        "paragraphs": [
+          {
+            "text": "Không thể xác nhận dự án của bạn có đủ điều kiện cấp giấy phép xây dựng hay không. Theo quy định tại Nghị định 217/2026/NĐ-CP, việc xem xét và đáp ứng các điều kiện cấp giấy phép xây dựng đòi hỏi phải có và phù hợp với hồ sơ đề nghị cấp phép, bao gồm việc chủ đầu tư phải nộp đầy đủ bộ hồ sơ theo từng loại công trình.",
+            "citations": [
+              {
+                "id": "nd217:1038",
+                "quote": "Hồ sơ đề nghị cấp giấy phép xây dựng phù hợp với từng loại công trình theo quy định tại Điều 57 Nghị định này."
+              },
+              {
+                "id": "nd217:1169",
+                "quote": "Chủ đầu tư nộp bộ hồ sơ đầy đủ thành phần tương ứng theo quy định tại các Điều 57, 58, 59, 60, 61 và 62 Nghị định này."
+              }
+            ]
+          },
+          {
+            "text": "Bên cạnh đó, các điều kiện cấp giấy phép xây dựng còn gắn liền trực tiếp với các nội dung thiết kế tại hồ sơ cũng như tính hợp pháp của giấy tờ về đất đai và việc lập, thẩm định, phê duyệt thiết kế, do đó không thể đưa ra xác nhận khi chưa nộp hồ sơ công trình.",
+            "citations": [
+              {
+                "id": "nd217:1038",
+                "quote": "Phù hợp với mục đích sử dụng đất theo quy định của pháp luật về đất đai được xác định tại giấy tờ hợp pháp về đất đai theo quy định tại Điều 55 Nghị định này."
+              },
+              {
+                "id": "nd217:1038",
+                "quote": "Thiết kế xây dựng tại hồ sơ đề nghị cấp giấy phép xây dựng phải phù hợp với các nội dung theo quy định tại điểm b khoản 1 Điều 44 Luật Xây dựng năm 2025"
+              },
+              {
+                "id": "nd217:1038",
+                "quote": "Thiết kế xây dựng công trình đã được lập, thẩm định và phê duyệt theo quy định tại Luật Xây dựng năm 2025 và Nghị định này."
+              }
+            ]
+          }
+        ],
+        "sources": [
+          {
+            "id": "nd217:1056",
+            "document": "NĐ 217/2026/NĐ-CP",
+            "heading": "Điều 51. Điều kiện cấp giấy phép xây dựng sửa chữa, cải tạo, di dời công trình",
+            "line": 1056,
+            "text": "### Điều 51. Điều kiện cấp giấy phép xây dựng sửa chữa, cải tạo, di dời công trình\n\n\n1. Phù hợp điều kiện để cấp giấy phép xây dựng theo quy định tại các khoản 1, 2, 3 và 4 Điều 50 Nghị định này; riêng trường hợp sửa chữa, cải tạo giữ nguyên quy mô, chức năng hiện hữu của công trình cần đảm bảo quy định tại các khoản 1, 3 và 4 Điều 50 Nghị định này.\n\n2. Phương án di dời công trình phải bảo đảm các biện pháp an toàn lao động, an toàn đối với công trình được di dời và các công trình lân cận, bảo vệ môi trường và hệ thống hạ tầng kỹ thuật.\n\n3. Hồ sơ đề nghị cấp giấy phép xây dựng sửa chữa, cải tạo, di dời công trình theo quy định tại Điều 61 Nghị định này.",
+            "url": "https://vanban.chinhphu.vn/?classid=1&docid=218509&pageid=27160&typegroupid=4",
+            "sha256": "866e2ef741bdbad9293eb86c7364ccbfeda6c23442b230454c487b765ea398c2"
+          },
+          {
+            "id": "nd217:1038",
+            "document": "NĐ 217/2026/NĐ-CP",
+            "heading": "Điều 50. Điều kiện cấp giấy phép xây dựng mới",
+            "line": 1038,
+            "text": "### Điều 50. Điều kiện cấp giấy phép xây dựng mới\n\nViệc cấp phép xây dựng phải tuân thủ quy định về điều kiện để cấp giấy phép xây dựng theo quy định tại khoản 1 Điều 44 Luật Xây dựng năm 2025, một số nội dung được quy định cụ thể như sau:\n\n1. Phù hợp với mục đích sử dụng đất theo quy định của pháp luật về đất đai được xác định tại giấy tờ hợp pháp về đất đai theo quy định tại Điều 55 Nghị định này.\n\n2. Thiết kế xây dựng tại hồ sơ đề nghị cấp giấy phép xây dựng phải phù hợp với các nội dung theo quy định tại điểm b khoản 1 Điều 44 Luật Xây dựng năm 2025, cụ thể:\n- a) Công trình thuộc dự án đầu tư xây dựng: phù hợp với một trong các loại quy hoạch tương ứng theo quy định tại khoản 1 Điều 26 Nghị định này;\n- b) Công trình nhà ở riêng lẻ của hộ gia đình, cá nhân phải phù hợp với một trong các loại quy hoạch tương ứng theo quy định tại điểm g, h và i khoản 1 Điều 26 Nghị định này;\n- c) Công trình phục vụ trực tiếp sản xuất nông nghiệp phù hợp với quy định của Ủy ban nhân dân cấp tỉnh theo quy định tại khoản 3 Điều 178 Luật Đất đai năm 2024.\n\n3. Bảo đảm an toàn về kết cấu chịu lực cho công trình, công trình lân cận và yêu cầu về bảo vệ môi trường, phòng cháy và chữa cháy; bảo đảm an toàn hạ tầng kỹ thuật, hành lang bảo vệ công trình thuỷ lợi, đê điều, năng lượng, giao thông, di tích lịch sử - văn hoá, danh lam thắng cảnh, di sản thế giới, cảnh quan văn hóa của di tích, không gian văn hóa liên quan; bảo đảm khoảng cách an toàn đến công trình dễ cháy, nổ, độc hại và công trình quan trọng có liên quan đến quốc phòng, an ninh. Tuân thủ quy định về điều kiện để cấp giấy phép xây dựng theo quy định của pháp luật về di sản văn hoá đối với công trình văn hóa.\nCông trình xây dựng ảnh hưởng lớn đến an toàn, lợi ích cộng đồng hoặc dự án có công trình có quy mô lớn, kỹ thuật phức tạp phải được thẩm tra thiết kế xây dựng về nội dung an toàn công trình, sự tuân thủ quy chuẩn kỹ thuật, tiêu chuẩn áp dụng và các nội dung khác theo thỏa thuận hợp đồng xây dựng. Công trình thuộc diện thẩm định thiết kế về phòng cháy và chữa cháy theo quy định của pháp luật về phòng cháy, chữa cháy và cứu nạn, cứu hộ phải được thẩm tra thiết kế xây dựng bảo đảm các yêu cầu về thiết kế phòng cháy và chữa cháy theo quy định của pháp luật về phòng cháy, chữa cháy và cứu nạn, cứu hộ.\n\n4. Thiết kế xây dựng công trình đã được lập, thẩm định và phê duyệt theo quy định tại Luật Xây dựng năm 2025 và Nghị định này. Riêng việc thiết kế xây dựng công trình nhà ở riêng lẻ của hộ gia đình, cá nhân thực hiện theo quy định tại Nghị định về quản lý chất lượng công trình xây dựng.\n\n5. Hồ sơ đề nghị cấp giấy phép xây dựng phù hợp với từng loại công trình theo quy định tại Điều 57 Nghị định này.",
+            "url": "https://vanban.chinhphu.vn/?classid=1&docid=218509&pageid=27160&typegroupid=4",
+            "sha256": "866e2ef741bdbad9293eb86c7364ccbfeda6c23442b230454c487b765ea398c2"
+          },
+          {
+            "id": "nd217:1065",
+            "document": "NĐ 217/2026/NĐ-CP",
+            "heading": "Điều 52. Điều kiện cấp giấy phép xây dựng có thời hạn",
+            "line": 1065,
+            "text": "### Điều 52. Điều kiện cấp giấy phép xây dựng có thời hạn\n\n\n1. Điều kiện chung cấp giấy phép xây dựng có thời hạn gồm:\n- a) Thuộc khu vực có quy hoạch theo pháp luật về quy hoạch đô thị và nông thôn hoặc quy hoạch ngành hoặc quy hoạch chi tiết ngành được cơ quan nhà nước có thẩm quyền phê duyệt, công bố nhưng chưa thực hiện và chưa có quyết định thu hồi đất của cơ quan nhà nước có thẩm quyền;\n- b) Phù hợp với quy mô, thời hạn tồn tại của công trình do Ủy ban nhân dân cấp tỉnh quy định đối với từng khu vực hoặc chấp thuận đối với công trình cụ thể theo yêu cầu quản lý, phát triển và phù hợp với thời hạn quy hoạch;\n- c) Phù hợp với mục đích sử dụng đất được xác định tại giấy tờ hợp pháp về đất đai của chủ đầu tư đề nghị cấp giấy phép xây dựng có thời hạn theo quy định tại Điều 55 Nghị định này;\n- d) Khi hết thời hạn tồn tại của công trình ghi trong giấy phép xây dựng có thời hạn và cơ quan có thẩm quyền có quyết định thu hồi đất, chủ đầu tư cam kết tự phá dỡ công trình, nếu không tự phá dỡ thì bị cưỡng chế và chịu mọi chi phí cho việc phá dỡ. Trường hợp quá thời hạn này mà quy hoạch chưa thực hiện, chủ đầu tư được tiếp tục sử dụng công trình cho đến khi cơ quan có thẩm quyền có quyết định thu hồi đất. Việc bồi thường, hỗ trợ, tái định cư khi thu hồi đất, phá dỡ công trình thực hiện theo quy định của pháp luật về đất đai.\n\n2. Công trình xây dựng được cấp giấy phép xây dựng có thời hạn phải đáp ứng điều kiện quy định tại khoản 1 Điều này và quy định tại khoản 3, khoản 4 Điều 50 Nghị định này.\n\n3. Đối với công trình xây dựng được cấp giấy phép xây dựng có thời hạn, khi hết thời hạn tồn tại của công trình ghi trong giấy phép xây dựng mà quy hoạch chưa thực hiện thì cơ quan đã cấp giấy phép xây dựng có trách nhiệm thông báo về việc gia hạn thời gian tồn tại của công trình. Trường hợp chủ đầu tư tiếp tục có nhu cầu xây dựng mới hoặc sửa chữa, cải tạo thì thực hiện cấp giấy phép xây dựng có thời hạn.\n\n4. Đối với công trình xây dựng thuộc trường hợp quy định tại khoản 1 Điều này và đã có kế hoạch sử dụng đất cấp xã thì không cấp giấy phép xây dựng có thời hạn cho việc xây dựng mới mà chỉ cấp giấy phép xây dựng có thời hạn để sửa chữa, cải tạo.\nTrường hợp sau 02 năm liên tục kể từ ngày kế hoạch sử dụng đất cấp xã được phê duyệt, cơ quan có thẩm quyền chưa có quyết định thu hồi đất hoặc chưa cho phép chuyển mục đích sử dụng đất theo kế hoạch sử dụng đất cấp xã đã được công bố mà không điều chỉnh, hủy bỏ hoặc có điều chỉnh, hủy bỏ nhưng không công bố việc điều chỉnh, hủy bỏ kế hoạch sử dụng đất cấp xã thì người sử dụng đất được quyền đề nghị cấp giấy phép xây dựng có thời hạn theo quy định tại khoản 2 và khoản 3 Điều này. Trường hợp cơ quan nhà nước có thẩm quyền có quyết định thu hồi đất khi chưa hết thời hạn tồn tại công trình ghi trong giấy phép xây dựng có thời hạn đã được cấp thì thực hiện việc bồi thường, giải phóng mặt bằng, thu hồi đất theo quy định của pháp luật về đất đai.\n\n5. Ủy ban nhân dân cấp tỉnh ban hành quy định cụ thể về quy mô, chiều cao đối với công trình xây dựng mới và công trình đề nghị cấp giấy phép sửa chữa, cải tạo; thời hạn tồn tại của công trình để làm căn cứ cấp giấy phép xây dựng có thời hạn.\n\n6. Hồ sơ đề nghị cấp giấy phép xây dựng có thời hạn theo quy định tại Điều 62 Nghị định này.",
+            "url": "https://vanban.chinhphu.vn/?classid=1&docid=218509&pageid=27160&typegroupid=4",
+            "sha256": "866e2ef741bdbad9293eb86c7364ccbfeda6c23442b230454c487b765ea398c2"
+          },
+          {
+            "id": "nd217:1169",
+            "document": "NĐ 217/2026/NĐ-CP",
+            "heading": "Điều 56. Quy định chung về hồ sơ đề nghị cấp giấy phép xây dựng",
+            "line": 1169,
+            "text": "### Điều 56. Quy định chung về hồ sơ đề nghị cấp giấy phép xây dựng\n\n\n1. Nguyên tắc thực hiện thủ tục cấp giấy phép xây dựng thực hiện theo quy định tại Điều 7 Nghị định này. Hồ sơ cấp phép xây dựng thực hiện theo quy định cấp giấy phép trực tuyến toàn trình tại cổng Dịch vụ công quốc gia; trường hợp do sự cố khách quan, đột xuất không thể thực hiện trên môi trường điện tử, cơ quan có thẩm quyền cấp giấy phép xây dựng được thực hiện theo hình thức trực tiếp tại Bộ phận Một cửa hoặc thông qua dịch vụ bưu chính công ích.\n\n2. Các văn bản, giấy tờ, bản vẽ thiết kế trong hồ sơ đề nghị cấp phép xây dựng là bản chính hoặc bản sao có chứng thực hoặc bản sao điện tử có giá trị pháp lý. Chủ đầu tư không phải nộp các loại giấy tờ hợp pháp về đất đai để cấp giấy phép xây dựng đã có trên cơ sở dữ liệu quốc gia.\n\n3. Bản vẽ thiết kế xây dựng trong hồ sơ đề nghị cấp giấy phép xây dựng phải tuân thủ quy định về quy cách hồ sơ thiết kế xây dựng và có chữ ký số của tổ chức, cá nhân thiết kế theo quy định tại Điều 18 Nghị định này.\n\n4. Báo cáo kết quả thẩm tra (nếu có).\n\n5. Chủ đầu tư nộp bộ hồ sơ đầy đủ thành phần tương ứng theo quy định tại các Điều 57, 58, 59, 60, 61 và 62 Nghị định này.",
+            "url": "https://vanban.chinhphu.vn/?classid=1&docid=218509&pageid=27160&typegroupid=4",
+            "sha256": "866e2ef741bdbad9293eb86c7364ccbfeda6c23442b230454c487b765ea398c2"
+          },
+          {
+            "id": "nd217:1182",
+            "document": "NĐ 217/2026/NĐ-CP",
+            "heading": "Điều 57. Hồ sơ đề nghị cấp giấy phép xây dựng mới",
+            "line": 1182,
+            "text": "### Điều 57. Hồ sơ đề nghị cấp giấy phép xây dựng mới\n\n\n1. Đối với công trình theo tuyến hoặc công trình không theo tuyến:\n- a) Đơn đề nghị cấp giấy phép xây dựng theo quy định tại Mẫu số 01 Phụ lục II ban hành kèm theo Nghị định này;\n- b) Một trong các loại giấy tờ hợp pháp về đất đai để cấp giấy phép xây dựng theo quy định tại Điều 55 Nghị định này hoặc văn bản chấp thuận của cơ quan có thẩm quyền về vị trí và phương án tuyến hoặc Quyết định thu hồi đất của cơ quan có thẩm quyền theo quy định của pháp luật về đất đai;\n- c) Quyết định phê duyệt dự án; Báo cáo kết quả thẩm tra thiết kế xây dựng theo quy định tại Nghị định này (nếu có); kết quả thực hiện thủ tục hành chính theo quy định của pháp luật về phòng cháy, chữa cháy và cứu nạn, cứu hộ đối với hồ sơ thiết kế đề nghị cấp giấy phép xây dựng (nếu có yêu cầu); kết quả thực hiện thủ tục hành chính về bảo vệ môi trường theo quy định của pháp luật về bảo vệ môi trường (nếu có yêu cầu); văn bản ý kiến của cơ quan chuyên môn về văn hóa cấp tỉnh (nếu có yêu cầu).\n- d) Bộ bản vẽ thiết kế xây dựng trong hồ sơ thiết kế xây dựng triển khai sau khi dự án được phê duyệt hoặc thiết kế bản vẽ thi công đối với dự án chỉ yêu cầu lập Báo cáo kinh tế - kỹ thuật được phê duyệt hoặc đóng dấu xác nhận theo quy định của pháp luật về xây dựng, gồm: bản vẽ tổng mặt bằng toàn dự án, mặt bằng định vị công trình trên lô đất, bản vẽ kiến trúc các mặt bằng, các mặt đứng và mặt cắt chủ yếu của công trình (đối với công trình không theo tuyến) hoặc sơ đồ vị trí tuyến công trình, bản vẽ mặt bằng tổng thể hoặc bản vẽ bình đồ công trình, bản vẽ các mặt cắt dọc và mặt cắt ngang chủ yếu của tuyến công trình (đối với công trình theo tuyến); bản vẽ mặt bằng, mặt cắt móng; các bản vẽ thể hiện giải pháp kết cấu chính của công trình; bản vẽ mặt bằng đấu nối với hệ thống hạ tầng kỹ thuật bên ngoài công trình, dự án.\n\n2. Đối với công trình tín ngưỡng, tôn giáo và phụ trợ:\n- a) Hồ sơ đề nghị cấp giấy phép xây dựng công trình tôn giáo gồm các tài liệu như quy định tại khoản 1 Điều này và văn bản chấp thuận về sự cần thiết xây dựng và quy mô công trình của cơ quan chuyên môn về tín ngưỡng, tôn giáo thuộc Ủy ban nhân dân cấp tỉnh;\n- b) Hồ sơ đề nghị cấp giấy phép xây dựng công trình tín ngưỡng gồm các tài liệu như quy định tại khoản 1, khoản 2 và điểm a khoản 3 Điều 60 Nghị định này, văn bản chấp thuận về sự cần thiết xây dựng và quy mô công trình của cơ quan chuyên môn về tín ngưỡng, tôn giáo thuộc Ủy ban nhân dân cấp tỉnh; Báo cáo kết quả thẩm tra thiết kế xây dựng đối với các công trình tín ngưỡng ảnh hưởng lớn đến an toàn, lợi ích cộng đồng.\n\n3. Đối với công trình tượng đài, tranh hoành tráng:\nHồ sơ đề nghị cấp giấy phép xây dựng gồm các tài liệu như quy định tại khoản 1 Điều này và văn bản của cơ quan quản lý nhà nước về văn hóa có thẩm quyền theo quy định của pháp luật về hoạt động mỹ thuật.\n\n4. Đối với công trình quảng cáo, thực hiện theo quy định của pháp luật về quảng cáo.\n\n5. Đối với công trình của các cơ quan ngoại giao và tổ chức quốc tế:\nHồ sơ đề nghị cấp giấy phép xây dựng đối với công trình của các cơ quan ngoại giao, tổ chức quốc tế và cơ quan nước ngoài đầu tư tại Việt Nam được thực hiện theo quy định tương ứng tại khoản 1 Điều này và các điều khoản quy định của Hiệp định hoặc thỏa thuận đã được ký kết với Chính phủ Việt Nam.",
+            "url": "https://vanban.chinhphu.vn/?classid=1&docid=218509&pageid=27160&typegroupid=4",
+            "sha256": "866e2ef741bdbad9293eb86c7364ccbfeda6c23442b230454c487b765ea398c2"
+          },
+          {
+            "id": "nd217:1225",
+            "document": "NĐ 217/2026/NĐ-CP",
+            "heading": "Điều 60. Hồ sơ đề nghị cấp giấy phép xây dựng đối với công trình nhà ở riêng lẻ",
+            "line": 1225,
+            "text": "### Điều 60. Hồ sơ đề nghị cấp giấy phép xây dựng đối với công trình nhà ở riêng lẻ\n\n\n1. Đơn đề nghị cấp giấy phép xây dựng theo quy định tại Mẫu số 01 Phụ lục II ban hành kèm theo Nghị định này.\n\n2. Một trong các loại giấy tờ hợp pháp về đất đai để cấp giấy phép xây dựng theo quy định tại Điều 55 Nghị định này; văn bản ý kiến của cơ quan chuyên môn về văn hóa cấp tỉnh (trường hợp pháp luật về di sản văn hóa có yêu cầu).\n\n3. Hồ sơ thiết kế xây dựng:\n- a) Đối với công trình nhà ở riêng lẻ của hộ gia đình, cá nhân: bộ bản vẽ thiết kế xây dựng kèm theo; kết quả thực hiện thủ tục hành chính theo quy định của pháp luật về phòng cháy, chữa cháy và cứu nạn, cứu hộ (nếu có yêu cầu); Báo cáo kết quả thẩm tra thiết kế xây dựng trong trường hợp pháp luật về xây dựng có yêu cầu, gồm: bản vẽ mặt bằng công trình trên lô đất kèm theo sơ đồ vị trí công trình; bản vẽ mặt bằng các tầng, các mặt đứng và mặt cắt chính của công trình; bản vẽ mặt bằng móng và mặt cắt móng kèm theo sơ đồ đấu nối hệ thống hạ tầng kỹ thuật bên ngoài công trình gồm cấp nước, thoát nước, cấp điện; bản cam kết bảo đảm an toàn đối với công trình liền kề;\n- b) Đối với công trình nhà ở riêng lẻ của tổ chức: bộ bản vẽ thiết kế xây dựng trong hồ sơ thiết kế xây dựng triển khai sau khi dự án được phê duyệt hoặc thiết kế bản vẽ thi công đối với dự án chỉ yêu cầu lập Báo cáo kinh tế - kỹ thuật được phê duyệt theo quy định của pháp luật về xây dựng kèm theo kết quả thực hiện thủ tục hành chính theo quy định của pháp luật về phòng cháy, chữa cháy và cứu nạn, cứu hộ (nếu có yêu cầu); Báo cáo kết quả thẩm tra thiết kế xây dựng trong trường hợp pháp luật về xây dựng có yêu cầu, gồm: bản vẽ mặt bằng công trình trên lô đất kèm theo sơ đồ vị trí công trình; bản vẽ mặt bằng các tầng, các mặt đứng và mặt cắt chính của công trình; bản vẽ mặt bằng móng và mặt cắt móng kèm theo sơ đồ đấu nối hệ thống hạ tầng kỹ thuật bên ngoài công trình gồm cấp nước, thoát nước, cấp điện; bản cam kết bảo đảm an toàn đối với công trình liền kề.",
+            "url": "https://vanban.chinhphu.vn/?classid=1&docid=218509&pageid=27160&typegroupid=4",
+            "sha256": "866e2ef741bdbad9293eb86c7364ccbfeda6c23442b230454c487b765ea398c2"
+          }
+        ],
+        "registry": [
+          {
+            "id": "nd217",
+            "title": "NĐ 217/2026/NĐ-CP",
+            "url": "https://vanban.chinhphu.vn/?classid=1&docid=218509&pageid=27160&typegroupid=4",
+            "sha256": "866e2ef741bdbad9293eb86c7364ccbfeda6c23442b230454c487b765ea398c2",
+            "effectiveFrom": "2026-07-01",
+            "status": "converted_requires_review"
+          },
+          {
+            "id": "pl217",
+            "title": "Phụ lục I NĐ 217/2026/NĐ-CP",
+            "url": "https://datafiles.chinhphu.vn/cpp/files/vbpq/2026/6/pl217.pdf",
+            "sha256": "6e5c8f9b25df3c87267133acd78d43acbc0251c65ab2ed5cc6f1b2976e9ab0dd",
+            "effectiveFrom": "2026-07-01",
+            "status": "converted_requires_review"
+          },
+          {
+            "id": "nd206",
+            "title": "NĐ 206/2026/NĐ-CP",
+            "url": "https://vanban.chinhphu.vn/?docid=218454&orggroupid=2&pageid=27160",
+            "sha256": "7f8cd038776ab8f8315458f61a72f76a95e3337dfcb327b5111f2e9133fd1522",
+            "effectiveFrom": "2026-07-01",
+            "status": "converted_requires_review"
+          },
+          {
+            "id": "nd207",
+            "title": "NĐ 207/2026/NĐ-CP",
+            "url": "https://xaydungchinhsach.chinhphu.vn/nghi-dinh-so-207-2026-nd-cp-ve-quan-ly-chat-iuong-thi-cong-bao-tri-cong-trinh-xay-dung-119260616081951719.htm",
+            "sha256": "176aa60e95b50b53306762f21d927fe131925d928520d746a9c6d4c44fb981a6",
+            "effectiveFrom": "2026-07-01",
+            "status": "converted_requires_review"
+          },
+          {
+            "id": "luat135",
+            "title": "Luật 135/2025/QH15",
+            "url": "https://vanban.chinhphu.vn/?classid=1&docid=216514&orggroupid=1&pageid=27160",
+            "sha256": "443f4960d5d91fd83fa8a0d6d83be9f2f5fa925a140b5f46daef7e30cdc50daa",
+            "effectiveFrom": "2026-07-01",
+            "status": "converted_requires_review"
+          }
+        ],
+        "model": "gemini-3.8-flash",
+        "status": "unverified_ai",
+        "notice": "Bản chuyển đổi trong kho tài liệu; cần đối chiếu bản chính thức và rà soát điều kiện áp dụng. Phạm vi tra cứu từ 01/07/2026.",
+        "elapsedMs": 4671
+      }
+    }
+  ]
+}

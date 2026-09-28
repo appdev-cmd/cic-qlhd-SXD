@@ -1,108 +1,82 @@
-# BuildAppraisal AI - Phần mềm AI Hỗ trợ Thẩm định Dự án Xây dựng
+# BuildAppraisal AI
 
-> **Dự án thí điểm tại:** Sở Xây dựng tỉnh Điện Biên  
-> **Mục tiêu:** Tự động hóa và hỗ trợ chuyên viên thẩm định hồ sơ dự án, thiết kế cơ sở, dự toán xây dựng công trình sử dụng công nghệ AI / RAG và kiểm tra quy chuẩn tự động.
+Ứng dụng hỗ trợ tiếp nhận và rà soát hồ sơ BCNCKT với bằng chứng nguồn, xác nhận của chuyên viên và xuất dự thảo A4.
 
----
+**Hướng dẫn sử dụng:** [Quy trình thẩm định có hỗ trợ AI — hướng dẫn chi tiết theo vai trò](docs/HUONG_DAN_QUY_TRINH_THAM_DINH_AI.md).
 
-## 🏗️ Kiến trúc Hệ thống
+**Trạng thái demo:** Đã hoàn thiện đợt đối chiếu pháp lý và biểu mẫu `2026-07.v2`, 52 phiếu mẫu liên kết dự án. Xem [kết quả rà soát và phạm vi xác nhận](docs/LEGAL_FORMS_DEMO_REVIEW_2026_09_27.md). Domain, production và SMTP để sau theo yêu cầu.
 
-Hệ thống được tổ chức dưới dạng **Turborepo Monorepo**, bao gồm:
+## Chạy trên máy
 
-- **Web Frontend (`apps/web`):** Giao diện chuyên viên thẩm định và quản lý hồ sơ xây dựng trên nền tảng Next.js 15 (App Router, Tailwind CSS, Shadcn UI).
-- **Backend API (`services/api`):** API dịch vụ nghiệp vụ thẩm định, quản lý hồ sơ, workflow duyệt, tích hợp dữ liệu viết bằng NestJS và Prisma ORM.
-- **AI Worker (`services/ai-worker`):** Dịch vụ xử lý tài liệu, OCR bản vẽ/thuyết minh, vector hóa tri thức quy chuẩn Việt Nam (QCVN, TCVN) và RAG engine viết bằng Python FastAPI.
-- **Shared Packages (`packages/*`):** Chứa thư viện dùng chung:
-  - `@ba/core`: Định nghĩa Prisma schema, DB client, entities, types.
-  - `@ba/shared`: Tiện ích dùng chung, constants, validation schemas.
-  - `@ba/eslint-config`: Cấu hình linting chuẩn.
-  - `@ba/typescript-config`: Cấu hình TypeScript chuẩn.
+Yêu cầu Node.js 22 trở lên, pnpm và Python 3.11 trở lên. Script tự tìm Python đi kèm Codex; máy khác có thể đặt APPRAISAL_PYTHON.
 
----
-
-## 🛠️ Công nghệ Sử dụng (Tech Stack)
-
-| Thành phần | Công nghệ |
-| :--- | :--- |
-| **Monorepo Manager** | [Turborepo](https://turbo.build/) & [pnpm](https://pnpm.io/) |
-| **Backend Framework** | [NestJS](https://nestjs.com/) (TypeScript) |
-| **Frontend Framework** | [Next.js 15](https://nextjs.org/) (React 19, Tailwind CSS) |
-| **AI / Machine Learning** | Python [FastAPI](https://fastapi.tiangolo.com/), LangChain / LlamaIndex, OCR |
-| **Cơ sở dữ liệu chính & Vector** | [PostgreSQL 17](https://www.postgresql.org/) với extension [pgvector](https://github.com/pgvector/pgvector) |
-| **Caching & Job Queue** | [Redis 7](https://redis.io/) (BullMQ) |
-| **Lưu trữ hồ sơ (Object Storage)** | [MinIO](https://min.io/) (Tương thích S3 API) |
-| **ORM / Database Access** | [Prisma](https://www.prisma.io/) |
-| **Tích hợp ngoài** | DVC Dịch vụ công Tấn Dân (Mock/Thực tế) |
-
----
-
-## 🚀 Hướng dẫn Cài đặt & Khởi chạy
-
-### 1. Yêu cầu Tiên quyết
-- **Node.js**: >= 20.x
-- **pnpm**: 10.x (`npm i -g pnpm@10.26.0`)
-- **Docker** & **Docker Compose**
-- **Python**: >= 3.11 (cho AI Worker)
-
-### 2. Cài đặt Phụ thuộc
-```bash
-# Cài đặt dependencies cho toàn bộ workspace
+```powershell
 pnpm install
+pnpm setup:appraisal
+pnpm samples:build
+pnpm dev:appraisal
 ```
 
-### 3. Khởi chạy Dịch vụ Hạ tầng (Docker)
-Khởi động cơ sở dữ liệu PostgreSQL (pgvector), Redis và MinIO:
-```bash
-# Khởi động containers
-docker compose up -d
+Terminal thứ hai:
 
-# Hoặc dùng lệnh script
-pnpm docker:up
-```
-
-### 4. Cấu hình Môi trường
-Tạo file `.env` từ file mẫu `.env.example`:
-```bash
-cp .env.example .env
-```
-Cập nhật các biến môi trường cấu hình kết nối DB, MinIO, API keys nếu cần.
-
-### 5. Khởi tạo Cơ sở dữ liệu
-```bash
-# Sinh Prisma Client
-pnpm db:generate
-
-# Đẩy schema vào cơ sở dữ liệu PostgreSQL
-pnpm db:push
-
-# Khởi tạo dữ liệu mẫu ban đầu
-pnpm db:seed
-```
-
-### 6. Khởi chạy Chế độ Phát triển (Development)
-Chạy toàn bộ các ứng dụng và dịch vụ qua Turborepo:
-```bash
+```powershell
 pnpm dev
 ```
 
----
+Mở **http://localhost:3008/projects/appraisal**. Trong chế độ `demo`, chọn **Nạp mẫu lần đầu** hoặc **Nạp mẫu đã bổ sung**. Trong chế độ `cloud`, đăng nhập bằng tài khoản đã được cấp profile. Gói tài liệu ở `output/appraisal/bo-ho-so-mau-bcnckt.zip`.
 
-## 📜 Các Lệnh Thao tác Thường dùng
+## Kiến trúc thực tế
 
-| Lệnh | Mô tả |
-| :--- | :--- |
-| `pnpm dev` | Chạy song song môi trường dev cho tất cả apps & services |
-| `pnpm build` | Build tất cả packages và apps |
-| `pnpm lint` | Chạy kiểm tra cú pháp và định dạng code |
-| `pnpm test` | Chạy kiểm thử tự động |
-| `pnpm db:generate` | Sinh Prisma client |
-| `pnpm db:push` | Đồng bộ cấu trúc schema lên CSDL PostgreSQL |
-| `pnpm db:seed` | Nạp dữ liệu mẫu ban đầu |
-| `pnpm docker:up` | Khởi động Postgres, Redis, MinIO |
-| `pnpm docker:down` | Dừng các container hạ tầng |
+| Thành phần | Công nghệ và vị trí | Cổng |
+|---|---|---|
+| Web | React 19, Vite, TypeScript, Tailwind tại src/ | 3008 |
+| Core | NestJS tại services/core/ | 3001 |
+| Worker | FastAPI tại ai/app/ | 8000 |
+| Lưu dùng thử | SQLite và bản gốc trong .appraisal-data/ | — |
+| Lưu nghiệp vụ | Supabase Auth, PostgreSQL với RLS, private Storage và signed upload | — |
 
----
+Repository hiện tại chưa phải Turborepo/Next.js. Redis, Prisma và vector database chưa được triển khai. Dashboard, danh mục, bản đồ và kho văn bản đã đọc dữ liệu cloud theo quyền; môi trường này vẫn phục vụ thử nghiệm.
 
-## 🏢 Đơn vị Chủ trì & Phát triển
-- **Đơn vị ứng dụng:** Sở Xây dựng tỉnh Điện Biên
-- **Dự án:** Hệ thống Trợ lý Thẩm định Hồ sơ Xây dựng Thông minh (BuildAppraisal AI)
+## Chức năng hiện có
+
+- Nộp PDF/DOCX/TXT; SHA-256, bản gốc, phiên bản và vai trò tài liệu.
+- Nhận diện danh mục văn bản pháp lý trong tờ trình; chuyên viên xác nhận thành phần.
+- Trích trường theo nhãn, xem nguồn, xác nhận/loại bỏ dữ liệu.
+- Kiểm tra đủ hồ sơ, nhất quán chứng chỉ/tiêu chuẩn, tổng 7 khoản chi phí, chênh lệch cơ cấu, diện tích sàn và mật độ/hệ số.
+- Adapter Responses API trả đề xuất có nguồn khi cấu hình mô hình và người dùng bật AI.
+- Công việc nền, hủy/chạy lại, kiểm soát revision, lịch sử, ý kiến/giải trình và đánh giá chuyên viên.
+- Xuất báo cáo, yêu cầu bổ sung, tạm dừng, thông báo rà soát, khung quyết định bằng DOCX/PDF A4 và JSON.
+- Bộ mẫu gồm 17 tài liệu đầu vào, 10 đầu ra; mỗi tài liệu có DOCX/PDF, tổng 54 file văn bản.
+
+## Cấu hình
+
+Mặc định APPRAISAL_MODE=demo, dữ liệu lưu cục bộ. OPENAI_API_KEY và OPENAI_MODEL chỉ đặt phía server; không dùng tiền tố VITE_. Chưa cấu hình vẫn dùng được bộ quy tắc, giao diện hiển thị đúng trạng thái.
+
+OCR tiếng Việt dùng Tesseract vie+eng, chạy qua hàng đợi khi bấm Đọc OCR: tối đa 300 trang, 18 MB và 15 phút/công việc. Bản gốc giữ nguyên; dữ liệu trích xuất cần chuyên viên xác nhận. Cấu hình TESSERACT_CMD, TESSDATA_PREFIX, APPRAISAL_OCR_SPOOL ở runtime riêng.
+
+Xem [phạm vi triển khai và phần còn lại](docs/APPRAISAL_IMPLEMENTATION.md), [kế hoạch](implementation_plan.md) và [hướng dẫn bộ mẫu](output/appraisal/HUONG-DAN.md).
+
+### Cloud thử nghiệm sau triển khai G0–G1
+
+Đã kết nối nguồn dự án/hồ sơ dùng chung, đăng nhập toàn app, tải tệp trực tiếp có kiểm tra hash, phân trang server và hàng đợi bền vững. Có 161 hồ sơ/868 tài liệu đã đối soát, gắn với danh mục 26 dự án. Vertex vẫn dùng Gemini 3.8 Flash.
+
+Xem [bàn giao, kiểm thử, đăng nhập và vận hành](docs/G0_G1_DELIVERY_2026_09_27.md). Mật khẩu, runtime DB và credential Vertex nằm ngoài repo. Đây là môi trường thử nghiệm; các chức năng còn lại và điều kiện nghiệm thu production được liệt kê trong tài liệu.
+
+## Kiểm tra
+
+Hướng dẫn mới nhất: [bản demo Sở Xây dựng, kịch bản theo vai trò và phần còn lại](docs/DEMO_SXD_2026_09_27.md). Đã bổ sung phân công/quy trình nội bộ, phiếu A4, hỏi đáp pháp luật có nguồn bằng Vertex Gemini 3.8 Flash. SMTP và production được hoãn theo yêu cầu người dùng.
+
+Đợt bổ sung mới: [52 phiếu GPXD/nghiệm thu, CRUD danh mục, OCR nền, bản đồ ngoại tuyến và bộ mẫu](docs/DEMO_COMPLETION_2026_09_27.md). Bộ mẫu ở `output/appraisal/bo-mau-gpxd-nghiem-thu.zip`.
+
+```powershell
+pnpm build
+pnpm test:appraisal
+```
+
+Kiểm tra dùng dữ liệu cục bộ cách ly. Adapter mô hình/OCR dùng phản hồi giả lập; gọi mô hình thật và kiểm thử RLS cloud cần môi trường đã cấu hình.
+
+## Quy trình sau 01/07/2026
+
+Tab Căn cứ pháp lý đối chiếu Điều 35 NĐ 217 và danh sách chứng chỉ theo Mẫu 01; mỗi điều kiện áp dụng và bằng chứng cần chuyên viên xác nhận. Bộ mẫu dùng ngày trình giả lập 27/09/2026. Khung Mẫu 03/09/15/16 xuất A4; trình xem PDF.js hiển thị trực tiếp từng trang.
+
+Xem [báo cáo nghiên cứu pháp lý](docs/LEGAL_REVIEW_POST_2026_07.md) và [kiểm kê 187 tệp nguồn](docs/legal-corpus-inventory.json).

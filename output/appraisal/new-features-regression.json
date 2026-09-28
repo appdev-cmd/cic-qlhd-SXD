@@ -1,0 +1,33 @@
+{
+  "organizations": {
+    "create_update": true,
+    "role_denial": true,
+    "scope_injection_denied": true,
+    "revision_conflict": true,
+    "audit": true
+  },
+  "personnel": {
+    "create_update": true,
+    "role_denial": true,
+    "scope_injection_denied": true,
+    "revision_conflict": true,
+    "audit": true
+  },
+  "material_prices": {
+    "create_update": true,
+    "role_denial": true,
+    "scope_injection_denied": true,
+    "revision_conflict": true,
+    "audit": true
+  },
+  "ocr": {
+    "queued": true,
+    "seconds": 29.2,
+    "segments": 11,
+    "unconfirmed_facts": 3,
+    "key_values_recognized": true,
+    "original_preserved": true,
+    "review_invalidated": true,
+    "spool_cleaned": true
+  }
+}

@@ -44,8 +44,10 @@ export function SlidePanelProvider({ children }: { children: React.ReactNode }) 
   }, []);
 
   const closePanel = useCallback((id?: string) => {
+    if (document.body.dataset.modalOpen || document.body.classList.contains('modal-open')) return;
     setStack((prev) => {
       if (prev.length === 0) return prev;
+      if (prev.find(p => p.id === (id || prev[prev.length - 1].id))?.hasUnsavedChanges) return prev;
       if (!id) {
         return prev.slice(0, -1);
       }
@@ -54,7 +56,8 @@ export function SlidePanelProvider({ children }: { children: React.ReactNode }) 
   }, []);
 
   const closeAllPanels = useCallback(() => {
-    setStack([]);
+    if (document.body.dataset.modalOpen || document.body.classList.contains('modal-open')) return;
+    setStack(prev => prev.some(p => p.hasUnsavedChanges) ? prev : []);
   }, []);
 
   const bringToFront = useCallback((id: string) => {

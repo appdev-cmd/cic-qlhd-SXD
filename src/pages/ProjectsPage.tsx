@@ -1,4 +1,4 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo,useEffect } from 'react';
 import {
   LayoutGrid,
   List,
@@ -17,41 +17,33 @@ import { TableToolbar } from '../components/TableToolbar';
 import { StatusBadge } from '../components/ui/StatusBadge';
 import { SearchableSelect } from '../components/ui/SearchableSelect';
 import { Tooltip } from '../components/ui/Tooltip';
-import { MOCK_PROJECTS, type Project } from '../data/mockData';
+import type { Project } from '../data/mockData';
+import {projectService} from '../services/projectService';
+import {useFilterState} from '../hooks/useFilterState';
 import { cn, formatCurrency, formatDate } from '../lib/utils';
 import { useSlidePanel } from '../context/SlidePanelContext';
 import { ProjectDetailSlidePanel } from './projects/ProjectDetailSlidePanel';
 import { matchesSmartSearch } from '../lib/smartSearch';
+import {useAuth} from '../context/AuthContext';
+import {CreateProjectModal} from '../components/appraisal/CreateProjectModal';
+import {EntityLink} from '../components/ui/EntityLink';
 
 export function ProjectsPage() {
+  const {mode,profile}=useAuth();const [createOpen,setCreateOpen]=useState(false);const [version,setVersion]=useState(0);
   const { openPanel } = useSlidePanel();
-  const [searchQuery, setSearchQuery] = useState('');
-  const [groupFilter, setGroupFilter] = useState('all');
-  const [slaFilter, setSlaFilter] = useState('all');
-  const [stageFilter, setStageFilter] = useState('all');
-  const [viewMode, setViewMode] = useState<'table' | 'cards'>('table');
-
-  const filteredProjects = useMemo(() => {
-    return MOCK_PROJECTS.filter((p) => {
-      // 1. Tìm kiếm thông minh
-      const matchSearch =
-        matchesSmartSearch(p.name, searchQuery) ||
-        matchesSmartSearch(p.code, searchQuery) ||
-        matchesSmartSearch(p.investorName, searchQuery) ||
-        matchesSmartSearch(p.location, searchQuery);
-
-      // 2. Lọc nhóm dự án
-      const matchGroup = groupFilter === 'all' || p.projectGroup === groupFilter;
-
-      // 3. Lọc trạng thái SLA
-      const matchSla = slaFilter === 'all' || p.slaStatus === slaFilter;
-
-      // 4. Lọc giai đoạn
-      const matchStage = stageFilter === 'all' || p.stage === stageFilter;
-
-      return matchSearch && matchGroup && matchSla && matchStage;
-    });
-  }, [searchQuery, groupFilter, slaFilter, stageFilter]);
+  const [filters,setFilters]=useFilterState('projects-filters-v2',{search:'',group:'all',status:'all',stage:'all'});
+  const searchQuery=filters.search,groupFilter=filters.group,slaFilter=filters.status,stageFilter=filters.stage;
+  const setSearchQuery=(search:string)=>setFilters({...filters,search});
+  const setGroupFilter=(group:string)=>setFilters({...filters,group});
+  const setSlaFilter=(status:string)=>setFilters({...filters,status});
+  const setStageFilter=(stage:string)=>setFilters({...filters,stage});
+  const [viewMode,setViewMode]=useState<'table'|'cards'>('table');
+  const [filteredProjects,setProjects]=useState<Project[]>([]);
+  const [total,setTotal]=useState(0);const [page,setPage]=useState(0);const [error,setError]=useState('');
+  useEffect(()=>setPage(0),[JSON.stringify(filters)]);
+  useEffect(()=>{let active=true;const timer=setTimeout(()=>{
+    projectService.list({...filters,offset:page*50,limit:50}).then(result=>{if(active){setProjects(result.items);setTotal(result.total);setError('');}}).catch(e=>{if(active)setError(e.message);});
+  },180);return()=>{active=false;clearTimeout(timer);};},[JSON.stringify(filters),page,version]);
 
   const handleOpenDetail = (project: Project) => {
     openPanel({
@@ -88,7 +80,7 @@ export function ProjectsPage() {
           )}
           <div className="flex flex-col min-w-0">
             <span className="font-bold text-ink hover:text-primary-600 transition-colors line-clamp-1">
-              {p.name}
+              <EntityLink type="project" id={p.id} name={p.name} onClick={()=>handleOpenDetail(p)}/>
             </span>
             <div className="flex items-center gap-1.5 mt-0.5 text-3xs font-mono">
               <span className="text-primary-600 dark:text-primary-400 font-bold">{p.code}</span>
@@ -103,8 +95,8 @@ export function ProjectsPage() {
     {
       header: 'Chủ đầu tư / Ban QLDA',
       accessor: (p) => (
-        <span className="text-ink-secondary line-clamp-1" title={p.investorName}>
-          {p.investorName}
+        <span className="text-ink-secondary dark:text-ink-secondary line-clamp-1">
+          {p.investorId?<EntityLink type="organization" id={p.investorId} name={p.investorName}/>:p.investorName}
         </span>
       ),
       width: '20%',
@@ -150,22 +142,21 @@ export function ProjectsPage() {
 
   return (
     <div className="space-y-4">
+      {createOpen&&<CreateProjectModal onClose={()=>setCreateOpen(false)} onCreated={p=>{setCreateOpen(false);setVersion(v=>v+1);handleOpenDetail(p);}}/>}
+      {error&&<p role="alert" className="rounded-lg bg-red-50 dark:bg-red-950 p-3 text-red-700 dark:text-red-300">{error}</p>}
+      <div className="flex gap-3 text-sm text-ink dark:text-ink"><button disabled={page===0} onClick={()=>setPage(p=>p-1)}>Trang trước</button><span>Trang {page+1} · {total} dự án</span><button disabled={(page+1)*50>=total} onClick={()=>setPage(p=>p+1)}>Trang sau</button></div>
       {/* ─── THANH CÔNG CỤ LỌC CHUẨN 5 VỊ TRÍ + CHẾ ĐỘ XEM ─── */}
       <TableToolbar
         searchQuery={searchQuery}
         onSearchChange={setSearchQuery}
         searchPlaceholder="Tìm theo tên dự án, mã hồ sơ, chủ đầu tư, địa bàn..."
-        resultCount={filteredProjects.length}
+        resultCount={total}
         onResetFilters={() => {
-          setSearchQuery('');
-          setGroupFilter('all');
-          setSlaFilter('all');
-          setStageFilter('all');
+          setFilters({search:'',group:'all',status:'all',stage:'all'});
         }}
-        addNewLabel="Tiếp nhận Hồ sơ Mới"
-        onAddNew={() => {
-          handleOpenDetail(MOCK_PROJECTS[0]);
-        }}
+        addNewLabel="Tiếp nhận dự án"
+        onAddNew={mode==='cloud'&&['admin','officer','head_of_department'].includes(profile?.role||'')?()=>setCreateOpen(true):undefined}
+
         filters={
           <>
             {/* Vị trí 2: Phân loại Giai đoạn thẩm định */}

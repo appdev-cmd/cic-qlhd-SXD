@@ -1,0 +1,272 @@
+{
+  "method": "OCR raster trang PDF gốc, đối chiếu lớp chữ có sẵn. Lớp chữ chưa được chuyên gia gán nhãn; similarity không phải độ chính xác OCR. Không thay đổi bản gốc.",
+  "documents": 2,
+  "pages": 21,
+  "readablePages": 21,
+  "seconds": 46.5,
+  "meanTextSimilarity": 0.9613,
+  "numericTokens": 207,
+  "numericTokensMatched": 203,
+  "items": [
+    {
+      "document": "5.-TTr-tham-dinh-BC-NCKT-Huong-Xuan_phanquocbao-20-05-2026_10h44p07(20.05.2026_10h51p46)_signed.pdf",
+      "sha256": "df3b976a0381482f5f9e13fde69e6dc0994e8c78f4632747200f27b30a4ac744",
+      "page": 1,
+      "seconds": 2.44,
+      "textLayerChars": 2415,
+      "ocrChars": 2399,
+      "textSimilarity": 0.957,
+      "numericTokens": 31,
+      "numericTokensMatched": 31,
+      "numericTokensMissing": []
+    },
+    {
+      "document": "5.-TTr-tham-dinh-BC-NCKT-Huong-Xuan_phanquocbao-20-05-2026_10h44p07(20.05.2026_10h51p46)_signed.pdf",
+      "sha256": "df3b976a0381482f5f9e13fde69e6dc0994e8c78f4632747200f27b30a4ac744",
+      "page": 2,
+      "seconds": 1.8,
+      "textLayerChars": 2160,
+      "ocrChars": 2185,
+      "textSimilarity": 0.8404,
+      "numericTokens": 10,
+      "numericTokensMatched": 10,
+      "numericTokensMissing": []
+    },
+    {
+      "document": "5.-TTr-tham-dinh-BC-NCKT-Huong-Xuan_phanquocbao-20-05-2026_10h44p07(20.05.2026_10h51p46)_signed.pdf",
+      "sha256": "df3b976a0381482f5f9e13fde69e6dc0994e8c78f4632747200f27b30a4ac744",
+      "page": 3,
+      "seconds": 2.11,
+      "textLayerChars": 3078,
+      "ocrChars": 3088,
+      "textSimilarity": 0.9876,
+      "numericTokens": 4,
+      "numericTokensMatched": 4,
+      "numericTokensMissing": []
+    },
+    {
+      "document": "5.-TTr-tham-dinh-BC-NCKT-Huong-Xuan_phanquocbao-20-05-2026_10h44p07(20.05.2026_10h51p46)_signed.pdf",
+      "sha256": "df3b976a0381482f5f9e13fde69e6dc0994e8c78f4632747200f27b30a4ac744",
+      "page": 4,
+      "seconds": 1.61,
+      "textLayerChars": 1898,
+      "ocrChars": 1933,
+      "textSimilarity": 0.9658,
+      "numericTokens": 3,
+      "numericTokensMatched": 3,
+      "numericTokensMissing": []
+    },
+    {
+      "document": "Thong-bao-ket-qua-tham-dinh-truong-lien-cap-Huong-Xuan-1-(09.06.2026_16h59p51)_signed.pdf",
+      "sha256": "7c73fcd25de9324bed367fd357373b2f5d9f04ca96906476ee9646271dfde949",
+      "page": 1,
+      "seconds": 1.86,
+      "textLayerChars": 2297,
+      "ocrChars": 2243,
+      "textSimilarity": 0.9473,
+      "numericTokens": 21,
+      "numericTokensMatched": 21,
+      "numericTokensMissing": []
+    },
+    {
+      "document": "Thong-bao-ket-qua-tham-dinh-truong-lien-cap-Huong-Xuan-1-(09.06.2026_16h59p51)_signed.pdf",
+      "sha256": "7c73fcd25de9324bed367fd357373b2f5d9f04ca96906476ee9646271dfde949",
+      "page": 2,
+      "seconds": 1.72,
+      "textLayerChars": 2449,
+      "ocrChars": 2445,
+      "textSimilarity": 0.9883,
+      "numericTokens": 17,
+      "numericTokensMatched": 17,
+      "numericTokensMissing": []
+    },
+    {
+      "document": "Thong-bao-ket-qua-tham-dinh-truong-lien-cap-Huong-Xuan-1-(09.06.2026_16h59p51)_signed.pdf",
+      "sha256": "7c73fcd25de9324bed367fd357373b2f5d9f04ca96906476ee9646271dfde949",
+      "page": 3,
+      "seconds": 1.56,
+      "textLayerChars": 2275,
+      "ocrChars": 2291,
+      "textSimilarity": 0.9948,
+      "numericTokens": 3,
+      "numericTokensMatched": 3,
+      "numericTokensMissing": []
+    },
+    {
+      "document": "Thong-bao-ket-qua-tham-dinh-truong-lien-cap-Huong-Xuan-1-(09.06.2026_16h59p51)_signed.pdf",
+      "sha256": "7c73fcd25de9324bed367fd357373b2f5d9f04ca96906476ee9646271dfde949",
+      "page": 4,
+      "seconds": 1.64,
+      "textLayerChars": 2268,
+      "ocrChars": 2273,
+      "textSimilarity": 0.989,
+      "numericTokens": 7,
+      "numericTokensMatched": 6,
+      "numericTokensMissing": [
+        "28/5/2"
+      ]
+    },
+    {
+      "document": "Thong-bao-ket-qua-tham-dinh-truong-lien-cap-Huong-Xuan-1-(09.06.2026_16h59p51)_signed.pdf",
+      "sha256": "7c73fcd25de9324bed367fd357373b2f5d9f04ca96906476ee9646271dfde949",
+      "page": 5,
+      "seconds": 2.17,
+      "textLayerChars": 2552,
+      "ocrChars": 2558,
+      "textSimilarity": 0.985,
+      "numericTokens": 10,
+      "numericTokensMatched": 10,
+      "numericTokensMissing": []
+    },
+    {
+      "document": "Thong-bao-ket-qua-tham-dinh-truong-lien-cap-Huong-Xuan-1-(09.06.2026_16h59p51)_signed.pdf",
+      "sha256": "7c73fcd25de9324bed367fd357373b2f5d9f04ca96906476ee9646271dfde949",
+      "page": 6,
+      "seconds": 2.22,
+      "textLayerChars": 2629,
+      "ocrChars": 2583,
+      "textSimilarity": 0.9827,
+      "numericTokens": 9,
+      "numericTokensMatched": 8,
+      "numericTokensMissing": [
+        "11/6/2024"
+      ]
+    },
+    {
+      "document": "Thong-bao-ket-qua-tham-dinh-truong-lien-cap-Huong-Xuan-1-(09.06.2026_16h59p51)_signed.pdf",
+      "sha256": "7c73fcd25de9324bed367fd357373b2f5d9f04ca96906476ee9646271dfde949",
+      "page": 7,
+      "seconds": 2.11,
+      "textLayerChars": 2842,
+      "ocrChars": 2846,
+      "textSimilarity": 0.9876,
+      "numericTokens": 5,
+      "numericTokensMatched": 5,
+      "numericTokensMissing": []
+    },
+    {
+      "document": "Thong-bao-ket-qua-tham-dinh-truong-lien-cap-Huong-Xuan-1-(09.06.2026_16h59p51)_signed.pdf",
+      "sha256": "7c73fcd25de9324bed367fd357373b2f5d9f04ca96906476ee9646271dfde949",
+      "page": 8,
+      "seconds": 2.19,
+      "textLayerChars": 2785,
+      "ocrChars": 2792,
+      "textSimilarity": 0.7334,
+      "numericTokens": 4,
+      "numericTokensMatched": 4,
+      "numericTokensMissing": []
+    },
+    {
+      "document": "Thong-bao-ket-qua-tham-dinh-truong-lien-cap-Huong-Xuan-1-(09.06.2026_16h59p51)_signed.pdf",
+      "sha256": "7c73fcd25de9324bed367fd357373b2f5d9f04ca96906476ee9646271dfde949",
+      "page": 9,
+      "seconds": 2.11,
+      "textLayerChars": 2994,
+      "ocrChars": 2993,
+      "textSimilarity": 0.9843,
+      "numericTokens": 3,
+      "numericTokensMatched": 3,
+      "numericTokensMissing": []
+    },
+    {
+      "document": "Thong-bao-ket-qua-tham-dinh-truong-lien-cap-Huong-Xuan-1-(09.06.2026_16h59p51)_signed.pdf",
+      "sha256": "7c73fcd25de9324bed367fd357373b2f5d9f04ca96906476ee9646271dfde949",
+      "page": 10,
+      "seconds": 2.02,
+      "textLayerChars": 2552,
+      "ocrChars": 2556,
+      "textSimilarity": 0.9811,
+      "numericTokens": 5,
+      "numericTokensMatched": 5,
+      "numericTokensMissing": []
+    },
+    {
+      "document": "Thong-bao-ket-qua-tham-dinh-truong-lien-cap-Huong-Xuan-1-(09.06.2026_16h59p51)_signed.pdf",
+      "sha256": "7c73fcd25de9324bed367fd357373b2f5d9f04ca96906476ee9646271dfde949",
+      "page": 11,
+      "seconds": 1.92,
+      "textLayerChars": 2240,
+      "ocrChars": 2281,
+      "textSimilarity": 0.9699,
+      "numericTokens": 6,
+      "numericTokensMatched": 6,
+      "numericTokensMissing": []
+    },
+    {
+      "document": "Thong-bao-ket-qua-tham-dinh-truong-lien-cap-Huong-Xuan-1-(09.06.2026_16h59p51)_signed.pdf",
+      "sha256": "7c73fcd25de9324bed367fd357373b2f5d9f04ca96906476ee9646271dfde949",
+      "page": 12,
+      "seconds": 2.03,
+      "textLayerChars": 2350,
+      "ocrChars": 2359,
+      "textSimilarity": 0.9793,
+      "numericTokens": 4,
+      "numericTokensMatched": 4,
+      "numericTokensMissing": []
+    },
+    {
+      "document": "Thong-bao-ket-qua-tham-dinh-truong-lien-cap-Huong-Xuan-1-(09.06.2026_16h59p51)_signed.pdf",
+      "sha256": "7c73fcd25de9324bed367fd357373b2f5d9f04ca96906476ee9646271dfde949",
+      "page": 13,
+      "seconds": 1.92,
+      "textLayerChars": 2278,
+      "ocrChars": 2289,
+      "textSimilarity": 0.9771,
+      "numericTokens": 9,
+      "numericTokensMatched": 8,
+      "numericTokensMissing": [
+        "175/2"
+      ]
+    },
+    {
+      "document": "Thong-bao-ket-qua-tham-dinh-truong-lien-cap-Huong-Xuan-1-(09.06.2026_16h59p51)_signed.pdf",
+      "sha256": "7c73fcd25de9324bed367fd357373b2f5d9f04ca96906476ee9646271dfde949",
+      "page": 14,
+      "seconds": 1.73,
+      "textLayerChars": 2568,
+      "ocrChars": 2558,
+      "textSimilarity": 0.9924,
+      "numericTokens": 10,
+      "numericTokensMatched": 10,
+      "numericTokensMissing": []
+    },
+    {
+      "document": "Thong-bao-ket-qua-tham-dinh-truong-lien-cap-Huong-Xuan-1-(09.06.2026_16h59p51)_signed.pdf",
+      "sha256": "7c73fcd25de9324bed367fd357373b2f5d9f04ca96906476ee9646271dfde949",
+      "page": 15,
+      "seconds": 3.2,
+      "textLayerChars": 2920,
+      "ocrChars": 2919,
+      "textSimilarity": 0.9874,
+      "numericTokens": 20,
+      "numericTokensMatched": 20,
+      "numericTokensMissing": []
+    },
+    {
+      "document": "Thong-bao-ket-qua-tham-dinh-truong-lien-cap-Huong-Xuan-1-(09.06.2026_16h59p51)_signed.pdf",
+      "sha256": "7c73fcd25de9324bed367fd357373b2f5d9f04ca96906476ee9646271dfde949",
+      "page": 16,
+      "seconds": 2.44,
+      "textLayerChars": 2613,
+      "ocrChars": 2523,
+      "textSimilarity": 0.9828,
+      "numericTokens": 21,
+      "numericTokensMatched": 20,
+      "numericTokensMissing": [
+        "2/2021"
+      ]
+    },
+    {
+      "document": "Thong-bao-ket-qua-tham-dinh-truong-lien-cap-Huong-Xuan-1-(09.06.2026_16h59p51)_signed.pdf",
+      "sha256": "7c73fcd25de9324bed367fd357373b2f5d9f04ca96906476ee9646271dfde949",
+      "page": 17,
+      "seconds": 2.27,
+      "textLayerChars": 2424,
+      "ocrChars": 2384,
+      "textSimilarity": 0.9743,
+      "numericTokens": 5,
+      "numericTokensMatched": 5,
+      "numericTokensMissing": []
+    }
+  ]
+}

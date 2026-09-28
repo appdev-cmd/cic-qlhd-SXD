@@ -1,4 +1,4 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useEffect } from 'react';
 import {
   Building2,
   MapPin,
@@ -29,14 +29,25 @@ import {
 import { cn, formatCurrency, formatDate } from '../../lib/utils';
 import { Tooltip } from '../../components/ui/Tooltip';
 import type { Project, ProjectTT39Data, ProjectMemberTT39, ProjectParticipantOrgTT39 } from '../../data/mockData';
-import { getProjectTT39Data } from '../../data/mockData';
+import { projectService } from '../../services/projectService';
 
 interface ProjectTT39InfoTabProps {
   project: Project;
 }
 
 export function ProjectTT39InfoTab({ project }: ProjectTT39InfoTabProps) {
-  const tt39: ProjectTT39Data = useMemo(() => getProjectTT39Data(project), [project]);
+  const [data,setData]=useState<ProjectTT39Data|null>(null);
+  const [loading,setLoading]=useState(true);const [error,setError]=useState('');
+  useEffect(()=>{let current=true;setLoading(true);setError('');
+    projectService.getTT39Data(project).then(value=>{if(current)setData(value);}).catch(e=>{if(current)setError(e.message);}).finally(()=>{if(current)setLoading(false);});
+    return()=>{current=false;};},[project.id]);
+  if(loading)return <p className="p-4 text-ink dark:text-ink">Đang tải thông tin dự án…</p>;
+  if(error)return <p role="alert" className="p-4 text-red-700 dark:text-red-300">{error}</p>;
+  if(!data||!Array.isArray(data.members))return <p className="p-4 text-ink-muted dark:text-ink-muted">Chưa có thông tin chi tiết được lưu cho dự án này.</p>;
+  return <LoadedProjectInfo project={project} tt39={data}/>;
+}
+
+function LoadedProjectInfo({project,tt39}:{project:Project;tt39:ProjectTT39Data}) {
 
   // Bộ lọc và tìm kiếm danh sách thành viên tham gia
   const [memberSearch, setMemberSearch] = useState('');

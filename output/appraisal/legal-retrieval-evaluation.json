@@ -1,0 +1,640 @@
+{
+  "kind": "retrieval-only",
+  "datasetSize": 14,
+  "hits": 14,
+  "notice": "Đánh giá truy hồi điều khoản trong bộ câu hỏi đã công bố. Không suy ra tính đúng đắn của diễn giải AI hoặc kết luận nghiệp vụ từ tỷ lệ truy hồi.",
+  "registry": [
+    {
+      "id": "nd217",
+      "title": "NĐ 217/2026/NĐ-CP",
+      "url": "https://vanban.chinhphu.vn/?classid=1&docid=218509&pageid=27160&typegroupid=4",
+      "sha256": "866e2ef741bdbad9293eb86c7364ccbfeda6c23442b230454c487b765ea398c2",
+      "effectiveFrom": "2026-07-01",
+      "status": "converted_requires_review"
+    },
+    {
+      "id": "pl217",
+      "title": "Phụ lục I NĐ 217/2026/NĐ-CP",
+      "url": "https://datafiles.chinhphu.vn/cpp/files/vbpq/2026/6/pl217.pdf",
+      "sha256": "6e5c8f9b25df3c87267133acd78d43acbc0251c65ab2ed5cc6f1b2976e9ab0dd",
+      "effectiveFrom": "2026-07-01",
+      "status": "converted_requires_review"
+    },
+    {
+      "id": "nd206",
+      "title": "NĐ 206/2026/NĐ-CP",
+      "url": "https://vanban.chinhphu.vn/?docid=218454&orggroupid=2&pageid=27160",
+      "sha256": "7f8cd038776ab8f8315458f61a72f76a95e3337dfcb327b5111f2e9133fd1522",
+      "effectiveFrom": "2026-07-01",
+      "status": "converted_requires_review"
+    },
+    {
+      "id": "nd207",
+      "title": "NĐ 207/2026/NĐ-CP",
+      "url": "https://xaydungchinhsach.chinhphu.vn/nghi-dinh-so-207-2026-nd-cp-ve-quan-ly-chat-iuong-thi-cong-bao-tri-cong-trinh-xay-dung-119260616081951719.htm",
+      "sha256": "176aa60e95b50b53306762f21d927fe131925d928520d746a9c6d4c44fb981a6",
+      "effectiveFrom": "2026-07-01",
+      "status": "converted_requires_review"
+    },
+    {
+      "id": "luat135",
+      "title": "Luật 135/2025/QH15",
+      "url": "https://vanban.chinhphu.vn/?classid=1&docid=216514&orggroupid=1&pageid=27160",
+      "sha256": "443f4960d5d91fd83fa8a0d6d83be9f2f5fa925a140b5f46daef7e30cdc50daa",
+      "effectiveFrom": "2026-07-01",
+      "status": "converted_requires_review"
+    },
+    {
+      "id": "pl207",
+      "title": "Phụ lục NĐ 207/2026/NĐ-CP",
+      "url": "https://datafiles.chinhphu.vn/cpp/files/vbpq/2026/6/207-ndcp.signed.pdf",
+      "sha256": "fedfd480735eae8bd23ccc7e5fadbce30f783945881c727e8b7c7e21d5492cdc",
+      "effectiveFrom": "2026-07-01",
+      "status": "converted_requires_review"
+    },
+    {
+      "id": "tt32",
+      "title": "TT 32/2026/TT-BXD",
+      "url": "https://datafiles.chinhphu.vn/cpp/files/vbpq/2026/6/32-bxd.pdf",
+      "sha256": "07c839607b204f162266364c882d7f9ec70ef366315b014d3380495b99852b7a",
+      "effectiveFrom": "2026-07-01",
+      "status": "converted_requires_review"
+    }
+  ],
+  "results": [
+    {
+      "id": "GPXD-NEW",
+      "question": "Hồ sơ đề nghị cấp giấy phép xây dựng mới theo Nghị định 217/2026 gồm những gì?",
+      "source": "NĐ 217/2026/NĐ-CP",
+      "heading": "Điều 57.",
+      "hit": true,
+      "rank": 1,
+      "elapsedMs": 319,
+      "sources": [
+        {
+          "id": "nd217:1182",
+          "heading": "Điều 57. Hồ sơ đề nghị cấp giấy phép xây dựng mới",
+          "sha256": "866e2ef741bdbad9293eb86c7364ccbfeda6c23442b230454c487b765ea398c2"
+        },
+        {
+          "id": "nd217:1252",
+          "heading": "Điều 62. Hồ sơ đề nghị cấp giấy phép xây dựng có thời hạn",
+          "sha256": "866e2ef741bdbad9293eb86c7364ccbfeda6c23442b230454c487b765ea398c2"
+        },
+        {
+          "id": "nd217:1169",
+          "heading": "Điều 56. Quy định chung về hồ sơ đề nghị cấp giấy phép xây dựng",
+          "sha256": "866e2ef741bdbad9293eb86c7364ccbfeda6c23442b230454c487b765ea398c2"
+        },
+        {
+          "id": "nd217:1203",
+          "heading": "Điều 58. Hồ sơ đề nghị cấp giấy phép xây dựng theo giai đoạn",
+          "sha256": "866e2ef741bdbad9293eb86c7364ccbfeda6c23442b230454c487b765ea398c2"
+        },
+        {
+          "id": "nd217:1214",
+          "heading": "Điều 59. Hồ sơ đề nghị cấp giấy phép xây dựng cho toàn bộ công trình thuộc dự án, nhóm công trình thuộc dự án",
+          "sha256": "866e2ef741bdbad9293eb86c7364ccbfeda6c23442b230454c487b765ea398c2"
+        },
+        {
+          "id": "nd217:1225",
+          "heading": "Điều 60. Hồ sơ đề nghị cấp giấy phép xây dựng đối với công trình nhà ở riêng lẻ",
+          "sha256": "866e2ef741bdbad9293eb86c7364ccbfeda6c23442b230454c487b765ea398c2"
+        }
+      ]
+    },
+    {
+      "id": "GPXD-HOUSE",
+      "question": "Hồ sơ đề nghị cấp giấy phép xây dựng công trình nhà ở riêng lẻ theo Nghị định 217/2026?",
+      "source": "NĐ 217/2026/NĐ-CP",
+      "heading": "Điều 60.",
+      "hit": true,
+      "rank": 1,
+      "elapsedMs": 46,
+      "sources": [
+        {
+          "id": "nd217:1225",
+          "heading": "Điều 60. Hồ sơ đề nghị cấp giấy phép xây dựng đối với công trình nhà ở riêng lẻ",
+          "sha256": "866e2ef741bdbad9293eb86c7364ccbfeda6c23442b230454c487b765ea398c2"
+        },
+        {
+          "id": "nd217:1252",
+          "heading": "Điều 62. Hồ sơ đề nghị cấp giấy phép xây dựng có thời hạn",
+          "sha256": "866e2ef741bdbad9293eb86c7364ccbfeda6c23442b230454c487b765ea398c2"
+        },
+        {
+          "id": "nd217:1214",
+          "heading": "Điều 59. Hồ sơ đề nghị cấp giấy phép xây dựng cho toàn bộ công trình thuộc dự án, nhóm công trình thuộc dự án",
+          "sha256": "866e2ef741bdbad9293eb86c7364ccbfeda6c23442b230454c487b765ea398c2"
+        },
+        {
+          "id": "nd217:1169",
+          "heading": "Điều 56. Quy định chung về hồ sơ đề nghị cấp giấy phép xây dựng",
+          "sha256": "866e2ef741bdbad9293eb86c7364ccbfeda6c23442b230454c487b765ea398c2"
+        },
+        {
+          "id": "nd217:1182",
+          "heading": "Điều 57. Hồ sơ đề nghị cấp giấy phép xây dựng mới",
+          "sha256": "866e2ef741bdbad9293eb86c7364ccbfeda6c23442b230454c487b765ea398c2"
+        },
+        {
+          "id": "nd217:1203",
+          "heading": "Điều 58. Hồ sơ đề nghị cấp giấy phép xây dựng theo giai đoạn",
+          "sha256": "866e2ef741bdbad9293eb86c7364ccbfeda6c23442b230454c487b765ea398c2"
+        }
+      ]
+    },
+    {
+      "id": "GPXD-REPAIR",
+      "question": "Hồ sơ đề nghị cấp giấy phép sửa chữa cải tạo di dời công trình theo Nghị định 217/2026?",
+      "source": "NĐ 217/2026/NĐ-CP",
+      "heading": "Điều 61.",
+      "hit": true,
+      "rank": 1,
+      "elapsedMs": 65,
+      "sources": [
+        {
+          "id": "nd217:1236",
+          "heading": "Điều 61. Hồ sơ đề nghị cấp giấy phép sửa chữa, cải tạo, di dời công trình",
+          "sha256": "866e2ef741bdbad9293eb86c7364ccbfeda6c23442b230454c487b765ea398c2"
+        },
+        {
+          "id": "nd217:1056",
+          "heading": "Điều 51. Điều kiện cấp giấy phép xây dựng sửa chữa, cải tạo, di dời công trình",
+          "sha256": "866e2ef741bdbad9293eb86c7364ccbfeda6c23442b230454c487b765ea398c2"
+        },
+        {
+          "id": "nd217:1252",
+          "heading": "Điều 62. Hồ sơ đề nghị cấp giấy phép xây dựng có thời hạn",
+          "sha256": "866e2ef741bdbad9293eb86c7364ccbfeda6c23442b230454c487b765ea398c2"
+        },
+        {
+          "id": "nd217:1225",
+          "heading": "Điều 60. Hồ sơ đề nghị cấp giấy phép xây dựng đối với công trình nhà ở riêng lẻ",
+          "sha256": "866e2ef741bdbad9293eb86c7364ccbfeda6c23442b230454c487b765ea398c2"
+        },
+        {
+          "id": "nd217:1182",
+          "heading": "Điều 57. Hồ sơ đề nghị cấp giấy phép xây dựng mới",
+          "sha256": "866e2ef741bdbad9293eb86c7364ccbfeda6c23442b230454c487b765ea398c2"
+        },
+        {
+          "id": "nd217:1214",
+          "heading": "Điều 59. Hồ sơ đề nghị cấp giấy phép xây dựng cho toàn bộ công trình thuộc dự án, nhóm công trình thuộc dự án",
+          "sha256": "866e2ef741bdbad9293eb86c7364ccbfeda6c23442b230454c487b765ea398c2"
+        }
+      ]
+    },
+    {
+      "id": "GPXD-TEMP",
+      "question": "Hồ sơ đề nghị cấp giấy phép xây dựng có thời hạn theo Nghị định 217/2026?",
+      "source": "NĐ 217/2026/NĐ-CP",
+      "heading": "Điều 62.",
+      "hit": true,
+      "rank": 1,
+      "elapsedMs": 47,
+      "sources": [
+        {
+          "id": "nd217:1252",
+          "heading": "Điều 62. Hồ sơ đề nghị cấp giấy phép xây dựng có thời hạn",
+          "sha256": "866e2ef741bdbad9293eb86c7364ccbfeda6c23442b230454c487b765ea398c2"
+        },
+        {
+          "id": "nd217:1169",
+          "heading": "Điều 56. Quy định chung về hồ sơ đề nghị cấp giấy phép xây dựng",
+          "sha256": "866e2ef741bdbad9293eb86c7364ccbfeda6c23442b230454c487b765ea398c2"
+        },
+        {
+          "id": "nd217:1203",
+          "heading": "Điều 58. Hồ sơ đề nghị cấp giấy phép xây dựng theo giai đoạn",
+          "sha256": "866e2ef741bdbad9293eb86c7364ccbfeda6c23442b230454c487b765ea398c2"
+        },
+        {
+          "id": "nd217:1214",
+          "heading": "Điều 59. Hồ sơ đề nghị cấp giấy phép xây dựng cho toàn bộ công trình thuộc dự án, nhóm công trình thuộc dự án",
+          "sha256": "866e2ef741bdbad9293eb86c7364ccbfeda6c23442b230454c487b765ea398c2"
+        },
+        {
+          "id": "nd217:1182",
+          "heading": "Điều 57. Hồ sơ đề nghị cấp giấy phép xây dựng mới",
+          "sha256": "866e2ef741bdbad9293eb86c7364ccbfeda6c23442b230454c487b765ea398c2"
+        },
+        {
+          "id": "nd217:1225",
+          "heading": "Điều 60. Hồ sơ đề nghị cấp giấy phép xây dựng đối với công trình nhà ở riêng lẻ",
+          "sha256": "866e2ef741bdbad9293eb86c7364ccbfeda6c23442b230454c487b765ea398c2"
+        }
+      ]
+    },
+    {
+      "id": "GPXD-EXTEND",
+      "question": "Điều chỉnh gia hạn giấy phép xây dựng theo Nghị định 217/2026 cần những điều kiện và tài liệu nào?",
+      "source": "NĐ 217/2026/NĐ-CP",
+      "heading": "Điều 63.",
+      "hit": true,
+      "rank": 1,
+      "elapsedMs": 52,
+      "sources": [
+        {
+          "id": "nd217:1259",
+          "heading": "Điều 63. Điều chỉnh, gia hạn giấy phép xây dựng",
+          "sha256": "866e2ef741bdbad9293eb86c7364ccbfeda6c23442b230454c487b765ea398c2"
+        },
+        {
+          "id": "nd217:1101",
+          "heading": "Điều 54. Trình tự, nội dung xem xét cấp, điều chỉnh, cấp lại, gia hạn giấy phép xây dựng",
+          "sha256": "866e2ef741bdbad9293eb86c7364ccbfeda6c23442b230454c487b765ea398c2"
+        },
+        {
+          "id": "nd217:1119",
+          "heading": "Điều 54. Trình tự, nội dung xem xét cấp, điều chỉnh, cấp lại, gia hạn giấy phép xây dựng",
+          "sha256": "866e2ef741bdbad9293eb86c7364ccbfeda6c23442b230454c487b765ea398c2"
+        },
+        {
+          "id": "nd217:1065",
+          "heading": "Điều 52. Điều kiện cấp giấy phép xây dựng có thời hạn",
+          "sha256": "866e2ef741bdbad9293eb86c7364ccbfeda6c23442b230454c487b765ea398c2"
+        },
+        {
+          "id": "nd217:1252",
+          "heading": "Điều 62. Hồ sơ đề nghị cấp giấy phép xây dựng có thời hạn",
+          "sha256": "866e2ef741bdbad9293eb86c7364ccbfeda6c23442b230454c487b765ea398c2"
+        },
+        {
+          "id": "nd217:1056",
+          "heading": "Điều 51. Điều kiện cấp giấy phép xây dựng sửa chữa, cải tạo, di dời công trình",
+          "sha256": "866e2ef741bdbad9293eb86c7364ccbfeda6c23442b230454c487b765ea398c2"
+        }
+      ]
+    },
+    {
+      "id": "GPXD-REISSUE",
+      "question": "Cấp lại giấy phép xây dựng bị mất theo Nghị định 217/2026?",
+      "source": "NĐ 217/2026/NĐ-CP",
+      "heading": "Điều 64.",
+      "hit": true,
+      "rank": 1,
+      "elapsedMs": 50,
+      "sources": [
+        {
+          "id": "nd217:1281",
+          "heading": "Điều 64. Cấp lại giấy phép xây dựng",
+          "sha256": "866e2ef741bdbad9293eb86c7364ccbfeda6c23442b230454c487b765ea398c2"
+        },
+        {
+          "id": "nd217:1101",
+          "heading": "Điều 54. Trình tự, nội dung xem xét cấp, điều chỉnh, cấp lại, gia hạn giấy phép xây dựng",
+          "sha256": "866e2ef741bdbad9293eb86c7364ccbfeda6c23442b230454c487b765ea398c2"
+        },
+        {
+          "id": "nd217:1119",
+          "heading": "Điều 54. Trình tự, nội dung xem xét cấp, điều chỉnh, cấp lại, gia hạn giấy phép xây dựng",
+          "sha256": "866e2ef741bdbad9293eb86c7364ccbfeda6c23442b230454c487b765ea398c2"
+        },
+        {
+          "id": "nd217:1292",
+          "heading": "Điều 65. Thu hồi, hủy giấy phép xây dựng",
+          "sha256": "866e2ef741bdbad9293eb86c7364ccbfeda6c23442b230454c487b765ea398c2"
+        },
+        {
+          "id": "nd217:1182",
+          "heading": "Điều 57. Hồ sơ đề nghị cấp giấy phép xây dựng mới",
+          "sha256": "866e2ef741bdbad9293eb86c7364ccbfeda6c23442b230454c487b765ea398c2"
+        },
+        {
+          "id": "nd217:1085",
+          "heading": "Điều 53. Thẩm quyền cấp giấy phép xây dựng",
+          "sha256": "866e2ef741bdbad9293eb86c7364ccbfeda6c23442b230454c487b765ea398c2"
+        }
+      ]
+    },
+    {
+      "id": "DESIGN-FORMAT",
+      "question": "Quy cách hồ sơ thiết kế xây dựng theo Nghị định 217/2026?",
+      "source": "NĐ 217/2026/NĐ-CP",
+      "heading": "Điều 18.",
+      "hit": true,
+      "rank": 1,
+      "elapsedMs": 42,
+      "sources": [
+        {
+          "id": "nd217:360",
+          "heading": "Điều 18. Quy cách hồ sơ thiết kế xây dựng",
+          "sha256": "866e2ef741bdbad9293eb86c7364ccbfeda6c23442b230454c487b765ea398c2"
+        },
+        {
+          "id": "pl217:1161",
+          "heading": "II. HỒ SƠ TRÌNH THẨM ĐỊNH THIẾT KẾ XÂY DỰNG",
+          "sha256": "6e5c8f9b25df3c87267133acd78d43acbc0251c65ab2ed5cc6f1b2976e9ab0dd"
+        },
+        {
+          "id": "nd217:303",
+          "heading": "Điều 16. Quy định chung về thiết kế xây dựng",
+          "sha256": "866e2ef741bdbad9293eb86c7364ccbfeda6c23442b230454c487b765ea398c2"
+        },
+        {
+          "id": "pl217:1079",
+          "heading": "V. KẾT QUẢ THẨM TRA THIẾT KẾ XÂY DỰNG",
+          "sha256": "6e5c8f9b25df3c87267133acd78d43acbc0251c65ab2ed5cc6f1b2976e9ab0dd"
+        },
+        {
+          "id": "nd217:487",
+          "heading": "Điều 25. Quản lý công tác thiết kế xây dựng",
+          "sha256": "866e2ef741bdbad9293eb86c7364ccbfeda6c23442b230454c487b765ea398c2"
+        },
+        {
+          "id": "pl217:1177",
+          "heading": "V. KẾT QUẢ THẨM ĐỊNH THIẾT KẾ XÂY DỰNG",
+          "sha256": "6e5c8f9b25df3c87267133acd78d43acbc0251c65ab2ed5cc6f1b2976e9ab0dd"
+        }
+      ]
+    },
+    {
+      "id": "FS-PREPARE",
+      "question": "Lập báo cáo nghiên cứu khả thi báo cáo kinh tế kỹ thuật theo Nghị định 217/2026?",
+      "source": "NĐ 217/2026/NĐ-CP",
+      "heading": "Điều 27.",
+      "hit": true,
+      "rank": 1,
+      "elapsedMs": 50,
+      "sources": [
+        {
+          "id": "nd217:516",
+          "heading": "Điều 27. Lập Báo cáo nghiên cứu khả thi, Báo cáo kinh tế - kỹ thuật",
+          "sha256": "866e2ef741bdbad9293eb86c7364ccbfeda6c23442b230454c487b765ea398c2"
+        },
+        {
+          "id": "nd217:499",
+          "heading": "Điều 26. Quy hoạch sử dụng làm căn cứ lập Báo cáo nghiên cứu khả thi, Báo cáo kinh tế - kỹ thuật",
+          "sha256": "866e2ef741bdbad9293eb86c7364ccbfeda6c23442b230454c487b765ea398c2"
+        },
+        {
+          "id": "nd217:619",
+          "heading": "Điều 31. Thẩm định Báo cáo nghiên cứu khả thi, Báo cáo kinh tế - kỹ thuật của người quyết định đầu tư",
+          "sha256": "866e2ef741bdbad9293eb86c7364ccbfeda6c23442b230454c487b765ea398c2"
+        },
+        {
+          "id": "pl217:944",
+          "heading": "Mẫu số 10:  Áp dụng đối với dự án có yêu cầu lập Báo cáo kinh tế - kỹ thuật",
+          "sha256": "6e5c8f9b25df3c87267133acd78d43acbc0251c65ab2ed5cc6f1b2976e9ab0dd"
+        },
+        {
+          "id": "pl217:863",
+          "heading": "Mẫu số 09:  Áp dụng đối với dự án có yêu cầu lập Báo cáo nghiên cứu khả thi",
+          "sha256": "6e5c8f9b25df3c87267133acd78d43acbc0251c65ab2ed5cc6f1b2976e9ab0dd"
+        },
+        {
+          "id": "nd217:552",
+          "heading": "Điều 29. Nội dung Báo cáo nghiên cứu khả thi",
+          "sha256": "866e2ef741bdbad9293eb86c7364ccbfeda6c23442b230454c487b765ea398c2"
+        }
+      ]
+    },
+    {
+      "id": "ACCEPTANCE-CHECK",
+      "question": "Nội dung trình tự kiểm tra công tác nghiệm thu theo Nghị định 207/2026?",
+      "source": "NĐ 207/2026/NĐ-CP",
+      "heading": "Điều 27.",
+      "hit": true,
+      "rank": 1,
+      "elapsedMs": 41,
+      "sources": [
+        {
+          "id": "nd207:632",
+          "heading": "Điều 27. Nội dung, trình tự kiểm tra công tác nghiệm thu công trình xây dựng",
+          "sha256": "176aa60e95b50b53306762f21d927fe131925d928520d746a9c6d4c44fb981a6"
+        },
+        {
+          "id": "nd207:590",
+          "heading": "Điều 25. Kiểm tra công tác nghiệm thu công trình xây dựng",
+          "sha256": "176aa60e95b50b53306762f21d927fe131925d928520d746a9c6d4c44fb981a6"
+        },
+        {
+          "id": "nd207:610",
+          "heading": "Điều 26. Thẩm quyền kiểm tra công tác nghiệm thu công trình xây dựng",
+          "sha256": "176aa60e95b50b53306762f21d927fe131925d928520d746a9c6d4c44fb981a6"
+        },
+        {
+          "id": "nd207:629",
+          "heading": "Điều 26. Thẩm quyền kiểm tra công tác nghiệm thu công trình xây dựng",
+          "sha256": "176aa60e95b50b53306762f21d927fe131925d928520d746a9c6d4c44fb981a6"
+        },
+        {
+          "id": "nd207:174",
+          "heading": "Điều 8. Thí nghiệm đối chứng, kiểm định xây dựng, thử nghiệm khả năng chịu lực của kết cấu công trình",
+          "sha256": "176aa60e95b50b53306762f21d927fe131925d928520d746a9c6d4c44fb981a6"
+        },
+        {
+          "id": "nd207:546",
+          "heading": "Điều 23. Nghiệm thu giai đoạn thi công xây dựng hoặc bộ phận công trình xây dựng",
+          "sha256": "176aa60e95b50b53306762f21d927fe131925d928520d746a9c6d4c44fb981a6"
+        }
+      ]
+    },
+    {
+      "id": "ACCEPTANCE-ARCHIVE",
+      "question": "Lập lưu trữ hồ sơ hoàn thành công trình theo Nghị định 207/2026?",
+      "source": "NĐ 207/2026/NĐ-CP",
+      "heading": "Điều 28.",
+      "hit": true,
+      "rank": 1,
+      "elapsedMs": 51,
+      "sources": [
+        {
+          "id": "nd207:651",
+          "heading": "Điều 28. Hồ sơ hoàn thành công trình xây dựng",
+          "sha256": "176aa60e95b50b53306762f21d927fe131925d928520d746a9c6d4c44fb981a6"
+        },
+        {
+          "id": "pl207:402",
+          "heading": "Phụ lục IVb BÁO CÁOHOÀN THÀNH CÔNG TÁC GIÁM SÁT THI CÔNG XÂY DỰNG GÓI THẦU/GIAI ĐOẠN/HẠNG MỤC CÔNG TRÌNH/ CÔNG TRÌNH XÂY DỰNG",
+          "sha256": "fedfd480735eae8bd23ccc7e5fadbce30f783945881c727e8b7c7e21d5492cdc"
+        },
+        {
+          "id": "pl207:276",
+          "heading": "Phụ lục IVb. Báo cáo hoàn thành công tác giám sát thi công xây dựng gói thầu, giai đoạn, hạng mục công trình, công trình xây dựng.",
+          "sha256": "fedfd480735eae8bd23ccc7e5fadbce30f783945881c727e8b7c7e21d5492cdc"
+        },
+        {
+          "id": "pl207:592",
+          "heading": "III. HỒ SƠ QUẢN LÝ THI CÔNG XÂY DỰNG CÔNG TRÌNH",
+          "sha256": "fedfd480735eae8bd23ccc7e5fadbce30f783945881c727e8b7c7e21d5492cdc"
+        },
+        {
+          "id": "pl207:328",
+          "heading": "Phụ lục IVb BÁO CÁOHOÀN THÀNH CÔNG TÁC GIÁM SÁT THI CÔNG XÂY DỰNG GÓI THẦU/GIAI ĐOẠN/HẠNG MỤC CÔNG TRÌNH/ CÔNG TRÌNH XÂY DỰNG",
+          "sha256": "fedfd480735eae8bd23ccc7e5fadbce30f783945881c727e8b7c7e21d5492cdc"
+        },
+        {
+          "id": "nd207:557",
+          "heading": "Điều 24. Nghiệm thu hoàn thành hạng mục công trình, công trình xây dựng",
+          "sha256": "176aa60e95b50b53306762f21d927fe131925d928520d746a9c6d4c44fb981a6"
+        }
+      ]
+    },
+    {
+      "id": "AUTHORITY",
+      "question": "Thẩm quyền cấp giấy phép xây dựng cấp III cấp IV Sở Xây dựng cấp xã theo Nghị định 217?",
+      "source": "NĐ 217/2026/NĐ-CP",
+      "heading": "Điều 53.",
+      "hit": true,
+      "rank": 1,
+      "elapsedMs": 54,
+      "sources": [
+        {
+          "id": "nd217:1085",
+          "heading": "Điều 53. Thẩm quyền cấp giấy phép xây dựng",
+          "sha256": "866e2ef741bdbad9293eb86c7364ccbfeda6c23442b230454c487b765ea398c2"
+        },
+        {
+          "id": "nd217:1065",
+          "heading": "Điều 52. Điều kiện cấp giấy phép xây dựng có thời hạn",
+          "sha256": "866e2ef741bdbad9293eb86c7364ccbfeda6c23442b230454c487b765ea398c2"
+        },
+        {
+          "id": "nd217:1160",
+          "heading": "Điều 55. Các loại giấy tờ hợp pháp về đất đai để cấp giấy phép xây dựng",
+          "sha256": "866e2ef741bdbad9293eb86c7364ccbfeda6c23442b230454c487b765ea398c2"
+        },
+        {
+          "id": "nd217:1133",
+          "heading": "Điều 55. Các loại giấy tờ hợp pháp về đất đai để cấp giấy phép xây dựng",
+          "sha256": "866e2ef741bdbad9293eb86c7364ccbfeda6c23442b230454c487b765ea398c2"
+        },
+        {
+          "id": "nd217:1011",
+          "heading": "Chương III: GIẤY PHÉP XÂY DỰNG VÀ QUẢN LÝ TRẬT TỰ XÂY DỰNG",
+          "sha256": "866e2ef741bdbad9293eb86c7364ccbfeda6c23442b230454c487b765ea398c2"
+        },
+        {
+          "id": "nd217:1203",
+          "heading": "Điều 58. Hồ sơ đề nghị cấp giấy phép xây dựng theo giai đoạn",
+          "sha256": "866e2ef741bdbad9293eb86c7364ccbfeda6c23442b230454c487b765ea398c2"
+        }
+      ]
+    },
+    {
+      "id": "CONDITIONAL",
+      "question": "Nghiệm thu có điều kiện tồn tại không ảnh hưởng khả năng chịu lực thời hạn sử dụng công năng theo Nghị định 207?",
+      "source": "NĐ 207/2026/NĐ-CP",
+      "heading": "Điều 24.",
+      "hit": true,
+      "rank": 3,
+      "elapsedMs": 59,
+      "sources": [
+        {
+          "id": "nd207:174",
+          "heading": "Điều 8. Thí nghiệm đối chứng, kiểm định xây dựng, thử nghiệm khả năng chịu lực của kết cấu công trình",
+          "sha256": "176aa60e95b50b53306762f21d927fe131925d928520d746a9c6d4c44fb981a6"
+        },
+        {
+          "id": "nd207:982",
+          "heading": "Điều 43. Xử lý đối với công trình hết thời hạn sử dụng theo thiết kế",
+          "sha256": "176aa60e95b50b53306762f21d927fe131925d928520d746a9c6d4c44fb981a6"
+        },
+        {
+          "id": "nd207:557",
+          "heading": "Điều 24. Nghiệm thu hoàn thành hạng mục công trình, công trình xây dựng",
+          "sha256": "176aa60e95b50b53306762f21d927fe131925d928520d746a9c6d4c44fb981a6"
+        },
+        {
+          "id": "nd207:1006",
+          "heading": "Điều 43. Xử lý đối với công trình hết thời hạn sử dụng theo thiết kế",
+          "sha256": "176aa60e95b50b53306762f21d927fe131925d928520d746a9c6d4c44fb981a6"
+        },
+        {
+          "id": "nd207:953",
+          "heading": "Mục 4: XỬ LÝ ĐỐI VỚI CÔNG TRÌNH CÓ DẤU HIỆU NGUY HIỂM, CÔNG TRÌNH HẾT THỜI HẠN SỬ DỤNG,PHÁ DỠ CÔNG TRÌNH XÂY DỰNG",
+          "sha256": "176aa60e95b50b53306762f21d927fe131925d928520d746a9c6d4c44fb981a6"
+        },
+        {
+          "id": "nd207:590",
+          "heading": "Điều 25. Kiểm tra công tác nghiệm thu công trình xây dựng",
+          "sha256": "176aa60e95b50b53306762f21d927fe131925d928520d746a9c6d4c44fb981a6"
+        }
+      ]
+    },
+    {
+      "id": "HANDOVER",
+      "question": "Bàn giao hồ sơ phục vụ quản lý sử dụng công trình xây dựng theo Nghị định 207?",
+      "source": "NĐ 207/2026/NĐ-CP",
+      "heading": "Điều 30.",
+      "hit": true,
+      "rank": 3,
+      "elapsedMs": 50,
+      "sources": [
+        {
+          "id": "nd207:287",
+          "heading": "Điều 14. Quản lý vật liệu xây dựng, sản phẩm, cấu kiện, thiết bị sử dụng cho công trình xây dựng",
+          "sha256": "176aa60e95b50b53306762f21d927fe131925d928520d746a9c6d4c44fb981a6"
+        },
+        {
+          "id": "nd207:312",
+          "heading": "Điều 14. Quản lý vật liệu xây dựng, sản phẩm, cấu kiện, thiết bị sử dụng cho công trình xây dựng",
+          "sha256": "176aa60e95b50b53306762f21d927fe131925d928520d746a9c6d4c44fb981a6"
+        },
+        {
+          "id": "nd207:682",
+          "heading": "Điều 30. Bàn giao hạng mục công trình, công trình xây dựng",
+          "sha256": "176aa60e95b50b53306762f21d927fe131925d928520d746a9c6d4c44fb981a6"
+        },
+        {
+          "id": "nd207:699",
+          "heading": "Điều 31. Bàn giao công trình xây dựng trong dự án đầu tư xây dựng khu đô thị",
+          "sha256": "176aa60e95b50b53306762f21d927fe131925d928520d746a9c6d4c44fb981a6"
+        },
+        {
+          "id": "nd207:873",
+          "heading": "Điều 38. Quản lý chất lượng công việc bảo trì công trình xây dựng",
+          "sha256": "176aa60e95b50b53306762f21d927fe131925d928520d746a9c6d4c44fb981a6"
+        },
+        {
+          "id": "nd207:858",
+          "heading": "Điều 37. Quan trắc công trình phục vụ công tác bảo trì công trình xây dựng",
+          "sha256": "176aa60e95b50b53306762f21d927fe131925d928520d746a9c6d4c44fb981a6"
+        }
+      ]
+    },
+    {
+      "id": "INSPECTION-TT32",
+      "question": "Kiểm định xây dựng theo Thông tư 32/2026/TT-BXD yêu cầu như thế nào?",
+      "source": "TT 32/2026/TT-BXD",
+      "heading": "Điều 4.",
+      "hit": true,
+      "rank": 1,
+      "elapsedMs": 38,
+      "sources": [
+        {
+          "id": "tt32:56",
+          "heading": "Điều 4. Kiểm định xây dựng",
+          "sha256": "07c839607b204f162266364c882d7f9ec70ef366315b014d3380495b99852b7a"
+        },
+        {
+          "id": "tt32:88",
+          "heading": "Điều 5. Trình tự thực hiện và thông báo kết luận giám định xây dựng",
+          "sha256": "07c839607b204f162266364c882d7f9ec70ef366315b014d3380495b99852b7a"
+        },
+        {
+          "id": "tt32:38",
+          "heading": "Điều 2. Kế hoạch tổ chức thí nghiệm",
+          "sha256": "07c839607b204f162266364c882d7f9ec70ef366315b014d3380495b99852b7a"
+        },
+        {
+          "id": "tt32:129",
+          "heading": "Điều 8. Hiệu lực thi hành",
+          "sha256": "07c839607b204f162266364c882d7f9ec70ef366315b014d3380495b99852b7a"
+        },
+        {
+          "id": "tt32:47",
+          "heading": "Điều 3. Quan trắc công trình trong quá trình thi công xây dựng",
+          "sha256": "07c839607b204f162266364c882d7f9ec70ef366315b014d3380495b99852b7a"
+        },
+        {
+          "id": "tt32:105",
+          "heading": "Điều 6. Quan trắc phục vụ công tác bảo trì đối với công trình xây dựng thuộc thẩm quyền quản lý của Bộ Xây dựng",
+          "sha256": "07c839607b204f162266364c882d7f9ec70ef366315b014d3380495b99852b7a"
+        }
+      ]
+    }
+  ]
+}

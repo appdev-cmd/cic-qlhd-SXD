@@ -1,0 +1,63 @@
+11
+
+— > Giải pháp kết cấu: Móng cọc BTCT tiết diện 25x25cm; kết cấu đài móng,
+dâm móng, giăng móng BTCT mác 250, đá 1x2cm. Phân thân sử dụng hệ kết câu
+khung BTCT chịu lực; dâm, sàn BTCT toàn khôi mác 250, đá 1x2cm.
+
+2.16. Hành lang cầu số 3 (Hạng mục G3)
+
+- Giải pháp kiến trúc: Xây dựng hành lang cầu 01 tầng, mặt bằng hình chữ nhật,
+kích thước 11x3m, chiêu cao 3,9m. Nên san lát gach men, hoàn thiện trát vữa xi
+măng và sơn hoàn thiện 01 lớp lót, 02 lớp phủ.
+
+- Giải pháp kết cấu: Móng đơn BTCT mác 250, đá 1x2cm, Phan thân sử
+dụng hệ kêt câu khung BTCT chịu lực; dâm, sàn BTCT toàn khôi mác 250, đá
+1x2cm.
+
+2.17. Hanh lang cầu số 4 (Hạng mục G4)
+
+- Giải pháp kiến trúc: Xây dựng hành lang cầu 01 tầng, mặt bằng hình chữ
+nhật, kích thước 26x7,5m, chiêu cao 4,38m, mái lợp tôn.
+
+- Giải pháp kết cấu: Móng đơn BTCT mác 250, đá 1x2cm. Phan thân sử dụng
+hệ cột, vì kèo, xa gô băng thép hộp mạ kẽm.
+
+2.18. Mái đi bộ (Hạng mục G5)
+
+- Giải pháp kiến trúc: Xây dựng mái đi bộ 01 tầng, mặt bằng hình chữ nhật,
+kích thước 63x3,3m, chiêu cao 2,4m, đoạn qua đường cao 4,4m, mái lợp bang tâm
+nhựa lây sáng.
+
+- Giải pháp kết cau: Móng đơn BTCT mác 250, đá 1x2cm. Phần thân sử dụng
+hệ thông cột thép tròn mạ kẽm, thanh đỡ băng thép hộp mạ kẽm.
+
+2.19. Nhà dé xe LI và L2
+
+l Nhà để xe mặt bằng hình chữ nhật, kích thước 51,0x4,5m, chiều cao 4,3m,
+nên bê tông xi măng mác 150, mái lợp tôn.
+
+Kết cau móng đơn BTCT mác 250, đá 1x2cm. Phan thân sử dụng hệ thống cột
+thép tròn mạ kẽm, thanh đỡ băng thép hộp mạ kẽm.
+
+2.20. Xây dựng hạ tang kỹ thuật, san, đường nội bộ, cây xanh
+
+a) San nền
+
+_ San nên khu đất xây dựng với cao độ trung bình từ +97,50m đến +100,55m
+bang dat đôi dam chặt K>0,9. Trước khi dap dat tiên hành vét hữu co khu dat. Dat
+hữu cơ được chọn lọc và tận dung dap khu vực cây xanh.
+
+b) Sân đường nội bộ
+
+- Xây dựng mới các tuyến đường giao thông nội bộ có mặt cắt ngang cụ thể
+như sau:
+
++Nền đường rộng 15,0m; mặt đường rộng 12,0m; vỉa hè 2x1,5m = 3,0m.
+
++Nền đường rộng 11,0m; mặt đường rộng 8,0m; vỉa hè 2x1,5m = 3,0m.
+
++Nền đường rộng 9,5m; mặt đường rộng 6,5m; vỉa hè 2x1,5m = 3,0m.
+
++Nền đường rộng 8,5m; mặt đường rộng 5,5m; vỉa hè 2x1,5m = 3,0m.
+
++Nền đường rộng 6,5m; mặt đường rộng 3,5m; vỉa hè 2x1,5m = 3,0m.

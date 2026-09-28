@@ -1,10 +1,32 @@
-/* Styling cho Bản đồ GIS Google Maps & Leaflet */
+/* Styling cho bản đồ Leaflet */
 
 .leaflet-container {
   font-family: inherit;
   width: 100%;
   height: 100%;
-  background: #020617 !important;
+  background: var(--bg-muted, #ECE8DF) !important;
+}
+
+.project-map-canvas {
+  width: 100%;
+  height: min(62vh, 620px);
+  min-height: 440px;
+  background:
+    radial-gradient(ellipse at 52% 45%, rgb(186 230 253 / 0.55), transparent 60%),
+    linear-gradient(135deg, #eff6ff 0%, #e0f2fe 45%, #f0f9ff 100%);
+}
+
+.dark .project-map-canvas {
+  background:
+    radial-gradient(ellipse at 52% 45%, rgb(14 116 144 / 0.22), transparent 60%),
+    linear-gradient(135deg, #0f172a 0%, #102a43 48%, #0f172a 100%);
+}
+
+@media (max-width: 640px) {
+  .project-map-canvas {
+    height: 58vh;
+    min-height: 360px;
+  }
 }
 
 /* Custom Popup */
@@ -34,6 +56,38 @@
 .leaflet-popup-content {
   margin: 6px 4px !important;
   line-height: 1.4 !important;
+}
+
+.project-map-popup {
+  display: grid;
+  gap: 5px;
+  min-width: 180px;
+  color: #0f172a;
+  font-size: 12px;
+}
+
+.dark .project-map-popup {
+  color: #f8fafc;
+}
+
+.project-map-popup strong {
+  font-size: 13px;
+}
+
+.project-map-popup-action {
+  justify-self: start;
+  margin-top: 3px;
+  border: 0;
+  border-radius: 6px;
+  background: #0369a1;
+  padding: 5px 9px;
+  color: #ffffff;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.project-map-popup-action:hover {
+  background: #075985;
 }
 
 /* Custom Tooltip */

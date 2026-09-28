@@ -1,0 +1,52 @@
+[
+  {
+    "file": "gpxd-draft.pdf",
+    "pages": 2,
+    "a4": true
+  },
+  {
+    "file": "gpxd-review.pdf",
+    "pages": 2,
+    "a4": true
+  },
+  {
+    "file": "ho-so-scan-mau.pdf",
+    "pages": 1,
+    "a4": true
+  },
+  {
+    "file": "nghiem_thu-draft.pdf",
+    "pages": 2,
+    "a4": true
+  },
+  {
+    "file": "nghiem_thu-minutes.pdf",
+    "pages": 3,
+    "a4": true
+  },
+  {
+    "file": "nghiem_thu-review.pdf",
+    "pages": 3,
+    "a4": true
+  },
+  {
+    "file": "gpxd-draft.docx",
+    "a4": true
+  },
+  {
+    "file": "gpxd-review.docx",
+    "a4": true
+  },
+  {
+    "file": "nghiem_thu-draft.docx",
+    "a4": true
+  },
+  {
+    "file": "nghiem_thu-minutes.docx",
+    "a4": true
+  },
+  {
+    "file": "nghiem_thu-review.docx",
+    "a4": true
+  }
+]

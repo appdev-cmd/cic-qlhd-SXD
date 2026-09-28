@@ -17,6 +17,7 @@ export interface SearchableSelectProps {
   placeholder?: string;
   className?: string;
   disabled?: boolean;
+  onSearchChange?: (query:string)=>void;
 }
 
 export function SearchableSelect({
@@ -26,6 +27,7 @@ export function SearchableSelect({
   placeholder = 'Chọn một mục...',
   className,
   disabled = false,
+  onSearchChange,
 }: SearchableSelectProps) {
   const [isOpen, setIsOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
@@ -35,11 +37,12 @@ export function SearchableSelect({
   const selectedOption = options.find((opt) => opt.value === value);
 
   // Lọc options dựa trên smart search
-  const filteredOptions = options.filter(
+  const filteredOptions = onSearchChange ? options : options.filter(
     (opt) =>
       matchesSmartSearch(opt.label, searchQuery) ||
       (opt.sublabel && matchesSmartSearch(opt.sublabel, searchQuery))
   );
+  useEffect(()=>{onSearchChange?.(searchQuery);},[searchQuery,onSearchChange]);
 
   useEffect(() => {
     const handleOutsideClick = (e: MouseEvent) => {

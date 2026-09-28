@@ -1,0 +1,60 @@
+12
+
++ Độ đốc ngang mặt đường ima = 2%, độ đốc ngang vỉa hè in = 1,5%.
+
+Kết cấu mặt đường, vịnh đỗ xe từ trên xuống: Bê tông xi măng đá 1x2cm
+mác 250 dày khoảng 18cm; lớp ni lon chống mat nước; lớp cấp phối đá dim loại 2
+day khoảng 15cm;
+
+Nền đường: Nền đường đắp bằng dat độ chặt K > 0,95; riêng 30cm nền đất
+dưới đáy áo đường được đầm chặt K > 0,98 trước khi đắp đất nền đường tiến hành
+vét hữu cơ; taluy nền đường đắp 1/1,5;
+
+- Hệ thống vỉa hè, bó via, đan rãnh: Via hè, sân trường lát gach Terrazzo và
+bê tông áp khuôn; bó via, đan rãnh bằng bê tông đúc sẵn;
+
+©) Thoát nước
+
+- Sử dụng muong thoát nước B400, B600, B800; Kết cấu: Thành và đáy
+mương bằng bê tông cốt thép mác 200, tắm đan bằng bê tông cốt thép mác 200;
+
+- Cống thoát nước qua đường: Sử dụng cống tròn bê tông ly tâm D300 và
+cống hộp BTCT đúc sẵn có khẩu độ BxH=0,6x0,6m; BxH=0,8x0,8m;
+BxH=3,0x1,5m;
+
+- Hồ ga, hồ thu: Bố tri khoảng cách trung bình 20-30m/01 hố ga. Kết cấu:
+thành, đáy, bản nắp bằng bê tông cốt thép mác 200, nắp hồ ga, song chắn rác bằng
+bê tông cường độ cao.
+
+d) Thoát nước thải
+
+- Nước thải được xử lý sơ bộ qua bé tự hoại trong từng công trình sau đó
+chảy vào hệ thống thoát nước thải bên ngoài nhà rồi dẫn về bể xử lý nước thải
+chung của trường để xử lý trước khi xả ra nguồn tiếp nhận. Cống thoát nước thải
+tự chảy có đường kính D200.
+
+- Hồ ga: Bồ trí khoảng cách trung bình 20-30m/01 hé ga. Kết cấu: thành xây
+gạch, đáy và nắp đan bằng bê tông cốt thép mác 200.
+
+e) Cấp nước
+
+- Nguồn nước cấp cho công trình lấy từ hệ thống cấp nước hạ tang khu vực.
+Từ điểm đấu nói qua cụm đồng hồ đo nước dẫn vào các bê nước, từ các bé chứa sẽ
+cấp đến két mái các công trình và các khu vực có nhu cầu sử dụng nước thông qua
+hệ thông máy bơm;
+
+- Hệ thống cấp nước ngoài nhà sử dụng ống HDPE đường kính D50, D40. Hệ
+thống cấp nước đảm bảo cấp nước day đủ và liên tục đáp ứng nhu cầu sử dụng
+nước cho toàn bộ trường học.
+
+J) Cây xanh, khu hoạt động trải nghiệm, tăng gia sản xuất
+
+- Trồng mới các cây xanh bóng mát trong khu vực trường kết hợp thảm cỏ,
+cây cảnh dạng khóm, bụi tạo cảnh quan;
+
+- Xây mới bồn cây, bồn hoa bằng gạch không nung vữa xi măng mác 75.
+
+8) Điện chiếu sáng
+
+- Nguén điện cấp cho hệ thống điện chiếu sáng lấy từ đường dây hạ thế sau
+Trạm biến áp; lắp đặt 01 tủ điều khiển chiếu sáng. Dây dẫn sử dụng cáp

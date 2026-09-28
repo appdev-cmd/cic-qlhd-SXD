@@ -127,7 +127,7 @@ export interface ProjectAppraisalData {
 export function getProjectAppraisalData(project: Project): ProjectAppraisalData {
   const name = project.name.toLowerCase();
   const total = project.totalInvestment;
-  const savings = project.estimatedSavings || Math.round(total * 0.045);
+  const savings = project.estimatedSavings ?? 0;
   const original = total + savings;
 
   // 1. Phân loại chuyên ngành công trình
