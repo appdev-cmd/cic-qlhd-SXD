@@ -1,4 +1,5 @@
 """Export linked demo outputs and a synthetic scanned input from the running app."""
+from runtime_endpoints import API_BASE
 import io,json,zipfile,time
 from pathlib import Path
 import httpx
@@ -9,7 +10,7 @@ from app.reporting import document_bytes
 
 root=Path(__file__).resolve().parents[1];out=root/'output/appraisal/gpxd-nghiem-thu';out.mkdir(parents=True,exist_ok=True)
 manifest=json.loads((root/'output/appraisal/procedure-demo-manifest.json').read_text(encoding='utf-8'))
-base='http://127.0.0.1:3001/api/appraisal';client=httpx.Client(timeout=120)
+base=API_BASE;client=httpx.Client(timeout=120)
 for attempt in range(4):
     response=client.post(base+'/test-login',json={'role':'admin'})
     if response.status_code==200:break

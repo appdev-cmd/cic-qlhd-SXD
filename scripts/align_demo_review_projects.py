@@ -1,11 +1,12 @@
 """Replace untouched demo placeholders with metadata from their linked projects."""
+from runtime_endpoints import API_BASE
 import json
 from pathlib import Path
 import httpx
 
 
 def main():
-    root=Path(__file__).resolve().parents[1]; base='http://127.0.0.1:3001/api/appraisal'
+    root=Path(__file__).resolve().parents[1]; base=API_BASE
     client=httpx.Client(timeout=60)
     assert client.get(base+'/runtime').json()['environment']=='staging'
     login=client.post(base+'/test-login',json={'role':'admin'}); login.raise_for_status()

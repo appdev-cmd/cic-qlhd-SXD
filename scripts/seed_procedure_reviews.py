@@ -1,10 +1,11 @@
 """Enrich only editable synthetic cloud cases; preserve previous rounds and reviews."""
+from runtime_endpoints import API_BASE
 import json
 from pathlib import Path
 from concurrent.futures import ThreadPoolExecutor
 import httpx
 
-base='http://127.0.0.1:3001/api/appraisal'
+base=API_BASE
 client=httpx.Client(timeout=100)
 if client.get(base+'/runtime').json().get('environment')!='staging':raise RuntimeError('Staging only')
 login=client.post(base+'/test-login',json={'role':'admin'});login.raise_for_status()

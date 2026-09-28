@@ -1,4 +1,5 @@
 """Staging regression for catalog writes and actual queued OCR; exact-ID cleanup."""
+from runtime_endpoints import API_BASE
 import hashlib
 import json
 import os
@@ -15,7 +16,7 @@ def main():
         for line in path.read_text(encoding='utf-8').splitlines():
             if '=' in line and not line.startswith('#'):
                 key, value = line.split('=', 1); os.environ.setdefault(key, value.strip('"\''))
-    base = 'http://127.0.0.1:3001/api/appraisal'
+    base = API_BASE
     client = httpx.Client(timeout=90)
     assert client.get(base+'/runtime').json()['environment']=='staging'
     sessions = {}

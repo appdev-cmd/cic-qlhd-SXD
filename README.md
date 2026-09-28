@@ -6,6 +6,8 @@
 
 **Trạng thái demo:** Đã hoàn thiện đợt đối chiếu pháp lý và biểu mẫu `2026-07.v2`, 52 phiếu mẫu liên kết dự án. Xem [kết quả rà soát và phạm vi xác nhận](docs/LEGAL_FORMS_DEMO_REVIEW_2026_09_27.md). Domain, production và SMTP để sau theo yêu cầu.
 
+**Cập nhật 28/09/2026:** Đã khắc phục quyền anonymous cloud, bổ sung gallery bền vững, dữ liệu demo và tối ưu truy vấn. Xem [bằng chứng kiểm thử và các gate còn lại](docs/IMPLEMENTATION_DELIVERY_2026_09_28.md), [ma trận quyền](docs/SECURITY_MATRIX.md) và [runbook](docs/RUNBOOK_2026_09_28.md). Theo yêu cầu người dùng, đã đổi bộ cổng để tránh dải Windows dành riêng: Web/API dùng chung địa chỉ 8208, Core/Worker dùng cổng nội bộ 8201/8200. Đã đăng nhập và tải hồ sơ cloud qua trình duyệt; AI/OCR thật chưa sẵn sàng. Thông tin provider ở các bàn giao ngày 27/09 là trạng thái lịch sử.
+
 ## Chạy trên máy
 
 Yêu cầu Node.js 22 trở lên, pnpm và Python 3.11 trở lên. Script tự tìm Python đi kèm Codex; máy khác có thể đặt APPRAISAL_PYTHON.
@@ -14,24 +16,20 @@ Yêu cầu Node.js 22 trở lên, pnpm và Python 3.11 trở lên. Script tự t
 pnpm install
 pnpm setup:appraisal
 pnpm samples:build
-pnpm dev:appraisal
-```
-
-Terminal thứ hai:
-
-```powershell
 pnpm dev
 ```
 
-Mở **http://localhost:3008/projects/appraisal**. Trong chế độ `demo`, chọn **Nạp mẫu lần đầu** hoặc **Nạp mẫu đã bổ sung**. Trong chế độ `cloud`, đăng nhập bằng tài khoản đã được cấp profile. Gói tài liệu ở `output/appraisal/bo-ho-so-mau-bcnckt.zip`.
+Mở **http://localhost:8208/projects/appraisal**. Một lệnh `pnpm dev` khởi động cả Worker, Core và Web theo thứ tự; chỉ báo sẵn sàng sau khi API qua Web trả HTTP 200. Giữ terminal chạy, dùng Ctrl+C để dừng cả bộ. `pnpm dev:appraisal` là tên lệnh tương đương; không chạy cả hai cùng lúc.
+
+Cổng cố định đọc từ `config/runtime-ports.json`, không tự nhảy sang cổng khác khi bị chiếm. Trong chế độ `demo`, chọn **Nạp mẫu lần đầu** hoặc **Nạp mẫu đã bổ sung**. Trong chế độ `cloud`, đăng nhập bằng tài khoản đã được cấp profile. Gói tài liệu ở `output/appraisal/bo-ho-so-mau-bcnckt.zip`.
 
 ## Kiến trúc thực tế
 
 | Thành phần | Công nghệ và vị trí | Cổng |
 |---|---|---|
-| Web | React 19, Vite, TypeScript, Tailwind tại src/ | 3008 |
-| Core | NestJS tại services/core/ | 3001 |
-| Worker | FastAPI tại ai/app/ | 8000 |
+| Web và API công khai trên máy | React 19, Vite, TypeScript, Tailwind tại src/; proxy `/api/appraisal` | 8208 |
+| Core nội bộ | NestJS tại services/core/, chỉ loopback | 8201 |
+| Worker nội bộ | FastAPI tại ai/app/, chỉ loopback | 8200 |
 | Lưu dùng thử | SQLite và bản gốc trong .appraisal-data/ | — |
 | Lưu nghiệp vụ | Supabase Auth, PostgreSQL với RLS, private Storage và signed upload | — |
 

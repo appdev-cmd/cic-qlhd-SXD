@@ -1,11 +1,12 @@
 """Bounded live Vertex smoke evaluation; citation checks are not legal sign-off."""
+from runtime_endpoints import API_BASE
 import json
 from pathlib import Path
 import httpx
 
 
 def main():
-    base='http://127.0.0.1:3001/api/appraisal'
+    base=API_BASE
     client=httpx.Client(timeout=115)
     assert client.get(base+'/runtime').json()['environment']=='staging'
     login=client.post(base+'/test-login',json={'role':'head_of_department'}); login.raise_for_status()

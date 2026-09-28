@@ -1,397 +1,269 @@
-# Kế hoạch nâng cấp và hoàn thiện full stack BuildAppraisal AI
+# Kế hoạch tối ưu và hoàn thiện BuildAppraisal AI — sau review tổng thể
 
-**Cập nhật pháp lý/biểu mẫu 27/09/2026:** Đã đối chiếu nguồn chính thức, triển khai checklist 13 loại thủ tục, sửa dự thảo và nâng cấp 52 phiếu mẫu. [Kết quả và giới hạn xác nhận](docs/LEGAL_FORMS_DEMO_REVIEW_2026_09_27.md).
+**Ngày lập:** 28/09/2026 (16:20).
+**Trạng thái:** CHỜ NGƯỜI DÙNG REVIEW/PHÊ DUYỆT QUA CHAT. Chưa sửa code.
+**Kế hoạch trước:** [kế hoạch A–F đã duyệt và đang triển khai dở](docs/plans/20260928-ke-hoach-A-F-truoc-review-tong-the.md) · [tiến độ đợt A–F](docs/IMPLEMENTATION_DELIVERY_2026_09_28.md) · [review sáng 28/09](docs/PROJECT_REVIEW_2026_09_28.md).
 
-**Ngày lập:** 27/09/2026. **Trạng thái:** Người dùng đã duyệt bằng tin nhắn “ok”; đã triển khai phần nền tảng G0–G1 trên cloud thử nghiệm. Xem [bàn giao và phần còn lại](docs/G0_G1_DELIVERY_2026_09_27.md). Đã bổ sung đăng nhập theo cic-ibst, 4 vai trò thử nghiệm và chuỗi hồ sơ/lần bổ sung; xem [bàn giao mới](docs/LOGIN_AND_SUBMISSION_DELIVERY_2026_09_27.md). Chưa nghiệm thu toàn bộ các gate.
+Kế hoạch này **kế thừa** đợt A–F, không làm lại phần đã đạt. Nó dựa trên review lại toàn bộ code, cấu hình, CI, tài liệu và kết quả kiểm tra chạy lúc 16:00–16:20 cùng ngày.
 
-**Phạm vi:** Toàn bộ dự án `D:\01_Projects\cic-qlhd-SXD`: frontend, backend, cơ sở dữ liệu, hồ sơ điện tử, AI, pháp lý, kiểm thử và vận hành. Các mục hiện trạng dưới đây ghi nhận thời điểm lập kế hoạch trước triển khai; trạng thái thực hiện mới nhất nằm trong tài liệu bàn giao.
+---
 
-**Cập nhật phạm vi demo:** Người dùng yêu cầu để SMTP/domain/production sang giai đoạn đưa vào sử dụng. Đã tiếp tục workflow nội bộ của ba nghiệp vụ, phân công/mở lại có lịch sử, danh mục và Dashboard cloud, truy hồi pháp luật + Vertex, bản đồ theo tọa độ lưu và kho văn bản A4. Xem [bàn giao demo và danh sách gate còn lại](docs/DEMO_SXD_2026_09_27.md). Các mục kế hoạch gốc phía dưới là lộ trình; chưa coi toàn bộ G2–G5 hoàn tất.
+## 1. Kết luận nhanh
 
-**Kiểm thử sau hoàn thiện:** 48/48 ca tự động đạt; các luồng cloud, danh mục và OCR nền đã chạy thực tế; đánh giá OCR trên 21 trang và 3 tình huống Vertex có bằng chứng. Xem [báo cáo kiểm thử](docs/DEMO_REGRESSION_2026_09_27.md). Người dùng tiếp tục loại domain/production khỏi phạm vi đợt này. Phiếu duyệt nghiệp vụ đã chuẩn bị, chưa tự xác nhận thay chuyên viên.
+Hệ thống đã có nền tảng tốt: ba nghiệp vụ (BCNCKT, GPXD, nghiệm thu), revision/CAS, chuỗi lần nộp, hash bản gốc, audit, hàng đợi có lease, quyền cloud đã đóng anonymous, baseline DB, gallery bền vững, A4 PDF/DOCX. Kiểm tra kỹ thuật hiện tại đều đạt (trừ lỗi build tạm thời do phiên khác đang sửa, xem F01).
 
-## 1. Kết luận và mục tiêu
+Phần còn thiếu để hoàn thiện nằm ở 5 nhóm:
 
-**Cập nhật triển khai tiếp:** đã bổ sung 52 phiếu GPXD/nghiệm thu, checklist/dự thảo, CRUD danh mục có RLS/audit/revision, OCR nền tiếng Việt, nền bản đồ ngoại tuyến, tách bundle và bộ đánh giá truy hồi. Xem [bàn giao đợt hoàn thiện demo và giới hạn nghiệm thu](docs/DEMO_COMPLETION_2026_09_27.md). Các gate production vẫn theo mục 6 của bàn giao này.
+1. **Quản trị thay đổi:** 88 file chưa commit, một phiên khác đang sửa song song, build đang vỡ tạm thời.
+2. **Nghiệp vụ:** chưa có **SLA / hạn trả kết quả** ở backend. Đây là cột 4–5 của thanh lọc chuẩn và là trọng tâm quy trình NĐ 217. Hai trường `status` và `workflow.state` đang được đồng bộ thủ công.
+3. **Hiệu năng cloud:** mỗi request đều gọi 2 lần tới Supabase Auth/REST và mở một kết nối PostgreSQL TLS mới, không dùng pool. Pooler đặt ở Tokyo.
+4. **Chuẩn UI và mã chết:** chưa có bộ `GridToolbar` chuẩn; còn nền dark có độ mờ thấp; có khoảng 10 module không còn được dùng; scanner UI mới kiểm 4 quy tắc.
+5. **Chất lượng dài hạn:** `main.py` 780 dòng với khoảng 60 route; code viết nén nhiều lệnh trên một dòng; `strict=false`; chưa có test frontend/E2E; CI chưa từng chạy từ xa; AI/OCR thật chưa cấu hình.
 
-Hệ thống hiện là **MVP cục bộ có luồng BCNCKT và kết nối Vertex AI**. Cần hoàn thiện nền tảng dữ liệu, quyền và nghiệp vụ trước khi vận hành nhiều người dùng với hồ sơ thật.
+---
 
-Năm ưu tiên:
+## 2. Hiểu biết hệ thống (căn cứ để lập kế hoạch)
 
-1. **P0 — Bảo vệ dữ liệu:** đóng quyền phát triển đang mở trên cloud, sửa cách xác định người thao tác và các đường ghi bỏ qua nghiệp vụ.
-2. **P1 — Một nguồn dữ liệu:** dự án, tổ chức, nhân sự, hồ sơ và dashboard dùng nguồn được xác định rõ; production không tự thay lỗi DB bằng mock.
-3. **P1 — Ba quy trình đầy đủ:** BCNCKT, GPXD và hậu kiểm/nghiệm thu có nghiệp vụ riêng, liên kết dự án và lịch sử các lần nộp.
-4. **P1/P2 — AI có bằng chứng:** giữ Gemini 3.8 Flash; bổ sung OCR, truy hồi pháp lý/tài liệu, đánh giá chất lượng và kiểm soát chi phí.
-5. **P1/P2 — Vận hành:** job bền vững, CI, quan sát hệ thống, triển khai tái lập, sao lưu và khôi phục.
-
-Không dùng tỷ lệ phần trăm hoàn thành khi chưa có bộ tiêu chí nghiệm thu toàn hệ thống. Nghiệm thu theo năng lực cụ thể và bằng chứng.
-
-### Nền tảng đã có để tiếp tục sử dụng
-
-- React/Vite; danh sách và panel dự án; ba phân hệ con dưới Quản lý dự án và ba tab tương ứng.
-- Đọc PDF/DOCX/TXT, bản gốc/phiên bản, trích dữ liệu, kiểm tra quy tắc, đối chiếu pháp lý, chuyên viên rà soát, lịch sử và dự thảo đầu ra.
-- Revision chống ghi đè, dữ liệu mẫu liên kết dự án, trình xem PDF, xuất A4 và các UI component dùng chung.
-- Supabase cloud có danh mục dự án/chủ thể, các hàm dashboard, ngày làm việc, workflow và view lịch sử; cần kế thừa sau rà quyền/nghiệp vụ.
-- Vertex cấu hình `gemini-3.8-flash`, endpoint `global`. Có kết quả kiểm tra kết nối thành công đã lưu; chưa nghiệm thu đầu cuối nghiệp vụ trên mô hình này.
-
-### Cơ sở rà soát
-
-Đã đọc mã nguồn/migration/tài liệu; health cục bộ; thống kê SQLite chỉ đọc; metadata, định nghĩa hàm, quyền hiệu lực và số lượng dữ liệu Supabase qua Management API do người dùng cung cấp. Đã đối chiếu nguồn pháp lý/kỹ thuật chính thức. Không chạy lại test, build, benchmark, khai thác lỗ hổng hoặc ghi dữ liệu cloud.
-
-Chi tiết bằng chứng: [Báo cáo rà soát](D:/01_Projects/cic-qlhd-SXD/docs/FULL_STACK_REVIEW_2026_09_27.md). Tài liệu không chứa mật khẩu hoặc token.
-
-## 2. Hiện trạng dữ liệu và chức năng
-
-### 2.1. Cloud và local chưa thống nhất
-
-| Nguồn | Quan sát chỉ đọc | Ý nghĩa |
-| --- | --- | --- |
-| SQLite demo | 161 hồ sơ/lần nộp, 868 tài liệu; 156 lần nộp seed liên kết 26 dự án | Dữ liệu mẫu và hồ sơ thử ở local |
-| Supabase cloud | 26 dự án, 32 tổ chức, 40 nhân sự, 9 staff_users, 5 giá vật liệu | Đã có danh mục để đối soát; chưa xác minh bản ghi nào là nghiệp vụ thật |
-| Auth/profile cloud | 0 profiles; chưa có province_id trong profiles | Chưa đáp ứng mô hình identity/scope mà worker mới cần |
-| Hồ sơ mới cloud | Chưa có appraisal_cases và RPC tương ứng; Storage chưa có bucket | Không thể chỉ đổi biến môi trường để đưa hồ sơ mới lên cloud |
-| Migration | Cloud có ba migration bổ sung ngày 26/09 không có trong thư mục repo hiện tại | Cần baseline và hợp nhất lịch sử trước migration tiếp |
-| Quyền cloud | 13 bảng có dev_open_access cho anon/authenticated; transition_dossier dùng x-actor-id | Gate P0 bắt buộc trước hồ sơ thật |
-
-### 2.2. Theo phân hệ
-
-| Phân hệ/lớp | Hiện trạng | Đích hoàn thiện | Ưu tiên |
-| --- | --- | --- | --- |
-| Dashboard | KPI/biểu đồ UI dùng mẫu; cloud có hàm tổng hợp | KPI từ DB theo quyền và thời gian, mở hồ sơ nguồn | P1 |
-| Quản lý dự án | UI dùng 26 dự án mẫu; service cloud có fallback | CRUD, scope, chủ thể, quy mô, TMĐT, tài liệu và ba tab cùng dữ liệu | P1 |
-| BCNCKT | Tiếp nhận/rules/pháp lý/AI/review/dự thảo | Phân công, SLA, bổ sung, trình duyệt, phát hành theo version pháp luật | P1 |
-| GPXD | Danh sách và workspace tiếp nhận chung | Checklist theo thủ tục, xử lý chuyên môn, ý kiến, giấy phép, điều chỉnh | P1/P2 |
-| Hậu kiểm/nghiệm thu | Danh sách, tài liệu, lịch sử mẫu | Lịch kiểm tra, biên bản, tồn tại, khắc phục, kiểm tra lại, kết quả | P1/P2 |
-| Tổ chức/cá nhân | UI phần lớn mock; cloud có danh mục | CRUD, quan hệ vai trò/thời kỳ, năng lực, nguồn xác minh, hết hạn | P1/P2 |
-| Pháp luật/chat | Kết quả/câu trả lời dựng sẵn | Kho được duyệt, trích dẫn và hiệu lực; hỏi đáp theo phạm vi | P2 |
-| Giá/định mức | UI mẫu, cloud có ít dữ liệu giá | Nguồn công bố, địa bàn/thời kỳ/đơn vị/version, import và đối chiếu | P2 |
-| GIS/quy hoạch | Dự án mẫu và nền bản đồ | Địa điểm thật, nguồn lớp quy hoạch, hệ tọa độ và quyền truy cập | P2 |
-| Văn bản/A4 | Generator mới và màn mẫu cũ tách biệt | Kho mẫu thống nhất, snapshot, duyệt, ký/phát hành và lưu trữ | P1/P2 |
-| Quản trị | Mô tả vai trò/trạng thái kết nối tĩnh | Người dùng, quyền thật, cấu hình có version, trạng thái đo được | P0/P1 |
-| Core API | NestJS proxy | Module nghiệp vụ, auth, DTO, lỗi chuẩn, tài liệu API | P1 |
-| Worker | FastAPI kiêm nghiệp vụ và job trong RAM | Worker tài liệu/AI theo snapshot, retry, telemetry | P1 |
-| DB/Storage | Schema cloud cũ + local JSON aggregate | Quan hệ lõi, tệp riêng, snapshot bất biến, truy vấn hiệu quả | P0/P1 |
-| DevOps | Script phát triển; chưa có chuỗi CI/deployment chuẩn trong repo | Staging/prod, container, giám sát, backup và rollback | P1/P2 |
-
-## 3. Gói P0: quyền, identity và tính toàn vẹn
-
-### 3.1. Cloud đang mở quyền phát triển
-
-- Sao lưu cấu hình/grant/policy/schema; rà phụ thuộc trước thay quyền để tránh khóa chính đường nghiệp vụ hợp lệ.
-- Thu hồi `dev_open_access` và các grant không cần trên bảng nghiệp vụ; bổ sung chính sách tỉnh/phòng/vai trò/phân công cho từng hành động.
-- Bảo vệ `schema_migrations` khỏi Data API/client; khóa sửa/xóa audit và AI log đối với người dùng thông thường.
-- Kiểm tra cả bảng, view, function, sequence và Storage. Các view lịch sử đã có security_invoker cần tiếp tục giữ và kiểm thử.
-- Thay nguồn actor của `transition_dossier`: lấy UUID từ Auth, ánh xạ cán bộ active, kiểm tra scope và quyền trong DB; không lấy quyền từ `x-actor-id` do client truyền. Rà quyền EXECUTE cả `refresh_sla_status` và hàm có side effect khác.
-- Profile/Auth UUID và staff_users hiện phải được liên kết có kiểm chứng; không cấp quyền tự chọn role bằng dữ liệu do frontend gửi.
-- Admin kỹ thuật tách quyền phê duyệt/ký nghiệp vụ; quyền lãnh đạo liên phòng là phạm vi được giao, không mở toàn DB mặc định.
-
-Grant và RLS phải được xử lý cùng nhau; thêm một policy hẹp không vô hiệu policy rộng đang tồn tại vì policy cho phép mặc định kết hợp bằng OR. Nguồn: [Supabase RLS](https://supabase.com/docs/guides/database/postgres/row-level-security), [PostgreSQL Row Security](https://www.postgresql.org/docs/current/ddl-rowsecurity.html).
-
-### 3.2. Sửa thiết kế ghi hồ sơ mới trước khi áp migration
-
-RPC `save_appraisal_case` trong repo chưa có trên cloud. Không áp nguyên trạng rồi mới sửa sau:
-
-- Thay nhận cả payload bằng command hẹp: tiếp nhận, sửa trường cho phép, gắn dự án, xác nhận dữ liệu, review, trình duyệt, duyệt/trả lại.
-- Kiểm tra null-safe cho trường bắt buộc; chặn thay đổi scope/revision sai, xóa finalReview, tự đặt status và giả kết quả AI.
-- Audit do server/DB sinh; snapshot, run và review đã duyệt bất biến. Kết quả worker có schema/version và quyền ghi riêng.
-- Giao dịch thay dữ liệu, transition và audit phải nhất quán; có idempotency key cho lệnh dễ gửi lại.
-- Giữ RLS và quyền tối thiểu; không dùng service_role cho mọi request để thay thế thiết kế authorization.
-
-Quyền EXECUTE và security definer cần cấu hình riêng, theo [Supabase Database Functions](https://supabase.com/docs/guides/database/functions).
-
-### 3.3. Trạng thái và dữ liệu phải phản ánh đúng thực tế
-
-- Demo/staging/production có cấu hình rõ. Production lỗi DB hoặc dữ liệu rỗng không được tự chuyển sang mock.
-- Tên người dùng, quyền và đăng xuất gắn Auth thật; xóa cache theo account/scope khi đổi phiên.
-- Kết nối chưa triển khai hiển thị chưa cấu hình/chưa kiểm tra; bỏ Online và webhook giả trong Settings.
-- Chỉnh ngày hiệu lực và rà nội dung pháp lý mẫu sai; dùng registry chung thay chuỗi viết cứng.
-- Giữ Gemini 3.8; tách identity/hạn mức ứng dụng trước production, ưu tiên xác thực không dùng khóa dài hạn khi hạ tầng hỗ trợ. Không đưa credential vào client, log hoặc tài liệu.
-
-## 4. Kiến trúc đích
-
-Giữ React/Vite và nền tảng hiện có. Nâng cấp từng module, không đổi framework đồng thời với chuyển dữ liệu.
+### 2.1 Kiến trúc đang chạy
 
 ```mermaid
-flowchart TD
-  UI[React/Vite - danh sách và panel] --> AUTH[Supabase Auth]
-  UI --> API[Core API - NestJS]
-  API --> DOMAIN[Quyền - dự án - hồ sơ - quy trình - văn bản]
-  DOMAIN --> DB[(PostgreSQL + RLS)]
-  API --> UPLOAD[Upload session và xác nhận tệp]
-  UPLOAD --> STORAGE[(Private Storage)]
-  DOMAIN --> JOBS[(Job + Outbox + Snapshot)]
-  JOBS --> WORKER[FastAPI Worker]
-  WORKER --> EXTRACT[Đọc tài liệu - OCR - Rules]
-  WORKER --> RETRIEVAL[Truy hồi hồ sơ và pháp lý đã duyệt]
-  RETRIEVAL --> AI[Vertex AI - Gemini 3.8 Flash]
-  WORKER --> RESULT[Kết quả có bằng chứng và phiên bản]
-  RESULT --> DOMAIN
-  DOMAIN --> REVIEW[Chuyên viên - lãnh đạo - văn thư]
-  REVIEW --> OUTPUT[Dự thảo và văn bản phát hành]
+flowchart LR
+    B[Trình duyệt] -->|:8208| Web[Vite React 19 + proxy /api/appraisal]
+    Web -->|127.0.0.1:8201| Core[Core NestJS/Express — gateway 48 dòng]
+    Core -->|x-internal-token| Worker[FastAPI Worker :8200 — ~60 route]
+    Web --> Auth[Supabase Auth]
+    Worker -->|demo| SQLite[(.appraisal-data SQLite + projects.json)]
+    Worker -->|cloud: psycopg TLS, RLS theo actor| PG[(Supabase PostgreSQL)]
+    Worker -->|Auth/REST mỗi request| Auth
+    Worker --> Storage[Private Storage]
+    Worker --> AI[Adapter Vertex / OpenAI — chưa cấu hình]
+    Worker --> OCR[Tesseract — chưa sẵn sàng]
+    Worker --> Jobs[Hàng đợi lease 180s, 3 lần thử, thread nền]
 ```
 
-| Thành phần | Trách nhiệm | Ranh giới |
-| --- | --- | --- |
-| Frontend | Hiển thị/nhập liệu/panel/bộ lọc/chứng cứ | Không quyết định quyền hoặc kết luận pháp lý |
-| Core API | Auth, authorization, CRUD, state machine, phân công, SLA, audit | Đầu mối lệnh nghiệp vụ của UI |
-| PostgreSQL | Ràng buộc, RLS, giao dịch, revision, lịch sử | Kiểm soát cả Data API/RPC trực tiếp |
-| Worker | Trích xuất, OCR, rules, retrieval, AI, render | Không tự duyệt/phát hành |
-| Storage | Bản gốc, phiên bản, đầu ra | Private, scope theo hồ sơ, URL có hạn |
-| Kho pháp lý | Điều khoản, hiệu lực/phạm vi/version/người duyệt | Tách dữ liệu đang nhập với căn cứ đã kiểm chứng |
+- **Web (`src/`, ~11.500 dòng TS/TSX):** 10 trang lazy. Workspace BCNCKT (`AppraisalWorkspace.tsx`), GPXD/nghiệm thu (`SubmissionWorkspace.tsx`, `ProcedureReview.tsx`), Dashboard, Danh mục (tổ chức/nhân sự/giá vật liệu dùng chung `CatalogPage`), GIS Leaflet, Kho văn bản, Trợ lý pháp luật, Cài đặt runtime.
+- **Core (`services/core/main.ts`):** chỉ kiểm tra origin/host/method, chặn test-login, chuyển tiếp nguyên body tới Worker. Không có module/controller/Swagger.
+- **Worker (`ai/app/`):** chứa gần như toàn bộ nghiệp vụ: `main.py` (route), `store.py` (persistence demo/cloud), `workflow.py`, `rules.py`, `legal*.py`, `procedure_*.py`, `ingestion/ocr*`, `jobs.py`, `reporting.py`/`*_templates.py` (A4), `gallery.py`, `catalog.py`.
+- **DB:** 22 bảng, 32 hàm, 33 policy (baseline `supabase/baselines/20260928.sql`). Dữ liệu lần nộp chủ yếu nằm trong JSONB `appraisal_cases.payload`.
 
-Mỗi endpoint chỉ có một chủ sở hữu ghi nghiệp vụ. Chuyển dần từ FastAPI sang module Core qua adapter tương thích; tránh hai bộ state machine độc lập. Worker ghi kết quả qua contract nội bộ giới hạn quyền.
+### 2.2 Mô hình nghiệp vụ
 
-### Job bền vững
+**Dự án → Hồ sơ gốc (`appraisal_dossiers`) → Lần nộp (`appraisal_cases`, kiểu TS `Dossier`) → Tài liệu / dữ kiện / phát hiện / phiếu / kết quả.**
+Vai trò: `officer`, `head_of_department`, `director`, `admin`. Workflow gồm: tiếp nhận → phân công → xử lý → chờ bổ sung → chờ rà soát → hiện trường → khắc phục → hoàn tất (rà soát nội bộ, chưa ký số/cấp số). Căn cứ pháp lý trong code đã cập nhật theo Luật 135/2025, NĐ 206/207/217/2026, TT 32/39/2026.
 
-- Bước đầu dùng PostgreSQL cho job/outbox: trạng thái, lease, heartbeat, retry, idempotency, snapshot và actor. Chỉ thêm dịch vụ hàng đợi riêng khi đo tải cho thấy cần.
-- Ghi hồ sơ và outbox cùng giao dịch; worker nhận việc nguyên tử. Thiết kế chịu được giao lại tác vụ, không giả định chỉ chạy một lần.
-- GET chỉ đọc; tiến trình quản lý lease phát hiện job treo. API instance không được đánh dấu job ở instance khác là mất.
-- Tác vụ dài dùng identity worker giới hạn và acting user, không phụ thuộc JWT người dùng còn hạn đến lúc hoàn thành.
-- Hủy dừng bước chưa chạy và bỏ kết quả muộn; cuộc gọi model đã gửi có thể vẫn tốn chi phí, UI phải thể hiện đúng.
+### 2.3 Kiểm chứng tại thời điểm review
 
-## 5. Dữ liệu và liên kết dự án
-
-### 5.1. Mô hình đề xuất
-
-| Nhóm dữ liệu | Thiết kế |
+| Kiểm tra | Kết quả |
 | --- | --- |
-| Projects/parties | Dự án, tổ chức, cá nhân, cán bộ Auth, quan hệ vai trò/thời kỳ; scope và FK rõ |
-| Dossiers/submissions | Dự án → hồ sơ nghiệp vụ → các lần nộp; loại BCNCKT/GPXD/nghiệm thu; lần trước/lý do/ngày nhận |
-| Documents/versions | Bản gốc, SHA-256, MIME, dung lượng, storage key, thành phần, phiên bản dùng trong từng lần nộp |
-| Facts/evidence | Giá trị/đơn vị, trang/vùng nguồn, confidence, giá trị xác nhận/người xác nhận |
-| Workflow | Assignments, transitions, consultations, SLA events, lịch làm việc có version |
-| Analysis | Snapshot bất biến, job, run, finding; model/prompt/rule/corpus version và dữ liệu đầu vào |
-| Review/output | Ý kiến, phê duyệt, mẫu và snapshot được duyệt, trạng thái ký/phát hành |
-| Legal/rules | Văn bản/điều khoản/hiệu lực/phạm vi/sửa đổi/nguồn/người duyệt |
-| Prices/norms | Công bố, kỳ/địa bàn/mã/đơn vị, nguồn và điều kiện áp dụng |
-| History | Audit, AI log, integration events nối tiếp, actor thật, request/job ID |
+| `tsc --noEmit` (web) | Lúc 16:05 đạt. Lúc 16:17 **lỗi 1**: `DashboardPage.tsx:1` import `CloudDashboard` vừa bị phiên khác xoá |
+| `tsc -p tsconfig.core.json` | Đạt |
+| `node scripts/lint-ui.mjs` | 0 vi phạm (4 quy tắc) |
+| `node scripts/appraisal.mjs test` | **66/66 đạt** (5,3 giây) |
+| Bật thử `--strict` cho web | Chỉ **3 lỗi** (`googleMapsLoader.ts:59`, `projectService.ts:14`, `:18`) |
+| Bundle (`dist/` 15:57) | pdf.worker 1,27 MB; pdf-reader 437 KB; Dashboard 324 KB (recharts); supabase 223 KB; react 244 KB. Đều được tách chunk/lazy |
+| `pnpm` cục bộ | Bản 12.3.4 (không nhận cờ `-s`); CI khai báo pnpm 10 |
 
-Các trường lọc/sort/join thường dùng là cột có kiểu; JSON dành cho snapshot và kết quả có schema/version. Tiền dùng numeric/Decimal. Ngày nghiệp vụ là date; sự kiện lưu UTC, hiển thị Asia/Saigon.
+---
 
-### 5.2. Liên kết bắt buộc
+## 3. Phát hiện mới (theo mức ưu tiên)
 
-- Server resolve dự án từ ID có quyền; tự lấy tên/mã/scope. Không tin snapshot tên/tỉnh/phòng do client khai.
-- Danh sách phân hệ tổng hợp và tab dự án dùng cùng API; tab thêm projectId. Cùng hồ sơ có cùng ID, trạng thái, phiên bản và số tài liệu ở cả hai nơi.
-- Lần bổ sung nối lần trước, tham chiếu phiên bản giữ nguyên; không gộp theo tên.
-- GPXD/nghiệm thu tham chiếu kết quả giai đoạn trước khi có căn cứ; ba kịch bản seed độc lập không mặc nhiên là tiến độ pháp lý thật.
-- Chuyển đơn vị hoặc đổi dự án là thao tác có quyền/audit; đánh dấu kết quả ảnh hưởng cần rà lại.
-
-### 5.3. Migration dựa trên cloud thực tế
-
-1. Lấy baseline schema/policy/function hiện tại; tìm ba migration cloud bị thiếu. Nếu không tìm được, dựng baseline được review và xác nhận checksum trước thay đổi.
-2. Thống nhất public.schema_migrations với cơ chế migration đích; không reset database hoặc chạy lại initial schema trên dữ liệu đang có.
-3. Rà/tái sử dụng cloud dashboard, holidays, search_text, workflow và view lịch sử; sửa identity/scope và đưa workflow xuống cấp hồ sơ phù hợp.
-4. Liên kết Auth UUID ↔ staff_users/profile; nguồn province_code/province_id được chuẩn hóa có bảng ánh xạ. Không tự cấp vai trò dựa vào email/tên trùng.
-5. Giữ ID dự án text hiện có trong đợt đầu; không ép đổi hàng loạt sang UUID. AppraisalCase.id hiện tại giữ như ID công khai của lần nộp hoặc alias tương thích.
-6. Tạo hồ sơ cha theo quan hệ dự án/nghiệp vụ đã xác nhận. Trường hợp chưa đủ thông tin vào danh sách cần xử lý; không suy đoán liên kết.
-7. Chạy chuyển đổi trên staging, đối soát số lượng/FK/version/hash/audit, giữ snapshot JSON gốc để truy nguyên.
-8. Seed có namespace/version/idempotency và môi trường riêng. Không tự đưa toàn bộ dữ liệu mẫu local vào production.
-
-## 6. Hoàn thiện ba quy trình
-
-Khung sản phẩm đề xuất:
-
-`Nháp → Tiếp nhận → Kiểm tra thành phần → Phân công → Xử lý chuyên môn → Trình rà soát → Trình duyệt → Phát hành → Lưu trữ`.
-
-Các nhánh bổ sung/tạm dừng/trả lại/rút hồ sơ/điều chỉnh/mở lại phải có điều kiện, quyền, lý do và bằng chứng. Chuyên viên nghiệp vụ xác nhận khung này trước khi mã hóa thành quy trình pháp lý cụ thể.
-
-- Tách trạng thái nghiệp vụ, trạng thái chạy AI và trạng thái tài liệu.
-- Tách bổ sung thành phần với khắc phục nội dung; cấu hình số lần, mốc thời gian, văn bản và ngoại lệ theo căn cứ được duyệt.
-- SLA tính từ sự kiện thực tế và lịch làm việc đã xác nhận; không nhận tùy ý deadline từ client như nguồn chân lý.
-- Người lập, rà soát, duyệt và phát hành có quyền riêng; có ủy quyền thời hạn và audit khi cần.
-- Khi sửa đầu vào sau review, kết quả bị ảnh hưởng chuyển cần rà lại; bản cũ giữ nguyên để truy nguyên.
-
-| Nghiệp vụ | Chức năng phải hoàn thiện | Đầu ra |
-| --- | --- | --- |
-| BCNCKT | Xác định phạm vi/thẩm quyền; checklist có điều kiện; xác nhận facts; rules/AI; xử lý phát hiện; ý kiến chuyên ngành; trình duyệt | Phiếu/yêu cầu theo tình huống, báo cáo rà soát, dự thảo kết quả, lịch sử và snapshot |
-| GPXD | Loại thủ tục/đối tượng; checklist; căn cứ đất đai/quy hoạch/thiết kế theo điều kiện; liên kết thẩm định; lấy ý kiến; duyệt | Dự thảo giấy phép/thông báo; số phát hành khi hợp lệ; lịch sử điều chỉnh/gia hạn/cấp lại trong phạm vi được duyệt |
-| Hậu kiểm/nghiệm thu | Xác định phạm vi kiểm tra của cơ quan; kế hoạch/đoàn kiểm tra; tài liệu hoàn thành; ảnh/biên bản; tồn tại/khắc phục/kiểm tra lại | Biên bản, danh sách tồn tại, đối chiếu khắc phục, dự thảo văn bản kết quả |
-
-Phân biệt kiểm tra công tác nghiệm thu của cơ quan quản lý với nghiệm thu của chủ đầu tư. AI hỗ trợ hồ sơ; đánh giá hiện trường, chất lượng và quyết định thuộc người có trách nhiệm.
-
-## 7. AI, OCR và pháp lý
-
-### 7.1. Chuỗi xử lý đích
-
-1. Upload → kiểm tra/cách ly tệp nghi ngờ → bản gốc và hash.
-2. Phân loại → đọc text/bảng/trang → OCR nếu cần → giữ tọa độ bằng chứng.
-3. Chuẩn hóa dữ liệu/đơn vị → chuyên viên xác nhận trường quan trọng hoặc chưa chắc.
-4. Chụp bộ tài liệu và dữ liệu xác nhận → chọn pháp lý/rule đúng thời điểm/phạm vi.
-5. Rules kiểm tra nội dung xác định được → truy hồi đoạn cần thiết cho từng vấn đề.
-6. Gemini 3.8 đề xuất có nguồn → kiểm tra schema/ID/phạm vi/mức hỗ trợ của trích dẫn.
-7. Chuyên viên chấp nhận/sửa/bác bỏ → lưu cả đề xuất và quyết định.
-8. Dự thảo từ snapshot được chọn → rà soát/duyệt/phát hành đúng quyền.
-
-### 7.2. Hạng mục AI
-
-- Thay chọn 55.000 ký tự đầu bằng phân đoạn cấu trúc, truy hồi theo nội dung và ngân sách token; thể hiện độ phủ và trang/tài liệu chưa xử lý.
-- Tìm pháp lý theo số hiệu/điều khoản/hiệu lực/đối tượng trước; bổ sung ngữ nghĩa. Đánh giá PostgreSQL full-text/vector trên corpus thực tế trước chọn index.
-- Lọc quyền trước truy hồi; cache/index có tenant và snapshot. Tách pháp luật công khai với hồ sơ riêng tư.
-- Tài liệu là dữ liệu không đáng tin cậy: giữ bảo vệ prompt injection, không cho nội dung tệp điều khiển công cụ hoặc truy cập hồ sơ khác.
-- Lưu model, endpoint, prompt/rule/corpus version, input hash, token usage, latency, lỗi và chi phí ước tính theo bảng giá có ngày hiệu lực.
-- Hạn mức theo người/đơn vị/job, chống gửi lặp, retry/backoff cho 429/timeout. Không tự chuyển model/nhà cung cấp khi lỗi.
-- Giữ `gemini-3.8-flash` theo yêu cầu. Tham chiếu [hướng dẫn mô hình](https://docs.cloud.google.com/gemini-enterprise-agent-platform/models/guides/gemini-3-8-flash).
-- Đối chiếu yêu cầu xử lý dữ liệu của đơn vị với endpoint global hiện tại; identity ứng dụng riêng và dữ liệu được phép gửi. Không mặc định mọi cấu hình có lưu giữ bằng không; tham chiếu [điều kiện lưu giữ của Google](https://docs.cloud.google.com/gemini-enterprise-agent-platform/resources/zero-data-retention).
-
-### 7.3. OCR và định dạng
-
-Hoàn thiện OCR tiếng Việt, trang xoay/mờ, bảng, trang trống, số và đơn vị; lưu vùng nguồn để bấm xem. So OCR cục bộ với dịch vụ được phép trên cùng bộ tài liệu theo chất lượng/chi phí/dữ liệu trước chọn nhà cung cấp. OCR thấp confidence phải chuyển xác nhận, không tạo facts “đã xác thực”.
-
-Mở XLSX cho TMĐT sau khi thống nhất công thức/đơn vị/nguồn; xử lý công thức không có giá trị cache và liên kết ngoài rõ ràng. CAD/BIM/tính toán kết cấu là nhánh mở rộng riêng; đọc PDF chưa đáp ứng các năng lực này.
-
-### 7.4. Pháp lý sau 01/07/2026
-
-Hồ sơ trình mới theo chỉ đạo dùng bộ quy định sau 01/07/2026. Hồ sơ lịch sử có chế độ chuyển tiếp riêng; không sửa ngày/bối cảnh bản gốc để khớp bộ luật mới.
-
-NĐ 217/2026/NĐ-CP ban hành 19/06/2026, hiệu lực 01/07/2026 theo [Cổng văn bản Chính phủ](https://vanban.chinhphu.vn/?classid=1&docid=218509&pageid=27160&typegroupid=4). LegalAiPage đang viết 15/05/2026; phải sửa và rà cả tóm tắt nội dung.
-
-- Kế thừa [nghiên cứu pháp lý hiện có](D:/01_Projects/cic-qlhd-SXD/docs/LEGAL_REVIEW_POST_2026_07.md): Luật 135, NĐ 217/206/207/212, thông tư và QCVN trong kho; tiếp tục kiểm chứng điều/phụ lục dùng để vận hành.
-- Registry có bản chính thức/hash/điều khoản/hiệu lực/sửa đổi/thay thế/phạm vi/người duyệt; Markdown chỉ là bản đọc hỗ trợ.
-- Rule/checklist/template tham chiếu đúng version; thay đổi pháp luật tạo version mới và danh sách hồ sơ cần xem xét theo quyết định nghiệp vụ.
-- Ba trạng thái áp dụng/không áp dụng/chưa xác định; chưa đủ dữ liệu thì yêu cầu xác nhận.
-- Không lấy thành phần đặc thù Hương Xuân/Hà Tĩnh thành yêu cầu chung cho mọi dự án Điện Biên.
-- Chữ ký số cần xác thực mật mã/chứng thư nếu triển khai; dò thấy trường chữ ký chưa đủ kết luận hợp lệ.
-
-## 8. Frontend và trải nghiệm
-
-### Cấu trúc và dữ liệu
-
-- AuthProvider và route guard toàn app; UI hiển thị quyền, API quyết định quyền.
-- Tách AppraisalPage thành trang điều phối, danh sách, form và workspace theo nghiệp vụ. Entity resolver trung tâm bỏ import vòng với panel dự án.
-- Repository/API chung cho dự án/chủ thể; mapper có schema. Dữ liệu chưa rõ giữ unknown/null, không mặc định thành nhóm/cấp/chủ đầu tư/deadline có vẻ hợp lệ.
-- Cache theo account/scope, hủy request cũ khi đổi lọc, refresh danh sách/tab sau mutation; xử lý riêng 401/403/409.
-- Search/filter/sort/paging/count toàn tập ở DB; tab dự án dùng cùng endpoint thêm projectId.
-
-### Chuẩn UI bắt buộc
-
-- EntityLink mở panel trung tâm theo ID thật; deep link khôi phục được panel.
-- Tooltip chung và AutoTableTooltip; không dùng HTML title. SearchableSelect, DateInput, NumberInput đúng quy tắc.
-- Thanh lọc theo thứ tự tìm kiếm → phân loại → cán bộ/chủ đầu tư → trạng thái → thời gian → actions.
-- Bảng dùng chung resize/sort/lưu thiết lập; key cột ổn định, cấu hình version và tách theo account khi cần.
-- Theme primary/semantic tokens trên mọi phân hệ; bổ sung dark cho phần còn thiếu; kiểm tra mọi bảng màu và ba chế độ nền.
-- Guard cho form con/unsaved; Escape chỉ đóng lớp trên; bảo vệ chuyển tab/đóng panel/đổi dự án; header chừa nút đóng.
-- Bàn phím, focus trap/return, nhãn trợ năng, loading/empty/error và chống double-click.
-- Lazy-load PDF/GIS/charts/trang nặng, tải dữ liệu từng tab; không tải toàn bộ segments/runs/audit cho danh sách.
-
-### Văn bản
-
-Thống nhất nguồn template cho preview/DOCX/PDF, version mẫu và snapshot đầu vào. Giữ A4 210×297mm, lề trái/phải/trên/dưới 30/20/22/20mm theo quy tắc dự án. Phân trang thật trước khi đưa vào khung cao cố định để không cắt mất chữ; kiểm tra font trên Linux/container. Số/ký/phát hành chỉ có sau thao tác hợp lệ.
-
-## 9. API, upload và hiệu năng
-
-- Core có module Auth/Projects/Parties/Dossiers/Workflow/Documents/Jobs/Legal/Audit/Integrations; DTO, OpenAPI tại `/api/docs`, mã lỗi, request ID, rate limit, log lọc bí mật.
-- Version hợp đồng API, sinh type UI từ schema, typecheck Core riêng; bật strict theo từng module để tránh thay đổi lớn khó kiểm soát.
-- Danh sách dùng projection; index theo scope/procedure/project/status/date và khóa phân trang; đo query plan trên staging. Tái sử dụng index/hàm cloud phù hợp.
-- Upload session có quyền, tải trực tiếp Storage, kiểm tra hash/quyền khi finalize; hỗ trợ tải tiếp cho tệp lớn, dọn object mồ côi có audit. Supabase khuyến nghị resumable upload trên 6MB: [tài liệu upload](https://supabase.com/docs/guides/storage/uploads/standard-uploads).
-- Parser/OCR chạy nền có hạn thời gian/trang/bộ nhớ/giải nén; giữ giới hạn đã có, bổ sung kiểm tra MIME/magic, tệp hỏng/độc hại.
-- Xuất báo cáo lớn là job; không giữ request web dài chờ OCR/AI/render.
-
-**Mục tiêu đề xuất, chưa đo:** danh sách 50 dòng p95 ≤800ms; đọc metadata p95 ≤500ms; nhận job p95 ≤1 giây. Bộ tải ban đầu: 10.000 hồ sơ, 100.000 metadata tài liệu, 30 người dùng đồng thời, nhiều scope. Độ trễ AI/OCR đo riêng theo số trang/model. Chốt ngân sách bundle và giảm token sau baseline, không cam kết tỷ lệ tối ưu khi chưa có số đo.
-
-## 10. Vận hành và tích hợp
-
-- Giữ port phát triển web **3008**, Core **3001**, Worker **8000**. Frontend hiện ở `src/`; cập nhật hướng dẫn lệnh để không chỉ tới `apps/web` chưa tồn tại.
-- Pin Node/pnpm/Python, lock dependency, Python venv, kiểm tra cấu hình lúc khởi động.
-- Dev/staging/prod tách DB/bucket/identity/quota. Credential không vào bundle/log/mẫu tải xuống/repo.
-- Container Core/Worker và frontend build tĩnh sau reverse proxy TLS; worker không public. Chọn host sau khi chốt hạ tầng. Máy chủ Công báo là phương án nếu đơn vị duyệt tài nguyên/cách ly, không mặc định triển khai chung.
-- CI gồm type/lint/UI, unit/integration/RLS, build, dependency/secret scan, migration trên DB tạm, artifact có version. AI trả phí chạy trong đợt đánh giá có kiểm soát.
-- Tách liveness/readiness/dependency; AI connection có thời điểm kiểm tra, không gọi model trả phí trong mọi health probe.
-- Metrics latency/error/queue age/retry/token/cost/OCR/dung lượng; log request/job ID đã lọc dữ liệu nhạy cảm; cảnh báo có người nhận và runbook.
-- Backup cả DB, Storage, template/registry; diễn tập restore. Mục tiêu ban đầu đề xuất RPO ≤24h, RTO ≤4h, cần đơn vị chốt theo nghiệp vụ/ngân sách.
-- DVC/chữ ký số/CSDL năng lực/giá/quy hoạch dùng adapter, sandbox, idempotency và đối soát; phụ thuộc tài liệu kết nối và quyền truy cập chính thức.
-
-## 11. Lộ trình và gate nghiệm thu
-
-Ước lượng **10–15 tuần làm việc** với giả định 2 kỹ sư full stack, 1 kỹ sư AI/backend, QA và chuyên viên nghiệp vụ/pháp lý tham gia thường xuyên. Đây là ước lượng lập kế hoạch, chưa phải lịch cam kết; thời gian chờ kết nối ngoài/duyệt nghiệp vụ tính riêng.
-
-| Giai đoạn | Thời lượng | Sản phẩm | Điều kiện hoàn tất |
+| Mã | Mức | Phát hiện | Bằng chứng |
 | --- | --- | --- | --- |
-| G0 — Baseline và P0 | 1 tuần | Baseline cloud/repo; ma trận quyền; sửa dev access/actor/RPC/auth/status; chuẩn pháp lý tối thiểu | Chặn các đường ghi trái quyền đã phát hiện, trạng thái UI đúng, backup và kế hoạch migration rõ |
-| G1 — Nền dữ liệu/API | 2–3 tuần | Identity, project/submission, migration/adapter, API phân trang, Auth toàn app, upload session, queue | Danh sách/tab cùng dữ liệu; scope đúng; đối soát đạt; restart không mất job |
-| G2 — Quy trình/UI | 2–3 tuần | Ba state machine, phân công/SLA/review, panel/grid/guard/theme, dự thảo/audit | Hành trình và nhánh bổ sung/khắc phục chạy trên staging; không tự phát hành |
-| G3 — AI/OCR/pháp lý | 2–3 tuần | Corpus duyệt, retrieval/OCR, Gemini 3.8, evidence, cost control, tập đánh giá | Đạt ngưỡng đã chốt; không lẫn quyền; xử lý đúng thiếu nguồn/lỗi |
-| G4 — Phân hệ hỗ trợ/tích hợp | 2–3 tuần | Dashboard, tổ chức/nhân sự, giá/định mức, GIS, văn bản/quản trị; adapter ngoài | Dữ liệu nguồn thật hoặc trạng thái chưa tích hợp rõ; KPI đối soát được |
-| G5 — Thí điểm/bàn giao | 1–2 tuần | UAT, tải/restore, hướng dẫn, triển khai/rollback, sửa lỗi thí điểm | Gate nghiệp vụ/bảo mật/vận hành đạt, không lỗi chặn, có người nhận vận hành |
+| F01 | **P0** | 88 thay đổi chưa commit, gồm toàn bộ đợt A–F. Một phiên khác đang sửa dashboard/tooltip/catalog song song. Build hiện vỡ tạm thời. Rủi ro mất việc hoặc ghi đè lẫn nhau | `git status`. File sửa trong 15 phút gần nhất: `dashboardData.ts`, `Tooltip.tsx`, `dashboard.css`, `catalog.py`, `demo_catalog.py`. `CloudDashboard.tsx` bị xoá |
+| F02 | **P1** | Chưa có SLA/hạn xử lý ở backend: không có ngày tiếp nhận chuẩn, hạn pháp định/nội bộ, tạm dừng khi yêu cầu bổ sung, lịch nghỉ. Thanh lọc chuẩn vị trí 4–5 không có dữ liệu thật để lọc | `ai/app/workflow.py`, `domain.py`: không có trường deadline/SLA. Chưa có `ai/app/sla.py`. Bảng `holidays` chỉ có trong baseline |
+| F03 | **P1** | `status` và `workflow.state` được gán tay ở từng action, dễ lệch khi thêm thao tác mới | `workflow.py:56-63` |
+| F04 | **P1** | Mỗi request cloud gọi `GET /auth/v1/user` và `GET /rest/v1/profiles`, sau đó mở kết nối psycopg mới (TLS verify-full, không pool). Pooler ở `ap-northeast-1`. Độ trễ cộng dồn nhiều lượt round-trip mỗi thao tác. Chưa có số đo HTTP | `store.py:58-59`, `database.py:14`. Không có `psycopg_pool` |
+| F05 | P2 | Workspace poll **toàn bộ payload** lần nộp mỗi 1,5 giây. OcrPanel poll bằng interval. Mỗi thao tác ghi phát sự kiện `appraisal:changed` khiến danh sách tải lại | `AppraisalWorkspace.tsx:51-52`, `OcrPanel.tsx:11`, `apiClient.ts` |
+| F06 | P2 | Khoảng 10 module không còn được import: `A4DocumentPreview`, `GoogleMapViewer`, `GoogleApiKeyModal`, `googleMapsLoader`, `gisData`, `KpiCard`, `ChartDefs`, `projectImages`, `mockAppraisalData`. Thư mục `src/data/mock*.ts` (~160 KB) chỉ còn dùng làm **type** trong `src` và làm dữ liệu seed cho `scripts/`. Dependency `@googlemaps/js-api-loader`, `@types/google.maps` có thể bỏ | Quét import tĩnh và lazy. Cần xác nhận lại sau khi phiên dashboard xong |
+| F07 | P2 | Chưa có bộ component thanh lọc chuẩn (`GridToolbar`, `GridSearchInput`, `GridResetButton`, `GridCount`) như CLAUDE.md quy định; đang dùng `TableToolbar` riêng. Thứ tự 5 vị trí chưa được cưỡng chế | `src/components/TableToolbar.tsx`. Không tìm thấy `GridToolbar` |
+| F08 | P2 | 12 chỗ nền dark có độ mờ thấp (`/30`–`/50`), trái quy chuẩn Dark Mode | `StatusBadge.tsx:20-55`, `SlidePanelStack.tsx:309`, `GoogleApiKeyModal.tsx:123` |
+| F09 | P2 | Scanner `lint:ui` chỉ kiểm HTML `title`, `<select>`, `input date`, `toLocaleDateString`. Chưa kiểm: dark opacity, `<a>`/`Link`/`useNavigate` nội bộ, `input type=number`, class màu thiếu `dark:`, `right-0` trong header panel, bảng không resize/sort | `scripts/lint-ui.mjs` |
+| F10 | P2 | `main.py` 43 KB/780 dòng với khoảng 60 route và model. Frontend viết nén (`AppraisalWorkspace.tsx` 31 KB trong 195 dòng). Khó review, diff và phối hợp nhiều agent | Kích thước file |
+| F11 | P2 | Core dùng NestJS chỉ để bọc Express. Chưa có contract API: Worker tắt OpenAPI, type TS viết tay (`src/types/appraisal.ts`) | `services/core/main.ts`, `main.py:19` |
+| F12 | P2 | `strict=false` ở web, dù bật strict chỉ phát sinh 3 lỗi. Chi phí chuyển đổi rất thấp | `tsconfig.json` |
+| F13 | P2 | Chưa có test frontend/E2E (Playwright). Các gate C/B về ESC/backdrop/modal lồng, reload gallery, sort/paging mới chỉ kiểm bằng tay. CI chưa từng chạy từ xa và pin pnpm 10, lệch với máy dev (12.3.4) | `.github/workflows/quality.yml` |
+| F14 | P2 | AI/OCR thật chưa sẵn sàng (`modelConfigured=false`, `ocrAvailable=false`) | Tiến độ A–F, mục 3 |
+| F15 | P3 | Repo chứa nhiều tệp nhị phân lớn (PDF luật tới 16 MB, `DinhMucXayDung.xlsx/.esd` khoảng 21 MB) đặt ở gốc repo. Bốn file quy tắc `AGENTS/CLAUDE/GEMINI/RULES.md` trùng hệt nhau, phải sửa tay cả bốn | `git ls-files`, md5 giống nhau |
+| F16 | P3 | Gateway ép `Content-Type: application/json` và nhận body tới 27 MB. Ảnh gallery gửi base64 (tối đa 7 MB) qua JSON, tốn thêm khoảng 33% dung lượng và RAM | `main.ts:12,31`, `main.py AddProjectImage` |
 
-Phụ thuộc: G0 → G1 → G2; G3 cần nền dữ liệu G1 và căn cứ được duyệt; G4 cần G1; G5 chỉ mở phạm vi đã đạt gate. UI/tài liệu có thể làm đồng thời khi contract ổn định.
+**Ghi chú phạm vi bảo mật:** memory ngày 25/09 ghi "chưa cần bảo mật". Ngày 28/09 người dùng đã duyệt đợt A–F và phần đóng quyền anonymous đã được triển khai. Kế hoạch này chỉ **duy trì** mức bảo mật hiện có (không làm hỏng, không mở lại). Trọng tâm chuyển sang nghiệp vụ, hiệu năng, chuẩn UI và AI.
 
-Có thể thí điểm BCNCKT trước sau G0–G3 cùng các hạng mục vận hành bắt buộc. GPXD/nghiệm thu và tích hợp ngoài có gate riêng; dữ liệu mẫu đầy đủ không thay thế nghiệm thu quy trình.
+---
 
-## 12. Danh sách file/module dự kiến sửa hoặc thêm
+## 4. Mục tiêu đợt này
 
-Đường dẫn tính từ `D:\01_Projects\cic-qlhd-SXD`. Tên mới là đề xuất, chưa tạo trong pha kế hoạch.
+1. Ổn định nhánh làm việc: commit checkpoint, build xanh, CI chạy được từ xa.
+2. Hoàn thiện nghiệp vụ lõi: SLA/hạn trả kết quả, một nguồn trạng thái duy nhất, bộ lọc 5 vị trí có dữ liệu thật.
+3. Giảm độ trễ cloud mỗi request và lưu lượng polling phía web, có số đo trước/sau.
+4. Đồng bộ chuẩn UI của CLAUDE.md và cưỡng chế tự động bằng scanner.
+5. Dọn mã chết, tách module, bật strict, sinh contract API để dễ bảo trì.
+6. Đưa AI/OCR thật vào chạy khi có credential, có bộ đánh giá.
+7. Có E2E cho các luồng chính và UAT theo vai trò.
 
-| Khu vực | File hiện có | Dự kiến thêm/tách |
+---
+
+## 5. Lộ trình theo giai đoạn
+
+Thứ tự: **G0 → (G1 ∥ G2) → G3 → G4 → G5 → G6**. G1 (nghiệp vụ) và G2 (hiệu năng backend) làm song song được vì chạm các file khác nhau.
+
+### G0 — Ổn định nhánh (P0, 0,5–1 ngày)
+
+- Phối hợp với phiên đang sửa dashboard: chờ phiên đó hoàn tất, hoặc người dùng chỉ định phiên nào sở hữu các file `dashboard*`, `Tooltip.tsx`, `catalog.py`.
+- Chạy `tsc`/`lint:ui`/test đầy đủ. Tách thành các commit theo chủ đề: quyền/migration, runtime/cổng, gallery, UI, demo/benchmark, AI adapter, tài liệu. Không gộp file `.env`, backup hay credential.
+- Chuẩn hoá xuống dòng (`.gitattributes`: LF cho mã nguồn) để hết cảnh báo CRLF.
+- Đồng bộ phiên bản pnpm giữa CI và máy dev (`packageManager` trong `package.json`), sau đó đẩy nhánh và chạy CI từ xa lần đầu.
+- **Gate G0:** working tree sạch; build + typecheck core + lint:ui + 66 test đạt trên CI.
+
+### G1 — Nghiệp vụ: SLA và nguồn trạng thái duy nhất (P1, 4–6 ngày)
+
+- **Mô hình SLA** (`ai/app/sla.py` mới):
+  - Mỗi lần nộp lưu `receivedAt`, `legalDueDate`, `internalDueDate`, `slaBasis` (điều khoản căn cứ), `calendarVersion`, `pausedDays`.
+  - Tính theo **ngày làm việc** với bảng `holidays`. Tạm dừng khi `request_supplement` và chạy lại khi nhận bổ sung.
+  - Trạng thái SLA gồm: Trong hạn / Sắp đến hạn (ngưỡng cấu hình) / Quá hạn / Tạm dừng.
+- **Bảng thời hạn theo thủ tục:** lấy từ NĐ 217/2026, Luật 135/2025 và thủ tục GPXD/nghiệm thu. Đưa vào bảng cấu hình có version. **Chuyên viên phải xác nhận số ngày** trước khi bật tính tự động; agent không tự quyết con số pháp định.
+- **Nguồn trạng thái duy nhất:** `workflow.state` là nguồn gốc; `status` hiển thị được suy ra bằng một hàm ánh xạ duy nhất. Có migration/backfill cho dữ liệu cũ và test bất biến "không có tổ hợp lệch".
+- **Projection:** thêm cột `sla_state` và `due_date` vào bảng tóm tắt demo và view/cột cloud để lọc, sắp xếp ở DB. Không lọc bằng JavaScript.
+- **UI:**
+  - Cột "Hạn trả KQ" và badge SLA trong `DossierGrid` và `AppraisalPage`.
+  - Bộ lọc vị trí 4 (SLA) và vị trí 5 (khoảng ngày tiếp nhận / hạn chót dùng `DateInput`).
+  - Dashboard có KPI "Quá hạn / Sắp đến hạn", đối soát được với danh sách lọc.
+- **Audit:** mỗi lần đổi hạn hoặc tạm dừng ghi `audit_logs`, có lý do.
+- **Gate G1:** unit test cho ngày nghỉ, tạm dừng/tiếp tục, chuỗi bổ sung và mở lại. Lọc SLA trả đúng toàn tập khi có hơn 1.000 bản ghi. Không có lần nộp nào lệch `status`/`workflow.state`.
+
+### G2 — Hiệu năng backend và polling (P1, 3–4 ngày)
+
+- **Đo trước:** script đo p50/p95 HTTP cho các endpoint list/get/dashboard ở cả demo và cloud, qua Web 8208. Lưu kết quả vào `output/appraisal/benchmark/`.
+- **Pool kết nối:** dùng `psycopg_pool.ConnectionPool` (min/max theo cấu hình). Giữ `set_config` actor và `statement_timeout` trong phạm vi từng giao dịch. Pool đóng khi tắt tiến trình.
+- **Xác thực:** verify JWT cục bộ bằng JWKS hoặc secret của Supabase (kiểm tra `exp`/`aud`/`iss`). Cache profile theo `user_id` với TTL ngắn (30–60 giây); xoá cache khi profile bị vô hiệu hoá. Không nới quyền: RLS vẫn gắn actor như hiện tại.
+- **Polling nhẹ:**
+  - Endpoint `GET /cases/{id}/status` chỉ trả `revision`, trạng thái job và tiến độ.
+  - Chỉ tải payload đầy đủ khi `revision` đổi. Có backoff (1,5 → 5 giây) và dừng khi tab bị ẩn.
+  - OcrPanel dùng chung cơ chế này.
+  - Sự kiện `appraisal:changed` mang theo `caseId` để chỉ làm mới đúng phần liên quan.
+- **Upload ảnh:** chuyển gallery sang signed upload trực tiếp vào Storage (cloud), bỏ base64 qua gateway. Hạ giới hạn body của gateway.
+- **Gate G2:** số đo trước/sau tái lập được; p95 list/get cloud giảm rõ so với baseline (ngưỡng chốt sau khi có số đo); không lẫn scope giữa hai tài khoản chạy đồng thời; toàn bộ test đạt.
+
+### G3 — Chuẩn UI và dọn mã chết (P2, 4–6 ngày)
+
+- **Bộ thanh lọc chuẩn** trong `src/components/ui/grid/`: `GridToolbar`, `GridSearchInput`, `GridResetButton`, `GridCount`.
+  - Các slot có thứ tự cố định: tìm kiếm → phân loại → cán bộ/CĐT → SLA → thời gian → actions.
+  - Thay `TableToolbar` ở `ProjectsPage`, `AppraisalPage`, `CatalogPage`, `DocumentHub`, `ProjectMap`.
+- **Bảng:** hợp nhất `MasterTable` và `DossierGrid` về một contract cột, resize và sort. Mọi bảng hồ sơ có resize lưu localStorage (debounce) và sort theo server.
+- **Dark mode:** thay 12 chỗ nền mờ bằng nền full opacity. Rà màu chữ trên nền màu. Mặt giấy A4 được **ngoại lệ có chủ đích** (luôn nền trắng) và đưa vào allowlist.
+- **EntityLink:** rà mọi vị trí hiển thị tên thực thể có ID thật. Tên trong TT39 chưa có ID thì giữ văn bản thuần, không tạo ID từ tên.
+- **Mở rộng `lint:ui`:** thêm quy tắc cho dark opacity; `<a>`/`Link`/`useNavigate` nội bộ (link ngoài `target=_blank` tới nguồn pháp lý đưa vào allowlist); `input type=number`; `right-0` trong header panel; overlay tự chế `fixed inset-0` ngoài `ReviewModal`/`SlidePanelStack`. CI sẽ fail khi vi phạm.
+- **Dọn mã chết (F06):**
+  - Xoá các module không dùng (sau khi xác nhận lại) và bỏ dependency Google Maps.
+  - Tách type `Project`, `ProjectTT39Data`, … từ `mockData.ts` sang `src/types/project.ts`.
+  - Chuyển `src/data/mock*.ts` sang `scripts/fixtures/` vì chỉ script seed còn dùng.
+  - Riêng `A4DocumentPreview`: xoá, hoặc gắn vào luồng xem trước nếu người dùng muốn xem trước A4 phía client (xem mục 9).
+- **Gate G3:** `lint:ui` mở rộng đạt 0 vi phạm; E2E thanh lọc/resize/sort đạt (G6); kiểm tra thủ công sáng/tối ở 1366 px và màn hình hẹp.
+
+### G4 — Kiến trúc và khả năng bảo trì (P2, 4–6 ngày)
+
+- **Tách `main.py`** thành `ai/app/routes/` (`runtime`, `projects`, `catalog`, `cases`, `workflow`, `legal`, `procedure`, `exports`, `gallery`) và `ai/app/schemas.py`. Chỉ di chuyển mã, giữ nguyên hành vi; 66 test là lưới an toàn.
+- **Định dạng mã:** áp `ruff format` (Python) và Prettier (TS/TSX) theo từng thư mục, mỗi thư mục một commit riêng chỉ đổi định dạng. Thêm bước kiểm định dạng vào CI. Làm **sau G0** để tránh xung đột với phiên song song.
+- **Contract API:**
+  - Bật OpenAPI của FastAPI ở chế độ demo/staging, phục vụ qua Core tại `/api/appraisal/docs` (chỉ loopback).
+  - Sinh type TS bằng `openapi-typescript` vào `src/types/api.gen.ts`; `appraisalService`/`projectService` dùng type sinh ra.
+- **Core:** quyết định giữ NestJS và dùng đúng cách (module/controller, health, docs), hay thay bằng Express thuần để bỏ `@nestjs/*`, `rxjs`, `reflect-metadata`. Đề xuất: **Express thuần**, vì Core chỉ làm gateway (xem mục 9).
+- **TypeScript:** bật `strict: true` cho web (sửa 3 lỗi), sau đó bật dần `noUnusedLocals` và giảm `any` (14 chỗ) tại lớp service/mapper.
+- **Quy tắc agent:** giữ `CLAUDE.md` làm nguồn duy nhất và thêm script `scripts/sync-rules.mjs` sinh `AGENTS.md`/`GEMINI.md`/`RULES.md`; CI kiểm tra các bản đồng bộ.
+- **Tệp lớn:** chuyển PDF luật và định mức sang Git LFS hoặc thư mục dữ liệu ngoài repo, có manifest hash. Thao tác này cần người dùng xác nhận vì ảnh hưởng lịch sử và dung lượng clone.
+- **Gate G4:** hành vi không đổi (66 test đạt cùng E2E G6); build/typecheck strict đạt; type sinh từ OpenAPI khớp.
+
+### G5 — AI/OCR thật và A4 (P2, 5–8 ngày, phụ thuộc credential)
+
+Tiếp tục gate E của kế hoạch trước:
+
+- Cấu hình provider/model ở server (ngoài repo) và probe có hạn mức. Tesseract `vie+eng` với spool riêng.
+- Đánh giá có nhãn chuyên viên: tiền, diện tích, ngày, chứng chỉ, và 20 tình huống nghiệp vụ. Tách tập đánh giá khỏi tập tinh chỉnh.
+- Provenance đầy đủ: provider/model, prompt/rule/corpus version, token/chi phí, độ trễ.
+- Legal assistant: đo precision/recall truy hồi trên kho 7 nguồn trước khi quyết định dùng vector.
+- A4: test render nhiều trang cho mọi subtype, kiểm tra lề 30/20/22/20 mm, số trang góc phải và phần ký.
+- **Gate G5:** 0 kết luận không có nguồn; trường quan trọng chưa xác nhận vẫn chặn hoàn tất; chuyên viên duyệt chất lượng mẫu.
+
+### G6 — Kiểm thử đầu cuối, CI và UAT (P1/P2, 4–6 ngày, chạy dần từ G1)
+
+- Thêm Playwright (`playwright.config.ts`, `tests/e2e/`) chạy ở chế độ demo cách ly:
+  - Đăng nhập theo vai trò (staging).
+  - Tiếp nhận, phân công, yêu cầu bổ sung, trình, hoàn tất và mở lại.
+  - Modal lồng: ESC chỉ đóng modal trên cùng, bấm backdrop không đóng panel cha.
+  - Gallery giữ dữ liệu sau reload.
+  - Lọc, sort, resize, paging với dữ liệu hơn 1.000 dòng.
+  - Xuất A4.
+- Thêm Vitest cho hook và tiện ích: `useFilterState`, `useColumnResize`, `useGridSort`, `smartSearch`, `formatDate`.
+- CI có các job: lint/format → typecheck (web strict + core) → unit Python → Vitest → build → E2E demo → baseline PostgreSQL. Artifact gồm báo cáo E2E và benchmark.
+- UAT theo phiếu cho từng vai trò, có người phụ trách ký xác nhận. Cập nhật `docs/RUNBOOK` và `docs/SECURITY_MATRIX`.
+- **Gate G6:** CI xanh từ xa; E2E các luồng chính đạt; biên bản UAT không còn lỗi chặn.
+
+---
+
+## 6. File dự kiến sửa/thêm
+
+| Giai đoạn | Sửa | Thêm |
 | --- | --- | --- |
-| Auth/bootstrap | `src/App.tsx`, `src/main.tsx`, `src/layouts/AppLayout.tsx`, `src/lib/supabase.ts` | `src/context/AuthContext.tsx`, `src/components/auth/RequireAuth.tsx`, `src/lib/permissions.ts` |
-| Entity/panel | `src/components/ui/EntityLink.tsx`, `src/context/SlidePanelContext.tsx`, `src/components/SlidePanelStack.tsx` | `src/lib/entityRegistry.ts`, resolver theo ID |
-| API/service | `src/services/projectService.ts`, `organizationService.ts`, `personnelService.ts`, `appraisalService.ts`, `src/types/appraisal.ts` | `src/services/apiClient.ts`, `src/types/generated/`, schema/mapper domain |
-| Dự án/lần nộp | `src/pages/ProjectsPage.tsx`, `AppraisalPage.tsx`, `src/pages/projects/ProjectDetailSlidePanel.tsx` | `src/features/projects/`, `submissions/`, `permits/`, `inspections/` |
-| Workspace | `src/pages/projects/appraisal/AppraisalWorkspace.tsx`, `src/components/appraisal/SubmissionWorkspace.tsx`, `LegalReview.tsx`, `ModelConnection.tsx` | Assignment/SLA/approval/evidence/job components |
-| UI chung | `src/components/MasterTable.tsx`, `TableToolbar.tsx`, `src/components/appraisal/DossierGrid.tsx`, `src/hooks/`, `src/styles/tokens.css` | GridToolbar, AutoTableTooltip, AuditHistoryTab, schema lưu bộ lọc/cột |
-| Phân hệ hỗ trợ | `src/pages/DashboardPage.tsx`, `OrganizationsPage.tsx`, `PersonnelPage.tsx`, `LegalAiPage.tsx`, `CostDatabasePage.tsx`, `GisMapPage.tsx`, `DocumentsPage.tsx`, `SettingsPage.tsx`, `src/components/ai/AiChatWidget.tsx` | API/feature theo phân hệ và quyền/nguồn dữ liệu |
-| Văn bản | `src/components/documents/A4DocumentPreview.tsx`, `ai/app/reporting.py`, `draft_templates.py` | `templates/` có version, output snapshot, font/render config |
-| Core | `services/core/main.ts` | `services/core/src/` với auth/projects/parties/dossiers/workflow/documents/jobs/legal/audit/integrations, TS config riêng |
-| Worker | `ai/app/main.py`, `store.py`, `domain.py`, `ingestion.py`, `ocr.py`, `rules.py`, `provider.py`, `vertex.py`, `legal.py` | `ai/app/jobs/`, `retrieval/`, `extraction/`, `schemas/`, prompt/rule registry |
-| DB | Hai migration hiện có và baseline cloud cần bổ sung | Migration mới quyền/identity/quan hệ/workflow/jobs/legal/price; `supabase/tests/` |
-| Mẫu/chuyển đổi | `src/data/mock*.ts`, `scripts/appraisal.mjs`, `scripts/seed_project_submissions.py`, `.ts`, `ai/app/samples.py` | Dry-run/đối soát migration, seed manifest, bộ mẫu theo kịch bản |
-| Tooling | `package.json`, `tsconfig.json`, `vite.config.ts`, `ai/requirements.txt`, `.env.example` | Lock Python, lint/typecheck/UI, contract/E2E/AI eval |
-| Vận hành/docs | `README.md`, `docs/APPRAISAL_IMPLEMENTATION.md`, `docs/LEGAL_REVIEW_POST_2026_07.md`, `docs/VERTEX_AI_CONNECTION.md` | `deploy/`, CI, runbook, ma trận quyền, từ điển dữ liệu, hướng dẫn nghiệp vụ |
+| G0 | `package.json` (`packageManager`), `.github/workflows/quality.yml` | `.gitattributes` |
+| G1 | `ai/app/workflow.py`, `domain.py`, `store.py`, `demo_summary.py`, `main.py`; `src/pages/AppraisalPage.tsx`, `components/appraisal/DossierGrid.tsx`, dashboard, `types/appraisal.ts` | `ai/app/sla.py`, `ai/tests/test_sla.py`, migration `2026xxxx_sla_projection.sql`, cấu hình thời hạn có version |
+| G2 | `ai/app/database.py`, `store.py` (`actor_for`), `jobs.py`, `gallery.py`, `main.py`; `services/core/main.ts`; `src/services/apiClient.ts`, `AppraisalWorkspace.tsx`, `OcrPanel.tsx`, `ProjectGalleryTab.tsx`; `ai/requirements.txt` (`psycopg_pool`, thư viện JWT) | `ai/app/auth.py`, `scripts/benchmark_http.py` |
+| G3 | `TableToolbar.tsx` → thay thế, `MasterTable.tsx`, `DossierGrid.tsx`, `StatusBadge.tsx`, `SlidePanelStack.tsx`, các trang danh sách, `scripts/lint-ui.mjs`, `package.json` | `src/components/ui/grid/*`, `src/types/project.ts`, `scripts/fixtures/` |
+| G3 (xoá) | — | Xoá: `components/gis/*`, `lib/googleMapsLoader.ts`, `lib/gisData.ts`, `lib/projectImages.ts`, `components/KpiCard.tsx`, `ChartDefs.tsx`, `data/mockAppraisalData.ts` (sau khi xác nhận) |
+| G4 | `ai/app/main.py` → tách, `services/core/main.ts`, `tsconfig.json`, `services/*.ts` | `ai/app/routes/*`, `ai/app/schemas.py`, `src/types/api.gen.ts`, `scripts/sync-rules.mjs`, cấu hình ruff/prettier |
+| G5 | `provider.py`, `vertex.py`, `legal_assistant.py`, `ocr*.py`, `reporting.py`, `*_templates.py` | Tập nhãn đánh giá, test render A4 nhiều trang |
+| G6 | `.github/workflows/quality.yml`, `docs/RUNBOOK_*`, `docs/SECURITY_MATRIX.md` | `playwright.config.ts`, `tests/e2e/*`, `vitest.config.ts`, `src/**/*.test.ts`, phiếu UAT |
 
-Không sửa migration đã được áp dụng để giả lập lịch sử mới; thêm migration tương thích sau baseline được xác nhận.
+---
 
-## 13. Kế hoạch kiểm thử sau khi duyệt
+## 7. Kế hoạch kiểm thử
 
-Đợt này không chạy các kiểm thử dưới đây. Bộ Python test hiện có là nền mở rộng, chưa đại diện bao phủ toàn hệ thống.
-
-| Nhóm | Tình huống bắt buộc | Tiêu chí |
+| Nhóm | Tình huống | Tiêu chí đạt |
 | --- | --- | --- |
-| Auth/RLS/Storage | Anon, khác tỉnh/phòng, chưa phân công, inactive, JWT hết hạn, direct RPC/Data API, giả x-actor-id | Từ chối đúng; không lộ tên/tệp/snippet/số đếm; actor từ Auth |
-| Tính toàn vẹn | Scope thiếu/null, giả status/run/audit, xóa review, đổi project sai scope, sửa snapshot duyệt | API/DB đều chặn; lịch sử không bị client tự sửa |
-| Liên kết | Tổng danh sách/tab dự án, lần bổ sung, hồ sơ chưa gắn, dự án ngoài mock | Cùng ID/dữ liệu; seed không trùng; không nối theo tên |
-| Job/concurrency | Hai người lưu, crash/restart/hai worker, retry/cancel, token hết hạn, upload lỗi | Không ghi đè âm thầm, không mất job, không kết quả trùng, đối soát tệp mồ côi |
-| Search/paging | Hơn 1.000 dòng, không dấu, lọc kết hợp, sort/trang kế | Đúng toàn tập và tổng số; không chỉ lọc trang đang tải |
-| Pháp lý/SLA | Trước/sau 01/07/2026, chuyển tiếp/ngoại lệ, thiếu dữ liệu, ngày nghỉ, bổ sung/khắc phục | Đúng version được duyệt; không suy diễn thẩm quyền/hạn khi chưa đủ căn cứ |
-| OCR/parser | Text/scan/mờ/xoay/bảng, số/đơn vị, tệp hỏng/quá lớn/độc hại | Nguồn trang/vùng truy được; chưa chắc phải xác nhận; worker không sập |
-| AI | Injection, thiếu bằng chứng, nguồn không hỗ trợ, corpus hết hiệu lực, timeout/429 | Không tự phê duyệt/giả nguồn; lỗi không thành thành công; có provenance |
-| UI | Theme/dark/zoom/bàn phím, panel lồng, Escape/backdrop, unsaved, responsive | Đúng component, không mất dữ liệu, không đè nút |
-| Văn bản | Nội dung dài, bảng nhiều trang, font Việt, DOCX/PDF/preview, ký/dự thảo | A4, không mất chữ; snapshot/template đúng; không tự ký/cấp số |
-| Vận hành | Load, restore DB+tệp, nâng/hạ bản, rotation, provider outage | Đạt gate staging, có runbook và báo cáo rollback |
+| SLA | Ngày nghỉ lễ/cuối tuần, tạm dừng bổ sung nhiều lần, mở lại, đổi lịch nghỉ (version) | Hạn tính đúng theo bảng đã được chuyên viên xác nhận; có audit |
+| Trạng thái | Mọi action workflow × 3 nghiệp vụ × 13 subtype | Không có cặp `status`/`workflow.state` lệch |
+| Hiệu năng | 10.000 lần nộp demo; cloud qua Web 8208; hai tài khoản chạy đồng thời | p50/p95 trước/sau có số liệu; không lẫn scope; pool không rò kết nối |
+| Polling | Job chạy dài, tab ẩn, mất mạng | Không tải lại payload đầy đủ khi `revision` không đổi; có backoff |
+| UI | Thanh lọc 5 vị trí, resize/sort/paging, sáng/tối, ESC/backdrop | `lint:ui` 0 vi phạm; E2E đạt |
+| Refactor | Tách route, strict TS, định dạng mã | 66 test Python + E2E + typecheck đều đạt, hành vi không đổi |
+| AI/OCR | Thiếu nguồn, trích dẫn giả, prompt injection, bản scan, vấn đề ở cuối hồ sơ | Nguồn/coverage/provenance đúng; không tự phê duyệt |
+| A4 | Mọi subtype, nhiều trang, bảng dài | Đúng khổ và lề, không cắt hoặc tràn trang |
 
-### Bộ đánh giá AI và hồ sơ mẫu
+Lệnh kỹ thuật: `pnpm lint:ui`, `pnpm typecheck:core`, `pnpm build`, `pnpm test:appraisal`, `pnpm test:web` (mới), `pnpm test:e2e` (mới), `python scripts/benchmark_appraisal.py`, `python scripts/benchmark_http.py` (mới).
 
-- Tập vàng ban đầu tối thiểu 20 hồ sơ được phép dùng/ẩn danh và 150 trang đa chất lượng; chuyên viên gán nhãn, rà bất đồng.
-- Tách tập xây prompt/rule với tập đánh giá giữ lại. Đo precision/recall theo nhóm, độ đúng trường, trích dẫn, từ chối hợp lý, latency và chi phí.
-- Ngưỡng đề xuất: ≥95% trích dẫn hỗ trợ đúng nhận xét trên tập giữ lại; không chấp nhận tự phê duyệt/giả nguồn trong bộ tình huống chặn. Recall và ngưỡng từng trường cần chốt theo rủi ro; không suy rộng thành bảo đảm đúng mọi hồ sơ.
-- Bộ mẫu: lần đầu/bổ sung, không áp dụng, sai thẩm quyền, thiếu nguồn, thay version, scan, xung đột số liệu, timeout và AI bị bác bỏ. Input/output có manifest/hash/version/nhãn mô phỏng/kết quả kỳ vọng.
-- Kiểm chứng pipeline Gemini 3.8 trên bộ này; probe kết nối thành công chưa thay thế đánh giá nghiệp vụ.
+---
 
-## 14. Chuyển đổi và rollback
+## 8. Rủi ro và cách kiểm soát
 
-1. Chốt baseline và lưu các thay đổi đã duyệt thành phần riêng, bảo toàn working tree hiện có.
-2. Backup và diễn tập phục hồi trên staging trước migration.
-3. Schema mở rộng tương thích, adapter và feature flag; đối soát chỉ đọc cũ/mới. Không ghi hai nguồn thiếu cơ chế giao dịch/đối soát.
-4. Nếu cần, có cửa sổ đóng băng ghi đã thống nhất; chuyển dữ liệu, kiểm tra hash/FK/quyền/số lượng.
-5. Thí điểm nhóm nhỏ, theo dõi lỗi/quyền/chi phí, mở rộng sau UAT.
-6. Lỗi chặn: tắt feature, dừng nhận job mới, quay bản app tương thích. Dữ liệu phát sinh sau chuyển đổi phải được đối soát/replay trước restore; không phục hồi mù làm mất hồ sơ mới.
-7. Dọn đường cũ sau cửa sổ rollback và nghiệm thu.
+- **Hai phiên sửa song song:** mỗi giai đoạn khai báo danh sách file sở hữu. Việc định dạng hàng loạt (G4) chỉ làm khi không có phiên nào khác đang sửa.
+- **Số ngày SLA pháp định:** agent chỉ dựng cơ chế; chuyên viên xác nhận bảng thời hạn. Chưa xác nhận thì hiển thị "Chưa cấu hình hạn", không đoán.
+- **Verify JWT cục bộ:** giữ fallback gọi Auth khi JWKS lỗi. Test token hết hạn và tài khoản bị vô hiệu hoá trong thời gian TTL của cache.
+- **Tách `main.py`:** chỉ di chuyển mã, không đổi logic trong cùng commit.
+- **Xoá mã chết:** xác nhận lại bằng quét import sau G0; xoá theo từng commit để dễ hoàn tác.
 
-## 15. Các quyết định cần chốt khi bắt đầu triển khai
+---
 
-| Quyết định | Khuyến nghị ban đầu | Hạn chốt |
-| --- | --- | --- |
-| Phạm vi người dùng | Một Sở, nhiều phòng; tenant rõ; lãnh đạo có phạm vi được giao | G0 |
-| Nguồn DB | Supabase đã cung cấp sau sửa P0/baseline; staging riêng; local mẫu tách biệt | G0 |
-| Identity/quyền ký | Auth UUID liên kết staff; ma trận phê duyệt và ủy quyền; admin kỹ thuật tách nghiệp vụ | G0/G2 |
-| Dữ liệu gửi AI | Gemini 3.8, identity riêng, đối chiếu endpoint global/lưu giữ/dữ liệu được phép | Trước hồ sơ thật vào AI |
-| Thủ tục/SLA | Chuyên viên xác nhận căn cứ sau 01/07, phạm vi, ngoại lệ và lịch | Trước nghiệm thu G2 |
-| Kết nối ngoài | Chỉ triển khai thực khi có tài liệu/credential/sandbox; chưa có thì ghi chưa tích hợp | G4 |
-| Tải/RPO/RTO/ngân sách | Đo baseline và duyệt mục tiêu đề xuất ở mục 9–10 | Trước G5 |
+## 9. Quyết định cần người dùng chốt
 
-## 16. Đề xuất phê duyệt
+1. **Phiên song song:** phiên đang sửa dashboard/tooltip/catalog có tiếp tục không? Tôi có được commit checkpoint toàn bộ thay đổi A–F hiện tại (G0) không?
+2. **Core gateway:** thay NestJS bằng Express thuần (đề xuất) hay giữ NestJS và bổ sung module/Swagger?
+3. **`A4DocumentPreview` phía client:** xoá (xem trước dùng PDF do server render, như hiện tại) hay giữ và gắn vào luồng xem trước?
+4. **Tệp luật/định mức lớn:** chuyển sang Git LFS / thư mục ngoài repo, hay giữ nguyên?
+5. **Thứ tự ưu tiên:** giữ G1 (SLA) và G2 (hiệu năng) làm song song sau G0 như đề xuất, hay ưu tiên G3 (UI) trước để phục vụ demo?
 
-Ưu tiên **G0 + G1** để xử lý quyền cloud đang mở và hợp nhất nền dữ liệu; sau đó nghiệm thu G2–G5 theo gate. Có thể duyệt toàn lộ trình, nhưng không mở phạm vi vận hành khi giai đoạn phụ thuộc chưa đạt.
+---
 
-Ghi nhận lịch sử: ở thời điểm lập kế hoạch, công việc dừng theo **Plan-First** để chờ duyệt. Sau đó người dùng đã duyệt bằng tin nhắn và yêu cầu thực hiện phần demo; trạng thái triển khai và kiểm thử mới nhất nằm ở đầu tài liệu và các báo cáo bàn giao liên kết phía trên.
+## 10. Ước lượng
 
-Kế hoạch BCNCKT trước đợt này được lưu nguyên trạng tại [bản lưu](D:/01_Projects/cic-qlhd-SXD/docs/plans/20260927-ke-hoach-bcnckt-truoc-ra-soat-full-stack.md).
+| Giai đoạn | Ngày công |
+| --- | --- |
+| G0 Ổn định nhánh | 0,5–1 |
+| G1 SLA và trạng thái | 4–6 |
+| G2 Hiệu năng backend/polling | 3–4 |
+| G3 Chuẩn UI và dọn mã | 4–6 |
+| G4 Kiến trúc/bảo trì | 4–6 |
+| G5 AI/OCR/A4 | 5–8 (chưa gồm thời gian chờ credential và nhãn) |
+| G6 E2E/CI/UAT | 4–6 |
+| **Tổng** | **24,5–37 ngày công** |
+
+Mốc đề xuất: **G0 + G1 + G2** đưa hệ thống đến mức đúng nghiệp vụ và phản hồi nhanh trên cloud. **G3 + G6** đạt chuẩn UI và có kiểm thử tự động. **G4 + G5** hoàn thiện khả năng bảo trì và AI thật.
+
+**Dừng theo Plan-First của CLAUDE.md. Chờ tin nhắn phê duyệt trực tiếp của người dùng trước khi triển khai.**

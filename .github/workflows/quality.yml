@@ -1,0 +1,52 @@
+name: Kiểm tra chất lượng
+on:
+  pull_request:
+  push:
+    branches: [main, master]
+jobs:
+  baseline:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    services:
+      postgres:
+        image: postgres:17
+        env:
+          POSTGRES_DB: appraisal_baseline_test
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: baseline-test-only
+        ports: [5432:5432]
+        options: >-
+          --health-cmd "pg_isready -U postgres"
+          --health-interval 5s --health-timeout 5s --health-retries 10
+    env:
+      BASELINE_TEST_DATABASE_URL: postgresql://postgres:baseline-test-only@127.0.0.1:5432/appraisal_baseline_test
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: python -m pip install --target ai/.deps 'psycopg[binary]>=3.2,<4'
+      - run: python scripts/verify_baseline_local.py
+  quality:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    env:
+      APPRAISAL_MODE: demo
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 10
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: pnpm
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm setup:appraisal
+      - run: pnpm lint:ui
+      - run: pnpm typecheck:core
+      - run: pnpm build
+      - run: pnpm test:appraisal

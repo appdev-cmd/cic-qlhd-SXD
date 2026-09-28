@@ -1,4 +1,4 @@
-﻿# Quy tắc Dự án BuildAppraisal AI (Thẩm định Dự án Xây dựng)
+# Quy tắc Dự án BuildAppraisal AI (Thẩm định Dự án Xây dựng)
 *(Áp dụng BẮT BUỘC cho Antigravity AI, Gemini Agent, Claude Code, Cursor & Codex)*
 
 > ⚠️ **QUY ĐỊNH CHUNG:** Mọi quy tắc trong tài liệu này áp dụng **BẮT BUỘC** cho tất cả các AI Assistant khi làm việc trên dự án Thẩm định Xây dựng (Sở Xây dựng tỉnh Điện Biên).
@@ -6,13 +6,14 @@
 ---
 
 ## 📌 Cấu hình Môi trường & Port (ĐẶC THÙ DỰ ÁN)
-- **Web Frontend (`apps/web`)**: Luôn sử dụng cổng **`3008`** (`http://localhost:3008`).
-  - Lệnh khởi động Web: `pnpm --filter @ba/web dev` (hoặc `pnpm dev` qua Turborepo).
-  - **CẤM** tự ý chuyển đổi port của Web về 3000 hay port khác trừ khi người dùng yêu cầu rõ ràng.
-- **Backend Core API (`services/core`)**: Luôn sử dụng cổng **`3001`** (`http://localhost:3001/api`).
-  - Swagger API Docs: `http://localhost:3001/api/docs`.
-- **Database**: Supabase PostgreSQL (Cloud) — Cấu hình qua connection pooler `DATABASE_URL` và `DIRECT_URL`.
-- **AI Worker (`ai/`)**: FastAPI trên cổng `8000` (`http://localhost:8000`).
+- **Địa chỉ chung cho Web và API:** `http://localhost:8208`.
+- **Web Frontend (`src/`, Vite):** cổng cố định **8208**; API đi qua `/api/appraisal` trên cùng địa chỉ.
+- **Backend Core API (`services/core`):** cổng nội bộ **8201**, chỉ bind `127.0.0.1`.
+- **AI Worker (`ai/`):** cổng nội bộ **8200**, chỉ bind `127.0.0.1`.
+- **Nguồn cấu hình duy nhất:** `config/runtime-ports.json`. Cấm tự đổi sang cổng khác khi cổng bận.
+- **Khởi động toàn bộ:** `pnpm dev` (hoặc `pnpm dev:appraisal`). Launcher chờ Worker/Core sẵn sàng trước khi mở Web; Ctrl+C dừng cả bộ.
+- **Database:** Supabase PostgreSQL (Cloud); runtime dùng `APPRAISAL_DATABASE_URL` riêng có RLS.
+- **Thay đổi đã được người dùng yêu cầu trực tiếp ngày 28/09/2026:** chọn cổng mới và gom Web/API chung một cổng; thay thế bộ cổng cũ 3008/3001/8000.
 
 ---
 
