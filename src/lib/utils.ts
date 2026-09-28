@@ -32,6 +32,11 @@ export function formatBillion(amount: number | undefined | null): string {
 export function formatDate(dateStr: string | Date | undefined | null): string {
   if (!dateStr) return '—';
   try {
+    if(typeof dateStr==='string'){
+      const local=dateStr.match(/^(\d{1,2})\/(\d{1,2})\/(\d{4})$/);
+      // Legacy administrative dates use day/month, regardless of browser locale.
+      if(local)return `${local[1].padStart(2,'0')}/${local[2].padStart(2,'0')}/${local[3]}`;
+    }
     const d = new Date(dateStr);
     if (isNaN(d.getTime())) return String(dateStr);
     const day = String(d.getDate()).padStart(2, '0');

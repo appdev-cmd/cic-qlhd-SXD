@@ -1,6 +1,7 @@
 import React, { createContext, useContext, useEffect, useState } from 'react';
 import type { Session } from '@supabase/supabase-js';
 import { supabase } from '../lib/supabase';
+import {getRuntime} from '../services/apiClient';
 
 export interface UserProfile { id:string; full_name:string; email:string; role:string; department:string; province_id:string; is_active:boolean }
 interface AuthState { mode:'demo'|'cloud'|null; session:Session|null; profile:UserProfile|null; loading:boolean; error:string; reload:()=>void; signOut:()=>Promise<void>; passwordRecovery:boolean; finishRecovery:()=>void }
@@ -16,7 +17,7 @@ export function AuthProvider({children}:{children:React.ReactNode}) {
   const [passwordRecovery,setPasswordRecovery]=useState(()=>window.location.pathname==='/auth/recovery'||window.location.hash.includes('type=recovery'));
   useEffect(()=>{
     let current=true;
-    fetch('/api/appraisal/runtime').then(async r=>{if(!r.ok)throw new Error('Không kết nối được dịch vụ.');return r.json();})
+    getRuntime()
       .then(data=>{if(current)setMode(data.mode);}).catch(e=>{if(current){setError(e.message);setLoading(false);}});
     return()=>{current=false;};
   },[revision]);
@@ -53,3 +54,4 @@ export function AuthProvider({children}:{children:React.ReactNode}) {
 }
 
 export function useAuth(){const state=useContext(AuthContext);if(!state)throw new Error('AuthProvider is required');return state;}
+export function useStorageScope(){const state=useContext(AuthContext);return state?.mode==='cloud'&&state.session?`${state.session.user.id}:${state.profile?.province_id||''}:${state.profile?.department||''}`:'demo';}

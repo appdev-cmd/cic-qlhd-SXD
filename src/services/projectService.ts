@@ -20,7 +20,7 @@ export function mapProject(row:Record<string,any>):Project{
   };
 }
 export const projectService={
-  async list(options:{search?:string;offset?:number;limit?:number;stage?:string;group?:string;status?:string}={}):Promise<Page<Project>>{
+  async list(options:{search?:string;offset?:number;limit?:number;stage?:string;group?:string;status?:string;sort?:string;direction?:string}={}):Promise<Page<Project>>{
     const query=new URLSearchParams();Object.entries(options).forEach(([k,v])=>{if(v!==undefined&&v!==''&&v!=='all')query.set(k,String(v));});
     const page=await apiRequest<Page<Record<string,any>>>('/projects?'+query);
     return {...page,items:page.items.map(mapProject)};

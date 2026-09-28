@@ -322,7 +322,7 @@ export function AppLayout() {
                               key={id}
                               type="button"
                               onClick={() => setPrimaryColor(id)}
-                              title={name}
+                              data-tooltip={name}
                               className={cn(
                                 'relative w-5 h-5 rounded-full transition-transform hover:scale-115 cursor-pointer flex items-center justify-center',
                                 isCurrent && 'scale-110 ring-2 ring-offset-2 ring-offset-surface'
@@ -358,7 +358,7 @@ export function AppLayout() {
                           type="button"
                           onClick={() => setZoom(Math.max(90, zoom - 10))}
                           disabled={zoom <= 90}
-                          title="Giảm cỡ chữ 10%"
+                          data-tooltip="Giảm cỡ chữ 10%"
                           className="p-1 rounded-lg border border-border bg-subtle hover:bg-muted disabled:opacity-40 transition-colors cursor-pointer"
                         >
                           <ZoomOut size={12} />
@@ -378,7 +378,7 @@ export function AppLayout() {
                           type="button"
                           onClick={() => setZoom(Math.min(120, zoom + 10))}
                           disabled={zoom >= 120}
-                          title="Tăng cỡ chữ 10%"
+                          data-tooltip="Tăng cỡ chữ 10%"
                           className="p-1 rounded-lg border border-border bg-subtle hover:bg-muted disabled:opacity-40 transition-colors cursor-pointer"
                         >
                           <ZoomIn size={12} />

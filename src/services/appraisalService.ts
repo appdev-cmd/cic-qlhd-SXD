@@ -1,18 +1,9 @@
 import { supabase } from '../lib/supabase';
 import type { Dossier, DossierSummary, Health, ModelProvider } from '../types/appraisal';
-import {apiRequest,type Page} from './apiClient';
+import {apiRequest,apiResponse,getRuntime,type Page} from './apiClient';
 
 async function request(path:string, body?:unknown, method='GET') {
-  const { data } = await supabase.auth.getSession();
-  const response=await fetch('/api/appraisal'+path,{ method, headers:{'Content-Type':'application/json',
-    ...(data.session ? {Authorization:'Bearer '+data.session.access_token}: {})},
-    body: body ? JSON.stringify(body) : undefined });
-  if(!response.ok){
-    const error=await response.json().catch(()=>({detail:'Không kết nối được Core API. Chạy pnpm dev:appraisal.'}));
-    throw new Error(typeof error.detail==='string'?error.detail:'Dữ liệu chưa hợp lệ. Kiểm tra các trường bắt buộc.');
-  }
-  if(method!=='GET')window.dispatchEvent(new Event('appraisal:changed'));
-  return response;
+  return apiResponse(path,{method,body:body!==undefined?JSON.stringify(body):undefined});
 }
 export const appraisalService={
   page:async(options:Record<string,string|number|undefined>):Promise<Page<DossierSummary>>=>{
@@ -35,7 +26,7 @@ export const appraisalService={
   mutate:async(id:string,path:string,body:unknown,method='POST'):Promise<Dossier>=>(await request('/cases/'+id+path,body,method)).json(),
   upload:async(d:Dossier,requirementId:string,file:File,role:string)=>{
     if(file.size>18*1024*1024)throw new Error('Giới hạn 18 MB mỗi tệp.');
-    const runtime=await apiRequest<{mode:string}>('/runtime');
+    const runtime=await getRuntime();
     if(runtime.mode!=='demo'){
       const digest=await crypto.subtle.digest('SHA-256',await file.arrayBuffer());
       const sha256=Array.from(new Uint8Array(digest)).map(n=>n.toString(16).padStart(2,'0')).join('');

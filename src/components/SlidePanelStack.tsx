@@ -30,7 +30,7 @@ interface ResizeHandleProps {
 const ResizeHandle: React.FC<ResizeHandleProps> = ({ onPointerDown, resizing }) => (
   <div
     onPointerDown={onPointerDown}
-    title="Kéo sang trái/phải để thay đổi chiều rộng"
+    data-tooltip="Kéo sang trái/phải để thay đổi chiều rộng"
     className="group pointer-events-auto absolute top-0 bottom-0 z-40 flex w-6 cursor-col-resize items-center justify-center touch-none select-none"
     style={{ left: -12 }}
   >
@@ -240,7 +240,7 @@ export function SlidePanelStack({ sidebarWidth: propSidebarWidth }: SlidePanelSt
                   e.stopPropagation();
                   if (!isActive) bringToFront(panel.id);
                 }}
-                title={panel.title}
+                data-tooltip={panel.title}
                 className={cn(
                   'pointer-events-auto group flex flex-col items-center gap-1.5 rounded-l-xl border border-r-0 pb-2 pt-2.5 shadow-md transition-all duration-150 select-none cursor-pointer',
                   isActive
@@ -275,7 +275,7 @@ export function SlidePanelStack({ sidebarWidth: propSidebarWidth }: SlidePanelSt
                         closePanel(panel.id);
                       }
                     }}
-                    title="Đóng panel này (Esc)"
+                    data-tooltip="Đóng panel này (Esc)"
                     className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full text-white/80 transition-colors hover:bg-white/25 hover:text-white cursor-pointer"
                   >
                     <X size={11} strokeWidth={2.5} />
@@ -288,7 +288,7 @@ export function SlidePanelStack({ sidebarWidth: propSidebarWidth }: SlidePanelSt
                         closePanel(panel.id);
                       }
                     }}
-                    title="Đóng panel này"
+                    data-tooltip="Đóng panel này"
                     className="opacity-0 group-hover:opacity-100 flex h-4 w-4 shrink-0 items-center justify-center rounded-full text-ink-muted hover:bg-red-50 hover:text-red-500 dark:hover:bg-red-950/40 transition-all cursor-pointer"
                   >
                     <X size={10} strokeWidth={2} />
@@ -308,7 +308,7 @@ export function SlidePanelStack({ sidebarWidth: propSidebarWidth }: SlidePanelSt
               }}
               className="pointer-events-auto group flex flex-col items-center gap-1 rounded-l-xl border border-r-0 pt-2 pb-1.5 bg-red-50/90 dark:bg-red-950/50 border-red-200 dark:border-red-800/80 text-red-500 dark:text-red-400 hover:bg-red-100 dark:hover:bg-red-900/50 shadow-sm transition-all hover:scale-[1.02] origin-right cursor-pointer"
               style={{ width: TAB_WIDTH }}
-              title="Đóng tất cả các panel"
+              data-tooltip="Đóng tất cả các panel"
             >
               <Layers size={13} className="shrink-0" />
               <span
@@ -369,7 +369,7 @@ export function SlidePanelStack({ sidebarWidth: propSidebarWidth }: SlidePanelSt
                         type="button"
                         onClick={() => toggleMaximize(panel.id)}
                         className="p-1.5 rounded-lg border border-border bg-surface hover:bg-subtle text-ink-muted hover:text-ink transition-colors cursor-pointer"
-                        title={isTopMaximized ? 'Thu nhỏ cửa sổ (60%)' : 'Mở rộng toàn màn hình (Full)'}
+                        aria-label={isTopMaximized ? 'Thu nhỏ cửa sổ (60%)' : 'Mở rộng toàn màn hình (Full)'}
                       >
                         {isTopMaximized ? <Minimize2 size={15} /> : <Maximize2 size={15} />}
                       </button>
@@ -384,7 +384,7 @@ export function SlidePanelStack({ sidebarWidth: propSidebarWidth }: SlidePanelSt
                           }
                         }}
                         className="p-1.5 rounded-lg border border-border bg-surface hover:bg-subtle text-ink-muted hover:text-red-500 hover:border-red-300 dark:hover:border-red-800 transition-colors cursor-pointer"
-                        title="Đóng panel (Esc)"
+                        aria-label="Đóng panel (Esc)"
                       >
                         <X size={15} />
                       </button>

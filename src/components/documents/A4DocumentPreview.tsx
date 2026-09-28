@@ -60,7 +60,7 @@ export function A4DocumentPreview({
             </button>
           </Tooltip>
 
-          <Tooltip content="Xuất bản file PDF đóng dấu số" placement="top">
+          <Tooltip content="Xuất PDF dự thảo" placement="top">
             <button
               type="button"
               onClick={onExportPdf || handlePrint}

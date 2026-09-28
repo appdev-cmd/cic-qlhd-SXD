@@ -8,6 +8,7 @@ export interface TooltipProps {
   placement?: 'top' | 'bottom' | 'left' | 'right';
   className?: string;
   delay?: number;
+  anchor?: Element | null;
 }
 
 export function Tooltip({
@@ -16,11 +17,19 @@ export function Tooltip({
   placement = 'top',
   className,
   delay = 200,
+  anchor,
 }: TooltipProps) {
   const [isVisible, setIsVisible] = useState(false);
   const [coords, setCoords] = useState<{ top: number; left: number }>({ top: 0, left: 0 });
   const triggerRef = useRef<HTMLDivElement>(null);
   const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  useEffect(()=>{
+    if(!anchor)return;
+    const rect=anchor.getBoundingClientRect();
+    setCoords({top:placement==='bottom'?rect.bottom+8:rect.top-8,left:rect.left+rect.width/2});
+    setIsVisible(true);
+    return()=>setIsVisible(false);
+  },[anchor,placement]);
 
   const showTooltip = () => {
     timerRef.current = setTimeout(() => {
@@ -97,6 +106,7 @@ export function Tooltip({
         )
       : null;
 
+  if(anchor)return tooltipPortal;
   return (
     <div
       ref={triggerRef}

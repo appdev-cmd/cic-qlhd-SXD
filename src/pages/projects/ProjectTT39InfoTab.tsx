@@ -28,8 +28,13 @@ import {
 } from 'lucide-react';
 import { cn, formatCurrency, formatDate } from '../../lib/utils';
 import { Tooltip } from '../../components/ui/Tooltip';
+import { SearchableSelect } from '../../components/ui/SearchableSelect';
 import type { Project, ProjectTT39Data, ProjectMemberTT39, ProjectParticipantOrgTT39 } from '../../data/mockData';
 import { projectService } from '../../services/projectService';
+import { DossierGrid } from '../../components/appraisal/DossierGrid';
+import { EntityLink } from '../../components/ui/EntityLink';
+import { useFilterState } from '../../hooks/useFilterState';
+import { matchesSmartSearch } from '../../lib/smartSearch';
 
 interface ProjectTT39InfoTabProps {
   project: Project;
@@ -50,20 +55,14 @@ export function ProjectTT39InfoTab({ project }: ProjectTT39InfoTabProps) {
 function LoadedProjectInfo({project,tt39}:{project:Project;tt39:ProjectTT39Data}) {
 
   // Bộ lọc và tìm kiếm danh sách thành viên tham gia
-  const [memberSearch, setMemberSearch] = useState('');
-  const [selectedOrgFilter, setSelectedOrgFilter] = useState<string>('all');
+  const [memberSearch, setMemberSearch] = useFilterState('tt39-members-search:'+project.id,'');
+  const [selectedOrgFilter, setSelectedOrgFilter] = useFilterState('tt39-members-org:'+project.id,'all');
   const [copiedCoord, setCopiedCoord] = useState(false);
 
   // Lọc thành viên
   const filteredMembers = useMemo(() => {
     return tt39.members.filter((m) => {
-      const matchSearch =
-        m.fullName.toLowerCase().includes(memberSearch.toLowerCase()) ||
-        m.role.toLowerCase().includes(memberSearch.toLowerCase()) ||
-        m.position.toLowerCase().includes(memberSearch.toLowerCase()) ||
-        m.idCard.includes(memberSearch) ||
-        m.certNumber.toLowerCase().includes(memberSearch.toLowerCase()) ||
-        m.orgName.toLowerCase().includes(memberSearch.toLowerCase());
+      const matchSearch = matchesSmartSearch([m.fullName,m.role,m.position,m.certNumber,m.orgName].join(' '),memberSearch);
 
       const matchOrg = selectedOrgFilter === 'all' || m.orgName === selectedOrgFilter;
       return matchSearch && matchOrg;
@@ -471,44 +470,19 @@ function LoadedProjectInfo({project,tt39}:{project:Project;tt39:ProjectTT39Data}
             </span>
           </div>
           <span className="text-3xs font-semibold px-2 py-0.5 rounded bg-emerald-500/10 text-emerald-600">
-            {tt39.legalDocs.length} Văn bản đã xác thực
+            {tt39.legalDocs.length} Văn bản kê khai
           </span>
         </div>
 
-        <div className="overflow-x-auto">
-          <table className="w-full text-left border-collapse">
-            <thead>
-              <tr className="border-b border-border bg-subtle/60 text-3xs font-bold text-ink-muted uppercase">
-                <th className="py-2 px-3 w-10 text-center">STT</th>
-                <th className="py-2 px-3 w-40">Loại Văn bản</th>
-                <th className="py-2 px-3 w-36">Số hiệu & Ngày</th>
-                <th className="py-2 px-3 w-48">Cơ quan Ban hành</th>
-                <th className="py-2 px-3">Nội dung Trích yếu</th>
-                <th className="py-2 px-3 w-28 text-center">Trạng thái</th>
-              </tr>
-            </thead>
-            <tbody className="divide-y divide-border">
-              {tt39.legalDocs.map((doc, idx) => (
-                <tr key={idx} className="hover:bg-subtle/30 transition-colors">
-                  <td className="py-2 px-3 text-center text-ink-muted font-mono">{idx + 1}</td>
-                  <td className="py-2 px-3 font-semibold text-ink">{doc.category}</td>
-                  <td className="py-2 px-3 font-mono font-bold text-primary-600 text-2xs">
-                    <div>{doc.docNumber}</div>
-                    <div className="text-3xs font-normal text-ink-muted">{doc.docDate}</div>
-                  </td>
-                  <td className="py-2 px-3 text-ink-secondary">{doc.issuer}</td>
-                  <td className="py-2 px-3 text-ink text-2xs">{doc.description}</td>
-                  <td className="py-2 px-3 text-center">
-                    <span className="inline-flex items-center gap-1 text-3xs px-2 py-0.5 rounded-full font-medium bg-emerald-500/10 text-emerald-600 border border-emerald-500/20">
-                      <CheckCircle2 size={11} />
-                      Đã ký số
-                    </span>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
+        <DossierGrid storageKey={'tt39-documents:'+project.id} rows={tt39.legalDocs.map((doc,index)=>({...doc,id:String(index)}))} columns={[
+          {label:'Loại văn bản',value:r=>r.category,width:170},
+          {label:'Số hiệu',value:r=>r.docNumber,width:160},
+          {label:'Ngày văn bản',value:r=>r.docDate,render:r=>formatDate(r.docDate),width:120},
+          {label:'Cơ quan ban hành',value:r=>r.issuer,width:220},
+          {label:'Trích yếu',value:r=>r.description,width:320},
+          {label:'Trạng thái kê khai',value:r=>r.status,render:r=>r.status==='da_xac_thuc'?'Đã kê khai xác thực':r.status==='can_bo_sung'?'Cần bổ sung':'Chờ đối soát',width:170},
+        ]}/>
+        <p className="text-2xs text-ink-muted dark:text-ink-muted">Trạng thái kê khai cần đối chiếu văn bản gốc; hệ thống chưa xác minh chữ ký số.</p>
       </div>
 
       {/* ─── KHỐI 7: DANH SÁCH CÁC ĐƠN VỊ THAM GIA DỰ ÁN (TT39 MỤC I.20) ─── */}
@@ -536,7 +510,7 @@ function LoadedProjectInfo({project,tt39}:{project:Project;tt39:ProjectTT39Data}
                   <span className="text-3xs font-semibold px-2 py-0.5 rounded bg-primary-500/10 text-primary-700 dark:text-primary-300">
                     {org.role}
                   </span>
-                  <h5 className="font-bold text-ink text-xs mt-1.5 leading-snug">{org.name}</h5>
+                  <h5 className="font-bold text-ink dark:text-ink text-xs mt-1.5 leading-snug">{project.contractors.find(c=>c.orgName===org.name)?.orgId?<EntityLink type="organization" id={project.contractors.find(c=>c.orgName===org.name)!.orgId} name={org.name}/>:org.name}</h5>
                 </div>
                 {org.certGrade && (
                   <span className="text-3xs font-mono font-bold px-2 py-0.5 rounded bg-emerald-500/10 text-emerald-700 border border-emerald-500/20 shrink-0">
@@ -562,7 +536,7 @@ function LoadedProjectInfo({project,tt39}:{project:Project;tt39:ProjectTT39Data}
                 </div>
                 <div className="flex items-center justify-between">
                   <span className="text-ink-muted">Địa chỉ trụ sở:</span>
-                  <span className="text-ink-secondary truncate max-w-[200px]" title={org.address}>
+                  <span className="text-ink-secondary truncate max-w-[200px]" data-tooltip={org.address}>
                     {org.address}
                   </span>
                 </div>
@@ -614,7 +588,7 @@ function LoadedProjectInfo({project,tt39}:{project:Project;tt39:ProjectTT39Data}
                 type="text"
                 value={memberSearch}
                 onChange={(e) => setMemberSearch(e.target.value)}
-                placeholder="Tìm theo tên thành viên, vai trò, số CCHN, CCCD..."
+                placeholder="Tìm theo tên thành viên, vai trò, số CCHN..."
                 className="w-full pl-9 pr-3 py-1.5 text-xs rounded-lg border border-border bg-surface text-ink placeholder:text-ink-muted focus:outline-none focus:ring-1 focus:ring-primary-500"
               />
               {memberSearch && (
@@ -630,154 +604,32 @@ function LoadedProjectInfo({project,tt39}:{project:Project;tt39:ProjectTT39Data}
 
             <div className="flex items-center gap-1.5">
               <Filter size={13} className="text-ink-muted" />
-              <select
-                value={selectedOrgFilter}
-                onChange={(e) => setSelectedOrgFilter(e.target.value)}
-                className="text-xs py-1.5 px-2.5 rounded-lg border border-border bg-surface text-ink focus:outline-none focus:ring-1 focus:ring-primary-500"
-              >
-                <option value="all">Tất cả đơn vị tham gia ({tt39.members.length})</option>
-                {tt39.participants.map((org) => (
-                  <option key={org.id} value={org.name}>
-                    {org.name}
-                  </option>
-                ))}
-              </select>
+              <SearchableSelect value={selectedOrgFilter} onChange={setSelectedOrgFilter} options={[{value:'all',label:`Tất cả đơn vị tham gia (${tt39.members.length})`},...tt39.participants.map(org=>({value:org.name,label:org.name}))]}/>
             </div>
           </div>
         </div>
 
-        {/* Nội dung Data Table */}
-        <div className="overflow-x-auto">
-          <table className="w-full text-left border-collapse">
-            <thead>
-              <tr className="border-b border-border bg-subtle/80 text-3xs font-bold text-ink-muted uppercase tracking-wider">
-                <th className="py-2.5 px-3 w-10 text-center">STT</th>
-                <th className="py-2.5 px-3 min-w-[170px]">Thành viên / Họ tên</th>
-                <th className="py-2.5 px-3 min-w-[180px]">Vai trò trong Dự án</th>
-                <th className="py-2.5 px-3 min-w-[150px]">Chức vụ tại Đơn vị</th>
-                <th className="py-2.5 px-3 min-w-[200px]">Thuộc Đơn vị nào</th>
-                <th className="py-2.5 px-3 min-w-[140px]">Số CCHN & Hạng</th>
-                <th className="py-2.5 px-3 min-w-[170px]">Lĩnh vực Hành nghề</th>
-                <th className="py-2.5 px-3 w-28 text-center">Tình trạng CCHN</th>
-              </tr>
-            </thead>
-            <tbody className="divide-y divide-border">
-              {filteredMembers.length === 0 ? (
-                <tr>
-                  <td colSpan={8} className="py-8 text-center text-ink-muted">
-                    Không tìm thấy thành viên phù hợp với bộ lọc tìm kiếm.
-                  </td>
-                </tr>
-              ) : (
-                filteredMembers.map((mem, idx) => (
-                  <tr key={mem.id} className="hover:bg-subtle/40 transition-colors">
-                    {/* STT */}
-                    <td className="py-3 px-3 text-center text-ink-muted font-mono font-medium">
-                      {idx + 1}
-                    </td>
-
-                    {/* Họ tên + CCCD */}
-                    <td className="py-3 px-3">
-                      <div className="flex items-center gap-2">
-                        <div className="w-7 h-7 rounded-full bg-primary-600 text-white font-bold text-3xs flex items-center justify-center shrink-0 shadow-2xs">
-                          {mem.fullName
-                            .split(' ')
-                            .slice(-2)
-                            .map((n) => n[0])
-                            .join('')}
-                        </div>
-                        <div>
-                          <p className="font-bold text-ink text-xs leading-snug">{mem.fullName}</p>
-                          <p className="font-mono text-3xs text-ink-muted">CCCD: {mem.idCard}</p>
-                        </div>
-                      </div>
-                    </td>
-
-                    {/* Vai trò trong Dự án */}
-                    <td className="py-3 px-3">
-                      <span className="font-bold text-primary-700 dark:text-primary-300 text-2xs block">
-                        {mem.role}
-                      </span>
-                      <span className="text-3xs text-ink-muted">{mem.orgRole}</span>
-                    </td>
-
-                    {/* Chức vụ tại Đơn vị */}
-                    <td className="py-3 px-3 text-ink-secondary text-2xs font-medium">
-                      {mem.position}
-                    </td>
-
-                    {/* Thuộc Đơn vị nào */}
-                    <td className="py-3 px-3">
-                      <p className="text-ink font-semibold text-2xs leading-snug">{mem.orgName}</p>
-                    </td>
-
-                    {/* Số CCHN & Hạng */}
-                    <td className="py-3 px-3">
-                      <div className="flex items-center gap-1.5">
-                        <span className="font-mono font-bold text-xs text-ink">{mem.certNumber}</span>
-                        <span
-                          className={cn(
-                            'text-3xs font-bold px-1.5 py-0.2 rounded font-mono',
-                            mem.certGrade === 'I'
-                              ? 'bg-purple-500/10 text-purple-700 border border-purple-500/20'
-                              : 'bg-blue-500/10 text-blue-700 border border-blue-500/20'
-                          )}
-                        >
-                          Hạng {mem.certGrade}
-                        </span>
-                      </div>
-                      <span className="text-3xs text-ink-muted block mt-0.5 truncate max-w-[150px]" title={mem.certIssuer}>
-                        {mem.certIssuer}
-                      </span>
-                    </td>
-
-                    {/* Lĩnh vực hành nghề */}
-                    <td className="py-3 px-3">
-                      <div className="flex flex-wrap gap-1">
-                        {mem.specialties.map((sp, sIdx) => (
-                          <span
-                            key={sIdx}
-                            className="text-3xs px-1.5 py-0.5 rounded bg-subtle text-ink-secondary border border-border"
-                          >
-                            {sp}
-                          </span>
-                        ))}
-                      </div>
-                    </td>
-
-                    {/* Tình trạng CCHN */}
-                    <td className="py-3 px-3 text-center">
-                      {mem.status === 'hieu_luc' ? (
-                        <Tooltip content={`Hiệu lực đến: ${mem.certExpiry}`} placement="top">
-                          <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-3xs font-semibold bg-emerald-500/10 text-emerald-700 dark:text-emerald-400 border border-emerald-500/20">
-                            <span className="w-1.5 h-1.5 rounded-full bg-emerald-500" />
-                            Còn hạn
-                          </span>
-                        </Tooltip>
-                      ) : mem.status === 'sap_het_han' ? (
-                        <Tooltip content={`Sắp hết hạn: ${mem.certExpiry}`} placement="top">
-                          <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-3xs font-semibold bg-amber-500/10 text-amber-700 dark:text-amber-400 border border-amber-500/20">
-                            <AlertTriangle size={10} />
-                            Hết {mem.certExpiry}
-                          </span>
-                        </Tooltip>
-                      ) : (
-                        <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-3xs font-semibold bg-rose-500/10 text-rose-700 border border-rose-500/20">
-                          Hết hạn
-                        </span>
-                      )}
-                    </td>
-                  </tr>
-                ))
-              )}
-            </tbody>
-          </table>
-        </div>
+        <DossierGrid storageKey={'tt39-members:'+project.id} rows={filteredMembers} columns={[
+          {label:'Thành viên / Họ tên',value:r=>r.fullName,width:220,render:r=>{
+            const id=project.contractors.find(c=>c.leadPersonnelName===r.fullName)?.leadPersonnelId;
+            return id?<EntityLink type="personnel" id={id} name={r.fullName}/>:<span>{r.fullName}</span>;
+          }},
+          {label:'Vai trò trong dự án',value:r=>r.role,width:220,render:r=><div>{r.role}<p className="text-ink-muted dark:text-ink-muted">{r.orgRole}</p></div>},
+          {label:'Chức vụ tại đơn vị',value:r=>r.position,width:170},
+          {label:'Đơn vị',value:r=>r.orgName,width:250,render:r=>{
+            const id=project.contractors.find(c=>c.orgName===r.orgName)?.orgId;
+            return id?<EntityLink type="organization" id={id} name={r.orgName}/>:<span>{r.orgName}</span>;
+          }},
+          {label:'Số CCHN / Hạng',value:r=>r.certNumber,width:180,render:r=><div>{r.certNumber} · Hạng {r.certGrade}<p className="text-ink-muted dark:text-ink-muted">{r.certIssuer}</p></div>},
+          {label:'Lĩnh vực hành nghề',value:r=>r.specialties.join(', '),width:230},
+          {label:'Hạn CCHN',value:r=>r.certExpiry,render:r=>formatDate(r.certExpiry),width:120},
+          {label:'Tình trạng kê khai',value:r=>r.status,render:r=>r.status==='hieu_luc'?'Còn hạn':r.status==='sap_het_han'?'Sắp hết hạn':'Hết hạn',width:160},
+        ]}/>
 
         {/* Footer bảng ghi chú */}
         <div className="p-3 border-t border-border bg-subtle/30 flex flex-wrap items-center justify-between text-3xs text-ink-muted gap-2">
           <span>
-            * Dữ liệu năng lực hoạt động xây dựng được kết nối & đồng bộ trực tuyến với Cơ sở dữ liệu Quốc gia về Hoạt động Xây dựng (Bộ Xây dựng).
+            Dữ liệu được lưu trong hồ sơ dự án. Cần đối chiếu chứng chỉ và nguồn chính thức; chưa có kết nối đồng bộ CSDL quốc gia.
           </span>
           <span className="font-mono">TT39/2026/TT-BXD • Điều 5 & Điều 21</span>
         </div>

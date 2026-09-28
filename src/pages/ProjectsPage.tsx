@@ -32,6 +32,7 @@ export function ProjectsPage() {
   const {mode,profile}=useAuth();const [createOpen,setCreateOpen]=useState(false);const [version,setVersion]=useState(0);
   const { openPanel } = useSlidePanel();
   const [filters,setFilters]=useFilterState('projects-filters-v2',{search:'',group:'all',status:'all',stage:'all'});
+  const [sorting,setSorting]=useFilterState('projects-sort-v1',{key:'submissionDate',direction:'desc'});
   const searchQuery=filters.search,groupFilter=filters.group,slaFilter=filters.status,stageFilter=filters.stage;
   const setSearchQuery=(search:string)=>setFilters({...filters,search});
   const setGroupFilter=(group:string)=>setFilters({...filters,group});
@@ -40,10 +41,11 @@ export function ProjectsPage() {
   const [viewMode,setViewMode]=useState<'table'|'cards'>('table');
   const [filteredProjects,setProjects]=useState<Project[]>([]);
   const [total,setTotal]=useState(0);const [page,setPage]=useState(0);const [error,setError]=useState('');
-  useEffect(()=>setPage(0),[JSON.stringify(filters)]);
+  useEffect(()=>{const refresh=()=>setVersion(v=>v+1);window.addEventListener('appraisal:changed',refresh);return()=>window.removeEventListener('appraisal:changed',refresh);},[]);
+  useEffect(()=>setPage(0),[JSON.stringify(filters),JSON.stringify(sorting)]);
   useEffect(()=>{let active=true;const timer=setTimeout(()=>{
-    projectService.list({...filters,offset:page*50,limit:50}).then(result=>{if(active){setProjects(result.items);setTotal(result.total);setError('');}}).catch(e=>{if(active)setError(e.message);});
-  },180);return()=>{active=false;clearTimeout(timer);};},[JSON.stringify(filters),page,version]);
+    projectService.list({...filters,sort:sorting.key,direction:sorting.direction,offset:page*50,limit:50}).then(result=>{if(active){setProjects(result.items);setTotal(result.total);setError('');}}).catch(e=>{if(active)setError(e.message);});
+  },180);return()=>{active=false;clearTimeout(timer);};},[JSON.stringify(filters),JSON.stringify(sorting),page,version]);
 
   const handleOpenDetail = (project: Project) => {
     openPanel({
@@ -60,6 +62,8 @@ export function ProjectsPage() {
   const columns: Column<Project>[] = [
     {
       header: 'Mã & Tên Dự án',
+      sortValue:p=>p.name,
+      sortKey:'name',
       accessor: (p) => (
         <div className="flex items-center gap-3 py-1">
           {p.coverImage && (
@@ -94,6 +98,8 @@ export function ProjectsPage() {
     },
     {
       header: 'Chủ đầu tư / Ban QLDA',
+      sortValue:p=>p.investorName,
+      sortKey:'investorName',
       accessor: (p) => (
         <span className="text-ink-secondary dark:text-ink-secondary line-clamp-1">
           {p.investorId?<EntityLink type="organization" id={p.investorId} name={p.investorName}/>:p.investorName}
@@ -103,11 +109,15 @@ export function ProjectsPage() {
     },
     {
       header: 'Địa bàn (Huyện/Thị)',
+      sortValue:p=>p.location,
+      sortKey:'location',
       accessor: (p) => <span className="text-ink-secondary truncate">{p.location}</span>,
       width: '13%',
     },
     {
       header: 'Tổng mức đầu tư',
+      sortValue:p=>p.totalInvestment??0,
+      sortKey:'totalInvestment',
       accessor: (p) => (
         <span className="font-mono font-bold text-ink text-right block">
           {formatCurrency(p.totalInvestment)}
@@ -118,6 +128,8 @@ export function ProjectsPage() {
     },
     {
       header: 'Giai đoạn',
+      sortValue:p=>p.stage,
+      sortKey:'stage',
       accessor: (p) => (
         <div className="text-center">
           <span className="px-2 py-0.5 rounded-md bg-subtle border border-border text-2xs font-semibold text-ink-secondary uppercase">
@@ -130,6 +142,8 @@ export function ProjectsPage() {
     },
     {
       header: 'Trạng thái SLA',
+      sortValue:p=>p.slaStatus,
+      sortKey:'slaStatus',
       accessor: (p) => (
         <div className="text-center">
           <StatusBadge status={p.slaStatus} />
@@ -241,6 +255,8 @@ export function ProjectsPage() {
       {/* ─── NỘI DUNG THEO CHẾ ĐỘ XEM ─── */}
       {viewMode === 'table' ? (
         <MasterTable
+          storageKey="projects-grid"
+          serverSort={sorting} onSort={(key,direction)=>setSorting({key,direction})}
           columns={columns}
           data={filteredProjects}
           onRowClick={handleOpenDetail}

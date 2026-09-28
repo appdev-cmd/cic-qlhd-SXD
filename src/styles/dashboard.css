@@ -1,0 +1,27 @@
+.dashboard-visuals {
+  --chart-bcnckt: var(--color-primary);
+  --chart-gpxd: #6366f1;
+  --chart-inspection: #0d9488;
+  --chart-intake: #94a3b8;
+  --chart-analyzing: #818cf8;
+  --chart-analyzed: #0284c7;
+  --chart-supplement: #d97706;
+  --chart-reviewed: #059669;
+  --chart-other: #64748b;
+}
+.dark .dashboard-visuals {
+  --chart-bcnckt: rgb(var(--color-primary-400));
+  --chart-gpxd: #a5b4fc;
+  --chart-inspection: #2dd4bf;
+  --chart-intake: #94a3b8;
+  --chart-analyzing: #c4b5fd;
+  --chart-analyzed: #38bdf8;
+  --chart-supplement: #fbbf24;
+  --chart-reviewed: #34d399;
+  --chart-other: #cbd5e1;
+}
+.dashboard-visuals .recharts-surface:focus-visible {
+  outline: 2px solid var(--chart-bcnckt);
+  outline-offset: 3px;
+  border-radius: 12px;
+}
