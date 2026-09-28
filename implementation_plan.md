@@ -1,7 +1,7 @@
 # Kế hoạch tối ưu và hoàn thiện BuildAppraisal AI — sau review tổng thể
 
 **Ngày lập:** 28/09/2026 (16:20).
-**Trạng thái:** CHỜ NGƯỜI DÙNG REVIEW/PHÊ DUYỆT QUA CHAT. Chưa sửa code.
+**Trạng thái:** ĐÃ DUYỆT QUA CHAT ("ok. làm hết đi") VÀ ĐÃ TRIỂN KHAI G0–G6. Kết quả, số đo và các việc còn lại (AI/OCR thật, xác nhận bảng thời hạn SLA, Git LFS, push CI): [bàn giao đợt tối ưu](docs/OPTIMIZATION_DELIVERY_2026_09_28.md).
 **Kế hoạch trước:** [kế hoạch A–F đã duyệt và đang triển khai dở](docs/plans/20260928-ke-hoach-A-F-truoc-review-tong-the.md) · [tiến độ đợt A–F](docs/IMPLEMENTATION_DELIVERY_2026_09_28.md) · [review sáng 28/09](docs/PROJECT_REVIEW_2026_09_28.md).
 
 Kế hoạch này **kế thừa** đợt A–F, không làm lại phần đã đạt. Nó dựa trên review lại toàn bộ code, cấu hình, CI, tài liệu và kết quả kiểm tra chạy lúc 16:00–16:20 cùng ngày.
