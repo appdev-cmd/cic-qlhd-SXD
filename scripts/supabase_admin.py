@@ -1,4 +1,5 @@
 """Explicit administrative SQL and baseline capture; credentials come from the environment."""
+
 import argparse
 import hashlib
 import json
@@ -13,8 +14,9 @@ def query(sql, read_only=True):
     request = urllib.request.Request(
         f'https://api.supabase.com/v1/projects/{project}/database/query',
         data=json.dumps({'query': sql, 'read_only': read_only}).encode(),
-        headers={'Authorization': 'Bearer ' + os.environ['SUPABASE_ACCESS_TOKEN'],
-                 'Content-Type': 'application/json'}, method='POST')
+        headers={'Authorization': 'Bearer ' + os.environ['SUPABASE_ACCESS_TOKEN'], 'Content-Type': 'application/json'},
+        method='POST',
+    )
     try:
         with urllib.request.urlopen(request, timeout=90) as response:
             return json.load(response)

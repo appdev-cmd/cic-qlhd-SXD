@@ -1,0 +1,8 @@
+[tool.ruff]
+line-length = 120
+target-version = "py312"
+extend-exclude = ["ai/.deps", ".appraisal-data", "node_modules", "dist", ".agent"]
+
+[tool.ruff.format]
+quote-style = "preserve"
+line-ending = "lf"

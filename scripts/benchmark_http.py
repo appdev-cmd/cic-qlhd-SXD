@@ -6,6 +6,7 @@ Cloud staging signs in through the loopback-only test login (role officer); demo
 Prints p50/p95 per endpoint and writes output/appraisal/benchmark/http-<label>.json.
 Read-only: only GET requests after sign-in.
 """
+
 import argparse
 import json
 import statistics
@@ -40,7 +41,10 @@ def main():
     first = client.get('/submissions', params={'procedure': 'bcnckt', 'limit': 1}).json()['items'][0]['id']
     endpoints = {
         'submissions page': ('/submissions', {'procedure': 'bcnckt', 'limit': 50}),
-        'submissions overdue': ('/submissions', {'procedure': 'bcnckt', 'limit': 50, 'sla': 'overdue', 'sort': 'slaDueDate'}),
+        'submissions overdue': (
+            '/submissions',
+            {'procedure': 'bcnckt', 'limit': 50, 'sla': 'overdue', 'sort': 'slaDueDate'},
+        ),
         'case detail': ('/cases/' + first, None),
         'case progress': ('/cases/' + first + '/progress', None),
         'projects page': ('/projects', {'limit': 50}),
@@ -55,14 +59,32 @@ def main():
             timings.append((time.perf_counter() - started) * 1000)
             size, status = len(response.content), response.status_code
         steady = timings[1:] or timings
-        results[name] = {'status': status, 'bytes': size, 'p50_ms': round(statistics.median(steady)),
-                         'p95_ms': round(percentile(steady, 0.95)), 'first_ms': round(timings[0])}
-        print(f"{name:22} HTTP {status}  p50 {results[name]['p50_ms']:>5} ms  p95 {results[name]['p95_ms']:>5} ms  {size:>8} B")
+        results[name] = {
+            'status': status,
+            'bytes': size,
+            'p50_ms': round(statistics.median(steady)),
+            'p95_ms': round(percentile(steady, 0.95)),
+            'first_ms': round(timings[0]),
+        }
+        print(
+            f"{name:22} HTTP {status}  p50 {results[name]['p50_ms']:>5} ms  p95 {results[name]['p95_ms']:>5} ms  {size:>8} B"
+        )
     target = ROOT / 'output/appraisal/benchmark'
     target.mkdir(parents=True, exist_ok=True)
-    (target / f'http-{args.label}.json').write_text(json.dumps(
-        {'label': args.label, 'at': datetime.now().isoformat(), 'mode': runtime.get('mode'), 'rounds': args.rounds,
-         'results': results}, ensure_ascii=False, indent=2), encoding='utf-8')
+    (target / f'http-{args.label}.json').write_text(
+        json.dumps(
+            {
+                'label': args.label,
+                'at': datetime.now().isoformat(),
+                'mode': runtime.get('mode'),
+                'rounds': args.rounds,
+                'results': results,
+            },
+            ensure_ascii=False,
+            indent=2,
+        ),
+        encoding='utf-8',
+    )
 
 
 if __name__ == '__main__':

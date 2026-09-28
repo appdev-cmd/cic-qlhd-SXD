@@ -1,4 +1,5 @@
 """Capture private schema evidence and apply one ledgered migration transactionally."""
+
 import argparse
 import hashlib
 import json
@@ -13,8 +14,11 @@ ROOT = Path(__file__).resolve().parents[1]
 
 def load_environment():
     inherited = set(os.environ)
-    for path in (ROOT / '.env', ROOT / '.env.local',
-                 Path(os.getenv('APPRAISAL_CONFIG_FILE', str(Path.home() / '.config/buildappraisal/runtime.env')))):
+    for path in (
+        ROOT / '.env',
+        ROOT / '.env.local',
+        Path(os.getenv('APPRAISAL_CONFIG_FILE', str(Path.home() / '.config/buildappraisal/runtime.env'))),
+    ):
         if not path.is_file():
             continue
         for line in path.read_text(encoding='utf-8-sig').splitlines():
@@ -53,9 +57,11 @@ def capture(destination):
     for table in tables:
         name = table['tablename']
         quoted = '"' + name.replace('"', '""') + '"'
-        statements.append("select '" + name.replace("'", "''") + "' as table_name,count(*) as rows,"
-                          "md5(coalesce(string_agg(md5(to_jsonb(t)::text),'' order by md5(to_jsonb(t)::text)),'')) as fingerprint "
-                          'from public.' + quoted + ' t')
+        statements.append(
+            "select '" + name.replace("'", "''") + "' as table_name,count(*) as rows,"
+            "md5(coalesce(string_agg(md5(to_jsonb(t)::text),'' order by md5(to_jsonb(t)::text)),'')) as fingerprint "
+            'from public.' + quoted + ' t'
+        )
     manifest = query(' union all '.join(statements))
     (destination / 'manifest.json').write_text(json.dumps(manifest, indent=2), encoding='utf-8')
     return manifest
@@ -84,8 +90,11 @@ def main():
     load_environment()
     if args.snapshot:
         manifest = capture(args.snapshot)
-        print(json.dumps({'snapshot': str(args.snapshot), 'tables': len(manifest),
-                          'rows': sum(r['rows'] for r in manifest)}))
+        print(
+            json.dumps(
+                {'snapshot': str(args.snapshot), 'tables': len(manifest), 'rows': sum(r['rows'] for r in manifest)}
+            )
+        )
     if args.apply:
         print(json.dumps({'migration': args.apply.name, 'applied': apply_migration(args.apply)}))
 

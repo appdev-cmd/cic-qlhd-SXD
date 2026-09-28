@@ -6,6 +6,7 @@ handshake to the Supabase pooler. BEGIN and the transaction-local settings
 is cleared at COMMIT/ROLLBACK, so a pooled connection never carries identity
 over to the next request.
 """
+
 from contextlib import contextmanager
 import os
 import threading
@@ -25,13 +26,23 @@ def _pool(url):
         pool = _pools.get(url)
         if pool is None:
             pool = ConnectionPool(
-                url, open=True, name='appraisal',
+                url,
+                open=True,
+                name='appraisal',
                 min_size=int(os.getenv('APPRAISAL_DB_POOL_MIN', '1')),
                 max_size=int(os.getenv('APPRAISAL_DB_POOL_MAX', '8')),
-                timeout=15, max_idle=300, check=ConnectionPool.check_connection,
-                kwargs={'connect_timeout': 10, 'sslmode': 'verify-full', 'autocommit': True,
-                        'sslrootcert': os.getenv('APPRAISAL_DATABASE_CA', certifi.where()),
-                        'row_factory': dict_row, 'prepare_threshold': None})
+                timeout=15,
+                max_idle=300,
+                check=ConnectionPool.check_connection,
+                kwargs={
+                    'connect_timeout': 10,
+                    'sslmode': 'verify-full',
+                    'autocommit': True,
+                    'sslrootcert': os.getenv('APPRAISAL_DATABASE_CA', certifi.where()),
+                    'row_factory': dict_row,
+                    'prepare_threshold': None,
+                },
+            )
             _pools[url] = pool
         return pool
 

@@ -8,6 +8,7 @@ the UI shows that flag next to every computed due date.
 The due date is stored on the case payload (so lists can filter/sort in the
 database); the SLA *state* depends on "today" and is evaluated when reading.
 """
+
 import json
 import threading
 import time
@@ -29,8 +30,18 @@ STATES = {
 }
 
 # NĐ 217/2026/NĐ-CP, Điều 54 khoản 1 điểm b — working days by permit subtype.
-PERMIT_DAYS = {'house': 7, 'new': 10, 'stage': 10, 'group': 10, 'relocation': 10, 'temporary': 10,
-               'amendment': 9, 'repair': 9, 'extension': 5, 'reissue': 5}
+PERMIT_DAYS = {
+    'house': 7,
+    'new': 10,
+    'stage': 10,
+    'group': 10,
+    'relocation': 10,
+    'temporary': 10,
+    'amendment': 9,
+    'repair': 9,
+    'extension': 5,
+    'reissue': 5,
+}
 # NĐ 217/2026/NĐ-CP, Điều 37 khoản 1 — (grade I or above, other grades, clause point).
 FEASIBILITY_DAYS = {'A': (25, 20, 'b'), 'B': (20, 16, 'c'), 'C': (15, 12, 'd')}
 
@@ -60,8 +71,11 @@ def legal_period(procedure, group, grade, subtype=None):
         if not grade:
             return {'missing': 'Dự án chưa có cấp công trình.'}
         upper, lower, point = FEASIBILITY_DAYS[group]
-        return {'days': upper if high else lower, 'unit': 'working',
-                'basis': f'Điểm {point} khoản 1 Điều 37 NĐ 217/2026/NĐ-CP'}
+        return {
+            'days': upper if high else lower,
+            'unit': 'working',
+            'basis': f'Điểm {point} khoản 1 Điều 37 NĐ 217/2026/NĐ-CP',
+        }
     if procedure == 'gpxd':
         days = PERMIT_DAYS.get(subtype or 'new')
         if not days:
@@ -70,8 +84,11 @@ def legal_period(procedure, group, grade, subtype=None):
     if procedure == 'nghiem_thu':
         if not grade:
             return {'missing': 'Dự án chưa có cấp công trình.'}
-        return {'days': 16 if high else 12, 'unit': 'working',
-                'basis': 'Điều 27 NĐ 207/2026/NĐ-CP (thời hạn ra văn bản thông báo kết quả kiểm tra)'}
+        return {
+            'days': 16 if high else 12,
+            'unit': 'working',
+            'basis': 'Điều 27 NĐ 207/2026/NĐ-CP (thời hạn ra văn bản thông báo kết quả kiểm tra)',
+        }
     return {'missing': 'Loại hồ sơ chưa có quy định thời hạn.'}
 
 
@@ -130,6 +147,7 @@ def load_calendar(actor_id=None, cloud=False):
             return _cache['calendar']
     try:
         from .database import connection
+
         with connection(actor_id) as con:
             rows = con.execute('select holiday_date,kind,is_confirmed from public.holidays').fetchall()
         calendar = Calendar([(r['holiday_date'], r['kind'], r['is_confirmed']) for r in rows], 'public.holidays')
@@ -186,7 +204,9 @@ def compute(case, calendar, classification, today=None):
     paused_days = 0
     for begin, end in periods:
         stop = end or today
-        paused_days += calendar.between(begin, stop) if period.get('unit') != 'calendar' else max((stop - begin).days, 0)
+        paused_days += (
+            calendar.between(begin, stop) if period.get('unit') != 'calendar' else max((stop - begin).days, 0)
+        )
     legal_due = None
     if start and period.get('days'):
         total = period['days'] + paused_days
@@ -195,17 +215,23 @@ def compute(case, calendar, classification, today=None):
     due = legal_due or internal_due
     finished = completed_at(case)
     return {
-        'policyVersion': POLICY_VERSION, 'policyStatus': POLICY_STATUS, 'calendarVersion': calendar.version,
+        'policyVersion': POLICY_VERSION,
+        'policyStatus': POLICY_STATUS,
+        'calendarVersion': calendar.version,
         'calendarConfirmed': bool(start and due) and calendar.confirmed(start, max(due, start)),
-        'basis': period.get('basis'), 'missing': period.get('missing'),
-        'periodDays': period.get('days'), 'periodUnit': period.get('unit'),
-        'projectGroup': group, 'projectGrade': grade,
+        'basis': period.get('basis'),
+        'missing': period.get('missing'),
+        'periodDays': period.get('days'),
+        'periodUnit': period.get('unit'),
+        'projectGroup': group,
+        'projectGrade': grade,
         'startDate': start.isoformat() if start else None,
         'legalDueDate': legal_due.isoformat() if legal_due else None,
         'internalDueDate': internal_due.isoformat() if internal_due else None,
         'dueDate': due.isoformat() if due else None,
         'dueKind': 'legal' if legal_due else 'internal' if internal_due else None,
-        'paused': paused, 'pausedSince': periods[-1][0].isoformat() if paused else None,
+        'paused': paused,
+        'pausedSince': periods[-1][0].isoformat() if paused else None,
         'pausedDays': paused_days,
         'completedAt': finished.isoformat() if finished else None,
     }

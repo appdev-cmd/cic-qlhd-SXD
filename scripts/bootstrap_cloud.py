@@ -1,4 +1,5 @@
 """Provision the initial Auth administrator and apply the reviewed G0 migration atomically."""
+
 import argparse
 import json
 import os
@@ -10,9 +11,12 @@ from supabase_admin import query
 
 
 def request(url, headers, body=None):
-    req = urllib.request.Request(url, headers=headers,
+    req = urllib.request.Request(
+        url,
+        headers=headers,
         data=json.dumps(body).encode() if body is not None else None,
-        method='POST' if body is not None else 'GET')
+        method='POST' if body is not None else 'GET',
+    )
     try:
         with urllib.request.urlopen(req, timeout=40) as response:
             return json.load(response)
@@ -34,16 +38,23 @@ def main():
         if credentials['email'] != email:
             raise RuntimeError('Existing bootstrap file belongs to a different account.')
     else:
-        keys = request(f'https://api.supabase.com/v1/projects/{ref}/api-keys',
-            {'Authorization': 'Bearer ' + os.environ['SUPABASE_ACCESS_TOKEN']})
+        keys = request(
+            f'https://api.supabase.com/v1/projects/{ref}/api-keys',
+            {'Authorization': 'Bearer ' + os.environ['SUPABASE_ACCESS_TOKEN']},
+        )
         service_key = next(k['api_key'] for k in keys if k['name'] == 'service_role')
         password = secrets.token_urlsafe(24)
-        user = request(f'https://{ref}.supabase.co/auth/v1/admin/users',
-            {'apikey': service_key, 'Authorization': 'Bearer ' + service_key,
-             'Content-Type': 'application/json'},
-            {'email': email, 'password': password, 'email_confirm': True,
-             'user_metadata': {'full_name': 'Quản trị hệ thống'},
-             'app_metadata': {'bootstrap_account': True}})
+        user = request(
+            f'https://{ref}.supabase.co/auth/v1/admin/users',
+            {'apikey': service_key, 'Authorization': 'Bearer ' + service_key, 'Content-Type': 'application/json'},
+            {
+                'email': email,
+                'password': password,
+                'email_confirm': True,
+                'user_metadata': {'full_name': 'Quản trị hệ thống'},
+                'app_metadata': {'bootstrap_account': True},
+            },
+        )
         credentials = {'email': email, 'password': password, 'user_id': user['id']}
         credentials_path.write_text(json.dumps(credentials, ensure_ascii=False, indent=2), encoding='utf-8')
     migrations = ['20260927000002_appraisal_workspace.sql', '20260927000003_security_identity.sql']
@@ -69,8 +80,17 @@ def main():
     query(sql + '\nrollback;', read_only=False)
     if args.apply:
         query(sql + '\ncommit;', read_only=False)
-    print(json.dumps({'ddl_validated': True, 'applied': args.apply, 'admin_email': email,
-                      'credentials_file': str(credentials_path)}, ensure_ascii=False))
+    print(
+        json.dumps(
+            {
+                'ddl_validated': True,
+                'applied': args.apply,
+                'admin_email': email,
+                'credentials_file': str(credentials_path),
+            },
+            ensure_ascii=False,
+        )
+    )
 
 
 if __name__ == '__main__':

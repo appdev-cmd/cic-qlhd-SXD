@@ -8,6 +8,7 @@ revision unchanged). Cloud rows go through the normal persist path with one
 audit event each, acting as the dedicated staging admin account, after a
 payload snapshot is written outside the repository.
 """
+
 import argparse
 import hashlib
 import json
@@ -24,7 +25,11 @@ os.environ.setdefault('APPRAISAL_INTERNAL_TOKEN', 'backfill-script')
 
 
 def load_environment():
-    for path in [ROOT / '.env', ROOT / '.env.local', Path(os.getenv('APPRAISAL_CONFIG_FILE', Path.home() / '.config/buildappraisal/runtime.env'))]:
+    for path in [
+        ROOT / '.env',
+        ROOT / '.env.local',
+        Path(os.getenv('APPRAISAL_CONFIG_FILE', Path.home() / '.config/buildappraisal/runtime.env')),
+    ]:
         if path.exists():
             for line in path.read_text(encoding='utf-8-sig').splitlines():
                 if '=' in line and not line.startswith('#'):
@@ -35,6 +40,7 @@ def load_environment():
 def demo(apply):
     os.environ['APPRAISAL_MODE'] = 'demo'
     from app.store import Store, DEMO_ACTOR, db
+
     store = Store(actor=DEMO_ACTOR)
     with db() as con:
         ids = [r[0] for r in con.execute('select id from cases')]
@@ -47,8 +53,10 @@ def demo(apply):
             changed += 1
             if apply:
                 with db() as con:
-                    con.execute('update cases set payload=? where id=? and revision=?',
-                                (json.dumps(case, ensure_ascii=False), id, case['revision']))
+                    con.execute(
+                        'update cases set payload=? where id=? and revision=?',
+                        (json.dumps(case, ensure_ascii=False), id, case['revision']),
+                    )
     print(f'demo: {len(ids)} lần nộp, {changed} cần cập nhật' + (' — đã ghi.' if apply else ' (dry-run).'))
 
 
@@ -57,31 +65,54 @@ def cloud(apply):
     from app.database import connection
     from app.domain import audit, now
     from app.store import Store
-    accounts = json.loads((Path.home() / '.config/buildappraisal/test-accounts.json').read_text(encoding='utf-8'))['accounts']
+
+    accounts = json.loads((Path.home() / '.config/buildappraisal/test-accounts.json').read_text(encoding='utf-8'))[
+        'accounts'
+    ]
     admin = next(a for a in accounts if a['role'] == 'admin')
     with connection(admin['user_id']) as con:
-        profile = con.execute('select id,full_name,province_id,department,role from public.profiles where id=%s and is_active',
-                              (admin['user_id'],)).fetchone()
+        profile = con.execute(
+            'select id,full_name,province_id,department,role from public.profiles where id=%s and is_active',
+            (admin['user_id'],),
+        ).fetchone()
         rows = con.execute("""select id,payload from public.appraisal_cases c
             where not (payload ? 'sla') and not exists(select 1 from public.appraisal_cases n where n.previous_submission_id=c.id)
             order by created_at""").fetchall()
-    actor = {'id': str(profile['id']), 'name': profile['full_name'], 'tenantId': profile['province_id'],
-             'department': profile['department'], 'role': profile['role']}
+    actor = {
+        'id': str(profile['id']),
+        'name': profile['full_name'],
+        'tenantId': profile['province_id'],
+        'department': profile['department'],
+        'role': profile['role'],
+    }
     print(f'cloud: {len(rows)} lần nộp mới nhất chưa có SLA trong phạm vi tài khoản quản trị staging.')
     if not apply or not rows:
         return
-    folder = Path.home() / '.config/buildappraisal/backups' / (datetime.now().strftime('%Y%m%d-%H%M%S') + '-before-sla-backfill')
+    folder = (
+        Path.home()
+        / '.config/buildappraisal/backups'
+        / (datetime.now().strftime('%Y%m%d-%H%M%S') + '-before-sla-backfill')
+    )
     folder.mkdir(parents=True)
-    data = json.dumps([{'id': str(r['id']), 'payload': r['payload']} for r in rows], ensure_ascii=False, default=str).encode()
+    data = json.dumps(
+        [{'id': str(r['id']), 'payload': r['payload']} for r in rows], ensure_ascii=False, default=str
+    ).encode()
     (folder / 'cases.json').write_bytes(data)
-    (folder / 'manifest.json').write_text(json.dumps({'rows': len(rows), 'sha256': hashlib.sha256(data).hexdigest()}), encoding='utf-8')
+    (folder / 'manifest.json').write_text(
+        json.dumps({'rows': len(rows), 'sha256': hashlib.sha256(data).hexdigest()}), encoding='utf-8'
+    )
     store = Store(actor=actor)
     for row in rows:
         case = store.get(str(row['id']))
         expected = case['revision']
         case['revision'] = expected + 1
         case['updatedAt'] = now()
-        audit(case, actor, 'Tính hạn xử lý', 'Bổ sung hạn xử lý theo chính sách SLA (chờ chuyên viên xác nhận bảng thời hạn).')
+        audit(
+            case,
+            actor,
+            'Tính hạn xử lý',
+            'Bổ sung hạn xử lý theo chính sách SLA (chờ chuyên viên xác nhận bảng thời hạn).',
+        )
         store.save(case, expected)
     print(f'Đã ghi {len(rows)} lần nộp; bản chụp trước khi ghi: {folder}')
 

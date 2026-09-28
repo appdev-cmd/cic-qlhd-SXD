@@ -30,7 +30,10 @@ class ProgressTests(unittest.TestCase):
             self.assertEqual(store.progress(case['id'])['job']['status'], 'running')
             with store_module.db() as con:
                 con.execute("update jobs set state='failed' where id='job-1'")
-            self.assertEqual(store.progress(case['id']), {'revision': 2, 'job': {'id': 'job-1', 'status': 'failed', 'mode': 'intake'}})
+            self.assertEqual(
+                store.progress(case['id']),
+                {'revision': 2, 'job': {'id': 'job-1', 'status': 'failed', 'mode': 'intake'}},
+            )
 
 
 class ActorCacheTests(unittest.TestCase):
@@ -43,8 +46,16 @@ class ActorCacheTests(unittest.TestCase):
         return result
 
     def test_actor_is_cached_until_ttl_and_never_past_token_expiry(self):
-        profile = [{'id': 'user-1', 'full_name': 'Chuyên viên', 'role': 'officer', 'province_id': 'DB',
-                    'department': 'QLXD', 'is_active': True}]
+        profile = [
+            {
+                'id': 'user-1',
+                'full_name': 'Chuyên viên',
+                'role': 'officer',
+                'province_id': 'DB',
+                'department': 'QLXD',
+                'is_active': True,
+            }
+        ]
         calls = []
 
         def remote(path, *args, **kwargs):
@@ -67,9 +78,26 @@ class ActorCacheTests(unittest.TestCase):
                 self.assertEqual(len(calls), 10)
 
     def test_inactive_profile_is_rejected_and_not_cached(self):
-        inactive = [{'id': 'user-2', 'full_name': 'Ngừng', 'role': 'officer', 'province_id': 'DB', 'department': 'QLXD', 'is_active': False}]
-        with patch.object(store_module, 'MODE', 'cloud'), patch.object(
-                store_module, 'remote', side_effect=lambda path, *a, **k: self.response({'id': 'user-2'} if path.startswith('/auth') else inactive)):
+        inactive = [
+            {
+                'id': 'user-2',
+                'full_name': 'Ngừng',
+                'role': 'officer',
+                'province_id': 'DB',
+                'department': 'QLXD',
+                'is_active': False,
+            }
+        ]
+        with (
+            patch.object(store_module, 'MODE', 'cloud'),
+            patch.object(
+                store_module,
+                'remote',
+                side_effect=lambda path, *a, **k: self.response(
+                    {'id': 'user-2'} if path.startswith('/auth') else inactive
+                ),
+            ),
+        ):
             for _ in range(2):
                 with self.assertRaises(Exception):
                     store_module.actor_for(token(time.time() + 3600))

@@ -11,8 +11,11 @@ from app.workflow import derive_status, TRANSITIONS
 
 
 def calendar(*holidays):
-    return sla.Calendar([(date.fromisoformat(d), kind, True) for d, kind in holidays] +
-                        [(date(2026, 1, 1), 'le_tet', True), (date(2027, 1, 1), 'le_tet', True)], 'test')
+    return sla.Calendar(
+        [(date.fromisoformat(d), kind, True) for d, kind in holidays]
+        + [(date(2026, 1, 1), 'le_tet', True), (date(2027, 1, 1), 'le_tet', True)],
+        'test',
+    )
 
 
 class LegalPeriodTests(unittest.TestCase):
@@ -80,14 +83,24 @@ class ComputeTests(unittest.TestCase):
 
     def test_supplement_pause_extends_deadline(self):
         cal = calendar()
-        history = [{'from': 'processing', 'to': 'awaiting_supplement', 'at': '2026-09-03T08:00:00+00:00'},
-                   {'from': 'awaiting_supplement', 'to': 'processing', 'at': '2026-09-08T08:00:00+00:00'}]
-        facts = sla.compute(self.case(workflow={'state': 'processing', 'history': history}), cal,
-                            {'group': 'B', 'grade': 'II'}, today=date(2026, 9, 10))
+        history = [
+            {'from': 'processing', 'to': 'awaiting_supplement', 'at': '2026-09-03T08:00:00+00:00'},
+            {'from': 'awaiting_supplement', 'to': 'processing', 'at': '2026-09-08T08:00:00+00:00'},
+        ]
+        facts = sla.compute(
+            self.case(workflow={'state': 'processing', 'history': history}),
+            cal,
+            {'group': 'B', 'grade': 'II'},
+            today=date(2026, 9, 10),
+        )
         self.assertEqual(facts['pausedDays'], 3)
         self.assertEqual(facts['legalDueDate'], '2026-09-28')
-        paused = sla.compute(self.case(workflow={'state': 'awaiting_supplement', 'history': history[:1]}), cal,
-                             {'group': 'B', 'grade': 'II'}, today=date(2026, 9, 10))
+        paused = sla.compute(
+            self.case(workflow={'state': 'awaiting_supplement', 'history': history[:1]}),
+            cal,
+            {'group': 'B', 'grade': 'II'},
+            today=date(2026, 9, 10),
+        )
         self.assertTrue(paused['paused'])
         self.assertEqual(sla.evaluate(paused, cal, today=date(2026, 12, 1))['state'], 'paused')
 
@@ -112,14 +125,19 @@ class StatusInvariantTests(unittest.TestCase):
                 self.assertEqual(derive_status(case), expected.get(target, fallback), (target, runs))
         self.assertEqual(derive_status({'runs': [], 'job': {'status': 'running', 'mode': 'intake'}}), 'analyzing')
         self.assertEqual(derive_status({'runs': [], 'job': {'status': 'running', 'mode': 'ocr'}}), 'intake')
-        self.assertEqual(derive_status({'runs': [], 'finalReview': {'decision': 'request_supplement'}}), 'request_supplement')
+        self.assertEqual(
+            derive_status({'runs': [], 'finalReview': {'decision': 'request_supplement'}}), 'request_supplement'
+        )
 
 
 class StoreIntegrationTests(unittest.TestCase):
     def test_save_derives_fields_and_page_filters_by_sla(self):
         project = {'id': 'project', 'projectGroup': 'C', 'buildingGrade': 'III'}
-        with tempfile.TemporaryDirectory() as directory, patch('app.store.DATA_DIR', Path(directory)), \
-                patch.object(Store, 'project', return_value=project):
+        with (
+            tempfile.TemporaryDirectory() as directory,
+            patch('app.store.DATA_DIR', Path(directory)),
+            patch.object(Store, 'project', return_value=project),
+        ):
             store = Store(actor=DEMO_ACTOR)
             old = new_case('Hồ sơ quá hạn', 'Điện Biên', DEMO_ACTOR, '2026-01-05', 'project')
             fresh = new_case('Hồ sơ mới', 'Điện Biên', DEMO_ACTOR, date.today().isoformat(), 'project')

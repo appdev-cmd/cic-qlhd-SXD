@@ -1,12 +1,16 @@
 """Appraisal vocabulary shared by ingestion, rules and sample generation."""
+
 from datetime import datetime, timezone
 from uuid import uuid4
+
 
 def uid():
     return str(uuid4())
 
+
 def now():
     return datetime.now(timezone.utc).isoformat()
+
 
 REQUIREMENTS = [
     ('TTR', 'Tờ trình thẩm định BCNCKT', 'Tiếp nhận'),
@@ -25,9 +29,12 @@ REQUIREMENTS = [
     ('NL01', 'Năng lực tổ chức và nhân sự chủ chốt', 'Năng lực'),
 ]
 COSTS = [
-    ('land', 'Chi phí GPMB'), ('construction', 'Chi phí xây dựng'),
-    ('equipment', 'Chi phí thiết bị'), ('management', 'Chi phí quản lý dự án'),
-    ('consulting', 'Chi phí tư vấn'), ('other', 'Chi phí khác'),
+    ('land', 'Chi phí GPMB'),
+    ('construction', 'Chi phí xây dựng'),
+    ('equipment', 'Chi phí thiết bị'),
+    ('management', 'Chi phí quản lý dự án'),
+    ('consulting', 'Chi phí tư vấn'),
+    ('other', 'Chi phí khác'),
     ('contingency', 'Chi phí dự phòng'),
 ]
 FIELDS = {
@@ -58,50 +65,100 @@ for key, label in COSTS:
 for key in ['A1', 'A2', 'A3', 'A4', 'A5', 'A6', 'B', 'C', 'D', 'G1', 'G2']:
     FIELDS['floor.' + key] = ('Diện tích sàn ' + key, 'm²')
 
-def new_case(name, province, actor, legal_date, project_id=None, sample=False, school_template=False,
-             procedure='bcnckt', project_name=None, project_code=None):
-    reqs = REQUIREMENTS if school_template else [
-        ('TTR', 'Tờ trình và danh mục hồ sơ gửi kèm', 'Tiếp nhận'),
-        ('KT01', 'Hồ sơ khảo sát địa hình', 'Khảo sát'),
-        ('KT02', 'Hồ sơ khảo sát địa chất', 'Khảo sát'),
-        ('KT03', 'Thuyết minh BCNCKT', 'Thiết kế'),
-        ('KT04', 'Hồ sơ thiết kế cơ sở', 'Thiết kế'),
-        ('KT05', 'Tổng mức đầu tư', 'Chi phí'),
-        ('NL01', 'Năng lực tổ chức và nhân sự', 'Năng lực'),
-    ]
+
+def new_case(
+    name,
+    province,
+    actor,
+    legal_date,
+    project_id=None,
+    sample=False,
+    school_template=False,
+    procedure='bcnckt',
+    project_name=None,
+    project_code=None,
+):
+    reqs = (
+        REQUIREMENTS
+        if school_template
+        else [
+            ('TTR', 'Tờ trình và danh mục hồ sơ gửi kèm', 'Tiếp nhận'),
+            ('KT01', 'Hồ sơ khảo sát địa hình', 'Khảo sát'),
+            ('KT02', 'Hồ sơ khảo sát địa chất', 'Khảo sát'),
+            ('KT03', 'Thuyết minh BCNCKT', 'Thiết kế'),
+            ('KT04', 'Hồ sơ thiết kế cơ sở', 'Thiết kế'),
+            ('KT05', 'Tổng mức đầu tư', 'Chi phí'),
+            ('NL01', 'Năng lực tổ chức và nhân sự', 'Năng lực'),
+        ]
+    )
     if procedure != 'bcnckt':
-        reqs = [('APPLICATION', 'Đơn / văn bản đề nghị', 'Tiếp nhận'),
-                ('ATTACHMENTS', 'Tài liệu gửi kèm', 'Tiếp nhận'),
-                ('DRAWINGS', 'Bản vẽ', 'Tiếp nhận'),
-                ('RESULTS', 'Văn bản xử lý và kết quả', 'Xử lý')]
+        reqs = [
+            ('APPLICATION', 'Đơn / văn bản đề nghị', 'Tiếp nhận'),
+            ('ATTACHMENTS', 'Tài liệu gửi kèm', 'Tiếp nhận'),
+            ('DRAWINGS', 'Bản vẽ', 'Tiếp nhận'),
+            ('RESULTS', 'Văn bản xử lý và kết quả', 'Xử lý'),
+        ]
     return {
-        'procedure': procedure, 'projectName': project_name, 'projectCode': project_code,
-        'id': uid(), 'projectId': project_id, 'name': name, 'province': province,
-        'tenantId': actor['tenantId'], 'department': actor['department'],
-        'assignee': actor['name'], 'createdAt': now(), 'updatedAt': now(),
-        'legalDate': legal_date, 'sample': sample, 'revision': 1,
-        'legalContext': {'submissionDate': legal_date, 'scope': 'construction', 'stage': 'original',
-                         'priorStatus': 'unknown', 'note': '', 'confirmedBy': None},
+        'procedure': procedure,
+        'projectName': project_name,
+        'projectCode': project_code,
+        'id': uid(),
+        'projectId': project_id,
+        'name': name,
+        'province': province,
+        'tenantId': actor['tenantId'],
+        'department': actor['department'],
+        'assignee': actor['name'],
+        'createdAt': now(),
+        'updatedAt': now(),
+        'legalDate': legal_date,
+        'sample': sample,
+        'revision': 1,
+        'legalContext': {
+            'submissionDate': legal_date,
+            'scope': 'construction',
+            'stage': 'original',
+            'priorStatus': 'unknown',
+            'note': '',
+            'confirmedBy': None,
+        },
         'legalRequirements': {},
-        'requirements': [{'id': c, 'name': n, 'category': g, 'required': procedure == 'bcnckt' and (school_template or c!='KT05'),
-                          'status': 'missing', 'note': '', 'verifiedBy': None} for c,n,g in reqs],
-        'documents': [], 'facts': [], 'runs': [], 'consultations': [], 'audit': [],
-        'status': 'intake', 'finalReview': None,
+        'requirements': [
+            {
+                'id': c,
+                'name': n,
+                'category': g,
+                'required': procedure == 'bcnckt' and (school_template or c != 'KT05'),
+                'status': 'missing',
+                'note': '',
+                'verifiedBy': None,
+            }
+            for c, n, g in reqs
+        ],
+        'documents': [],
+        'facts': [],
+        'runs': [],
+        'consultations': [],
+        'audit': [],
+        'status': 'intake',
+        'finalReview': None,
     }
 
+
 def audit(case, actor, action, detail):
-    case['audit'].append({'id': uid(), 'at': now(), 'actor': actor['name'],
-                          'action': action, 'detail': detail})
+    case['audit'].append({'id': uid(), 'at': now(), 'actor': actor['name'], 'action': action, 'detail': detail})
+
 
 def invalidate(case):
     if case.get('procedureReview'):
-        case.setdefault('procedureReviewHistory',[]).append(case['procedureReview'])
-        case['procedureReview']=None
+        case.setdefault('procedureReviewHistory', []).append(case['procedureReview'])
+        case['procedureReview'] = None
     if case.get('job', {}).get('status') == 'running':
         case['job']['status'] = 'cancelled'
     case['finalReview'] = None
     for run in case['runs']:
         run['stale'] = True
+
 
 def latest_documents(case, mode='intake'):
     result = {}
