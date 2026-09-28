@@ -1,0 +1,50 @@
+{
+  "label": "after-g2-ipv4",
+  "at": "2026-09-28T16:59:46.241419",
+  "mode": "cloud",
+  "rounds": 12,
+  "results": {
+    "submissions page": {
+      "status": 200,
+      "bytes": 51830,
+      "p50_ms": 525,
+      "p95_ms": 715,
+      "first_ms": 537
+    },
+    "submissions overdue": {
+      "status": 200,
+      "bytes": 14926,
+      "p50_ms": 451,
+      "p95_ms": 492,
+      "first_ms": 392
+    },
+    "case detail": {
+      "status": 200,
+      "bytes": 9221,
+      "p50_ms": 649,
+      "p95_ms": 707,
+      "first_ms": 654
+    },
+    "case progress": {
+      "status": 200,
+      "bytes": 25,
+      "p50_ms": 340,
+      "p95_ms": 359,
+      "first_ms": 341
+    },
+    "projects page": {
+      "status": 200,
+      "bytes": 81074,
+      "p50_ms": 580,
+      "p95_ms": 663,
+      "first_ms": 582
+    },
+    "dashboard": {
+      "status": 200,
+      "bytes": 4423,
+      "p50_ms": 1423,
+      "p95_ms": 1444,
+      "first_ms": 1426
+    }
+  }
+}

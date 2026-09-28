@@ -393,6 +393,18 @@ begin
     return d;
 end $function$;
 
+CREATE OR REPLACE FUNCTION public.app_actor_scope()
+ RETURNS TABLE(province_id text, department text, is_admin boolean)
+ LANGUAGE sql
+ STABLE SECURITY DEFINER
+ SET search_path TO ''
+AS $function$
+  select p.province_id, p.department, p.role = 'admin'
+  from public.profiles p
+  where p.id = auth.uid() and p.is_active is true
+    and p.role in ('admin','director','head_of_department','officer')
+$function$;
+
 CREATE OR REPLACE FUNCTION public.app_has_scope(p_province text, p_department text DEFAULT NULL::text)
  RETURNS boolean
  LANGUAGE sql
@@ -1435,7 +1447,7 @@ create policy "appraisal_audit_scope_read" on "public"."appraisal_audit_logs" as
    FROM appraisal_cases c
   WHERE (c.id = appraisal_audit_logs.case_id))));
 
-create policy "appraisal_scope_read" on "public"."appraisal_cases" as PERMISSIVE for SELECT to "authenticated" using (appraisal_has_scope(province_id, department));
+create policy "appraisal_scope_read" on "public"."appraisal_cases" as PERMISSIVE for SELECT to "authenticated" using (province_id = ( SELECT s.province_id FROM app_actor_scope() s(province_id, department, is_admin)) AND ((department = ( SELECT s.department FROM app_actor_scope() s(province_id, department, is_admin))) OR COALESCE(( SELECT s.is_admin FROM app_actor_scope() s(province_id, department, is_admin)), false)));
 
 create policy "checklist_scope_read" on "public"."appraisal_checklists" as PERMISSIVE for SELECT to "authenticated" using ((EXISTS ( SELECT 1
    FROM appraisal_disciplines d
@@ -1445,7 +1457,7 @@ create policy "discipline_scope_read" on "public"."appraisal_disciplines" as PER
    FROM projects p
   WHERE (p.id = appraisal_disciplines.project_id))));
 
-create policy "dossier_scope_read" on "public"."appraisal_dossiers" as PERMISSIVE for SELECT to "authenticated" using (app_has_scope(province_id, department));
+create policy "dossier_scope_read" on "public"."appraisal_dossiers" as PERMISSIVE for SELECT to "authenticated" using (province_id = ( SELECT s.province_id FROM app_actor_scope() s(province_id, department, is_admin)) AND ((department = ( SELECT s.department FROM app_actor_scope() s(province_id, department, is_admin))) OR COALESCE(( SELECT s.is_admin FROM app_actor_scope() s(province_id, department, is_admin)), false)));
 
 create policy "upload_backend_scope" on "public"."appraisal_upload_sessions" as PERMISSIVE for ALL to "appraisal_backend" using (((actor_id = auth.uid()) AND (EXISTS ( SELECT 1
    FROM appraisal_cases c
@@ -1495,7 +1507,7 @@ create policy "document_scope_read" on "public"."project_documents" as PERMISSIV
    FROM projects p
   WHERE (p.id = project_documents.project_id))));
 
-create policy "project_scope_read" on "public"."projects" as PERMISSIVE for SELECT to "authenticated" using (app_has_scope(province_code, department));
+create policy "project_scope_read" on "public"."projects" as PERMISSIVE for SELECT to "authenticated" using (province_code = ( SELECT s.province_id FROM app_actor_scope() s(province_id, department, is_admin)) AND ((department = ( SELECT s.department FROM app_actor_scope() s(province_id, department, is_admin))) OR COALESCE(( SELECT s.is_admin FROM app_actor_scope() s(province_id, department, is_admin)), false)));
 
 create policy "staff_scope_read" on "public"."staff_users" as PERMISSIVE for SELECT to "authenticated" using (app_has_scope(province_code, department));
 
@@ -1534,6 +1546,8 @@ alter default privileges in schema public revoke all on sequences from anon,auth
 alter default privileges in schema public revoke execute on functions from public,anon,authenticated;
 
 grant EXECUTE on function add_working_days(date,integer) to "authenticated";
+
+grant EXECUTE on function app_actor_scope() to "authenticated";
 
 grant EXECUTE on function app_has_scope(text,text) to "authenticated";
 

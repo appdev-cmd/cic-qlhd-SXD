@@ -1,7 +1,11 @@
 """Local demo persistence and JWT-scoped Supabase persistence."""
+import base64
+import hashlib
 import json
 import os
 import sqlite3
+import threading
+import time
 import unicodedata
 from contextlib import contextmanager
 from pathlib import Path
@@ -18,21 +22,33 @@ DATA_DIR.mkdir(parents=True, exist_ok=True)
 DEMO_ACTOR = {'id':'00000000-0000-4000-8000-000000000001','name':'Chuyên viên mẫu',
               'tenantId':'demo','department':'Phòng thẩm định mẫu','role':'officer'}
 
+_ready=set()
+
+
 @contextmanager
 def db():
-    con = sqlite3.connect(DATA_DIR / 'appraisal.sqlite', timeout=20)
-    con.execute('PRAGMA journal_mode=WAL')
-    con.execute('CREATE TABLE IF NOT EXISTS cases (id TEXT PRIMARY KEY, revision INTEGER NOT NULL, payload TEXT NOT NULL)')
-    con.execute('CREATE TABLE IF NOT EXISTS files (case_id TEXT, id TEXT PRIMARY KEY, data BLOB NOT NULL)')
-    con.execute('CREATE TABLE IF NOT EXISTS jobs (id TEXT PRIMARY KEY, case_id TEXT NOT NULL, actor TEXT NOT NULL, snapshot TEXT NOT NULL, state TEXT NOT NULL DEFAULT \'queued\', attempts INTEGER NOT NULL DEFAULT 0, lease_owner TEXT, lease_until REAL, created_at REAL NOT NULL)')
+    path = DATA_DIR / 'appraisal.sqlite'
+    con = sqlite3.connect(path, timeout=20)
     con.create_function('normalize_search',1,normalize_search)
-    from .demo_summary import ensure
-    ensure(con)
+    if str(path) not in _ready:
+        # Schema setup once per database file and process instead of on every connection.
+        _setup(con)
+        _ready.add(str(path))
     try:
         with con:
             yield con
     finally:
         con.close()
+
+
+def _setup(con):
+    con.execute('PRAGMA journal_mode=WAL')
+    con.execute('CREATE TABLE IF NOT EXISTS cases (id TEXT PRIMARY KEY, revision INTEGER NOT NULL, payload TEXT NOT NULL)')
+    con.execute('CREATE TABLE IF NOT EXISTS files (case_id TEXT, id TEXT PRIMARY KEY, data BLOB NOT NULL)')
+    con.execute('CREATE TABLE IF NOT EXISTS jobs (id TEXT PRIMARY KEY, case_id TEXT NOT NULL, actor TEXT NOT NULL, snapshot TEXT NOT NULL, state TEXT NOT NULL DEFAULT \'queued\', attempts INTEGER NOT NULL DEFAULT 0, lease_owner TEXT, lease_until REAL, created_at REAL NOT NULL)')
+    from .demo_summary import ensure
+    ensure(con)
+
 
 def normalize_search(value):
     return ''.join(c for c in unicodedata.normalize('NFD',str(value or '').lower().replace('đ','d'))
@@ -50,17 +66,46 @@ def remote(path, token, method='GET', **kwargs):
                             'Không thể truy cập dữ liệu Supabase. Kiểm tra quyền và migration.')
     return r
 
+ACTOR_TTL = float(os.getenv('APPRAISAL_ACTOR_CACHE_SECONDS', '60'))
+_actors = {}
+_actors_lock = threading.Lock()
+
+
+def _token_expiry(token):
+    """Unverified 'exp' claim, used only to cap the cache lifetime (Auth still verifies the token)."""
+    try:
+        part = token.split(' ',1)[1].split('.')[1]
+        return float(json.loads(base64.urlsafe_b64decode(part+'='*(-len(part)%4)))['exp'])
+    except Exception:
+        return 0.0
+
+
 def actor_for(token):
     if MODE == 'demo':
         return dict(DEMO_ACTOR)
     if not token.startswith('Bearer '):
         raise HTTPException(401,'Vui lòng đăng nhập bằng tài khoản được phân quyền.')
+    key = hashlib.sha256(token.encode()).hexdigest()
+    now = time.time()
+    with _actors_lock:
+        cached = _actors.get(key)
+        if cached and cached[0] > now:
+            return dict(cached[1])
     user = remote('/auth/v1/user',token).json()
     rows = remote('/rest/v1/profiles',token,params={'id':'eq.'+user['id'],'select':'id,full_name,role,province_id,department,is_active','limit':'1'}).json()
     if not rows or not rows[0].get('is_active') or not rows[0].get('province_id') or not rows[0].get('department'):
         raise HTTPException(403,'Tài khoản chưa được gán tỉnh, phòng ban hoặc đang ngừng hoạt động.')
     p = rows[0]
-    return {'id':p['id'],'name':p['full_name'],'tenantId':p['province_id'],'department':p['department'],'role':p['role']}
+    actor = {'id':p['id'],'name':p['full_name'],'tenantId':p['province_id'],'department':p['department'],'role':p['role']}
+    # A deactivated profile or revoked session takes effect within ACTOR_TTL; RLS still re-checks
+    # the active profile inside every database transaction.
+    until = min(now + ACTOR_TTL, _token_expiry(token))
+    with _actors_lock:
+        if len(_actors) > 2000:
+            _actors.clear()
+        if until > now:
+            _actors[key] = (until, actor)
+    return dict(actor)
 
 class Store:
     def __init__(self,token='',actor=None):
@@ -110,6 +155,21 @@ class Store:
         if not rows:
             raise HTTPException(404,'Không tìm thấy hồ sơ trong phạm vi quyền.')
         return self.with_job_state(rows[0]['payload'])
+
+    def progress(self,id):
+        """Revision and job state only, for cheap polling while a job runs."""
+        if MODE=='demo':
+            with db() as con:
+                row=con.execute("select revision,json_extract(payload,'$.job') from cases where id=?",(id,)).fetchone()
+            if not row:raise HTTPException(404,'Không tìm thấy hồ sơ.')
+            revision,job=row[0],json.loads(row[1]) if row[1] else None
+        else:
+            with connection(self.actor['id']) as con:
+                row=con.execute("select revision,payload->'job' as job from public.appraisal_cases where id=%s",(id,)).fetchone()
+            if not row:raise HTTPException(404,'Không tìm thấy hồ sơ trong phạm vi quyền.')
+            revision,job=row['revision'],row['job']
+        job=self.with_job_state({'job':job,'runs':[],'workflow':{}}).get('job') if job else None
+        return {'revision':revision,'job':{k:job.get(k) for k in ('id','status','mode')} if job else None}
 
     def with_job_state(self,case):
         job=case.get('job') or {}
@@ -329,8 +389,8 @@ class Store:
             'due_soon':(running+' and '+due+'>='+mark+' and '+due+'<='+mark,[now,soon]),
             'on_track':(running+' and '+due+'>'+mark,[soon])}
 
-    def sla_counts(self,kind='all'):
-        """Submission counts per SLA state in one aggregate query (dashboard)."""
+    def sla_counts_query(self,kind='all'):
+        """(sql, params, states) counting submissions per SLA state in one aggregate query."""
         from .sla import date
         conditions=self._sla_conditions(self.calendar(),date.today())
         sqlite=MODE=='demo'
@@ -340,11 +400,20 @@ class Store:
         if kind in ('sample','real'):
             where=(' where coalesce(sample,0)='+('1' if kind=='sample' else '0') if sqlite
                    else " where coalesce((payload->>'sample')::boolean,false)="+('true' if kind=='sample' else 'false'))
-        if sqlite:
-            with db() as con:row=con.execute('select '+select+' from case_summaries'+where,values).fetchone()
+        return 'select '+select+(' from case_summaries' if sqlite else ' from public.appraisal_cases')+where,values,list(conditions)
+
+    @staticmethod
+    def sla_rows(row,states):
+        values=list(row.values()) if isinstance(row,dict) else list(row)
+        return [{'id':key,'total':int(values[i])} for i,key in enumerate(states)]
+
+    def sla_counts(self,kind='all'):
+        sql,values,states=self.sla_counts_query(kind)
+        if MODE=='demo':
+            with db() as con:row=con.execute(sql,values).fetchone()
         else:
-            with connection(self.actor['id']) as con:row=list(con.execute('select '+select+' from public.appraisal_cases'+where,values).fetchone().values())
-        return [{'id':key,'total':int(row[i])} for i,key in enumerate(conditions)]
+            with connection(self.actor['id']) as con:row=con.execute(sql,values).fetchone()
+        return self.sla_rows(row,states)
 
     def page(self,offset=0,limit=50,procedure=None,project_id=None,search='',kind='',status='',date_from='',date_to='',sort='updatedAt',direction='desc',dossier_id=None,sla=''):
         from . import sla as deadlines
@@ -394,8 +463,10 @@ class Store:
         else:
             projection="jsonb_build_object("+','.join("'"+k+"',"+(field(k) if k in nested else "payload->'"+k+"'") for k in fields)+",'procedure',coalesce(payload->>'procedure','bcnckt'),'documentCount',"+count_expr+",'hasSuccessor',"+successor+') as summary'
             with connection(self.actor['id']) as con:
-                total=con.execute('select count(*) as n from public.appraisal_cases'+where,values).fetchone()['n']
-                rows=[r['summary'] for r in con.execute('select '+projection+' from public.appraisal_cases'+where+' order by '+sort_expr+' '+direction+' nulls last,id '+direction+' limit %s offset %s',values+[limit,offset])]
+                # Total rides along with the page (one round trip); count separately only past the last page.
+                result=con.execute('select '+projection+',count(*) over() as total from public.appraisal_cases'+where+' order by '+sort_expr+' '+direction+' nulls last,id '+direction+' limit %s offset %s',values+[limit,offset]).fetchall()
+                rows=[r['summary'] for r in result]
+                total=result[0]['total'] if result else con.execute('select count(*) as n from public.appraisal_cases'+where,values).fetchone()['n'] if offset else 0
         for row in rows:
             row['slaState']=deadlines.evaluate({'dueDate':row.get('slaDueDate'),'paused':bool(row.get('slaPaused')),
                 'completedAt':row.get('slaCompletedAt')},calendar,bool(row.pop('hasSuccessor',False)),today)

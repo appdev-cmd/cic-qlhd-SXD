@@ -19,6 +19,7 @@ export const appraisalService={
     return (await request('/cases?'+query)).json();
   },
   get:async(id:string):Promise<Dossier>=>(await request('/cases/'+id)).json(),
+  progress:async(id:string):Promise<{revision:number;job:{id:string;status:string;mode?:string}|null}>=>(await request('/cases/'+id+'/progress')).json(),
   lineage:async(id:string,offset=0):Promise<Page<DossierSummary>&{latestId:string}>=>(await request('/cases/'+id+'/submissions?offset='+offset)).json(),
   legal:async(id:string)=>(await request('/cases/'+id+'/legal')).json(),
   create:async(body:unknown):Promise<Dossier>=>(await request('/cases',body,'POST')).json(),

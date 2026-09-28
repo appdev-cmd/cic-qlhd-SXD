@@ -1,5 +1,6 @@
 import {WorkflowPanel} from '../../../components/appraisal/WorkflowPanel';
 import {OcrPanel} from '../../../components/appraisal/OcrPanel';
+import {useCaseProgress} from '../../../hooks/useCaseProgress';
 import { SubmissionHistory } from '../../../components/appraisal/SubmissionHistory';
 import { AnalysisFeedback } from '../../../components/appraisal/AnalysisFeedback';
 import React,{useEffect,useState,useRef,Suspense,lazy} from 'react';
@@ -45,12 +46,7 @@ export function AppraisalWorkspace({dossierId,project}:{dossierId?:string;projec
     if(id){const item=await api.get(id);if(live)setD(item);}
   }catch(e){if(live)setError((e as Error).message);}})();return()=>{live=false;};},[dossierId,project?.id]);
   useEffect(()=>{pendingAnalysis.current=null;setPollError('');},[dossierId,project?.id]);
-  useEffect(()=>{
-    if(d?.job?.status!=='running')return;
-    let live=true;let timer:ReturnType<typeof setTimeout>;
-    const poll=async()=>{try{const next=await api.get(d.id);if(live){setD(current=>current?.id===next.id&&current.revision<=next.revision?next:current);setPollError('');}}catch{if(live)setPollError('Chưa lấy được tiến trình mới nhất. Hệ thống đang thử kết nối lại; không cần bấm chạy thêm.');}finally{if(live)timer=setTimeout(poll,1500);}};
-    timer=setTimeout(poll,1500);return()=>{live=false;clearTimeout(timer);};
-  },[d?.id,d?.job?.status]);
+  useCaseProgress(d,next=>setD(current=>current?.id===next.id&&current.revision<=next.revision?next:current),setPollError);
   useEffect(()=>{
     if(!d?.job||d.job.mode==='ocr')return;
     if(d.job.status==='running'){pendingAnalysis.current=d.job.id;return;}

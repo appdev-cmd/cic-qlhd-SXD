@@ -367,6 +367,10 @@ def get_case(id:str,s:Store=Depends(store)):
     case['slaState']=evaluate(case.get('sla'),s.calendar(),case['readOnly'])
     return case
 
+@app.get('/v1/cases/{id}/progress')
+def case_progress(id:str,s:Store=Depends(store)):
+    return s.progress(id)
+
 @app.get('/v1/cases/{id}/submissions')
 def submission_history(id:str,s:Store=Depends(store),offset:int=Query(default=0,ge=0)):
     return s.lineage(id,offset)
@@ -623,7 +627,9 @@ def start_ocr(id:str,doc_id:str,body:Mutation,s:Store=Depends(store)):
 @app.on_event('shutdown')
 def stop_queue():
     from .jobs import stop
+    from .database import close_pools
     stop()
+    close_pools()
 
 @app.post('/v1/cases/{id}/analysis')
 def start_analysis(id:str,body:RunRequest,s:Store=Depends(store)):
