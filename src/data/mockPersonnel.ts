@@ -1,4 +1,4 @@
-import type { Personnel } from './mockData';
+import type { Personnel } from '../types/project';
 
 export const MOCK_PERSONNEL: Personnel[] = [
   // ─── 1. CHỦ NHIỆM & KIẾN TRÚC SƯ THIẾT KẾ (KTS) ───

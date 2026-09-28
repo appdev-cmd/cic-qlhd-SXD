@@ -1,4 +1,4 @@
-import type { Organization } from './mockData';
+import type { Organization } from '../types/project';
 
 export const MOCK_ORGANIZATIONS: Organization[] = [
   // ─── NHÓM 1: CÁC CHỦ ĐẦU TƯ / BAN QLDA / CƠ QUAN NHÀ NƯỚC (15 ĐƠN VỊ) ───

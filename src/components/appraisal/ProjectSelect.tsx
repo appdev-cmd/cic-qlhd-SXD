@@ -1,7 +1,7 @@
 import React,{useEffect,useState} from 'react';
 import { SearchableSelect } from '../ui/SearchableSelect';
 import { projectService } from '../../services/projectService';
-import type { Project } from '../../data/mockData';
+import type { Project } from '../../types/project';
 
 export function ProjectSelect({value,onChange,allowAll=false}:{value:string;onChange:(id:string)=>void;allowAll?:boolean}){
   const [search,setSearch]=useState('');const [items,setItems]=useState<Project[]>([]);

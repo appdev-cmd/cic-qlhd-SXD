@@ -27,7 +27,7 @@ import { StatusBadge } from '../../components/ui/StatusBadge';
 import { Tooltip } from '../../components/ui/Tooltip';
 import { ProjectTT39InfoTab } from './ProjectTT39InfoTab';
 import { ProjectGalleryTab } from './ProjectGalleryTab';
-import type { Project } from '../../data/mockData';
+import type { Project } from '../../types/project';
 import { AuditHistoryTab } from '../../components/appraisal/AuditHistoryTab';
 
 export function ProjectDetailSlidePanel({ project, initialTab='bcnckt' }: { project: Project; initialTab?:ProjectProcedure }) {

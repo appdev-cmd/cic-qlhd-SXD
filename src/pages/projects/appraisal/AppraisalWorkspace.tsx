@@ -17,7 +17,7 @@ import { EntityLink } from '../../../components/ui/EntityLink';
 import { useFilterState } from '../../../hooks/useFilterState';
 import { formatCurrency,formatDateTime } from '../../../lib/utils';
 import { matchesSmartSearch } from '../../../lib/smartSearch';
-import type { Project } from '../../../data/mockData';
+import type { Project } from '../../../types/project';
 const PdfPreview=lazy(()=>import('../../../components/appraisal/PdfPreview').then(module=>({default:module.PdfPreview})));
 
 const button='focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-500 dark:focus-visible:ring-primary-400 transition-colors inline-flex items-center justify-center gap-2 rounded-lg border border-border dark:border-border bg-surface dark:bg-surface px-3 py-2 text-xs font-semibold text-ink-secondary dark:text-ink-secondary hover:bg-subtle dark:hover:bg-subtle disabled:opacity-50';

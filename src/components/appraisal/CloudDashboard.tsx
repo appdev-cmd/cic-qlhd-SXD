@@ -9,6 +9,8 @@ import { EntityLink } from '../ui/EntityLink';
 import { SearchableSelect } from '../ui/SearchableSelect';
 import { Tooltip } from '../ui/Tooltip';
 import { dashboardMonths, number, percent, procedureStyles, statusStyles, type DashboardSummary } from './dashboardData';
+import { SLA_STATES } from './SlaBadge';
+import type { SlaStateId } from '../../types/appraisal';
 import '../../styles/dashboard.css';
 
 const muted = 'text-ink-muted dark:text-slate-400';
@@ -106,6 +108,14 @@ export function CloudDashboard() {
         <span className="text-amber-700 dark:text-amber-300">Cần bổ sung <strong className="ml-1 tabular-nums">{number(data.cases.supplements)}</strong><span className={`ml-2 text-xs ${muted}`}>({percent(data.cases.supplements, total)})</span></span>
         <span className="text-emerald-700 dark:text-emerald-300">Đã rà soát nội bộ <strong className="ml-1 tabular-nums">{number(data.cases.reviewed)}</strong></span>
       </div>
+
+      {data.sla && <section className={`${card} px-5 py-4`} aria-label="Hạn xử lý các lần nộp">
+        <div className="mb-3 flex flex-wrap items-baseline justify-between gap-2"><h2 className="font-semibold">Hạn xử lý</h2><p className={`text-xs ${muted}`}>Tính theo NĐ 217/2026 và NĐ 207/2026 (bảng thời hạn chờ chuyên viên xác nhận); lần nộp đã có bổ sung được tách riêng.</p></div>
+        <div className="grid grid-cols-2 gap-3 sm:grid-cols-4 xl:grid-cols-8">{data.sla.map(item => {
+          const style = SLA_STATES[item.id as SlaStateId];
+          return <div key={item.id} className={`rounded-xl border px-3 py-2.5 ${style?.className || ''}`}><p className="text-xs">{style?.label || item.id}</p><p className="mt-1 text-xl font-bold tabular-nums">{number(item.total)}</p></div>;
+        })}</div>
+      </section>}
 
       <div className="grid items-stretch gap-5 xl:grid-cols-3">
         <ChartCard heading="Xu hướng tiếp nhận" description="Lần nộp theo tháng tạo hồ sơ, phân theo nghiệp vụ." className="xl:col-span-2" badge={<div role="group" aria-label="Khoảng thời gian biểu đồ" className="flex rounded-lg bg-subtle dark:bg-slate-800 p-1">{[{ id: '6', label: '6 tháng' }, { id: '12', label: '12 tháng' }, { id: 'all', label: 'Tất cả' }].map(item => <button key={item.id} type="button" aria-pressed={range === item.id} onClick={() => { setRange(item.id as typeof range); setHover(null); }} className={`rounded-md px-3 py-1.5 text-xs font-medium transition-colors ${range === item.id ? 'bg-surface dark:bg-slate-700 text-primary-700 dark:text-primary-300 shadow-sm' : 'text-ink-muted dark:text-slate-400 hover:text-ink dark:hover:text-slate-200'}`}>{item.label}</button>)}</div>}>

@@ -4,7 +4,7 @@
  * Sử dụng 100% hình ảnh phối cảnh kiến trúc & hiện trạng thực địa offline chất lượng cao.
  */
 
-import type { Project, ProjectImage } from './mockData';
+import type { Project, ProjectImage } from '../types/project';
 
 function makeGallery(
   primaryImg: string,

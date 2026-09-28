@@ -8,7 +8,8 @@ import { useFilterState } from '../../hooks/useFilterState';
 import { useTheme, PRIMARY_COLORS } from '../../context/ThemeContext';
 import { useEntityPanel } from '../../hooks/useEntityPanel';
 import { Tooltip } from '../ui/Tooltip';
-import { Compass, Map as MapIcon, MapPinned, Satellite, Search } from 'lucide-react';
+import { Compass, Map as MapIcon, MapPinned, Satellite } from 'lucide-react';
+import { GridSearchInput } from '../ui/grid/GridToolbar';
 
 type Point = { id: string; title: string; code: string; lat: number | null; lng: number | null; location_district: string };
 type BaseLayer = 'offline' | 'esri-street' | 'esri-satellite';
@@ -234,19 +235,8 @@ export function ProjectMap() {
       </header>
 
       <div className="flex flex-wrap items-center gap-2">
-        <div className="relative min-w-[260px] flex-1">
-          <Search size={16} className="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-ink-muted dark:text-ink-muted" />
-          <input
-            aria-label="Tìm dự án trên bản đồ"
-            className="w-full rounded-lg border border-border bg-surface py-2.5 pl-9 pr-3 text-sm text-ink outline-none transition-colors placeholder:text-ink-muted focus:border-primary-500 focus:ring-2 focus:ring-primary-500/20 dark:border-border dark:bg-slate-800 dark:text-ink"
-            placeholder="Tìm tên, mã dự án, địa bàn…"
-            value={search}
-            onChange={(event) => {
-              setSearch(event.target.value);
-              setOffset(0);
-            }}
-          />
-        </div>
+        <GridSearchInput className="flex-1 sm:w-auto" label="Tìm dự án trên bản đồ" placeholder="Tìm tên, mã dự án, địa bàn…" value={search}
+          onChange={(value) => { setSearch(value); setOffset(0); }} />
         <div className="inline-flex shrink-0 items-center gap-1 rounded-xl border border-border bg-subtle p-1 dark:border-border dark:bg-slate-800" aria-label="Kiểu nền bản đồ">
           <Tooltip content="Nền địa lý ngoại tuyến, dùng được khi không có Internet" placement="top">
             <button type="button" aria-label="Nền ngoại tuyến" aria-pressed={base === 'offline'} onClick={() => { setFallbackNotice(''); setBase('offline'); }} className={`${button} h-9 w-10 ${base === 'offline' ? selectedButton : 'border-transparent bg-transparent hover:bg-surface dark:hover:bg-slate-700'}`}>

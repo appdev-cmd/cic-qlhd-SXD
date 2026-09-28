@@ -11,13 +11,14 @@ import {
   Sparkles,
   TrendingDown,
   Coins,
+  Plus,
 } from 'lucide-react';
 import { MasterTable, type Column } from '../components/MasterTable';
-import { TableToolbar } from '../components/TableToolbar';
+import { GridToolbar, GridSearchInput, GridCount } from '../components/ui/grid/GridToolbar';
 import { StatusBadge } from '../components/ui/StatusBadge';
 import { SearchableSelect } from '../components/ui/SearchableSelect';
 import { Tooltip } from '../components/ui/Tooltip';
-import type { Project } from '../data/mockData';
+import type { Project } from '../types/project';
 import {projectService} from '../services/projectService';
 import {useFilterState} from '../hooks/useFilterState';
 import { cn, formatCurrency, formatDate } from '../lib/utils';
@@ -160,96 +161,48 @@ export function ProjectsPage() {
       {error&&<p role="alert" className="rounded-lg bg-red-50 dark:bg-red-950 p-3 text-red-700 dark:text-red-300">{error}</p>}
       <div className="flex gap-3 text-sm text-ink dark:text-ink"><button disabled={page===0} onClick={()=>setPage(p=>p-1)}>Trang trước</button><span>Trang {page+1} · {total} dự án</span><button disabled={(page+1)*50>=total} onClick={()=>setPage(p=>p+1)}>Trang sau</button></div>
       {/* ─── THANH CÔNG CỤ LỌC CHUẨN 5 VỊ TRÍ + CHẾ ĐỘ XEM ─── */}
-      <TableToolbar
-        searchQuery={searchQuery}
-        onSearchChange={setSearchQuery}
-        searchPlaceholder="Tìm theo tên dự án, mã hồ sơ, chủ đầu tư, địa bàn..."
-        resultCount={total}
-        onResetFilters={() => {
-          setFilters({search:'',group:'all',status:'all',stage:'all'});
-        }}
-        addNewLabel="Tiếp nhận dự án"
-        onAddNew={mode==='cloud'&&['admin','officer','head_of_department'].includes(profile?.role||'')?()=>setCreateOpen(true):undefined}
-
-        filters={
-          <>
-            {/* Vị trí 2: Phân loại Giai đoạn thẩm định */}
-            <div className="w-36">
-              <SearchableSelect
-                value={stageFilter}
-                onChange={setStageFilter}
-                options={[
-                  { value: 'all', label: 'Tất cả Giai đoạn' },
-                  { value: 'bcnckt', label: 'Thẩm định BCNCKT' },
-                  { value: 'gpxd', label: 'Cấp Giấy phép XD' },
-                  { value: 'nghiem_thu', label: 'Kiểm tra Nghiệm thu' },
-                ]}
-              />
-            </div>
-
-            {/* Vị trí 2b: Nhóm dự án */}
-            <div className="w-32">
-              <SearchableSelect
-                value={groupFilter}
-                onChange={setGroupFilter}
-                options={[
-                  { value: 'all', label: 'Tất cả Nhóm DA' },
-                  { value: 'A', label: 'Dự án Nhóm A' },
-                  { value: 'B', label: 'Dự án Nhóm B' },
-                  { value: 'C', label: 'Dự án Nhóm C' },
-                ]}
-              />
-            </div>
-
-            {/* Vị trí 4: Trạng thái SLA */}
-            <div className="w-36">
-              <SearchableSelect
-                value={slaFilter}
-                onChange={setSlaFilter}
-                options={[
-                  { value: 'all', label: 'Tất cả Trạng thái' },
-                  { value: 'dang_tham_dinh', label: 'Đang thẩm định' },
-                  { value: 'yeu_cau_bo_sung', label: 'Yêu cầu bổ sung' },
-                  { value: 'da_tham_dinh', label: 'Đã có kết quả' },
-                  { value: 'qua_han', label: 'Quá hạn SLA' },
-                ]}
-              />
-            </div>
-
-            {/* Chuyển đổi chế độ xem Bảng / Lưới thẻ phối cảnh */}
-            <div className="flex items-center p-0.5 rounded-lg border border-border bg-subtle">
-              <Tooltip content="Chế độ xem Bảng chi tiết" placement="top">
-                <button
-                  type="button"
-                  onClick={() => setViewMode('table')}
-                  className={cn(
-                    'p-1.5 rounded-md text-xs font-semibold transition-all',
-                    viewMode === 'table'
-                      ? 'bg-surface text-ink shadow-xs'
-                      : 'text-ink-muted hover:text-ink'
-                  )}
-                >
-                  <List size={15} />
+      <GridToolbar
+        search={<GridSearchInput value={searchQuery} onChange={setSearchQuery} label="Tìm dự án" placeholder="Tìm theo tên dự án, mã hồ sơ, chủ đầu tư, địa bàn..." />}
+        classification={<>
+          <div className="w-40"><SearchableSelect value={stageFilter} onChange={setStageFilter} options={[
+            { value: 'all', label: 'Tất cả giai đoạn' },
+            { value: 'bcnckt', label: 'Thẩm định BCNCKT' },
+            { value: 'gpxd', label: 'Cấp giấy phép XD' },
+            { value: 'nghiem_thu', label: 'Kiểm tra nghiệm thu' },
+          ]} /></div>
+          <div className="w-36"><SearchableSelect value={groupFilter} onChange={setGroupFilter} options={[
+            { value: 'all', label: 'Tất cả nhóm DA' },
+            { value: 'A', label: 'Dự án nhóm A' },
+            { value: 'B', label: 'Dự án nhóm B' },
+            { value: 'C', label: 'Dự án nhóm C' },
+          ]} /></div>
+        </>}
+        status={<div className="w-40"><SearchableSelect value={slaFilter} onChange={setSlaFilter} options={[
+          { value: 'all', label: 'Tất cả trạng thái' },
+          { value: 'dang_tham_dinh', label: 'Đang thẩm định' },
+          { value: 'yeu_cau_bo_sung', label: 'Yêu cầu bổ sung' },
+          { value: 'da_tham_dinh', label: 'Đã có kết quả' },
+          { value: 'qua_han', label: 'Quá hạn SLA' },
+        ]} /></div>}
+        onReset={() => setFilters({search:'',group:'all',status:'all',stage:'all'})}
+        count={<GridCount total={total} unit="dự án" />}
+        actions={<>
+          <div className="flex items-center rounded-lg border border-border dark:border-slate-700 bg-subtle dark:bg-slate-800 p-0.5">
+            {([['table', 'Chế độ xem bảng chi tiết', List], ['cards', 'Chế độ xem lưới thẻ phối cảnh & hình ảnh', LayoutGrid]] as const).map(([view, label, Icon]) => (
+              <Tooltip key={view} content={label} placement="top">
+                <button type="button" aria-label={label} aria-pressed={viewMode === view} onClick={() => setViewMode(view)}
+                  className={cn('rounded-md p-1.5 transition-all', viewMode === view ? 'bg-surface dark:bg-slate-900 text-ink dark:text-slate-100 shadow-xs' : 'text-ink-muted dark:text-slate-400 hover:text-ink dark:hover:text-slate-100')}>
+                  <Icon size={15} />
                 </button>
               </Tooltip>
-
-              <Tooltip content="Chế độ xem Lưới thẻ Phối cảnh & Hình ảnh" placement="top">
-                <button
-                  type="button"
-                  onClick={() => setViewMode('cards')}
-                  className={cn(
-                    'p-1.5 rounded-md text-xs font-semibold transition-all',
-                    viewMode === 'cards'
-                      ? 'bg-surface text-ink shadow-xs'
-                      : 'text-ink-muted hover:text-ink'
-                  )}
-                >
-                  <LayoutGrid size={15} />
-                </button>
-              </Tooltip>
-            </div>
-          </>
-        }
+            ))}
+          </div>
+          {mode==='cloud'&&['admin','officer','head_of_department'].includes(profile?.role||'')&&(
+            <button type="button" onClick={()=>setCreateOpen(true)} className="flex items-center gap-1.5 rounded-lg bg-primary-500 px-3 py-2 text-xs font-semibold text-white shadow-sm transition-colors hover:bg-primary-600 dark:bg-primary-500 dark:text-white dark:hover:bg-primary-600">
+              <Plus size={14} /><span>Tiếp nhận dự án</span>
+            </button>
+          )}
+        </>}
       />
 
       {/* ─── NỘI DUNG THEO CHẾ ĐỘ XEM ─── */}
@@ -368,7 +321,7 @@ export function ProjectsPage() {
                         e.stopPropagation();
                         handleOpenDetail(p);
                       }}
-                      className="flex items-center gap-1 px-3 py-1.5 rounded-lg bg-primary-50 dark:bg-primary-950/40 text-primary-600 dark:text-primary-400 font-semibold text-2xs group-hover:bg-primary-600 group-hover:text-white transition-all shadow-xs"
+                      className="flex items-center gap-1 px-3 py-1.5 rounded-lg bg-primary-50 dark:bg-slate-800 text-primary-600 dark:text-primary-400 font-semibold text-2xs group-hover:bg-primary-600 group-hover:text-white transition-all shadow-xs"
                     >
                       <span>Xem hồ sơ</span>
                       <ArrowRight size={13} />

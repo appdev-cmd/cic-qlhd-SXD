@@ -11,6 +11,7 @@ export default defineConfig({
       if(id.includes('react-dom')||id.includes('/react/')||id.includes('react-router')||id.includes('scheduler'))return 'react-vendor';
       if(id.includes('leaflet'))return 'maps';
       if(id.includes('pdfjs-dist'))return 'pdf-reader';
+      if(id.includes('recharts')||id.includes('/d3-')||id.includes('victory-vendor'))return 'charts';
     }
   }}}},
   resolve: {

@@ -50,7 +50,7 @@ const ResizeHandle: React.FC<ResizeHandleProps> = ({ onPointerDown, resizing }) 
         'pointer-events-none absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 flex h-12 w-3.5 flex-col items-center justify-center gap-1 rounded-full border shadow-md transition-all',
         resizing
           ? 'border-primary-500 bg-primary-500 text-white scale-110 shadow-primary-500/30 ring-2 ring-primary-400/30'
-          : 'border-border bg-surface text-ink-muted group-hover:scale-105 group-hover:border-primary-400 group-hover:bg-primary-50 group-hover:text-primary-500 dark:border-slate-700/80 dark:bg-slate-800'
+          : 'border-border bg-surface text-ink-muted group-hover:scale-105 group-hover:border-primary-400 group-hover:bg-primary-50 group-hover:text-primary-500 dark:border-slate-700 dark:bg-slate-800'
       )}
     >
       <span className={cn('h-1 w-1 rounded-full transition-colors', resizing ? 'bg-white' : 'bg-ink-muted/70 group-hover:bg-primary-500')} />
@@ -306,7 +306,7 @@ export function SlidePanelStack({ sidebarWidth: propSidebarWidth }: SlidePanelSt
                 e.stopPropagation();
                 closeAllPanels();
               }}
-              className="pointer-events-auto group flex flex-col items-center gap-1 rounded-l-xl border border-r-0 pt-2 pb-1.5 bg-red-50/90 dark:bg-red-950/50 border-red-200 dark:border-red-800/80 text-red-500 dark:text-red-400 hover:bg-red-100 dark:hover:bg-red-900/50 shadow-sm transition-all hover:scale-[1.02] origin-right cursor-pointer"
+              className="pointer-events-auto group flex flex-col items-center gap-1 rounded-l-xl border border-r-0 pt-2 pb-1.5 bg-red-50/90 dark:bg-red-950 border-red-200 dark:border-red-800 text-red-500 dark:text-red-400 hover:bg-red-100 dark:hover:bg-red-900/50 shadow-sm transition-all hover:scale-[1.02] origin-right cursor-pointer"
               style={{ width: TAB_WIDTH }}
               data-tooltip="Đóng tất cả các panel"
             >

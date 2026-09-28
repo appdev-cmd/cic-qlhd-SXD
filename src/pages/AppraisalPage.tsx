@@ -1,6 +1,6 @@
 import React,{useEffect,useState,useRef,lazy,Suspense} from 'react';
 import { useParams } from 'react-router-dom';
-import { Plus,Download,RefreshCw,Search } from 'lucide-react';
+import { Plus,Download,RefreshCw } from 'lucide-react';
 import { appraisalService as api } from '../services/appraisalService';
 import type { DossierSummary,Health } from '../types/appraisal';
 import { AppraisalWorkspace } from './projects/appraisal/AppraisalWorkspace';
@@ -14,12 +14,13 @@ import { useFilterState } from '../hooks/useFilterState';
 import { formatDate,formatDateTime } from '../lib/utils';
 
 
-import type { Project } from '../data/mockData';
+import type { Project } from '../types/project';
 import {projectService} from '../services/projectService';
 import {ProjectSelect} from '../components/appraisal/ProjectSelect';
 import { PROJECT_PROCEDURES, SUBMISSION_STATUS, type ProjectProcedure } from '../lib/projectProcedures';
 import { SubmissionWorkspace } from '../components/appraisal/SubmissionWorkspace';
 import { SlaBadge, SLA_FILTER_OPTIONS } from '../components/appraisal/SlaBadge';
+import { GridToolbar, GridSearchInput, GridCount } from '../components/ui/grid/GridToolbar';
 const ProjectPanel=lazy(()=>import('./projects/ProjectDetailSlidePanel').then(m=>({default:m.ProjectDetailSlidePanel})));
 
 const button='focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-500 dark:focus-visible:ring-primary-400 transition-colors inline-flex items-center gap-2 rounded-lg border border-border dark:border-border bg-surface dark:bg-surface px-3 py-2 text-sm text-ink-secondary dark:text-ink-secondary disabled:opacity-50';
@@ -53,14 +54,15 @@ export function AppraisalPage({procedure='bcnckt',project}:{procedure?:ProjectPr
       <button className={button} disabled={busy||!health} onClick={()=>action(()=>api.download('/samples.zip','bo-ho-so-bcnckt.zip'))}><Download size={16}/>Tải bộ đầu vào và đầu ra</button></>}
       <button className={button} disabled={busy} onClick={()=>action(load)}><RefreshCw size={16}/>Tải lại</button>
     </div>
-    <div className="flex flex-wrap gap-3 items-center">
-      <div className="relative flex-1 min-w-60"><Search size={16} className="absolute left-3 top-3 text-ink-muted dark:text-ink-muted"/><input aria-label="Tìm hồ sơ" className={input+' pl-9'} value={filters.search} placeholder="Tìm hồ sơ, tên dự án, mã dự án…" onChange={e=>setFilters({...filters,search:e.target.value})}/></div>
-      {!project&&<div className="w-64"><ProjectSelect value={filters.projectId} onChange={projectId=>{setPage(0);setFilters({...filters,projectId});}} allowAll/></div>}
-      <div className="w-48"><SearchableSelect value={filters.status} onChange={status=>setFilters({...filters,status})} options={[{value:'all',label:'Tất cả trạng thái'},{value:'intake',label:'Tiếp nhận'},{value:'analyzed',label:'Đã kiểm tra'},{value:'request_supplement',label:'Yêu cầu bổ sung'},{value:'reviewed',label:'Đã rà soát nội bộ'}]}/></div>
-      <div className="w-48"><SearchableSelect value={filters.sla||'all'} onChange={sla=>setFilters({...filters,sla})} options={SLA_FILTER_OPTIONS}/></div>
-      <div className="w-40"><DateInput value={filters.from} placeholder="Ngày đánh giá từ" onChange={from=>setFilters({...filters,from})}/></div><div className="w-40"><DateInput value={filters.to} placeholder="Ngày đánh giá đến" onChange={to=>setFilters({...filters,to})}/></div>
-      <button className={button} onClick={()=>{setPage(0);setFilters({search:'',kind:'all',projectId:'',status:'all',sla:'all',from:'',to:''});}}>Đặt lại</button><span className="text-xs text-ink-muted dark:text-ink-muted">{total} hồ sơ · trang {page+1} · {rows.length} hồ sơ đang hiển thị</span>
-    </div>
+    <GridToolbar
+      search={<GridSearchInput value={filters.search} onChange={search=>setFilters({...filters,search})} label="Tìm hồ sơ" placeholder="Tìm theo tên hồ sơ, tên dự án, mã dự án…"/>}
+      people={!project&&<div className="w-64"><ProjectSelect value={filters.projectId} onChange={projectId=>{setPage(0);setFilters({...filters,projectId});}} allowAll/></div>}
+      status={<><div className="w-48"><SearchableSelect value={filters.status} onChange={status=>setFilters({...filters,status})} options={[{value:'all',label:'Tất cả trạng thái'},{value:'intake',label:'Tiếp nhận'},{value:'analyzing',label:'Đang kiểm tra'},{value:'analyzed',label:'Đã kiểm tra'},{value:'request_supplement',label:'Yêu cầu bổ sung'},{value:'reviewed',label:'Đã rà soát nội bộ'}]}/></div>
+        <div className="w-48"><SearchableSelect value={filters.sla||'all'} onChange={sla=>setFilters({...filters,sla})} options={SLA_FILTER_OPTIONS}/></div></>}
+      period={<><div className="w-40"><DateInput value={filters.from} placeholder="Ngày đánh giá từ" onChange={from=>setFilters({...filters,from})}/></div><div className="w-40"><DateInput value={filters.to} placeholder="Ngày đánh giá đến" onChange={to=>setFilters({...filters,to})}/></div></>}
+      onReset={()=>{setPage(0);setFilters({search:'',kind:'all',projectId:'',status:'all',sla:'all',from:'',to:''});}}
+      count={<GridCount total={total} unit="hồ sơ" detail={`trang ${page+1}`}/>}
+    />
     <DossierGrid fitWidth className="flex-1 min-h-56" storageKey={'submission-compact-v2-'+procedure+(project?'-project':'-all')} rows={rows} serverSort={sort} onSort={(key,direction)=>setSort({key,direction})} columns={[
       {label:'Hồ sơ / tài liệu',sortKey:'name',value:d=>d.name,width:310,render:d=><div className="space-y-2 leading-relaxed"><EntityLink type="dossier" id={d.id} name={d.name} className="whitespace-normal break-words overflow-visible" onClick={()=>open(d)}/><div className="flex flex-wrap items-center gap-2 text-ink-muted dark:text-ink-muted"><span>{d.documentCount??0} tài liệu</span></div></div>},
       ...(!project?[{label:'Dự án',sortKey:'projectName',value:projectName,width:300,render:(d:DossierSummary)=><div className="space-y-2 leading-relaxed">{d.projectId?<EntityLink type="project" id={d.projectId} name={projectName(d)} className="whitespace-normal break-words overflow-visible" onClick={()=>void action(async()=>openProject(await projectService.getById(d.projectId!)))}/>:<span>{projectName(d)}</span>}<button className="block text-xs text-primary-700 dark:text-primary-300 hover:text-primary-600 dark:hover:text-primary-200" disabled={busy} onClick={()=>{setLinkId(d.projectId||'');setLinking(d);}}>{d.projectId?'Đổi dự án':'Gắn dự án'}</button></div>}]:[]),

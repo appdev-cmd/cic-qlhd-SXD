@@ -29,7 +29,7 @@ import {
 import { cn, formatCurrency, formatDate } from '../../lib/utils';
 import { Tooltip } from '../../components/ui/Tooltip';
 import { SearchableSelect } from '../../components/ui/SearchableSelect';
-import type { Project, ProjectTT39Data, ProjectMemberTT39, ProjectParticipantOrgTT39 } from '../../data/mockData';
+import type { Project, ProjectTT39Data, ProjectMemberTT39, ProjectParticipantOrgTT39 } from '../../types/project';
 import { projectService } from '../../services/projectService';
 import { DossierGrid } from '../../components/appraisal/DossierGrid';
 import { EntityLink } from '../../components/ui/EntityLink';
@@ -78,7 +78,7 @@ function LoadedProjectInfo({project,tt39}:{project:Project;tt39:ProjectTT39Data}
   return (
     <div className="space-y-6 text-xs pb-10">
       {/* ─── BANNER TIÊU CHUẨN THÔNG TƯ 39/2026/TT-BXD ─── */}
-      <div className="p-3.5 rounded-xl border border-primary-500/20 bg-primary-500/5 dark:bg-primary-500/10 flex flex-wrap items-center justify-between gap-3">
+      <div className="p-3.5 rounded-xl border border-primary-500/20 bg-primary-500/5 dark:bg-slate-800 flex flex-wrap items-center justify-between gap-3">
         <div className="flex items-center gap-2.5">
           <div className="w-8 h-8 rounded-lg bg-primary-600 text-white flex items-center justify-center font-bold shadow-xs">
             <Layers size={17} />

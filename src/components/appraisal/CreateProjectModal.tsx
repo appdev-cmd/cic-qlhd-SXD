@@ -4,7 +4,7 @@ import {SearchableSelect} from '../ui/SearchableSelect';
 import {NumberInput} from '../ui/NumberInput';
 import {apiRequest} from '../../services/apiClient';
 import {mapProject} from '../../services/projectService';
-import type {Project} from '../../data/mockData';
+import type {Project} from '../../types/project';
 
 const initial={code:'',title:'',field:'Dân dụng',group_type:'B',grade:'II',investment_cost:0,investor_id:'',location:'Điện Biên'};
 const input='w-full mt-1 rounded-lg border border-border dark:border-border bg-surface dark:bg-surface p-2 text-ink dark:text-ink';

@@ -1,4 +1,4 @@
-import type { Project,ProjectTT39Data } from '../data/mockData';
+import type { Project,ProjectTT39Data } from '../types/project';
 import { apiRequest,type Page } from './apiClient';
 
 export function mapProject(row:Record<string,any>):Project{

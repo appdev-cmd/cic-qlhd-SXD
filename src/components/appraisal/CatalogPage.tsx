@@ -4,6 +4,7 @@ import {apiRequest,type Page} from '../../services/apiClient';
 import {DossierGrid,type GridColumn} from './DossierGrid';
 import {EntityLink} from '../ui/EntityLink';
 import {SearchableSelect} from '../ui/SearchableSelect';
+import {GridToolbar,GridSearchInput,GridCount} from '../ui/grid/GridToolbar';
 import {useFilterState} from '../../hooks/useFilterState';
 import {formatDate,formatCurrency} from '../../lib/utils';
 
@@ -39,12 +40,16 @@ export function CatalogPage({kind}:{kind:'organizations'|'personnel'|'material_p
   columns.push({label:'Thao tác',value:r=>r.code||'',width:170,render:r=><div className="flex gap-2">{data?.canEdit&&<button className={button} onClick={()=>setEditing(r)}>Sửa</button>}<button className={button} onClick={()=>setHistory(r)}>Lịch sử</button></div>});
   return <div className="space-y-5 text-ink dark:text-ink"><h1 className="text-2xl font-bold">{names[kind]}</h1>
     <p className="text-sm text-ink-muted dark:text-ink-muted">Dữ liệu Supabase trong phạm vi quyền truy cập. {kind==='material_prices'?'Đối chiếu văn bản công bố và kỳ giá trước khi sử dụng; chưa kết nối tự động với nguồn công bố giá.':'Thông tin chứng chỉ cần được đối chiếu nguồn cấp trước khi xác nhận năng lực.'}</p>
-    <div className="flex flex-wrap gap-3 items-center"><input aria-label="Tìm danh mục" placeholder="Tìm tên, mã, chứng chỉ…" value={filters.search} onChange={e=>setFilters({...filters,search:e.target.value})} className={button+' min-w-64 flex-1'}/>
-      <SearchableSelect value={filters.category} onChange={category=>setFilters({...filters,category})} options={[{value:'all',label:'Tất cả phân loại'},...(data?.categories||[]).map(value=>({value,label:labels[value]||value}))]}/>
-      <SearchableSelect value={filters.status} onChange={status=>setFilters({...filters,status})} options={[{value:'all',label:kind==='material_prices'?'Tất cả kỳ giá':'Tất cả trạng thái'},...(data?.statuses||[]).map(value=>({value,label:labels[value]||value}))]}/>
-      <button className={button} onClick={()=>{setFilters({...filters,search:'',category:'all',status:'all'});setOffset(0);}}>Đặt lại</button><button className={button} disabled={busy} onClick={()=>setVersion(n=>n+1)}>Tải lại</button>
-      {data?.canEdit&&<button className={button+' !bg-primary-500 dark:!bg-primary-500 !text-white dark:!text-white'} onClick={()=>setEditing(null)}>Thêm mới</button>}
-    </div>{error&&<p role="alert" className="text-red-700 dark:text-red-300">{error}</p>}
+    <GridToolbar
+      search={<GridSearchInput value={filters.search} onChange={search=>setFilters({...filters,search})} label="Tìm danh mục" placeholder="Tìm tên, mã, chứng chỉ…"/>}
+      classification={<div className="w-48"><SearchableSelect value={filters.category} onChange={category=>setFilters({...filters,category})} options={[{value:'all',label:'Tất cả phân loại'},...(data?.categories||[]).map(value=>({value,label:labels[value]||value}))]}/></div>}
+      status={<div className="w-48"><SearchableSelect value={filters.status} onChange={status=>setFilters({...filters,status})} options={[{value:'all',label:kind==='material_prices'?'Tất cả kỳ giá':'Tất cả trạng thái'},...(data?.statuses||[]).map(value=>({value,label:labels[value]||value}))]}/></div>}
+      onReset={()=>{setFilters({...filters,search:'',category:'all',status:'all'});setOffset(0);}}
+      count={data&&<GridCount total={data.total}/>}
+      actions={<><button className={button} disabled={busy} onClick={()=>setVersion(n=>n+1)}>Tải lại</button>
+        {data?.canEdit&&<button className={button+' !bg-primary-500 dark:!bg-primary-500 !text-white dark:!text-white'} onClick={()=>setEditing(null)}>Thêm mới</button>}</>}
+    />
+{error&&<p role="alert" className="text-red-700 dark:text-red-300">{error}</p>}
     <p role="status" className="text-sm text-ink-muted dark:text-ink-muted">{busy?'Đang tải…':`${data?.total||0} bản ghi · Trang ${offset/50+1}`}</p>
     <DossierGrid storageKey={'catalog-'+kind} columns={columns} rows={data?.items||[]} serverSort={{key:filters.sort,direction:filters.direction}} onSort={(sort,direction)=>setFilters({...filters,sort,direction})}/>
     <div className="flex gap-3"><button className={button} disabled={busy||offset===0} onClick={()=>setOffset(Math.max(0,offset-50))}>Trang trước</button><button className={button} disabled={busy||offset+50>=(data?.total||0)} onClick={()=>setOffset(offset+50)}>Trang sau</button></div>

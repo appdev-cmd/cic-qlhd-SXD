@@ -6,6 +6,7 @@ export type DashboardSummary = {
   statuses: { id: string; total: number }[];
   top_projects: { id: string; name: string; total: number; dossiers: number }[];
   recent: { id: string; name: string; project_id: string; project_name: string; status: string }[];
+  sla?: { id: string; total: number }[];
 };
 
 export const procedureStyles = [

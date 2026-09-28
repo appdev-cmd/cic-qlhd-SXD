@@ -1,6 +1,6 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import { Camera, ChevronLeft, ChevronRight, Download, Plus } from 'lucide-react';
-import type { Project, ProjectImage } from '../../data/mockData';
+import type { Project, ProjectImage } from '../../types/project';
 import { apiRequest } from '../../services/apiClient';
 import { appraisalService } from '../../services/appraisalService';
 import { ReviewModal } from '../../components/appraisal/ReviewModal';

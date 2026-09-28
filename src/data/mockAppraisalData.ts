@@ -3,7 +3,7 @@
  * Sở Xây dựng Tỉnh Điện Biên — Tuân thủ Luật Xây dựng 2025/2026 & Nghị định 217/2026/NĐ-CP
  */
 
-import type { Project } from './mockData';
+import type { Project } from '../types/project';
 import { formatCurrency } from '../lib/utils';
 
 // ─── Interfaces ──────────────────────────────────────────────────────────────
