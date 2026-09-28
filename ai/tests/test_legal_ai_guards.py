@@ -1,4 +1,5 @@
 import json
+import httpx
 from types import SimpleNamespace
 import unittest
 from unittest.mock import patch
@@ -15,8 +16,8 @@ class LegalAssistantGuards(unittest.TestCase):
     def ask(self, response):
         with patch.object(legal_assistant,'retrieve',return_value=([self.source],[])), \
              patch.object(legal_assistant,'MODE','demo'), \
-             patch.object(legal_assistant.vertex,'configuration',return_value={'model':'fixture'}), \
-             patch.object(legal_assistant.vertex,'generate',return_value=response):
+             patch.object(legal_assistant.provider,'model_name',return_value='fixture'), \
+             patch.object(legal_assistant.provider,'generate',return_value=response):
             return legal_assistant.ask(self.store,'Câu hỏi thử nghiệm có dẫn chứng',True)
 
     def test_fabricated_missing_and_inexact_quotes_are_discarded(self):
@@ -33,9 +34,18 @@ class LegalAssistantGuards(unittest.TestCase):
             self.assertEqual(result['status'],'model_unavailable'); self.assertFalse(result['paragraphs'])
 
     def test_empty_corpus_skips_provider(self):
-        with patch.object(legal_assistant,'retrieve',return_value=([],[])), patch.object(legal_assistant.vertex,'generate') as provider:
+        with patch.object(legal_assistant,'retrieve',return_value=([],[])), patch.object(legal_assistant.provider,'generate') as provider:
             self.assertEqual(legal_assistant.ask(self.store,'Không có nguồn',True)['status'],'insufficient_sources')
             provider.assert_not_called()
+
+    def test_provider_network_failure_preserves_retrieved_sources(self):
+        with patch.object(legal_assistant,'retrieve',return_value=([self.source],[])), \
+             patch.object(legal_assistant,'MODE','demo'), \
+             patch.object(legal_assistant.provider,'generate',side_effect=httpx.ConnectError('Unavailable')):
+            result=legal_assistant.ask(self.store,'Câu hỏi khi mất kết nối mô hình',True)
+            self.assertEqual(result['status'],'model_unavailable')
+            self.assertEqual(result['sources'],[self.source])
+            self.assertEqual(result['paragraphs'],[])
 
     def test_accepted_quote_remains_unverified_and_rate_limited(self):
         raw=json.dumps({'paragraphs':[{'text':'Diễn giải cần rà soát','citations':[{'id':'source:1','quote':self.source['text']}]}]})

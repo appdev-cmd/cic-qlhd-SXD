@@ -1,6 +1,8 @@
 import json
 from pathlib import Path
 import tempfile
+import sqlite3
+from contextlib import closing
 import unittest
 from unittest.mock import patch
 
@@ -45,6 +47,34 @@ class FoundationTests(unittest.TestCase):
             self.assertIn(row[1],['queued','running'])
             case['revision']=3;case['job']['status']='cancelled';store.save(case,2)
             with db() as con:self.assertEqual(con.execute('select state from jobs where id=?',('durable-job',)).fetchone()[0],'cancelled')
+
+    def test_summary_migrates_legacy_supplement_chain(self):
+        with tempfile.TemporaryDirectory() as directory,patch('app.store.DATA_DIR',Path(directory)):
+            with closing(sqlite3.connect(Path(directory)/'appraisal.sqlite')) as con,con:
+                con.execute('create table cases(id text primary key,revision integer,payload text)')
+                for id,previous in [('child','root'),('root',None)]:
+                    case=new_case('Hồ sơ cũ','Điện Biên',DEMO_ACTOR,'2026-09-28',sample=True)
+                    case.update(id=id,previousSubmissionId=previous)
+                    con.execute('insert into cases values(?,?,?)',(id,1,json.dumps(case)))
+            from app.catalog import dashboard
+            self.assertEqual(dashboard(Store(actor=DEMO_ACTOR),'sample')['cases']['dossiers'],1)
+            self.assertEqual(Store(actor=DEMO_ACTOR).page()['total'],2)
+
+    def test_summary_observes_transaction_rollback_update_and_delete(self):
+        with tempfile.TemporaryDirectory() as directory,patch('app.store.DATA_DIR',Path(directory)):
+            store=Store(actor=DEMO_ACTOR)
+            case=new_case('Tên hồ sơ ban đầu','Điện Biên',DEMO_ACTOR,'2026-09-28',sample=True)
+            with db() as con:con.execute('insert into cases values(?,?,?)',(case['id'],1,json.dumps(case)))
+            changed={**case,'name':'Tên đã thay đổi','revision':2}
+            with self.assertRaises(RuntimeError):
+                with db() as con:
+                    con.execute('update cases set payload=?,revision=2 where id=?',(json.dumps(changed),case['id']))
+                    raise RuntimeError('Rollback')
+            self.assertEqual(store.page()['items'][0]['name'],case['name'])
+            with db() as con:con.execute('update cases set payload=?,revision=2 where id=?',(json.dumps(changed),case['id']))
+            self.assertEqual(store.page()['items'][0]['name'],changed['name'])
+            with db() as con:con.execute('delete from cases where id=?',(case['id'],))
+            self.assertEqual(store.page()['total'],0)
 
     def test_read_does_not_write_interrupted_state(self):
         with tempfile.TemporaryDirectory() as directory,patch('app.store.DATA_DIR',Path(directory)):

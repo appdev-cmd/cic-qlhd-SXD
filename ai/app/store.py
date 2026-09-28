@@ -26,6 +26,8 @@ def db():
     con.execute('CREATE TABLE IF NOT EXISTS files (case_id TEXT, id TEXT PRIMARY KEY, data BLOB NOT NULL)')
     con.execute('CREATE TABLE IF NOT EXISTS jobs (id TEXT PRIMARY KEY, case_id TEXT NOT NULL, actor TEXT NOT NULL, snapshot TEXT NOT NULL, state TEXT NOT NULL DEFAULT \'queued\', attempts INTEGER NOT NULL DEFAULT 0, lease_owner TEXT, lease_until REAL, created_at REAL NOT NULL)')
     con.create_function('normalize_search',1,normalize_search)
+    from .demo_summary import ensure
+    ensure(con)
     try:
         with con:
             yield con
@@ -201,13 +203,20 @@ class Store:
         if not project: raise HTTPException(404,'Không tìm thấy dự án trong phạm vi quyền.')
         return project
 
-    def projects(self,search='',offset=0,limit=50,stage='',group='',status=''):
+    def projects(self,search='',offset=0,limit=50,stage='',group='',status='',sort='submissionDate',direction='desc'):
+        sorts={'name':'title','code':'code','investorName':'investor_name','location':'location_district','totalInvestment':'investment_cost','stage':'stage','slaStatus':'sla_status','submissionDate':'submission_date'}
+        sort=sort if sort in sorts else 'submissionDate';direction='asc' if direction=='asc' else 'desc'
         if MODE=='demo':
             path=DATA_DIR/'projects.json'
             rows=json.loads(path.read_text(encoding='utf-8')) if path.exists() else []
             rows=[p for p in rows if normalize_search(search) in normalize_search(' '.join(str(p.get(k,'')) for k in ['name','code','investorName','location']))
                 and (not stage or p.get('stage')==stage) and (not group or p.get('projectGroup')==group)
                 and (not status or p.get('slaStatus')==status)]
+            present=[p for p in rows if p.get(sort) is not None]
+            absent=[p for p in rows if p.get(sort) is None]
+            present.sort(key=lambda p:(p[sort],p['id']),reverse=direction=='desc')
+            absent.sort(key=lambda p:p['id'],reverse=direction=='desc')
+            rows=present+absent
             return {'items':rows[offset:offset+limit],'total':len(rows),'offset':offset,'limit':limit}
         clauses=['true']; values=[]
         for column,value in [('stage',stage),("regexp_replace(group_type,'^Nhóm\\s*','','i')",group),('sla_status',status)]:
@@ -218,17 +227,22 @@ class Store:
         where=' and '.join(clauses)
         with connection(self.actor['id']) as con:
             total=con.execute('select count(*) as n from public.projects where '+where,values).fetchone()['n']
-            rows=con.execute('select id,code,title,lat,lng,field,group_type,grade,investment_cost,investor_id,investor_name,location_district,stage,sla_status,submission_date,deadline,lead_reviewer_name,department,province_code,planning_compliance,standard_compliance,fire_safety_status,estimated_savings,thumbnail_url,images,contractors from public.projects where '+where+' order by submission_date desc nulls last,id limit %s offset %s',values+[limit,offset]).fetchall()
+            rows=con.execute('select id,code,title,lat,lng,field,group_type,grade,investment_cost,investor_id,investor_name,location_district,stage,sla_status,submission_date,deadline,lead_reviewer_name,department,province_code,planning_compliance,standard_compliance,fire_safety_status,estimated_savings,thumbnail_url,images,contractors from public.projects where '+where+' order by '+sorts[sort]+' '+direction+' nulls last,id '+direction+' limit %s offset %s',values+[limit,offset]).fetchall()
         return {'items':rows,'total':total,'offset':offset,'limit':limit}
 
     def organization_options(self,search=''):
-        if MODE=='demo':return []
+        if MODE=='demo':
+            from .catalog import CATALOGS
+            from .demo_catalog import page
+            return [{'id':r['id'],'name':r['name']} for r in page('organizations',CATALOGS['organizations'],search,'','',0,50,'name','asc')['items']]
         with connection(self.actor['id']) as con:
             return con.execute("select id,name from public.organizations where public.f_unaccent(lower(name)) like %s order by name,id limit 50",
                 ('%'+normalize_search(search).replace('\\','\\\\').replace('%','\\%').replace('_','\\_')+'%',)).fetchall()
 
     def entity(self,kind,id):
-        if MODE=='demo':raise HTTPException(404,'Chi tiết danh mục dùng thử được xem tại phân hệ danh mục.')
+        if MODE=='demo':
+            from .demo_catalog import entity
+            return entity({'organization':'organizations','personnel':'personnel'}[kind],id)
         table={'organization':'organizations','personnel':'personnel'}[kind]
         with connection(self.actor['id']) as con:
             row=con.execute('select * from public.'+table+' where id=%s',(id,)).fetchone()
@@ -236,19 +250,35 @@ class Store:
         return row
 
     def project_audit(self,id,offset=0,limit=50):
-        self.project(id)
+        project=self.project(id)
         if MODE=='demo':
-            source=" from cases c,json_each(c.payload,'$.audit') a where json_extract(c.payload,'$.projectId')=?"
+            from .gallery import schema
+            source=""" from (
+              select a.value as event,json_extract(c.payload,'$.name') as name,c.id as case_id
+              from cases c,json_each(c.payload,'$.audit') a where json_extract(c.payload,'$.projectId')=?
+              union all select json_object('id',id,'at',created_at,'actor',json_extract(actor,'$.name'),
+                'action','Bổ sung ảnh','detail',detail),?,null from project_image_audit where project_id=?
+            ) events"""
             with db() as con:
-                total=con.execute('select count(*)'+source,(id,)).fetchone()[0]
-                rows=con.execute("select a.value,json_extract(c.payload,'$.name'),c.id"+source+" order by json_extract(a.value,'$.at') desc,a.key desc limit ? offset ?",(id,limit,offset)).fetchall()
+                schema(con);values=[id,project.get('name','Dự án'),id]
+                total=con.execute('select count(*)'+source,values).fetchone()[0]
+                rows=con.execute("select event,name,case_id"+source+" order by json_extract(event,'$.at') desc,json_extract(event,'$.id') limit ? offset ?",values+[limit,offset]).fetchall()
             items=[{**json.loads(r[0]),'caseName':r[1],'caseId':r[2]} for r in rows]
         else:
-            source=" from public.appraisal_cases c cross join lateral jsonb_array_elements(c.payload->'audit') a where c.project_id=%s"
+            source=""" from (
+              select a as event,c.payload->>'name' as name,c.id::text as case_id from public.appraisal_cases c
+              cross join lateral jsonb_array_elements(c.payload->'audit') a where c.project_id=%s
+              union all select jsonb_build_object('id',a.id,'at',a.created_at,'actor',coalesce(u.full_name,'Cán bộ hệ thống'),
+                'action',case when a.action='INSERT' then 'Tạo dự án' else 'Cập nhật dự án' end,
+                'detail',case when 'images'=any(a.changed_fields) then 'Cập nhật thư viện ảnh' else 'Cập nhật thông tin dự án' end),
+                %s,null from public.audit_logs a left join public.staff_users u on u.id=a.actor_id
+              where a.table_name='projects' and a.record_id=%s
+            ) events"""
             with connection(self.actor['id']) as con:
-                total=con.execute('select count(*) as n'+source,(id,)).fetchone()['n']
-                rows=con.execute("select a as event,c.payload->>'name' as name,c.id"+source+" order by a->>'at' desc,c.id,a->>'id' limit %s offset %s",(id,limit,offset)).fetchall()
-            items=[{**r['event'],'caseName':r['name'],'caseId':str(r['id'])} for r in rows]
+                values=[id,project['title'],id]
+                total=con.execute('select count(*) as n'+source,values).fetchone()['n']
+                rows=con.execute("select event,name,case_id"+source+" order by event->>'at' desc,event->>'id' limit %s offset %s",values+[limit,offset]).fetchall()
+            items=[{**r['event'],'caseName':r['name'],'caseId':r['case_id']} for r in rows]
         return {'items':items,'total':total,'offset':offset,'limit':limit}
 
     def page(self,offset=0,limit=50,procedure=None,project_id=None,search='',kind='',status='',date_from='',date_to='',sort='updatedAt',direction='desc',dossier_id=None):
@@ -257,7 +287,7 @@ class Store:
         sort=sort if sort in fields+['documentCount','procedure'] else 'updatedAt'
         direction='asc' if direction=='asc' else 'desc'
         sqlite=MODE=='demo'; mark='?' if sqlite else '%s'
-        field=lambda key: "json_extract(payload,'$."+key+"')" if sqlite else "payload->>'"+key+"'"
+        field=lambda key: '"'+key+'"' if sqlite else "payload->>'"+key+"'"
         clauses=[]; values=[]
         if dossier_id:
             if sqlite:
@@ -278,18 +308,18 @@ class Store:
             if value: clauses.append(field('legalDate')+operator+mark);values.append(value)
         if search:
             expression=" || ' ' || ".join('coalesce('+field(k)+",'')" for k in ['name','province','projectName','projectCode'])
-            norm='normalize_search('+expression+')' if sqlite else 'public.f_unaccent(lower('+expression+'))'
+            norm='normalize_search(searchText)' if sqlite else 'public.f_unaccent(lower('+expression+'))'
             clauses.append(norm+' like '+mark+" escape '\\'")
             values.append('%'+normalize_search(search).replace('\\','\\\\').replace('%','\\%').replace('_','\\_')+'%')
         where=' where '+' and '.join(clauses) if clauses else ''
-        count_expr="json_array_length(payload,'$.documents')" if sqlite else "jsonb_array_length(payload->'documents')"
+        count_expr='documentCount' if sqlite else "jsonb_array_length(payload->'documents')"
         sort_expr=count_expr if sort=='documentCount' else field(sort)
         if sort=='submissionRound':sort_expr='cast(coalesce('+field(sort)+",'1') as integer)"
         if sqlite:
             projection="json_object("+','.join("'"+k+"',"+field(k) for k in fields)+",'procedure',coalesce("+field('procedure')+",'bcnckt'),'documentCount',"+count_expr+')'
             with db() as con:
-                total=con.execute('select count(*) from cases'+where,values).fetchone()[0]
-                rows=[json.loads(r[0]) for r in con.execute('select '+projection+' from cases'+where+' order by '+sort_expr+' '+direction+',id '+direction+' limit ? offset ?',values+[limit,offset])]
+                total=con.execute('select count(*) from case_summaries'+where,values).fetchone()[0]
+                rows=[json.loads(r[0]) for r in con.execute('select '+projection+' from case_summaries'+where+' order by '+sort_expr+' '+direction+',id '+direction+' limit ? offset ?',values+[limit,offset])]
         else:
             projection="jsonb_build_object("+','.join("'"+k+"',payload->'"+k+"'" for k in fields)+",'procedure',coalesce(payload->>'procedure','bcnckt'),'documentCount',"+count_expr+') as summary'
             with connection(self.actor['id']) as con:

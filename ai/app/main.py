@@ -54,6 +54,14 @@ class CreateProject(Payload):
     investor_id:str|None=Field(default=None,max_length=100)
     location:str=Field(min_length=2,max_length=300)
 
+class AddProjectImage(Payload):
+    revision:int=Field(ge=1)
+    title:str=Field(min_length=1,max_length=240)
+    category:Literal['phoi_canh','hien_trang','ban_ve','tien_do']
+    description:str=Field(default='',max_length=2000)
+    url:str=Field(default='',max_length=2000)
+    contentBase64:str|None=Field(default=None,max_length=7_000_000)
+
 class Mutation(Payload):
     revision:int=Field(ge=1)
 
@@ -184,6 +192,34 @@ def runtime(x_internal_token:str=Header(default='')):
     if not hmac.compare_digest(x_internal_token,SECRET):raise HTTPException(403,'Chỉ nhận yêu cầu qua Core API.')
     return {'mode':MODE,'environment':os.getenv('APPRAISAL_ENVIRONMENT','demo' if MODE=='demo' else 'staging'),'authenticationRequired':MODE!='demo'}
 
+@app.get('/v1/readiness')
+def readiness(s:Store=Depends(store)):
+    from .ocr import available
+    if MODE=='cloud':
+        from .database import connection
+        with connection(s.actor['id']) as con:
+            secure=con.execute('select not (rolsuper or rolbypassrls) as secure from pg_roles where rolname=current_user').fetchone()['secure']
+            if not secure:raise HTTPException(503,'Kết nối runtime có quyền quản trị vượt mức.')
+            con.execute('select id from public.appraisal_cases limit 1')
+    return {'ready':True,'mode':MODE,'database':'connected','modelConfigured':configured(),'ocrAvailable':available()}
+
+@app.get('/v1/projects/{id}/images')
+def project_images(id:str,s:Store=Depends(store)):
+    from .gallery import read
+    return read(s,id)
+
+@app.post('/v1/projects/{id}/images')
+def add_project_image(id:str,body:AddProjectImage,s:Store=Depends(store)):
+    from .gallery import add
+    return add(s,id,body)
+
+@app.get('/v1/projects/{id}/images/{image_id}/content')
+def project_image_original(id:str,image_id:UUID,s:Store=Depends(store)):
+    from .gallery import content
+    data=content(s,id,str(image_id))
+    mime='image/png' if data.startswith(b'\x89PNG') else 'image/webp' if data[:4]==b'RIFF' else 'image/jpeg'
+    return Response(data,media_type=mime,headers={'X-Content-Type-Options':'nosniff','Cache-Control':'private, no-store'})
+
 def test_login_guard(token,local):
     import hmac
     if not hmac.compare_digest(token,SECRET) or local!='true':raise HTTPException(403,'Chỉ cho phép đăng nhập thử nghiệm từ máy cục bộ.')
@@ -202,8 +238,8 @@ def login_test_account(body:TestLogin,x_internal_token:str=Header(default=''),x_
 
 @app.get('/v1/projects')
 def projects(s:Store=Depends(store),search:str=Query(default='',max_length=200),offset:int=Query(default=0,ge=0),
-             limit:int=Query(default=50,ge=1,le=100),stage:str='',group:str='',status:str=''):
-    return s.projects(search,offset,limit,stage,group,status)
+             limit:int=Query(default=50,ge=1,le=100),stage:str='',group:str='',status:str='',sort:str='submissionDate',direction:Literal['asc','desc']='desc'):
+    return s.projects(search,offset,limit,stage,group,status,sort,direction)
 
 @app.get('/v1/catalog/{kind}')
 def catalog_page(kind:Literal['organizations','personnel','material_prices'],s:Store=Depends(store),

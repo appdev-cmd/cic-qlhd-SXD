@@ -61,6 +61,8 @@ def document_bytes(title,blocks,format='pdf',sample=True):
                 for row in rows[1:]:
                     for c,v in zip(table.add_row().cells,row):c.text=str(v)
                 for row in table.rows:
+                    # Keep a complete evidence row on one page; repeat the header after a break.
+                    no_split=OxmlElement('w:cantSplit');row._tr.get_or_add_trPr().append(no_split)
                     for c in row.cells:
                         for p in c.paragraphs:
                             for run in p.runs:run.font.size=Pt(10)

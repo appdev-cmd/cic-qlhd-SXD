@@ -3,6 +3,7 @@ import json
 import os
 import httpx
 import threading
+import time
 from datetime import datetime, timezone
 from . import vertex
 
@@ -50,14 +51,10 @@ def check_connection():
 def semantic_notes(case, run):
     if not configured():
         return [], 'Chưa cấu hình mô hình; đã chạy kiểm tra quy tắc.'
-    allowed=set(run['documentIds'])
-    segments=[dict(s,documentId=d['id']) for d in case['documents'] if d['id'] in allowed for s in d['segments']]
-    # Explicitly disclose truncation; never imply all content was semantically reviewed.
-    selected=[]; used=0
-    for s in segments:
-        used+=len(s['text'])
-        if used>55000: break
-        selected.append(s)
+    from .evidence_selection import select
+    selected,coverage=select(case,run)
+    run['aiCoverage']=coverage
+    if not selected:return [],'Không có trích đoạn trong giới hạn dung lượng; chưa gọi mô hình.'
     schema={'type':'object','properties':{'notes':{'type':'array','items':{
         'type':'object','properties':{'text':{'type':'string'},'segmentIds':{'type':'array','items':{'type':'string'}}},
         'required':['text','segmentIds'],'additionalProperties':False}}},'required':['notes'],'additionalProperties':False}
@@ -68,13 +65,11 @@ def semantic_notes(case, run):
             'Nếu không đủ cơ sở, trả notes rỗng. Các số học do bộ quy tắc xử lý.')
     content=json.dumps({'legalDate':case['legalDate'],'legalProfile':run.get('legalOverview',{}).get('profile',{}),
                         'segments':selected},ensure_ascii=False)
-    if provider_id() == 'vertex':
-        vertex_schema={'type':'OBJECT','properties':{'notes':{'type':'ARRAY','maxItems':8,'items':{
-            'type':'OBJECT','properties':{'text':{'type':'STRING'},'segmentIds':{'type':'ARRAY','items':{'type':'STRING'}}},
-            'required':['text','segmentIds']}}},'required':['notes']}
-        text=vertex.generate(prompt,content,vertex_schema)
-    else:
-        text=openai_generate(prompt,content,schema)
+    started=time.monotonic()
+    text=generate(prompt,content,schema,2200)
+    run['aiProvenance']={'provider':provider_id(),'model':model_name(),'promptVersion':'bcnckt-notes-v2',
+                         'selectionVersion':coverage['version'],'inputHash':coverage['inputHash'],
+                         'revision':case['revision'],'elapsedMs':round((time.monotonic()-started)*1000)}
     try:
         notes=json.loads(text)['notes']
         if not isinstance(notes,list): raise ValueError('Invalid notes')
@@ -92,16 +87,27 @@ def semantic_notes(case, run):
         validated.append({'text':n['text'][:3000], 'sources':[by_id[id] for id in dict.fromkeys(n['segmentIds'])],
                           'status':'unverified','model':model_name()})
     record_connection(True,'Đã nhận phản hồi phân tích có cấu trúc từ mô hình.')
-    suffix=' Chỉ phân tích trích đoạn do giới hạn dung lượng.' if len(selected)<len(segments) else ''
+    suffix=' Chỉ phân tích trích đoạn do giới hạn dung lượng.' if coverage['selectedSegments']<coverage['totalSegments'] else ''
     if rejected: suffix+=f' Đã loại {rejected} nhận xét không có nguồn hợp lệ.'
     return validated,f'Đã nhận {len(validated)} đề xuất từ {status()["label"]} ({model_name()}); chuyên viên cần xác nhận nội dung và trích dẫn.'+suffix
 
-def openai_generate(prompt,content,schema):
+def generate(prompt,content,schema,max_tokens=4096):
+    if not configured():raise ValueError('Chưa cấu hình nhà cung cấp mô hình.')
+    if provider_id()=='vertex':
+        def convert(value):
+            if isinstance(value,dict):return {k:(v.upper() if k=='type' else convert(v)) for k,v in value.items() if k!='additionalProperties'}
+            if isinstance(value,list):return [convert(v) for v in value]
+            return value
+        return vertex.generate(prompt,content,convert(schema),max_tokens,'LOW')
+    return openai_generate(prompt,content,schema,max_tokens)
+
+
+def openai_generate(prompt,content,schema,max_tokens=2200):
     response=httpx.post('https://api.openai.com/v1/responses',headers={
         'Authorization':'Bearer '+os.environ['OPENAI_API_KEY']},json={
         'model':os.environ['OPENAI_MODEL'],'store':False,'instructions':prompt,
         'input':content,
-        'max_output_tokens':2200,'text':{'format':{'type':'json_schema','name':'appraisal_notes','strict':True,'schema':schema}}},timeout=90)
+        'max_output_tokens':max_tokens,'text':{'format':{'type':'json_schema','name':'appraisal_result','strict':True,'schema':schema}}},timeout=90)
     response.raise_for_status()
     payload=response.json()
     if payload.get('status')!='completed':
