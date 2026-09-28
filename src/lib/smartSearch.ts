@@ -18,43 +18,32 @@ export const ABBREVIATIONS_DICT: Record<string, string[]> = {
 };
 
 /**
- * Loại bỏ dấu tiếng Việt để tìm kiếm không dấu
+ * Loại bỏ dấu tiếng Việt để tìm kiếm không dấu (hỗ trợ cả chuỗi dựng sẵn NFC và tổ hợp NFD).
  */
 export function removeVietnameseTones(str: string): string {
   if (!str) return '';
-  str = str.toLowerCase();
-  str = str.replace(/à|á|ạ|ả|ã|â|ầ|ấ|ậ|ẩ|ẫ|ă|ằ|ắ|ặ|ẳ|ẵ/g, 'a');
-  str = str.replace(/è|é|ẹ|ẻ|ẽ|ê|ề|ế|ệ|ể|ễ/g, 'e');
-  str = str.replace(/ì|í|ị|ỉ|ĩ/g, 'i');
-  str = str.replace(/ò|ó|ọ|ỏ|õ|ô|ồ|ố|ộ|ổ|ỗ|ơ|ờ|ớ|ợ|ở|ỡ/g, 'o');
-  str = str.replace(/ù|ú|ụ|ủ|ũ|ư|ừ|ứ|ự|ử|ữ/g, 'u');
-  str = str.replace(/ỳ|ý|ỵ|ỷ|ỹ/g, 'y');
-  str = str.replace(/đ/g, 'd');
-  return str;
+  return str
+    .normalize('NFD')
+    .replace(/[\u0300-\u036f]/g, '')
+    .replace(/đ/g, 'd')
+    .replace(/Đ/g, 'D')
+    .toLowerCase();
 }
 
 /**
- * So khớp chuỗi tìm kiếm thông minh có hỗ trợ từ viết tắt và không dấu
+ * So khớp chuỗi tìm kiếm thông minh: không dấu, hỗ trợ từ viết tắt; mọi từ trong truy vấn phải khớp.
  */
 export function matchesSmartSearch(text: string, query: string): boolean {
   if (!query || !query.trim()) return true;
   if (!text) return false;
-
-  const cleanQuery = removeVietnameseTones(query.trim().toLowerCase());
-  const cleanText = removeVietnameseTones(text.toLowerCase());
-
-  // Khớp trực tiếp
+  const cleanText = removeVietnameseTones(text);
+  const cleanQuery = removeVietnameseTones(query.trim());
   if (cleanText.includes(cleanQuery)) return true;
-
-  // Khớp từ điển viết tắt
-  for (const [abbr, fullNames] of Object.entries(ABBREVIATIONS_DICT)) {
-    if (cleanQuery.includes(abbr)) {
-      for (const name of fullNames) {
-        const cleanName = removeVietnameseTones(name);
-        if (cleanText.includes(cleanName)) return true;
-      }
-    }
-  }
-
-  return false;
+  return cleanQuery
+    .split(/\s+/)
+    .every(
+      (token) =>
+        cleanText.includes(token) ||
+        (ABBREVIATIONS_DICT[token] || []).some((name) => cleanText.includes(removeVietnameseTones(name))),
+    );
 }

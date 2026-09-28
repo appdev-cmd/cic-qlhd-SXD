@@ -23,3 +23,8 @@ output/appraisal/qa/
 tmp/pdfs/
 gcp-sa-key.json
 *-sa-key.json
+
+# End-to-end tests
+tests/e2e/node_modules/
+tests/e2e/test-results/
+output/appraisal/e2e-report/

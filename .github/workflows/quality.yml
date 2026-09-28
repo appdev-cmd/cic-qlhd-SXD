@@ -27,9 +27,10 @@ jobs:
           python-version: '3.12'
       - run: python -m pip install --target ai/.deps 'psycopg[binary]>=3.2,<4'
       - run: python scripts/verify_baseline_local.py
+
   quality:
     runs-on: ubuntu-latest
-    timeout-minutes: 15
+    timeout-minutes: 20
     env:
       APPRAISAL_MODE: demo
     steps:
@@ -44,9 +45,74 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
+      - name: Serif fonts for A4 PDF rendering
+        run: sudo apt-get update -qq && sudo apt-get install -y -qq fonts-liberation2
       - run: pnpm install --frozen-lockfile
       - run: pnpm setup:appraisal
+      - name: Agent rules in sync with CLAUDE.md
+        run: pnpm rules:check
+      - name: Formatting
+        run: |
+          python -m pip install ruff==0.13.3
+          ruff format --check ai/app ai/tests scripts
+          pnpm format:check
       - run: pnpm lint:ui
+      - run: pnpm typecheck
       - run: pnpm typecheck:core
+      - name: Web unit tests
+        run: node --import tsx --test "src/**/*.test.ts"
       - run: pnpm build
       - run: pnpm test:appraisal
+      - name: OpenAPI contract is up to date
+        run: |
+          python scripts/export_openapi.py
+          git diff --exit-code docs/api/openapi.json
+
+  e2e:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    needs: quality
+    env:
+      APPRAISAL_MODE: demo
+      APPRAISAL_ENVIRONMENT: demo
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 10
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: pnpm
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Serif fonts for A4 PDF rendering
+        run: sudo apt-get update -qq && sudo apt-get install -y -qq fonts-liberation2
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm setup:appraisal
+      - name: Seed demo data
+        run: |
+          node --import tsx scripts/export_demo_catalog.ts
+          pnpm samples:projects
+          python scripts/backfill_sla.py --apply
+      - name: Start stack (Worker 8200, Core 8201, Web 8208)
+        run: |
+          pnpm dev > stack.log 2>&1 &
+          for i in $(seq 1 60); do curl -sf http://127.0.0.1:8208/api/appraisal/runtime && break; sleep 2; done
+      - name: Playwright
+        working-directory: tests/e2e
+        run: |
+          npm ci
+          npx playwright install --with-deps chromium
+          npx playwright test
+      - if: failure()
+        run: cat stack.log
+      - if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: e2e-report
+          path: |
+            output/appraisal/e2e-report
+            tests/e2e/test-results
+          if-no-files-found: ignore

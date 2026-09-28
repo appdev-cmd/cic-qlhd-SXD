@@ -21,7 +21,9 @@
     "format:check": "npx -y prettier@3.6.2 --check \"src/**/*.{ts,tsx}\" \"services/**/*.ts\" \"scripts/*.{mjs,ts}\"",
     "typecheck": "tsc -p tsconfig.json --noEmit",
     "rules:check": "node scripts/sync-rules.mjs --check",
-    "benchmark:http": "python scripts/benchmark_http.py"
+    "benchmark:http": "python scripts/benchmark_http.py",
+    "test:web": "node --import tsx --test \"src/**/*.test.ts\"",
+    "test:e2e": "cd tests/e2e && npx playwright test"
   },
   "dependencies": {
     "@supabase/supabase-js": "^2.117.1",
