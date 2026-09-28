@@ -19,7 +19,7 @@ export function EntityLink({ type, id, name, className, onClick }: EntityLinkPro
       onClick();
       return;
     }
-    open(type,{id,name});
+    open(type, { id, name });
   };
 
   return (
@@ -28,7 +28,7 @@ export function EntityLink({ type, id, name, className, onClick }: EntityLinkPro
       onClick={handleClick}
       className={cn(
         'text-inherit hover:text-primary-600 dark:hover:text-primary-400 no-underline cursor-pointer font-medium text-left transition-colors truncate max-w-full',
-        className
+        className,
       )}
     >
       {name}

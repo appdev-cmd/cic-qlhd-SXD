@@ -13,7 +13,7 @@ function makeGallery(
   planImg: string,
   surveyImg: string,
   projectName: string,
-  location: string
+  location: string,
 ): ProjectImage[] {
   return [
     {
@@ -25,7 +25,8 @@ function makeGallery(
       categoryLabel: 'Phối cảnh 3D',
       date: '15/05/2026',
       author: 'Tư vấn Thiết kế Xây dựng Điện Biên',
-      description: 'Phương án kiến trúc tối ưu công năng, kết hợp hài hòa nét đặc trưng văn hóa Tây Bắc và vật liệu hiện đại.',
+      description:
+        'Phương án kiến trúc tối ưu công năng, kết hợp hài hòa nét đặc trưng văn hóa Tây Bắc và vật liệu hiện đại.',
       isPrimary: true,
     },
     {
@@ -48,7 +49,8 @@ function makeGallery(
       categoryLabel: 'Hiện trạng thực địa',
       date: '20/07/2026',
       author: 'Đoàn Khảo sát Hiện trường Sở Xây dựng',
-      description: 'Biên bản bàn giao mốc ranh giới GPMB, hiện trạng địa hình đồi dốc tự nhiên và đấu nối hạ tầng kỹ thuật.',
+      description:
+        'Biên bản bàn giao mốc ranh giới GPMB, hiện trạng địa hình đồi dốc tự nhiên và đấu nối hạ tầng kỹ thuật.',
     },
     {
       id: `img-${Date.now()}-4`,
@@ -70,7 +72,8 @@ function makeGallery(
       categoryLabel: 'Tiến độ thực địa',
       date: '10/08/2026',
       author: 'Viện Khoa học Công nghệ Xây dựng (IBST)',
-      description: 'Lấy mẫu đất đá nguyên dạng, thí nghiệm SPT và xác định mực nước ngầm phục vụ tính toán móng an toàn.',
+      description:
+        'Lấy mẫu đất đá nguyên dạng, thí nghiệm SPT và xác định mực nước ngầm phục vụ tính toán móng an toàn.',
     },
   ];
 }
@@ -89,7 +92,7 @@ export const ADDITIONAL_PROJECTS: Project[] = [
       '/images/projects/road/road_urban_01.jpg',
       '/images/projects/road/road_coastal_01.jpg',
       'Cầu Thanh Bình vượt sông Nậm Rốm',
-      'TP. Điện Biên Phủ, Tỉnh Điện Biên'
+      'TP. Điện Biên Phủ, Tỉnh Điện Biên',
     ),
     investorId: 'org-002',
     investorName: 'Ban QLDA Các công trình Giao thông tỉnh Điện Biên',
@@ -145,7 +148,7 @@ export const ADDITIONAL_PROJECTS: Project[] = [
       '/images/projects/government_office/government_office_01.jpg',
       '/images/projects/road/road_urban_01.jpg',
       'Trung tâm Hội nghị & Triển lãm Văn hóa Tỉnh',
-      'Phường Noong Bua, TP. Điện Biên Phủ'
+      'Phường Noong Bua, TP. Điện Biên Phủ',
     ),
     investorId: 'org-001',
     investorName: 'Ban QLDA Các công trình Dân dụng & Công nghiệp tỉnh Điện Biên',
@@ -201,7 +204,7 @@ export const ADDITIONAL_PROJECTS: Project[] = [
       '/images/projects/road/road_urban_01.jpg',
       '/images/projects/infrastructure_environment/water_treatment_01.jpg',
       'Trụ sở liên cơ quan Sở Xây dựng - Sở TN&MT',
-      'TP. Điện Biên Phủ, Tỉnh Điện Biên'
+      'TP. Điện Biên Phủ, Tỉnh Điện Biên',
     ),
     investorId: 'org-001',
     investorName: 'Ban QLDA Các công trình Dân dụng & Công nghiệp tỉnh Điện Biên',
@@ -250,7 +253,7 @@ export const ADDITIONAL_PROJECTS: Project[] = [
       '/images/projects/infrastructure_environment/water_treatment_01.jpg',
       '/images/projects/culture_sports/square_beach_01.jpg',
       'Khu Tái định cư & NOXH Noong Bua',
-      'Phường Noong Bua, TP. Điện Biên Phủ'
+      'Phường Noong Bua, TP. Điện Biên Phủ',
     ),
     investorId: 'org-008',
     investorName: 'UBND Thành phố Điện Biên Phủ',
@@ -299,7 +302,7 @@ export const ADDITIONAL_PROJECTS: Project[] = [
       '/images/projects/bridge/bridge_rural_01.jpg',
       '/images/projects/specialties/transport_urban.jpg',
       'Đường liên huyện Mường Chà - Nậm Pồ',
-      'Huyện Mường Chà & Huyện Nậm Pồ'
+      'Huyện Mường Chà & Huyện Nậm Pồ',
     ),
     investorId: 'org-002',
     investorName: 'Ban QLDA Các công trình Giao thông tỉnh Điện Biên',
@@ -348,7 +351,7 @@ export const ADDITIONAL_PROJECTS: Project[] = [
       '/images/projects/culture_sports/square_beach_01.jpg',
       '/images/projects/school/school_primary_01.jpg',
       'Trường Mầm non Hoa Ban Huyện Tủa Chùa',
-      'Huyện Tủa Chùa, Tỉnh Điện Biên'
+      'Huyện Tủa Chùa, Tỉnh Điện Biên',
     ),
     investorId: 'org-015',
     investorName: 'UBND Huyện Tủa Chùa',
@@ -397,7 +400,7 @@ export const ADDITIONAL_PROJECTS: Project[] = [
       '/images/projects/infrastructure_environment/water_treatment_01.jpg',
       '/images/projects/specialties/agriculture_rural.jpg',
       'Kè chống sạt lở bờ sông Nậm Mức',
-      'Huyện Tủa Chùa, Tỉnh Điện Biên'
+      'Huyện Tủa Chùa, Tỉnh Điện Biên',
     ),
     investorId: 'org-010',
     investorName: 'Ban QLDA Phát triển Nông nghiệp & PTNT tỉnh Điện Biên',
@@ -446,7 +449,7 @@ export const ADDITIONAL_PROJECTS: Project[] = [
       '/images/projects/infrastructure_environment/water_treatment_01.jpg',
       '/images/projects/government_office/government_office_01.jpg',
       'Trung tâm Y tế Huyện Điện Biên CS2',
-      'Xã Sam Mứn, Huyện Điện Biên'
+      'Xã Sam Mứn, Huyện Điện Biên',
     ),
     investorId: 'org-001',
     investorName: 'Ban QLDA Các công trình Dân dụng & Công nghiệp tỉnh Điện Biên',
@@ -495,7 +498,7 @@ export const ADDITIONAL_PROJECTS: Project[] = [
       '/images/projects/road/road_urban_01.jpg',
       '/images/projects/government_office/government_office_01.jpg',
       'Sân vận động Tỉnh Điện Biên quy mô 20.000 chỗ',
-      'Xã Thanh Xương, Huyện Điện Biên'
+      'Xã Thanh Xương, Huyện Điện Biên',
     ),
     investorId: 'org-001',
     investorName: 'Ban QLDA Các công trình Dân dụng & Công nghiệp tỉnh Điện Biên',
@@ -544,7 +547,7 @@ export const ADDITIONAL_PROJECTS: Project[] = [
       '/images/projects/specialties/transport_urban.jpg',
       '/images/projects/road/road_coastal_01.jpg',
       'Cải tạo Đại lộ 7/5 & Chiếu sáng IoT',
-      'TP. Điện Biên Phủ, Tỉnh Điện Biên'
+      'TP. Điện Biên Phủ, Tỉnh Điện Biên',
     ),
     investorId: 'org-008',
     investorName: 'UBND Thành phố Điện Biên Phủ',
@@ -593,7 +596,7 @@ export const ADDITIONAL_PROJECTS: Project[] = [
       '/images/projects/culture_sports/sports_stadium_01.jpg',
       '/images/projects/government_office/government_office_01.jpg',
       'Trường Tiểu học Bế Văn Đàn Mường Ảng',
-      'Thị trấn Mường Ảng, Huyện Mường Ảng'
+      'Thị trấn Mường Ảng, Huyện Mường Ảng',
     ),
     investorId: 'org-011',
     investorName: 'UBND Huyện Mường Ảng',
@@ -642,7 +645,7 @@ export const ADDITIONAL_PROJECTS: Project[] = [
       '/images/projects/road/road_rural_01.jpg',
       '/images/projects/specialties/agriculture_rural.jpg',
       'Cầu treo dây võng dân sinh Nậm Nhé',
-      'Xã Mường Nhé, Huyện Mường Nhé'
+      'Xã Mường Nhé, Huyện Mường Nhé',
     ),
     investorId: 'org-017',
     investorName: 'UBND Huyện Mường Nhé',
@@ -691,7 +694,7 @@ export const ADDITIONAL_PROJECTS: Project[] = [
       '/images/projects/specialties/technical_infrastructure.jpg',
       '/images/projects/road/road_urban_01.jpg',
       'Nhà máy Chế biến Dược liệu Tây Bắc',
-      'Xã Pom Lót, Huyện Điện Biên'
+      'Xã Pom Lót, Huyện Điện Biên',
     ),
     investorId: 'org-006',
     investorName: 'Công ty CP Đầu tư & Phát triển Đô thị Tây Bắc',
@@ -740,7 +743,7 @@ export const ADDITIONAL_PROJECTS: Project[] = [
       '/images/projects/road/road_urban_01.jpg',
       '/images/projects/resettlement/resettlement_01.jpg',
       'Tôn tạo Di tích Đồi A1, Hầm De Castries & Tượng đài',
-      'TP. Điện Biên Phủ & Huyện Điện Biên'
+      'TP. Điện Biên Phủ & Huyện Điện Biên',
     ),
     investorId: 'org-019',
     investorName: 'Ban Quản lý Di tích Lịch sử Chiến trường Điện Biên Phủ',
@@ -789,7 +792,7 @@ export const ADDITIONAL_PROJECTS: Project[] = [
       '/images/projects/specialties/technical_infrastructure.jpg',
       '/images/projects/road/road_urban_01.jpg',
       'Trạm Xử lý Nước thải Đô thị Mường Ảng 3.500m³/ngđ',
-      'Thị trấn Mường Ảng, Huyện Mường Ảng'
+      'Thị trấn Mường Ảng, Huyện Mường Ảng',
     ),
     investorId: 'org-011',
     investorName: 'UBND Huyện Mường Ảng',
@@ -838,7 +841,7 @@ export const ADDITIONAL_PROJECTS: Project[] = [
       '/images/projects/road/road_urban_01.jpg',
       '/images/projects/resettlement/resettlement_01.jpg',
       'Quảng trường Cảnh quan Hồ Trung tâm Tỉnh lỵ',
-      'Phường Him Lam, TP. Điện Biên Phủ'
+      'Phường Him Lam, TP. Điện Biên Phủ',
     ),
     investorId: 'org-008',
     investorName: 'UBND Thành phố Điện Biên Phủ',
@@ -887,7 +890,7 @@ export const ADDITIONAL_PROJECTS: Project[] = [
       '/images/projects/government_office/government_office_01.jpg',
       '/images/projects/culture_sports/square_beach_01.jpg',
       'Dãy Shophouse Phố đi bộ Chợ Mường Thanh',
-      'Phường Mường Thanh, TP. Điện Biên Phủ'
+      'Phường Mường Thanh, TP. Điện Biên Phủ',
     ),
     investorId: 'org-006',
     investorName: 'Công ty CP Đầu tư & Phát triển Đô thị Tây Bắc',
@@ -936,7 +939,7 @@ export const ADDITIONAL_PROJECTS: Project[] = [
       '/images/projects/government_office/government_office_01.jpg',
       '/images/projects/infrastructure_environment/water_treatment_01.jpg',
       'Bến xe Khách Hiện đại Chuẩn Loại 1',
-      'Xã Thanh Nưa, Huyện Điện Biên'
+      'Xã Thanh Nưa, Huyện Điện Biên',
     ),
     investorId: 'org-002',
     investorName: 'Ban QLDA Các công trình Giao thông tỉnh Điện Biên',
@@ -985,7 +988,7 @@ export const ADDITIONAL_PROJECTS: Project[] = [
       '/images/projects/road/road_rural_01.jpg',
       '/images/projects/specialties/civil_industrial.jpg',
       'Khu Thực nghiệm Nông nghiệp Công nghệ cao',
-      'Huyện Điện Biên, Tỉnh Điện Biên'
+      'Huyện Điện Biên, Tỉnh Điện Biên',
     ),
     investorId: 'org-010',
     investorName: 'Ban QLDA Phát triển Nông nghiệp & PTNT tỉnh Điện Biên',
@@ -1034,7 +1037,7 @@ export const ADDITIONAL_PROJECTS: Project[] = [
       '/images/projects/specialties/transport_urban.jpg',
       '/images/projects/culture_sports/square_beach_01.jpg',
       'Trạm Kiểm soát Liên hợp Cửa khẩu Tây Trang',
-      'Xã Na Ư, Huyện Điện Biên'
+      'Xã Na Ư, Huyện Điện Biên',
     ),
     investorId: 'org-001',
     investorName: 'Ban QLDA Các công trình Dân dụng & Công nghiệp tỉnh Điện Biên',

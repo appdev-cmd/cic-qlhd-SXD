@@ -24,7 +24,7 @@ export interface Project {
   location: string;
   projectGroup: 'A' | 'B' | 'C' | 'QG';
   buildingGrade: 'I' | 'II' | 'III' | 'IV' | 'DB';
-  totalInvestment: number; // VNĐ
+  totalInvestment: number | null; // VNĐ
   stage: 'bcnckt' | 'gpxd' | 'nghiem_thu' | 'hoan_thanh';
   slaStatus: 'tiep_nhan' | 'dang_tham_dinh' | 'yeu_cau_bo_sung' | 'da_tham_dinh' | 'qua_han';
   submissionDate: string;
@@ -35,7 +35,7 @@ export interface Project {
   planningCompliance: boolean;
   standardCompliance: boolean;
   fireSafetyStatus: 'dat' | 'can_bo_sung' | 'cho_y_kien_ca';
-  estimatedSavings: number; // Tiền cắt giảm qua thẩm định
+  estimatedSavings: number | null; // Tiền cắt giảm qua thẩm định
   contractors: {
     role: string;
     orgId: string;
@@ -170,7 +170,7 @@ export interface MaterialPrice {
   name: string;
   unit: string;
   standardPrice: number; // Giá công bố liên sở
-  marketPrice: number;   // Giá thị trường khảo sát
+  marketPrice: number; // Giá thị trường khảo sát
   region: string;
   period: string; // Kỳ công bố (Tháng 09/2026)
   supplier: string;

@@ -1,23 +1,7 @@
-import React, {
-  createContext,
-  useCallback,
-  useContext,
-  useEffect,
-  useState,
-  type ReactNode,
-} from 'react';
+import React, { createContext, useCallback, useContext, useEffect, useState, type ReactNode } from 'react';
 
 export type Theme = 'nature' | 'light' | 'dark';
-export type PrimaryColor =
-  | 'teal'
-  | 'red'
-  | 'blue'
-  | 'emerald'
-  | 'amber'
-  | 'rose'
-  | 'violet'
-  | 'cyan'
-  | 'indigo';
+export type PrimaryColor = 'teal' | 'red' | 'blue' | 'emerald' | 'amber' | 'rose' | 'violet' | 'cyan' | 'indigo';
 
 // 9 Màu sắc chủ đạo hệ thống — Đồng bộ 100% cơ chế đa tông màu cic-ibst
 export const PRIMARY_COLORS: { id: PrimaryColor; name: string; hex: string }[] = [

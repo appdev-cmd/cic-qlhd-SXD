@@ -59,7 +59,7 @@
 ## 💬 Chi tiết Quy chuẩn Tooltip Toàn Hệ Thống (`Universal Tooltip` & `AutoTableTooltip`)
 * Tất cả tooltip rà chuột (hover) **BẮT BUỘC DÙNG DUY NHẤT** component `<Tooltip content="..." placement="top|bottom">` từ `components/ui/Tooltip.tsx`.
 * Component dùng React Portal (`createPortal`) nổi lớp trên cùng `z-[9999]`, chuẩn Dark Glassmorphism (`bg-slate-900/95 dark:bg-slate-800/95 text-slate-100 text-xs shadow-xl border border-slate-700/60 backdrop-blur-md`).
-* Đã tích hợp `<AutoTableTooltip />` trong `AppProviders.tsx` để tự động kích hoạt tooltip kính mờ cho các ô bảng và văn bản bị cắt ngắn (ellipsis).
+* Đã tích hợp `<AutoTableTooltip />` trong `src/main.tsx` để tự động kích hoạt tooltip kính mờ cho các ô bảng và văn bản bị cắt ngắn (ellipsis).
 * ❌ **CẤM HOÀN TOÀN:**
   1. Dùng thuộc tính `title="..."` native của HTML (bị trễ 1-2s, hình chữ nhật thô vàng/trắng, không ăn Dark Mode).
   2. Tự viết tooltip inline hoặc tạo component tooltip riêng lẻ.
@@ -95,7 +95,7 @@
 ---
 
 ## 🔎 Chi tiết Quy chuẩn Bố cục Thanh Tìm kiếm & Bộ lọc (`Standard Filter Bar Layout`)
-* Mọi view danh sách, bảng dữ liệu, trang quản lý hồ sơ **BẮT BUỘC tuân thủ thứ tự 5 vị trí chuẩn từ Trái sang Phải** (dùng `<GridToolbar>`):
+* Mọi view danh sách, bảng dữ liệu, trang quản lý hồ sơ **BẮT BUỘC tuân thủ thứ tự 5 vị trí chuẩn từ Trái sang Phải** (dùng `<GridToolbar>` từ `components/ui/grid/GridToolbar.tsx` với các slot cố định `search` → `classification` → `people` → `status` → `period`):
   1. **Vị trí 1 - Ô Tìm kiếm (`GridSearchInput`):** Luôn đứng **ĐẦU TIÊN BÊN TRÁI**. Chứa icon `<Search />` bên trái, nút xóa `(x)` khi có chữ, placeholder rõ ràng "Tìm theo tên dự án, mã hồ sơ...".
   2. **Vị trí 2 - Phân loại chính:** Loại thủ tục thẩm định (BCNCKT / KTKT / Báo cáo KT-KT / GPXD), Nhóm dự án (A, B, C, Quan trọng quốc gia).
   3. **Vị trí 3 - Cán bộ thẩm định / Chủ đầu tư:** Chuyên viên thụ lý, Phòng chuyên môn (QLXD / QLĐT), Chủ đầu tư.

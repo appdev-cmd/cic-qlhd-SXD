@@ -1,0 +1,4 @@
+src/types/api.gen.ts
+dist
+node_modules
+ai

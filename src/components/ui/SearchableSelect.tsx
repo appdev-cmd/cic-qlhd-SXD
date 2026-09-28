@@ -17,7 +17,7 @@ export interface SearchableSelectProps {
   placeholder?: string;
   className?: string;
   disabled?: boolean;
-  onSearchChange?: (query:string)=>void;
+  onSearchChange?: (query: string) => void;
 }
 
 export function SearchableSelect({
@@ -37,12 +37,15 @@ export function SearchableSelect({
   const selectedOption = options.find((opt) => opt.value === value);
 
   // Lọc options dựa trên smart search
-  const filteredOptions = onSearchChange ? options : options.filter(
-    (opt) =>
-      matchesSmartSearch(opt.label, searchQuery) ||
-      (opt.sublabel && matchesSmartSearch(opt.sublabel, searchQuery))
-  );
-  useEffect(()=>{onSearchChange?.(searchQuery);},[searchQuery,onSearchChange]);
+  const filteredOptions = onSearchChange
+    ? options
+    : options.filter(
+        (opt) =>
+          matchesSmartSearch(opt.label, searchQuery) || (opt.sublabel && matchesSmartSearch(opt.sublabel, searchQuery)),
+      );
+  useEffect(() => {
+    onSearchChange?.(searchQuery);
+  }, [searchQuery, onSearchChange]);
 
   useEffect(() => {
     const handleOutsideClick = (e: MouseEvent) => {
@@ -71,7 +74,7 @@ export function SearchableSelect({
         className={cn(
           'flex items-center justify-between w-full min-h-[38px] px-3 py-1.5 rounded-lg border text-left transition-all',
           'bg-surface border-border hover:border-primary-500 focus:outline-none focus:ring-2 focus:ring-primary-500/20',
-          disabled && 'opacity-50 cursor-not-allowed bg-subtle'
+          disabled && 'opacity-50 cursor-not-allowed bg-subtle',
         )}
       >
         <span className={cn('truncate', !selectedOption && 'text-ink-muted')}>
@@ -105,9 +108,7 @@ export function SearchableSelect({
 
           <div className="overflow-y-auto flex-1 p-1">
             {filteredOptions.length === 0 ? (
-              <div className="p-3 text-center text-xs text-ink-muted italic">
-                Không tìm thấy kết quả phù hợp
-              </div>
+              <div className="p-3 text-center text-xs text-ink-muted italic">Không tìm thấy kết quả phù hợp</div>
             ) : (
               filteredOptions.map((opt) => {
                 const isSelected = opt.value === value;
@@ -123,14 +124,12 @@ export function SearchableSelect({
                       'flex items-center justify-between w-full px-3 py-2 text-xs rounded-md text-left transition-colors',
                       isSelected
                         ? 'bg-primary-500/10 text-primary-600 dark:text-primary-400 font-semibold'
-                        : 'text-ink hover:bg-subtle'
+                        : 'text-ink hover:bg-subtle',
                     )}
                   >
                     <div className="flex flex-col truncate">
                       <span>{opt.label}</span>
-                      {opt.sublabel && (
-                        <span className="text-3xs text-ink-muted truncate">{opt.sublabel}</span>
-                      )}
+                      {opt.sublabel && <span className="text-3xs text-ink-muted truncate">{opt.sublabel}</span>}
                     </div>
                     {isSelected && <Check size={14} className="text-primary-500 ml-2 shrink-0" />}
                   </button>

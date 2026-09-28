@@ -11,25 +11,18 @@ export interface TooltipProps {
   anchor?: Element | null;
 }
 
-export function Tooltip({
-  content,
-  children,
-  placement = 'top',
-  className,
-  delay = 200,
-  anchor,
-}: TooltipProps) {
+export function Tooltip({ content, children, placement = 'top', className, delay = 200, anchor }: TooltipProps) {
   const [isVisible, setIsVisible] = useState(false);
   const [coords, setCoords] = useState<{ top: number; left: number }>({ top: 0, left: 0 });
   const triggerRef = useRef<HTMLDivElement>(null);
   const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
-  useEffect(()=>{
-    if(!anchor)return;
-    const rect=anchor.getBoundingClientRect();
-    setCoords({top:placement==='bottom'?rect.bottom+8:rect.top-8,left:rect.left+rect.width/2});
+  useEffect(() => {
+    if (!anchor) return;
+    const rect = anchor.getBoundingClientRect();
+    setCoords({ top: placement === 'bottom' ? rect.bottom + 8 : rect.top - 8, left: rect.left + rect.width / 2 });
     setIsVisible(true);
-    return()=>setIsVisible(false);
-  },[anchor,placement]);
+    return () => setIsVisible(false);
+  }, [anchor, placement]);
 
   const showTooltip = () => {
     timerRef.current = setTimeout(() => {
@@ -88,25 +81,25 @@ export function Tooltip({
                 placement === 'top'
                   ? 'translate(-50%, -100%)'
                   : placement === 'bottom'
-                  ? 'translate(-50%, 0)'
-                  : placement === 'left'
-                  ? 'translate(-100%, -50%)'
-                  : 'translate(0, -50%)',
+                    ? 'translate(-50%, 0)'
+                    : placement === 'left'
+                      ? 'translate(-100%, -50%)'
+                      : 'translate(0, -50%)',
             }}
             className={cn(
               'z-[9999] max-w-xs px-2.5 py-1.5 text-xs text-slate-100 font-medium rounded-lg',
               'bg-slate-900/95 dark:bg-slate-800/95 shadow-xl border border-slate-700/60 backdrop-blur-md',
               'pointer-events-none animate-fade-in transition-all',
-              className
+              className,
             )}
           >
             {content}
           </div>,
-          document.getElementById('tooltip-root') || document.body
+          document.getElementById('tooltip-root') || document.body,
         )
       : null;
 
-  if(anchor)return tooltipPortal;
+  if (anchor) return tooltipPortal;
   return (
     <div
       ref={triggerRef}

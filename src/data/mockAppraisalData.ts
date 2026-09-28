@@ -126,7 +126,7 @@ export interface ProjectAppraisalData {
 
 export function getProjectAppraisalData(project: Project): ProjectAppraisalData {
   const name = project.name.toLowerCase();
-  const total = project.totalInvestment;
+  const total = project.totalInvestment ?? 0;
   const savings = project.estimatedSavings ?? 0;
   const original = total + savings;
 
@@ -137,7 +137,11 @@ export function getProjectAppraisalData(project: Project): ProjectAppraisalData 
   let isSchool = name.includes('trường') || name.includes('mầm non') || name.includes('tiểu học');
   let isWater = name.includes('cấp nước') || name.includes('thoát nước') || name.includes('nước thải');
   let isSports = name.includes('thể thao') || name.includes('sân vận động');
-  let isCulture = name.includes('hội nghị') || name.includes('triển lãm') || name.includes('di tích') || name.includes('quảng trường');
+  let isCulture =
+    name.includes('hội nghị') ||
+    name.includes('triển lãm') ||
+    name.includes('di tích') ||
+    name.includes('quảng trường');
   let isHousing = name.includes('nhà ở') || name.includes('tái định cư') || name.includes('liền kề');
   let isIndustrial = name.includes('nhà máy') || name.includes('cụm công nghiệp') || name.includes('nông lâm sản');
 
@@ -278,17 +282,57 @@ export function getProjectAppraisalData(project: Project): ProjectAppraisalData 
   let planningMetrics: PlanningMetricItem[] = [];
   if (isRoad || isBridge) {
     planningMetrics = [
-      { name: 'Chỉ giới giải phóng mặt bằng', designValue: 'Rộng 26.5m', standardLimit: 'Quy hoạch ≥ 25.0m', isPassed: true },
-      { name: 'Bề rộng nền đường / cầu', designValue: 'Bề rộng 12.0m (2 làn xe cơ giới)', standardLimit: 'TCVN 4054:2005 (≥ 9.0m)', isPassed: true },
-      { name: 'Độ dốc dọc tối đa (Imax)', designValue: '6.8%', standardLimit: 'Đường cấp III miền núi (≤ 7.0%)', isPassed: true },
-      { name: 'Hành lang an toàn đường bộ', designValue: '15.0m tính từ mép ngoài đất của đường', standardLimit: 'Nghị định 11/2010/NĐ-CP (≥ 13.0m)', isPassed: true },
+      {
+        name: 'Chỉ giới giải phóng mặt bằng',
+        designValue: 'Rộng 26.5m',
+        standardLimit: 'Quy hoạch ≥ 25.0m',
+        isPassed: true,
+      },
+      {
+        name: 'Bề rộng nền đường / cầu',
+        designValue: 'Bề rộng 12.0m (2 làn xe cơ giới)',
+        standardLimit: 'TCVN 4054:2005 (≥ 9.0m)',
+        isPassed: true,
+      },
+      {
+        name: 'Độ dốc dọc tối đa (Imax)',
+        designValue: '6.8%',
+        standardLimit: 'Đường cấp III miền núi (≤ 7.0%)',
+        isPassed: true,
+      },
+      {
+        name: 'Hành lang an toàn đường bộ',
+        designValue: '15.0m tính từ mép ngoài đất của đường',
+        standardLimit: 'Nghị định 11/2010/NĐ-CP (≥ 13.0m)',
+        isPassed: true,
+      },
     ];
   } else {
     planningMetrics = [
-      { name: 'Mật độ xây dựng thuần', designValue: `${project.buildingGrade === 'I' ? '32.5%' : '38.0%'}`, standardLimit: 'Quy chuẩn QCVN 01:2021 (≤ 40.0%)', isPassed: true },
-      { name: 'Tầng cao công trình', designValue: `${project.buildingGrade === 'I' ? '08 tầng nổi, 01 hầm' : '05 tầng nổi'}`, standardLimit: 'Đúng Đồ án quy hoạch 1/500 phê duyệt', isPassed: true },
-      { name: 'Hệ số sử dụng đất (FAR)', designValue: `${project.buildingGrade === 'I' ? '2.1 lần' : '1.45 lần'}`, standardLimit: 'Giới hạn quy chuẩn (≤ 3.0 lần)', isPassed: true },
-      { name: 'Chỉ giới lùi công trình', designValue: '6.0 m', standardLimit: 'Quy định tối thiểu ≥ 5.0m', isPassed: true },
+      {
+        name: 'Mật độ xây dựng thuần',
+        designValue: `${project.buildingGrade === 'I' ? '32.5%' : '38.0%'}`,
+        standardLimit: 'Quy chuẩn QCVN 01:2021 (≤ 40.0%)',
+        isPassed: true,
+      },
+      {
+        name: 'Tầng cao công trình',
+        designValue: `${project.buildingGrade === 'I' ? '08 tầng nổi, 01 hầm' : '05 tầng nổi'}`,
+        standardLimit: 'Đúng Đồ án quy hoạch 1/500 phê duyệt',
+        isPassed: true,
+      },
+      {
+        name: 'Hệ số sử dụng đất (FAR)',
+        designValue: `${project.buildingGrade === 'I' ? '2.1 lần' : '1.45 lần'}`,
+        standardLimit: 'Giới hạn quy chuẩn (≤ 3.0 lần)',
+        isPassed: true,
+      },
+      {
+        name: 'Chỉ giới lùi công trình',
+        designValue: '6.0 m',
+        standardLimit: 'Quy định tối thiểu ≥ 5.0m',
+        isPassed: true,
+      },
     ];
   }
 
@@ -298,8 +342,12 @@ export function getProjectAppraisalData(project: Project): ProjectAppraisalData 
     agreementDate: '15/08/2026',
     agency: 'Phòng Cảnh sát PCCC & CNCH — Công an Tỉnh Điện Biên',
     fireResistanceGrade: project.buildingGrade === 'I' ? 'Bậc I (Chịu lửa ≥ 150 phút)' : 'Bậc II (Chịu lửa ≥ 120 phút)',
-    evacuationDistance: isRoad || isBridge ? 'Không áp dụng đối với công trình tuyến giao thông' : '26.5m (Quy chuẩn QCVN 06:2022 cho phép ≤ 40m)',
-    evacuationStaircases: isRoad || isBridge ? 'Không áp dụng' : '03 buồng thang bộ kín loại N1/N2 thoát trực tiếp ra ngoài sân',
+    evacuationDistance:
+      isRoad || isBridge
+        ? 'Không áp dụng đối với công trình tuyến giao thông'
+        : '26.5m (Quy chuẩn QCVN 06:2022 cho phép ≤ 40m)',
+    evacuationStaircases:
+      isRoad || isBridge ? 'Không áp dụng' : '03 buồng thang bộ kín loại N1/N2 thoát trực tiếp ra ngoài sân',
     fireAccessRoad: 'Đường giao thông nội bộ rộng 6.5m chạy bao quanh, khoảng cách đỗ xe chữa cháy đạt chuẩn',
     waterReserve: 'Bể ngầm PCCC dung tích 250m³ kết hợp trạm bơm điện tử & máy phát diesel dự phòng 100%',
   };
@@ -376,19 +424,49 @@ export function getProjectAppraisalData(project: Project): ProjectAppraisalData 
 
   // ─── F. Cấp Giấy phép Xây dựng ───
   const permit: PermitData = {
-    status: project.stage === 'gpxd' ? 'dang_tham_tra' : project.stage === 'nghiem_thu' || project.stage === 'hoan_thanh' ? 'da_cap' : 'cho_bo_sung',
+    status:
+      project.stage === 'gpxd'
+        ? 'dang_tham_tra'
+        : project.stage === 'nghiem_thu' || project.stage === 'hoan_thanh'
+          ? 'da_cap'
+          : 'cho_bo_sung',
     permitNumber: `${project.code.replace(/\D/g, '').slice(-3)}/GPXD-SXD`,
     permitDate: '18/08/2026',
     checklistDocs: [
-      { name: 'Đơn đề nghị cấp giấy phép xây dựng theo mẫu NĐ 217/2026', code: 'DOC-01', status: 'hop_le', note: 'Đúng mẫu số 01 Phụ lục II' },
-      { name: 'Giấy chứng nhận quyền sử dụng đất / Quyết định giao đất', code: 'DOC-02', status: 'hop_le', note: 'UBND tỉnh cấp còn nguyên hiệu lực' },
-      { name: 'Văn bản thẩm duyệt PCCC & Báo cáo ĐTM môi trường', code: 'DOC-03', status: 'hop_le', note: 'Đã tích hợp đầy đủ số hiệu công văn' },
-      { name: 'Hai bộ bản vẽ thiết kế xây dựng kèm Báo cáo kết quả thẩm tra', code: 'DOC-04', status: 'hop_le', note: 'Đã đóng dấu thẩm tra của đơn vị tư vấn cấp I' },
-      { name: 'Chứng chỉ năng lực hoạt động xây dựng của các tổ chức tham gia', code: 'DOC-05', status: 'hop_le', note: 'Tra cứu CSDL Quốc gia hợp lệ 100%' },
+      {
+        name: 'Đơn đề nghị cấp giấy phép xây dựng theo mẫu NĐ 217/2026',
+        code: 'DOC-01',
+        status: 'hop_le',
+        note: 'Đúng mẫu số 01 Phụ lục II',
+      },
+      {
+        name: 'Giấy chứng nhận quyền sử dụng đất / Quyết định giao đất',
+        code: 'DOC-02',
+        status: 'hop_le',
+        note: 'UBND tỉnh cấp còn nguyên hiệu lực',
+      },
+      {
+        name: 'Văn bản thẩm duyệt PCCC & Báo cáo ĐTM môi trường',
+        code: 'DOC-03',
+        status: 'hop_le',
+        note: 'Đã tích hợp đầy đủ số hiệu công văn',
+      },
+      {
+        name: 'Hai bộ bản vẽ thiết kế xây dựng kèm Báo cáo kết quả thẩm tra',
+        code: 'DOC-04',
+        status: 'hop_le',
+        note: 'Đã đóng dấu thẩm tra của đơn vị tư vấn cấp I',
+      },
+      {
+        name: 'Chứng chỉ năng lực hoạt động xây dựng của các tổ chức tham gia',
+        code: 'DOC-05',
+        status: 'hop_le',
+        note: 'Tra cứu CSDL Quốc gia hợp lệ 100%',
+      },
     ],
     technicalConditions: {
-      allowedGroundArea: `${(project.totalInvestment / 50000000).toFixed(0)} m²`,
-      allowedTotalFloorArea: `${(project.totalInvestment / 12000000).toFixed(0)} m²`,
+      allowedGroundArea: `${((project.totalInvestment ?? 0) / 50000000).toFixed(0)} m²`,
+      allowedTotalFloorArea: `${((project.totalInvestment ?? 0) / 12000000).toFixed(0)} m²`,
       allowedStories: project.buildingGrade === 'I' ? '08 tầng' : '05 tầng',
       allowedHeight: project.buildingGrade === 'I' ? '32.5 m' : '22.0 m',
       specialRequirements: [
@@ -404,7 +482,11 @@ export function getProjectAppraisalData(project: Project): ProjectAppraisalData 
     groundBreakingConditions: [
       { item: 'Mặt bằng xây dựng đã được bàn giao mốc giới trên thực địa', status: 'dat', verifyDate: '10/06/2026' },
       { item: 'Có Giấy phép xây dựng hoặc văn bản miễn giấy phép hợp lệ', status: 'dat', verifyDate: '12/06/2026' },
-      { item: 'Có thiết kế bản vẽ thi công đã được chủ đầu tư phê duyệt đóng dấu', status: 'dat', verifyDate: '15/06/2026' },
+      {
+        item: 'Có thiết kế bản vẽ thi công đã được chủ đầu tư phê duyệt đóng dấu',
+        status: 'dat',
+        verifyDate: '15/06/2026',
+      },
       { item: 'Hợp đồng thi công xây dựng và hợp đồng bảo hiểm công trình', status: 'dat', verifyDate: '18/06/2026' },
       { item: 'Thông báo ngày khởi công gửi Sở Xây dựng và UBND cấp huyện', status: 'dat', verifyDate: '20/06/2026' },
     ],

@@ -43,7 +43,10 @@ export function useCaseProgress(
           delay = Math.min(Math.round(delay * 1.5), MAX_DELAY);
         }
       } catch {
-        if (live) handlers.current.onError?.('Chưa lấy được tiến trình mới nhất. Hệ thống đang thử kết nối lại; không cần bấm chạy thêm.');
+        if (live)
+          handlers.current.onError?.(
+            'Chưa lấy được tiến trình mới nhất. Hệ thống đang thử kết nối lại; không cần bấm chạy thêm.',
+          );
       } finally {
         if (live) timer = setTimeout(tick, delay);
       }

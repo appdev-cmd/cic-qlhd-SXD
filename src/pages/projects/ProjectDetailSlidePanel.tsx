@@ -30,13 +30,24 @@ import { ProjectGalleryTab } from './ProjectGalleryTab';
 import type { Project } from '../../types/project';
 import { AuditHistoryTab } from '../../components/appraisal/AuditHistoryTab';
 
-export function ProjectDetailSlidePanel({ project, initialTab='bcnckt' }: { project: Project; initialTab?:ProjectProcedure }) {
-  const [activeTab, setActiveTab] = useState<'info' | 'gallery' | 'bcnckt' | 'gpxd' | 'nghiem_thu' | 'entities' | 'audit'>(initialTab);
-
-
+export function ProjectDetailSlidePanel({
+  project,
+  initialTab = 'bcnckt',
+}: {
+  project: Project;
+  initialTab?: ProjectProcedure;
+}) {
+  const [activeTab, setActiveTab] = useState<
+    'info' | 'gallery' | 'bcnckt' | 'gpxd' | 'nghiem_thu' | 'entities' | 'audit'
+  >(initialTab);
 
   return (
-    <div className={cn('space-y-5',(['bcnckt','gpxd','nghiem_thu'] as string[]).includes(activeTab)&&'h-full flex flex-col [&>div]:shrink-0')}>
+    <div
+      className={cn(
+        'space-y-5',
+        (['bcnckt', 'gpxd', 'nghiem_thu'] as string[]).includes(activeTab) && 'h-full flex flex-col [&>div]:shrink-0',
+      )}
+    >
       {/* ─── BANNER TÓM TẮT DỰ ÁN ─── */}
       <div className="p-4 rounded-xl border border-border bg-subtle/60 flex flex-wrap items-center justify-between gap-3">
         <div className="flex items-center gap-3.5">
@@ -44,7 +55,8 @@ export function ProjectDetailSlidePanel({ project, initialTab='bcnckt' }: { proj
             <div
               onClick={() => setActiveTab('gallery')}
               className="relative w-16 h-16 rounded-xl overflow-hidden shrink-0 border border-border/80 bg-slate-950 cursor-pointer group shadow-xs"
-              role="button" aria-label="Xem thư viện ảnh"
+              role="button"
+              aria-label="Xem thư viện ảnh"
             >
               <img
                 src={project.coverImage}
@@ -64,9 +76,7 @@ export function ProjectDetailSlidePanel({ project, initialTab='bcnckt' }: { proj
           )}
           <div className="flex flex-col">
             <div className="flex items-center gap-2">
-              <span className="font-mono text-xs font-bold text-primary-600 dark:text-primary-400">
-                {project.code}
-              </span>
+              <span className="font-mono text-xs font-bold text-primary-600 dark:text-primary-400">{project.code}</span>
               <span className="text-2xs font-semibold px-2 py-0.5 rounded bg-surface border border-border text-ink-secondary">
                 Nhóm {project.projectGroup} • Cấp {project.buildingGrade}
               </span>
@@ -102,7 +112,7 @@ export function ProjectDetailSlidePanel({ project, initialTab='bcnckt' }: { proj
             'flex items-center gap-1.5 px-3 py-2 text-xs font-semibold border-b-2 transition-all shrink-0',
             activeTab === 'info'
               ? 'border-primary-500 text-primary-600 dark:text-primary-400'
-              : 'border-transparent text-ink-secondary hover:text-ink'
+              : 'border-transparent text-ink-secondary hover:text-ink',
           )}
         >
           <Building size={14} />
@@ -116,7 +126,7 @@ export function ProjectDetailSlidePanel({ project, initialTab='bcnckt' }: { proj
             'flex items-center gap-1.5 px-3 py-2 text-xs font-semibold border-b-2 transition-all shrink-0',
             activeTab === 'bcnckt'
               ? 'border-primary-500 text-primary-600 dark:text-primary-400'
-              : 'border-transparent text-ink-secondary hover:text-ink'
+              : 'border-transparent text-ink-secondary hover:text-ink',
           )}
         >
           <ShieldCheck size={14} />
@@ -131,7 +141,7 @@ export function ProjectDetailSlidePanel({ project, initialTab='bcnckt' }: { proj
             'flex items-center gap-1.5 px-3 py-2 text-xs font-semibold border-b-2 transition-all shrink-0',
             activeTab === 'gpxd'
               ? 'border-primary-500 text-primary-600 dark:text-primary-400'
-              : 'border-transparent text-ink-secondary hover:text-ink'
+              : 'border-transparent text-ink-secondary hover:text-ink',
           )}
         >
           <FileText size={14} />
@@ -145,7 +155,7 @@ export function ProjectDetailSlidePanel({ project, initialTab='bcnckt' }: { proj
             'flex items-center gap-1.5 px-3 py-2 text-xs font-semibold border-b-2 transition-all shrink-0',
             activeTab === 'nghiem_thu'
               ? 'border-primary-500 text-primary-600 dark:text-primary-400'
-              : 'border-transparent text-ink-secondary hover:text-ink'
+              : 'border-transparent text-ink-secondary hover:text-ink',
           )}
         >
           <FileCheck size={14} />
@@ -159,7 +169,7 @@ export function ProjectDetailSlidePanel({ project, initialTab='bcnckt' }: { proj
             'flex items-center gap-1.5 px-3 py-2 text-xs font-semibold border-b-2 transition-all shrink-0',
             activeTab === 'entities'
               ? 'border-primary-500 text-primary-600 dark:text-primary-400'
-              : 'border-transparent text-ink-secondary hover:text-ink'
+              : 'border-transparent text-ink-secondary hover:text-ink',
           )}
         >
           <Users size={14} />
@@ -173,7 +183,7 @@ export function ProjectDetailSlidePanel({ project, initialTab='bcnckt' }: { proj
             'flex items-center gap-1.5 px-3 py-2 text-xs font-semibold border-b-2 transition-all shrink-0',
             activeTab === 'audit'
               ? 'border-primary-500 text-primary-600 dark:text-primary-400'
-              : 'border-transparent text-ink-secondary hover:text-ink'
+              : 'border-transparent text-ink-secondary hover:text-ink',
           )}
         >
           <History size={14} />
@@ -187,7 +197,7 @@ export function ProjectDetailSlidePanel({ project, initialTab='bcnckt' }: { proj
             'flex items-center gap-1.5 px-3 py-2 text-xs font-semibold border-b-2 transition-all shrink-0',
             activeTab === 'gallery'
               ? 'border-primary-500 text-primary-600 dark:text-primary-400'
-              : 'border-transparent text-ink-secondary hover:text-ink'
+              : 'border-transparent text-ink-secondary hover:text-ink',
           )}
         >
           <Camera size={14} />
@@ -201,8 +211,9 @@ export function ProjectDetailSlidePanel({ project, initialTab='bcnckt' }: { proj
       {activeTab === 'info' && <ProjectTT39InfoTab project={project} />}
 
       {/* TAB 2: THẨM ĐỊNH BCNCKT (TRỌNG TÂM CỦA SỞ XÂY DỰNG) */}
-      {(['bcnckt','gpxd','nghiem_thu'] as string[]).includes(activeTab) &&
-        <AppraisalPage key={project.id+activeTab} project={project} procedure={activeTab as ProjectProcedure}/>}
+      {(['bcnckt', 'gpxd', 'nghiem_thu'] as string[]).includes(activeTab) && (
+        <AppraisalPage key={project.id + activeTab} project={project} procedure={activeTab as ProjectProcedure} />
+      )}
 
       {activeTab === 'entities' && (
         <div className="space-y-3 text-xs">
@@ -213,7 +224,10 @@ export function ProjectDetailSlidePanel({ project, initialTab='bcnckt' }: { proj
             </div>
             <div className="p-3 space-y-3">
               {project.contractors.map((c, i) => (
-                <div key={i} className="p-3 rounded-lg border border-border bg-subtle/40 flex items-center justify-between">
+                <div
+                  key={i}
+                  className="p-3 rounded-lg border border-border bg-subtle/40 flex items-center justify-between"
+                >
                   <div>
                     <span className="text-2xs font-semibold px-2 py-0.5 rounded bg-primary-500/10 text-primary-600">
                       {c.role}
@@ -229,7 +243,8 @@ export function ProjectDetailSlidePanel({ project, initialTab='bcnckt' }: { proj
 
                   <Tooltip content="Chưa cấu hình kết nối tra cứu chứng chỉ" placement="left">
                     <button
-                      type="button" disabled
+                      type="button"
+                      disabled
                       className="p-1.5 rounded-lg border border-border bg-surface hover:bg-subtle text-ink-muted hover:text-ink transition-colors"
                     >
                       <ExternalLink size={14} />
@@ -243,7 +258,7 @@ export function ProjectDetailSlidePanel({ project, initialTab='bcnckt' }: { proj
       )}
 
       {/* TAB 6: NHẬT KÝ AI AUDIT TRAIL */}
-      {activeTab === 'audit' && <AuditHistoryTab projectId={project.id}/>}
+      {activeTab === 'audit' && <AuditHistoryTab projectId={project.id} />}
 
       {/* TAB 7: THƯ VIỆN ẢNH & PHỐI CẢNH 3D DỰ ÁN */}
       {activeTab === 'gallery' && <ProjectGalleryTab project={project} />}

@@ -2,8 +2,28 @@
  * Dữ liệu Mẫu Thực tế Hệ thống Thẩm định — Sở Xây dựng Tỉnh Điện Biên
  */
 
-import type { ProjectImage, Project, ProjectMemberTT39, ProjectParticipantOrgTT39, ProjectLegalDocTT39, ProjectTT39Data, Organization, Personnel, MaterialPrice } from '../types/project';
-export type { ProjectImage, Project, ProjectMemberTT39, ProjectParticipantOrgTT39, ProjectLegalDocTT39, ProjectTT39Data, Organization, Personnel, MaterialPrice } from '../types/project';
+import type {
+  ProjectImage,
+  Project,
+  ProjectMemberTT39,
+  ProjectParticipantOrgTT39,
+  ProjectLegalDocTT39,
+  ProjectTT39Data,
+  Organization,
+  Personnel,
+  MaterialPrice,
+} from '../types/project';
+export type {
+  ProjectImage,
+  Project,
+  ProjectMemberTT39,
+  ProjectParticipantOrgTT39,
+  ProjectLegalDocTT39,
+  ProjectTT39Data,
+  Organization,
+  Personnel,
+  MaterialPrice,
+} from '../types/project';
 
 import { ADDITIONAL_PROJECTS } from './mockAdditionalProjects';
 
@@ -47,7 +67,8 @@ const INITIAL_PROJECTS: Project[] = [
         categoryLabel: 'Hiện trạng thực địa',
         date: '02/09/2026',
         author: 'Đoàn Thẩm định Sở Xây dựng',
-        description: 'Diện tích 2.45 ha, địa hình thoai thoải đồi bát úp, đã hoàn tất cắm mốc GPMB và bàn giao ranh giới.',
+        description:
+          'Diện tích 2.45 ha, địa hình thoai thoải đồi bát úp, đã hoàn tất cắm mốc GPMB và bàn giao ranh giới.',
       },
       {
         id: 'img-001-4',
@@ -132,7 +153,8 @@ const INITIAL_PROJECTS: Project[] = [
         categoryLabel: 'Phối cảnh 3D',
         date: '22/06/2026',
         author: 'TEDI',
-        description: 'Cầu dầm bê tông cốt thép DƯL Super-T khẩu độ 40m, khổ cầu B = 16.0m đảm bảo 4 làn xe chạy an toàn.',
+        description:
+          'Cầu dầm bê tông cốt thép DƯL Super-T khẩu độ 40m, khổ cầu B = 16.0m đảm bảo 4 làn xe chạy an toàn.',
       },
       {
         id: 'img-002-3',
@@ -232,7 +254,8 @@ const INITIAL_PROJECTS: Project[] = [
         categoryLabel: 'Phối cảnh 3D',
         date: '20/07/2026',
         author: 'Tư vấn Thiết kế Tây Bắc',
-        description: 'Không gian tổ chức sự kiện và hội nghị quốc tế sức chứa 800 chỗ với vách kính panoramic nhìn ra hồ.',
+        description:
+          'Không gian tổ chức sự kiện và hội nghị quốc tế sức chứa 800 chỗ với vách kính panoramic nhìn ra hồ.',
       },
     ],
     investorId: 'org-006',
@@ -543,8 +566,8 @@ export const MOCK_DASHBOARD_STATS = {
   onTimeSlaRate: 95.8, // 95.8%
   overdueSlaCount: 1,
   totalAppraisedInvestment: 8450000000000, // 8.450 tỷ
-  totalSavingsAmount: 384000000000,       // Tiết kiệm 384 tỷ cho NSNN
-  averageProcessingDays: 14.2,             // 14.2 ngày
+  totalSavingsAmount: 384000000000, // Tiết kiệm 384 tỷ cho NSNN
+  averageProcessingDays: 14.2, // 14.2 ngày
   warningApproachingSlaCount: 3,
 };
 
@@ -586,7 +609,8 @@ export function getProjectTT39Data(project: Project): ProjectTT39Data {
       projectType: 'Dự án Đầu tư công (theo Nghị định 217/2026/NĐ-CP)',
       facilityType: 'Công trình Dân dụng - Cơ sở Y tế khám chữa bệnh (Nghị định 207/2026/NĐ-CP)',
       facilityGrade: 'Cấp II (Niên hạn sử dụng trên 50 năm)',
-      objective: 'Xây dựng mới đồng bộ cơ sở vật chất Bệnh viện Đa khoa quy mô 200 giường đáp ứng nhu cầu khám chữa bệnh chất lượng cao cho nhân dân các dân tộc huyện Mường Ảng và vùng phụ cận.',
+      objective:
+        'Xây dựng mới đồng bộ cơ sở vật chất Bệnh viện Đa khoa quy mô 200 giường đáp ứng nhu cầu khám chữa bệnh chất lượng cao cho nhân dân các dân tộc huyện Mường Ảng và vùng phụ cận.',
       landArea: 24500, // 2.45 ha
       constructionArea: 6125,
       grossFloorArea: 28600,
@@ -600,20 +624,27 @@ export function getProjectTT39Data(project: Project): ProjectTT39Data {
       fundingSource: 'Vốn Đầu tư công (Ngân sách tỉnh Điện Biên 60% + Ngân sách Trung ương hỗ trợ 40%)',
       costBreakdown: {
         construction: 210000000000, // Chi phí xây dựng
-        equipment: 82500000000,     // Chi phí thiết bị
-        management: 6200000000,     // Chi phí quản lý dự án
-        consulting: 14800000000,    // Chi phí tư vấn ĐTXD
-        others: 36000000000,        // Bồi thường GPMB + Chi phí khác
-        contingency: 35500000000,   // Chi phí dự phòng
+        equipment: 82500000000, // Chi phí thiết bị
+        management: 6200000000, // Chi phí quản lý dự án
+        consulting: 14800000000, // Chi phí tư vấn ĐTXD
+        others: 36000000000, // Bồi thường GPMB + Chi phí khác
+        contingency: 35500000000, // Chi phí dự phòng
       },
       executionPeriod: '2026 – 2028 (36 tháng)',
       startDate: '15/03/2026',
       completionDate: '31/12/2028',
-      phases: 'Giai đoạn 1 (2026-2027): Thi công khối nhà khám & điều trị 7 tầng; Giai đoạn 2 (2028): Khối truyền nhiễm, xử lý nước thải y tế & lắp đặt trang thiết bị.',
+      phases:
+        'Giai đoạn 1 (2026-2027): Thi công khối nhà khám & điều trị 7 tầng; Giai đoạn 2 (2028): Khối truyền nhiễm, xử lý nước thải y tế & lắp đặt trang thiết bị.',
       standards: [
         { code: 'QCVN 01:2021/BXD', name: 'Quy chuẩn kỹ thuật quốc gia về Quy hoạch xây dựng' },
-        { code: 'QCVN 06:2022/BXD + SĐ 1:2023', name: 'Quy chuẩn kỹ thuật quốc gia về An toàn cháy cho nhà và công trình' },
-        { code: 'QCVN 02:2022/BXD', name: 'Quy chuẩn kỹ thuật quốc gia về Số liệu điều kiện tự nhiên dùng trong xây dựng' },
+        {
+          code: 'QCVN 06:2022/BXD + SĐ 1:2023',
+          name: 'Quy chuẩn kỹ thuật quốc gia về An toàn cháy cho nhà và công trình',
+        },
+        {
+          code: 'QCVN 02:2022/BXD',
+          name: 'Quy chuẩn kỹ thuật quốc gia về Số liệu điều kiện tự nhiên dùng trong xây dựng',
+        },
         { code: 'TCVN 4470:2012', name: 'Bệnh viện đa khoa - Tiêu chuẩn thiết kế' },
         { code: 'TCVN 9386:2012', name: 'Thiết kế công trình chịu động đất (Địa bàn Điện Biên cấp VII)' },
         { code: 'QCVN 07:2023/BXD', name: 'Quy chuẩn kỹ thuật quốc gia về các công trình Hạ tầng kỹ thuật' },
@@ -896,16 +927,16 @@ export function getProjectTT39Data(project: Project): ProjectTT39Data {
     floorCount: '05 tầng nổi, 01 tầng hầm',
     buildingHeight: 22.0,
     capacity: 'Quy mô công suất thiết kế theo Quyết định chủ trương đầu tư',
-    totalInvestment: project.totalInvestment,
-    appraisalItemCost: project.totalInvestment,
+    totalInvestment: project.totalInvestment ?? 0,
+    appraisalItemCost: project.totalInvestment ?? 0,
     fundingSource: 'Vốn ngân sách nhà nước tỉnh Điện Biên & Ngân sách hỗ trợ',
     costBreakdown: {
-      construction: Math.round(project.totalInvestment * 0.55),
-      equipment: Math.round(project.totalInvestment * 0.22),
-      management: Math.round(project.totalInvestment * 0.02),
-      consulting: Math.round(project.totalInvestment * 0.04),
-      others: Math.round(project.totalInvestment * 0.07),
-      contingency: Math.round(project.totalInvestment * 0.1),
+      construction: Math.round((project.totalInvestment ?? 0) * 0.55),
+      equipment: Math.round((project.totalInvestment ?? 0) * 0.22),
+      management: Math.round((project.totalInvestment ?? 0) * 0.02),
+      consulting: Math.round((project.totalInvestment ?? 0) * 0.04),
+      others: Math.round((project.totalInvestment ?? 0) * 0.07),
+      contingency: Math.round((project.totalInvestment ?? 0) * 0.1),
     },
     executionPeriod: '2026 – 2028 (36 tháng)',
     startDate: project.submissionDate,
@@ -941,7 +972,8 @@ export function getProjectTT39Data(project: Project): ProjectTT39Data {
         role: 'Chủ đầu tư / Cơ quan chuẩn bị dự án',
         taxCode: MOCK_ORGANIZATIONS.find((o) => o.id === project.investorId)?.taxCode || '5600123456',
         address: MOCK_ORGANIZATIONS.find((o) => o.id === project.investorId)?.address || 'Tỉnh Điện Biên',
-        representative: MOCK_ORGANIZATIONS.find((o) => o.id === project.investorId)?.representative || 'Đại diện Ban QLDA',
+        representative:
+          MOCK_ORGANIZATIONS.find((o) => o.id === project.investorId)?.representative || 'Đại diện Ban QLDA',
         certNumber: MOCK_ORGANIZATIONS.find((o) => o.id === project.investorId)?.certificateNumber,
         certGrade: MOCK_ORGANIZATIONS.find((o) => o.id === project.investorId)?.certificateGrade,
         memberCount: 2,
@@ -975,7 +1007,9 @@ export function getProjectTT39Data(project: Project): ProjectTT39Data {
         certGrade: foundPerson?.certGrade || 'I',
         certIssuer: foundPerson?.certIssuer || 'Bộ Xây dựng',
         certExpiry: foundPerson?.certExpiry
-          ? (foundPerson.certExpiry.includes('/') ? foundPerson.certExpiry : foundPerson.certExpiry.split('-').reverse().join('/'))
+          ? foundPerson.certExpiry.includes('/')
+            ? foundPerson.certExpiry
+            : foundPerson.certExpiry.split('-').reverse().join('/')
           : '15/05/2029',
         status: foundPerson?.status || 'hieu_luc',
         specialties: foundPerson?.specialties || ['Thiết kế công trình xây dựng', 'Quản lý dự án'],

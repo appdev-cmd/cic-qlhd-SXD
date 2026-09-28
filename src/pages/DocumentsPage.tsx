@@ -1,1 +1,1 @@
-export {DocumentHub as DocumentsPage} from '../components/appraisal/DocumentHub';
+export { DocumentHub as DocumentsPage } from '../components/appraisal/DocumentHub';

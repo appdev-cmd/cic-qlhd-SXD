@@ -47,7 +47,7 @@ export function SlidePanelProvider({ children }: { children: React.ReactNode }) 
     if (document.body.dataset.modalOpen || document.body.classList.contains('modal-open')) return;
     setStack((prev) => {
       if (prev.length === 0) return prev;
-      if (prev.find(p => p.id === (id || prev[prev.length - 1].id))?.hasUnsavedChanges) return prev;
+      if (prev.find((p) => p.id === (id || prev[prev.length - 1].id))?.hasUnsavedChanges) return prev;
       if (!id) {
         return prev.slice(0, -1);
       }
@@ -57,7 +57,7 @@ export function SlidePanelProvider({ children }: { children: React.ReactNode }) 
 
   const closeAllPanels = useCallback(() => {
     if (document.body.dataset.modalOpen || document.body.classList.contains('modal-open')) return;
-    setStack(prev => prev.some(p => p.hasUnsavedChanges) ? prev : []);
+    setStack((prev) => (prev.some((p) => p.hasUnsavedChanges) ? prev : []));
   }, []);
 
   const bringToFront = useCallback((id: string) => {
@@ -72,9 +72,7 @@ export function SlidePanelProvider({ children }: { children: React.ReactNode }) 
   }, []);
 
   const updatePanelUnsavedStatus = useCallback((id: string, hasUnsaved: boolean) => {
-    setStack((prev) =>
-      prev.map((p) => (p.id === id ? { ...p, hasUnsavedChanges: hasUnsaved } : p))
-    );
+    setStack((prev) => prev.map((p) => (p.id === id ? { ...p, hasUnsavedChanges: hasUnsaved } : p)));
   }, []);
 
   const value = useMemo(
@@ -86,7 +84,7 @@ export function SlidePanelProvider({ children }: { children: React.ReactNode }) 
       bringToFront,
       updatePanelUnsavedStatus,
     }),
-    [stack, openPanel, closePanel, closeAllPanels, bringToFront, updatePanelUnsavedStatus]
+    [stack, openPanel, closePanel, closeAllPanels, bringToFront, updatePanelUnsavedStatus],
   );
 
   return <SlidePanelContext.Provider value={value}>{children}</SlidePanelContext.Provider>;

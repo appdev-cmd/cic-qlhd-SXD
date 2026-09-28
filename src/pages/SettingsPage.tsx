@@ -1,1 +1,1 @@
-export {RuntimeSettings as SettingsPage} from '../components/appraisal/RuntimeSettings';
+export { RuntimeSettings as SettingsPage } from '../components/appraisal/RuntimeSettings';

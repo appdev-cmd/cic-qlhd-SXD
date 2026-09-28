@@ -1,15 +1,205 @@
-export interface SourceRef { documentId: string; segmentId: string; locator: string; quote: string }
-export interface ChecklistCandidate extends SourceRef { id:string;requirementId:string;name:string;category:string;accepted:boolean }
-export interface Segment { id:string; locator:string; page:number|null; text:string }
-export interface DossierDocument { id:string; requirementId:string; name:string; role:string; version:number; hash:string; size:number; uploadedAt:string; segments:Segment[]; warnings:string[]; signature:string }
-export interface Fact extends SourceRef { id:string; key:string; label:string; value:string; rawValue:string; unit:string; method:string; reviewStatus:string; reviewedBy:string|null; reviewNote:string }
-export interface Finding { id:string; code:string; category:string; title:string; result:string; explanation:string; sources:SourceRef[]; calculation:string; missingEvidence:string[]; legalRefs:{label:string;url:string}[]; review:null|{decision:string;note:string;actor:string;at:string} }
-export interface AppraisalRun { aiCoverage?:AiCoverage; aiProvenance?:{provider:string;model:string;promptVersion:string;selectionVersion:string;inputHash:string;revision:number;elapsedMs:number}; id:string; createdAt:string; ruleVersion:string; mode:string; stale:boolean; findings:Finding[]; documentIds:string[]; provider:string; aiStatus:string; aiNotes:{text:string;sources:(Segment&{documentId:string})[];status:string;model:string}[]; costVersions:{documentId:string;name:string;version:number;total:string;sum:string;items:{key:string;name:string;value:string}[]}[]; costComparison:null|{before:string;after:string;netSavings:string;items:{name:string;before:string;after:string;difference:string}[]} }
-export interface DossierSummary { id:string; dossierId?:string; previousSubmissionId?:string; previousSubmissionName?:string; submissionCode?:string; submissionRound?:number; documentCount?:number; sampleScenario?:string; projectId?:string; projectName?:string; projectCode?:string; procedure?:import('../lib/projectProcedures').ProjectProcedure; createdAt?:string; name:string; province:string; department:string; sample:boolean; legalDate:string; updatedAt:string; status:string; revision:number; slaDueDate?:string|null; slaState?:SlaState }
-export interface Dossier extends DossierSummary { readOnly?:boolean; checklistCandidates?:ChecklistCandidate[]; assignee:string; tenantId:string; requirements:{id:string;name:string;category:string;required:boolean;status:string;note:string;verifiedBy:string|null}[]; documents:DossierDocument[]; facts:Fact[]; runs:AppraisalRun[]; consultations:{id:string;text:string;response:string;actor:string;at:string;status:string}[]; audit:{id:string;at:string;actor:string;action:string;detail:string}[]; job?:{id:string;status:string;mode?:string;documentId?:string;startedAt?:string;finishedAt?:string;useModel?:boolean}; finalReview:null|{decision:string;note:string;actor:string;at:string;simulation:boolean}; sla?:SlaFacts }
-export interface ModelProvider { id:string;label:string;model:string;configured:boolean;connection:{status:'not_checked'|'connected'|'error';checkedAt:string|null;message:string} }
-export interface Health { modelProvider?:ModelProvider; mode:string;modelConfigured:boolean;actor:{name:string;role:string;department:string};ocrAvailable:boolean }
-export interface AiCoverage {selectedSegments:number;totalSegments:number;selectedCharacters:number;totalCharacters:number;documents:{name:string;selectedSegments:number;totalSegments:number;locators:string[];complete:boolean}[]}
-export type SlaStateId='on_track'|'due_soon'|'overdue'|'paused'|'completed'|'completed_late'|'superseded'|'unconfigured';
-export interface SlaState { state:SlaStateId; label:string; remainingWorkingDays:number|null }
-export interface SlaFacts { policyVersion:string; policyStatus:string; calendarVersion:string; calendarConfirmed:boolean; basis:string|null; missing:string|null; periodDays:number|null; periodUnit:'working'|'calendar'|null; projectGroup:string|null; projectGrade:string|null; startDate:string|null; legalDueDate:string|null; internalDueDate:string|null; dueDate:string|null; dueKind:'legal'|'internal'|null; paused:boolean; pausedSince:string|null; pausedDays:number; completedAt:string|null }
+export interface SourceRef {
+  documentId: string;
+  segmentId: string;
+  locator: string;
+  quote: string;
+}
+export interface ChecklistCandidate extends SourceRef {
+  id: string;
+  requirementId: string;
+  name: string;
+  category: string;
+  accepted: boolean;
+}
+export interface Segment {
+  id: string;
+  locator: string;
+  page: number | null;
+  text: string;
+}
+export interface DossierDocument {
+  id: string;
+  requirementId: string;
+  name: string;
+  role: string;
+  version: number;
+  hash: string;
+  size: number;
+  uploadedAt: string;
+  segments: Segment[];
+  warnings: string[];
+  signature: string;
+}
+export interface Fact extends SourceRef {
+  id: string;
+  key: string;
+  label: string;
+  value: string;
+  rawValue: string;
+  unit: string;
+  method: string;
+  reviewStatus: string;
+  reviewedBy: string | null;
+  reviewNote: string;
+}
+export interface Finding {
+  id: string;
+  code: string;
+  category: string;
+  title: string;
+  result: string;
+  explanation: string;
+  sources: SourceRef[];
+  calculation: string;
+  missingEvidence: string[];
+  legalRefs: { label: string; url: string }[];
+  review: null | { decision: string; note: string; actor: string; at: string };
+}
+export interface AppraisalRun {
+  aiCoverage?: AiCoverage;
+  aiProvenance?: {
+    provider: string;
+    model: string;
+    promptVersion: string;
+    selectionVersion: string;
+    inputHash: string;
+    revision: number;
+    elapsedMs: number;
+  };
+  id: string;
+  createdAt: string;
+  ruleVersion: string;
+  mode: string;
+  stale: boolean;
+  findings: Finding[];
+  documentIds: string[];
+  provider: string;
+  aiStatus: string;
+  aiNotes: { text: string; sources: (Segment & { documentId: string })[]; status: string; model: string }[];
+  costVersions: {
+    documentId: string;
+    name: string;
+    version: number;
+    total: string;
+    sum: string;
+    items: { key: string; name: string; value: string }[];
+  }[];
+  costComparison: null | {
+    before: string;
+    after: string;
+    netSavings: string;
+    items: { name: string; before: string; after: string; difference: string }[];
+  };
+}
+export interface DossierSummary {
+  id: string;
+  dossierId?: string;
+  previousSubmissionId?: string;
+  previousSubmissionName?: string;
+  submissionCode?: string;
+  submissionRound?: number;
+  documentCount?: number;
+  sampleScenario?: string;
+  projectId?: string;
+  projectName?: string;
+  projectCode?: string;
+  procedure?: import('../lib/projectProcedures').ProjectProcedure;
+  createdAt?: string;
+  name: string;
+  province: string;
+  department: string;
+  sample: boolean;
+  legalDate: string;
+  updatedAt: string;
+  status: string;
+  revision: number;
+  slaDueDate?: string | null;
+  slaState?: SlaState;
+}
+export interface Dossier extends DossierSummary {
+  readOnly?: boolean;
+  checklistCandidates?: ChecklistCandidate[];
+  assignee: string;
+  tenantId: string;
+  requirements: {
+    id: string;
+    name: string;
+    category: string;
+    required: boolean;
+    status: string;
+    note: string;
+    verifiedBy: string | null;
+  }[];
+  documents: DossierDocument[];
+  facts: Fact[];
+  runs: AppraisalRun[];
+  consultations: { id: string; text: string; response: string; actor: string; at: string; status: string }[];
+  audit: { id: string; at: string; actor: string; action: string; detail: string }[];
+  job?: {
+    id: string;
+    status: string;
+    mode?: string;
+    documentId?: string;
+    startedAt?: string;
+    finishedAt?: string;
+    useModel?: boolean;
+  };
+  finalReview: null | { decision: string; note: string; actor: string; at: string; simulation: boolean };
+  sla?: SlaFacts;
+}
+export interface ModelProvider {
+  id: string;
+  label: string;
+  model: string;
+  configured: boolean;
+  connection: { status: 'not_checked' | 'connected' | 'error'; checkedAt: string | null; message: string };
+}
+export interface Health {
+  modelProvider?: ModelProvider;
+  mode: string;
+  modelConfigured: boolean;
+  actor: { name: string; role: string; department: string };
+  ocrAvailable: boolean;
+}
+export interface AiCoverage {
+  selectedSegments: number;
+  totalSegments: number;
+  selectedCharacters: number;
+  totalCharacters: number;
+  documents: { name: string; selectedSegments: number; totalSegments: number; locators: string[]; complete: boolean }[];
+}
+export type SlaStateId =
+  | 'on_track'
+  | 'due_soon'
+  | 'overdue'
+  | 'paused'
+  | 'completed'
+  | 'completed_late'
+  | 'superseded'
+  | 'unconfigured';
+export interface SlaState {
+  state: SlaStateId;
+  label: string;
+  remainingWorkingDays: number | null;
+}
+export interface SlaFacts {
+  policyVersion: string;
+  policyStatus: string;
+  calendarVersion: string;
+  calendarConfirmed: boolean;
+  basis: string | null;
+  missing: string | null;
+  periodDays: number | null;
+  periodUnit: 'working' | 'calendar' | null;
+  projectGroup: string | null;
+  projectGrade: string | null;
+  startDate: string | null;
+  legalDueDate: string | null;
+  internalDueDate: string | null;
+  dueDate: string | null;
+  dueKind: 'legal' | 'internal' | null;
+  paused: boolean;
+  pausedSince: string | null;
+  pausedDays: number;
+  completedAt: string | null;
+}

@@ -65,8 +65,8 @@ async function generateSeed() {
     ];
     lines.push(
       `insert into public.organizations (id, code, name, short_name, type, license_number, tax_code, address, phone, legal_rep, cert_number, cert_grade, cert_expiry, status, active_projects_count) values (${fields.join(
-        ', '
-      )}) on conflict (id) do nothing;`
+        ', ',
+      )}) on conflict (id) do nothing;`,
     );
   }
   lines.push('');
@@ -95,8 +95,8 @@ async function generateSeed() {
     ];
     lines.push(
       `insert into public.personnel (id, code, full_name, id_card, cert_number, cert_authority, cert_expiry, cert_grade, specialties, org_id, org_name, email, phone, status, active_projects_count, has_conflict_warning, conflict_details) values (${fields.join(
-        ', '
-      )}) on conflict (id) do nothing;`
+        ', ',
+      )}) on conflict (id) do nothing;`,
     );
   }
   lines.push('');
@@ -146,8 +146,8 @@ async function generateSeed() {
 
     lines.push(
       `insert into public.projects (id, code, title, field, group_type, grade, investment_cost, investor_id, investor_name, designer_id, designer_name, auditor_id, auditor_name, lead_reviewer_id, lead_reviewer_name, procedure_type, status, sla_days, sla_status, progress, submission_date, deadline, location_district, lat, lng, thumbnail_url, description, tt39_data) values (${fields.join(
-        ', '
-      )}) on conflict (id) do nothing;`
+        ', ',
+      )}) on conflict (id) do nothing;`,
     );
 
     // Tạo disciplines cho dự án
@@ -163,8 +163,8 @@ async function generateSeed() {
       const discId = `disc-${proj.id}-${d.code.toLowerCase()}`;
       lines.push(
         `insert into public.appraisal_disciplines (id, project_id, discipline_code, discipline_name, assigned_reviewer_id, status, comments_count) values (${escapeSql(
-          discId
-        )}, ${escapeSql(proj.id)}, ${escapeSql(d.code)}, ${escapeSql(d.name)}, ${escapeSql(d.reviewer)}, 'reviewing', 2) on conflict (id) do nothing;`
+          discId,
+        )}, ${escapeSql(proj.id)}, ${escapeSql(d.code)}, ${escapeSql(d.name)}, ${escapeSql(d.reviewer)}, 'reviewing', 2) on conflict (id) do nothing;`,
       );
     }
   }
@@ -189,8 +189,8 @@ async function generateSeed() {
     ];
     lines.push(
       `insert into public.ai_compliance_alerts (id, alert_type, severity, target_personnel_id, target_project_id, title, message, is_resolved) values (${fields.join(
-        ', '
-      )}) on conflict (id) do nothing;`
+        ', ',
+      )}) on conflict (id) do nothing;`,
     );
   }
 

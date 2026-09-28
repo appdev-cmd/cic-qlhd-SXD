@@ -42,7 +42,7 @@ export function NumberInput({
         className={cn(
           'w-full px-3 py-1.5 rounded-lg border text-sm text-right pr-14 outline-none transition-all font-mono',
           'bg-surface border-border text-ink focus:border-primary-500 focus:ring-2 focus:ring-primary-500/20',
-          disabled && 'opacity-50 cursor-not-allowed bg-subtle'
+          disabled && 'opacity-50 cursor-not-allowed bg-subtle',
         )}
       />
       {suffix && (

@@ -41,28 +41,53 @@ interface ProjectTT39InfoTabProps {
 }
 
 export function ProjectTT39InfoTab({ project }: ProjectTT39InfoTabProps) {
-  const [data,setData]=useState<ProjectTT39Data|null>(null);
-  const [loading,setLoading]=useState(true);const [error,setError]=useState('');
-  useEffect(()=>{let current=true;setLoading(true);setError('');
-    projectService.getTT39Data(project).then(value=>{if(current)setData(value);}).catch(e=>{if(current)setError(e.message);}).finally(()=>{if(current)setLoading(false);});
-    return()=>{current=false;};},[project.id]);
-  if(loading)return <p className="p-4 text-ink dark:text-ink">Đang tải thông tin dự án…</p>;
-  if(error)return <p role="alert" className="p-4 text-red-700 dark:text-red-300">{error}</p>;
-  if(!data||!Array.isArray(data.members))return <p className="p-4 text-ink-muted dark:text-ink-muted">Chưa có thông tin chi tiết được lưu cho dự án này.</p>;
-  return <LoadedProjectInfo project={project} tt39={data}/>;
+  const [data, setData] = useState<ProjectTT39Data | null>(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState('');
+  useEffect(() => {
+    let current = true;
+    setLoading(true);
+    setError('');
+    projectService
+      .getTT39Data(project)
+      .then((value) => {
+        if (current) setData(value);
+      })
+      .catch((e) => {
+        if (current) setError(e.message);
+      })
+      .finally(() => {
+        if (current) setLoading(false);
+      });
+    return () => {
+      current = false;
+    };
+  }, [project.id]);
+  if (loading) return <p className="p-4 text-ink dark:text-ink">Đang tải thông tin dự án…</p>;
+  if (error)
+    return (
+      <p role="alert" className="p-4 text-red-700 dark:text-red-300">
+        {error}
+      </p>
+    );
+  if (!data || !Array.isArray(data.members))
+    return <p className="p-4 text-ink-muted dark:text-ink-muted">Chưa có thông tin chi tiết được lưu cho dự án này.</p>;
+  return <LoadedProjectInfo project={project} tt39={data} />;
 }
 
-function LoadedProjectInfo({project,tt39}:{project:Project;tt39:ProjectTT39Data}) {
-
+function LoadedProjectInfo({ project, tt39 }: { project: Project; tt39: ProjectTT39Data }) {
   // Bộ lọc và tìm kiếm danh sách thành viên tham gia
-  const [memberSearch, setMemberSearch] = useFilterState('tt39-members-search:'+project.id,'');
-  const [selectedOrgFilter, setSelectedOrgFilter] = useFilterState('tt39-members-org:'+project.id,'all');
+  const [memberSearch, setMemberSearch] = useFilterState('tt39-members-search:' + project.id, '');
+  const [selectedOrgFilter, setSelectedOrgFilter] = useFilterState('tt39-members-org:' + project.id, 'all');
   const [copiedCoord, setCopiedCoord] = useState(false);
 
   // Lọc thành viên
   const filteredMembers = useMemo(() => {
     return tt39.members.filter((m) => {
-      const matchSearch = matchesSmartSearch([m.fullName,m.role,m.position,m.certNumber,m.orgName].join(' '),memberSearch);
+      const matchSearch = matchesSmartSearch(
+        [m.fullName, m.role, m.position, m.certNumber, m.orgName].join(' '),
+        memberSearch,
+      );
 
       const matchOrg = selectedOrgFilter === 'all' || m.orgName === selectedOrgFilter;
       return matchSearch && matchOrg;
@@ -85,16 +110,15 @@ function LoadedProjectInfo({project,tt39}:{project:Project;tt39:ProjectTT39Data}
           </div>
           <div>
             <div className="flex items-center gap-2">
-              <span className="font-bold text-ink text-xs">
-                Dữ liệu Hồ sơ Dự án theo Thông tư 39/2026/TT-BXD
-              </span>
+              <span className="font-bold text-ink text-xs">Dữ liệu Hồ sơ Dự án theo Thông tư 39/2026/TT-BXD</span>
               <span className="text-3xs font-semibold px-2 py-0.5 rounded-full bg-emerald-500/10 text-emerald-600 border border-emerald-500/20 flex items-center gap-1">
                 <span className="w-1.5 h-1.5 rounded-full bg-emerald-500" />
                 Chuẩn hóa CSDL Quốc gia
               </span>
             </div>
             <p className="text-2xs text-ink-muted mt-0.5">
-              Quy định chi tiết các trường dữ liệu thu thập, tạo lập CSDL quốc gia và CSDL chuyên ngành theo Nghị định 212/2026/NĐ-CP & Nghị định 217/2026/NĐ-CP
+              Quy định chi tiết các trường dữ liệu thu thập, tạo lập CSDL quốc gia và CSDL chuyên ngành theo Nghị định
+              212/2026/NĐ-CP & Nghị định 217/2026/NĐ-CP
             </p>
           </div>
         </div>
@@ -249,9 +273,7 @@ function LoadedProjectInfo({project,tt39}:{project:Project;tt39:ProjectTT39Data}
 
           <div className="md:col-span-2">
             <span className="text-2xs text-ink-muted block">Tọa độ GPS định vị (Hệ VN-2000):</span>
-            <p className="font-mono font-semibold text-primary-700 dark:text-primary-300 mt-0.5">
-              {tt39.coordinates}
-            </p>
+            <p className="font-mono font-semibold text-primary-700 dark:text-primary-300 mt-0.5">{tt39.coordinates}</p>
           </div>
 
           <div className="md:col-span-4 p-2.5 rounded-lg bg-subtle/60 border border-border">
@@ -303,9 +325,7 @@ function LoadedProjectInfo({project,tt39}:{project:Project;tt39:ProjectTT39Data}
 
           <div className="p-3 rounded-lg border border-border bg-subtle/50">
             <span className="text-3xs uppercase tracking-wider text-ink-muted block">Số tầng & Chiều cao</span>
-            <p className="text-sm font-bold text-ink mt-0.5">
-              {tt39.floorCount}
-            </p>
+            <p className="text-sm font-bold text-ink mt-0.5">{tt39.floorCount}</p>
             <span className="text-3xs text-ink-muted">Cao: {tt39.buildingHeight} m</span>
           </div>
         </div>
@@ -363,9 +383,7 @@ function LoadedProjectInfo({project,tt39}:{project:Project;tt39:ProjectTT39Data}
           <div className="p-3 grid grid-cols-2 sm:grid-cols-3 gap-3 bg-surface">
             <div>
               <span className="text-3xs text-ink-muted block">1. Chi phí Xây dựng</span>
-              <p className="font-mono font-bold text-ink mt-0.5">
-                {formatCurrency(tt39.costBreakdown.construction)}
-              </p>
+              <p className="font-mono font-bold text-ink mt-0.5">{formatCurrency(tt39.costBreakdown.construction)}</p>
               <span className="text-3xs text-ink-muted">
                 ({((tt39.costBreakdown.construction / tt39.totalInvestment) * 100).toFixed(1)}%)
               </span>
@@ -373,9 +391,7 @@ function LoadedProjectInfo({project,tt39}:{project:Project;tt39:ProjectTT39Data}
 
             <div>
               <span className="text-3xs text-ink-muted block">2. Chi phí Thiết bị</span>
-              <p className="font-mono font-bold text-ink mt-0.5">
-                {formatCurrency(tt39.costBreakdown.equipment)}
-              </p>
+              <p className="font-mono font-bold text-ink mt-0.5">{formatCurrency(tt39.costBreakdown.equipment)}</p>
               <span className="text-3xs text-ink-muted">
                 ({((tt39.costBreakdown.equipment / tt39.totalInvestment) * 100).toFixed(1)}%)
               </span>
@@ -383,9 +399,7 @@ function LoadedProjectInfo({project,tt39}:{project:Project;tt39:ProjectTT39Data}
 
             <div>
               <span className="text-3xs text-ink-muted block">3. Quản lý dự án</span>
-              <p className="font-mono font-bold text-ink mt-0.5">
-                {formatCurrency(tt39.costBreakdown.management)}
-              </p>
+              <p className="font-mono font-bold text-ink mt-0.5">{formatCurrency(tt39.costBreakdown.management)}</p>
               <span className="text-3xs text-ink-muted">
                 ({((tt39.costBreakdown.management / tt39.totalInvestment) * 100).toFixed(1)}%)
               </span>
@@ -393,9 +407,7 @@ function LoadedProjectInfo({project,tt39}:{project:Project;tt39:ProjectTT39Data}
 
             <div>
               <span className="text-3xs text-ink-muted block">4. Tư vấn ĐTXD</span>
-              <p className="font-mono font-bold text-ink mt-0.5">
-                {formatCurrency(tt39.costBreakdown.consulting)}
-              </p>
+              <p className="font-mono font-bold text-ink mt-0.5">{formatCurrency(tt39.costBreakdown.consulting)}</p>
               <span className="text-3xs text-ink-muted">
                 ({((tt39.costBreakdown.consulting / tt39.totalInvestment) * 100).toFixed(1)}%)
               </span>
@@ -403,9 +415,7 @@ function LoadedProjectInfo({project,tt39}:{project:Project;tt39:ProjectTT39Data}
 
             <div>
               <span className="text-3xs text-ink-muted block">5. Bồi thường GPMB & Khác</span>
-              <p className="font-mono font-bold text-ink mt-0.5">
-                {formatCurrency(tt39.costBreakdown.others)}
-              </p>
+              <p className="font-mono font-bold text-ink mt-0.5">{formatCurrency(tt39.costBreakdown.others)}</p>
               <span className="text-3xs text-ink-muted">
                 ({((tt39.costBreakdown.others / tt39.totalInvestment) * 100).toFixed(1)}%)
               </span>
@@ -442,10 +452,7 @@ function LoadedProjectInfo({project,tt39}:{project:Project;tt39:ProjectTT39Data}
 
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5 pt-1">
           {tt39.standards.map((st, idx) => (
-            <div
-              key={idx}
-              className="p-2.5 rounded-lg border border-border bg-subtle/50 flex items-start gap-2.5"
-            >
+            <div key={idx} className="p-2.5 rounded-lg border border-border bg-subtle/50 flex items-start gap-2.5">
               <div className="w-5 h-5 rounded bg-primary-500/10 text-primary-600 flex items-center justify-center font-bold text-3xs shrink-0 mt-0.5">
                 {idx + 1}
               </div>
@@ -465,24 +472,38 @@ function LoadedProjectInfo({project,tt39}:{project:Project;tt39:ProjectTT39Data}
         <div className="flex items-center justify-between border-b border-border pb-2.5">
           <div className="flex items-center gap-2 font-bold text-ink">
             <FileCheck2 size={15} className="text-primary-600" />
-            <span className="uppercase tracking-wider text-2xs">
-              6. Danh mục Hồ sơ Pháp lý Đầu vào (Mục I.21 TT39)
-            </span>
+            <span className="uppercase tracking-wider text-2xs">6. Danh mục Hồ sơ Pháp lý Đầu vào (Mục I.21 TT39)</span>
           </div>
           <span className="text-3xs font-semibold px-2 py-0.5 rounded bg-emerald-500/10 text-emerald-600">
             {tt39.legalDocs.length} Văn bản kê khai
           </span>
         </div>
 
-        <DossierGrid storageKey={'tt39-documents:'+project.id} rows={tt39.legalDocs.map((doc,index)=>({...doc,id:String(index)}))} columns={[
-          {label:'Loại văn bản',value:r=>r.category,width:170},
-          {label:'Số hiệu',value:r=>r.docNumber,width:160},
-          {label:'Ngày văn bản',value:r=>r.docDate,render:r=>formatDate(r.docDate),width:120},
-          {label:'Cơ quan ban hành',value:r=>r.issuer,width:220},
-          {label:'Trích yếu',value:r=>r.description,width:320},
-          {label:'Trạng thái kê khai',value:r=>r.status,render:r=>r.status==='da_xac_thuc'?'Đã kê khai xác thực':r.status==='can_bo_sung'?'Cần bổ sung':'Chờ đối soát',width:170},
-        ]}/>
-        <p className="text-2xs text-ink-muted dark:text-ink-muted">Trạng thái kê khai cần đối chiếu văn bản gốc; hệ thống chưa xác minh chữ ký số.</p>
+        <DossierGrid
+          storageKey={'tt39-documents:' + project.id}
+          rows={tt39.legalDocs.map((doc, index) => ({ ...doc, id: String(index) }))}
+          columns={[
+            { label: 'Loại văn bản', value: (r) => r.category, width: 170 },
+            { label: 'Số hiệu', value: (r) => r.docNumber, width: 160 },
+            { label: 'Ngày văn bản', value: (r) => r.docDate, render: (r) => formatDate(r.docDate), width: 120 },
+            { label: 'Cơ quan ban hành', value: (r) => r.issuer, width: 220 },
+            { label: 'Trích yếu', value: (r) => r.description, width: 320 },
+            {
+              label: 'Trạng thái kê khai',
+              value: (r) => r.status,
+              render: (r) =>
+                r.status === 'da_xac_thuc'
+                  ? 'Đã kê khai xác thực'
+                  : r.status === 'can_bo_sung'
+                    ? 'Cần bổ sung'
+                    : 'Chờ đối soát',
+              width: 170,
+            },
+          ]}
+        />
+        <p className="text-2xs text-ink-muted dark:text-ink-muted">
+          Trạng thái kê khai cần đối chiếu văn bản gốc; hệ thống chưa xác minh chữ ký số.
+        </p>
       </div>
 
       {/* ─── KHỐI 7: DANH SÁCH CÁC ĐƠN VỊ THAM GIA DỰ ÁN (TT39 MỤC I.20) ─── */}
@@ -510,7 +531,17 @@ function LoadedProjectInfo({project,tt39}:{project:Project;tt39:ProjectTT39Data}
                   <span className="text-3xs font-semibold px-2 py-0.5 rounded bg-primary-500/10 text-primary-700 dark:text-primary-300">
                     {org.role}
                   </span>
-                  <h5 className="font-bold text-ink dark:text-ink text-xs mt-1.5 leading-snug">{project.contractors.find(c=>c.orgName===org.name)?.orgId?<EntityLink type="organization" id={project.contractors.find(c=>c.orgName===org.name)!.orgId} name={org.name}/>:org.name}</h5>
+                  <h5 className="font-bold text-ink dark:text-ink text-xs mt-1.5 leading-snug">
+                    {project.contractors.find((c) => c.orgName === org.name)?.orgId ? (
+                      <EntityLink
+                        type="organization"
+                        id={project.contractors.find((c) => c.orgName === org.name)!.orgId}
+                        name={org.name}
+                      />
+                    ) : (
+                      org.name
+                    )}
+                  </h5>
                 </div>
                 {org.certGrade && (
                   <span className="text-3xs font-mono font-bold px-2 py-0.5 rounded bg-emerald-500/10 text-emerald-700 border border-emerald-500/20 shrink-0">
@@ -565,7 +596,8 @@ function LoadedProjectInfo({project,tt39}:{project:Project;tt39:ProjectTT39Data}
                 </span>
               </div>
               <p className="text-2xs text-ink-muted mt-0.5">
-                Kê khai Chủ nhiệm, Chủ trì theo quy định tại Điểm 20.2, 20.4, 20.5, 20.7, 20.8 Mục 20 Bảng 01 Phụ lục II TT39
+                Kê khai Chủ nhiệm, Chủ trì theo quy định tại Điểm 20.2, 20.4, 20.5, 20.7, 20.8 Mục 20 Bảng 01 Phụ lục II
+                TT39
               </p>
             </div>
 
@@ -604,32 +636,80 @@ function LoadedProjectInfo({project,tt39}:{project:Project;tt39:ProjectTT39Data}
 
             <div className="flex items-center gap-1.5">
               <Filter size={13} className="text-ink-muted" />
-              <SearchableSelect value={selectedOrgFilter} onChange={setSelectedOrgFilter} options={[{value:'all',label:`Tất cả đơn vị tham gia (${tt39.members.length})`},...tt39.participants.map(org=>({value:org.name,label:org.name}))]}/>
+              <SearchableSelect
+                value={selectedOrgFilter}
+                onChange={setSelectedOrgFilter}
+                options={[
+                  { value: 'all', label: `Tất cả đơn vị tham gia (${tt39.members.length})` },
+                  ...tt39.participants.map((org) => ({ value: org.name, label: org.name })),
+                ]}
+              />
             </div>
           </div>
         </div>
 
-        <DossierGrid storageKey={'tt39-members:'+project.id} rows={filteredMembers} columns={[
-          {label:'Thành viên / Họ tên',value:r=>r.fullName,width:220,render:r=>{
-            const id=project.contractors.find(c=>c.leadPersonnelName===r.fullName)?.leadPersonnelId;
-            return id?<EntityLink type="personnel" id={id} name={r.fullName}/>:<span>{r.fullName}</span>;
-          }},
-          {label:'Vai trò trong dự án',value:r=>r.role,width:220,render:r=><div>{r.role}<p className="text-ink-muted dark:text-ink-muted">{r.orgRole}</p></div>},
-          {label:'Chức vụ tại đơn vị',value:r=>r.position,width:170},
-          {label:'Đơn vị',value:r=>r.orgName,width:250,render:r=>{
-            const id=project.contractors.find(c=>c.orgName===r.orgName)?.orgId;
-            return id?<EntityLink type="organization" id={id} name={r.orgName}/>:<span>{r.orgName}</span>;
-          }},
-          {label:'Số CCHN / Hạng',value:r=>r.certNumber,width:180,render:r=><div>{r.certNumber} · Hạng {r.certGrade}<p className="text-ink-muted dark:text-ink-muted">{r.certIssuer}</p></div>},
-          {label:'Lĩnh vực hành nghề',value:r=>r.specialties.join(', '),width:230},
-          {label:'Hạn CCHN',value:r=>r.certExpiry,render:r=>formatDate(r.certExpiry),width:120},
-          {label:'Tình trạng kê khai',value:r=>r.status,render:r=>r.status==='hieu_luc'?'Còn hạn':r.status==='sap_het_han'?'Sắp hết hạn':'Hết hạn',width:160},
-        ]}/>
+        <DossierGrid
+          storageKey={'tt39-members:' + project.id}
+          rows={filteredMembers}
+          columns={[
+            {
+              label: 'Thành viên / Họ tên',
+              value: (r) => r.fullName,
+              width: 220,
+              render: (r) => {
+                const id = project.contractors.find((c) => c.leadPersonnelName === r.fullName)?.leadPersonnelId;
+                return id ? <EntityLink type="personnel" id={id} name={r.fullName} /> : <span>{r.fullName}</span>;
+              },
+            },
+            {
+              label: 'Vai trò trong dự án',
+              value: (r) => r.role,
+              width: 220,
+              render: (r) => (
+                <div>
+                  {r.role}
+                  <p className="text-ink-muted dark:text-ink-muted">{r.orgRole}</p>
+                </div>
+              ),
+            },
+            { label: 'Chức vụ tại đơn vị', value: (r) => r.position, width: 170 },
+            {
+              label: 'Đơn vị',
+              value: (r) => r.orgName,
+              width: 250,
+              render: (r) => {
+                const id = project.contractors.find((c) => c.orgName === r.orgName)?.orgId;
+                return id ? <EntityLink type="organization" id={id} name={r.orgName} /> : <span>{r.orgName}</span>;
+              },
+            },
+            {
+              label: 'Số CCHN / Hạng',
+              value: (r) => r.certNumber,
+              width: 180,
+              render: (r) => (
+                <div>
+                  {r.certNumber} · Hạng {r.certGrade}
+                  <p className="text-ink-muted dark:text-ink-muted">{r.certIssuer}</p>
+                </div>
+              ),
+            },
+            { label: 'Lĩnh vực hành nghề', value: (r) => r.specialties.join(', '), width: 230 },
+            { label: 'Hạn CCHN', value: (r) => r.certExpiry, render: (r) => formatDate(r.certExpiry), width: 120 },
+            {
+              label: 'Tình trạng kê khai',
+              value: (r) => r.status,
+              render: (r) =>
+                r.status === 'hieu_luc' ? 'Còn hạn' : r.status === 'sap_het_han' ? 'Sắp hết hạn' : 'Hết hạn',
+              width: 160,
+            },
+          ]}
+        />
 
         {/* Footer bảng ghi chú */}
         <div className="p-3 border-t border-border bg-subtle/30 flex flex-wrap items-center justify-between text-3xs text-ink-muted gap-2">
           <span>
-            Dữ liệu được lưu trong hồ sơ dự án. Cần đối chiếu chứng chỉ và nguồn chính thức; chưa có kết nối đồng bộ CSDL quốc gia.
+            Dữ liệu được lưu trong hồ sơ dự án. Cần đối chiếu chứng chỉ và nguồn chính thức; chưa có kết nối đồng bộ
+            CSDL quốc gia.
           </span>
           <span className="font-mono">TT39/2026/TT-BXD • Điều 5 & Điều 21</span>
         </div>

@@ -1,4 +1,4 @@
-import React, { useState, useMemo,useEffect } from 'react';
+import React, { useState, useMemo, useEffect } from 'react';
 import {
   LayoutGrid,
   List,
@@ -19,34 +19,68 @@ import { StatusBadge } from '../components/ui/StatusBadge';
 import { SearchableSelect } from '../components/ui/SearchableSelect';
 import { Tooltip } from '../components/ui/Tooltip';
 import type { Project } from '../types/project';
-import {projectService} from '../services/projectService';
-import {useFilterState} from '../hooks/useFilterState';
+import { projectService } from '../services/projectService';
+import { useFilterState } from '../hooks/useFilterState';
 import { cn, formatCurrency, formatDate } from '../lib/utils';
 import { useSlidePanel } from '../context/SlidePanelContext';
 import { ProjectDetailSlidePanel } from './projects/ProjectDetailSlidePanel';
 import { matchesSmartSearch } from '../lib/smartSearch';
-import {useAuth} from '../context/AuthContext';
-import {CreateProjectModal} from '../components/appraisal/CreateProjectModal';
-import {EntityLink} from '../components/ui/EntityLink';
+import { useAuth } from '../context/AuthContext';
+import { CreateProjectModal } from '../components/appraisal/CreateProjectModal';
+import { EntityLink } from '../components/ui/EntityLink';
 
 export function ProjectsPage() {
-  const {mode,profile}=useAuth();const [createOpen,setCreateOpen]=useState(false);const [version,setVersion]=useState(0);
+  const { mode, profile } = useAuth();
+  const [createOpen, setCreateOpen] = useState(false);
+  const [version, setVersion] = useState(0);
   const { openPanel } = useSlidePanel();
-  const [filters,setFilters]=useFilterState('projects-filters-v2',{search:'',group:'all',status:'all',stage:'all'});
-  const [sorting,setSorting]=useFilterState('projects-sort-v1',{key:'submissionDate',direction:'desc'});
-  const searchQuery=filters.search,groupFilter=filters.group,slaFilter=filters.status,stageFilter=filters.stage;
-  const setSearchQuery=(search:string)=>setFilters({...filters,search});
-  const setGroupFilter=(group:string)=>setFilters({...filters,group});
-  const setSlaFilter=(status:string)=>setFilters({...filters,status});
-  const setStageFilter=(stage:string)=>setFilters({...filters,stage});
-  const [viewMode,setViewMode]=useState<'table'|'cards'>('table');
-  const [filteredProjects,setProjects]=useState<Project[]>([]);
-  const [total,setTotal]=useState(0);const [page,setPage]=useState(0);const [error,setError]=useState('');
-  useEffect(()=>{const refresh=()=>setVersion(v=>v+1);window.addEventListener('appraisal:changed',refresh);return()=>window.removeEventListener('appraisal:changed',refresh);},[]);
-  useEffect(()=>setPage(0),[JSON.stringify(filters),JSON.stringify(sorting)]);
-  useEffect(()=>{let active=true;const timer=setTimeout(()=>{
-    projectService.list({...filters,sort:sorting.key,direction:sorting.direction,offset:page*50,limit:50}).then(result=>{if(active){setProjects(result.items);setTotal(result.total);setError('');}}).catch(e=>{if(active)setError(e.message);});
-  },180);return()=>{active=false;clearTimeout(timer);};},[JSON.stringify(filters),JSON.stringify(sorting),page,version]);
+  const [filters, setFilters] = useFilterState('projects-filters-v2', {
+    search: '',
+    group: 'all',
+    status: 'all',
+    stage: 'all',
+  });
+  const [sorting, setSorting] = useFilterState('projects-sort-v1', { key: 'submissionDate', direction: 'desc' });
+  const searchQuery = filters.search,
+    groupFilter = filters.group,
+    slaFilter = filters.status,
+    stageFilter = filters.stage;
+  const setSearchQuery = (search: string) => setFilters({ ...filters, search });
+  const setGroupFilter = (group: string) => setFilters({ ...filters, group });
+  const setSlaFilter = (status: string) => setFilters({ ...filters, status });
+  const setStageFilter = (stage: string) => setFilters({ ...filters, stage });
+  const [viewMode, setViewMode] = useState<'table' | 'cards'>('table');
+  const [filteredProjects, setProjects] = useState<Project[]>([]);
+  const [total, setTotal] = useState(0);
+  const [page, setPage] = useState(0);
+  const [error, setError] = useState('');
+  useEffect(() => {
+    const refresh = () => setVersion((v) => v + 1);
+    window.addEventListener('appraisal:changed', refresh);
+    return () => window.removeEventListener('appraisal:changed', refresh);
+  }, []);
+  useEffect(() => setPage(0), [JSON.stringify(filters), JSON.stringify(sorting)]);
+  useEffect(() => {
+    let active = true;
+    const timer = setTimeout(() => {
+      projectService
+        .list({ ...filters, sort: sorting.key, direction: sorting.direction, offset: page * 50, limit: 50 })
+        .then((result) => {
+          if (active) {
+            setProjects(result.items);
+            setTotal(result.total);
+            setError('');
+          }
+        })
+        .catch((e) => {
+          if (active) setError(e.message);
+        });
+    }, 180);
+    return () => {
+      active = false;
+      clearTimeout(timer);
+    };
+  }, [JSON.stringify(filters), JSON.stringify(sorting), page, version]);
 
   const handleOpenDetail = (project: Project) => {
     openPanel({
@@ -63,8 +97,8 @@ export function ProjectsPage() {
   const columns: Column<Project>[] = [
     {
       header: 'Mã & Tên Dự án',
-      sortValue:p=>p.name,
-      sortKey:'name',
+      sortValue: (p) => p.name,
+      sortKey: 'name',
       accessor: (p) => (
         <div className="flex items-center gap-3 py-1">
           {p.coverImage && (
@@ -85,12 +119,14 @@ export function ProjectsPage() {
           )}
           <div className="flex flex-col min-w-0">
             <span className="font-bold text-ink hover:text-primary-600 transition-colors line-clamp-1">
-              <EntityLink type="project" id={p.id} name={p.name} onClick={()=>handleOpenDetail(p)}/>
+              <EntityLink type="project" id={p.id} name={p.name} onClick={() => handleOpenDetail(p)} />
             </span>
             <div className="flex items-center gap-1.5 mt-0.5 text-3xs font-mono">
               <span className="text-primary-600 dark:text-primary-400 font-bold">{p.code}</span>
               <span className="text-ink-muted">•</span>
-              <span className="text-ink-secondary">Nhóm {p.projectGroup} (Cấp {p.buildingGrade})</span>
+              <span className="text-ink-secondary">
+                Nhóm {p.projectGroup} (Cấp {p.buildingGrade})
+              </span>
             </div>
           </div>
         </div>
@@ -99,38 +135,36 @@ export function ProjectsPage() {
     },
     {
       header: 'Chủ đầu tư / Ban QLDA',
-      sortValue:p=>p.investorName,
-      sortKey:'investorName',
+      sortValue: (p) => p.investorName,
+      sortKey: 'investorName',
       accessor: (p) => (
         <span className="text-ink-secondary dark:text-ink-secondary line-clamp-1">
-          {p.investorId?<EntityLink type="organization" id={p.investorId} name={p.investorName}/>:p.investorName}
+          {p.investorId ? <EntityLink type="organization" id={p.investorId} name={p.investorName} /> : p.investorName}
         </span>
       ),
       width: '20%',
     },
     {
       header: 'Địa bàn (Huyện/Thị)',
-      sortValue:p=>p.location,
-      sortKey:'location',
+      sortValue: (p) => p.location,
+      sortKey: 'location',
       accessor: (p) => <span className="text-ink-secondary truncate">{p.location}</span>,
       width: '13%',
     },
     {
       header: 'Tổng mức đầu tư',
-      sortValue:p=>p.totalInvestment??0,
-      sortKey:'totalInvestment',
+      sortValue: (p) => p.totalInvestment ?? 0,
+      sortKey: 'totalInvestment',
       accessor: (p) => (
-        <span className="font-mono font-bold text-ink text-right block">
-          {formatCurrency(p.totalInvestment)}
-        </span>
+        <span className="font-mono font-bold text-ink text-right block">{formatCurrency(p.totalInvestment)}</span>
       ),
       className: 'text-right',
       width: '13%',
     },
     {
       header: 'Giai đoạn',
-      sortValue:p=>p.stage,
-      sortKey:'stage',
+      sortValue: (p) => p.stage,
+      sortKey: 'stage',
       accessor: (p) => (
         <div className="text-center">
           <span className="px-2 py-0.5 rounded-md bg-subtle border border-border text-2xs font-semibold text-ink-secondary uppercase">
@@ -143,8 +177,8 @@ export function ProjectsPage() {
     },
     {
       header: 'Trạng thái SLA',
-      sortValue:p=>p.slaStatus,
-      sortKey:'slaStatus',
+      sortValue: (p) => p.slaStatus,
+      sortKey: 'slaStatus',
       accessor: (p) => (
         <div className="text-center">
           <StatusBadge status={p.slaStatus} />
@@ -157,59 +191,134 @@ export function ProjectsPage() {
 
   return (
     <div className="space-y-4">
-      {createOpen&&<CreateProjectModal onClose={()=>setCreateOpen(false)} onCreated={p=>{setCreateOpen(false);setVersion(v=>v+1);handleOpenDetail(p);}}/>}
-      {error&&<p role="alert" className="rounded-lg bg-red-50 dark:bg-red-950 p-3 text-red-700 dark:text-red-300">{error}</p>}
-      <div className="flex gap-3 text-sm text-ink dark:text-ink"><button disabled={page===0} onClick={()=>setPage(p=>p-1)}>Trang trước</button><span>Trang {page+1} · {total} dự án</span><button disabled={(page+1)*50>=total} onClick={()=>setPage(p=>p+1)}>Trang sau</button></div>
+      {createOpen && (
+        <CreateProjectModal
+          onClose={() => setCreateOpen(false)}
+          onCreated={(p) => {
+            setCreateOpen(false);
+            setVersion((v) => v + 1);
+            handleOpenDetail(p);
+          }}
+        />
+      )}
+      {error && (
+        <p role="alert" className="rounded-lg bg-red-50 dark:bg-red-950 p-3 text-red-700 dark:text-red-300">
+          {error}
+        </p>
+      )}
+      <div className="flex gap-3 text-sm text-ink dark:text-ink">
+        <button disabled={page === 0} onClick={() => setPage((p) => p - 1)}>
+          Trang trước
+        </button>
+        <span>
+          Trang {page + 1} · {total} dự án
+        </span>
+        <button disabled={(page + 1) * 50 >= total} onClick={() => setPage((p) => p + 1)}>
+          Trang sau
+        </button>
+      </div>
       {/* ─── THANH CÔNG CỤ LỌC CHUẨN 5 VỊ TRÍ + CHẾ ĐỘ XEM ─── */}
       <GridToolbar
-        search={<GridSearchInput value={searchQuery} onChange={setSearchQuery} label="Tìm dự án" placeholder="Tìm theo tên dự án, mã hồ sơ, chủ đầu tư, địa bàn..." />}
-        classification={<>
-          <div className="w-40"><SearchableSelect value={stageFilter} onChange={setStageFilter} options={[
-            { value: 'all', label: 'Tất cả giai đoạn' },
-            { value: 'bcnckt', label: 'Thẩm định BCNCKT' },
-            { value: 'gpxd', label: 'Cấp giấy phép XD' },
-            { value: 'nghiem_thu', label: 'Kiểm tra nghiệm thu' },
-          ]} /></div>
-          <div className="w-36"><SearchableSelect value={groupFilter} onChange={setGroupFilter} options={[
-            { value: 'all', label: 'Tất cả nhóm DA' },
-            { value: 'A', label: 'Dự án nhóm A' },
-            { value: 'B', label: 'Dự án nhóm B' },
-            { value: 'C', label: 'Dự án nhóm C' },
-          ]} /></div>
-        </>}
-        status={<div className="w-40"><SearchableSelect value={slaFilter} onChange={setSlaFilter} options={[
-          { value: 'all', label: 'Tất cả trạng thái' },
-          { value: 'dang_tham_dinh', label: 'Đang thẩm định' },
-          { value: 'yeu_cau_bo_sung', label: 'Yêu cầu bổ sung' },
-          { value: 'da_tham_dinh', label: 'Đã có kết quả' },
-          { value: 'qua_han', label: 'Quá hạn SLA' },
-        ]} /></div>}
-        onReset={() => setFilters({search:'',group:'all',status:'all',stage:'all'})}
-        count={<GridCount total={total} unit="dự án" />}
-        actions={<>
-          <div className="flex items-center rounded-lg border border-border dark:border-slate-700 bg-subtle dark:bg-slate-800 p-0.5">
-            {([['table', 'Chế độ xem bảng chi tiết', List], ['cards', 'Chế độ xem lưới thẻ phối cảnh & hình ảnh', LayoutGrid]] as const).map(([view, label, Icon]) => (
-              <Tooltip key={view} content={label} placement="top">
-                <button type="button" aria-label={label} aria-pressed={viewMode === view} onClick={() => setViewMode(view)}
-                  className={cn('rounded-md p-1.5 transition-all', viewMode === view ? 'bg-surface dark:bg-slate-900 text-ink dark:text-slate-100 shadow-xs' : 'text-ink-muted dark:text-slate-400 hover:text-ink dark:hover:text-slate-100')}>
-                  <Icon size={15} />
-                </button>
-              </Tooltip>
-            ))}
+        search={
+          <GridSearchInput
+            value={searchQuery}
+            onChange={setSearchQuery}
+            label="Tìm dự án"
+            placeholder="Tìm theo tên dự án, mã hồ sơ, chủ đầu tư, địa bàn..."
+          />
+        }
+        classification={
+          <>
+            <div className="w-40">
+              <SearchableSelect
+                value={stageFilter}
+                onChange={setStageFilter}
+                options={[
+                  { value: 'all', label: 'Tất cả giai đoạn' },
+                  { value: 'bcnckt', label: 'Thẩm định BCNCKT' },
+                  { value: 'gpxd', label: 'Cấp giấy phép XD' },
+                  { value: 'nghiem_thu', label: 'Kiểm tra nghiệm thu' },
+                ]}
+              />
+            </div>
+            <div className="w-36">
+              <SearchableSelect
+                value={groupFilter}
+                onChange={setGroupFilter}
+                options={[
+                  { value: 'all', label: 'Tất cả nhóm DA' },
+                  { value: 'A', label: 'Dự án nhóm A' },
+                  { value: 'B', label: 'Dự án nhóm B' },
+                  { value: 'C', label: 'Dự án nhóm C' },
+                ]}
+              />
+            </div>
+          </>
+        }
+        status={
+          <div className="w-40">
+            <SearchableSelect
+              value={slaFilter}
+              onChange={setSlaFilter}
+              options={[
+                { value: 'all', label: 'Tất cả trạng thái' },
+                { value: 'dang_tham_dinh', label: 'Đang thẩm định' },
+                { value: 'yeu_cau_bo_sung', label: 'Yêu cầu bổ sung' },
+                { value: 'da_tham_dinh', label: 'Đã có kết quả' },
+                { value: 'qua_han', label: 'Quá hạn SLA' },
+              ]}
+            />
           </div>
-          {mode==='cloud'&&['admin','officer','head_of_department'].includes(profile?.role||'')&&(
-            <button type="button" onClick={()=>setCreateOpen(true)} className="flex items-center gap-1.5 rounded-lg bg-primary-500 px-3 py-2 text-xs font-semibold text-white shadow-sm transition-colors hover:bg-primary-600 dark:bg-primary-500 dark:text-white dark:hover:bg-primary-600">
-              <Plus size={14} /><span>Tiếp nhận dự án</span>
-            </button>
-          )}
-        </>}
+        }
+        onReset={() => setFilters({ search: '', group: 'all', status: 'all', stage: 'all' })}
+        count={<GridCount total={total} unit="dự án" />}
+        actions={
+          <>
+            <div className="flex items-center rounded-lg border border-border dark:border-slate-700 bg-subtle dark:bg-slate-800 p-0.5">
+              {(
+                [
+                  ['table', 'Chế độ xem bảng chi tiết', List],
+                  ['cards', 'Chế độ xem lưới thẻ phối cảnh & hình ảnh', LayoutGrid],
+                ] as const
+              ).map(([view, label, Icon]) => (
+                <Tooltip key={view} content={label} placement="top">
+                  <button
+                    type="button"
+                    aria-label={label}
+                    aria-pressed={viewMode === view}
+                    onClick={() => setViewMode(view)}
+                    className={cn(
+                      'rounded-md p-1.5 transition-all',
+                      viewMode === view
+                        ? 'bg-surface dark:bg-slate-900 text-ink dark:text-slate-100 shadow-xs'
+                        : 'text-ink-muted dark:text-slate-400 hover:text-ink dark:hover:text-slate-100',
+                    )}
+                  >
+                    <Icon size={15} />
+                  </button>
+                </Tooltip>
+              ))}
+            </div>
+            {mode === 'cloud' && ['admin', 'officer', 'head_of_department'].includes(profile?.role || '') && (
+              <button
+                type="button"
+                onClick={() => setCreateOpen(true)}
+                className="flex items-center gap-1.5 rounded-lg bg-primary-500 px-3 py-2 text-xs font-semibold text-white shadow-sm transition-colors hover:bg-primary-600 dark:bg-primary-500 dark:text-white dark:hover:bg-primary-600"
+              >
+                <Plus size={14} />
+                <span>Tiếp nhận dự án</span>
+              </button>
+            )}
+          </>
+        }
       />
 
       {/* ─── NỘI DUNG THEO CHẾ ĐỘ XEM ─── */}
       {viewMode === 'table' ? (
         <MasterTable
           storageKey="projects-grid"
-          serverSort={sorting} onSort={(key,direction)=>setSorting({key,direction})}
+          serverSort={sorting}
+          onSort={(key, direction) => setSorting({ key, direction })}
           columns={columns}
           data={filteredProjects}
           onRowClick={handleOpenDetail}
@@ -229,7 +338,10 @@ export function ProjectsPage() {
                 {/* Ảnh bìa phối cảnh nổi bật */}
                 <div className="relative aspect-[16/10] overflow-hidden bg-slate-950">
                   <img
-                    src={p.coverImage || 'https://images.unsplash.com/photo-1541888946425-d0fbb186c5f7?auto=format&fit=crop&w=1200&q=80'}
+                    src={
+                      p.coverImage ||
+                      'https://images.unsplash.com/photo-1541888946425-d0fbb186c5f7?auto=format&fit=crop&w=1200&q=80'
+                    }
                     alt={p.name}
                     className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 ease-out"
                     loading="lazy"

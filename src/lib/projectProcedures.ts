@@ -5,6 +5,9 @@ export const PROJECT_PROCEDURES = {
   nghiem_thu: { label: 'Hậu kiểm & Nghiệm thu', path: '/projects/inspections' },
 } as const;
 export const SUBMISSION_STATUS: Record<string, string> = {
-  intake: 'Tiếp nhận', analyzing: 'Đang kiểm tra', analyzed: 'Đã kiểm tra',
-  request_supplement: 'Yêu cầu bổ sung', reviewed: 'Đã rà soát nội bộ',
+  intake: 'Tiếp nhận',
+  analyzing: 'Đang kiểm tra',
+  analyzed: 'Đã kiểm tra',
+  request_supplement: 'Yêu cầu bổ sung',
+  reviewed: 'Đã rà soát nội bộ',
 };

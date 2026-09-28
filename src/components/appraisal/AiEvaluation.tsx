@@ -1,8 +1,62 @@
-import React,{useState} from 'react';
-import {apiRequest} from '../../services/apiClient';
-import {DossierGrid} from './DossierGrid';
-type Result={total:number;hits:number;notice:string;items:{id:string;question:string;expected:string;hit:boolean;rank:number|null}[]};
-export function AiEvaluation(){
- const [result,setResult]=useState<Result|null>(null),[busy,setBusy]=useState(false),[error,setError]=useState('');
- return <section className="rounded-xl border border-border dark:border-border bg-surface dark:bg-surface p-5 space-y-3 text-ink dark:text-ink"><h2 className="font-semibold">Đánh giá tìm nguồn pháp lý</h2><p className="text-sm text-ink-muted dark:text-ink-muted">10 tình huống tham chiếu Điều 18, 27, 57–64 NĐ 217 và Điều 27–28 NĐ 207. Chạy trên kho hiện tại, không gọi mô hình và không phát sinh phí AI.</p><button className="rounded-lg bg-primary-500 dark:bg-primary-500 text-white dark:text-white px-3 py-2 text-sm disabled:opacity-50" disabled={busy} onClick={async()=>{setBusy(true);setError('');try{setResult(await apiRequest<Result>('/legal-assistant/evaluation'));}catch(e){setError((e as Error).message);}finally{setBusy(false);}}}>{busy?'Đang đánh giá…':'Đánh giá kho nguồn'}</button>{error&&<p role="alert" className="text-red-700 dark:text-red-300">{error}</p>}{result&&<><p className="font-medium">Tìm đúng điều khoản: {result.hits}/{result.total}</p><p className="text-sm text-ink-muted dark:text-ink-muted">{result.notice}</p><DossierGrid storageKey="ai-retrieval-evaluation" rows={result.items} columns={[{label:'Tình huống',value:r=>r.question,width:420},{label:'Nguồn cần tìm',value:r=>r.expected,width:250},{label:'Kết quả',value:r=>r.hit?'Tìm thấy ở vị trí '+r.rank:'Chưa tìm thấy'}]}/></>}</section>;
+import React, { useState } from 'react';
+import { apiRequest } from '../../services/apiClient';
+import { DossierGrid } from './DossierGrid';
+type Result = {
+  total: number;
+  hits: number;
+  notice: string;
+  items: { id: string; question: string; expected: string; hit: boolean; rank: number | null }[];
+};
+export function AiEvaluation() {
+  const [result, setResult] = useState<Result | null>(null),
+    [busy, setBusy] = useState(false),
+    [error, setError] = useState('');
+  return (
+    <section className="rounded-xl border border-border dark:border-border bg-surface dark:bg-surface p-5 space-y-3 text-ink dark:text-ink">
+      <h2 className="font-semibold">Đánh giá tìm nguồn pháp lý</h2>
+      <p className="text-sm text-ink-muted dark:text-ink-muted">
+        10 tình huống tham chiếu Điều 18, 27, 57–64 NĐ 217 và Điều 27–28 NĐ 207. Chạy trên kho hiện tại, không gọi mô
+        hình và không phát sinh phí AI.
+      </p>
+      <button
+        className="rounded-lg bg-primary-500 dark:bg-primary-500 text-white dark:text-white px-3 py-2 text-sm disabled:opacity-50"
+        disabled={busy}
+        onClick={async () => {
+          setBusy(true);
+          setError('');
+          try {
+            setResult(await apiRequest<Result>('/legal-assistant/evaluation'));
+          } catch (e) {
+            setError((e as Error).message);
+          } finally {
+            setBusy(false);
+          }
+        }}
+      >
+        {busy ? 'Đang đánh giá…' : 'Đánh giá kho nguồn'}
+      </button>
+      {error && (
+        <p role="alert" className="text-red-700 dark:text-red-300">
+          {error}
+        </p>
+      )}
+      {result && (
+        <>
+          <p className="font-medium">
+            Tìm đúng điều khoản: {result.hits}/{result.total}
+          </p>
+          <p className="text-sm text-ink-muted dark:text-ink-muted">{result.notice}</p>
+          <DossierGrid
+            storageKey="ai-retrieval-evaluation"
+            rows={result.items}
+            columns={[
+              { label: 'Tình huống', value: (r) => r.question, width: 420 },
+              { label: 'Nguồn cần tìm', value: (r) => r.expected, width: 250 },
+              { label: 'Kết quả', value: (r) => (r.hit ? 'Tìm thấy ở vị trí ' + r.rank : 'Chưa tìm thấy') },
+            ]}
+          />
+        </>
+      )}
+    </section>
+  );
 }

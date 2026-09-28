@@ -5,8 +5,8 @@ import { useSlidePanel, type SlidePanelEntry } from '../context/SlidePanelContex
 import { Tooltip } from './ui/Tooltip';
 
 // ─── Constants theo chuẩn qlda-ddcn-ht-selfhost ────────────────────────────────
-const TAB_WIDTH = 34;        // px — chiều rộng tai thỏ
-const TAB_LENGTH = 142;      // px — chiều cao tai thỏ
+const TAB_WIDTH = 34; // px — chiều rộng tai thỏ
+const TAB_LENGTH = 142; // px — chiều cao tai thỏ
 const MIN_PANEL_WIDTH = 420; // px — chiều rộng tối thiểu của panel
 
 // Độ rộng Full màn hình: chiếm tối đa không gian, chừa vừa vặn lề cột tai thỏ (TAB_WIDTH + 8px = 42px)
@@ -18,7 +18,7 @@ const getFullPanelWidth = () => {
 // Độ rộng chuẩn (khi thu nhỏ về chế độ 60% để xem đồng thời bảng danh sách)
 const getStandardPanelWidth = () => {
   if (typeof window === 'undefined') return 860;
-  return Math.max(MIN_PANEL_WIDTH, Math.min(1150, Math.round(window.innerWidth * 0.60)));
+  return Math.max(MIN_PANEL_WIDTH, Math.min(1150, Math.round(window.innerWidth * 0.6)));
 };
 
 // ─── Viên tay cầm kéo dãn chiều rộng (Grab Handle Pill) ────────────────────────
@@ -40,7 +40,7 @@ const ResizeHandle: React.FC<ResizeHandleProps> = ({ onPointerDown, resizing }) 
         'h-full w-0.5 transition-colors',
         resizing
           ? 'w-1 bg-primary-500 shadow-xs shadow-primary-500/40'
-          : 'bg-transparent group-hover:w-1 group-hover:bg-primary-400/70'
+          : 'bg-transparent group-hover:w-1 group-hover:bg-primary-400/70',
       )}
     />
 
@@ -50,12 +50,27 @@ const ResizeHandle: React.FC<ResizeHandleProps> = ({ onPointerDown, resizing }) 
         'pointer-events-none absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 flex h-12 w-3.5 flex-col items-center justify-center gap-1 rounded-full border shadow-md transition-all',
         resizing
           ? 'border-primary-500 bg-primary-500 text-white scale-110 shadow-primary-500/30 ring-2 ring-primary-400/30'
-          : 'border-border bg-surface text-ink-muted group-hover:scale-105 group-hover:border-primary-400 group-hover:bg-primary-50 group-hover:text-primary-500 dark:border-slate-700 dark:bg-slate-800'
+          : 'border-border bg-surface text-ink-muted group-hover:scale-105 group-hover:border-primary-400 group-hover:bg-primary-50 group-hover:text-primary-500 dark:border-slate-700 dark:bg-slate-800',
       )}
     >
-      <span className={cn('h-1 w-1 rounded-full transition-colors', resizing ? 'bg-white' : 'bg-ink-muted/70 group-hover:bg-primary-500')} />
-      <span className={cn('h-1 w-1 rounded-full transition-colors', resizing ? 'bg-white' : 'bg-ink-muted/70 group-hover:bg-primary-500')} />
-      <span className={cn('h-1 w-1 rounded-full transition-colors', resizing ? 'bg-white' : 'bg-ink-muted/70 group-hover:bg-primary-500')} />
+      <span
+        className={cn(
+          'h-1 w-1 rounded-full transition-colors',
+          resizing ? 'bg-white' : 'bg-ink-muted/70 group-hover:bg-primary-500',
+        )}
+      />
+      <span
+        className={cn(
+          'h-1 w-1 rounded-full transition-colors',
+          resizing ? 'bg-white' : 'bg-ink-muted/70 group-hover:bg-primary-500',
+        )}
+      />
+      <span
+        className={cn(
+          'h-1 w-1 rounded-full transition-colors',
+          resizing ? 'bg-white' : 'bg-ink-muted/70 group-hover:bg-primary-500',
+        )}
+      />
     </div>
   </div>
 );
@@ -107,7 +122,7 @@ export function SlidePanelStack({ sidebarWidth: propSidebarWidth }: SlidePanelSt
     if (typeof window === 'undefined') return 800;
     const sbW = getSidebarWidth();
     const availableW = window.innerWidth - sbW;
-    return Math.max(MIN_PANEL_WIDTH, Math.min(1050, Math.round(availableW * 0.60)));
+    return Math.max(MIN_PANEL_WIDTH, Math.min(1050, Math.round(availableW * 0.6)));
   }, [getSidebarWidth]);
 
   // Khôi phục độ rộng đã lưu từ localStorage (nếu có)
@@ -157,7 +172,7 @@ export function SlidePanelStack({ sidebarWidth: propSidebarWidth }: SlidePanelSt
     const startX = e.clientX;
     const currentW = isMax
       ? getFullPanelWidth()
-      : (panelWidths[topPanel.id] || topPanel.defaultWidth || getStandardPanelWidth());
+      : panelWidths[topPanel.id] || topPanel.defaultWidth || getStandardPanelWidth();
 
     // Khi người dùng chủ động kéo tay, chuyển trạng thái Maximize sang false
     setMaximizedPanels((prev) => ({ ...prev, [topPanel.id]: false }));
@@ -176,10 +191,7 @@ export function SlidePanelStack({ sidebarWidth: propSidebarWidth }: SlidePanelSt
       window.removeEventListener('pointerup', handlePointerUp);
 
       if (topPanel.storageKey) {
-        localStorage.setItem(
-          topPanel.storageKey,
-          String(panelWidths[topPanel.id] || currentW)
-        );
+        localStorage.setItem(topPanel.storageKey, String(panelWidths[topPanel.id] || currentW));
       }
     };
 
@@ -194,7 +206,7 @@ export function SlidePanelStack({ sidebarWidth: propSidebarWidth }: SlidePanelSt
 
   const currentWidth = isTopMaximized
     ? getFullPanelWidth()
-    : (panelWidths[topPanel.id] || topPanel.defaultWidth || getStandardPanelWidth());
+    : panelWidths[topPanel.id] || topPanel.defaultWidth || getStandardPanelWidth();
 
   return (
     <div className="fixed inset-0 z-50 pointer-events-none overflow-hidden">
@@ -245,12 +257,14 @@ export function SlidePanelStack({ sidebarWidth: propSidebarWidth }: SlidePanelSt
                   'pointer-events-auto group flex flex-col items-center gap-1.5 rounded-l-xl border border-r-0 pb-2 pt-2.5 shadow-md transition-all duration-150 select-none cursor-pointer',
                   isActive
                     ? 'border-primary-600 bg-primary-600 dark:bg-primary-500 text-white shadow-primary-900/20 z-10 scale-[1.02] origin-right'
-                    : 'border-border bg-surface text-ink-secondary hover:border-primary-300 hover:bg-primary-50 hover:text-primary-600 dark:border-slate-700 dark:bg-slate-800 dark:hover:bg-primary-900/30 hover:scale-[1.01] origin-right'
+                    : 'border-border bg-surface text-ink-secondary hover:border-primary-300 hover:bg-primary-50 hover:text-primary-600 dark:border-slate-700 dark:bg-slate-800 dark:hover:bg-primary-900/30 hover:scale-[1.01] origin-right',
                 )}
                 style={{ width: TAB_WIDTH, height: TAB_LENGTH }}
               >
                 {/* 1. Icon trên cùng của tai thỏ */}
-                <span className={cn('shrink-0', isActive ? 'text-white/90' : 'text-ink-muted group-hover:text-primary-500')}>
+                <span
+                  className={cn('shrink-0', isActive ? 'text-white/90' : 'text-ink-muted group-hover:text-primary-500')}
+                >
                   {panel.icon ?? <FileText size={14} />}
                 </span>
 
@@ -332,7 +346,7 @@ export function SlidePanelStack({ sidebarWidth: propSidebarWidth }: SlidePanelSt
                 key={panel.id}
                 className={cn(
                   'absolute inset-0 flex flex-col bg-surface',
-                  isActive ? 'z-20 opacity-100 pointer-events-auto' : 'z-10 opacity-0 pointer-events-none'
+                  isActive ? 'z-20 opacity-100 pointer-events-auto' : 'z-10 opacity-0 pointer-events-none',
                 )}
                 style={{
                   visibility: isActive ? 'visible' : 'hidden',
@@ -354,9 +368,7 @@ export function SlidePanelStack({ sidebarWidth: propSidebarWidth }: SlidePanelSt
                       )}
                       <span>{panel.title}</span>
                     </h3>
-                    {panel.subtitle && (
-                      <p className="text-2xs text-ink-muted truncate mt-0.5">{panel.subtitle}</p>
-                    )}
+                    {panel.subtitle && <p className="text-2xs text-ink-muted truncate mt-0.5">{panel.subtitle}</p>}
                   </div>
 
                   {/* Cụm nút Thao tác: Toggle Maximize/Full & Đóng X (đặt absolute góc phải) */}
@@ -393,9 +405,7 @@ export function SlidePanelStack({ sidebarWidth: propSidebarWidth }: SlidePanelSt
                 </div>
 
                 {/* Nội dung bên trong Panel */}
-                <div className="flex-1 overflow-y-auto p-5 overflow-x-hidden">
-                  {panel.component}
-                </div>
+                <div className="flex-1 overflow-y-auto p-5 overflow-x-hidden">{panel.component}</div>
               </div>
             );
           })}
