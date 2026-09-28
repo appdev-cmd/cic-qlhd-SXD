@@ -43,6 +43,16 @@ import '../../styles/dashboard.css';
 
 const muted = 'text-ink-muted dark:text-slate-400';
 const card = 'min-w-0 rounded-2xl border border-border dark:border-slate-800 bg-surface dark:bg-slate-900 shadow-sm';
+const SLA_ORDER = [
+  'overdue',
+  'due_soon',
+  'on_track',
+  'paused',
+  'unconfigured',
+  'completed',
+  'completed_late',
+  'superseded',
+];
 const axis = { fill: 'var(--text-muted)', fontSize: 11 };
 
 function ChartCard({
@@ -238,15 +248,17 @@ export function CloudDashboard() {
                 </p>
               </div>
               <div className="grid grid-cols-2 gap-3 sm:grid-cols-4 xl:grid-cols-8">
-                {data.sla.map((item) => {
-                  const style = SLA_STATES[item.id as SlaStateId];
-                  return (
-                    <div key={item.id} className={`rounded-xl border px-3 py-2.5 ${style?.className || ''}`}>
-                      <p className="text-xs">{style?.label || item.id}</p>
-                      <p className="mt-1 text-xl font-bold tabular-nums">{number(item.total)}</p>
-                    </div>
-                  );
-                })}
+                {[...data.sla]
+                  .sort((a, b) => SLA_ORDER.indexOf(a.id) - SLA_ORDER.indexOf(b.id))
+                  .map((item) => {
+                    const style = SLA_STATES[item.id as SlaStateId];
+                    return (
+                      <div key={item.id} className={`rounded-xl border px-3 py-2.5 ${style?.className || ''}`}>
+                        <p className="text-xs">{style?.label || item.id}</p>
+                        <p className="mt-1 text-xl font-bold tabular-nums">{number(item.total)}</p>
+                      </div>
+                    );
+                  })}
               </div>
             </section>
           )}
