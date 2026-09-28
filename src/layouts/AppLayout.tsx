@@ -70,6 +70,14 @@ export function AppLayout() {
   const userDepartment=profile?.department||'Phòng Quản lý Xây dựng';
   const initials=userName.split(' ').slice(-2).map(s=>s[0]).join('');
   const [isCollapsed, setIsCollapsed] = useState(false);
+  const [isSmallScreen, setIsSmallScreen] = useState(() => window.matchMedia('(max-width: 767px)').matches);
+  const compactMenu = isCollapsed || isSmallScreen;
+  useEffect(() => {
+    const media = window.matchMedia('(max-width: 767px)');
+    const update = () => setIsSmallScreen(media.matches);
+    media.addEventListener('change', update);
+    return () => media.removeEventListener('change', update);
+  }, []);
   const [userMenuOpen, setUserMenuOpen] = useState(false);
   const userMenuRef = useRef<HTMLDivElement>(null);
   const { theme, setTheme, primaryColor, setPrimaryColor, zoom, setZoom } = useTheme();
@@ -107,7 +115,7 @@ export function AppLayout() {
     <div className="flex h-screen w-screen overflow-hidden bg-page text-ink select-none">
       {/* ─── SIDEBAR TRÁI ─── */}
       <aside
-        style={{ width: isCollapsed ? '76px' : '272px' }}
+        style={{ width: compactMenu ? '76px' : '272px' }}
         className={cn(
           'h-full border-r border-border bg-surface flex flex-col justify-between shrink-0 transition-all duration-300 z-30'
         )}
@@ -124,7 +132,7 @@ export function AppLayout() {
                 </div>
               </div>
 
-              {!isCollapsed && (
+              {!compactMenu && (
                 <div className="flex flex-col min-w-0 justify-center flex-1 pr-1">
                   {/* Dòng trên: UBND TỈNH ĐIỆN BIÊN — Vàng ánh kim */}
                   <h2 className="text-gold-metallic text-[11.5px] font-black uppercase tracking-wider leading-tight whitespace-nowrap">
@@ -148,7 +156,7 @@ export function AppLayout() {
               type="button"
               onClick={() => setIsCollapsed(!isCollapsed)}
               aria-label={isCollapsed ? 'Mở rộng menu' : 'Thu gọn menu'}
-              className="p-1.5 rounded-lg hover:bg-subtle text-ink-muted hover:text-ink transition-colors shrink-0"
+              className="hidden md:block p-1.5 rounded-lg hover:bg-subtle dark:hover:bg-slate-800 text-ink-muted dark:text-slate-400 hover:text-ink dark:hover:text-slate-200 transition-colors shrink-0"
             >
               {isCollapsed ? <ChevronRight size={16} /> : <ChevronLeft size={16} />}
             </button>
@@ -163,23 +171,23 @@ export function AppLayout() {
               return <div key={item.to}>
                 <div className="flex items-center gap-1 [&>div:first-child]:flex-1 [&>div:first-child]:min-w-0">
                   <Tooltip content={item.label} placement="right">
-                    <NavLink to={item.to} end aria-label={item.label} className={cn('flex flex-1 items-center gap-3 px-3 py-2.5 rounded-xl text-xs transition-colors',active||parentActive?'bg-primary-50 dark:bg-slate-800 text-primary-800 dark:text-primary-300 font-semibold':'text-ink-secondary dark:text-ink-secondary hover:bg-subtle dark:hover:bg-subtle',isCollapsed&&'justify-center px-1')}>
+                    <NavLink to={item.to} end aria-label={item.label} className={cn('flex flex-1 items-center gap-3 px-3 py-2.5 rounded-xl text-xs transition-colors',active||parentActive?'bg-primary-50 dark:bg-slate-800 text-primary-800 dark:text-primary-300 font-semibold':'text-ink-secondary dark:text-ink-secondary hover:bg-subtle dark:hover:bg-subtle',compactMenu&&'justify-center px-1')}>
                       <Icon size={18} className="shrink-0"/>
-                      {!isCollapsed&&<span className="flex-1">{item.label}</span>}
-                      {!isCollapsed&&item.badge&&<span className="text-[10px] rounded-full bg-slate-100 dark:bg-slate-700 px-1.5">{item.badge}</span>}
+                      {!compactMenu&&<span className="flex-1">{item.label}</span>}
+                      {!compactMenu&&item.badge&&<span className="text-[10px] rounded-full bg-slate-100 dark:bg-slate-700 px-1.5">{item.badge}</span>}
                     </NavLink>
                   </Tooltip>
-                  {item.children&&!isCollapsed&&<Tooltip content={projectsExpanded?'Thu gọn phân hệ dự án':'Mở phân hệ dự án'} placement="right"><button type="button" aria-label="Các phân hệ quản lý dự án" aria-expanded={projectsExpanded} onClick={()=>setProjectsExpanded(!projectsExpanded)} className="p-1.5 rounded-lg text-ink-secondary dark:text-ink-secondary hover:bg-subtle dark:hover:bg-subtle">{projectsExpanded?<ChevronDown size={14}/>:<ChevronRight size={14}/>}</button></Tooltip>}
+                  {item.children&&!compactMenu&&<Tooltip content={projectsExpanded?'Thu gọn phân hệ dự án':'Mở phân hệ dự án'} placement="right"><button type="button" aria-label="Các phân hệ quản lý dự án" aria-expanded={projectsExpanded} onClick={()=>setProjectsExpanded(!projectsExpanded)} className="p-1.5 rounded-lg text-ink-secondary dark:text-ink-secondary hover:bg-subtle dark:hover:bg-subtle">{projectsExpanded?<ChevronDown size={14}/>:<ChevronRight size={14}/>}</button></Tooltip>}
                 </div>
-                {item.children&&(projectsExpanded||isCollapsed)&&<div className={cn('space-y-1 mt-1 [&>div]:block',!isCollapsed&&'ml-5 pl-2 border-l border-border dark:border-border')}>
-                  {item.children.map(child=>{const ChildIcon=child.icon;const selected=location.pathname===child.to;return <Tooltip key={child.to} content={child.label} placement="right"><NavLink to={child.to} aria-label={child.label} className={cn('flex items-center gap-2 rounded-lg px-2 py-2.5 text-xs',selected?'bg-primary-100 dark:bg-primary-900 text-primary-800 dark:text-primary-200 font-semibold':'text-ink-secondary dark:text-ink-secondary hover:bg-subtle dark:hover:bg-subtle',isCollapsed&&'justify-center')}><ChildIcon size={15} className="shrink-0"/>{!isCollapsed&&<span>{child.label}</span>}</NavLink></Tooltip>;})}
+                {item.children&&(projectsExpanded||compactMenu)&&<div className={cn('space-y-1 mt-1 [&>div]:block',!compactMenu&&'ml-5 pl-2 border-l border-border dark:border-border')}>
+                  {item.children.map(child=>{const ChildIcon=child.icon;const selected=location.pathname===child.to;return <Tooltip key={child.to} content={child.label} placement="right"><NavLink to={child.to} aria-label={child.label} className={cn('flex items-center gap-2 rounded-lg px-2 py-2.5 text-xs',selected?'bg-primary-100 dark:bg-primary-900 text-primary-800 dark:text-primary-200 font-semibold':'text-ink-secondary dark:text-ink-secondary hover:bg-subtle dark:hover:bg-subtle',compactMenu&&'justify-center')}><ChildIcon size={15} className="shrink-0"/>{!compactMenu&&<span>{child.label}</span>}</NavLink></Tooltip>;})}
                 </div>}
               </div>;
             })}
           </nav>
 
           {/* Footer Sidebar (Thông tin quy định pháp lý) */}
-          {!isCollapsed && (
+          {!compactMenu && (
             <div className="p-3.5 border-t border-border bg-subtle/50 text-3xs text-ink-muted leading-tight shrink-0">
               <p className="font-bold text-ink">BCNCKT: căn cứ theo thời điểm hồ sơ</p>
               <p className="mt-0.5">Kết quả tự động cần chuyên viên rà soát</p>
@@ -191,13 +199,13 @@ export function AppLayout() {
       {/* ─── NỘI DUNG CHÍNH (HEADER + MAIN VIEW) ─── */}
       <div className="flex-1 flex flex-col h-full min-w-0 overflow-hidden">
         {/* Header trên cùng */}
-        <header className="h-16 px-6 border-b border-border bg-surface flex items-center justify-between shrink-0 z-20">
+        <header className="h-16 px-3 sm:px-6 border-b border-border dark:border-slate-800 bg-surface dark:bg-slate-900 flex items-center justify-between gap-3 shrink-0 z-20">
           {/* Tiêu đề trang / Breadcrumb */}
-          <div className="flex items-center gap-3">
-            <div className="flex items-center gap-2 text-xs font-semibold text-ink-muted">
-              <span>Hệ thống Nghiệp vụ Thẩm định</span>
-              <span>/</span>
-              <span className="text-ink font-bold">
+          <div className="flex min-w-0 items-center gap-3">
+            <div className="flex min-w-0 items-center gap-2 text-xs font-semibold text-ink-muted dark:text-slate-400">
+              <span className="hidden lg:inline">Hệ thống Nghiệp vụ Thẩm định</span>
+              <span className="hidden lg:inline">/</span>
+              <span className="truncate text-ink dark:text-slate-100 font-bold">
                 {(location.pathname.startsWith('/projects/')?'Quản lý Dự án / ':'')+(NAV_ITEMS.flatMap(n=>[n,...(n.children||[])]).find(n=>n.to===location.pathname)?.label.replace(/^\d+\.\s*/, '') || (location.pathname.startsWith('/dossiers/')?'Quản lý Dự án / Hồ sơ nộp':'Bàn điều hành'))}
               </span>
             </div>
@@ -405,13 +413,13 @@ export function AppLayout() {
         </header>
 
         {/* Nội dung Màn hình thay đổi theo Route */}
-        <main className="flex-1 overflow-y-auto p-6 bg-page">
+        <main className="flex-1 overflow-y-auto p-3 sm:p-6 bg-page dark:bg-slate-950">
               {authError&&<p role="alert" className="text-red-700 dark:text-red-300 p-3">{authError}</p>}<Outlet />
         </main>
       </div>
 
       {/* SlidePanel Ngăn xếp Đa tầng & Chatbot */}
-      <SlidePanelStack sidebarWidth={isCollapsed ? 76 : 272} />
+      <SlidePanelStack sidebarWidth={compactMenu ? 76 : 272} />
       <AiChatWidget />
     </div>
   );

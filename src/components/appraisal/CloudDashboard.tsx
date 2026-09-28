@@ -153,11 +153,11 @@ export function CloudDashboard() {
       </div>
 
       <div className="grid gap-5 xl:grid-cols-2">
-        <ChartCard heading="Khối lượng theo nghiệp vụ" description="So sánh số lần nộp và tỷ trọng trong tổng hồ sơ." badge={<span className={badge}>3 nghiệp vụ</span>}>
+        <ChartCard heading="Khối lượng theo nghiệp vụ" description="So sánh số lần nộp và tỷ trọng trong tổng hồ sơ." badge={<span className={badge}>{procedureRows.length} nghiệp vụ</span>}>
           {total ? <div className="space-y-6 pt-2" aria-label="Biểu đồ thanh số lần nộp theo nghiệp vụ">{procedureRows.map(item => <div key={item.id}>
             <div className="mb-2.5 flex items-center justify-between gap-3"><span className="text-sm font-medium">{item.label}</span><span className="whitespace-nowrap text-sm font-semibold tabular-nums">{number(item.total)} <span className={`ml-2 text-xs font-normal ${muted}`}>{percent(item.total, total)}</span></span></div>
             <div className="[&>div]:w-full"><Tooltip content={`${item.label}: ${number(item.total)} / ${number(total)} lần nộp (${percent(item.total, total)})`} placement="top">
-              <div tabIndex={0} role="img" aria-label={`${item.label}: ${number(item.total)} lần nộp, ${percent(item.total, total)}`} className="h-3.5 w-full overflow-hidden rounded-full bg-subtle dark:bg-slate-800"><div className="h-full rounded-full" style={{ width: percent(item.total, total).replace(',', '.'), backgroundColor: item.color }} /></div>
+              <div tabIndex={0} role="img" aria-label={`${item.label}: ${number(item.total)} lần nộp, ${percent(item.total, total)}`} className="h-3.5 w-full overflow-hidden rounded-full bg-subtle dark:bg-slate-800"><div className="h-full rounded-full" style={{ width: `${total ? item.total / total * 100 : 0}%`, backgroundColor: item.color }} /></div>
             </Tooltip></div>
           </div>)}</div> : <EmptyChart />}
           {total > 0 && <p className={`mt-6 border-t border-border dark:border-slate-800 pt-4 text-xs leading-relaxed ${muted}`}>Mỗi lần nộp được tính vào một nghiệp vụ. Lần bổ sung vẫn được tính riêng.</p>}
