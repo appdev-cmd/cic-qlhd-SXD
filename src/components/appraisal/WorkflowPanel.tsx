@@ -8,7 +8,10 @@ import { DateInput } from '../ui/DateInput';
 import { DossierGrid } from './DossierGrid';
 import { formatDate, formatDateTime } from '../../lib/utils';
 import { SlaSummary } from './SlaBadge';
+import { ProcedureInfo, type AuthoritySuggestion, type ProcedurePolicy } from './ProcedureInfo';
 type Info = {
+  authority?: AuthoritySuggestion;
+  policy?: ProcedurePolicy;
   state: string;
   label: string;
   actions: { id: string; label: string }[];
@@ -20,7 +23,7 @@ type Info = {
     deadline?: string;
     deadlineBasis?: string;
     visitDate?: string;
-    history?: { action: string; actor: string; at: string; note: string }[];
+    history?: { action: string; actor: string; at: string; note: string; basis?: string }[];
   };
 };
 const button =
@@ -99,6 +102,7 @@ export function WorkflowPanel({ dossier: d, onChange }: { dossier: Dossier; onCh
         <p>Hạn nội bộ: {info?.workflow.deadline ? formatDate(info.workflow.deadline) : 'Chưa xác nhận'}</p>
         {info?.workflow.visitDate && <p>Kiểm tra hiện trường: {formatDate(info.workflow.visitDate)}</p>}
       </div>
+      <ProcedureInfo authority={info?.authority} policy={info?.policy} />
       <SlaSummary facts={d.sla} state={d.slaState} />
       {info?.workflow.deadlineBasis && (
         <p className="text-xs text-ink-muted dark:text-ink-muted">
@@ -140,6 +144,7 @@ export function WorkflowPanel({ dossier: d, onChange }: { dossier: Dossier; onCh
             { label: 'Thao tác', value: (r) => r.action },
             { label: 'Người thực hiện', value: (r) => r.actor },
             { label: 'Nội dung', value: (r) => r.note, width: 360 },
+            { label: 'Căn cứ', value: (r) => r.basis || '', width: 220 },
           ]}
         />
       )}

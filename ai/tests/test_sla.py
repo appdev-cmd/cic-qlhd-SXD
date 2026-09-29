@@ -69,9 +69,21 @@ class ComputeTests(unittest.TestCase):
         case.update(extra)
         return case
 
+    def processing(self, valid='2026-09-01', **workflow):
+        return self.case(workflow={'state': 'processing', 'validAt': valid, **workflow})
+
+    def test_intake_check_runs_before_the_dossier_is_accepted(self):
+        cal = calendar()
+        facts = sla.compute(self.case(), cal, {'group': 'B', 'grade': 'II'})
+        # Received Tue 1/9: 05 working days to check the dossier (khoản 3 Điều 36 NĐ 217/2026).
+        self.assertEqual((facts['dueDate'], facts['dueKind']), ('2026-09-08', 'intake'))
+        self.assertFalse(facts['validated'])
+        self.assertIn('Điều 36', facts['intakeBasis'])
+        self.assertEqual(sla.evaluate(facts, cal, today=date(2026, 9, 9))['state'], 'overdue')
+
     def test_due_date_and_states(self):
         cal = calendar()
-        facts = sla.compute(self.case(), cal, {'group': 'Nhóm B', 'grade': 'II'}, today=date(2026, 9, 1))
+        facts = sla.compute(self.processing(), cal, {'group': 'Nhóm B', 'grade': 'II'}, today=date(2026, 9, 1))
         # Tue 1/9 + 16 working days = Wed 23/9 (no holidays in this test calendar).
         self.assertEqual(facts['legalDueDate'], '2026-09-23')
         self.assertEqual((facts['dueKind'], facts['policyStatus']), ('legal', 'requires_confirmation'))
@@ -81,45 +93,71 @@ class ComputeTests(unittest.TestCase):
         self.assertEqual((late['state'], late['remainingWorkingDays']), ('overdue', -2))
         self.assertEqual(sla.evaluate(facts, cal, superseded=True, today=date(2026, 9, 25))['state'], 'superseded')
 
-    def test_supplement_pause_extends_deadline(self):
+    def test_extension_doubles_at_most_once(self):
+        cal = calendar()
+        facts = sla.compute(self.processing(extended=True), cal, {'group': 'B', 'grade': 'II'})
+        self.assertEqual(facts['legalDueDate'], cal.add(date(2026, 9, 1), 32).isoformat())
+        self.assertTrue(facts['extended'])
+
+    def test_supplement_restarts_the_period(self):
         cal = calendar()
         history = [
-            {'from': 'processing', 'to': 'awaiting_supplement', 'at': '2026-09-03T08:00:00+00:00'},
-            {'from': 'awaiting_supplement', 'to': 'processing', 'at': '2026-09-08T08:00:00+00:00'},
+            {'from': 'processing', 'to': 'suspended', 'at': '2026-09-03T08:00:00+00:00'},
+            {'from': 'suspended', 'to': 'processing', 'at': '2026-09-08T08:00:00+00:00'},
         ]
-        facts = sla.compute(
-            self.case(workflow={'state': 'processing', 'history': history}),
+        # After the supplement is received the period is counted again from the beginning (khoản 5 Điều 36).
+        facts = sla.compute(self.processing(valid='2026-09-08', history=history), cal, {'group': 'B', 'grade': 'II'})
+        self.assertEqual(facts['legalDueDate'], cal.add(date(2026, 9, 8), 16).isoformat())
+        waiting = sla.compute(
+            self.case(workflow={'state': 'suspended', 'validAt': '2026-09-01', 'history': history[:1]}),
             cal,
             {'group': 'B', 'grade': 'II'},
-            today=date(2026, 9, 10),
         )
-        self.assertEqual(facts['pausedDays'], 3)
-        self.assertEqual(facts['legalDueDate'], '2026-09-28')
-        paused = sla.compute(
-            self.case(workflow={'state': 'awaiting_supplement', 'history': history[:1]}),
-            cal,
-            {'group': 'B', 'grade': 'II'},
-            today=date(2026, 9, 10),
-        )
-        self.assertTrue(paused['paused'])
-        self.assertEqual(sla.evaluate(paused, cal, today=date(2026, 12, 1))['state'], 'paused')
+        self.assertTrue(waiting['paused'])
+        self.assertEqual(waiting['waitingDueDate'], cal.add(date(2026, 9, 3), 20).isoformat())
+        self.assertEqual(sla.evaluate(waiting, cal, today=date(2026, 9, 10))['state'], 'paused')
+        self.assertEqual(sla.evaluate(waiting, cal, today=date(2026, 12, 1))['state'], 'supplement_overdue')
 
-    def test_internal_deadline_and_completion(self):
+    def test_permit_supplement_window_is_two_working_days(self):
         cal = calendar()
-        case = self.case(workflow={'state': 'assigned', 'deadline': '2026-09-15'})
+        history = [{'from': 'processing', 'to': 'awaiting_supplement', 'at': '2026-09-03T08:00:00+00:00'}]
+        facts = sla.compute(
+            self.case(
+                procedure='gpxd', workflow={'state': 'awaiting_supplement', 'validAt': '2026-09-01', 'history': history}
+            ),
+            cal,
+            {},
+        )
+        self.assertEqual(facts['waitingDueDate'], '2026-09-07')
+
+    def test_internal_deadline_completion_and_closure(self):
+        cal = calendar()
+        case = self.processing(deadline='2026-09-15')
         facts = sla.compute(case, cal, {}, today=date(2026, 9, 2))
         self.assertEqual((facts['dueDate'], facts['dueKind']), ('2026-09-15', 'internal'))
         self.assertIsNotNone(facts['missing'])
         case['finalReview'] = {'decision': 'reviewed', 'at': '2026-09-16T09:00:00+00:00'}
         done = sla.compute(case, cal, {}, today=date(2026, 9, 20))
         self.assertEqual(sla.evaluate(done, cal, today=date(2026, 9, 20))['state'], 'completed_late')
-        self.assertEqual(sla.evaluate(sla.compute(self.case(), cal, {}), cal)['state'], 'unconfigured')
+        self.assertEqual(sla.evaluate(sla.compute(self.processing(), cal, {}), cal)['state'], 'unconfigured')
+        rejected = self.case(
+            workflow={'state': 'rejected', 'history': [{'to': 'rejected', 'at': '2026-09-02T08:00:00+00:00'}]}
+        )
+        closed = sla.compute(rejected, cal, {})
+        self.assertEqual((closed['outcome'], closed['completedAt']), ('rejected', '2026-09-02'))
+        self.assertEqual(sla.evaluate(closed, cal)['state'], 'closed')
 
 
 class StatusInvariantTests(unittest.TestCase):
     def test_status_follows_workflow_state(self):
-        expected = {'awaiting_supplement': 'request_supplement', 'reviewed': 'reviewed'}
-        for target in {t for _, t, _ in TRANSITIONS.values()} | {'received'}:
+        expected = {
+            'awaiting_supplement': 'request_supplement',
+            'reviewed': 'reviewed',
+            'suspended': 'suspended',
+            'rejected': 'rejected',
+            'stopped': 'stopped',
+        }
+        for target in {t for _, t, _ in TRANSITIONS.values() if t} | {'received'}:
             for runs, fallback in [([], 'intake'), ([{'stale': False}], 'analyzed'), ([{'stale': True}], 'intake')]:
                 case = {'workflow': {'state': target}, 'runs': runs}
                 self.assertEqual(derive_status(case), expected.get(target, fallback), (target, runs))

@@ -176,11 +176,14 @@ export type SlaStateId =
   | 'completed'
   | 'completed_late'
   | 'superseded'
+  | 'supplement_overdue'
+  | 'closed'
   | 'unconfigured';
 export interface SlaState {
   state: SlaStateId;
   label: string;
   remainingWorkingDays: number | null;
+  phase?: 'intake' | 'legal' | 'internal' | 'waiting' | 'closed';
 }
 export interface SlaFacts {
   policyVersion: string;
@@ -197,7 +200,14 @@ export interface SlaFacts {
   legalDueDate: string | null;
   internalDueDate: string | null;
   dueDate: string | null;
-  dueKind: 'legal' | 'internal' | null;
+  dueKind: 'intake' | 'legal' | 'internal' | null;
+  intakeDueDate?: string | null;
+  intakeBasis?: string | null;
+  receivedDate?: string | null;
+  validated?: boolean;
+  extended?: boolean;
+  waitingDueDate?: string | null;
+  outcome?: 'reviewed' | 'rejected' | 'stopped' | null;
   paused: boolean;
   pausedSince: string | null;
   pausedDays: number;

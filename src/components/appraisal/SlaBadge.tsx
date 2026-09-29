@@ -37,6 +37,15 @@ export const SLA_STATES: Record<SlaStateId, { label: string; className: string }
     className:
       'bg-slate-100 text-slate-700 border-slate-200 dark:bg-slate-800 dark:text-slate-200 dark:border-slate-700',
   },
+  supplement_overdue: {
+    label: 'Quá hạn bổ sung',
+    className: 'bg-rose-50 text-rose-800 border-rose-200 dark:bg-rose-900 dark:text-rose-100 dark:border-rose-700',
+  },
+  closed: {
+    label: 'Đã dừng / từ chối',
+    className:
+      'bg-slate-100 text-slate-700 border-slate-200 dark:bg-slate-800 dark:text-slate-200 dark:border-slate-700',
+  },
   unconfigured: {
     label: 'Chưa xác định hạn',
     className:
@@ -85,11 +94,21 @@ export function SlaSummary({ facts, state }: { facts?: SlaFacts; state?: SlaStat
     );
   const unit = facts.periodUnit === 'calendar' ? 'ngày' : 'ngày làm việc';
   const rows: [string, React.ReactNode][] = [
-    ['Tính từ ngày', formatDate(facts.startDate)],
-    ['Thời hạn theo quy định', facts.periodDays ? `${facts.periodDays} ${unit}` : facts.missing || 'Chưa xác định'],
+    ['Ngày tiếp nhận', formatDate(facts.receivedDate || facts.startDate)],
+    [
+      'Hạn kiểm tra hồ sơ',
+      facts.intakeDueDate ? formatDate(facts.intakeDueDate) : facts.validated ? 'Đã xác nhận hợp lệ' : '—',
+    ],
+    ['Tính thời hạn từ', formatDate(facts.startDate)],
+    [
+      'Thời hạn theo quy định',
+      facts.periodDays
+        ? `${facts.periodDays} ${unit}${facts.extended ? ' (đã gia hạn)' : ''}`
+        : facts.missing || 'Chưa xác định',
+    ],
     ['Hạn pháp định', formatDate(facts.legalDueDate)],
     ['Hạn nội bộ', formatDate(facts.internalDueDate)],
-    ['Thời gian tạm dừng', facts.pausedDays ? `${facts.pausedDays} ${unit}` : 'Không'],
+    ['Hạn chờ bổ sung', facts.waitingDueDate ? formatDate(facts.waitingDueDate) : '—'],
   ];
   return (
     <div className="space-y-2 text-sm">

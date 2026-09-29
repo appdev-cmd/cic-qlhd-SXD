@@ -555,6 +555,9 @@ class Store:
             'slaPaused': "(payload->'sla'->>'paused')::boolean",
             'slaCompletedAt': "payload->'sla'->>'completedAt'",
             'workflowState': "payload->'workflow'->>'state'",
+            'slaWaitingDue': "payload->'sla'->>'waitingDueDate'",
+            'slaOutcome': "payload->'sla'->>'outcome'",
+            'slaDueKind': "payload->'sla'->>'dueKind'",
         }
         if MODE == 'demo':
             return (
@@ -581,13 +584,30 @@ class Store:
         )
         running = 'not (' + done + ') and not ' + successor + ' and not ' + paused
         due = field('slaDueDate')
+        closed = "coalesce(" + field('slaOutcome') + ",'') in ('rejected','stopped')"
+        waiting_open = 'not (' + done + ') and not ' + successor + ' and ' + paused
+        waiting = field('slaWaitingDue')
         soon = soon_limit(calendar, today).isoformat()
         now = today.isoformat()
         return {
-            'completed': (done + ' and (' + due + ' is null or ' + field('slaCompletedAt') + '<=' + due + ')', []),
-            'completed_late': (done + ' and ' + field('slaCompletedAt') + '>' + due, []),
+            'completed': (
+                done
+                + ' and not '
+                + closed
+                + ' and ('
+                + due
+                + ' is null or '
+                + field('slaCompletedAt')
+                + '<='
+                + due
+                + ')',
+                [],
+            ),
+            'completed_late': (done + ' and not ' + closed + ' and ' + field('slaCompletedAt') + '>' + due, []),
+            'closed': (done + ' and ' + closed, []),
             'superseded': ('not (' + done + ') and ' + successor, []),
-            'paused': ('not (' + done + ') and not ' + successor + ' and ' + paused, []),
+            'paused': (waiting_open + ' and (' + waiting + ' is null or ' + waiting + '>=' + mark + ')', [now]),
+            'supplement_overdue': (waiting_open + ' and ' + waiting + '<' + mark, [now]),
             'unconfigured': (running + ' and ' + due + ' is null', []),
             'overdue': (running + ' and ' + due + '<' + mark, [now]),
             'due_soon': (running + ' and ' + due + '>=' + mark + ' and ' + due + '<=' + mark, [now, soon]),
@@ -673,6 +693,9 @@ class Store:
             'slaPaused',
             'slaCompletedAt',
             'workflowState',
+            'slaWaitingDue',
+            'slaOutcome',
+            'slaDueKind',
         ]
         sort = sort if sort in fields + ['documentCount', 'procedure'] else 'updatedAt'
         direction = 'asc' if direction == 'asc' else 'desc'
@@ -794,6 +817,9 @@ class Store:
                     'dueDate': row.get('slaDueDate'),
                     'paused': bool(row.get('slaPaused')),
                     'completedAt': row.get('slaCompletedAt'),
+                    'waitingDueDate': row.get('slaWaitingDue'),
+                    'outcome': row.get('slaOutcome'),
+                    'dueKind': row.get('slaDueKind'),
                 },
                 calendar,
                 bool(row.pop('hasSuccessor', False)),

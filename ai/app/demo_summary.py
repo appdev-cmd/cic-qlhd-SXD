@@ -26,6 +26,9 @@ FIELDS = [
     'slaPaused',
     'slaCompletedAt',
     'workflowState',
+    'slaWaitingDue',
+    'slaOutcome',
+    'slaDueKind',
 ]
 # Summary columns read from nested payload paths.
 PATHS = {
@@ -33,6 +36,9 @@ PATHS = {
     'slaPaused': '$.sla.paused',
     'slaCompletedAt': '$.sla.completedAt',
     'workflowState': '$.workflow.state',
+    'slaWaitingDue': '$.sla.waitingDueDate',
+    'slaOutcome': '$.sla.outcome',
+    'slaDueKind': '$.sla.dueKind',
 }
 
 

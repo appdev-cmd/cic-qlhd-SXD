@@ -64,6 +64,7 @@ def cloud(apply):
     os.environ['APPRAISAL_MODE'] = 'cloud'
     from app.database import connection
     from app.domain import audit, now
+    from app.sla import POLICY_VERSION
     from app.store import Store
 
     accounts = json.loads((Path.home() / '.config/buildappraisal/test-accounts.json').read_text(encoding='utf-8'))[
@@ -75,9 +76,14 @@ def cloud(apply):
             'select id,full_name,province_id,department,role from public.profiles where id=%s and is_active',
             (admin['user_id'],),
         ).fetchone()
-        rows = con.execute("""select id,payload from public.appraisal_cases c
-            where not (payload ? 'sla') and not exists(select 1 from public.appraisal_cases n where n.previous_submission_id=c.id)
-            order by created_at""").fetchall()
+        # Latest submissions whose SLA predates the current policy version (or has none).
+        rows = con.execute(
+            """select id,payload from public.appraisal_cases c
+            where (payload->'sla'->>'policyVersion') is distinct from %s
+              and not exists(select 1 from public.appraisal_cases n where n.previous_submission_id=c.id)
+            order by created_at""",
+            (POLICY_VERSION,),
+        ).fetchall()
     actor = {
         'id': str(profile['id']),
         'name': profile['full_name'],
@@ -85,7 +91,7 @@ def cloud(apply):
         'department': profile['department'],
         'role': profile['role'],
     }
-    print(f'cloud: {len(rows)} lần nộp mới nhất chưa có SLA trong phạm vi tài khoản quản trị staging.')
+    print(f'cloud: {len(rows)} lần nộp mới nhất cần tính lại hạn ({POLICY_VERSION}) trong phạm vi quản trị staging.')
     if not apply or not rows:
         return
     folder = (
@@ -111,7 +117,7 @@ def cloud(apply):
             case,
             actor,
             'Tính hạn xử lý',
-            'Bổ sung hạn xử lý theo chính sách SLA (chờ chuyên viên xác nhận bảng thời hạn).',
+            'Tính lại hạn xử lý theo chính sách ' + POLICY_VERSION + ' (NĐ 217/2026, NĐ 207/2026; chờ chuyên viên xác nhận).',
         )
         store.save(case, expected)
     print(f'Đã ghi {len(rows)} lần nộp; bản chụp trước khi ghi: {folder}')

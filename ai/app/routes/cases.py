@@ -207,6 +207,43 @@ def get_legal(id: str, s: Store = Depends(store)):
     return legal_overview(case)
 
 
+def case_authority(s, case):
+    """Suggested competent authority for this submission (officer confirms; never auto-rejects)."""
+    from ..authority import resolve
+    from fastapi import HTTPException as Missing
+
+    procedure = case.get('procedure', 'bcnckt')
+    project = {}
+    if case.get('projectId'):
+        try:
+            project = s.project(case['projectId'])
+        except Missing:
+            project = {}
+    appraised = False
+    if procedure == 'gpxd' and case.get('projectId'):
+        appraised = s.page(limit=1, procedure='bcnckt', project_id=case['projectId'], status='reviewed')['total'] > 0
+    return resolve(procedure, project, appraised)
+
+
+def policy_summary(case):
+    from ..procedure_policy import VERSION, policy
+    from ..workflow import counters
+
+    rules = policy(case.get('procedure', 'bcnckt'))
+    limits = {
+        key: {
+            'used': counters(case).get(key, 0),
+            'max': (rules.get(key) or {}).get('max'),
+            'form': (rules.get(key) or {}).get('form'),
+        }
+        for key in ('request_supplement', 'suspend', 'extend')
+        if rules.get(key if key != 'request_supplement' else 'supplement')
+    }
+    if 'request_supplement' in limits:
+        limits['request_supplement'].update(max=rules['supplement'].get('max'), form=rules['supplement'].get('form'))
+    return {'version': VERSION, 'limits': limits, 'resultForm': rules.get('resultForm')}
+
+
 @router.get('/v1/cases/{id}/workflow')
 def workflow_state(id: str, s: Store = Depends(store)):
     from ..workflow import state, options, STATES
@@ -219,6 +256,8 @@ def workflow_state(id: str, s: Store = Depends(store)):
         (reviewers,) = read(s.actor['id'], ('select * from public.appraisal_reviewers(%s)', (id,)))
     frozen = s.has_successor(id)
     return {
+        'authority': case_authority(s, case),
+        'policy': policy_summary(case),
         'state': state(case),
         'label': STATES[state(case)],
         'actions': [] if frozen else options(case, s.actor),

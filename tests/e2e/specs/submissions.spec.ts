@@ -32,10 +32,10 @@ test('child form guard keeps the panel and typed data on Escape and backdrop cli
   const panelHeading = page.getByRole('heading', { name: /Quy trình xử lý/ }).last();
   await expect(panelHeading).toBeVisible();
   await expect(page.getByText('Hạn xử lý', { exact: true }).last()).toBeVisible();
-  const action = page.getByRole('button', { name: 'Yêu cầu bổ sung', exact: true }).last();
+  const action = page.getByRole('button', { name: /^(Yêu cầu bổ sung|Tạm dừng thẩm định)/ }).last();
   await expect(action).toBeVisible();
   await action.click();
-  const dialog = page.getByRole('dialog', { name: 'Yêu cầu bổ sung' });
+  const dialog = page.getByRole('dialog', { name: /^(Yêu cầu bổ sung|Tạm dừng thẩm định)/ });
   await expect(dialog).toBeVisible();
   const note = dialog.locator('textarea');
   await note.fill('Nội dung kiểm thử không lưu — kiểm tra bảo vệ form con.');

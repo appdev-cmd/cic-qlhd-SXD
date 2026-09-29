@@ -9,5 +9,8 @@ export const SUBMISSION_STATUS: Record<string, string> = {
   analyzing: 'Đang kiểm tra',
   analyzed: 'Đã kiểm tra',
   request_supplement: 'Yêu cầu bổ sung',
+  suspended: 'Tạm dừng thẩm định',
+  rejected: 'Từ chối tiếp nhận',
+  stopped: 'Dừng xử lý',
   reviewed: 'Đã rà soát nội bộ',
 };

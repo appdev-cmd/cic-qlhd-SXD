@@ -134,6 +134,11 @@ class WorkflowCommand(Mutation):
     action: Literal[
         'start',
         'request_supplement',
+        'suspend',
+        'resume',
+        'extend',
+        'reject_intake',
+        'stop',
         'submit_review',
         'return',
         'approve',

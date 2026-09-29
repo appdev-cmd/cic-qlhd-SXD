@@ -294,6 +294,9 @@ export function AppraisalPage({ procedure = 'bcnckt', project }: { procedure?: P
                   { value: 'analyzed', label: 'Đã kiểm tra' },
                   { value: 'request_supplement', label: 'Yêu cầu bổ sung' },
                   { value: 'reviewed', label: 'Đã rà soát nội bộ' },
+                  { value: 'suspended', label: 'Tạm dừng thẩm định' },
+                  { value: 'rejected', label: 'Từ chối tiếp nhận' },
+                  { value: 'stopped', label: 'Dừng xử lý' },
                 ]}
               />
             </div>

@@ -28,6 +28,15 @@ class AppraisalTests(unittest.TestCase):
         cls.initial = client.post('/v1/samples/initial').json()
         cls.revised = client.post('/v1/samples/revised').json()
 
+    def test_workflow_endpoint_reports_authority_limits_and_actions(self):
+        info = client.get('/v1/cases/' + self.initial['id'] + '/workflow')
+        self.assertEqual(info.status_code, 200, info.text)
+        body = info.json()
+        self.assertIn('authority', body)
+        self.assertIn('limits', body['policy'])
+        self.assertIn('request_supplement', {a['id'] for a in body['actions']})
+        self.assertEqual(body['policy']['limits']['request_supplement']['max'], 1)
+
     def test_worker_requires_internal_key(self):
         self.assertEqual(TestClient(app).get('/v1/health').status_code, 403)
 

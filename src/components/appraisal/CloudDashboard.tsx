@@ -47,12 +47,14 @@ const muted = 'text-ink-muted dark:text-slate-400';
 const card = 'min-w-0 rounded-2xl border border-border dark:border-slate-800 bg-surface dark:bg-slate-900 shadow-sm';
 const SLA_ORDER = [
   'overdue',
+  'supplement_overdue',
   'due_soon',
   'on_track',
   'paused',
   'unconfigured',
   'completed',
   'completed_late',
+  'closed',
   'superseded',
 ];
 const axis = { fill: 'var(--text-muted)', fontSize: 11 };
@@ -255,7 +257,7 @@ export function CloudDashboard() {
                   được tách riêng.
                 </p>
               </div>
-              <div className="grid grid-cols-2 gap-3 sm:grid-cols-4 xl:grid-cols-8">
+              <div className="grid grid-cols-2 gap-3 sm:grid-cols-4 xl:grid-cols-5">
                 {[...data.sla]
                   .sort((a, b) => SLA_ORDER.indexOf(a.id) - SLA_ORDER.indexOf(b.id))
                   .map((item) => {
