@@ -454,6 +454,35 @@
         "title": "Defect",
         "type": "object"
       },
+      "Drawing": {
+        "additionalProperties": false,
+        "properties": {
+          "code": {
+            "default": "",
+            "maxLength": 60,
+            "title": "Code",
+            "type": "string"
+          },
+          "name": {
+            "maxLength": 300,
+            "minLength": 2,
+            "title": "Name",
+            "type": "string"
+          },
+          "sheets": {
+            "default": 1,
+            "maximum": 2000.0,
+            "minimum": 1.0,
+            "title": "Sheets",
+            "type": "integer"
+          }
+        },
+        "required": [
+          "name"
+        ],
+        "title": "Drawing",
+        "type": "object"
+      },
       "FactReview": {
         "additionalProperties": false,
         "properties": {
@@ -843,6 +872,172 @@
         "title": "RunRequest",
         "type": "object"
       },
+      "SectionInput": {
+        "additionalProperties": false,
+        "properties": {
+          "assessment": {
+            "default": "",
+            "maxLength": 4000,
+            "title": "Assessment",
+            "type": "string"
+          },
+          "findingIds": {
+            "items": {
+              "type": "string"
+            },
+            "maxItems": 60,
+            "title": "Findingids",
+            "type": "array"
+          },
+          "id": {
+            "enum": [
+              "legal",
+              "planning",
+              "infrastructure",
+              "standards",
+              "cost"
+            ],
+            "title": "Id",
+            "type": "string"
+          },
+          "requirements": {
+            "items": {
+              "type": "string"
+            },
+            "maxItems": 30,
+            "title": "Requirements",
+            "type": "array"
+          },
+          "status": {
+            "default": "pending",
+            "enum": [
+              "pending",
+              "meets",
+              "revise",
+              "fails",
+              "not_applicable"
+            ],
+            "title": "Status",
+            "type": "string"
+          }
+        },
+        "required": [
+          "id"
+        ],
+        "title": "SectionInput",
+        "type": "object"
+      },
+      "SheetInput": {
+        "additionalProperties": false,
+        "properties": {
+          "conclusion": {
+            "default": "pending",
+            "enum": [
+              "pending",
+              "eligible",
+              "eligible_after_revision",
+              "ineligible"
+            ],
+            "title": "Conclusion",
+            "type": "string"
+          },
+          "planningBasis": {
+            "default": "",
+            "enum": [
+              "",
+              "framework",
+              "detailed",
+              "sector",
+              "forest"
+            ],
+            "title": "Planningbasis",
+            "type": "string"
+          },
+          "recommendations": {
+            "default": "",
+            "maxLength": 4000,
+            "title": "Recommendations",
+            "type": "string"
+          },
+          "revision": {
+            "minimum": 1.0,
+            "title": "Revision",
+            "type": "integer"
+          },
+          "sections": {
+            "items": {
+              "$ref": "#/components/schemas/SectionInput"
+            },
+            "maxItems": 5,
+            "title": "Sections",
+            "type": "array"
+          }
+        },
+        "required": [
+          "revision",
+          "sections"
+        ],
+        "title": "SheetInput",
+        "type": "object"
+      },
+      "StampingCommand": {
+        "additionalProperties": false,
+        "properties": {
+          "action": {
+            "enum": [
+              "request",
+              "refuse",
+              "stamp",
+              "pdf_received"
+            ],
+            "title": "Action",
+            "type": "string"
+          },
+          "date": {
+            "format": "date",
+            "title": "Date",
+            "type": "string"
+          },
+          "drawings": {
+            "items": {
+              "$ref": "#/components/schemas/Drawing"
+            },
+            "maxItems": 300,
+            "title": "Drawings",
+            "type": "array"
+          },
+          "note": {
+            "default": "",
+            "maxLength": 2000,
+            "title": "Note",
+            "type": "string"
+          },
+          "noticeReference": {
+            "default": "",
+            "maxLength": 200,
+            "title": "Noticereference",
+            "type": "string"
+          },
+          "reference": {
+            "default": "",
+            "maxLength": 200,
+            "title": "Reference",
+            "type": "string"
+          },
+          "revision": {
+            "minimum": 1.0,
+            "title": "Revision",
+            "type": "integer"
+          }
+        },
+        "required": [
+          "revision",
+          "action",
+          "date"
+        ],
+        "title": "StampingCommand",
+        "type": "object"
+      },
       "Supplement": {
         "additionalProperties": false,
         "properties": {
@@ -994,6 +1189,11 @@
             "enum": [
               "start",
               "request_supplement",
+              "suspend",
+              "resume",
+              "extend",
+              "reject_intake",
+              "stop",
               "submit_review",
               "return",
               "approve",
@@ -1512,6 +1712,128 @@
         "summary": "Start Analysis"
       }
     },
+    "/v1/cases/{id}/appraisal-sheet": {
+      "get": {
+        "operationId": "appraisal_sheet_v1_cases__id__appraisal_sheet_get",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "title": "Id",
+              "type": "string"
+            }
+          },
+          {
+            "in": "header",
+            "name": "x-internal-token",
+            "required": false,
+            "schema": {
+              "default": "",
+              "title": "X-Internal-Token",
+              "type": "string"
+            }
+          },
+          {
+            "in": "header",
+            "name": "authorization",
+            "required": false,
+            "schema": {
+              "default": "",
+              "title": "Authorization",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Appraisal Sheet"
+      },
+      "post": {
+        "operationId": "save_appraisal_sheet_v1_cases__id__appraisal_sheet_post",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "title": "Id",
+              "type": "string"
+            }
+          },
+          {
+            "in": "header",
+            "name": "x-internal-token",
+            "required": false,
+            "schema": {
+              "default": "",
+              "title": "X-Internal-Token",
+              "type": "string"
+            }
+          },
+          {
+            "in": "header",
+            "name": "authorization",
+            "required": false,
+            "schema": {
+              "default": "",
+              "title": "Authorization",
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SheetInput"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Save Appraisal Sheet"
+      }
+    },
     "/v1/cases/{id}/assignment": {
       "post": {
         "operationId": "assign_case_v1_cases__id__assignment_post",
@@ -2012,7 +2334,8 @@
                 "supplement",
                 "suspension",
                 "notice",
-                "decision"
+                "decision",
+                "stamp"
               ],
               "title": "Kind",
               "type": "string"
@@ -3120,6 +3443,128 @@
           }
         },
         "summary": "Review Requirement"
+      }
+    },
+    "/v1/cases/{id}/stamping": {
+      "get": {
+        "operationId": "stamping_v1_cases__id__stamping_get",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "title": "Id",
+              "type": "string"
+            }
+          },
+          {
+            "in": "header",
+            "name": "x-internal-token",
+            "required": false,
+            "schema": {
+              "default": "",
+              "title": "X-Internal-Token",
+              "type": "string"
+            }
+          },
+          {
+            "in": "header",
+            "name": "authorization",
+            "required": false,
+            "schema": {
+              "default": "",
+              "title": "Authorization",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Stamping"
+      },
+      "post": {
+        "operationId": "stamping_action_v1_cases__id__stamping_post",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "title": "Id",
+              "type": "string"
+            }
+          },
+          {
+            "in": "header",
+            "name": "x-internal-token",
+            "required": false,
+            "schema": {
+              "default": "",
+              "title": "X-Internal-Token",
+              "type": "string"
+            }
+          },
+          {
+            "in": "header",
+            "name": "authorization",
+            "required": false,
+            "schema": {
+              "default": "",
+              "title": "Authorization",
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/StampingCommand"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Stamping Action"
       }
     },
     "/v1/cases/{id}/submissions": {

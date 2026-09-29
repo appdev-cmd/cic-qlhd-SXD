@@ -1,5 +1,12 @@
 import { supabase } from '../lib/supabase';
-import type { Dossier, DossierSummary, Health, ModelProvider } from '../types/appraisal';
+import type {
+  AppraisalSheetView,
+  Dossier,
+  DossierSummary,
+  Health,
+  ModelProvider,
+  StampingView,
+} from '../types/appraisal';
 import type { components, operations } from '../types/api.gen';
 
 /** Request contracts generated from the worker OpenAPI schema (pnpm api:types). */
@@ -36,6 +43,8 @@ export const appraisalService = {
   lineage: async (id: string, offset = 0): Promise<Page<DossierSummary> & { latestId: string }> =>
     (await request('/cases/' + id + '/submissions?offset=' + offset)).json(),
   legal: async (id: string) => (await request('/cases/' + id + '/legal')).json(),
+  sheet: async (id: string): Promise<AppraisalSheetView> => (await request('/cases/' + id + '/appraisal-sheet')).json(),
+  stamping: async (id: string): Promise<StampingView> => (await request('/cases/' + id + '/stamping')).json(),
   create: async (body: CreateCaseBody): Promise<Dossier> => (await request('/cases', body, 'POST')).json(),
   sample: async (scenario: string): Promise<Dossier> => (await request('/samples/' + scenario, {}, 'POST')).json(),
   mutate: async (id: string, path: string, body: unknown, method = 'POST'): Promise<Dossier> =>

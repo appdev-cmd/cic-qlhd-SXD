@@ -8,8 +8,19 @@ from ..domain import uid, now, invalidate
 from ..rules import RULE_VERSION
 from ..store import Store, MODE
 from ..procedure_review import Review as ProcedureReview
-from ..deps import edit, require_appraisal, save, start_queue, store, validate_final_review, writable
+from ..deps import (
+    edit,
+    investment_of,
+    require_appraisal,
+    save,
+    start_queue,
+    store,
+    validate_final_review,
+    writable,
+)
 from ..schemas import Consultation, FinalReview, Mutation, ReopenReview, Review, RunRequest
+from ..appraisal_sheet import SheetInput
+from ..stamping import StampingCommand
 
 router = APIRouter()
 
@@ -79,7 +90,7 @@ def final_review(id: str, body: FinalReview, s: Store = Depends(store)):
     if not case['runs'] or case['runs'][-1]['stale'] or case['runs'][-1]['ruleVersion'] != RULE_VERSION:
         raise HTTPException(409, 'Cần kết quả kiểm tra theo bộ quy tắc hiện tại.')
     if body.decision == 'reviewed':
-        validate_final_review(case)
+        validate_final_review(case, investment_of(s, case))
     from ..workflow import state
 
     case['finalReview'] = {
@@ -121,6 +132,9 @@ def reopen_review(id: str, body: ReopenReview, s: Store = Depends(store)):
         raise HTTPException(409, 'Hồ sơ chưa khóa sau rà soát.')
     if s.has_successor(id):
         raise HTTPException(409, 'Mở lần nộp mới nhất để xử lý.')
+    if (case.get('stamping') or {}).get('status') in ('stamped', 'archived'):
+        raise HTTPException(409, 'Bản vẽ đã được đóng dấu thẩm định; xử lý điều chỉnh bằng lần trình mới.')
+    case.pop('stamping', None)
     case.setdefault('reviewHistory', []).append(case['finalReview'])
     invalidate(case)
     workflow = case.get('workflow', {})
@@ -145,7 +159,7 @@ def reopen_review(id: str, body: ReopenReview, s: Store = Depends(store)):
 @router.get('/v1/cases/{id}/export/{kind}/{format}')
 def export_case(
     id: str,
-    kind: Literal['report', 'supplement', 'suspension', 'notice', 'decision'],
+    kind: Literal['report', 'supplement', 'suspension', 'notice', 'decision', 'stamp'],
     format: Literal['pdf', 'docx', 'json'],
     s: Store = Depends(store),
 ):
@@ -252,3 +266,43 @@ def export_procedure_review(
         else 'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
         headers={'Content-Disposition': f'attachment; filename="{kind}.{format}"'},
     )
+
+
+@router.get('/v1/cases/{id}/appraisal-sheet')
+def appraisal_sheet(id: str, s: Store = Depends(store)):
+    from ..appraisal_sheet import view
+
+    case = s.get(id)
+    require_appraisal(case)
+    return view(case, investment_of(s, case))
+
+
+@router.post('/v1/cases/{id}/appraisal-sheet')
+def save_appraisal_sheet(id: str, body: SheetInput, s: Store = Depends(store)):
+    from ..appraisal_sheet import CONCLUSIONS, apply
+
+    case = edit(s, id, body.revision)
+    require_appraisal(case)
+    sheet = apply(case, s.actor, body, investment_of(s, case))
+    detail = 'Kết luận: ' + CONCLUSIONS.get(sheet['conclusion'], 'chưa chọn')
+    return save(s, case, body.revision, 'Cập nhật phiếu thẩm định (Điều 38)', detail)
+
+
+@router.get('/v1/cases/{id}/stamping')
+def stamping(id: str, s: Store = Depends(store)):
+    from ..stamping import view
+
+    case = s.get(id)
+    require_appraisal(case)
+    return view(case, s.calendar())
+
+
+@router.post('/v1/cases/{id}/stamping')
+def stamping_action(id: str, body: StampingCommand, s: Store = Depends(store)):
+    from ..stamping import apply
+
+    case = edit(s, id, body.revision)
+    require_appraisal(case)
+    label = apply(case, s.actor, body, s.calendar(), MODE == 'demo')
+    detail = ' — '.join(x for x in (body.reference, body.note) if x) or label
+    return save(s, case, body.revision, label, detail)

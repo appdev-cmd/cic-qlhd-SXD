@@ -56,13 +56,28 @@ def money(value):
 
 # ─── Scenarios ────────────────────────────────────────────────────────────────────────────────────
 # Each round: received date and steps (working-day offset from the round's receipt, action, note).
-# Pseudo actions: analyze, legal (confirm legal context, facts and findings), review:<conclusion>.
+# Pseudo actions: analyze, legal (confirm legal context, facts and findings), review:<conclusion> (GPXD, nghiệm thu),
+# sheet:<conclusion> (phiếu thẩm định Điều 38), stamp:<action> (đóng dấu, lưu trữ — khoản 8, 9 Điều 36).
 M15 = 'Hồ sơ thiếu thành phần theo khoản 2 Điều 35 NĐ 217/2026; gửi một lần Phiếu Mẫu 15.'
 M16 = 'Số liệu tổng mức đầu tư và bản vẽ thiết kế cơ sở chưa thống nhất; tạm dừng thẩm định (Mẫu 16).'
 VALID = 'Hồ sơ đủ thành phần, đúng quy cách; xác nhận hợp lệ và bắt đầu thẩm định.'
 SUBMIT = 'Đã đánh giá 4 nhóm nội dung thẩm định; trình lãnh đạo rà soát dự thảo thông báo kết quả.'
 APPROVE = 'Thống nhất kết quả rà soát nội bộ; chuyển bộ phận văn thư dự thảo thông báo kết quả.'
 RESUME = 'Đã nhận văn bản giải trình, hồ sơ bổ sung đáp ứng; thời hạn thẩm định tính lại từ đầu.'
+SHEET_TEXT = {
+    'legal': 'Hồ sơ đủ thành phần theo khoản 2 Điều 35 NĐ 217/2026; chủ nhiệm, chủ trì có chứng chỉ hành nghề phù hợp.',
+    'planning': 'Thiết kế phù hợp chức năng sử dụng đất, chỉ tiêu mật độ, hệ số sử dụng đất và tầng cao của quy hoạch được duyệt.',
+    'infrastructure': 'Có văn bản thỏa thuận đấu nối cấp điện, cấp nước, thoát nước và giao thông với hạ tầng khu vực.',
+    'standards': 'Danh mục QCVN, TCVN phù hợp; giải pháp thiết kế đáp ứng quy chuẩn bắt buộc, có hồ sơ thiết kế PCCC.',
+    'cost': 'Tổng mức đầu tư xác định theo NĐ 206/2026/NĐ-CP; cơ cấu và các khoản mục chi phí phù hợp.',
+}
+DRAWINGS = [
+    {'code': 'KT-01', 'name': 'Tổng mặt bằng và định vị công trình', 'sheets': 2},
+    {'code': 'KT-02', 'name': 'Mặt bằng, mặt đứng, mặt cắt các hạng mục chính', 'sheets': 14},
+    {'code': 'KC-01', 'name': 'Giải pháp kết cấu móng và khung chịu lực', 'sheets': 8},
+    {'code': 'PC-01', 'name': 'Giải pháp phòng cháy chữa cháy, thoát nạn', 'sheets': 6},
+    {'code': 'HT-01', 'name': 'Đấu nối hạ tầng kỹ thuật ngoài nhà', 'sheets': 3},
+]
 
 BCNCKT = {
     'DA-2026-DB-0182': [
@@ -73,8 +88,11 @@ BCNCKT = {
                 (1, 'start', VALID),
                 (1, 'analyze'),
                 (8, 'legal'),
+                (10, 'sheet:eligible'),
                 (12, 'submit_review', SUBMIT),
                 (14, 'approve', APPROVE),
+                (16, 'stamp:stamp'),
+                (19, 'stamp:pdf_received'),
             ],
         ),
     ],
@@ -89,8 +107,13 @@ BCNCKT = {
                 (14, 'resume', RESUME),
                 (15, 'analyze'),
                 (22, 'legal'),
+                (23, 'sheet:eligible_after_revision'),
                 (25, 'submit_review', SUBMIT),
                 (27, 'approve', APPROVE),
+                (31, 'stamp:request', '112/BQLDA-KT ngày đề nghị đóng dấu hồ sơ thiết kế đã hoàn thiện'),
+                (33, 'stamp:refuse'),
+                (37, 'stamp:request', '128/BQLDA-KT ngày đề nghị đóng dấu (lần 2) kèm hồ sơ PCCC hoàn thiện'),
+                (39, 'stamp:stamp'),
             ],
         ),
     ],
@@ -102,10 +125,12 @@ BCNCKT = {
                 (1, 'start', VALID),
                 (1, 'analyze'),
                 (9, 'legal'),
+                (9, 'sheet:eligible'),
                 (10, 'submit_review', SUBMIT),
                 (11, 'return', 'Đề nghị làm rõ thêm nhận xét về khả năng kết nối hạ tầng giao thông khu vực.'),
                 (13, 'submit_review', 'Đã bổ sung đánh giá kết nối hạ tầng theo ý kiến lãnh đạo; trình lại.'),
                 (14, 'approve', APPROVE),
+                (25, 'stamp:stamp'),
             ],
         ),
     ],
@@ -117,6 +142,7 @@ BCNCKT = {
                 (1, 'start', VALID),
                 (1, 'analyze'),
                 (9, 'legal'),
+                (9, 'sheet:ineligible'),
                 (10, 'submit_review', SUBMIT),
                 (12, 'approve', APPROVE),
             ],
@@ -168,7 +194,16 @@ BCNCKT = {
         ),
     ],
     'DA-2026-DB-0188': [
-        ('2026-08-31', [(2, 'start', VALID), (2, 'analyze'), (9, 'legal'), (12, 'submit_review', SUBMIT)])
+        (
+            '2026-08-31',
+            [
+                (2, 'start', VALID),
+                (2, 'analyze'),
+                (9, 'legal'),
+                (11, 'sheet:eligible_after_revision'),
+                (12, 'submit_review', SUBMIT),
+            ],
+        )
     ],
     'DA-2026-DB-0198': [('2026-09-21', [(3, 'request_supplement', M15)])],
     'DA-2026-DB-0202': [('2026-09-15', [(4, 'request_supplement', M15)])],
@@ -364,13 +399,15 @@ def clock(day, hour=2):
         def today(cls):
             return day
 
-    import app.deps, app.domain, app.procedure_review, app.rules, app.workflow  # noqa: E401
+    import app.appraisal_sheet, app.deps, app.domain, app.procedure_review, app.rules, app.stamping, app.workflow  # noqa: E401
 
+    modules = (app.domain, app.deps, app.workflow, app.rules, app.procedure_review, app.appraisal_sheet, app.stamping)
     with ExitStack() as stack:
-        for module in (app.domain, app.deps, app.workflow, app.rules, app.procedure_review):
+        for module in modules:
             if hasattr(module, 'now'):
                 stack.enter_context(patch.object(module, 'now', lambda: stamp))
         stack.enter_context(patch.object(app.workflow, 'date', Today))
+        stack.enter_context(patch.object(app.stamping, 'date', Today))
         yield stamp
 
 
@@ -626,10 +663,14 @@ class Builder:
                 return self.confirm_legal(case, officer)
             if action.startswith('review:'):
                 return self.procedure_review(case, project, officer, action.split(':', 1)[1], day)
+            if action.startswith('sheet:'):
+                return self.appraisal_sheet(case, project, officer, action.split(':', 1)[1])
+            if action.startswith('stamp:'):
+                return self.stamp(case, project, action.split(':', 1)[1], day, note)
             if action == 'approve' and case.get('procedure') == 'bcnckt':
                 from app.deps import validate_final_review
 
-                validate_final_review(case)
+                validate_final_review(case, project.get('investmentForm'))
             visit = day.isoformat() if action == 'schedule_visit' else None
             label = apply(case, actor, action, note, visit)
             return self.persist(case, label, note)
@@ -651,12 +692,26 @@ class Builder:
                     'note': 'Không thuộc trường hợp áp dụng theo hồ sơ dự án (mô phỏng).',
                     'reviewedBy': officer['name'],
                 }
+            elif not item['conditional'] and item['state'] == 'missing':
+                # Core component filed inside the submission letter's attachments (e.g. planning decision).
+                case['legalRequirements'][item['id']] = {
+                    'applicability': 'applicable',
+                    'requirementIds': ['TTR', 'KT03'],
+                    'note': 'Văn bản, bản vẽ gửi kèm Tờ trình và thuyết minh BCNCKT (mô phỏng).',
+                    'reviewedBy': officer['name'],
+                }
         for fact in case['facts']:
             if fact.get('reviewStatus') == 'pending':
                 fact.update(
                     reviewStatus='confirmed', reviewedBy=officer['name'], reviewNote='Đã đối chiếu với tài liệu gốc.'
                 )
         if case['runs']:
+            # Legal context and data changed: the application requires a fresh run before findings are assessed.
+            from app.rules import analyze
+
+            for run in case['runs']:
+                run['stale'] = True
+            case['runs'].append(analyze(case))
             for finding in case['runs'][-1]['findings']:
                 finding['review'] = {
                     'decision': 'accept',
@@ -667,6 +722,84 @@ class Builder:
         return self.persist(
             case, 'Xác nhận căn cứ pháp lý và dữ liệu', 'Xác nhận phạm vi, thành phần pháp lý và dữ liệu trích xuất.'
         )
+
+    def appraisal_sheet(self, case, project, officer, conclusion):
+        """Phiếu thẩm định theo Điều 38 NĐ 217/2026 with the scenario's conclusion (mục V–VI Mẫu số 03)."""
+        from app.appraisal_sheet import CONCLUSIONS, SheetInput, apply as apply_sheet
+
+        text = dict(SHEET_TEXT)
+        statuses = {key: 'meets' for key in text}
+        requirements = {}
+        if conclusion == 'eligible_after_revision':
+            statuses['standards'] = 'revise'
+            text['standards'] = (
+                'Danh mục QCVN, TCVN phù hợp. Thiết kế phòng cháy chữa cháy chưa thể hiện đủ lối thoát nạn và '
+                'khoảng cách an toàn giữa các khối công trình theo QCVN 06:2022/BXD.'
+            )
+            requirements['standards'] = [
+                'Bổ sung tính toán số lượng, chiều rộng lối thoát nạn các tầng theo QCVN 06:2022/BXD.',
+                'Hoàn thiện thuyết minh hệ thống cấp nước chữa cháy ngoài nhà và bể nước dự trữ.',
+            ]
+        if conclusion == 'ineligible':
+            statuses['planning'] = 'fails'
+            text['planning'] = (
+                'Một số hạng mục phụ trợ bố trí trong khu vực bảo vệ I của di tích, không phù hợp quy hoạch '
+                'bảo quản, tu bổ, phục hồi di tích được cấp có thẩm quyền phê duyệt.'
+            )
+            requirements['planning'] = [
+                'Điều chỉnh vị trí các hạng mục phụ trợ ra ngoài khu vực bảo vệ I theo quy hoạch được duyệt.',
+                'Bổ sung ý kiến của cơ quan quản lý di tích về phương án tổng mặt bằng điều chỉnh.',
+            ]
+        field = (project.get('field') or '').lower()
+        body = SheetInput(
+            revision=case['revision'],
+            planningBasis='sector' if 'giao thông' in field else 'detailed',
+            conclusion=conclusion,
+            recommendations=(
+                'Cơ quan chuẩn bị dự án hoàn thiện hồ sơ theo các yêu cầu nêu trên trước khi trình phê duyệt; '
+                'nộp đề nghị đóng dấu kèm hồ sơ thiết kế đã chỉnh sửa (điểm d khoản 8 Điều 36 NĐ 217/2026).'
+                if conclusion == 'eligible_after_revision'
+                else 'Cơ quan chuẩn bị dự án nghiên cứu điều chỉnh phương án, trình thẩm định lại theo quy định.'
+                if conclusion == 'ineligible'
+                else 'Cơ quan chuẩn bị dự án tổng hợp, trình người quyết định đầu tư phê duyệt dự án theo quy định.'
+            ),
+            sections=[
+                {
+                    'id': key,
+                    'status': statuses[key],
+                    'assessment': text[key],
+                    'requirements': requirements.get(key, []),
+                }
+                for key in text
+            ],
+        )
+        apply_sheet(case, officer, body, project.get('investmentForm'))
+        return self.persist(case, 'Cập nhật phiếu thẩm định (Điều 38)', 'Kết luận: ' + CONCLUSIONS[conclusion])
+
+    def stamp(self, case, project, action, day, note=None):
+        """Đóng dấu, trả kết quả, lưu trữ — khoản 8, 9 Điều 36 NĐ 217/2026."""
+        from app.stamping import StampingCommand, apply as apply_stamping
+
+        actor = self.leader if action == 'stamp' else self.officer(project)
+        number = int(project['code'][-4:])
+        body = {'revision': case['revision'], 'action': action, 'date': day}
+        if action == 'request':
+            body.update(reference=note or 'Văn bản đề nghị đóng dấu', note='Kèm hồ sơ thiết kế đã chỉnh sửa.')
+        if action == 'refuse':
+            body['note'] = (
+                'Hồ sơ chỉnh sửa chưa bổ sung tính toán lối thoát nạn theo yêu cầu tại thông báo kết quả thẩm định; '
+                'đề nghị hoàn thiện và nộp lại.'
+            )
+        if action == 'stamp':
+            body.update(
+                noticeReference=f"{number}/TB-SXD ngày {day.strftime('%d/%m/%Y')} (mô phỏng)",
+                drawings=DRAWINGS,
+                note='Đóng dấu 01 bộ hồ sơ bản vẽ thiết kế xây dựng; giao lại cơ quan chuẩn bị dự án.',
+            )
+        if action == 'pdf_received':
+            body['note'] = 'Nhận bản chụp định dạng PDF các bản vẽ đã đóng dấu thẩm định.'
+        label = apply_stamping(case, actor, StampingCommand(**body), self.calendar, demo=True)
+        return self.persist(case, label, body.get('reference') or body.get('note') or label)
 
     def procedure_review(self, case, project, officer, conclusion, day):
         from app.procedure_review import Review, apply as apply_review, specification

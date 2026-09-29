@@ -145,10 +145,23 @@ def run_analysis(s, id, job_id, mode, use_model, snapshot=None):
             pass
 
 
-def validate_final_review(case):
+def investment_of(s, case):
+    """Investment form of the case's project (None when unknown or out of scope)."""
+    from .authority import facts
+
+    if not case.get('projectId'):
+        return None
+    try:
+        return facts(s.project(case['projectId']))['investment']
+    except HTTPException:
+        return None
+
+
+def validate_final_review(case, investment=None):
     if not case['runs'] or case['runs'][-1]['stale'] or case['runs'][-1]['ruleVersion'] != RULE_VERSION:
         raise HTTPException(409, 'Cần kết quả kiểm tra theo bộ quy tắc hiện tại.')
-    if not resolve_profile(case)['confirmed']:
+    profile = resolve_profile(case)
+    if not profile['confirmed']:
         raise HTTPException(422, 'Cần xác nhận phạm vi và chế độ pháp lý trước khi hoàn tất rà soát.')
     if any(r['applicability'] == 'unknown' for r in legal_checklist(case)):
         raise HTTPException(422, 'Còn thành phần pháp lý chưa xác định điều kiện áp dụng.')
@@ -159,3 +172,8 @@ def validate_final_review(case):
     ids = {d['id'] for d in latest_documents(case)}
     if any(f['reviewStatus'] == 'pending' and f['documentId'] in ids for f in case['facts']):
         raise HTTPException(422, 'Còn dữ liệu trích xuất chưa được xác nhận.')
+    if profile['code'] == 'nd217' and profile['scope'] in ('construction', 'concurrent'):
+        # Khoản 6 Điều 38: every content group is assessed and the notice carries one of three conclusions.
+        from .appraisal_sheet import require_complete
+
+        require_complete(case, investment)

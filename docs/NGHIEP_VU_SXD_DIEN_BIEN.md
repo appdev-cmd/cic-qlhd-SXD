@@ -85,7 +85,21 @@ Tiếp nhận ─(≤05 NLV kiểm tra)─► Hợp lệ ─► Thẩm định �
 
 - Gia hạn 01 lần, không quá thời hạn tương ứng (khoản 2 Điều 37).
 - Hồ sơ chuyển tiếp theo NĐ 175/2024 (khoản 2 Điều 76): A 35, B 25, C 15 ngày (Điều 59 Luật 2014).
-- Nội dung thẩm định gồm 4 nhóm theo Điều 38. Thành phần hồ sơ theo khoản 2 Điều 35, điểm a–m (N2 sẽ số hóa).
+- Thành phần hồ sơ theo khoản 2 Điều 35, điểm a–m: tab "Căn cứ pháp lý".
+- Phiếu thẩm định (tab "Phiếu thẩm định") theo Điều 38 và mục V Mẫu 03:
+  1. Lập dự án, thiết kế, năng lực hành nghề (khoản 4 Điều 27 Luật 135).
+  2. Phù hợp quy hoạch: chọn 1 trong 4 loại quy hoạch tại khoản 1 Điều 38 (hạ tầng khung, quy hoạch chi tiết, quy hoạch ngành/tuyến, đề án du lịch rừng).
+  3. Kết nối hạ tầng kỹ thuật (khoản 2).
+  4. Quy chuẩn, tiêu chuẩn, an toàn, PCCC (khoản 3, 4).
+  5. Tổng mức đầu tư: chỉ với dự án đầu tư công, PPP (khoản 5).
+- Mỗi nhóm có mức đáp ứng (Đáp ứng / Đáp ứng sau khi chỉnh sửa / Không đáp ứng / Không áp dụng), nhận xét và yêu cầu hoàn thiện. Kết luận là 1 trong 3 mức của mục VI Mẫu 03 và phải khớp các mức đáp ứng. Chưa hoàn chỉnh phiếu thì không hoàn tất rà soát được.
+- Đóng dấu và lưu trữ (tab "Đóng dấu & lưu trữ"), khoản 8–9 Điều 36:
+  - đủ điều kiện → kiểm tra, đóng dấu 01 bộ bản vẽ (Mẫu 14);
+  - chỉ đủ điều kiện sau khi hoàn thiện → trả kết quả không đóng dấu, chờ đề nghị đóng dấu kèm hồ sơ đã chỉnh sửa → kiểm tra (có thể trả lại) → đóng dấu;
+  - chưa đủ điều kiện → trả hồ sơ không đóng dấu;
+  - sau đóng dấu, cơ quan chuẩn bị dự án nộp bản chụp PDF trong 05 NLV;
+  - danh mục lưu trữ tại Sở theo điểm a khoản 9.
+- Kết quả gửi đồng thời cơ quan quản lý xây dựng ở địa phương (khoản 6 Điều 38; ghi ở Nơi nhận của dự thảo Mẫu 03).
 
 ### 4.2 Cấp GPXD
 

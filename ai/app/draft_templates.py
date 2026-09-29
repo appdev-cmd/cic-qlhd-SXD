@@ -1,6 +1,7 @@
 """Draft sections aligned to Annex I of Decree 217; unsigned placeholders stay explicit."""
 
 from .legal import legal_overview, ANNEX217
+from .appraisal_sheet import CONCLUSIONS, SECTIONS, STATUSES
 from .domain import latest_documents
 
 GENERAL_FIELDS = [
@@ -49,8 +50,10 @@ def draft_blocks(case, kind):
     if profile['code'] != 'nd217' or kind == 'report':
         return None
     # Templates 07/08 require a distinct assessment model, not relabelling template 03.
-    if profile['scope'] != 'construction' and kind in ['notice', 'supplement', 'suspension']:
+    if profile['scope'] != 'construction' and kind in ['notice', 'supplement', 'suspension', 'stamp']:
         return None
+    if kind == 'stamp':
+        return stamp_blocks(case)
     titles = {
         'notice': 'DỰ THẢO THÔNG BÁO KẾT QUẢ THẨM ĐỊNH BCNCKT',
         'decision': 'KHUNG DỰ THẢO QUYẾT ĐỊNH PHÊ DUYỆT DỰ ÁN',
@@ -145,34 +148,43 @@ def draft_blocks(case, kind):
                 'text': ['Các mục dưới đây là đề xuất rà soát, chưa phải kết luận được cơ quan thẩm định chấp thuận.'],
             },
         ]
-        groups = [
-            (
-                '1. Lập dự án, thiết kế và điều kiện năng lực',
-                ['Pháp lý và năng lực', 'Nhất quán', 'Thành phần theo pháp luật', 'Hồ sơ đầu vào'],
-            ),
-            ('2. Sự phù hợp với quy hoạch', ['Quy hoạch', 'Thiết kế']),
-            ('3. Kết nối hạ tầng kỹ thuật', ['Hạ tầng']),
-            (
-                '4. Quy chuẩn, tiêu chuẩn; an toàn; giải pháp PCCC',
-                ['Quy chuẩn', 'Khảo sát và kết cấu', 'PCCC và môi trường'],
-            ),
-            ('5. Quản lý chi phí đối với dự án đầu tư công, PPP', ['Chi phí']),
-        ]
-        for heading, categories in groups:
-            selected = [f for f in findings if f['category'] in categories and f['result'] != 'consistent']
-            blocks.append(
-                {
-                    'heading': heading,
-                    'text': [line for f in selected for line in description(f)]
-                    or ['[Chưa có đánh giá chuyên môn được xác nhận].'],
-                }
-            )
+        sheet = case.get('appraisalSheet') or {}
+        rows = {r['id']: r for r in sheet.get('sections', [])}
+        requests = []
+        for number, spec in enumerate(SECTIONS, 1):
+            row = rows.get(spec['id']) or {}
+            status = row.get('status', 'pending')
+            if status == 'pending':
+                # Not assessed yet: show the reviewed machine findings as material for the officer.
+                selected = [f for f in findings if f['category'] in spec['categories'] and f['result'] != 'consistent']
+                text = [line for f in selected for line in description(f)] or [
+                    '[Chưa có đánh giá chuyên môn được xác nhận].'
+                ]
+            elif status == 'not_applicable':
+                text = ['Không thuộc nội dung thẩm định của dự án này.']
+            else:
+                text = ['Mức độ đáp ứng: ' + STATUSES[status] + '.']
+                if row.get('assessment'):
+                    text.append(row['assessment'])
+                for item in row.get('requirements', []):
+                    text.append('Yêu cầu: ' + item)
+                    requests.append(item)
+            blocks.append({'heading': f"{number}. {spec['title']}", 'text': text})
+        conclusion = sheet.get('conclusion', 'pending')
+        name = str(case.get('projectName') or case['name'])
         blocks.append(
             {
                 'heading': 'VI. KẾT LUẬN VÀ KIẾN NGHỊ',
                 'text': [
-                    '1. Kết luận: [Chưa lựa chọn. Người có thẩm quyền xác định: đủ điều kiện / chưa đủ điều kiện / chỉ đủ điều kiện sau khi hoàn thiện để tổng hợp, trình phê duyệt].',
-                    '2. Kiến nghị: [Hoàn thiện các vấn đề đã được chuyên viên xác nhận; không dùng toàn bộ cảnh báo máy làm yêu cầu hành chính].',
+                    '1. Kết luận: Báo cáo nghiên cứu khả thi ' + name + ' ' + CONCLUSIONS[conclusion].lower() + '.'
+                    if conclusion in CONCLUSIONS
+                    else '1. Kết luận: [Chưa lựa chọn. Người có thẩm quyền xác định: đủ điều kiện / chưa đủ điều kiện / chỉ đủ điều kiện sau khi hoàn thiện để tổng hợp, trình phê duyệt].',
+                    '2. Kiến nghị: '
+                    + (
+                        sheet.get('recommendations')
+                        or '[Hoàn thiện các vấn đề đã được chuyên viên xác nhận; không dùng toàn bộ cảnh báo máy làm yêu cầu hành chính].'
+                    ),
+                    *[f'- {item}' for item in requests],
                 ],
             }
         )
@@ -251,10 +263,52 @@ def draft_blocks(case, kind):
         {
             'heading': 'Nơi nhận và ký ban hành',
             'text': [
-                '[Nơi nhận theo mẫu và thẩm quyền; lưu hồ sơ].',
+                (
+                    'Nơi nhận: Như trên; cơ quan quản lý nhà nước về xây dựng tại địa phương (khoản 6 Điều 38); lưu.'
+                    if kind == 'notice'
+                    else '[Nơi nhận theo mẫu và thẩm quyền; lưu hồ sơ].'
+                ),
                 '[Chức danh, họ tên người ký — để trống chữ ký và con dấu].',
                 'Nguồn cấu trúc biểu mẫu: ' + ANNEX217,
             ],
         }
     )
     return titles[kind], blocks
+
+
+def stamp_blocks(case):
+    """Mẫu số 14 Phụ lục I: stamp content and the drawings stamped (điểm a khoản 8 Điều 36)."""
+    from .stamping import view
+
+    record = view(case)
+    name = str(case.get('projectName') or case['name'])
+    conclusion = CONCLUSIONS.get(record['conclusion'] or '', '[Chưa có kết luận]')
+    states = {'done': 'đã có', 'missing': 'còn thiếu', 'optional': 'nếu có'}
+    return 'DANH MỤC BẢN VẼ ĐÓNG DẤU THẨM ĐỊNH (MẪU SỐ 14)', [
+        {'letterhead': True, 'agency': '[CƠ QUAN CHUYÊN MÔN VỀ XÂY DỰNG]'},
+        {
+            'heading': 'Nội dung dấu thẩm định thiết kế xây dựng',
+            'text': [
+                'THẨM ĐỊNH THIẾT KẾ XÂY DỰNG',
+                'Căn cứ thông báo kết quả thẩm định số: ' + (record['noticeReference'] or '[chưa ghi]'),
+                'Hồ sơ thiết kế: ' + name,
+                'Kết luận: ' + conclusion,
+                'Người phê duyệt/thẩm định: ' + (record['stampedBy'] or '[chưa đóng dấu]') + ' (ký, ghi rõ họ tên)',
+                'Kích thước mẫu dấu: rộng 4–6 cm, dài 6–9 cm. Hồ sơ trực tuyến xác nhận bằng chữ ký số.',
+            ],
+        },
+        {
+            'heading': 'Bản vẽ đã đóng dấu (01 bộ)',
+            'rows': [['STT', 'Ký hiệu', 'Tên bản vẽ', 'Số tờ']]
+            + [[str(i + 1), d['code'], d['name'], str(d['sheets'])] for i, d in enumerate(record['drawings'])],
+        },
+        {
+            'heading': 'Trả kết quả và lưu trữ',
+            'text': [
+                'Trạng thái: ' + record['label'] + '.',
+                'Ngày đóng dấu: ' + (record['stampedAt'] or '[chưa đóng dấu]'),
+                'Hạn nộp bản chụp PDF (05 ngày làm việc, điểm b khoản 9 Điều 36): ' + (record['pdfDueDate'] or '—'),
+                *[item['name'] + ': ' + states[item['state']] for item in record['archive']],
+            ],
+        },
+    ]

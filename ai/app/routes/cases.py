@@ -9,7 +9,7 @@ from ..domain import new_case, now, audit, invalidate
 from ..rules import RULE_VERSION
 from ..store import Store, MODE
 from ..legal import legal_overview, legal_checklist
-from ..deps import edit, require_appraisal, save, store, validate_final_review, writable
+from ..deps import edit, investment_of, require_appraisal, save, store, validate_final_review, writable
 from ..schemas import (
     Assignment,
     CreateCase,
@@ -314,7 +314,7 @@ def transition_case(id: str, body: WorkflowCommand, s: Store = Depends(store)):
 
     case = edit(s, id, body.revision)
     if body.action == 'approve' and case.get('procedure', 'bcnckt') == 'bcnckt':
-        validate_final_review(case)
+        validate_final_review(case, investment_of(s, case))
     label = apply(case, s.actor, body.action, body.note, body.visitDate.isoformat() if body.visitDate else None)
     return save(s, case, body.revision, label, body.note)
 

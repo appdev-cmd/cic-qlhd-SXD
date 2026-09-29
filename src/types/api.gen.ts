@@ -56,6 +56,24 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/v1/cases/{id}/appraisal-sheet": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Appraisal Sheet */
+        get: operations["appraisal_sheet_v1_cases__id__appraisal_sheet_get"];
+        put?: never;
+        /** Save Appraisal Sheet */
+        post: operations["save_appraisal_sheet_v1_cases__id__appraisal_sheet_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/v1/cases/{id}/assignment": {
         parameters: {
             query?: never;
@@ -429,6 +447,24 @@ export interface paths {
         head?: never;
         /** Review Requirement */
         patch: operations["review_requirement_v1_cases__id__requirements__req_id__patch"];
+        trace?: never;
+    };
+    "/v1/cases/{id}/stamping": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Stamping */
+        get: operations["stamping_v1_cases__id__stamping_get"];
+        put?: never;
+        /** Stamping Action */
+        post: operations["stamping_action_v1_cases__id__stamping_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
         trace?: never;
     };
     "/v1/cases/{id}/submissions": {
@@ -1070,6 +1106,21 @@ export interface components {
              */
             status?: "open" | "resolved";
         };
+        /** Drawing */
+        Drawing: {
+            /**
+             * Code
+             * @default
+             */
+            code?: string;
+            /** Name */
+            name: string;
+            /**
+             * Sheets
+             * @default 1
+             */
+            sheets?: number;
+        };
         /** FactReview */
         FactReview: {
             /**
@@ -1222,6 +1273,85 @@ export interface components {
              */
             useModel?: boolean;
         };
+        /** SectionInput */
+        SectionInput: {
+            /**
+             * Assessment
+             * @default
+             */
+            assessment?: string;
+            /** Findingids */
+            findingIds?: string[];
+            /**
+             * Id
+             * @enum {string}
+             */
+            id: "legal" | "planning" | "infrastructure" | "standards" | "cost";
+            /** Requirements */
+            requirements?: string[];
+            /**
+             * Status
+             * @default pending
+             * @enum {string}
+             */
+            status?: "pending" | "meets" | "revise" | "fails" | "not_applicable";
+        };
+        /** SheetInput */
+        SheetInput: {
+            /**
+             * Conclusion
+             * @default pending
+             * @enum {string}
+             */
+            conclusion?: "pending" | "eligible" | "eligible_after_revision" | "ineligible";
+            /**
+             * Planningbasis
+             * @default
+             * @enum {string}
+             */
+            planningBasis?: "" | "framework" | "detailed" | "sector" | "forest";
+            /**
+             * Recommendations
+             * @default
+             */
+            recommendations?: string;
+            /** Revision */
+            revision: number;
+            /** Sections */
+            sections: components["schemas"]["SectionInput"][];
+        };
+        /** StampingCommand */
+        StampingCommand: {
+            /**
+             * Action
+             * @enum {string}
+             */
+            action: "request" | "refuse" | "stamp" | "pdf_received";
+            /**
+             * Date
+             * Format: date
+             */
+            date: string;
+            /** Drawings */
+            drawings?: components["schemas"]["Drawing"][];
+            /**
+             * Note
+             * @default
+             */
+            note?: string;
+            /**
+             * Noticereference
+             * @default
+             */
+            noticeReference?: string;
+            /**
+             * Reference
+             * @default
+             */
+            reference?: string;
+            /** Revision */
+            revision: number;
+        };
         /** Supplement */
         Supplement: {
             /**
@@ -1285,7 +1415,7 @@ export interface components {
              * Action
              * @enum {string}
              */
-            action: "start" | "request_supplement" | "submit_review" | "return" | "approve" | "schedule_visit" | "require_correction" | "confirm_correction";
+            action: "start" | "request_supplement" | "suspend" | "resume" | "extend" | "reject_intake" | "stop" | "submit_review" | "return" | "approve" | "schedule_visit" | "require_correction" | "confirm_correction";
             /** Note */
             note: string;
             /** Revision */
@@ -1521,6 +1651,78 @@ export interface operations {
         requestBody: {
             content: {
                 "application/json": components["schemas"]["RunRequest"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": unknown;
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    appraisal_sheet_v1_cases__id__appraisal_sheet_get: {
+        parameters: {
+            query?: never;
+            header?: {
+                "x-internal-token"?: string;
+                authorization?: string;
+            };
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": unknown;
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    save_appraisal_sheet_v1_cases__id__appraisal_sheet_post: {
+        parameters: {
+            query?: never;
+            header?: {
+                "x-internal-token"?: string;
+                authorization?: string;
+            };
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["SheetInput"];
             };
         };
         responses: {
@@ -1817,7 +2019,7 @@ export interface operations {
             };
             path: {
                 id: string;
-                kind: "report" | "supplement" | "suspension" | "notice" | "decision";
+                kind: "report" | "supplement" | "suspension" | "notice" | "decision" | "stamp";
                 format: "pdf" | "docx" | "json";
             };
             cookie?: never;
@@ -2380,6 +2582,78 @@ export interface operations {
         requestBody: {
             content: {
                 "application/json": components["schemas"]["RequirementReview"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": unknown;
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    stamping_v1_cases__id__stamping_get: {
+        parameters: {
+            query?: never;
+            header?: {
+                "x-internal-token"?: string;
+                authorization?: string;
+            };
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": unknown;
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    stamping_action_v1_cases__id__stamping_post: {
+        parameters: {
+            query?: never;
+            header?: {
+                "x-internal-token"?: string;
+                authorization?: string;
+            };
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["StampingCommand"];
             };
         };
         responses: {

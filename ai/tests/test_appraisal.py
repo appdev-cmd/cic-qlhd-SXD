@@ -37,6 +37,36 @@ class AppraisalTests(unittest.TestCase):
         self.assertIn('request_supplement', {a['id'] for a in body['actions']})
         self.assertEqual(body['policy']['limits']['request_supplement']['max'], 1)
 
+    def test_appraisal_sheet_and_stamping_endpoints(self):
+        case = client.post('/v1/samples/initial').json()
+        url = '/v1/cases/' + case['id']
+        view = client.get(url + '/appraisal-sheet').json()
+        self.assertEqual(
+            [s['id'] for s in view['sections']], ['legal', 'planning', 'infrastructure', 'standards', 'cost']
+        )
+        self.assertFalse(view['complete'])
+        sections = [
+            {'id': s['id'], 'status': 'meets', 'assessment': 'Đáp ứng theo hồ sơ đã kiểm tra.'}
+            for s in view['sections']
+        ]
+        saved = client.post(
+            url + '/appraisal-sheet',
+            json={
+                'revision': case['revision'],
+                'planningBasis': 'detailed',
+                'sections': sections,
+                'conclusion': 'eligible',
+            },
+        )
+        self.assertEqual(saved.status_code, 200, saved.text)
+        self.assertEqual(saved.json()['appraisalSheet']['conclusion'], 'eligible')
+        self.assertTrue(client.get(url + '/appraisal-sheet').json()['complete'])
+        stale = client.post(url + '/appraisal-sheet', json={'revision': case['revision'], 'sections': []})
+        self.assertEqual(stale.status_code, 409)
+        # No result notice yet: nothing to stamp.
+        stamp = client.get(url + '/stamping').json()
+        self.assertEqual((stamp['status'], stamp['actions']), ('not_started', []))
+
     def test_worker_requires_internal_key(self):
         self.assertEqual(TestClient(app).get('/v1/health').status_code, 403)
 

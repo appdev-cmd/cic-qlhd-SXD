@@ -22,6 +22,8 @@ import type { Dossier, Fact, Finding, Health, SourceRef } from '../../../types/a
 import { DossierGrid } from '../../../components/appraisal/DossierGrid';
 import { ReviewModal } from '../../../components/appraisal/ReviewModal';
 import { LegalReview } from '../../../components/appraisal/LegalReview';
+import { AppraisalSheet } from '../../../components/appraisal/AppraisalSheet';
+import { StampingPanel } from '../../../components/appraisal/StampingPanel';
 import { SearchableSelect } from '../../../components/ui/SearchableSelect';
 import { NumberInput } from '../../../components/ui/NumberInput';
 import { Tooltip } from '../../../components/ui/Tooltip';
@@ -67,9 +69,11 @@ const tabs = [
   ['legal', 'Căn cứ pháp lý'],
   ['facts', 'Dữ liệu trích xuất'],
   ['findings', 'Nội dung thẩm định'],
+  ['sheet', 'Phiếu thẩm định'],
   ['cost', 'Tổng mức đầu tư'],
   ['responses', 'Ý kiến và giải trình'],
   ['drafts', 'Dự thảo kết quả'],
+  ['stamping', 'Đóng dấu & lưu trữ'],
   ['audit', 'Lịch sử'],
 ];
 function Badge({ value }: { value: string }) {
@@ -427,6 +431,8 @@ export function AppraisalWorkspace({ dossierId, project }: { dossierId?: string;
           <LegalReview dossier={d} onChange={setD} />
         </fieldset>
       )}
+      {tab === 'sheet' && <AppraisalSheet dossier={d} onChange={setD} />}
+      {tab === 'stamping' && <StampingPanel dossier={d} onChange={setD} />}
       {['intake', 'facts', 'findings'].includes(tab) && (
         <div className="flex flex-wrap gap-3 items-center">
           <div className="relative min-w-60 flex-1">
@@ -878,6 +884,7 @@ export function AppraisalWorkspace({ dossierId, project }: { dossierId?: string;
               ['suspension', 'Dự thảo tạm dừng — Mẫu 16'],
               ['notice', 'Dự thảo kết quả — Mẫu 03'],
               ['decision', 'Khung quyết định — Mẫu 09'],
+              ['stamp', 'Danh mục bản vẽ đóng dấu — Mẫu 14'],
             ] as const
           ).map(([kind, label]) => (
             <div

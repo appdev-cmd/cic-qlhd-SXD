@@ -213,3 +213,72 @@ export interface SlaFacts {
   pausedDays: number;
   completedAt: string | null;
 }
+
+/** Phiếu thẩm định BCNCKT theo Điều 38 NĐ 217/2026 (mục V–VI Mẫu số 03). */
+export type SheetStatus = 'pending' | 'meets' | 'revise' | 'fails' | 'not_applicable';
+export type SheetConclusion = 'pending' | 'eligible' | 'eligible_after_revision' | 'ineligible';
+export interface SheetSection {
+  id: string;
+  title: string;
+  form: string;
+  basis: string;
+  criteria: string[];
+  applicable: boolean;
+  status: SheetStatus;
+  assessment: string;
+  requirements: string[];
+  findingIds: string[];
+  suggestion: {
+    status: SheetStatus | null;
+    reason: string;
+    requirements: string[];
+    findings: { id: string; title: string; result: string; decision: string | null }[];
+  };
+}
+export interface AppraisalSheetView {
+  version: string;
+  planningBases: Record<string, string>;
+  statuses: Record<SheetStatus, string>;
+  conclusions: Record<Exclude<SheetConclusion, 'pending'>, string>;
+  planningBasis: string;
+  sections: SheetSection[];
+  conclusion: SheetConclusion;
+  recommendations: string;
+  suggestedConclusion: Exclude<SheetConclusion, 'pending'> | null;
+  problems: string[];
+  complete: boolean;
+  hasRun: boolean;
+  locked: boolean;
+  updatedBy: string | null;
+  updatedAt: string | null;
+}
+
+/** Đóng dấu, trả kết quả và lưu trữ — khoản 8, 9 Điều 36 NĐ 217/2026. */
+export interface StampDrawing {
+  code: string;
+  name: string;
+  sheets: number;
+}
+export interface StampingView {
+  status: 'not_started' | 'to_stamp' | 'awaiting_request' | 'unstamped' | 'stamped' | 'archived';
+  label: string;
+  basis: string | null;
+  conclusion: SheetConclusion | null;
+  actions: { id: 'request' | 'refuse' | 'stamp' | 'pdf_received'; label: string }[];
+  drawings: StampDrawing[];
+  noticeReference: string;
+  stampedAt: string | null;
+  stampedBy: string | null;
+  pdfDueDate: string | null;
+  pdfReceivedAt: string | null;
+  history: {
+    action: string;
+    label: string;
+    date: string;
+    reference: string;
+    note: string;
+    actor: string;
+    at: string;
+  }[];
+  archive: { name: string; state: 'done' | 'missing' | 'optional' }[];
+}
