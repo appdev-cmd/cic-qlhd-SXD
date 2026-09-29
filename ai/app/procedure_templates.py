@@ -61,6 +61,14 @@ def draft_blocks(case, r, spec, kind='draft'):
             ]
         },
     ]
+    permit = case.get('permit')
+    if permit and not is_input and case['procedure'] == 'gpxd':
+        issued = date.fromisoformat(permit['issueDate']).strftime('%d/%m/%Y')
+        deadline = date.fromisoformat(permit['startDeadline']).strftime('%d/%m/%Y')
+        common[1]['text'].insert(
+            0,
+            f"Số: {permit['number']} — ngày cấp {issued}; hạn khởi công đến {deadline} (khoản 10 Điều 49 NĐ 217/2026).",
+        )
     owner = [
         'Chủ đầu tư: ' + (r['investor'] or '[chưa xác nhận]'),
         'Số định danh / mã số doanh nghiệp: ' + value('ownerIdentity'),

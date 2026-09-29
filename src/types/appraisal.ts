@@ -282,3 +282,73 @@ export interface StampingView {
   }[];
   archive: { name: string; state: 'done' | 'missing' | 'optional' }[];
 }
+
+/** Giấy phép xây dựng: lấy ý kiến, cấp số, sổ giấy phép, thu hồi/hủy (NĐ 217/2026 Điều 49, 54, 63–66). */
+export interface PermitConsultation {
+  id: string;
+  agency: string;
+  subject: string;
+  sentDate: string;
+  dueDate: string;
+  response: string;
+  respondedDate: string | null;
+  status: 'waiting' | 'responded' | 'silent_consent';
+}
+export interface PermitEvent {
+  type: 'revoke' | 'return' | 'cancel';
+  date: string;
+  reference: string;
+  reason: string;
+  note: string;
+  actor: string;
+  at: string;
+}
+export interface PermitRecord {
+  id: string;
+  number: string;
+  kind: string;
+  form: string;
+  issueDate: string;
+  issuedBy: string;
+  startDeadline: string;
+  publicUntil: string;
+  extensionNo?: number;
+  content: Record<string, string>;
+  note: string;
+  events: PermitEvent[];
+}
+export type PermitStatus = 'valid' | 'start_overdue' | 'revoked' | 'returned' | 'cancelled';
+export interface PermitView {
+  consultations: PermitConsultation[];
+  consultDays: number;
+  permit: PermitRecord | null;
+  status: PermitStatus | null;
+  statusLabel: string | null;
+  returnDueDate: string | null;
+  cancelFromDate: string | null;
+  actions: ('issue' | 'revoke' | 'return' | 'cancel')[];
+  revokeReasons: Record<string, string>;
+  subtype: string | null;
+  eligible: boolean;
+  reviewed: boolean;
+  basePermits?: { number: string; projectName: string; status: string }[];
+}
+export interface PermitRegisterRow {
+  number: string;
+  caseId: string;
+  projectId: string | null;
+  projectName: string | null;
+  projectCode: string | null;
+  form: string;
+  kind: string;
+  issueDate: string;
+  investor: string;
+  location: string;
+  startDeadline: string;
+  publicUntil: string;
+  public: boolean;
+  extensions: number;
+  history: { kind: string; issueDate: string; caseId: string }[];
+  status: PermitStatus;
+  statusLabel: string;
+}

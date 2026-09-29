@@ -238,6 +238,60 @@
         "title": "Consultation",
         "type": "object"
       },
+      "ConsultationCommand": {
+        "additionalProperties": false,
+        "properties": {
+          "action": {
+            "enum": [
+              "send",
+              "respond"
+            ],
+            "title": "Action",
+            "type": "string"
+          },
+          "agency": {
+            "default": "",
+            "maxLength": 300,
+            "title": "Agency",
+            "type": "string"
+          },
+          "date": {
+            "format": "date",
+            "title": "Date",
+            "type": "string"
+          },
+          "id": {
+            "default": "",
+            "maxLength": 60,
+            "title": "Id",
+            "type": "string"
+          },
+          "response": {
+            "default": "",
+            "maxLength": 3000,
+            "title": "Response",
+            "type": "string"
+          },
+          "revision": {
+            "minimum": 1.0,
+            "title": "Revision",
+            "type": "integer"
+          },
+          "subject": {
+            "default": "",
+            "maxLength": 2000,
+            "title": "Subject",
+            "type": "string"
+          }
+        },
+        "required": [
+          "revision",
+          "action",
+          "date"
+        ],
+        "title": "ConsultationCommand",
+        "type": "object"
+      },
       "CreateCase": {
         "additionalProperties": false,
         "properties": {
@@ -700,6 +754,72 @@
           "revision"
         ],
         "title": "Mutation",
+        "type": "object"
+      },
+      "PermitCommand": {
+        "additionalProperties": false,
+        "properties": {
+          "action": {
+            "enum": [
+              "issue",
+              "revoke",
+              "return",
+              "cancel"
+            ],
+            "title": "Action",
+            "type": "string"
+          },
+          "basePermit": {
+            "default": "",
+            "maxLength": 60,
+            "title": "Basepermit",
+            "type": "string"
+          },
+          "date": {
+            "format": "date",
+            "title": "Date",
+            "type": "string"
+          },
+          "note": {
+            "default": "",
+            "maxLength": 2000,
+            "title": "Note",
+            "type": "string"
+          },
+          "number": {
+            "default": "",
+            "maxLength": 60,
+            "title": "Number",
+            "type": "string"
+          },
+          "reason": {
+            "default": "",
+            "enum": [
+              "",
+              "unlawful",
+              "not_remedied"
+            ],
+            "title": "Reason",
+            "type": "string"
+          },
+          "reference": {
+            "default": "",
+            "maxLength": 200,
+            "title": "Reference",
+            "type": "string"
+          },
+          "revision": {
+            "minimum": 1.0,
+            "title": "Revision",
+            "type": "integer"
+          }
+        },
+        "required": [
+          "revision",
+          "action",
+          "date"
+        ],
+        "title": "PermitCommand",
         "type": "object"
       },
       "PrepareUpload": {
@@ -2102,6 +2222,73 @@
         "summary": "Consultation"
       }
     },
+    "/v1/cases/{id}/consultations/permit": {
+      "post": {
+        "operationId": "permit_consultation_v1_cases__id__consultations_permit_post",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "title": "Id",
+              "type": "string"
+            }
+          },
+          {
+            "in": "header",
+            "name": "x-internal-token",
+            "required": false,
+            "schema": {
+              "default": "",
+              "title": "X-Internal-Token",
+              "type": "string"
+            }
+          },
+          {
+            "in": "header",
+            "name": "authorization",
+            "required": false,
+            "schema": {
+              "default": "",
+              "title": "Authorization",
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ConsultationCommand"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Permit Consultation"
+      }
+    },
     "/v1/cases/{id}/documents": {
       "post": {
         "operationId": "upload_v1_cases__id__documents_post",
@@ -2886,6 +3073,128 @@
           }
         },
         "summary": "Review Legal Requirement"
+      }
+    },
+    "/v1/cases/{id}/permit": {
+      "get": {
+        "operationId": "permit_state_v1_cases__id__permit_get",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "title": "Id",
+              "type": "string"
+            }
+          },
+          {
+            "in": "header",
+            "name": "x-internal-token",
+            "required": false,
+            "schema": {
+              "default": "",
+              "title": "X-Internal-Token",
+              "type": "string"
+            }
+          },
+          {
+            "in": "header",
+            "name": "authorization",
+            "required": false,
+            "schema": {
+              "default": "",
+              "title": "Authorization",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Permit State"
+      },
+      "post": {
+        "operationId": "permit_action_v1_cases__id__permit_post",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "title": "Id",
+              "type": "string"
+            }
+          },
+          {
+            "in": "header",
+            "name": "x-internal-token",
+            "required": false,
+            "schema": {
+              "default": "",
+              "title": "X-Internal-Token",
+              "type": "string"
+            }
+          },
+          {
+            "in": "header",
+            "name": "authorization",
+            "required": false,
+            "schema": {
+              "default": "",
+              "title": "Authorization",
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PermitCommand"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Permit Action"
       }
     },
     "/v1/cases/{id}/procedure-review": {
@@ -4722,6 +5031,54 @@
           }
         },
         "summary": "Organization Options"
+      }
+    },
+    "/v1/permits": {
+      "get": {
+        "operationId": "permit_register_v1_permits_get",
+        "parameters": [
+          {
+            "in": "header",
+            "name": "x-internal-token",
+            "required": false,
+            "schema": {
+              "default": "",
+              "title": "X-Internal-Token",
+              "type": "string"
+            }
+          },
+          {
+            "in": "header",
+            "name": "authorization",
+            "required": false,
+            "schema": {
+              "default": "",
+              "title": "Authorization",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Permit Register"
       }
     },
     "/v1/projects": {

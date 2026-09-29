@@ -20,6 +20,7 @@ import { projectService } from '../services/projectService';
 import { ProjectSelect } from '../components/appraisal/ProjectSelect';
 import { PROJECT_PROCEDURES, SUBMISSION_STATUS, type ProjectProcedure } from '../lib/projectProcedures';
 import { SubmissionWorkspace } from '../components/appraisal/SubmissionWorkspace';
+import { PermitRegister } from '../components/appraisal/PermitRegister';
 import { SlaBadge, SLA_FILTER_OPTIONS } from '../components/appraisal/SlaBadge';
 import { GridToolbar, GridSearchInput, GridCount } from '../components/ui/grid/GridToolbar';
 const ProjectPanel = lazy(() =>
@@ -41,6 +42,8 @@ export function AppraisalPage({ procedure = 'bcnckt', project }: { procedure?: P
   const { session } = useAuth();
   const [loaded, setLoaded] = useState(false);
   const [sort, setSort] = useFilterState('submission-sort-' + procedure, { key: 'updatedAt', direction: 'desc' });
+  const [view, setView] = useFilterState('submission-view-' + procedure, 'list');
+  const register = procedure === 'gpxd' && !project && view === 'register';
   const [page, setPage] = useState(0);
   const [error, setError] = useState('');
   const [busy, setBusy] = useState(false);
@@ -257,219 +260,249 @@ export function AppraisalPage({ procedure = 'bcnckt', project }: { procedure?: P
           <RefreshCw size={16} />
           Tải lại
         </button>
+        {procedure === 'gpxd' && !project && (
+          <div className="ml-auto flex gap-2" role="group" aria-label="Chế độ xem">
+            <button
+              className={
+                button +
+                ' aria-pressed:!border-primary-500 dark:aria-pressed:!border-primary-400 aria-pressed:!text-primary-700 dark:aria-pressed:!text-primary-300'
+              }
+              aria-pressed={!register}
+              onClick={() => setView('list')}
+            >
+              Hồ sơ đề nghị
+            </button>
+            <button
+              className={
+                button +
+                ' aria-pressed:!border-primary-500 dark:aria-pressed:!border-primary-400 aria-pressed:!text-primary-700 dark:aria-pressed:!text-primary-300'
+              }
+              aria-pressed={register}
+              onClick={() => setView('register')}
+            >
+              Sổ giấy phép
+            </button>
+          </div>
+        )}
       </div>
-      <GridToolbar
-        search={
-          <GridSearchInput
-            value={filters.search}
-            onChange={(search) => setFilters({ ...filters, search })}
-            label="Tìm hồ sơ"
-            placeholder="Tìm theo tên hồ sơ, tên dự án, mã dự án…"
-          />
-        }
-        people={
-          !project && (
-            <div className="w-64">
-              <ProjectSelect
-                value={filters.projectId}
-                onChange={(projectId) => {
-                  setPage(0);
-                  setFilters({ ...filters, projectId });
-                }}
-                allowAll
+      {register ? (
+        <PermitRegister />
+      ) : (
+        <>
+          <GridToolbar
+            search={
+              <GridSearchInput
+                value={filters.search}
+                onChange={(search) => setFilters({ ...filters, search })}
+                label="Tìm hồ sơ"
+                placeholder="Tìm theo tên hồ sơ, tên dự án, mã dự án…"
               />
-            </div>
-          )
-        }
-        status={
-          <>
-            <div className="w-48">
-              <SearchableSelect
-                value={filters.status}
-                onChange={(status) => setFilters({ ...filters, status })}
-                options={[
-                  { value: 'all', label: 'Tất cả trạng thái' },
-                  { value: 'intake', label: 'Tiếp nhận' },
-                  { value: 'analyzing', label: 'Đang kiểm tra' },
-                  { value: 'analyzed', label: 'Đã kiểm tra' },
-                  { value: 'request_supplement', label: 'Yêu cầu bổ sung' },
-                  { value: 'processing', label: 'Đang xử lý' },
-                  { value: 'reviewed', label: 'Đã rà soát nội bộ' },
-                  { value: 'suspended', label: 'Tạm dừng thẩm định' },
-                  { value: 'rejected', label: 'Từ chối tiếp nhận' },
-                  { value: 'stopped', label: 'Dừng xử lý' },
-                ]}
-              />
-            </div>
-            <div className="w-48">
-              <SearchableSelect
-                value={filters.sla || 'all'}
-                onChange={(sla) => setFilters({ ...filters, sla })}
-                options={SLA_FILTER_OPTIONS}
-              />
-            </div>
-          </>
-        }
-        period={
-          <>
-            <div className="w-40">
-              <DateInput
-                value={filters.from}
-                placeholder="Ngày đánh giá từ"
-                onChange={(from) => setFilters({ ...filters, from })}
-              />
-            </div>
-            <div className="w-40">
-              <DateInput
-                value={filters.to}
-                placeholder="Ngày đánh giá đến"
-                onChange={(to) => setFilters({ ...filters, to })}
-              />
-            </div>
-          </>
-        }
-        onReset={() => {
-          setPage(0);
-          setFilters({ search: '', kind: 'all', projectId: '', status: 'all', sla: 'all', from: '', to: '' });
-        }}
-        count={<GridCount total={total} unit="hồ sơ" detail={`trang ${page + 1}`} />}
-      />
-      <DossierGrid
-        fitWidth
-        className="flex-1 min-h-56"
-        storageKey={'submission-compact-v2-' + procedure + (project ? '-project' : '-all')}
-        rows={rows}
-        loading={!loaded && !rows.length}
-        serverSort={sort}
-        onSort={(key, direction) => setSort({ key, direction })}
-        columns={[
-          {
-            label: 'Hồ sơ / tài liệu',
-            sortKey: 'name',
-            value: (d) => d.name,
-            width: 310,
-            render: (d) => (
-              <div className="space-y-2 leading-relaxed">
-                <EntityLink
-                  type="dossier"
-                  id={d.id}
-                  name={d.name}
-                  className="whitespace-normal break-words overflow-visible"
-                  onClick={() => open(d)}
-                />
-                <div className="flex flex-wrap items-center gap-2 text-ink-muted dark:text-ink-muted">
-                  <span>{d.documentCount ?? 0} tài liệu</span>
+            }
+            people={
+              !project && (
+                <div className="w-64">
+                  <ProjectSelect
+                    value={filters.projectId}
+                    onChange={(projectId) => {
+                      setPage(0);
+                      setFilters({ ...filters, projectId });
+                    }}
+                    allowAll
+                  />
                 </div>
-              </div>
-            ),
-          },
-          ...(!project
-            ? [
-                {
-                  label: 'Dự án',
-                  sortKey: 'projectName',
-                  value: projectName,
-                  width: 300,
-                  render: (d: DossierSummary) => (
-                    <div className="space-y-2 leading-relaxed">
-                      {d.projectId ? (
-                        <EntityLink
-                          type="project"
-                          id={d.projectId}
-                          name={projectName(d)}
-                          className="whitespace-normal break-words overflow-visible"
-                          onClick={() =>
-                            void action(async () => openProject(await projectService.getById(d.projectId!)))
-                          }
-                        />
-                      ) : (
-                        <span>{projectName(d)}</span>
-                      )}
-                      <button
-                        className="block text-xs text-primary-700 dark:text-primary-300 hover:text-primary-600 dark:hover:text-primary-200"
-                        disabled={busy}
-                        onClick={() => {
-                          setLinkId(d.projectId || '');
-                          setLinking(d);
-                        }}
-                      >
-                        {d.projectId ? 'Đổi dự án' : 'Gắn dự án'}
-                      </button>
+              )
+            }
+            status={
+              <>
+                <div className="w-48">
+                  <SearchableSelect
+                    value={filters.status}
+                    onChange={(status) => setFilters({ ...filters, status })}
+                    options={[
+                      { value: 'all', label: 'Tất cả trạng thái' },
+                      { value: 'intake', label: 'Tiếp nhận' },
+                      { value: 'analyzing', label: 'Đang kiểm tra' },
+                      { value: 'analyzed', label: 'Đã kiểm tra' },
+                      { value: 'request_supplement', label: 'Yêu cầu bổ sung' },
+                      { value: 'processing', label: 'Đang xử lý' },
+                      { value: 'reviewed', label: 'Đã rà soát nội bộ' },
+                      { value: 'suspended', label: 'Tạm dừng thẩm định' },
+                      { value: 'rejected', label: 'Từ chối tiếp nhận' },
+                      { value: 'stopped', label: 'Dừng xử lý' },
+                    ]}
+                  />
+                </div>
+                <div className="w-48">
+                  <SearchableSelect
+                    value={filters.sla || 'all'}
+                    onChange={(sla) => setFilters({ ...filters, sla })}
+                    options={SLA_FILTER_OPTIONS}
+                  />
+                </div>
+              </>
+            }
+            period={
+              <>
+                <div className="w-40">
+                  <DateInput
+                    value={filters.from}
+                    placeholder="Ngày đánh giá từ"
+                    onChange={(from) => setFilters({ ...filters, from })}
+                  />
+                </div>
+                <div className="w-40">
+                  <DateInput
+                    value={filters.to}
+                    placeholder="Ngày đánh giá đến"
+                    onChange={(to) => setFilters({ ...filters, to })}
+                  />
+                </div>
+              </>
+            }
+            onReset={() => {
+              setPage(0);
+              setFilters({ search: '', kind: 'all', projectId: '', status: 'all', sla: 'all', from: '', to: '' });
+            }}
+            count={<GridCount total={total} unit="hồ sơ" detail={`trang ${page + 1}`} />}
+          />
+          <DossierGrid
+            fitWidth
+            className="flex-1 min-h-56"
+            storageKey={'submission-compact-v2-' + procedure + (project ? '-project' : '-all')}
+            rows={rows}
+            loading={!loaded && !rows.length}
+            serverSort={sort}
+            onSort={(key, direction) => setSort({ key, direction })}
+            columns={[
+              {
+                label: 'Hồ sơ / tài liệu',
+                sortKey: 'name',
+                value: (d) => d.name,
+                width: 310,
+                render: (d) => (
+                  <div className="space-y-2 leading-relaxed">
+                    <EntityLink
+                      type="dossier"
+                      id={d.id}
+                      name={d.name}
+                      className="whitespace-normal break-words overflow-visible"
+                      onClick={() => open(d)}
+                    />
+                    <div className="flex flex-wrap items-center gap-2 text-ink-muted dark:text-ink-muted">
+                      <span>{d.documentCount ?? 0} tài liệu</span>
                     </div>
-                  ),
-                },
-              ]
-            : []),
-          {
-            label: 'Trạng thái / thụ lý',
-            sortKey: 'status',
-            value: (d) => SUBMISSION_STATUS[d.status] || 'Đang xử lý',
-            width: 220,
-            render: (d) => (
-              <div className="space-y-2 leading-relaxed">
-                <span className="inline-block rounded-md bg-primary-50 dark:bg-slate-800 px-2 py-1 font-medium text-primary-800 dark:text-primary-300">
-                  {SUBMISSION_STATUS[d.status] || 'Đang xử lý'}
-                </span>
-                <p>{d.department}</p>
-              </div>
-            ),
-          },
-          {
-            label: 'Hạn xử lý',
-            sortKey: 'slaDueDate',
-            value: (d) => d.slaDueDate || '',
-            width: 190,
-            render: (d) => (
-              <div className="space-y-1.5 leading-relaxed">
-                <SlaBadge sla={d.slaState} dueDate={d.slaDueDate} />
-                <p className="text-ink-muted dark:text-ink-muted">
-                  {d.slaDueDate ? 'Hạn ' + formatDate(d.slaDueDate) : 'Chưa có hạn'}
-                </p>
-              </div>
-            ),
-          },
-          {
-            label: 'Địa điểm công trình',
-            sortKey: 'province',
-            value: (d) => d.province,
-            width: 200,
-            render: (d) => <p className="leading-relaxed">{d.province}</p>,
-          },
-          {
-            label: 'Thời gian',
-            sortKey: 'updatedAt',
-            value: (d) => d.updatedAt,
-            width: 260,
-            render: (d) => (
-              <dl className="space-y-1.5 leading-relaxed">
-                {[
-                  ['Tạo lần nộp', d.createdAt ? formatDateTime(d.createdAt) : 'Chưa ghi nhận'],
-                  ['Đánh giá', formatDate(d.legalDate)],
-                  ['Cập nhật', formatDateTime(d.updatedAt)],
-                ].map(([label, value]) => (
-                  <div key={label} className="flex flex-wrap gap-x-2">
-                    <dt className="text-ink-muted dark:text-ink-muted">{label}:</dt>
-                    <dd>{value}</dd>
                   </div>
-                ))}
-              </dl>
-            ),
-          },
-        ]}
-      />
-      <div className="flex shrink-0 flex-wrap items-center justify-between gap-3">
-        <span className="text-xs text-ink-muted dark:text-ink-muted">
-          {total ? `${page * 50 + 1}–${page * 50 + rows.length} / ${total} hồ sơ` : '0 hồ sơ'}
-        </span>
-        <div className="flex gap-3">
-          <button className={button} disabled={busy || page === 0} onClick={() => setPage(page - 1)}>
-            Trang trước
-          </button>
-          <button className={button} disabled={busy || (page + 1) * 50 >= total} onClick={() => setPage(page + 1)}>
-            Trang sau
-          </button>
-        </div>
-      </div>
+                ),
+              },
+              ...(!project
+                ? [
+                    {
+                      label: 'Dự án',
+                      sortKey: 'projectName',
+                      value: projectName,
+                      width: 300,
+                      render: (d: DossierSummary) => (
+                        <div className="space-y-2 leading-relaxed">
+                          {d.projectId ? (
+                            <EntityLink
+                              type="project"
+                              id={d.projectId}
+                              name={projectName(d)}
+                              className="whitespace-normal break-words overflow-visible"
+                              onClick={() =>
+                                void action(async () => openProject(await projectService.getById(d.projectId!)))
+                              }
+                            />
+                          ) : (
+                            <span>{projectName(d)}</span>
+                          )}
+                          <button
+                            className="block text-xs text-primary-700 dark:text-primary-300 hover:text-primary-600 dark:hover:text-primary-200"
+                            disabled={busy}
+                            onClick={() => {
+                              setLinkId(d.projectId || '');
+                              setLinking(d);
+                            }}
+                          >
+                            {d.projectId ? 'Đổi dự án' : 'Gắn dự án'}
+                          </button>
+                        </div>
+                      ),
+                    },
+                  ]
+                : []),
+              {
+                label: 'Trạng thái / thụ lý',
+                sortKey: 'status',
+                value: (d) => SUBMISSION_STATUS[d.status] || 'Đang xử lý',
+                width: 220,
+                render: (d) => (
+                  <div className="space-y-2 leading-relaxed">
+                    <span className="inline-block rounded-md bg-primary-50 dark:bg-slate-800 px-2 py-1 font-medium text-primary-800 dark:text-primary-300">
+                      {SUBMISSION_STATUS[d.status] || 'Đang xử lý'}
+                    </span>
+                    <p>{d.department}</p>
+                  </div>
+                ),
+              },
+              {
+                label: 'Hạn xử lý',
+                sortKey: 'slaDueDate',
+                value: (d) => d.slaDueDate || '',
+                width: 190,
+                render: (d) => (
+                  <div className="space-y-1.5 leading-relaxed">
+                    <SlaBadge sla={d.slaState} dueDate={d.slaDueDate} />
+                    <p className="text-ink-muted dark:text-ink-muted">
+                      {d.slaDueDate ? 'Hạn ' + formatDate(d.slaDueDate) : 'Chưa có hạn'}
+                    </p>
+                  </div>
+                ),
+              },
+              {
+                label: 'Địa điểm công trình',
+                sortKey: 'province',
+                value: (d) => d.province,
+                width: 200,
+                render: (d) => <p className="leading-relaxed">{d.province}</p>,
+              },
+              {
+                label: 'Thời gian',
+                sortKey: 'updatedAt',
+                value: (d) => d.updatedAt,
+                width: 260,
+                render: (d) => (
+                  <dl className="space-y-1.5 leading-relaxed">
+                    {[
+                      ['Tạo lần nộp', d.createdAt ? formatDateTime(d.createdAt) : 'Chưa ghi nhận'],
+                      ['Đánh giá', formatDate(d.legalDate)],
+                      ['Cập nhật', formatDateTime(d.updatedAt)],
+                    ].map(([label, value]) => (
+                      <div key={label} className="flex flex-wrap gap-x-2">
+                        <dt className="text-ink-muted dark:text-ink-muted">{label}:</dt>
+                        <dd>{value}</dd>
+                      </div>
+                    ))}
+                  </dl>
+                ),
+              },
+            ]}
+          />
+          <div className="flex shrink-0 flex-wrap items-center justify-between gap-3">
+            <span className="text-xs text-ink-muted dark:text-ink-muted">
+              {total ? `${page * 50 + 1}–${page * 50 + rows.length} / ${total} hồ sơ` : '0 hồ sơ'}
+            </span>
+            <div className="flex gap-3">
+              <button className={button} disabled={busy || page === 0} onClick={() => setPage(page - 1)}>
+                Trang trước
+              </button>
+              <button className={button} disabled={busy || (page + 1) * 50 >= total} onClick={() => setPage(page + 1)}>
+                Trang sau
+              </button>
+            </div>
+          </div>
+        </>
+      )}
       {create && (
         <ReviewModal
           heading={'Tiếp nhận hồ sơ — ' + config.label}

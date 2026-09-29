@@ -5,6 +5,8 @@ import type {
   DossierSummary,
   Health,
   ModelProvider,
+  PermitRegisterRow,
+  PermitView,
   StampingView,
 } from '../types/appraisal';
 import type { components, operations } from '../types/api.gen';
@@ -45,6 +47,8 @@ export const appraisalService = {
   legal: async (id: string) => (await request('/cases/' + id + '/legal')).json(),
   sheet: async (id: string): Promise<AppraisalSheetView> => (await request('/cases/' + id + '/appraisal-sheet')).json(),
   stamping: async (id: string): Promise<StampingView> => (await request('/cases/' + id + '/stamping')).json(),
+  permit: async (id: string): Promise<PermitView> => (await request('/cases/' + id + '/permit')).json(),
+  permits: async (): Promise<{ items: PermitRegisterRow[] }> => (await request('/permits')).json(),
   create: async (body: CreateCaseBody): Promise<Dossier> => (await request('/cases', body, 'POST')).json(),
   sample: async (scenario: string): Promise<Dossier> => (await request('/samples/' + scenario, {}, 'POST')).json(),
   mutate: async (id: string, path: string, body: unknown, method = 'POST'): Promise<Dossier> =>

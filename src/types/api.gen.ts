@@ -142,6 +142,23 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/v1/cases/{id}/consultations/permit": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Permit Consultation */
+        post: operations["permit_consultation_v1_cases__id__consultations_permit_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/v1/cases/{id}/documents": {
         parameters: {
             query?: never;
@@ -323,6 +340,24 @@ export interface paths {
         put?: never;
         /** Review Legal Requirement */
         post: operations["review_legal_requirement_v1_cases__id__legal_requirements__key__post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/cases/{id}/permit": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Permit State */
+        get: operations["permit_state_v1_cases__id__permit_get"];
+        put?: never;
+        /** Permit Action */
+        post: operations["permit_action_v1_cases__id__permit_post"];
         delete?: never;
         options?: never;
         head?: never;
@@ -724,6 +759,23 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/v1/permits": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Permit Register */
+        get: operations["permit_register_v1_permits_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/v1/projects": {
         parameters: {
             query?: never;
@@ -1030,6 +1082,41 @@ export interface components {
             /** Text */
             text: string;
         };
+        /** ConsultationCommand */
+        ConsultationCommand: {
+            /**
+             * Action
+             * @enum {string}
+             */
+            action: "send" | "respond";
+            /**
+             * Agency
+             * @default
+             */
+            agency?: string;
+            /**
+             * Date
+             * Format: date
+             */
+            date: string;
+            /**
+             * Id
+             * @default
+             */
+            id?: string;
+            /**
+             * Response
+             * @default
+             */
+            response?: string;
+            /** Revision */
+            revision: number;
+            /**
+             * Subject
+             * @default
+             */
+            subject?: string;
+        };
         /** CreateCase */
         CreateCase: {
             /**
@@ -1205,6 +1292,47 @@ export interface components {
         };
         /** Mutation */
         Mutation: {
+            /** Revision */
+            revision: number;
+        };
+        /** PermitCommand */
+        PermitCommand: {
+            /**
+             * Action
+             * @enum {string}
+             */
+            action: "issue" | "revoke" | "return" | "cancel";
+            /**
+             * Basepermit
+             * @default
+             */
+            basePermit?: string;
+            /**
+             * Date
+             * Format: date
+             */
+            date: string;
+            /**
+             * Note
+             * @default
+             */
+            note?: string;
+            /**
+             * Number
+             * @default
+             */
+            number?: string;
+            /**
+             * Reason
+             * @default
+             * @enum {string}
+             */
+            reason?: "" | "unlawful" | "not_remedied";
+            /**
+             * Reference
+             * @default
+             */
+            reference?: string;
             /** Revision */
             revision: number;
         };
@@ -1898,6 +2026,44 @@ export interface operations {
             };
         };
     };
+    permit_consultation_v1_cases__id__consultations_permit_post: {
+        parameters: {
+            query?: never;
+            header?: {
+                "x-internal-token"?: string;
+                authorization?: string;
+            };
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["ConsultationCommand"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": unknown;
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
     upload_v1_cases__id__documents_post: {
         parameters: {
             query?: never;
@@ -2285,6 +2451,78 @@ export interface operations {
         requestBody: {
             content: {
                 "application/json": components["schemas"]["LegalRequirementReview"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": unknown;
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    permit_state_v1_cases__id__permit_get: {
+        parameters: {
+            query?: never;
+            header?: {
+                "x-internal-token"?: string;
+                authorization?: string;
+            };
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": unknown;
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    permit_action_v1_cases__id__permit_post: {
+        parameters: {
+            query?: never;
+            header?: {
+                "x-internal-token"?: string;
+                authorization?: string;
+            };
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["PermitCommand"];
             };
         };
         responses: {
@@ -3258,6 +3496,38 @@ export interface operations {
             query?: {
                 search?: string;
             };
+            header?: {
+                "x-internal-token"?: string;
+                authorization?: string;
+            };
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": unknown;
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    permit_register_v1_permits_get: {
+        parameters: {
+            query?: never;
             header?: {
                 "x-internal-token"?: string;
                 authorization?: string;

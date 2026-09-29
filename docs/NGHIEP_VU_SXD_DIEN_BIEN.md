@@ -119,6 +119,11 @@ Tiếp nhận ─(05 NLV; 03 với nhà ở riêng lẻ: thẩm định hồ sơ
 | Nhà ở riêng lẻ | 07 NLV |
 | Gia hạn, cấp lại | 05 NLV |
 
+Sau khi cấp (Điều 49, 63–66; panel "Lấy ý kiến và giấy phép", trang "Sổ giấy phép"):
+- Số GP; hạn khởi công 12 tháng; công khai tối thiểu 12 tháng từ ngày cấp/gia hạn.
+- Điều chỉnh, gia hạn (≤02 lần × 12 tháng), cấp lại được ghi vào GP gốc.
+- Thu hồi (khoản 1 Điều 65) → nộp lại bản gốc trong 05 NLV → quá 10 NLV thì hủy.
+
 ### 4.3 Kiểm tra công tác nghiệm thu (Điều 27 NĐ 207)
 - Kiểm tra trong thi công:
   - không quá 03 lần với cấp đặc biệt, cấp I; 02 lần với công trình khác;

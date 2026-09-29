@@ -5,7 +5,8 @@
 - N0: đã bổ sung văn bản và dự thảo [nghiệp vụ](docs/NGHIEP_VU_SXD_DIEN_BIEN.md); chờ chuyên viên xác nhận (gate).
 - N1: đã xong, kèm bộ dữ liệu mẫu sample-v3 ([bàn giao](docs/N0_N1_DELIVERY_2026_09_29.md)).
 - N2: phiếu thẩm định Điều 38, kết luận 3 mức, vòng đóng dấu Mẫu 14 và lưu trữ khoản 9 Điều 36 ([bàn giao](docs/N2_DELIVERY_2026_09_29.md)); AI phân loại/trích Mẫu 01/QCVN chuyển sang N5 (cần credential).
-- N3–N6: chưa làm.
+- N3: lấy ý kiến 02 ngày làm việc (im lặng là đồng ý), cấp số GP, sổ giấy phép, điều chỉnh/gia hạn/cấp lại trên GP gốc, thu hồi/hủy ([bàn giao](docs/N3_DELIVERY_2026_09_29.md)).
+- N4–N6: đang làm.
 **Phạm vi:** Thẩm định Báo cáo nghiên cứu khả thi (BCNCKT) · Cấp giấy phép xây dựng (GPXD) · Hậu kiểm và kiểm tra công tác nghiệm thu.
 **Kế hoạch trước:** [đợt G0–G6 đã triển khai](docs/plans/20260929-ke-hoach-G0-G6-da-trien-khai.md) · [bàn giao tối ưu](docs/OPTIMIZATION_DELIVERY_2026_09_28.md).
 

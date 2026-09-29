@@ -1,5 +1,6 @@
 import { WorkflowPanel } from './WorkflowPanel';
 import { ProcedureReview } from './ProcedureReview';
+import { PermitPanel } from './PermitPanel';
 import { OcrPanel } from './OcrPanel';
 import { SubmissionHistory } from './SubmissionHistory';
 import React, { useEffect, useState } from 'react';
@@ -67,6 +68,7 @@ export function SubmissionWorkspace({ dossierId }: { dossierId: string }) {
           <SubmissionHistory dossier={d} />
           <WorkflowPanel dossier={d} onChange={setD} />
           <ProcedureReview dossier={d} onChange={setD} />
+          {d.procedure === 'gpxd' && <PermitPanel dossier={d} onChange={setD} />}
           <OcrPanel dossier={d} onChange={setD} />
           <div className="flex gap-3">
             {['pdf', 'docx'].map((format) => (

@@ -36,7 +36,9 @@ POLICY = {
         # Thẩm định hồ sơ, kiểm tra thực địa: 05 ngày làm việc (03 với nhà ở riêng lẻ) — điểm a khoản 2 Điều 54.
         'intakeDays': 5,
         'intakeDaysHouse': 3,
-        'intakeBasis': 'Điểm a khoản 2 Điều 54 NĐ 217/2026/NĐ-CP',
+        # Gia hạn, cấp lại: 02 ngày làm việc — điểm a khoản 3 Điều 54.
+        'intakeDaysRenewal': 2,
+        'intakeBasis': 'Điểm a khoản 2, điểm a khoản 3 Điều 54 NĐ 217/2026/NĐ-CP',
         # Thông báo một lần; người đề nghị bổ sung trong 02 ngày làm việc (01 với gia hạn/cấp lại);
         # không đáp ứng → 01 ngày làm việc thông báo lý do không cấp — điểm b khoản 2, 3 Điều 54.
         'supplement': {
@@ -84,6 +86,8 @@ def intake_days(procedure, subtype=None):
     p = policy(procedure)
     if procedure == 'gpxd' and subtype == 'house':
         return p['intakeDaysHouse']
+    if procedure == 'gpxd' and subtype in ('extension', 'reissue'):
+        return p['intakeDaysRenewal']
     return p.get('intakeDays')
 
 

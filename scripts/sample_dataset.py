@@ -57,7 +57,8 @@ def money(value):
 # ─── Scenarios ────────────────────────────────────────────────────────────────────────────────────
 # Each round: received date and steps (working-day offset from the round's receipt, action, note).
 # Pseudo actions: analyze, legal (confirm legal context, facts and findings), review:<conclusion> (GPXD, nghiệm thu),
-# sheet:<conclusion> (phiếu thẩm định Điều 38), stamp:<action> (đóng dấu, lưu trữ — khoản 8, 9 Điều 36).
+# sheet:<conclusion> (phiếu thẩm định Điều 38), stamp:<action> (đóng dấu, lưu trữ — khoản 8, 9 Điều 36),
+# consult:send|reply:<i> (lấy ý kiến — điểm c khoản 2 Điều 54), permit:<action> (cấp, thu hồi, hủy GP — Điều 65).
 M15 = 'Hồ sơ thiếu thành phần theo khoản 2 Điều 35 NĐ 217/2026; gửi một lần Phiếu Mẫu 15.'
 M16 = 'Số liệu tổng mức đầu tư và bản vẽ thiết kế cơ sở chưa thống nhất; tạm dừng thẩm định (Mẫu 16).'
 VALID = 'Hồ sơ đủ thành phần, đúng quy cách; xác nhận hợp lệ và bắt đầu thẩm định.'
@@ -239,6 +240,9 @@ PERMITS = {
                 '2026-09-17',
                 [
                     (1, 'start', 'Hồ sơ trực tuyến đầy đủ; thẩm định hồ sơ, lấy ý kiến cơ quan quản lý tôn giáo.'),
+                    (2, 'consult:send:0'),
+                    (2, 'consult:send:1'),
+                    (3, 'consult:reply:1'),
                     (2, 'review:pending'),
                 ],
             )
@@ -251,7 +255,7 @@ PERMITS = {
             (
                 '2026-08-10',
                 [
-                    (1, 'start', 'Tiếp nhận hồ sơ điều chỉnh GPXD số 12/GPXD-SXD cấp năm 2025.'),
+                    (1, 'start', 'Tiếp nhận hồ sơ điều chỉnh GPXD số 12/2025/GPXD do Sở cấp năm 2025.'),
                     (
                         3,
                         'request_supplement',
@@ -261,6 +265,7 @@ PERMITS = {
                     (6, 'review:eligible'),
                     (6, 'submit_review', 'Trình lãnh đạo ký giấy phép điều chỉnh.'),
                     (7, 'approve', 'Đồng ý điều chỉnh giấy phép; ghi nội dung điều chỉnh vào giấy phép gốc.'),
+                    (7, 'permit:issue', '12/2025/GPXD'),
                 ],
             )
         ],
@@ -271,10 +276,11 @@ PERMITS = {
             (
                 '2026-09-14',
                 [
-                    (1, 'start', 'Tiếp nhận hồ sơ gia hạn GPXD số 27/GPXD-SXD cấp năm 2025 (chưa khởi công).'),
+                    (1, 'start', 'Tiếp nhận hồ sơ gia hạn GPXD số 27/2025/GPXD cấp năm 2025 (chưa khởi công).'),
                     (2, 'review:eligible'),
                     (2, 'submit_review', 'Trình gia hạn giấy phép lần 1.'),
                     (3, 'approve', 'Đồng ý gia hạn 12 tháng.'),
+                    (3, 'permit:issue', '27/2025/GPXD'),
                 ],
             )
         ],
@@ -324,6 +330,33 @@ PERMITS = {
             )
         ],
     ),
+}
+# Permits issued before the system went live (imported from the paper register):
+# code → (number, issue date, title, start date declared in the start notice or None).
+LEGACY_PERMITS = {
+    'DA-2026-DB-0184': ('12/2025/GPXD', '2025-06-16', 'Giấy phép đã cấp năm 2025 (nhập sổ)', '2025-10-06'),
+    'DA-2026-DB-0204': ('27/2025/GPXD', '2025-09-08', 'Giấy phép đã cấp năm 2025 (nhập sổ)', None),
+}
+CONSULTS = {
+    ('DA-2026-DB-0208', None): [
+        (
+            'Ban Tôn giáo — Sở Nội vụ tỉnh Điện Biên',
+            'Ý kiến về sự phù hợp của công trình tôn giáo với quy định pháp luật về tín ngưỡng, tôn giáo.',
+            '',
+        ),
+        (
+            'Phòng Cảnh sát PCCC và CNCH — Công an tỉnh Điện Biên',
+            'Thông tin thẩm duyệt thiết kế PCCC trong hồ sơ chưa thống nhất với bản vẽ mặt bằng tầng 1.',
+            'Bản vẽ mặt bằng tầng 1 phù hợp hồ sơ đã thẩm duyệt số 58/TD-PCCC; chênh lệch do đánh số trục.',
+        ),
+    ],
+    ('DA-2026-DB-0208', 'Nhà giáo lý'): [
+        (
+            'UBND phường Him Lam',
+            'Ý kiến về chỉ giới xây dựng và hiện trạng ranh giới khu đất.',
+            'Chỉ giới xây dựng phù hợp quy hoạch chi tiết phường; ranh giới không tranh chấp.',
+        ),
+    ],
 }
 INSPECTIONS = {
     'DA-2026-DB-0186': (
@@ -399,15 +432,25 @@ def clock(day, hour=2):
         def today(cls):
             return day
 
-    import app.appraisal_sheet, app.deps, app.domain, app.procedure_review, app.rules, app.stamping, app.workflow  # noqa: E401
+    import app.appraisal_sheet, app.deps, app.domain, app.permits, app.procedure_review, app.rules, app.stamping, app.workflow  # noqa: E401
 
-    modules = (app.domain, app.deps, app.workflow, app.rules, app.procedure_review, app.appraisal_sheet, app.stamping)
+    modules = (
+        app.domain,
+        app.deps,
+        app.workflow,
+        app.rules,
+        app.procedure_review,
+        app.appraisal_sheet,
+        app.stamping,
+        app.permits,
+    )
     with ExitStack() as stack:
         for module in modules:
             if hasattr(module, 'now'):
                 stack.enter_context(patch.object(module, 'now', lambda: stamp))
         stack.enter_context(patch.object(app.workflow, 'date', Today))
         stack.enter_context(patch.object(app.stamping, 'date', Today))
+        stack.enter_context(patch.object(app.permits, 'date', Today))
         yield stamp
 
 
@@ -667,6 +710,10 @@ class Builder:
                 return self.appraisal_sheet(case, project, officer, action.split(':', 1)[1])
             if action.startswith('stamp:'):
                 return self.stamp(case, project, action.split(':', 1)[1], day, note)
+            if action.startswith('consult:'):
+                return self.consult(case, project, action, day)
+            if action.startswith('permit:'):
+                return self.permit(case, action.split(':', 1)[1], day, note)
             if action == 'approve' and case.get('procedure') == 'bcnckt':
                 from app.deps import validate_final_review
 
@@ -800,6 +847,96 @@ class Builder:
             body['note'] = 'Nhận bản chụp định dạng PDF các bản vẽ đã đóng dấu thẩm định.'
         label = apply_stamping(case, actor, StampingCommand(**body), self.calendar, demo=True)
         return self.persist(case, label, body.get('reference') or body.get('note') or label)
+
+    def consult(self, case, project, action, day):
+        """Lấy ý kiến cơ quan liên quan — điểm c khoản 2 Điều 54 NĐ 217/2026."""
+        from app.permits import ConsultationCommand, consult
+
+        _, kind, index = action.split(':')
+        # Scenario key: (project code, dossier title); the dossier name carries the title.
+        entries = [k for k in CONSULTS if k[0] == project['code'] and (k[1] is None or k[1] in case['name'])]
+        key = max(entries, key=lambda k: k[1] is not None)
+        agency, subject, response = CONSULTS[key][int(index)]
+        body = {'revision': case['revision'], 'action': 'send' if kind == 'send' else 'respond', 'date': day}
+        if kind == 'send':
+            body.update(agency=agency, subject=subject)
+        else:
+            item = next(x for x in case['permitConsultations'] if x['agency'] == agency)
+            body.update(id=item['id'], response=response)
+        label = consult(case, self.officer(project), ConsultationCommand(**body), self.calendar)
+        return self.persist(case, label, subject if kind == 'send' else response)
+
+    def permit(self, case, action, day, note=None):
+        """Cấp, thu hồi, nhận lại, hủy giấy phép — Điều 49, 63–65 NĐ 217/2026."""
+        from app.permits import PermitCommand, act, register
+
+        body = {'revision': case['revision'], 'action': action, 'date': day}
+        if action == 'issue':
+            subtype = (case.get('procedureReview') or {}).get('subtype')
+            body['basePermit' if subtype in ('amendment', 'extension', 'reissue') else 'number'] = note or ''
+            body['note'] = 'Giấy phép mô phỏng; chưa ký số, chưa ban hành.'
+        if action == 'revoke':
+            body.update(
+                reason='not_remedied',
+                reference=note,
+                note='Chủ đầu tư không khắc phục việc xây dựng sai nội dung giấy phép trong thời hạn tại quyết định xử phạt.',
+            )
+        if action in ('return', 'cancel'):
+            body['reference'] = note or ''
+        records = register(self.store.permit_records(), self.calendar, day) if action == 'issue' else []
+        label = act(case, self.leader, PermitCommand(**body), records, self.calendar, demo=True)
+        return self.persist(case, label, body.get('reference') or body.get('note') or label)
+
+    def legacy_permit(self, project, number, issued, title, started=None):
+        """Permit issued before the system went live, imported from the paper register (no review sheet)."""
+        from app.permits import add_months
+
+        issued = date.fromisoformat(issued)
+        case = self.create(project, 'gpxd', issued, 1, key=f"{project['code']}/gpxd-legacy/1", title=title)
+        with clock(issued) as stamp:
+            case['workflow'] = {
+                'state': 'reviewed',
+                'validAt': issued.isoformat(),
+                'history': [
+                    {
+                        'from': 'received',
+                        'to': 'reviewed',
+                        'action': 'Nhập giấy phép đã cấp từ sổ giấy phép',
+                        'note': 'Giấy phép cấp trước khi vận hành hệ thống (mô phỏng).',
+                        'actor': self.leader['name'],
+                        'at': stamp,
+                    }
+                ],
+            }
+            case['finalReview'] = {
+                'decision': 'reviewed',
+                'note': 'Nhập từ sổ giấy phép.',
+                'actor': self.leader['name'],
+                'at': stamp,
+                'simulation': True,
+            }
+            case['permit'] = {
+                'id': sid(project['code'] + '/legacy-permit'),
+                'number': number,
+                'kind': 'new',
+                'form': '03',
+                'issueDate': issued.isoformat(),
+                'issuedBy': 'Sở Xây dựng tỉnh Điện Biên',
+                'content': {
+                    'name': project['name'],
+                    'investor': project['investorName'],
+                    'location': project['location'],
+                    'scope': project['name'],
+                    'buildingClass': 'Cấp ' + project['buildingGrade'],
+                },
+                'note': 'Giấy phép cấp trước khi vận hành hệ thống; nhập từ sổ giấy phép giấy (mô phỏng).',
+                'imported': True,
+                'startedAt': started,
+                'events': [],
+                'startDeadline': add_months(issued, 12).isoformat(),
+                'publicUntil': add_months(issued, 12).isoformat(),
+            }
+            return self.persist(case, 'Nhập giấy phép đã cấp', number)
 
     def procedure_review(self, case, project, officer, conclusion, day):
         from app.procedure_review import Review, apply as apply_review, specification
@@ -937,8 +1074,54 @@ def main():
         )
     for code, rounds in BCNCKT.items():
         builder.run(projects[code], 'bcnckt', rounds)
+    for code, (number, issued, title, started) in LEGACY_PERMITS.items():
+        builder.legacy_permit(projects[code], number, issued, title, started)
     for code, (subtype, rounds) in PERMITS.items():
         builder.run(projects[code], 'gpxd', rounds, subtype)
+    # Permit revoked for building in breach of it, not handed back within 10 working days → cancelled.
+    builder.run(
+        projects['DA-2026-DB-0209'],
+        'gpxd',
+        [
+            (
+                '2026-07-06',
+                [
+                    (1, 'start', 'Tiếp nhận hồ sơ cấp GPXD nhà điều hành và cổng tường rào kho lạnh.'),
+                    (4, 'review:eligible'),
+                    (5, 'submit_review', 'Trình lãnh đạo ký giấy phép xây dựng.'),
+                    (6, 'approve', 'Đồng ý cấp giấy phép xây dựng.'),
+                    (6, 'permit:issue'),
+                    (45, 'permit:revoke', '25/QĐ-SXD thu hồi giấy phép xây dựng'),
+                    (57, 'permit:cancel', '31/QĐ-SXD hủy giấy phép xây dựng'),
+                ],
+            )
+        ],
+        'new',
+        key_prefix='DA-2026-DB-0209/gpxd-office',
+        title='Nhà điều hành và cổng tường rào',
+    )
+    # New permit issued and in force (consultation answered in time).
+    builder.run(
+        projects['DA-2026-DB-0208'],
+        'gpxd',
+        [
+            (
+                '2026-07-13',
+                [
+                    (1, 'start', 'Tiếp nhận hồ sơ cấp GPXD nhà giáo lý; hồ sơ đầy đủ.'),
+                    (2, 'consult:send:0'),
+                    (3, 'consult:reply:0'),
+                    (4, 'review:eligible'),
+                    (5, 'submit_review', 'Trình lãnh đạo ký giấy phép xây dựng.'),
+                    (6, 'approve', 'Đồng ý cấp giấy phép xây dựng.'),
+                    (6, 'permit:issue'),
+                ],
+            )
+        ],
+        'new',
+        key_prefix='DA-2026-DB-0208/gpxd-catechism',
+        title='Nhà giáo lý',
+    )
     # Second permit dossier of the religious project: supplement notice once, not met → refusal.
     builder.run(
         projects['DA-2026-DB-0208'],

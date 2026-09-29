@@ -378,6 +378,30 @@ class Store:
         self._successors[id] = bool(rows)
         return self._successors[id]
 
+    def permit_records(self):
+        """Permit records stored on GPXD submissions visible to the actor (sổ giấy phép)."""
+        if MODE == 'demo':
+            with db() as con:
+                rows = con.execute(
+                    """select id,json_extract(payload,'$.projectId'),json_extract(payload,'$.projectName'),
+                    json_extract(payload,'$.projectCode'),json_extract(payload,'$.permit')
+                    from cases where json_extract(payload,'$.permit') is not null"""
+                ).fetchall()
+            return [
+                {'id': r[0], 'projectId': r[1], 'projectName': r[2], 'projectCode': r[3], 'permit': json.loads(r[4])}
+                for r in rows
+            ]
+        (rows,) = read(
+            self.actor['id'],
+            (
+                """select id::text as id,payload->>'projectId' as "projectId",payload->>'projectName' as "projectName",
+                payload->>'projectCode' as "projectCode",payload->'permit' as permit
+                from public.appraisal_cases where procedure='gpxd' and payload ? 'permit'""",
+                (),
+            ),
+        )
+        return rows
+
     def lineage(self, id, offset=0):
         case = self.get(id)
         if MODE == 'demo':
