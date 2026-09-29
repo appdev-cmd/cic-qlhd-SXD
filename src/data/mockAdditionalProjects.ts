@@ -83,6 +83,8 @@ export const ADDITIONAL_PROJECTS: Project[] = [
   {
     id: 'proj-007',
     code: 'DA-2026-DB-0188',
+    field: 'Giao thông',
+    investmentForm: 'dau_tu_cong',
     name: 'Xây dựng Cầu Thanh Bình vượt sông Nậm Rốm kết nối đường Võ Nguyên Giáp',
     coverImage: '/images/projects/bridge/bridge_river_01.jpg',
     images: makeGallery(
@@ -139,6 +141,8 @@ export const ADDITIONAL_PROJECTS: Project[] = [
   {
     id: 'proj-008',
     code: 'DA-2026-DB-0189',
+    field: 'Dân dụng',
+    investmentForm: 'dau_tu_cong',
     name: 'Trung tâm Hội nghị và Triển lãm Văn hóa Các Dân tộc Tỉnh Điện Biên',
     coverImage: '/images/projects/culture_sports/cultural_house_01.jpg',
     images: makeGallery(
@@ -195,6 +199,8 @@ export const ADDITIONAL_PROJECTS: Project[] = [
   {
     id: 'proj-009',
     code: 'DA-2026-DB-0190',
+    field: 'Dân dụng',
+    investmentForm: 'dau_tu_cong',
     name: 'Xây dựng Trụ sở làm việc liên cơ quan Sở Xây dựng - Sở TN&MT Tỉnh Điện Biên',
     coverImage: '/images/projects/government_office/government_office_01.jpg',
     images: makeGallery(
@@ -244,6 +250,8 @@ export const ADDITIONAL_PROJECTS: Project[] = [
   {
     id: 'proj-010',
     code: 'DA-2026-DB-0191',
+    field: 'Dân dụng',
+    investmentForm: 'dau_tu_cong',
     name: 'Khu Tái định cư và Nhà ở Xã hội Noong Bua - TP. Điện Biên Phủ',
     coverImage: '/images/projects/resettlement/resettlement_01.jpg',
     images: makeGallery(
@@ -293,6 +301,8 @@ export const ADDITIONAL_PROJECTS: Project[] = [
   {
     id: 'proj-011',
     code: 'DA-2026-DB-0192',
+    field: 'Giao thông',
+    investmentForm: 'dau_tu_cong',
     name: 'Đường giao thông liên huyện Mường Chà - Nậm Pồ kết nối Quốc lộ 4H',
     coverImage: '/images/projects/road/road_rural_01.jpg',
     images: makeGallery(
@@ -342,6 +352,8 @@ export const ADDITIONAL_PROJECTS: Project[] = [
   {
     id: 'proj-012',
     code: 'DA-2026-DB-0193',
+    field: 'Dân dụng',
+    investmentForm: 'dau_tu_cong',
     name: 'Xây dựng Trường Mầm non Thực hành Hoa Ban & Cụm Lớp học vùng cao Huyện Tủa Chùa',
     coverImage: '/images/projects/school/school_kindergarten_01.jpg',
     images: makeGallery(
@@ -391,6 +403,8 @@ export const ADDITIONAL_PROJECTS: Project[] = [
   {
     id: 'proj-013',
     code: 'DA-2026-DB-0194',
+    field: 'Hạ tầng kỹ thuật',
+    investmentForm: 'dau_tu_cong',
     name: 'Kè chống sạt lở bờ sông Nậm Mức bảo vệ thị trấn Tủa Chùa',
     coverImage: '/images/projects/dyke_embankment/dyke_sea_01.jpg',
     images: makeGallery(
@@ -440,6 +454,8 @@ export const ADDITIONAL_PROJECTS: Project[] = [
   {
     id: 'proj-014',
     code: 'DA-2026-DB-0195',
+    field: 'Dân dụng',
+    investmentForm: 'dau_tu_cong',
     name: 'Trung tâm Y tế Huyện Điện Biên cơ sở 2 tại xã Sam Mứn',
     coverImage: '/images/projects/hospital/hospital_clinic_01.jpg',
     images: makeGallery(
@@ -489,6 +505,8 @@ export const ADDITIONAL_PROJECTS: Project[] = [
   {
     id: 'proj-015',
     code: 'DA-2026-DB-0196',
+    field: 'Dân dụng',
+    investmentForm: 'dau_tu_cong',
     name: 'Xây dựng Sân vận động Tỉnh Điện Biên và Khu liên hợp Huấn luyện Thể dục Thể thao',
     coverImage: '/images/projects/culture_sports/sports_stadium_01.jpg',
     images: makeGallery(
@@ -538,6 +556,8 @@ export const ADDITIONAL_PROJECTS: Project[] = [
   {
     id: 'proj-016',
     code: 'DA-2026-DB-0197',
+    field: 'Giao thông',
+    investmentForm: 'dau_tu_cong',
     name: 'Nâng cấp, cải tạo Đại lộ 7/5 và Hệ thống chiếu sáng đô thị thông minh TP. Điện Biên Phủ',
     coverImage: '/images/projects/road/road_urban_01.jpg',
     images: makeGallery(
@@ -587,6 +607,8 @@ export const ADDITIONAL_PROJECTS: Project[] = [
   {
     id: 'proj-017',
     code: 'DA-2026-DB-0198',
+    field: 'Dân dụng',
+    investmentForm: 'dau_tu_cong',
     name: 'Xây dựng Trường Tiểu học Bế Văn Đàn đạt chuẩn Quốc gia mức độ 2',
     coverImage: '/images/projects/school/school_primary_01.jpg',
     images: makeGallery(
@@ -636,6 +658,9 @@ export const ADDITIONAL_PROJECTS: Project[] = [
   {
     id: 'proj-018',
     code: 'DA-2026-DB-0199',
+    field: 'Giao thông',
+    investmentForm: 'dau_tu_cong',
+    decidedByCommune: true,
     name: 'Cầu treo dân sinh vượt suối Nậm Nhé kết nối bản vùng sâu xã Mường Nhé',
     coverImage: '/images/projects/bridge/bridge_rural_01.jpg',
     images: makeGallery(
@@ -685,6 +710,8 @@ export const ADDITIONAL_PROJECTS: Project[] = [
   {
     id: 'proj-019',
     code: 'DA-2026-DB-0200',
+    field: 'Công nghiệp',
+    investmentForm: 'kinh_doanh',
     name: 'Nhà máy Chế biến Nông Lâm sản và Thảo dược Cụm Công nghiệp Na Hai - Huyện Điện Biên',
     coverImage: '/images/projects/specialties/civil_industrial.jpg',
     images: makeGallery(
@@ -734,6 +761,8 @@ export const ADDITIONAL_PROJECTS: Project[] = [
   {
     id: 'proj-020',
     code: 'DA-2026-DB-0201',
+    field: 'Dân dụng',
+    investmentForm: 'dau_tu_cong',
     name: 'Dự án Bảo tồn, tôn tạo Quần thể Di tích Lịch sử Chiến trường Điện Biên Phủ giai đoạn 2',
     coverImage: '/images/projects/culture_sports/cultural_house_01.jpg',
     images: makeGallery(
@@ -783,6 +812,8 @@ export const ADDITIONAL_PROJECTS: Project[] = [
   {
     id: 'proj-021',
     code: 'DA-2026-DB-0202',
+    field: 'Hạ tầng kỹ thuật',
+    investmentForm: 'dau_tu_cong',
     name: 'Hệ thống Thu gom và Xử lý Nước thải Sinh hoạt Đô thị Huyện Mường Ảng',
     coverImage: '/images/projects/infrastructure_environment/water_treatment_01.jpg',
     images: makeGallery(
@@ -832,6 +863,8 @@ export const ADDITIONAL_PROJECTS: Project[] = [
   {
     id: 'proj-022',
     code: 'DA-2026-DB-0203',
+    field: 'Dân dụng',
+    investmentForm: 'dau_tu_cong',
     name: 'Quảng trường 7/5 và Công viên Cảnh quan ven hồ Tỉnh lỵ Điện Biên',
     coverImage: '/images/projects/culture_sports/square_beach_01.jpg',
     images: makeGallery(
@@ -881,6 +914,8 @@ export const ADDITIONAL_PROJECTS: Project[] = [
   {
     id: 'proj-023',
     code: 'DA-2026-DB-0204',
+    field: 'Hạ tầng kỹ thuật',
+    investmentForm: 'kinh_doanh',
     name: 'Khu Nhà ở Liền kề Thương mại kết hợp Phố đi bộ Chợ Mường Thanh',
     coverImage: '/images/projects/specialties/mixed.jpg',
     images: makeGallery(
@@ -930,6 +965,8 @@ export const ADDITIONAL_PROJECTS: Project[] = [
   {
     id: 'proj-024',
     code: 'DA-2026-DB-0205',
+    field: 'Giao thông',
+    investmentForm: 'dau_tu_cong',
     name: 'Xây dựng Bến xe Khách Liên tỉnh phía Tây TP. Điện Biên Phủ đạt chuẩn loại 1',
     coverImage: '/images/projects/specialties/transport_urban.jpg',
     images: makeGallery(
@@ -979,6 +1016,8 @@ export const ADDITIONAL_PROJECTS: Project[] = [
   {
     id: 'proj-025',
     code: 'DA-2026-DB-0206',
+    field: 'Hạ tầng kỹ thuật',
+    investmentForm: 'dau_tu_cong',
     name: 'Hạ tầng Kỹ thuật Khu Nông nghiệp Ứng dụng Công nghệ cao Cánh đồng Mường Thanh',
     coverImage: '/images/projects/specialties/agriculture_rural.jpg',
     images: makeGallery(
@@ -1028,6 +1067,8 @@ export const ADDITIONAL_PROJECTS: Project[] = [
   {
     id: 'proj-026',
     code: 'DA-2026-DB-0207',
+    field: 'Dân dụng',
+    investmentForm: 'dau_tu_cong',
     name: 'Trụ sở Ban Quản lý Khu Kinh tế Cửa khẩu và Trạm Kiểm soát Liên hợp Tây Trang',
     coverImage: '/images/projects/government_office/government_office_01.jpg',
     images: makeGallery(
@@ -1069,6 +1110,94 @@ export const ADDITIONAL_PROJECTS: Project[] = [
         orgName: 'Trung tâm Kiểm định Chất lượng Xây dựng Điện Biên (Sở Xây dựng)',
         leadPersonnelId: 'per-040',
         leadPersonnelName: 'ThS. Nguyễn Đức Thành',
+      },
+    ],
+  },
+
+  // ─── DA 27: Công trình tôn giáo — cấp GPXD tại Sở (không thuộc Phụ lục IV NĐ 217/2026) ───
+  {
+    id: 'proj-027',
+    code: 'DA-2026-DB-0208',
+    field: 'Tôn giáo',
+    investmentForm: 'khac',
+    name: 'Xây dựng Nhà thờ Giáo xứ Điện Biên Phủ và nhà sinh hoạt cộng đồng',
+    coverImage: '/images/projects/culture_sports/square_beach_01.jpg',
+    images: makeGallery(
+      '/images/projects/culture_sports/square_beach_01.jpg',
+      '/images/projects/government_office/government_office_01.jpg',
+      '/images/projects/resettlement/resettlement_01.jpg',
+      '/images/projects/road/road_urban_01.jpg',
+      '/images/projects/specialties/mixed.jpg',
+      'Phối cảnh Nhà thờ Giáo xứ Điện Biên Phủ',
+      'Phường Him Lam, TP. Điện Biên Phủ',
+    ),
+    investorId: 'org-006',
+    investorName: 'Giáo xứ Điện Biên Phủ (đại diện Ban Hành giáo)',
+    location: 'Phường Him Lam, TP. Điện Biên Phủ',
+    projectGroup: 'C',
+    buildingGrade: 'II',
+    totalInvestment: 42000000000,
+    stage: 'gpxd',
+    slaStatus: 'dang_tham_dinh',
+    submissionDate: '2026-09-17',
+    deadlineDate: '2026-10-01',
+    assignee: 'KTS. Lê Hồng Phong',
+    department: 'Phòng Quản lý Xây dựng',
+    planningCompliance: true,
+    standardCompliance: true,
+    fireSafetyStatus: 'dat',
+    estimatedSavings: null,
+    contractors: [
+      {
+        role: 'Nhà thầu Tư vấn Thiết kế Kiến trúc',
+        orgId: 'org-003',
+        orgName: 'Công ty Cổ phần Tư vấn Thiết kế Xây dựng Điện Biên',
+        leadPersonnelId: 'per-001',
+        leadPersonnelName: 'KTS. Hoàng Tuấn Anh',
+      },
+    ],
+  },
+
+  // ─── DA 28: Kho lạnh — cấp GPXD tại Sở (kho, bãi không thuộc Phụ lục IV NĐ 217/2026) ───
+  {
+    id: 'proj-028',
+    code: 'DA-2026-DB-0209',
+    field: 'Kho lạnh bảo quản nông sản',
+    investmentForm: 'kinh_doanh',
+    name: 'Kho lạnh bảo quản và sơ chế nông sản Thanh An',
+    coverImage: '/images/projects/specialties/civil_industrial.jpg',
+    images: makeGallery(
+      '/images/projects/specialties/civil_industrial.jpg',
+      '/images/projects/specialties/agriculture_rural.jpg',
+      '/images/projects/road/road_rural_01.jpg',
+      '/images/projects/infrastructure_environment/water_treatment_01.jpg',
+      '/images/projects/resettlement/resettlement_01.jpg',
+      'Phối cảnh Kho lạnh Thanh An',
+      'Xã Thanh An, Huyện Điện Biên',
+    ),
+    investorId: 'org-006',
+    investorName: 'Công ty TNHH Nông sản Sạch Mường Thanh',
+    location: 'Xã Thanh An, Huyện Điện Biên',
+    projectGroup: 'C',
+    buildingGrade: 'II',
+    totalInvestment: 68000000000,
+    stage: 'gpxd',
+    slaStatus: 'tiep_nhan',
+    submissionDate: '2026-09-25',
+    deadlineDate: '2026-10-09',
+    assignee: 'KS. Trần Văn Hùng',
+    department: 'Phòng Quản lý Xây dựng',
+    planningCompliance: true,
+    standardCompliance: true,
+    fireSafetyStatus: 'can_bo_sung',
+    estimatedSavings: null,
+    contractors: [
+      {
+        role: 'Nhà thầu Tư vấn Thiết kế',
+        orgId: 'org-003',
+        orgName: 'Công ty Cổ phần Tư vấn Thiết kế Xây dựng Điện Biên',
+        leadPersonnelId: 'per-001',
+        leadPersonnelName: 'KTS. Hoàng Tuấn Anh',
       },
     ],
   },

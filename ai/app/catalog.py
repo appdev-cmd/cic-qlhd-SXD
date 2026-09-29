@@ -262,7 +262,7 @@ def dashboard(s, kind='all'):
     ) = read(
         s.actor['id'],
         (
-            "select count(*) as total,count(distinct dossier_id) as dossiers,count(*) filter(where payload->>'status' in ('intake','analyzing','analyzed')) as in_progress,coalesce(sum(jsonb_array_length(payload->'documents')),0) as documents,count(*) filter(where payload->>'status'='reviewed') as reviewed,count(*) filter(where payload->>'status'='request_supplement') as supplements from public.appraisal_cases"
+            "select count(*) as total,count(distinct dossier_id) as dossiers,count(*) filter(where payload->>'status' in ('intake','analyzing','analyzed','processing','suspended')) as in_progress,coalesce(sum(jsonb_array_length(payload->'documents')),0) as documents,count(*) filter(where payload->>'status'='reviewed') as reviewed,count(*) filter(where payload->>'status'='request_supplement') as supplements from public.appraisal_cases"
             + where,
             None,
         ),

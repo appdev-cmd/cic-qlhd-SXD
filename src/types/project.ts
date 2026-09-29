@@ -26,6 +26,12 @@ export interface Project {
   buildingGrade: 'I' | 'II' | 'III' | 'IV' | 'DB';
   totalInvestment: number | null; // VNĐ
   stage: 'bcnckt' | 'gpxd' | 'nghiem_thu' | 'hoan_thanh';
+  /** Lĩnh vực/chuyên ngành (Phụ lục III NĐ 217/2026) */
+  field?: string;
+  /** Hình thức đầu tư: đầu tư công, kinh doanh, PPP hoặc vốn khác (tôn giáo, xã hội hóa) */
+  investmentForm?: 'dau_tu_cong' | 'kinh_doanh' | 'ppp' | 'khac';
+  /** Dự án do UBND cấp xã quyết định đầu tư (khoản 4 Điều 32 NĐ 217/2026) */
+  decidedByCommune?: boolean;
   slaStatus: 'tiep_nhan' | 'dang_tham_dinh' | 'yeu_cau_bo_sung' | 'da_tham_dinh' | 'qua_han';
   submissionDate: string;
   deadlineDate: string;

@@ -71,6 +71,40 @@ class FeasibilityWorkflowTests(unittest.TestCase):
         self.assertNotIn('reject_intake', actions(dossier(), DEMO_ACTOR))
 
 
+class LineageLimitTests(unittest.TestCase):
+    def test_supplement_round_inherits_counters(self):
+        import tempfile
+        from pathlib import Path
+        from unittest.mock import patch
+        from uuid import uuid4
+        from app.store import Store
+        from app.routes.cases import create_supplement
+        from app.schemas import Supplement
+
+        with (
+            tempfile.TemporaryDirectory() as directory,
+            patch('app.store.DATA_DIR', Path(directory)),
+            patch.object(Store, 'project', return_value={'id': 'project'}),
+        ):
+            store = Store(actor=HEAD)
+            prior = dossier()
+            apply(prior, HEAD, 'request_supplement', NOTE)
+            from app.domain import audit
+
+            audit(prior, HEAD, 'Tạo', 'Kiểm thử')
+            store.save(prior)
+            body = Supplement(
+                requestId=uuid4(),
+                name='Hồ sơ bổ sung',
+                legalDate='2026-09-05',
+                reason='Bổ sung theo Mẫu 15',
+                revision=1,
+            )
+            child = create_supplement(prior['id'], body, store)
+            self.assertEqual(child['workflow']['counters'], {'request_supplement': 1})
+            self.assertNotIn('request_supplement', actions(child))
+
+
 class PermitWorkflowTests(unittest.TestCase):
     def test_single_notice_then_refusal(self):
         case = dossier('gpxd')
@@ -115,13 +149,17 @@ class AuthorityTests(unittest.TestCase):
 
     def test_permit(self):
         self.assertEqual(authority.resolve('gpxd', self.project())['authority'], 'mien_phep')
+        # Kinh doanh + Phụ lục IV: appraisal route, then permit exemption; existing permits stay with the Sở.
+        business = self.project(investment_form='kinh_doanh')
+        self.assertEqual(authority.resolve('gpxd', business)['authority'], 'khong_thuoc_dien')
+        self.assertEqual(authority.resolve('gpxd', business, subtype='amendment')['authority'], 'so_xay_dung')
         self.assertEqual(
-            authority.resolve('gpxd', self.project(investment_form='kinh_doanh'))['authority'], 'so_xay_dung'
+            authority.resolve('gpxd', {**business, 'grade': 'III'}, subtype='extension')['authority'], 'ubnd_xa'
         )
-        self.assertEqual(
-            authority.resolve('gpxd', self.project(investment_form='kinh_doanh', grade='III'))['authority'], 'ubnd_xa'
-        )
-        appraised = authority.resolve('gpxd', self.project(investment_form='kinh_doanh'), appraised=True)
+        church = self.project(investment_form='khac', field='Tôn giáo')
+        self.assertEqual(authority.resolve('gpxd', church)['authority'], 'so_xay_dung')
+        self.assertFalse(authority.resolve('gpxd', church)['appendixIv']['listed'])
+        appraised = authority.resolve('gpxd', self.project(investment_form='khac', field='Kho lạnh'), appraised=True)
         self.assertEqual((appraised['authority'], appraised['suggestion']), ('mien_phep', 'redirect_start_notice'))
 
     def test_inspection_and_appendix_iv(self):

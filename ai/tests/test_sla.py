@@ -32,6 +32,12 @@ class LegalPeriodTests(unittest.TestCase):
         self.assertIn('missing', sla.legal_period('bcnckt', None, 'II'))
         self.assertIn('missing', sla.legal_period('bcnckt', 'B', None))
 
+    def test_legacy_regime_periods(self):
+        legacy = sla.legal_period('bcnckt', 'B', 'II', regime='nd175')
+        self.assertEqual((legacy['days'], legacy['unit']), (25, 'calendar'))
+        self.assertIn('Điều 76', legacy['basis'])
+        self.assertEqual(sla.legal_period('bcnckt', 'A', 'I', regime='nd175')['days'], 35)
+
     def test_permit_and_inspection_periods(self):
         self.assertEqual(sla.legal_period('gpxd', None, None, 'house')['days'], 7)
         self.assertEqual(sla.legal_period('gpxd', None, None, 'new')['days'], 10)
@@ -158,7 +164,10 @@ class StatusInvariantTests(unittest.TestCase):
             'stopped': 'stopped',
         }
         for target in {t for _, t, _ in TRANSITIONS.values() if t} | {'received'}:
+            working = target in ('processing', 'site_visit', 'correction', 'pending_review')
             for runs, fallback in [([], 'intake'), ([{'stale': False}], 'analyzed'), ([{'stale': True}], 'intake')]:
+                if working and fallback == 'intake':
+                    fallback = 'processing'
                 case = {'workflow': {'state': target}, 'runs': runs}
                 self.assertEqual(derive_status(case), expected.get(target, fallback), (target, runs))
         self.assertEqual(derive_status({'runs': [], 'job': {'status': 'running', 'mode': 'intake'}}), 'analyzing')

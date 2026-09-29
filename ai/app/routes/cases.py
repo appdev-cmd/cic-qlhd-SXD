@@ -196,6 +196,8 @@ def create_supplement(id: str, body: Supplement, s: Store = Depends(store)):
         creationRequest=fingerprint,
     )
     case['requirements'] = [{**r, 'status': 'missing', 'note': '', 'verifiedBy': None} for r in prior['requirements']]
+    # Supplement/suspension limits apply to the whole dossier (NĐ 217/2026 Điều 36, 54), not to each round.
+    case['workflow'] = {'state': 'received', 'counters': dict((prior.get('workflow') or {}).get('counters') or {})}
     audit(case, s.actor, 'Tạo lần bổ sung', prior['name'] + ' — ' + body.reason)
     return s.save(case)
 
@@ -222,7 +224,7 @@ def case_authority(s, case):
     appraised = False
     if procedure == 'gpxd' and case.get('projectId'):
         appraised = s.page(limit=1, procedure='bcnckt', project_id=case['projectId'], status='reviewed')['total'] > 0
-    return resolve(procedure, project, appraised)
+    return resolve(procedure, project, appraised, (case.get('procedureReview') or {}).get('subtype'))
 
 
 def policy_summary(case):

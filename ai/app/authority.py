@@ -24,6 +24,8 @@ GRADE_RANK = {'DB': 4, 'I': 3, 'II': 2, 'III': 1, 'IV': 0}
 # Chuyên ngành of Sở Xây dựng per khoản 5 Điều 73 NĐ 217/2026 (công trình giao thông included).
 SO_XD_FIELDS = (
     'dân dụng',
+    'tôn giáo',
+    'tín ngưỡng',
     'giao thông',
     'hạ tầng kỹ thuật',
     'khu đô thị',
@@ -75,6 +77,10 @@ def appendix_iv(f):
     if grade is None:
         return None, 'Chưa có cấp công trình'
     field = f['field']
+    if any(word in field for word in ('tôn giáo', 'tín ngưỡng')):
+        return False, 'Công trình tôn giáo, tín ngưỡng không thuộc danh mục Phụ lục IV'
+    if any(word in field for word in ('kho', 'bãi')):
+        return False, 'Kho, bãi không thuộc danh mục Phụ lục IV'
     if any(word in field for word in ('đê điều',)):
         return True, 'V.2 Công trình đê điều (mọi cấp)'
     if any(word in field for word in ('thủy lợi', 'hồ chứa', 'đập')):
@@ -188,29 +194,47 @@ def feasibility(f):
     )
 
 
-def permit(f, appraised=False):
-    """Cấp giấy phép xây dựng — Điều 43 Luật 135/2025; Điều 53 NĐ 217/2026."""
+def permit(f, appraised=False, subtype=None):
+    """Cấp giấy phép xây dựng — Điều 43 Luật 135/2025; Điều 53 NĐ 217/2026.
+
+    Permits already issued (adjust, extend, reissue) stay with the issuing authority (điểm a khoản 4 Điều 53).
+    """
     missing = [
         m for m, ok in [('cấp công trình', f['grade']), ('nguồn vốn/hình thức đầu tư', f['investment'])] if not ok
     ]
-    if appraised:
-        return _result(
-            'mien_phep',
-            ['Điểm e khoản 2 Điều 43 Luật Xây dựng 135/2025'],
-            ['Dự án đã được cơ quan chuyên môn về xây dựng thẩm định BCNCKT.'],
-            missing,
-            'redirect_start_notice',
-        )
-    if f['investment'] == 'dau_tu_cong':
-        return _result(
-            'mien_phep',
-            ['Điểm b khoản 2 Điều 43 Luật Xây dựng 135/2025'],
-            [
-                'Công trình thuộc dự án đầu tư công do Chủ tịch UBND các cấp quyết định đầu tư (cần xác nhận người quyết định đầu tư).'
-            ],
-            missing,
-            'redirect_start_notice',
-        )
+    existing_permit = subtype in ('amendment', 'extension', 'reissue')
+    if not existing_permit:
+        if appraised:
+            return _result(
+                'mien_phep',
+                ['Điểm e khoản 2 Điều 43 Luật Xây dựng 135/2025'],
+                ['Dự án đã được cơ quan chuyên môn về xây dựng thẩm định BCNCKT.'],
+                missing,
+                'redirect_start_notice',
+            )
+        if f['investment'] == 'dau_tu_cong':
+            return _result(
+                'mien_phep',
+                ['Điểm b khoản 2 Điều 43 Luật Xây dựng 135/2025'],
+                [
+                    'Công trình thuộc dự án đầu tư công do Chủ tịch UBND các cấp quyết định đầu tư '
+                    '(cần xác nhận người quyết định đầu tư).'
+                ],
+                missing,
+                'redirect_start_notice',
+            )
+        listed, item = appendix_iv(f)
+        if f['investment'] == 'kinh_doanh' and listed:
+            return _result(
+                'khong_thuoc_dien',
+                ['Điểm c khoản 1 Điều 27, điểm e khoản 2 Điều 43 Luật Xây dựng 135/2025'],
+                [
+                    'Dự án có công trình thuộc Phụ lục IV phải trình cơ quan chuyên môn thẩm định BCNCKT; '
+                    'sau khi thẩm định, công trình được miễn giấy phép (' + item + ').'
+                ],
+                missing,
+                'reject_intake',
+            )
     if f['zone']:
         return _result(
             'bql_kcn',
@@ -229,13 +253,13 @@ def permit(f, appraised=False):
         )
     if not f['grade']:
         return _result('chua_xac_dinh', ['Điều 53 NĐ 217/2026'], ['Chưa có cấp công trình.'], missing, 'confirm')
-    return _result(
-        SO_XD,
-        ['Khoản 3 Điều 53 NĐ 217/2026'],
-        ['Công trình cấp II trở lên trên địa bàn tỉnh.'],
-        missing,
-        'accept' if not missing else 'confirm',
+    basis = ['Khoản 3 Điều 53 NĐ 217/2026'] + (['Điểm a khoản 4 Điều 53 NĐ 217/2026'] if existing_permit else [])
+    reason = (
+        'Giấy phép do Sở cấp trước đây: Sở điều chỉnh, gia hạn, cấp lại.'
+        if existing_permit
+        else 'Công trình cấp II trở lên trên địa bàn tỉnh.'
     )
+    return _result(SO_XD, basis, [reason], missing, 'accept' if not missing else 'confirm')
 
 
 def inspection(f):
@@ -272,9 +296,11 @@ def inspection(f):
     )
 
 
-def resolve(procedure, project, appraised=False):
+def resolve(procedure, project, appraised=False, subtype=None):
     f = facts(project or {})
-    result = {'bcnckt': feasibility, 'gpxd': lambda x: permit(x, appraised), 'nghiem_thu': inspection}[procedure](f)
+    result = {'bcnckt': feasibility, 'gpxd': lambda x: permit(x, appraised, subtype), 'nghiem_thu': inspection}[
+        procedure
+    ](f)
     listed, item = appendix_iv(f)
     result['appendixIv'] = {'listed': listed, 'item': item}
     result['facts'] = {k: f[k] for k in ('field', 'group', 'grade', 'investment', 'commune', 'zone')}

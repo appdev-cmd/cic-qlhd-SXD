@@ -94,7 +94,7 @@ def dashboard(kind):
     where = " where coalesce(sample,0)=" + ('1' if kind == 'sample' else '0') if kind in ('sample', 'real') else ''
     with db() as con:
         fields = con.execute(
-            "select count(*),coalesce(sum(status in ('intake','analyzing','analyzed')),0),coalesce(sum(documentCount),0),coalesce(sum(status='reviewed'),0),coalesce(sum(status='request_supplement'),0),count(distinct dossierId) from case_summaries"
+            "select count(*),coalesce(sum(status in ('intake','analyzing','analyzed','processing','suspended')),0),coalesce(sum(documentCount),0),coalesce(sum(status='reviewed'),0),coalesce(sum(status='request_supplement'),0),count(distinct dossierId) from case_summaries"
             + where
         ).fetchone()
         procedures = [

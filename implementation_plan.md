@@ -1,7 +1,10 @@
 # Kế hoạch hoàn thiện 3 nghiệp vụ lõi của Sở Xây dựng có AI hỗ trợ
 
 **Ngày lập:** 29/09/2026.
-**Trạng thái:** CHỜ NGƯỜI DÙNG REVIEW/PHÊ DUYỆT QUA CHAT. Chưa sửa code.
+**Trạng thái:** Đã duyệt qua chat 29/09/2026.
+- N0: đã bổ sung văn bản và dự thảo [nghiệp vụ](docs/NGHIEP_VU_SXD_DIEN_BIEN.md); chờ chuyên viên xác nhận (gate).
+- N1: đã xong, kèm bộ dữ liệu mẫu sample-v3 ([bàn giao](docs/N0_N1_DELIVERY_2026_09_29.md)).
+- N2–N6: chưa làm.
 **Phạm vi:** Thẩm định Báo cáo nghiên cứu khả thi (BCNCKT) · Cấp giấy phép xây dựng (GPXD) · Hậu kiểm và kiểm tra công tác nghiệm thu.
 **Kế hoạch trước:** [đợt G0–G6 đã triển khai](docs/plans/20260929-ke-hoach-G0-G6-da-trien-khai.md) · [bàn giao tối ưu](docs/OPTIMIZATION_DELIVERY_2026_09_28.md).
 

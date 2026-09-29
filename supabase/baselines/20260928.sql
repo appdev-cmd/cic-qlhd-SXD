@@ -1101,7 +1101,7 @@ alter table projects add constraint "projects_fire_safety_status_check" CHECK ((
 
 alter table projects add constraint "projects_investment_cost_check" CHECK ((investment_cost >= (0)::numeric));
 
-alter table projects add constraint "projects_investment_form_check" CHECK ((investment_form = ANY (ARRAY['dau_tu_cong'::text, 'ppp'::text, 'kinh_doanh'::text])));
+alter table projects add constraint "projects_investment_form_check" CHECK ((investment_form = ANY (ARRAY['dau_tu_cong'::text, 'ppp'::text, 'kinh_doanh'::text, 'khac'::text])));
 
 alter table projects add constraint "projects_pkey" PRIMARY KEY (id);
 

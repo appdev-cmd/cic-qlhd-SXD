@@ -7,6 +7,7 @@ export const PROJECT_PROCEDURES = {
 export const SUBMISSION_STATUS: Record<string, string> = {
   intake: 'Tiếp nhận',
   analyzing: 'Đang kiểm tra',
+  processing: 'Đang xử lý',
   analyzed: 'Đã kiểm tra',
   request_supplement: 'Yêu cầu bổ sung',
   suspended: 'Tạm dừng thẩm định',

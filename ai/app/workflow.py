@@ -91,7 +91,9 @@ def derive_status(case):
     if job.get('status') == 'running' and job.get('mode') != 'ocr':
         return 'analyzing'
     runs = case.get('runs') or []
-    return 'analyzed' if runs and not runs[-1].get('stale') else 'intake'
+    if runs and not runs[-1].get('stale'):
+        return 'analyzed'
+    return 'processing' if current in ('processing', 'site_visit', 'correction', 'pending_review') else 'intake'
 
 
 def counters(case):

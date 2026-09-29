@@ -32,6 +32,8 @@ const INITIAL_PROJECTS: Project[] = [
   {
     id: 'proj-001',
     code: 'DA-2026-DB-0182',
+    field: 'Dân dụng',
+    investmentForm: 'dau_tu_cong',
     name: 'Xây dựng Bệnh viện Đa khoa Khu vực Mường Ảng quy mô 200 giường',
     coverImage: '/images/projects/hospital/hospital_01.jpg',
     images: [
@@ -129,6 +131,8 @@ const INITIAL_PROJECTS: Project[] = [
   {
     id: 'proj-002',
     code: 'DA-2026-DB-0183',
+    field: 'Giao thông',
+    investmentForm: 'dau_tu_cong',
     name: 'Nâng cấp, mở rộng Tuyến đường nối TP. Điện Biên Phủ đi Cửa khẩu Quốc tế Tây Trang',
     coverImage: 'https://images.unsplash.com/photo-1470246973918-29a93221c455?auto=format&fit=crop&w=1200&q=80',
     images: [
@@ -208,6 +212,8 @@ const INITIAL_PROJECTS: Project[] = [
   {
     id: 'proj-003',
     code: 'DA-2026-DB-0184',
+    field: 'Dân dụng',
+    investmentForm: 'kinh_doanh',
     name: 'Khu Trung tâm Thương mại, Dịch vụ & Khách sạn Quốc tế Mường Lay Plaza',
     coverImage: 'https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?auto=format&fit=crop&w=1200&q=80',
     images: [
@@ -287,6 +293,8 @@ const INITIAL_PROJECTS: Project[] = [
   {
     id: 'proj-004',
     code: 'DA-2026-DB-0185',
+    field: 'Dân dụng',
+    investmentForm: 'dau_tu_cong',
     name: 'Xây dựng Trường Phổ thông Dân tộc Nội trú THCS & THPT Huyện Điện Biên Đông',
     coverImage: 'https://images.unsplash.com/photo-1580582932707-520aed937b7b?auto=format&fit=crop&w=1200&q=80',
     images: [
@@ -365,6 +373,8 @@ const INITIAL_PROJECTS: Project[] = [
   {
     id: 'proj-005',
     code: 'DA-2026-DB-0186',
+    field: 'Dân dụng',
+    investmentForm: 'dau_tu_cong',
     name: 'Khu Nhà ở Cán bộ Công chức & Công viên Thể thao Him Lam - TP. Điện Biên Phủ',
     coverImage: 'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1200&q=80',
     images: [
@@ -432,6 +442,8 @@ const INITIAL_PROJECTS: Project[] = [
   {
     id: 'proj-006',
     code: 'DA-2026-DB-0187',
+    field: 'Hạ tầng kỹ thuật',
+    investmentForm: 'dau_tu_cong',
     name: 'Hệ thống Cấp nước sinh hoạt & Thoát nước thải Cụm Công nghiệp Phổ Yên - Tuần Giáo',
     coverImage: 'https://images.unsplash.com/photo-1504307651254-35680f356dfd?auto=format&fit=crop&w=1200&q=80',
     images: [
@@ -929,7 +941,12 @@ export function getProjectTT39Data(project: Project): ProjectTT39Data {
     capacity: 'Quy mô công suất thiết kế theo Quyết định chủ trương đầu tư',
     totalInvestment: project.totalInvestment ?? 0,
     appraisalItemCost: project.totalInvestment ?? 0,
-    fundingSource: 'Vốn ngân sách nhà nước tỉnh Điện Biên & Ngân sách hỗ trợ',
+    fundingSource:
+      project.investmentForm === 'kinh_doanh'
+        ? 'Vốn của nhà đầu tư (vốn chủ sở hữu và vốn vay thương mại)'
+        : project.investmentForm === 'khac'
+          ? 'Vốn hợp pháp khác (đóng góp, xã hội hóa)'
+          : 'Vốn ngân sách nhà nước tỉnh Điện Biên & Ngân sách hỗ trợ',
     costBreakdown: {
       construction: Math.round((project.totalInvestment ?? 0) * 0.55),
       equipment: Math.round((project.totalInvestment ?? 0) * 0.22),

@@ -62,9 +62,22 @@ def normalize_grade(value):
     return text if text in ('I', 'II', 'III', 'IV') else None
 
 
-def legal_period(procedure, group, grade, subtype=None):
+# Chế độ chuyển tiếp: hồ sơ trình trước 01/7/2026 đủ điều kiện thẩm định tiếp tục theo NĐ 175/2024
+# (khoản 2 Điều 76 NĐ 217/2026); thời hạn của cơ quan chuyên môn theo Điều 59 Luật Xây dựng 2014 (sửa đổi 2020).
+LEGACY_FEASIBILITY_DAYS = {'A': 35, 'B': 25, 'C': 15}
+
+
+def legal_period(procedure, group, grade, subtype=None, regime='nd217'):
     """Return {'days','unit','basis'} or None with the reason in 'missing'."""
     high = grade in ('I', 'DB')
+    if procedure == 'bcnckt' and regime == 'nd175':
+        if group not in LEGACY_FEASIBILITY_DAYS:
+            return {'missing': 'Dự án chưa có nhóm A/B/C (chế độ NĐ 175/2024).'}
+        return {
+            'days': LEGACY_FEASIBILITY_DAYS[group],
+            'unit': 'calendar',
+            'basis': 'Khoản 2 Điều 59 Luật Xây dựng 2014 (sửa đổi 2020), áp dụng theo khoản 2 Điều 76 NĐ 217/2026/NĐ-CP',
+        }
     if procedure == 'bcnckt':
         if group == 'QG':
             return {'days': 60, 'unit': 'calendar', 'basis': 'Điểm a khoản 1 Điều 37 NĐ 217/2026/NĐ-CP'}
@@ -203,7 +216,12 @@ def compute(case, calendar, classification, today=None):
     group = normalize_group(classification.get('group'))
     grade = normalize_grade(classification.get('grade'))
     subtype = (case.get('procedureReview') or {}).get('subtype')
-    period = legal_period(procedure, group, grade, subtype)
+    regime = 'nd217'
+    if procedure == 'bcnckt':
+        from .legal import resolve_profile
+
+        regime = resolve_profile(case)['code'] if case.get('legalDate') else 'nd217'
+    period = legal_period(procedure, group, grade, subtype, 'nd175' if regime == 'nd175' else 'nd217')
     received = _day((case.get('legalContext') or {}).get('submissionDate') or case.get('legalDate'))
     valid = _day(workflow.get('validAt'))
     start = valid or received
@@ -231,6 +249,7 @@ def compute(case, calendar, classification, today=None):
         'calendarVersion': calendar.version,
         'calendarConfirmed': bool(start and due) and calendar.confirmed(start, max(due, start)),
         'basis': period.get('basis'),
+        'regime': 'nd175' if regime == 'nd175' else 'nd217',
         'intakeBasis': policy(procedure).get('intakeBasis') if intake_due else None,
         'missing': period.get('missing'),
         'periodDays': period.get('days'),

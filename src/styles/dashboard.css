@@ -5,8 +5,12 @@
   --chart-intake: #94a3b8;
   --chart-analyzing: #818cf8;
   --chart-analyzed: #0284c7;
+  --chart-processing: #2563eb;
   --chart-supplement: #d97706;
+  --chart-suspended: #ea580c;
   --chart-reviewed: #059669;
+  --chart-closed: #475569;
+  --chart-stopped: #dc2626;
   --chart-other: #64748b;
 }
 .dark .dashboard-visuals {
@@ -16,8 +20,12 @@
   --chart-intake: #94a3b8;
   --chart-analyzing: #c4b5fd;
   --chart-analyzed: #38bdf8;
+  --chart-processing: #60a5fa;
   --chart-supplement: #fbbf24;
+  --chart-suspended: #fb923c;
   --chart-reviewed: #34d399;
+  --chart-closed: #94a3b8;
+  --chart-stopped: #f87171;
   --chart-other: #cbd5e1;
 }
 .dashboard-visuals .recharts-surface:focus-visible {

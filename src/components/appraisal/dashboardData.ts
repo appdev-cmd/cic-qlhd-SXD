@@ -26,8 +26,12 @@ export const statusStyles = [
   { id: 'intake', label: 'Tiếp nhận', color: 'var(--chart-intake)' },
   { id: 'analyzing', label: 'Đang kiểm tra', color: 'var(--chart-analyzing)' },
   { id: 'analyzed', label: 'Đã kiểm tra', color: 'var(--chart-analyzed)' },
+  { id: 'processing', label: 'Đang xử lý', color: 'var(--chart-processing)' },
   { id: 'request_supplement', label: 'Cần bổ sung', color: 'var(--chart-supplement)' },
+  { id: 'suspended', label: 'Tạm dừng', color: 'var(--chart-suspended)' },
   { id: 'reviewed', label: 'Đã rà soát nội bộ', color: 'var(--chart-reviewed)' },
+  { id: 'rejected', label: 'Từ chối tiếp nhận', color: 'var(--chart-closed)' },
+  { id: 'stopped', label: 'Dừng/không cấp', color: 'var(--chart-stopped)' },
 ];
 
 export const number = (value: number) => new Intl.NumberFormat('vi-VN').format(value);
