@@ -146,10 +146,9 @@ def load_calendar(actor_id=None, cloud=False):
         if _cache['calendar'] and time.monotonic() < _cache['until']:
             return _cache['calendar']
     try:
-        from .database import connection
+        from .database import read
 
-        with connection(actor_id) as con:
-            rows = con.execute('select holiday_date,kind,is_confirmed from public.holidays').fetchall()
+        (rows,) = read(actor_id, ('select holiday_date,kind,is_confirmed from public.holidays', None))
         calendar = Calendar([(r['holiday_date'], r['kind'], r['is_confirmed']) for r in rows], 'public.holidays')
     except Exception:
         # Keep deadlines computable; the unconfirmed calendar is surfaced to the user.

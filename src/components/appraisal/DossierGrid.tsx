@@ -16,6 +16,7 @@ export function DossierGrid<T extends { id: string }>({
   onSort,
   fitWidth = false,
   className = '',
+  loading = false,
 }: {
   rows: T[];
   columns: GridColumn<T>[];
@@ -24,6 +25,8 @@ export function DossierGrid<T extends { id: string }>({
   onSort?: (key: string, direction: string) => void;
   fitWidth?: boolean;
   className?: string;
+  /** Show a loading message instead of the empty state while the first result is pending. */
+  loading?: boolean;
 }) {
   const { widths, start } = useColumnResize(storageKey + '-widths', fitWidth);
   const { sorted, sort, toggle } = useGridSort(storageKey + '-sort', rows, columns);
@@ -115,7 +118,7 @@ export function DossierGrid<T extends { id: string }>({
       </table>
       {!rows.length && (
         <p className="p-8 text-center text-sm text-ink-muted dark:text-ink-muted">
-          Chưa có dữ liệu trong phạm vi đã chọn.
+          {loading ? 'Đang tải dữ liệu…' : 'Chưa có dữ liệu trong phạm vi đã chọn.'}
         </p>
       )}
     </div>

@@ -26,6 +26,8 @@ export interface MasterTableProps<T extends { id: string }> {
   serverSort?: { key: string; direction: string };
   onSort?: (key: string, direction: string) => void;
   emptyMessage?: string;
+  /** Show a loading row instead of the empty message while the first result is pending. */
+  loading?: boolean;
   className?: string;
 }
 
@@ -38,6 +40,7 @@ export function MasterTable<T extends { id: string }>({
   onDelete,
   maxHeight = 'calc(100vh - 300px)',
   emptyMessage = 'Không tìm thấy dữ liệu phù hợp',
+  loading = false,
   className,
   storageKey = 'master-table',
   serverSort,
@@ -132,7 +135,7 @@ export function MasterTable<T extends { id: string }>({
                   colSpan={columns.length + (hasActions ? 2 : 1)}
                   className="px-4 py-12 text-center text-xs text-ink-muted italic"
                 >
-                  {emptyMessage}
+                  {loading ? 'Đang tải dữ liệu…' : emptyMessage}
                 </td>
               </tr>
             ) : (

@@ -11,6 +11,8 @@ import { SearchableSelect } from '../components/ui/SearchableSelect';
 import { DateInput } from '../components/ui/DateInput';
 import { useSlidePanel } from '../context/SlidePanelContext';
 import { useFilterState } from '../hooks/useFilterState';
+import { useAuth } from '../context/AuthContext';
+import { listCache } from '../lib/listCache';
 import { formatDate, formatDateTime } from '../lib/utils';
 
 import type { Project } from '../types/project';
@@ -36,6 +38,8 @@ export function AppraisalPage({ procedure = 'bcnckt', project }: { procedure?: P
   const [health, setHealth] = useState<Health | null>(null);
   const [total, setTotal] = useState(0);
   const requestId = useRef(0);
+  const { session } = useAuth();
+  const [loaded, setLoaded] = useState(false);
   const [sort, setSort] = useFilterState('submission-sort-' + procedure, { key: 'updatedAt', direction: 'desc' });
   const [page, setPage] = useState(0);
   const [error, setError] = useState('');
@@ -59,6 +63,16 @@ export function AppraisalPage({ procedure = 'bcnckt', project }: { procedure?: P
     from: '',
     to: '',
   });
+  const lastSearch = useRef(filters.search);
+  const queryKey = JSON.stringify([
+    'submissions',
+    session?.user.id || 'demo',
+    procedure,
+    project?.id || '',
+    filters,
+    sort,
+    page,
+  ]);
   const load = async () => {
     const current = ++requestId.current;
     const [h, result] = await Promise.all([
@@ -78,10 +92,12 @@ export function AppraisalPage({ procedure = 'bcnckt', project }: { procedure?: P
         direction: sort.direction,
       }),
     ]);
+    listCache.set(queryKey, result);
     if (current === requestId.current) {
       setHealth(h);
       setItems(result.items);
       setTotal(result.total);
+      setLoaded(true);
     }
   };
   const action = async (fn: () => Promise<unknown>) => {
@@ -96,12 +112,21 @@ export function AppraisalPage({ procedure = 'bcnckt', project }: { procedure?: P
     }
   };
   useEffect(() => {
-    const timer = setTimeout(() => void action(load), 180);
+    // Show the last result for this query at once, then refresh; debounce only while typing a search.
+    const cached = listCache.get<{ items: DossierSummary[]; total: number }>(queryKey);
+    if (cached) {
+      setItems(cached.items);
+      setTotal(cached.total);
+    }
+    setLoaded(!!cached);
+    const typing = lastSearch.current !== filters.search;
+    lastSearch.current = filters.search;
+    const timer = setTimeout(() => void action(load), typing ? 250 : 0);
     return () => {
       clearTimeout(timer);
       requestId.current++;
     };
-  }, [page, procedure, project?.id, JSON.stringify(filters), sort.key, sort.direction]);
+  }, [queryKey]);
   useEffect(() => setPage(0), [JSON.stringify(filters), sort.key, sort.direction]);
   useEffect(() => {
     const refresh = () => {
@@ -310,6 +335,7 @@ export function AppraisalPage({ procedure = 'bcnckt', project }: { procedure?: P
         className="flex-1 min-h-56"
         storageKey={'submission-compact-v2-' + procedure + (project ? '-project' : '-all')}
         rows={rows}
+        loading={!loaded && !rows.length}
         serverSort={sort}
         onSort={(key, direction) => setSort({ key, direction })}
         columns={[

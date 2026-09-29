@@ -1,4 +1,4 @@
-import React, { useState, useMemo, useEffect } from 'react';
+import React, { useState, useMemo, useEffect, useRef } from 'react';
 import {
   LayoutGrid,
   List,
@@ -26,11 +26,12 @@ import { useSlidePanel } from '../context/SlidePanelContext';
 import { ProjectDetailSlidePanel } from './projects/ProjectDetailSlidePanel';
 import { matchesSmartSearch } from '../lib/smartSearch';
 import { useAuth } from '../context/AuthContext';
+import { listCache } from '../lib/listCache';
 import { CreateProjectModal } from '../components/appraisal/CreateProjectModal';
 import { EntityLink } from '../components/ui/EntityLink';
 
 export function ProjectsPage() {
-  const { mode, profile } = useAuth();
+  const { mode, profile, session } = useAuth();
   const [createOpen, setCreateOpen] = useState(false);
   const [version, setVersion] = useState(0);
   const { openPanel } = useSlidePanel();
@@ -54,33 +55,53 @@ export function ProjectsPage() {
   const [total, setTotal] = useState(0);
   const [page, setPage] = useState(0);
   const [error, setError] = useState('');
+  const [loading, setLoading] = useState(true);
+  const lastSearch = useRef(filters.search);
   useEffect(() => {
     const refresh = () => setVersion((v) => v + 1);
     window.addEventListener('appraisal:changed', refresh);
     return () => window.removeEventListener('appraisal:changed', refresh);
   }, []);
   useEffect(() => setPage(0), [JSON.stringify(filters), JSON.stringify(sorting)]);
+  const queryKey = JSON.stringify(['projects', session?.user.id || 'demo', filters, sorting, page]);
   useEffect(() => {
     let active = true;
-    const timer = setTimeout(() => {
-      projectService
-        .list({ ...filters, sort: sorting.key, direction: sorting.direction, offset: page * 50, limit: 50 })
-        .then((result) => {
-          if (active) {
-            setProjects(result.items);
-            setTotal(result.total);
-            setError('');
-          }
-        })
-        .catch((e) => {
-          if (active) setError(e.message);
-        });
-    }, 180);
+    // Show the last result for this query at once, then refresh in the background.
+    const cached = listCache.get<{ items: Project[]; total: number }>(queryKey);
+    if (cached) {
+      setProjects(cached.items);
+      setTotal(cached.total);
+    }
+    setLoading(!cached);
+    // Debounce only while the user is typing a search; other changes load immediately.
+    const typing = lastSearch.current !== filters.search;
+    lastSearch.current = filters.search;
+    const timer = setTimeout(
+      () => {
+        projectService
+          .list({ ...filters, sort: sorting.key, direction: sorting.direction, offset: page * 50, limit: 50 })
+          .then((result) => {
+            listCache.set(queryKey, result);
+            if (active) {
+              setProjects(result.items);
+              setTotal(result.total);
+              setError('');
+            }
+          })
+          .catch((e) => {
+            if (active) setError(e.message);
+          })
+          .finally(() => {
+            if (active) setLoading(false);
+          });
+      },
+      typing ? 250 : 0,
+    );
     return () => {
       active = false;
       clearTimeout(timer);
     };
-  }, [JSON.stringify(filters), JSON.stringify(sorting), page, version]);
+  }, [queryKey, version]);
 
   const handleOpenDetail = (project: Project) => {
     openPanel({
@@ -210,9 +231,7 @@ export function ProjectsPage() {
         <button disabled={page === 0} onClick={() => setPage((p) => p - 1)}>
           Trang trước
         </button>
-        <span>
-          Trang {page + 1} · {total} dự án
-        </span>
+        <span aria-live="polite">{loading && !total ? 'Đang tải dự án…' : `Trang ${page + 1} · ${total} dự án`}</span>
         <button disabled={(page + 1) * 50 >= total} onClick={() => setPage((p) => p + 1)}>
           Trang sau
         </button>
@@ -271,7 +290,13 @@ export function ProjectsPage() {
           </div>
         }
         onReset={() => setFilters({ search: '', group: 'all', status: 'all', stage: 'all' })}
-        count={<GridCount total={total} unit="dự án" />}
+        count={
+          loading && !total ? (
+            <GridCount total={0} unit="dự án" detail="đang tải" />
+          ) : (
+            <GridCount total={total} unit="dự án" />
+          )
+        }
         actions={
           <>
             <div className="flex items-center rounded-lg border border-border dark:border-slate-700 bg-subtle dark:bg-slate-800 p-0.5">
@@ -321,6 +346,7 @@ export function ProjectsPage() {
           onSort={(key, direction) => setSorting({ key, direction })}
           columns={columns}
           data={filteredProjects}
+          loading={loading && !filteredProjects.length}
           onRowClick={handleOpenDetail}
           onView={handleOpenDetail}
           maxHeight="calc(100vh - 250px)"

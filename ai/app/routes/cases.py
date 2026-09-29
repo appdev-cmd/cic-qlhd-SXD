@@ -214,10 +214,9 @@ def workflow_state(id: str, s: Store = Depends(store)):
     case = s.get(id)
     reviewers = []
     if MODE != 'demo':
-        from ..database import connection
+        from ..database import read
 
-        with connection(s.actor['id']) as con:
-            reviewers = con.execute('select * from public.appraisal_reviewers(%s)', (id,)).fetchall()
+        (reviewers,) = read(s.actor['id'], ('select * from public.appraisal_reviewers(%s)', (id,)))
     frozen = s.has_successor(id)
     return {
         'state': state(case),

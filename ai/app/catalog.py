@@ -1,7 +1,7 @@
 """Scoped, paginated supporting data and aggregate reporting."""
 
 from fastapi import HTTPException
-from .database import connection
+from .database import connection, read
 from .store import MODE, normalize_search
 
 CATALOGS = {
@@ -249,48 +249,64 @@ def dashboard(s, kind='all'):
         else ''
     )
     sla_sql, sla_values, sla_states = s.sla_counts_query(kind)
-    with connection(s.actor['id']) as con:
-        # Pipeline: all dashboard queries share one network round trip.
-        with con.pipeline():
-            cases = con.execute(
-                "select count(*) as total,count(distinct dossier_id) as dossiers,count(*) filter(where payload->>'status' in ('intake','analyzing','analyzed')) as in_progress,coalesce(sum(jsonb_array_length(payload->'documents')),0) as documents,count(*) filter(where payload->>'status'='reviewed') as reviewed,count(*) filter(where payload->>'status'='request_supplement') as supplements from public.appraisal_cases"
-                + where
-            )
-            projects = con.execute('select count(*) as total from public.projects')
-            procedures = con.execute(
-                "select procedure as id,count(*) as total from public.appraisal_cases"
-                + where
-                + ' group by procedure order by procedure'
-            )
-            month_rows = con.execute(
-                "select to_char(coalesce(nullif(payload->>'createdAt','')::timestamptz::date,created_at::date),'YYYY-MM') as id,procedure,count(*) as total from public.appraisal_cases"
-                + where
-                + " group by 1,2 order by 1 asc,2"
-            )
-            statuses = con.execute(
-                "select coalesce(payload->>'status','unknown') as id,count(*) as total from public.appraisal_cases"
-                + where
-                + " group by 1 order by 1"
-            )
-            top_projects = con.execute(
-                "with scoped as (select project_id,dossier_id from public.appraisal_cases"
-                + where
-                + ") select p.id,p.title as name,count(*) as total,count(distinct c.dossier_id) as dossiers from scoped c join public.projects p on p.id=c.project_id group by p.id,p.title order by total desc,p.title,p.id limit 6"
-            )
-            pending = con.execute(
-                "select id,payload->>'name' as name,payload->>'projectName' as project_name,project_id,payload->>'status' as status from public.appraisal_cases"
-                + where
-                + ' order by updated_at desc,id limit 10'
-            )
-            sla_cursor = con.execute(sla_sql, sla_values)
-        cases = cases.fetchone()
-        projects = projects.fetchone()
-        procedures = procedures.fetchall()
-        month_rows = month_rows.fetchall()
-        statuses = statuses.fetchall()
-        top_projects = top_projects.fetchall()
-        pending = pending.fetchall()
-        sla = s.sla_rows(sla_cursor.fetchone(), sla_states)
+    # Every dashboard query in one network round trip (single message, one implicit transaction).
+    (
+        cases_rows,
+        projects_rows,
+        procedures_rows,
+        month_rows_rows,
+        statuses_rows,
+        top_projects_rows,
+        pending_rows,
+        sla_cursor_rows,
+    ) = read(
+        s.actor['id'],
+        (
+            "select count(*) as total,count(distinct dossier_id) as dossiers,count(*) filter(where payload->>'status' in ('intake','analyzing','analyzed')) as in_progress,coalesce(sum(jsonb_array_length(payload->'documents')),0) as documents,count(*) filter(where payload->>'status'='reviewed') as reviewed,count(*) filter(where payload->>'status'='request_supplement') as supplements from public.appraisal_cases"
+            + where,
+            None,
+        ),
+        ('select count(*) as total from public.projects', None),
+        (
+            "select procedure as id,count(*) as total from public.appraisal_cases"
+            + where
+            + ' group by procedure order by procedure',
+            None,
+        ),
+        (
+            "select to_char(coalesce(nullif(payload->>'createdAt','')::timestamptz::date,created_at::date),'YYYY-MM') as id,procedure,count(*) as total from public.appraisal_cases"
+            + where
+            + " group by 1,2 order by 1 asc,2",
+            None,
+        ),
+        (
+            "select coalesce(payload->>'status','unknown') as id,count(*) as total from public.appraisal_cases"
+            + where
+            + " group by 1 order by 1",
+            None,
+        ),
+        (
+            "with scoped as (select project_id,dossier_id from public.appraisal_cases"
+            + where
+            + ") select p.id,p.title as name,count(*) as total,count(distinct c.dossier_id) as dossiers from scoped c join public.projects p on p.id=c.project_id group by p.id,p.title order by total desc,p.title,p.id limit 6",
+            None,
+        ),
+        (
+            "select id,payload->>'name' as name,payload->>'projectName' as project_name,project_id,payload->>'status' as status from public.appraisal_cases"
+            + where
+            + ' order by updated_at desc,id limit 10',
+            None,
+        ),
+        (sla_sql, sla_values),
+    )
+    cases = cases_rows[0]
+    projects = projects_rows[0]
+    procedures = procedures_rows
+    month_rows = month_rows_rows
+    statuses = statuses_rows
+    top_projects = top_projects_rows
+    pending = pending_rows
+    sla = s.sla_rows(sla_cursor_rows[0], sla_states)
     months = {}
     for row in month_rows:
         month = months.setdefault(row['id'], {'id': row['id'], 'total': 0, 'procedures': {}})

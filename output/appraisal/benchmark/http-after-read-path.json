@@ -1,0 +1,50 @@
+{
+  "label": "after-read-path",
+  "at": "2026-09-29T09:58:41.307147",
+  "mode": "cloud",
+  "rounds": 12,
+  "results": {
+    "submissions page": {
+      "status": 200,
+      "bytes": 51829,
+      "p50_ms": 302,
+      "p95_ms": 722,
+      "first_ms": 615
+    },
+    "submissions overdue": {
+      "status": 200,
+      "bytes": 16060,
+      "p50_ms": 234,
+      "p95_ms": 248,
+      "first_ms": 246
+    },
+    "case detail": {
+      "status": 200,
+      "bytes": 9221,
+      "p50_ms": 97,
+      "p95_ms": 114,
+      "first_ms": 116
+    },
+    "case progress": {
+      "status": 200,
+      "bytes": 25,
+      "p50_ms": 88,
+      "p95_ms": 117,
+      "first_ms": 97
+    },
+    "projects page": {
+      "status": 200,
+      "bytes": 81074,
+      "p50_ms": 270,
+      "p95_ms": 342,
+      "first_ms": 277
+    },
+    "dashboard": {
+      "status": 200,
+      "bytes": 4423,
+      "p50_ms": 405,
+      "p95_ms": 426,
+      "first_ms": 412
+    }
+  }
+}

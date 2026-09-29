@@ -23,6 +23,8 @@ import {
   YAxis,
 } from 'recharts';
 import { apiRequest } from '../../services/apiClient';
+import { useAuth } from '../../context/AuthContext';
+import { listCache } from '../../lib/listCache';
 import { formatDateTime } from '../../lib/utils';
 import { SUBMISSION_STATUS } from '../../lib/projectProcedures';
 import { DossierGrid } from './DossierGrid';
@@ -101,13 +103,19 @@ export function CloudDashboard() {
   const [selectedMonth, setSelectedMonth] = useState('');
   const [hover, setHover] = useState<{ anchor: Element; content: string } | null>(null);
 
+  const { session } = useAuth();
+  const cacheKey = JSON.stringify(['dashboard', session?.user.id || 'demo']);
   useEffect(() => {
     const controller = new AbortController();
+    // Show the last summary at once while the fresh one loads.
+    const cached = listCache.get<DashboardSummary>(cacheKey);
+    if (cached) setData(cached);
     setLoading(true);
     setError('');
     setHover(null);
     apiRequest<DashboardSummary>('/dashboard', { signal: controller.signal })
       .then((summary) => {
+        listCache.set(cacheKey, summary);
         if (!controller.signal.aborted) {
           setData(summary);
           setUpdated(new Date().toISOString());
@@ -123,7 +131,7 @@ export function CloudDashboard() {
         if (!controller.signal.aborted) setLoading(false);
       });
     return () => controller.abort();
-  }, [version]);
+  }, [version, cacheKey]);
 
   useEffect(() => {
     const refresh = () => setVersion((current) => current + 1);

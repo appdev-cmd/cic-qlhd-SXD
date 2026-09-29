@@ -12,7 +12,7 @@ from contextlib import contextmanager
 from pathlib import Path
 import httpx
 from fastapi import HTTPException
-from .database import connection
+from .database import connection, read
 from psycopg.types.json import Jsonb
 
 MODE = os.getenv('APPRAISAL_MODE', 'demo')
@@ -148,6 +148,7 @@ class Store:
     def __init__(self, token='', actor=None):
         self.token = token
         self.actor = actor or actor_for(token)
+        self._successors = {}  # submission id -> has a supplement, learned while reading it
 
     def all(self, offset=0, procedure=None, project_id=None):
         if MODE == 'demo':
@@ -203,10 +204,17 @@ class Store:
                     ).fetchone()
                 case.update(dossierId=root[0], submissionRound=root[1] + 1)
             return self.with_job_state(case)
-        with connection(self.actor['id']) as con:
-            rows = con.execute('select payload from public.appraisal_cases where id=%s', (id,)).fetchall()
+        (rows,) = read(
+            self.actor['id'],
+            (
+                'select payload,exists(select 1 from public.appraisal_cases n where n.previous_submission_id=c.id)'
+                ' as has_successor from public.appraisal_cases c where id=%s',
+                (id,),
+            ),
+        )
         if not rows:
             raise HTTPException(404, 'Không tìm thấy hồ sơ trong phạm vi quyền.')
+        self._successors[id] = rows[0]['has_successor']
         return self.with_job_state(rows[0]['payload'])
 
     def progress(self, id):
@@ -220,10 +228,11 @@ class Store:
                 raise HTTPException(404, 'Không tìm thấy hồ sơ.')
             revision, job = row[0], json.loads(row[1]) if row[1] else None
         else:
-            with connection(self.actor['id']) as con:
-                row = con.execute(
-                    "select revision,payload->'job' as job from public.appraisal_cases where id=%s", (id,)
-                ).fetchone()
+            (rows,) = read(
+                self.actor['id'],
+                ("select revision,payload->'job' as job from public.appraisal_cases where id=%s", (id,)),
+            )
+            row = rows[0] if rows else None
             if not row:
                 raise HTTPException(404, 'Không tìm thấy hồ sơ trong phạm vi quyền.')
             revision, job = row['revision'], row['job']
@@ -239,9 +248,9 @@ class Store:
                 row = con.execute('select state from jobs where id=?', (job['id'],)).fetchone()
                 state = row[0] if row else 'stale'
         else:
-            with connection(self.actor['id']) as con:
-                row = con.execute('select public.read_appraisal_job(%s) as job', (job['id'],)).fetchone()['job']
-                state = row['status'] if row else 'stale'
+            (rows,) = read(self.actor['id'], ('select public.read_appraisal_job(%s) as job', (job['id'],)))
+            row = rows[0]['job']
+            state = row['status'] if row else 'stale'
         if state in ('stale', 'failed', 'cancelled'):
             from .workflow import derive_status
 
@@ -361,12 +370,13 @@ class Store:
                         "select 1 from cases where json_extract(payload,'$.previousSubmissionId')=? limit 1", (id,)
                     ).fetchone()
                 )
-        with connection(self.actor['id']) as con:
-            return bool(
-                con.execute(
-                    'select 1 from public.appraisal_cases where previous_submission_id=%s limit 1', (id,)
-                ).fetchone()
-            )
+        if id in self._successors:
+            return self._successors[id]
+        (rows,) = read(
+            self.actor['id'], ('select 1 from public.appraisal_cases where previous_submission_id=%s limit 1', (id,))
+        )
+        self._successors[id] = bool(rows)
+        return self._successors[id]
 
     def lineage(self, id, offset=0):
         case = self.get(id)
@@ -393,8 +403,8 @@ class Store:
             projects = json.loads(path.read_text(encoding='utf-8')) if path.exists() else []
             project = next((p for p in projects if p['id'] == id), None)
         else:
-            with connection(self.actor['id']) as con:
-                project = con.execute('select * from public.projects where id=%s', (id,)).fetchone()
+            (rows,) = read(self.actor['id'], ('select * from public.projects where id=%s', (id,)))
+            project = rows[0] if rows else None
         if not project:
             raise HTTPException(404, 'Không tìm thấy dự án trong phạm vi quyền.')
         return project
@@ -448,9 +458,10 @@ class Store:
             )
             values.append('%' + normalize_search(search).replace('%', '\\%').replace('_', '\\_') + '%')
         where = ' and '.join(clauses)
-        with connection(self.actor['id']) as con:
-            total = con.execute('select count(*) as n from public.projects where ' + where, values).fetchone()['n']
-            rows = con.execute(
+        counted, rows = read(
+            self.actor['id'],
+            ('select count(*) as n from public.projects where ' + where, values),
+            (
                 'select id,code,title,lat,lng,field,group_type,grade,investment_cost,investor_id,investor_name,location_district,stage,sla_status,submission_date,deadline,lead_reviewer_name,department,province_code,planning_compliance,standard_compliance,fire_safety_status,estimated_savings,thumbnail_url,images,contractors from public.projects where '
                 + where
                 + ' order by '
@@ -461,7 +472,9 @@ class Store:
                 + direction
                 + ' limit %s offset %s',
                 values + [limit, offset],
-            ).fetchall()
+            ),
+        )
+        total = counted[0]['n']
         return {'items': rows, 'total': total, 'offset': offset, 'limit': limit}
 
     def organization_options(self, search=''):
@@ -616,8 +629,7 @@ class Store:
             with db() as con:
                 row = con.execute(sql, values).fetchone()
         else:
-            with connection(self.actor['id']) as con:
-                row = con.execute(sql, values).fetchone()
+            ((row,),) = read(self.actor['id'], (sql, values))
         return self.sla_rows(row, states)
 
     def page(
@@ -755,12 +767,13 @@ class Store:
                 + successor
                 + ') as summary'
             )
-            with connection(self.actor['id']) as con:
-                # Total rides along with the page (one round trip); count separately only past the last page.
-                result = con.execute(
+            # Rows and total in one round trip.
+            result, counted = read(
+                self.actor['id'],
+                (
                     'select '
                     + projection
-                    + ',count(*) over() as total from public.appraisal_cases'
+                    + ' from public.appraisal_cases'
                     + where
                     + ' order by '
                     + sort_expr
@@ -770,15 +783,11 @@ class Store:
                     + direction
                     + ' limit %s offset %s',
                     values + [limit, offset],
-                ).fetchall()
-                rows = [r['summary'] for r in result]
-                total = (
-                    result[0]['total']
-                    if result
-                    else con.execute('select count(*) as n from public.appraisal_cases' + where, values).fetchone()['n']
-                    if offset
-                    else 0
-                )
+                ),
+                ('select count(*) as n from public.appraisal_cases' + where, values),
+            )
+            rows = [r['summary'] for r in result]
+            total = counted[0]['n']
         for row in rows:
             row['slaState'] = deadlines.evaluate(
                 {
