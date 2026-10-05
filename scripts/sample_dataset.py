@@ -43,7 +43,13 @@ PERMIT_NAMES = {
     'extension': 'Gia hạn GPXD',
     'repair': 'GPXD sửa chữa, cải tạo',
 }
-INSPECTION_NAMES = {'complete': 'Hoàn thành', 'conditional': 'Có điều kiện', 'partial': 'Một phần'}
+INSPECTION_NAMES = {
+    'complete': 'Hoàn thành',
+    'conditional': 'Có điều kiện',
+    'partial': 'Một phần',
+    'start_notice': 'Thông báo khởi công',
+    'during': 'Kiểm tra trong thi công',
+}
 
 
 def sid(key):
@@ -358,6 +364,125 @@ CONSULTS = {
         ),
     ],
 }
+# Start notices: scenario key → review details (Phụ lục V NĐ 207/2026).
+START_DETAILS = {
+    'DA-2026-DB-0190/start': {
+        'startDate': '2026-08-03',
+        'appraisalNotice': 'Thông báo kết quả thẩm định BCNCKT năm 2026 (NĐ 175/2024, mô phỏng)',
+        'inspectionPlan': 'Kiểm tra lần 1 khi hoàn thành phần móng; lần 2 khi hoàn thành phần thân (công trình cấp II: tối đa 02 lần).',
+    },
+    'DA-2026-DB-0195/start': {
+        'startDate': '2026-08-24',
+        'appraisalNotice': 'Thông báo kết quả thẩm định BCNCKT năm 2026 (NĐ 175/2024, mô phỏng)',
+        'inspectionPlan': 'Kiểm tra 01 lần khi hoàn thành phần kết cấu chính (công trình cấp III: tối đa 02 lần).',
+    },
+    'DA-2026-DB-0208/start': {
+        'startDate': '2026-08-24',
+        'permitNumber': '002/2026/GPXD',
+        'inspectionPlan': 'Công trình tôn giáo cấp II không thuộc Phụ lục IV NĐ 217/2026: không thuộc đối tượng kiểm tra công tác nghiệm thu.',
+    },
+}
+# Hậu kiểm: start notice → in-construction inspections (khoản 3 Điều 27 NĐ 207/2026).
+AFTER_START = [
+    (
+        'DA-2026-DB-0190',
+        'start_notice',
+        'start',
+        None,
+        '2026-07-27',
+        [
+            (
+                1,
+                'start',
+                'Tiếp nhận thông báo khởi công công trình miễn giấy phép (điểm b khoản 2 Điều 43 Luật 135/2025).',
+            ),
+            (2, 'review:eligible'),
+            (3, 'submit_review', 'Trình phiếu tiếp nhận và kế hoạch kiểm tra trong thi công.'),
+            (4, 'approve', 'Đồng ý kế hoạch kiểm tra; đã cập nhật cơ sở dữ liệu quốc gia.'),
+        ],
+    ),
+    (
+        'DA-2026-DB-0190',
+        'during',
+        'during-1',
+        'Kiểm tra lần 1',
+        '2026-08-24',
+        [
+            (1, 'start', 'Thông báo kế hoạch kiểm tra lần 1 (phần móng) cho chủ đầu tư.'),
+            (2, 'schedule_visit', 'Tổ chức kiểm tra hiện trường phần móng.'),
+            (2, 'review:eligible'),
+            (5, 'submit_review', 'Dự thảo thông báo kết quả kiểm tra lần 1.'),
+            (6, 'approve', 'Ban hành thông báo kết quả kiểm tra trong quá trình thi công lần 1.'),
+        ],
+    ),
+    (
+        'DA-2026-DB-0190',
+        'during',
+        'during-2',
+        'Kiểm tra lần 2',
+        '2026-09-21',
+        [
+            (1, 'start', 'Thông báo kế hoạch kiểm tra lần 2 (phần thân) cho chủ đầu tư.'),
+            (3, 'schedule_visit', 'Tổ chức kiểm tra hiện trường phần thân.'),
+            (3, 'review:pending'),
+        ],
+    ),
+    (
+        'DA-2026-DB-0195',
+        'start_notice',
+        'start',
+        None,
+        '2026-08-12',
+        [
+            (1, 'start', 'Tiếp nhận thông báo khởi công công trình đầu tư công đã thẩm định BCNCKT (miễn phép).'),
+            (2, 'review:eligible'),
+            (3, 'submit_review', 'Trình phiếu tiếp nhận và kế hoạch kiểm tra.'),
+            (3, 'approve', 'Đồng ý kế hoạch kiểm tra trong thi công.'),
+        ],
+    ),
+    (
+        'DA-2026-DB-0195',
+        'during',
+        'during-1',
+        'Kiểm tra lần 1',
+        '2026-09-15',
+        [
+            (1, 'start', 'Thông báo kế hoạch kiểm tra phần kết cấu chính.'),
+            (2, 'schedule_visit', 'Tổ chức kiểm tra hiện trường.'),
+            (2, 'review:eligible'),
+            (6, 'submit_review', 'Dự thảo thông báo kết quả kiểm tra.'),
+            (7, 'approve', 'Ban hành thông báo kết quả kiểm tra trong quá trình thi công.'),
+        ],
+    ),
+    (
+        'DA-2026-DB-0208',
+        'start_notice',
+        'start',
+        'Nhà giáo lý',
+        '2026-08-19',
+        [
+            (1, 'start', 'Tiếp nhận thông báo khởi công theo giấy phép xây dựng số 002/2026/GPXD.'),
+            (2, 'review:eligible'),
+            (2, 'submit_review', 'Trình phiếu tiếp nhận thông báo khởi công.'),
+            (3, 'approve', 'Đã cập nhật cơ sở dữ liệu quốc gia; công trình không thuộc đối tượng kiểm tra nghiệm thu.'),
+        ],
+    ),
+    # Conditional acceptance, then the investor reports the remedied items (khoản 5 Điều 27) → accepted.
+    (
+        'DA-2026-DB-0192',
+        'complete',
+        'remedy',
+        'Báo cáo khắc phục tồn tại',
+        '2026-09-21',
+        [
+            (1, 'start', 'Tiếp nhận báo cáo kết quả khắc phục tồn tại sau nghiệm thu có điều kiện (khoản 5 Điều 27).'),
+            (2, 'schedule_visit', 'Kiểm tra hiện trường biển báo, sơn kẻ đường đã hoàn thiện.'),
+            (2, 'review:eligible'),
+            (3, 'submit_review', 'Dự thảo thông báo chấp thuận kết quả nghiệm thu hoàn thành.'),
+            (4, 'approve', 'Chấp thuận kết quả nghiệm thu hoàn thành sau khi khắc phục tồn tại.'),
+        ],
+    ),
+]
 INSPECTIONS = {
     'DA-2026-DB-0186': (
         'complete',
@@ -382,10 +507,16 @@ INSPECTIONS = {
                 [
                     (1, 'start', 'Tiếp nhận báo cáo hoàn thành có đề xuất nghiệm thu có điều kiện.'),
                     (3, 'schedule_visit', 'Kiểm tra hiện trường tuyến đường và hệ thống thoát nước.'),
+                    (4, 'review:eligible'),
                     (
                         5,
-                        'require_correction',
-                        'Yêu cầu khắc phục tồn tại về biển báo, sơn kẻ đường; không ảnh hưởng chịu lực.',
+                        'submit_review',
+                        'Dự thảo thông báo chấp thuận kết quả nghiệm thu có điều kiện (Phụ lục VIII).',
+                    ),
+                    (
+                        6,
+                        'approve',
+                        'Chấp thuận nghiệm thu có điều kiện; tồn tại biển báo, sơn kẻ đường không ảnh hưởng chịu lực, hoàn thành trong 30 ngày.',
                     ),
                 ],
             )
@@ -537,6 +668,39 @@ def documents(project, procedure, round_no, subtype, complete):
                 ['Báo cáo thẩm tra; kết quả thẩm duyệt thiết kế PCCC (nếu thuộc diện).'],
             )
         return common, docs
+    if subtype == 'start_notice':
+        return common, {
+            'APPLICATION': (
+                'Thông báo khởi công xây dựng (Phụ lục V NĐ 207/2026)',
+                ['Ngày khởi công, ngày hoàn thành dự kiến; danh sách nhà thầu chính; người phụ trách trực tiếp.'],
+            ),
+            'ATTACHMENTS': (
+                'Hồ sơ gửi kèm thông báo khởi công',
+                [
+                    'Công trình miễn phép: hồ sơ tương ứng hồ sơ đề nghị cấp giấy phép (khoản 3 Điều 43 Luật 135/2025); '
+                    'công trình có giấy phép: bản sao giấy phép xây dựng.'
+                ],
+            ),
+            'DRAWINGS': (
+                'Thiết kế bản vẽ thi công được phê duyệt',
+                ['Quyết định phê duyệt thiết kế bản vẽ thi công phần công trình khởi công (điểm c khoản 1 Điều 48).'],
+            ),
+        }
+    if subtype == 'during':
+        return common, {
+            'APPLICATION': (
+                'Kế hoạch kiểm tra và văn bản thông báo cho chủ đầu tư',
+                ['Thời điểm, thành phần, nội dung kiểm tra theo điểm b khoản 3 Điều 27 NĐ 207/2026.'],
+            ),
+            'ATTACHMENTS': (
+                'Hồ sơ quản lý chất lượng trong thi công',
+                ['Nhật ký thi công; biên bản nghiệm thu công việc, giai đoạn; kết quả thí nghiệm vật liệu, cấu kiện.'],
+            ),
+            'DRAWINGS': (
+                'Bản vẽ thi công phần đã thực hiện',
+                ['Bản vẽ thi công được duyệt các bộ phận đã nghiệm thu.'],
+            ),
+        }
     docs = {
         'APPLICATION': (
             'Báo cáo hoàn thành thi công xây dựng (Phụ lục VI NĐ 207/2026)',
@@ -615,6 +779,7 @@ class Builder:
             )
             case.update(
                 id=sid(key),
+                sampleKey=key.rsplit('/', 1)[0],
                 createdAt=stamp,
                 updatedAt=stamp,
                 assignee=officer['name'],
@@ -1000,6 +1165,36 @@ class Builder:
                 participants='Sở Xây dựng, chủ đầu tư, tư vấn giám sát, nhà thầu thi công',
                 observations='Hiện trạng phù hợp hồ sơ hoàn công; ghi nhận tồn tại (nếu có) trong phiếu.',
             )
+        extra = START_DETAILS.get(case.get('sampleKey')) if subtype == 'start_notice' else None
+        if subtype == 'start_notice':
+            permitted = bool(extra and extra.get('permitNumber'))
+            skip = 'exempt' if permitted else 'permit_link'
+            for row in body['checks']:
+                if final and row['id'] == skip:
+                    row.update(
+                        status='not_applicable',
+                        documentIds=[],
+                        note='Công trình có giấy phép xây dựng.'
+                        if permitted
+                        else 'Công trình thuộc diện miễn giấy phép.',
+                    )
+            body['details'].update(extra or {})
+            body.update(visitDate=None, participants='', observations='')
+            body['designBasis'] = 'Thiết kế bản vẽ thi công được chủ đầu tư phê duyệt (mô phỏng).'
+            body['conditions'] = 'Đã cập nhật cơ sở dữ liệu quốc gia; lập kế hoạch kiểm tra trong thi công.'
+        if subtype == 'during':
+            for row in body['checks']:
+                if final and row['id'] == 'verification':
+                    row.update(
+                        status='not_applicable', documentIds=[], note='Không có dấu hiệu bất thường về chất lượng.'
+                    )
+            body['details'].update(
+                qualityAssessment='Chủ đầu tư, nhà thầu tuân thủ quy định quản lý chất lượng, an toàn; nghiệm thu công việc đầy đủ.'
+            )
+            body['observations'] = 'Kiểm tra phần móng, khung kết cấu đã thi công; hồ sơ nghiệm thu công việc đầy đủ.'
+            body['conditions'] = (
+                'Chủ đầu tư tiếp tục thi công theo thiết kế được duyệt; báo cáo khi hoàn thành giai đoạn.'
+            )
         apply_review(case, officer, Review(**body))
         return self.persist(case, 'Lập phiếu rà soát chuyên môn', 'Kết luận: ' + conclusion)
 
@@ -1150,6 +1345,15 @@ def main():
     )
     for code, (subtype, rounds) in INSPECTIONS.items():
         builder.run(projects[code], 'nghiem_thu', rounds, subtype)
+    for code, subtype, key, title, received, steps in AFTER_START:
+        builder.run(
+            projects[code],
+            'nghiem_thu',
+            [(received, steps)],
+            subtype,
+            key_prefix=f'{code}/{key}',
+            title=title or INSPECTION_NAMES[subtype],
+        )
     summary = {
         'seed': SEED,
         'cases': builder.cases,

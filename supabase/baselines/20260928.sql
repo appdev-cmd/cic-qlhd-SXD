@@ -1267,7 +1267,7 @@ CREATE INDEX appraisal_project_page ON public.appraisal_cases USING btree (provi
 
 CREATE INDEX appraisal_status_page ON public.appraisal_cases USING btree (province_id, department, ((payload ->> 'status'::text)), created_at DESC, id);
 
-CREATE INDEX appraisal_sla_due_page ON public.appraisal_cases USING btree (province_id, department, ((payload -> 'sla'::text) ->> 'dueDate'::text)), id);
+CREATE INDEX appraisal_sla_due_page ON public.appraisal_cases USING btree (province_id, department, ((payload -> 'sla'::text) ->> 'dueDate'::text), id);
 
 CREATE INDEX idx_ai_logs_project ON public.ai_logs USING btree (project_id, created_at DESC);
 

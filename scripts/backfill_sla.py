@@ -117,7 +117,9 @@ def cloud(apply):
             case,
             actor,
             'Tính hạn xử lý',
-            'Tính lại hạn xử lý theo chính sách ' + POLICY_VERSION + ' (NĐ 217/2026, NĐ 207/2026; chờ chuyên viên xác nhận).',
+            'Tính lại hạn xử lý theo chính sách '
+            + POLICY_VERSION
+            + ' (NĐ 217/2026, NĐ 207/2026; chờ chuyên viên xác nhận).',
         )
         store.save(case, expected)
     print(f'Đã ghi {len(rows)} lần nộp; bản chụp trước khi ghi: {folder}')
