@@ -2,5 +2,5 @@
   "$schema": "https://openapi.vercel.sh/vercel.json",
   "framework": null,
   "installCommand": "pnpm install",
-  "buildCommand": "pnpm build && node vercel-build.mjs"
+  "buildCommand": "pnpm run build:vercel"
 }
