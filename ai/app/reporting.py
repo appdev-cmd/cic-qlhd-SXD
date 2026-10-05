@@ -119,13 +119,8 @@ def document_bytes(title, blocks, format='pdf', sample=True):
     from reportlab.pdfbase import pdfmetrics
     from reportlab.pdfbase.ttfonts import TTFont
 
-    font_dir = Path(os.getenv('APPRAISAL_FONT_DIR', 'C:/Windows/Fonts'))
     if 'AppraisalSerif' not in pdfmetrics.getRegisteredFontNames():
-        regular = font_dir / 'times.ttf'
-        bold = font_dir / 'timesbd.ttf'
-        if not regular.exists():
-            regular = Path('/usr/share/fonts/truetype/liberation2/LiberationSerif-Regular.ttf')
-            bold = Path('/usr/share/fonts/truetype/liberation2/LiberationSerif-Bold.ttf')
+        regular, bold = serif_fonts()
         pdfmetrics.registerFont(TTFont('AppraisalSerif', str(regular)))
         pdfmetrics.registerFont(TTFont('AppraisalSerifBold', str(bold)))
     body = ParagraphStyle('Body', fontName='AppraisalSerif', fontSize=13, leading=17, spaceAfter=6)
@@ -347,6 +342,24 @@ def report_blocks(case, kind):
         }
     )
     return titles[kind], blocks
+
+
+def serif_fonts():
+    """Times New Roman (Windows) or a metric-compatible Liberation Serif; the install path differs by distro."""
+    font_dir = Path(os.getenv('APPRAISAL_FONT_DIR', 'C:/Windows/Fonts'))
+    pairs = [(font_dir / 'times.ttf', font_dir / 'timesbd.ttf')]
+    for base in ('liberation2', 'liberation', 'liberation-serif'):
+        for root in ('/usr/share/fonts/truetype', '/usr/share/fonts'):
+            folder = Path(root) / base
+            pairs.append((folder / 'LiberationSerif-Regular.ttf', folder / 'LiberationSerif-Bold.ttf'))
+    for regular, bold in pairs:
+        if regular.exists() and bold.exists():
+            return regular, bold
+    for root in ('/usr/share/fonts', '/usr/local/share/fonts'):
+        found = next(Path(root).rglob('LiberationSerif-Regular.ttf'), None) if Path(root).exists() else None
+        if found and (found.parent / 'LiberationSerif-Bold.ttf').exists():
+            return found, found.parent / 'LiberationSerif-Bold.ttf'
+    raise RuntimeError('Không tìm thấy font Times New Roman hoặc Liberation Serif; đặt APPRAISAL_FONT_DIR.')
 
 
 def export_document(case, kind, format):
