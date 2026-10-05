@@ -28,3 +28,5 @@ gcp-sa-key.json
 tests/e2e/node_modules/
 tests/e2e/test-results/
 output/appraisal/e2e-report/
+
+.env.production
