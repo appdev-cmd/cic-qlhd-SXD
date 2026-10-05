@@ -95,6 +95,7 @@ jobs:
         run: |
           node --import tsx scripts/export_demo_catalog.ts
           pnpm samples:projects
+          python scripts/sample_dataset.py
           python scripts/backfill_sla.py --apply
       - name: Start stack (Worker 8200, Core 8201, Web 8208)
         run: |
