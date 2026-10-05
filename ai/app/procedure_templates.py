@@ -43,7 +43,9 @@ def draft_blocks(case, r, spec, kind='draft'):
         return r.get('details', {}).get(key) or '[chưa xác nhận]'
 
     def fields(keys):
-        return [FIELD_LABELS[k] + ': ' + value(k) for k in keys]
+        from .procedure_review import DETAILS
+
+        return [(FIELD_LABELS.get(k) or DETAILS[k]) + ': ' + value(k) for k in keys]
 
     project = str(case.get('projectName') or case['name'])
     is_input = kind == 'application'
@@ -90,7 +92,84 @@ def draft_blocks(case, r, spec, kind='draft'):
     ]
     submitted = [d['name'] for d in case['documents'] if d['role'] == 'submission']
     attached = {'heading': 'Tài liệu gửi kèm', 'text': submitted or ['[Chưa nộp tài liệu]']}
-    if case['procedure'] == 'nghiem_thu':
+    if case['procedure'] == 'nghiem_thu' and r['subtype'] == 'start_notice':
+        title = (
+            'DỰ THẢO THÔNG BÁO KHỞI CÔNG XÂY DỰNG (PHỤ LỤC V)'
+            if is_input
+            else 'DỰ THẢO PHIẾU TIẾP NHẬN THÔNG BÁO KHỞI CÔNG VÀ KẾ HOẠCH KIỂM TRA'
+        )
+        blocks = common + [
+            {
+                'text': [
+                    'Đối chiếu Phụ lục V, khoản 2 Điều 12 và Điều 27 NĐ 207/2026/NĐ-CP.',
+                    'Kính gửi: ' + r['investor'],
+                ]
+            },
+            {
+                'heading': '1. Thông tin khởi công',
+                'text': [
+                    'Công trình: ' + project + '; phạm vi: ' + r['scope'],
+                    'Địa điểm: ' + r['location'],
+                    *fields(
+                        ['projectNationalId', 'buildingId', 'buildingClass', 'startDate', 'contractors', 'contact']
+                    ),
+                ],
+            },
+            {
+                'heading': '2. Căn cứ khởi công',
+                'text': [
+                    *fields(['permitNumber', 'appraisalNotice']),
+                    'Công trình miễn phép: kiểm tra điều kiện miễn phép, sự phù hợp quy hoạch và thông số chủ yếu của thiết kế tại BCNCKT đã thẩm định (điểm c khoản 2 Điều 67 NĐ 217/2026).',
+                ],
+            },
+            {
+                'heading': '3. Cập nhật cơ sở dữ liệu và kế hoạch kiểm tra',
+                'text': [
+                    'Cập nhật dữ liệu thông báo khởi công vào cơ sở dữ liệu quốc gia về hoạt động xây dựng.',
+                    *fields(['inspectionPlan']),
+                    'Số lần kiểm tra trong thi công không quá 03 lần (cấp đặc biệt, cấp I) hoặc 02 lần (công trình khác), trừ trường hợp có sự cố hoặc nghiệm thu từng phần, có điều kiện.',
+                    r['conditions'],
+                ],
+            },
+        ]
+        return title, blocks + [{'text': ['Nguồn biểu mẫu: ' + ND207]}] + sign
+    elif case['procedure'] == 'nghiem_thu' and r['subtype'] == 'during':
+        title = 'DỰ THẢO THÔNG BÁO KẾT QUẢ KIỂM TRA CÔNG TÁC NGHIỆM THU TRONG QUÁ TRÌNH THI CÔNG'
+        visit = date.fromisoformat(r['visitDate']).strftime('%d/%m/%Y') if r.get('visitDate') else '[chưa xác nhận]'
+        blocks = common + [
+            {
+                'text': [
+                    'Điểm a khoản 1, khoản 3 Điều 27 NĐ 207/2026/NĐ-CP; thời hạn ra văn bản không quá 10 ngày làm việc kể từ ngày kiểm tra.',
+                    'Kính gửi: ' + r['investor'],
+                    *fields(['authorityBasis']),
+                ],
+            },
+            {
+                'heading': '1. Công trình được kiểm tra',
+                'text': [
+                    'Tên: ' + project + '; phạm vi: ' + r['scope'],
+                    'Địa điểm: ' + r['location'],
+                    *fields(['buildingClass', 'startDate', 'contractors']),
+                ],
+            },
+            {
+                'heading': '2. Kiểm tra hiện trường',
+                'text': ['Ngày kiểm tra: ' + visit, 'Thành phần: ' + r['participants'], r['observations']],
+            },
+            {
+                'heading': '3. Kết quả kiểm tra việc tuân thủ quản lý chất lượng, an toàn',
+                'text': [
+                    *fields(['qualityAssessment', 'verificationTests', 'extraReason']),
+                    *['- ' + d['description'] + ' (' + d['responsible'] + ')' for d in r.get('defects', [])],
+                ],
+            },
+            {
+                'heading': '4. Yêu cầu đối với chủ đầu tư',
+                'text': [r['conditions'] or '[Các tồn tại cần khắc phục, thời hạn báo cáo].'],
+            },
+        ]
+        return title, blocks + [{'text': ['Nguồn biểu mẫu: ' + ND207]}] + sign
+    elif case['procedure'] == 'nghiem_thu':
         subtype = {'complete': 'hoàn thành', 'conditional': 'có điều kiện', 'partial': 'một phần'}[r['subtype']]
         if is_input:
             title = 'DỰ THẢO BÁO CÁO HOÀN THÀNH THI CÔNG XÂY DỰNG'

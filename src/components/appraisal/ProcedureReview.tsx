@@ -49,6 +49,7 @@ type Spec = {
   citation: string;
   types: { value: string; label: string }[];
   detailFields: { id: string; label: string }[];
+  inspectionLimit?: { used: number; max: number; basis: string; exceeded: boolean };
   checks: { id: string; label: string; conditional: boolean; citation: string; condition: string; url: string }[];
   review: Review | null;
 };
@@ -180,6 +181,14 @@ export function ProcedureReview({ dossier: d, onChange }: { dossier: Dossier; on
           >
             Xem biểu mẫu trong văn bản gốc
           </a>
+          {spec.inspectionLimit && (
+            <p className={spec.inspectionLimit.exceeded ? 'text-amber-800 dark:text-amber-200 font-medium' : ''}>
+              Đã kiểm tra trong thi công {spec.inspectionLimit.used}/{spec.inspectionLimit.max} lần (
+              {spec.inspectionLimit.basis}).
+              {spec.inspectionLimit.exceeded &&
+                ' Chỉ kiểm tra thêm khi có sự cố hoặc nghiệm thu từng phần, có điều kiện — ghi lý do vào trường tương ứng.'}
+            </p>
+          )}
           {spec.reviewOutdated && (
             <p role="status">
               Phiếu đã lưu dùng checklist cũ. Mở cập nhật để rà soát phiên bản mới; lịch sử được giữ lại.

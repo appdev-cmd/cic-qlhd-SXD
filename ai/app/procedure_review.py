@@ -62,7 +62,77 @@ DETAILS = {
     'contact': 'Người liên hệ và số điện thoại',
     'representative': 'Người đại diện, chức vụ, số định danh',
     'remainingSafety': 'Biện pháp bảo đảm an toàn khi tiếp tục thi công phần còn lại',
+    'startDate': 'Ngày khởi công (theo thông báo)',
+    'permitNumber': 'Số giấy phép xây dựng (nếu thuộc diện)',
+    'appraisalNotice': 'Số, ngày thông báo kết quả thẩm định BCNCKT (công trình miễn phép)',
+    'inspectionPlan': 'Kế hoạch kiểm tra trong thi công (thời điểm, nội dung)',
+    'extraReason': 'Lý do kiểm tra vượt số lần (sự cố; nghiệm thu từng phần, có điều kiện)',
+    'verificationTests': 'Yêu cầu thí nghiệm đối chứng, kiểm định (Điều 8 NĐ 207/2026)',
 }
+INSPECTIONS = {
+    'start_notice': 'Tiếp nhận thông báo khởi công',
+    'during': 'Kiểm tra trong quá trình thi công',
+    'complete': 'Nghiệm thu hoàn thành',
+    'conditional': 'Nghiệm thu có điều kiện',
+    'partial': 'Nghiệm thu một phần',
+}
+INSPECTION_DETAILS = {
+    'start_notice': (
+        'projectNationalId',
+        'buildingId',
+        'buildingClass',
+        'authorityBasis',
+        'startDate',
+        'permitNumber',
+        'appraisalNotice',
+        'contractors',
+        'contact',
+        'inspectionPlan',
+    ),
+    'during': (
+        'projectNationalId',
+        'buildingId',
+        'buildingClass',
+        'authorityBasis',
+        'startDate',
+        'extraReason',
+        'verificationTests',
+        'contractors',
+        'qualityAssessment',
+    ),
+}
+COMPLETION_DETAILS = (
+    'projectNationalId',
+    'buildingId',
+    'buildingClass',
+    'authorityBasis',
+    'specializedBasis',
+    'completionReport',
+    'acceptanceRecord',
+    'correctionReport',
+    'contractors',
+    'constructionPeriod',
+    'completedQuantities',
+    'qualityAssessment',
+    'remainingSafety',
+    'verificationTests',
+)
+PERMIT_EXCLUDED = (
+    'completionReport',
+    'acceptanceRecord',
+    'correctionReport',
+    'contractors',
+    'constructionPeriod',
+    'completedQuantities',
+    'qualityAssessment',
+    'remainingSafety',
+    'startDate',
+    'permitNumber',
+    'appraisalNotice',
+    'inspectionPlan',
+    'extraReason',
+    'verificationTests',
+)
 
 
 class Payload(BaseModel):
@@ -128,10 +198,16 @@ def specification(case, subtype=None):
         )
     else:
         subtype = subtype or (case.get('procedureReview') or {}).get('subtype', 'complete')
-        if subtype not in ('complete', 'conditional', 'partial'):
-            raise HTTPException(422, 'Chọn loại nghiệm thu hợp lệ.')
+        if subtype not in INSPECTIONS:
+            raise HTTPException(422, 'Chọn loại hậu kiểm, nghiệm thu hợp lệ.')
         rows = inspection_checks(subtype)
-        citation = 'Điều 24–30, Phụ lục VI, VII, VIII, X NĐ 207/2026/NĐ-CP; Điều 2–5 TT 32/2026/TT-BXD theo đối tượng.'
+        citation = {
+            'start_notice': 'Điều 48 Luật Xây dựng 135/2025; khoản 2 Điều 12, Điều 25–27, Phụ lục V NĐ 207/2026; điểm c khoản 2 Điều 67 NĐ 217/2026.',
+            'during': 'Điều 8, 25–27 NĐ 207/2026/NĐ-CP (không quá 03 lần với cấp đặc biệt, cấp I; 02 lần với công trình khác).',
+        }.get(
+            subtype,
+            'Điều 24–30, Phụ lục VI, VII, VIII, X NĐ 207/2026/NĐ-CP; Điều 2–5 TT 32/2026/TT-BXD theo đối tượng.',
+        )
     return {
         'subtype': subtype,
         'citation': citation,
@@ -141,52 +217,30 @@ def specification(case, subtype=None):
         'detailFields': [
             {'id': k, 'label': v}
             for k, v in DETAILS.items()
-            if (
-                procedure == 'gpxd'
-                and k
-                not in (
-                    'completionReport',
-                    'acceptanceRecord',
-                    'correctionReport',
-                    'contractors',
-                    'constructionPeriod',
-                    'completedQuantities',
-                    'qualityAssessment',
-                    'remainingSafety',
-                )
-            )
-            or (
-                procedure == 'nghiem_thu'
-                and k
-                in (
-                    'projectNationalId',
-                    'buildingId',
-                    'buildingClass',
-                    'authorityBasis',
-                    'specializedBasis',
-                    'completionReport',
-                    'acceptanceRecord',
-                    'correctionReport',
-                    'contractors',
-                    'constructionPeriod',
-                    'completedQuantities',
-                    'qualityAssessment',
-                    'remainingSafety',
-                )
-            )
+            if (procedure == 'gpxd' and k not in PERMIT_EXCLUDED)
+            or (procedure == 'nghiem_thu' and k in INSPECTION_DETAILS.get(subtype, COMPLETION_DETAILS))
         ],
         'types': [{'value': k, 'label': v[0]} for k, v in PERMITS.items()]
         if procedure == 'gpxd'
-        else [
-            {'value': 'complete', 'label': 'Hoàn thành'},
-            {'value': 'conditional', 'label': 'Có điều kiện'},
-            {'value': 'partial', 'label': 'Một phần'},
-        ],
+        else [{'value': k, 'label': v} for k, v in INSPECTIONS.items()],
         'checks': rows,
     }
 
 
-def apply(case, actor, body):
+def inspection_limit(grade, used):
+    """At most 03 inspections for special/grade I works, 02 for others (điểm a khoản 3 Điều 27 NĐ 207/2026)."""
+    from .sla import normalize_grade
+
+    high = normalize_grade(grade) in ('DB', 'I')
+    return {
+        'used': used,
+        'max': 3 if high else 2,
+        'basis': 'Điểm a khoản 3 Điều 27 NĐ 207/2026/NĐ-CP',
+        'exceeded': used >= (3 if high else 2),
+    }
+
+
+def apply(case, actor, body, limit=None):
     if set(body.details) - DETAILS.keys() or any(len(v) > 2000 for v in body.details.values()):
         raise HTTPException(422, 'Thông tin dự thảo vượt giới hạn hoặc có trường không hợp lệ.')
     if body.ruleVersion != VERSION:
@@ -195,6 +249,17 @@ def apply(case, actor, body):
     expected = {r['id']: r for r in spec['checks']}
     if len(body.checks) != len(expected) or {c.id for c in body.checks} != set(expected):
         raise HTTPException(422, 'Checklist chưa đầy đủ theo loại thủ tục đã chọn.')
+    if (
+        body.subtype == 'during'
+        and limit
+        and limit['exceeded']
+        and len(body.details.get('extraReason', '').strip()) < 10
+    ):
+        raise HTTPException(
+            422,
+            f"Đã kiểm tra {limit['used']}/{limit['max']} lần trong thi công; chỉ kiểm tra thêm khi có sự cố hoặc "
+            'nghiệm thu từng phần, có điều kiện — nêu lý do.',
+        )
     documents = {d['id']: d for d in case['documents'] if d['role'] == 'submission'}
     for check in body.checks:
         if not set(check.documentIds) <= documents.keys():
@@ -264,6 +329,10 @@ def validate(review):
             raise HTTPException(422, 'Cần thời hạn tồn tại được xác định theo quy định địa phương.')
         if review['subtype'] == 'partial' and not review.get('details', {}).get('remainingSafety', '').strip():
             raise HTTPException(422, 'Cần xác định an toàn khi tiếp tục thi công phần còn lại.')
+        if review['subtype'] == 'start_notice' and not review.get('details', {}).get('startDate', '').strip():
+            raise HTTPException(422, 'Cần ngày khởi công theo thông báo (Phụ lục V NĐ 207/2026).')
+        if review['subtype'] == 'during' and not review.get('visitDate'):
+            raise HTTPException(422, 'Cần ngày tổ chức kiểm tra; thời hạn thông báo kết quả tính từ ngày này.')
         if not review.get('investor', '').strip() or not review.get('location', '').strip():
             raise HTTPException(422, 'Cần thông tin chủ đầu tư và địa điểm trước khi đề xuất đủ điều kiện.')
 

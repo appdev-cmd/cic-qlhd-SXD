@@ -378,6 +378,51 @@ class Store:
         self._successors[id] = bool(rows)
         return self._successors[id]
 
+    def inspection_count(self, project_id, exclude_id):
+        """In-construction inspections already recorded for the project (khoản 3 Điều 27 NĐ 207/2026)."""
+        if not project_id:
+            return 0
+        if MODE == 'demo':
+            with db() as con:
+                return con.execute(
+                    """select count(*) from cases where json_extract(payload,'$.projectId')=? and id<>?
+                    and json_extract(payload,'$.procedureReview.subtype')='during'""",
+                    (project_id, exclude_id),
+                ).fetchone()[0]
+        (rows,) = read(
+            self.actor['id'],
+            (
+                """select count(*) as n from public.appraisal_cases where project_id=%s and id<>%s::uuid
+                and procedure='nghiem_thu' and payload->'procedureReview'->>'subtype'='during'""",
+                (project_id, exclude_id),
+            ),
+        )
+        return rows[0]['n']
+
+    def start_dates(self):
+        """Permit number → start date from accepted start notices (thông báo khởi công)."""
+        if MODE == 'demo':
+            with db() as con:
+                rows = con.execute(
+                    """select json_extract(payload,'$.procedureReview.details.permitNumber'),
+                    json_extract(payload,'$.procedureReview.details.startDate') from cases
+                    where json_extract(payload,'$.procedureReview.subtype')='start_notice'
+                    and json_extract(payload,'$.procedureReview.conclusion')='eligible'"""
+                ).fetchall()
+        else:
+            (result,) = read(
+                self.actor['id'],
+                (
+                    """select payload->'procedureReview'->'details'->>'permitNumber' as n,
+                    payload->'procedureReview'->'details'->>'startDate' as d from public.appraisal_cases
+                    where procedure='nghiem_thu' and payload->'procedureReview'->>'subtype'='start_notice'
+                    and payload->'procedureReview'->>'conclusion'='eligible'""",
+                    (),
+                ),
+            )
+            rows = [(r['n'], r['d']) for r in result]
+        return {n.strip(): d for n, d in rows if n and d}
+
     def permit_records(self):
         """Permit records stored on GPXD submissions visible to the actor (sổ giấy phép)."""
         if MODE == 'demo':

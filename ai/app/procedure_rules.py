@@ -1,5 +1,7 @@
 """Versioned documentary rules, cross-checked against the official July 2026 texts."""
 
+from .legal import LAW135
+
 VERSION = '2026-07.v2'
 ND217 = 'https://datafiles.chinhphu.vn/cpp/files/vbpq/2026/6/217-ndcp.signed.pdf'
 PL217 = 'https://datafiles.chinhphu.vn/cpp/files/vbpq/2026/6/pl217.pdf'
@@ -238,6 +240,79 @@ def inspection_checks(subtype):
     def row(id, label, citation, conditional=False, condition=''):
         return check(id, label, citation, conditional, condition, ND207)
 
+    if subtype == 'start_notice':
+        return [
+            row(
+                'notice',
+                'Nội dung thông báo khởi công: công trình, mã định danh, địa điểm, chủ đầu tư, quy mô, nhà thầu, ngày khởi công',
+                'Khoản 2 Điều 12; Phụ lục V NĐ 207/2026',
+            ),
+            check(
+                'start_conditions',
+                'Điều kiện khởi công: mặt bằng, giấy phép (hoặc miễn phép), thiết kế bản vẽ thi công được duyệt, hợp đồng',
+                'Khoản 1 Điều 48 Luật Xây dựng 135/2025',
+                url=LAW135,
+            ),
+            check(
+                'permit_link',
+                'Đối chiếu giấy phép đã cấp: số giấy phép, còn thời hạn khởi công',
+                'Khoản 10 Điều 49; điểm b khoản 2 Điều 67 NĐ 217/2026',
+                True,
+                'Áp dụng khi công trình phải có giấy phép xây dựng.',
+            ),
+            check(
+                'exempt',
+                'Công trình miễn phép: điều kiện miễn phép, phù hợp quy hoạch, phù hợp thông số chủ yếu của thiết kế tại BCNCKT đã thẩm định; hồ sơ gửi kèm',
+                'Khoản 2, 3 Điều 43 Luật 135/2025; điểm c khoản 2 Điều 67 NĐ 217/2026',
+                True,
+                'Áp dụng khi công trình thuộc diện miễn giấy phép xây dựng.',
+                LAW135,
+            ),
+            row(
+                'database',
+                'Cập nhật dữ liệu thông báo khởi công vào cơ sở dữ liệu quốc gia về hoạt động xây dựng',
+                'Khoản 2 Điều 12 NĐ 207/2026',
+            ),
+            row(
+                'plan',
+                'Kế hoạch kiểm tra công tác nghiệm thu trong thi công (số lần tối đa theo cấp công trình)',
+                'Điểm a, b khoản 3 Điều 27 NĐ 207/2026',
+                True,
+                'Áp dụng khi công trình thuộc đối tượng kiểm tra (khoản 1 Điều 25).',
+            ),
+        ]
+    if subtype == 'during':
+        return [
+            row('authority', 'Đối tượng phải kiểm tra, cơ quan có thẩm quyền', 'Điều 25, 26 NĐ 207/2026'),
+            row(
+                'plan_notice',
+                'Thông báo kế hoạch kiểm tra cho chủ đầu tư; số lần kiểm tra trong giới hạn hoặc có lý do vượt',
+                'Điểm a, b khoản 3 Điều 27 NĐ 207/2026',
+            ),
+            row(
+                'quality_management',
+                'Tuân thủ quy định về quản lý chất lượng, an toàn của chủ đầu tư và nhà thầu từ khi khởi công',
+                'Điểm a khoản 1 Điều 27 NĐ 207/2026',
+            ),
+            row(
+                'acceptance_records',
+                'Nghiệm thu công việc, giai đoạn, bộ phận công trình đã thực hiện',
+                'Điều 22, 23 NĐ 207/2026',
+            ),
+            check(
+                'verification',
+                'Yêu cầu thí nghiệm đối chứng, kiểm định, thử nghiệm khả năng chịu lực',
+                'Điểm a khoản 4 Điều 25; Điều 8 NĐ 207/2026',
+                True,
+                'Áp dụng khi có dấu hiệu không bảo đảm chất lượng.',
+                ND207,
+            ),
+            row(
+                'result_notice',
+                'Văn bản thông báo kết quả kiểm tra gửi chủ đầu tư trong 10 ngày làm việc từ ngày kiểm tra',
+                'Điểm b khoản 3 Điều 27 NĐ 207/2026',
+            ),
+        ]
     rows = [
         row(
             'authority', 'Đối tượng phải kiểm tra, cơ quan có thẩm quyền và phạm vi kiểm tra', 'Điều 25–27 NĐ 207/2026'
@@ -311,6 +386,18 @@ def inspection_checks(subtype):
 
 
 def template_info(procedure, subtype):
+    if procedure == 'nghiem_thu' and subtype == 'start_notice':
+        return {
+            'input': 'Thông báo khởi công — Phụ lục V',
+            'output': 'Phiếu tiếp nhận và kế hoạch kiểm tra',
+            'url': ND207,
+        }
+    if procedure == 'nghiem_thu' and subtype == 'during':
+        return {
+            'input': 'Kế hoạch kiểm tra và hồ sơ quản lý chất lượng',
+            'output': 'Thông báo kết quả kiểm tra trong quá trình thi công',
+            'url': ND207,
+        }
     if procedure == 'nghiem_thu':
         return {'input': 'Báo cáo hoàn thành — Phụ lục VI', 'output': 'Thông báo kết quả — Phụ lục VIII', 'url': ND207}
     output = (

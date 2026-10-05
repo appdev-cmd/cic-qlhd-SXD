@@ -96,6 +96,18 @@ def legal_period(procedure, group, grade, subtype=None, regime='nd217'):
         if not days:
             return {'missing': 'Chưa chọn loại thủ tục GPXD.'}
         return {'days': days, 'unit': 'working', 'basis': 'Điểm b khoản 1 Điều 54 NĐ 217/2026/NĐ-CP'}
+    if procedure == 'nghiem_thu' and subtype == 'start_notice':
+        return {
+            'days': 5,
+            'unit': 'working',
+            'basis': 'Khoản 2 Điều 12 NĐ 207/2026/NĐ-CP; TT 39/2026/TT-BXD (cập nhật cơ sở dữ liệu quốc gia)',
+        }
+    if procedure == 'nghiem_thu' and subtype == 'during':
+        return {
+            'days': 10,
+            'unit': 'working',
+            'basis': 'Điểm b khoản 3 Điều 27 NĐ 207/2026/NĐ-CP (thông báo kết quả trong 10 ngày làm việc từ ngày kiểm tra)',
+        }
     if procedure == 'nghiem_thu':
         if not grade:
             return {'missing': 'Dự án chưa có cấp công trình.'}
@@ -225,6 +237,10 @@ def compute(case, calendar, classification, today=None):
     received = _day((case.get('legalContext') or {}).get('submissionDate') or case.get('legalDate'))
     valid = _day(workflow.get('validAt'))
     start = valid or received
+    if procedure == 'nghiem_thu' and subtype == 'during':
+        # In-construction inspection: the result notice is due 10 working days after the inspection day.
+        visit = _day(workflow.get('visitDate') or (case.get('procedureReview') or {}).get('visitDate'))
+        start = visit
     legal_due = None
     if start and period.get('days'):
         total = period['days'] * (2 if workflow.get('extended') else 1)

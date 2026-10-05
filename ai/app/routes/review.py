@@ -229,7 +229,16 @@ def procedure_review(id: str, subtype: str | None = None, s: Store = Depends(sto
     from ..procedure_review import specification
 
     case = s.get(id)
-    return {**specification(case, subtype), 'review': case.get('procedureReview')}
+    spec = specification(case, subtype)
+    if spec['subtype'] == 'during':
+        spec['inspectionLimit'] = _inspection_limit(s, case)
+    return {**spec, 'review': case.get('procedureReview')}
+
+
+def _inspection_limit(s, case):
+    from ..procedure_review import inspection_limit
+
+    return inspection_limit(s.classification(case).get('grade'), s.inspection_count(case.get('projectId'), case['id']))
 
 
 @router.post('/v1/cases/{id}/procedure-review')
@@ -237,7 +246,7 @@ def save_procedure_review(id: str, body: ProcedureReview, s: Store = Depends(sto
     from ..procedure_review import apply
 
     case = edit(s, id, body.revision)
-    apply(case, s.actor, body)
+    apply(case, s.actor, body, _inspection_limit(s, case) if body.subtype == 'during' else None)
     return save(
         s,
         case,

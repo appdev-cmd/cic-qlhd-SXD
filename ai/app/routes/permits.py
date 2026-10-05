@@ -12,7 +12,7 @@ router = APIRouter()
 def _register(s):
     from ..permits import register
 
-    return register(s.permit_records(), s.calendar())
+    return register(s.permit_records(), s.calendar(), starts=s.start_dates())
 
 
 @router.get('/v1/permits')
