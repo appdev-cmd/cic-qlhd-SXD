@@ -16,7 +16,14 @@
   - cột phụ tự ẩn ở 1024px;
   - `PageHeader`/`PaginationBar` cho Dự án, Danh mục, Kho văn bản, Sổ GP;
   - Kho văn bản phân trang server; nhóm `QG` cho dự án.
-- **Tiếp theo:** U4 (không gian xử lý hồ sơ), sau đó U5–U7, B1, B2, B4.
+- **Xong 29/10:** U4, không gian xử lý hồ sơ:
+  - `CaseHeader` có thanh tiến trình theo bước pháp lý và danh sách việc trước khi trình;
+  - tách `AppraisalWorkspace` thành hook, tab và modal;
+  - đề xuất dạng thẻ;
+  - xem trước A4 có phóng to, chuyển trang, ảnh thu nhỏ.
+
+  Đã deploy production `e4e888b`.
+- **Tiếp theo:** U5 (dashboard theo vai trò), sau đó U6–U7, B1, B2, B4.
 - **Ghi nhận cho B2:** trên cloud staging, `GET /cases/{id}` mất khoảng 4 giây, danh sách khoảng 1,5 giây, trong khi xử lý trong tiến trình Worker chỉ mất 20–40 ms. Thời gian dồn vào các vòng truy vấn tới Supabase (Tokyo), cần gộp truy vấn hoặc cache.
 **Quyết định đã chốt:**
 1. **Bộ màu theo cic-hud:** 12 bộ màu hai tông (`config/palettes.ts` của cic-hud — nền menu tối trầm + màu nhấn ánh kim + màu chủ đạo), bộ chọn bộ màu, menu trái nền tối theo bộ màu, nền "bảo vệ mắt" cát ấm của cic-hud. Mặc định cho Sở Xây dựng: **"Lam công vụ"** (teal `#00668c` + vàng đồng), đổi được sang bộ "HUD" hoặc bộ khác.
