@@ -1,0 +1,78 @@
+{
+  "CATALOGS": {
+    "organizations": {
+      "fields": "id,code,name,type,tax_code,address,legal_rep,phone,email,cert_number,cert_grade,cert_expiry,status,updated_at,revision",
+      "name": "name",
+      "category": "type",
+      "search": [
+        "name",
+        "code",
+        "tax_code",
+        "address"
+      ]
+    },
+    "personnel": {
+      "fields": "id,code,full_name,cert_number,cert_authority,cert_grade,cert_expiry,specialties,org_id,org_name,email,phone,status,updated_at,revision",
+      "name": "full_name",
+      "category": "cert_grade",
+      "search": [
+        "full_name",
+        "code",
+        "cert_number",
+        "org_name"
+      ]
+    },
+    "material_prices": {
+      "fields": "id,code,name,unit,standard_price,market_price,region,period,supplier,updated_at,revision",
+      "name": "name",
+      "category": "region",
+      "search": [
+        "name",
+        "code",
+        "region",
+        "period",
+        "supplier"
+      ]
+    }
+  },
+  "FIELDS": {
+    "organizations": [
+      "address",
+      "cert_expiry",
+      "cert_grade",
+      "cert_number",
+      "code",
+      "email",
+      "legal_rep",
+      "name",
+      "phone",
+      "status",
+      "tax_code",
+      "type"
+    ],
+    "personnel": [
+      "cert_authority",
+      "cert_expiry",
+      "cert_grade",
+      "cert_number",
+      "code",
+      "email",
+      "full_name",
+      "id_card",
+      "org_id",
+      "phone",
+      "specialties",
+      "status"
+    ],
+    "material_prices": [
+      "code",
+      "market_price",
+      "name",
+      "period",
+      "region",
+      "standard_price",
+      "supplier",
+      "unit"
+    ]
+  }
+}

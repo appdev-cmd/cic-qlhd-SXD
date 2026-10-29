@@ -16,6 +16,10 @@ import { createServerlessGateway, createWorkerApp } from './app.js';
 import type { AddressInfo } from 'node:net';
 import type { Express } from 'express';
 import { norms } from './bim-suite.js';
+import { mkdtempSync, rmSync, realpathSync } from 'node:fs';
+import { tmpdir } from 'node:os';
+import { join, dirname, basename } from 'node:path';
+import { waitForLocalJobs, processJob } from './jobs.js';
 
 const identity = '00000000-0000-4000-8000-000000000001';
 function fakePool(failRollback = false) {
@@ -352,4 +356,155 @@ test('BIM construction norms use Vietnamese accent-insensitive search and preser
   assert.equal(result.items.length, 25);
   assert.ok(result.items.every((item) => item.resourceCount > 0));
   assert.equal(norms('a-random-unmatched-code-123456789').total, 0);
+});
+test('native API creates a dossier, uploads and reopens its original, extracts facts and rejects stale writes', async () => {
+  const dir = mkdtempSync(join(tmpdir(), 'appraisal-node-http-'));
+  const previous = { mode: process.env.APPRAISAL_MODE, data: process.env.APPRAISAL_DATA_DIR };
+  process.env.APPRAISAL_MODE = 'demo';
+  process.env.APPRAISAL_DATA_DIR = dir;
+  try {
+    await withServer(createWorkerApp('test-internal-secret'), async (base) => {
+      async function request(path: string, method = 'GET', value?: unknown) {
+        const response = await fetch(base + '/v1' + path, {
+          method,
+          headers: { 'x-internal-token': 'test-internal-secret', 'Content-Type': 'application/json' },
+          body: value === undefined ? undefined : JSON.stringify(value),
+        });
+        const data = (response.headers.get('content-type') || '').includes('application/json')
+          ? await response.json()
+          : Buffer.from(await response.arrayBuffer());
+        return { status: response.status, data };
+      }
+      const invalid = await request('/cases', 'POST', {
+        name: 'Dự án',
+        province: 'Điện Biên',
+        legalDate: 'not-a-date',
+      });
+      assert.equal(invalid.status, 422);
+      const created = await request('/cases', 'POST', {
+        name: 'Hồ sơ kiểm thử API Node',
+        province: 'Điện Biên',
+        legalDate: '2026-10-01',
+      });
+      assert.equal(created.status, 200);
+      const id = created.data.id;
+      const original = Buffer.from('Tên dự án: Công trình kiểm thử\nTổng mức đầu tư: 123.456.789 VNĐ');
+      const uploaded = await request(`/cases/${id}/documents`, 'POST', {
+        revision: 1,
+        requirementId: 'TTR',
+        name: 'to-trinh.txt',
+        contentBase64: original.toString('base64'),
+      });
+      assert.equal(uploaded.status, 200);
+      assert.equal(uploaded.data.revision, 2);
+      assert.equal(uploaded.data.facts.find((fact: { key: string }) => fact.key === 'total').value, '123456789');
+      const file = await request(`/cases/${id}/documents/${uploaded.data.documents[0].id}`);
+      assert.equal(file.status, 200);
+      assert.deepEqual(file.data, original);
+      const reopened = await request(`/cases/${id}`);
+      assert.equal(reopened.data.documents.length, 1);
+      const stale = await request(`/cases/${id}/requirements`, 'POST', {
+        revision: 1,
+        name: 'Hồ sơ bổ sung',
+        category: 'Pháp lý',
+      });
+      assert.equal(stale.status, 409);
+      const listed = await request('/submissions?search=kiem%20thu');
+      assert.equal(listed.status, 200);
+      assert.equal(listed.data.total, 1);
+      const started = await request(`/cases/${id}/analysis`, 'POST', { revision: 2, mode: 'intake', useModel: false });
+      assert.equal(started.status, 200);
+      await waitForLocalJobs();
+      const analyzed = await request(`/cases/${id}`);
+      assert.equal(analyzed.data.job.status, 'completed');
+      assert.ok(analyzed.data.runs[0].findings.length > 0);
+      assert.equal(analyzed.data.runs[0].provider, 'deterministic');
+      const originalFetch = globalThis.fetch;
+      const envKeys = ['AI_PROVIDER', 'OPENAI_API_KEY', 'OPENAI_MODEL'] as const;
+      const envBefore = Object.fromEntries(envKeys.map((key) => [key, process.env[key]]));
+      Object.assign(process.env, {
+        AI_PROVIDER: 'openai',
+        OPENAI_API_KEY: 'test-not-a-real-key',
+        OPENAI_MODEL: 'configured-model',
+      });
+      let aiCalls = 0;
+      globalThis.fetch = (async (url, init) => {
+        if (String(url) === 'https://api.openai.com/v1/responses') {
+          aiCalls++;
+          return Response.json({
+            status: 'completed',
+            output: [
+              {
+                content: [
+                  {
+                    type: 'output_text',
+                    text: JSON.stringify({ lines: ['Tổng mức đầu tư: 123.456.789 VNĐ'], illegible: false }),
+                  },
+                ],
+              },
+            ],
+          });
+        }
+        return originalFetch(url, init);
+      }) as typeof fetch;
+      try {
+        const scanned = await PDFDocument.create();
+        for (let i = 0; i < 4; i++) scanned.addPage([595.28, 841.89]);
+        const sourcePdf = Buffer.from(await scanned.save());
+        const pdfUpload = await request(`/cases/${id}/documents`, 'POST', {
+          revision: analyzed.data.revision,
+          requirementId: 'TTR',
+          name: 'scan.pdf',
+          contentBase64: sourcePdf.toString('base64'),
+        });
+        assert.equal(pdfUpload.status, 200);
+        const pdfId = pdfUpload.data.documents.at(-1).id;
+        const ocr = await request(`/cases/${id}/documents/${pdfId}/ocr`, 'POST', { revision: pdfUpload.data.revision });
+        assert.equal(ocr.status, 200);
+        let result = ocr;
+        const deadline = Date.now() + 8000;
+        do {
+          await waitForLocalJobs();
+          result = await request(`/cases/${id}`);
+          if (result.data.job.status === 'completed') break;
+          await new Promise((resolve) => setTimeout(resolve, 20));
+        } while (Date.now() < deadline);
+        assert.equal(result.data.job.status, 'completed');
+        assert.equal(aiCalls, 4, 'Checkpointed pages must not be sent to AI twice after continuation.');
+        const document = result.data.documents.find((entry: { id: string }) => entry.id === pdfId);
+        assert.equal(document.segments.length, 4);
+        assert.equal(document.ocrProvenance.length, 4);
+        assert.ok(
+          result.data.facts
+            .filter((entry: { documentId: string }) => entry.documentId === pdfId)
+            .every((entry: { reviewStatus: string }) => entry.reviewStatus === 'pending'),
+        );
+        assert.deepEqual((await request(`/cases/${id}/documents/${pdfId}`)).data, sourcePdf);
+        await processJob(result.data.job.id);
+        assert.equal(
+          (await request(`/cases/${id}`)).data.revision,
+          result.data.revision,
+          'Repeated queue delivery must not save the result again.',
+        );
+        await waitForLocalJobs();
+      } finally {
+        globalThis.fetch = originalFetch;
+        for (const key of envKeys) {
+          if (envBefore[key] === undefined) delete process.env[key];
+          else process.env[key] = envBefore[key];
+        }
+      }
+    });
+  } finally {
+    for (const [key, value] of [
+      ['APPRAISAL_MODE', previous.mode],
+      ['APPRAISAL_DATA_DIR', previous.data],
+    ]) {
+      if (value === undefined) delete process.env[key!];
+      else process.env[key!] = value;
+    }
+    assert.equal(realpathSync(dirname(dir)), realpathSync(tmpdir()));
+    assert.ok(basename(dir).startsWith('appraisal-node-http-'));
+    rmSync(dir, { recursive: true, force: true });
+  }
 });

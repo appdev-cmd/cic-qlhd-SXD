@@ -9,5 +9,5 @@
     "esModuleInterop": true,
     "resolveJsonModule": true
   },
-  "include": ["services/core/**/*.ts", "services/appraisal/**/*.ts"]
+  "include": ["api/**/*.ts", "services/core/**/*.ts", "services/appraisal/**/*.ts"]
 }

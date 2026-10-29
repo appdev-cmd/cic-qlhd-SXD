@@ -1,0 +1,47 @@
+{
+  "RULE_VERSION": "bcnckt-1.1.0-nd217",
+  "specialized": [
+    [
+      "LEGAL",
+      "Pháp lý và năng lực",
+      "Lập dự án, chủ trương và năng lực",
+      "Bản pháp lý chính thức, phạm vi chứng chỉ, quy định chuyển tiếp"
+    ],
+    [
+      "PLANNING",
+      "Quy hoạch",
+      "TKCS với quy hoạch được chấp thuận",
+      "Bản đồ/phụ lục chỉ tiêu được cơ quan có thẩm quyền xác nhận"
+    ],
+    [
+      "STRUCT",
+      "Khảo sát và kết cấu",
+      "An toàn nền móng và kết cấu",
+      "Báo cáo khảo sát, bảng tính thiết kế và thẩm tra chuyên ngành"
+    ],
+    [
+      "INFRA",
+      "Hạ tầng",
+      "Khả năng đấu nối điện, nước, giao thông",
+      "Thỏa thuận đấu nối, nhu cầu và công suất được xác nhận"
+    ],
+    [
+      "FIRE",
+      "PCCC và môi trường",
+      "An toàn cháy và môi trường",
+      "Hồ sơ PCCC/môi trường, các tính toán và ý kiến chuyên ngành"
+    ],
+    [
+      "STANDARD",
+      "Quy chuẩn",
+      "Danh mục và điều kiện áp dụng tiêu chuẩn",
+      "Danh mục chính thức, toàn văn điều khoản, thời điểm và ngoại lệ"
+    ],
+    [
+      "COST",
+      "Chi phí",
+      "Khối lượng, giá và cơ sở tổng mức đầu tư",
+      "Bảng khối lượng, nguồn giá địa phương đúng kỳ, cơ sở GPMB và dự phòng"
+    ]
+  ]
+}

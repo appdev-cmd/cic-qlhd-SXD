@@ -1,0 +1,2477 @@
+{
+  "gpxd/new/draft": {
+    "title": "DỰ THẢO GIẤY PHÉP XÂY DỰNG MỚI",
+    "blocks": [
+      {
+        "letterhead": true,
+        "nationalOnly": false,
+        "agency": "{{r.authority|%5Bch%C6%B0a%20x%C3%A1c%20nh%E1%BA%ADn%5D}}"
+      },
+      {
+        "text": [
+          "DỰ THẢO CHƯA KÝ, CHƯA BAN HÀNH. Nội dung chưa xác nhận phải được hoàn thiện từ hồ sơ.",
+          "Điều 55–56 và Điều 57 Nghị định 217/2026/NĐ-CP; cần đối chiếu quy định thẩm quyền tại địa phương.",
+          "Phiên bản đối chiếu: 2026-07.v2"
+        ]
+      },
+      {
+        "text": [
+          "Tham chiếu Mẫu 03 Phụ lục II NĐ 217/2026/NĐ-CP."
+        ]
+      },
+      {
+        "heading": "1. Cấp cho",
+        "text": [
+          "Chủ đầu tư: {{r.investor|%5Bch%C6%B0a%20x%C3%A1c%20nh%E1%BA%ADn%5D}}",
+          "Số định danh / mã số doanh nghiệp: {{details.ownerIdentity}}",
+          "Địa chỉ: {{details.ownerAddress}}",
+          "Người đại diện, chức vụ, số định danh: {{details.representative}}",
+          "Liên hệ: {{details.contact}}"
+        ]
+      },
+      {
+        "heading": "2. Nội dung cấp phép",
+        "text": [
+          "Công trình: {{project}}",
+          "Địa điểm: {{r.location}}",
+          "Phạm vi: {{r.scope}}",
+          "Theo thiết kế: {{r.designBasis}}",
+          "Mã định danh công trình: {{details.buildingId}}",
+          "Loại, cấp công trình: {{details.buildingClass}}",
+          "Tổ chức/cá nhân thiết kế và mã chứng chỉ: {{details.designer}}",
+          "Chủ nhiệm, chủ trì thiết kế và mã chứng chỉ: {{details.designLead}}",
+          "Tổ chức và chủ trì thẩm tra, mã chứng chỉ: {{details.verifier}}",
+          "Cốt xây dựng (m): {{details.elevation}}",
+          "Khoảng lùi (m): {{details.setback}}",
+          "Mật độ xây dựng (%): {{details.density}}",
+          "Hệ số sử dụng đất: {{details.landRatio}}",
+          "Chỉ giới đường đỏ, chỉ giới xây dựng: {{details.boundaries}}",
+          "Diện tích xây dựng (m²): {{details.area}}",
+          "Tổng diện tích sàn, phân theo tầng (m²): {{details.floorArea}}",
+          "Chiều cao, phân theo tầng (m): {{details.height}}",
+          "Chiều sâu (m): {{details.depth}}",
+          "Số tầng, tầng hầm, kỹ thuật, lửng, tum: {{details.floors}}",
+          "Màu sắc: {{details.color}}",
+          "Tuyến, điểm đầu/cuối, chiều dài, rộng, tĩnh không và độ sâu theo đoạn: {{details.route}}"
+        ]
+      },
+      {
+        "heading": "3. Giấy tờ về đất và quyền sở hữu",
+        "text": [
+          "Lô/thửa đất, diện tích đất và giấy tờ về đất: {{details.land}}"
+        ]
+      },
+      {
+        "heading": "4. Tiến độ dự kiến",
+        "text": [
+          "{{details.schedule}} tháng"
+        ]
+      },
+      {
+        "heading": "5. Hiệu lực khởi công",
+        "text": [
+          "Giấy phép có hiệu lực khởi công 12 tháng kể từ ngày cấp; quá thời hạn phải đề nghị gia hạn theo quy định."
+        ]
+      },
+      {
+        "heading": "Yêu cầu đối với chủ đầu tư",
+        "text": [
+          "Bảo đảm quyền hợp pháp của chủ sở hữu liền kề; thực hiện quy định đất đai, xây dựng và nội dung giấy phép.",
+          "Thông báo khởi công; xuất trình giấy phép và treo biển báo theo quy định. Điều chỉnh thiết kế thuộc Điều 63 phải điều chỉnh giấy phép.",
+          "{{r.conditions}}"
+        ]
+      },
+      {
+        "text": [
+          "Nguồn biểu mẫu: https://datafiles.chinhphu.vn/cpp/files/vbpq/2026/6/pl217.pdf"
+        ]
+      },
+      {
+        "keepTogether": true,
+        "heading": "Nơi nhận và ký ban hành",
+        "text": [
+          "[Hoàn thiện nơi nhận theo hồ sơ và thẩm quyền].",
+          "[Người có thẩm quyền ký, ghi rõ chức vụ, họ tên và đóng dấu — chưa ký]"
+        ]
+      }
+    ]
+  },
+  "gpxd/new/application": {
+    "title": "DỰ THẢO ĐƠN ĐỀ NGHỊ CẤP GIẤY PHÉP XÂY DỰNG MỚI",
+    "blocks": [
+      {
+        "letterhead": true,
+        "nationalOnly": true,
+        "agency": "{{r.investor|%5Bch%C6%B0a%20x%C3%A1c%20nh%E1%BA%ADn%5D}}"
+      },
+      {
+        "text": [
+          "DỰ THẢO CHƯA KÝ, CHƯA BAN HÀNH. Nội dung chưa xác nhận phải được hoàn thiện từ hồ sơ.",
+          "Điều 55–56 và Điều 57 Nghị định 217/2026/NĐ-CP; cần đối chiếu quy định thẩm quyền tại địa phương.",
+          "Phiên bản đối chiếu: 2026-07.v2"
+        ]
+      },
+      {
+        "text": [
+          "Tham chiếu Mẫu 01 Phụ lục II NĐ 217/2026/NĐ-CP.",
+          "Kính gửi: {{r.authority}}"
+        ]
+      },
+      {
+        "heading": "1. Chủ đầu tư",
+        "text": [
+          "Chủ đầu tư: {{r.investor|%5Bch%C6%B0a%20x%C3%A1c%20nh%E1%BA%ADn%5D}}",
+          "Số định danh / mã số doanh nghiệp: {{details.ownerIdentity}}",
+          "Địa chỉ: {{details.ownerAddress}}",
+          "Người đại diện, chức vụ, số định danh: {{details.representative}}",
+          "Liên hệ: {{details.contact}}"
+        ]
+      },
+      {
+        "heading": "2. Địa điểm xây dựng",
+        "text": [
+          "{{r.location}}",
+          "Lô/thửa đất, diện tích đất và giấy tờ về đất: {{details.land}}"
+        ]
+      },
+      {
+        "heading": "3. Tổ chức, cá nhân thiết kế và thẩm tra",
+        "text": [
+          "Tổ chức/cá nhân thiết kế và mã chứng chỉ: {{details.designer}}",
+          "Chủ nhiệm, chủ trì thiết kế và mã chứng chỉ: {{details.designLead}}",
+          "Tổ chức và chủ trì thẩm tra, mã chứng chỉ: {{details.verifier}}"
+        ]
+      },
+      {
+        "heading": "4. Nội dung đề nghị",
+        "text": [
+          "Dự án: {{project}}",
+          "Phạm vi: {{r.scope}}",
+          "Mã định danh công trình: {{details.buildingId}}",
+          "Loại, cấp công trình: {{details.buildingClass}}",
+          "Cốt xây dựng (m): {{details.elevation}}",
+          "Khoảng lùi (m): {{details.setback}}",
+          "Mật độ xây dựng (%): {{details.density}}",
+          "Hệ số sử dụng đất: {{details.landRatio}}",
+          "Chỉ giới đường đỏ, chỉ giới xây dựng: {{details.boundaries}}",
+          "Diện tích xây dựng (m²): {{details.area}}",
+          "Tổng diện tích sàn, phân theo tầng (m²): {{details.floorArea}}",
+          "Chiều cao, phân theo tầng (m): {{details.height}}",
+          "Chiều sâu (m): {{details.depth}}",
+          "Số tầng, tầng hầm, kỹ thuật, lửng, tum: {{details.floors}}",
+          "Màu sắc: {{details.color}}",
+          "Tuyến, điểm đầu/cuối, chiều dài, rộng, tĩnh không và độ sâu theo đoạn: {{details.route}}"
+        ]
+      },
+      {
+        "heading": "5. Thời gian hoàn thành dự kiến",
+        "text": [
+          "{{details.schedule}} tháng"
+        ]
+      },
+      {
+        "heading": "6. Cam kết",
+        "text": [
+          "[Người làm đơn xác nhận cam kết thực hiện đúng giấy phép và chịu trách nhiệm theo pháp luật trước khi ký]."
+        ]
+      },
+      {
+        "heading": "Tài liệu gửi kèm",
+        "text": [
+          "{{document.name}}"
+        ]
+      },
+      {
+        "text": [
+          "Nguồn biểu mẫu: https://datafiles.chinhphu.vn/cpp/files/vbpq/2026/6/pl217.pdf"
+        ]
+      },
+      {
+        "keepTogether": true,
+        "heading": "Nơi nhận và ký xác nhận",
+        "text": [
+          "[Hoàn thiện nơi nhận theo hồ sơ và thẩm quyền].",
+          "[Người làm đơn/đại diện chủ đầu tư ký, ghi rõ họ tên; đóng dấu nếu có — chưa ký]"
+        ]
+      }
+    ]
+  },
+  "gpxd/stage/draft": {
+    "title": "DỰ THẢO GIẤY PHÉP XÂY DỰNG THEO GIAI ĐOẠN",
+    "blocks": [
+      {
+        "letterhead": true,
+        "nationalOnly": false,
+        "agency": "{{r.authority|%5Bch%C6%B0a%20x%C3%A1c%20nh%E1%BA%ADn%5D}}"
+      },
+      {
+        "text": [
+          "DỰ THẢO CHƯA KÝ, CHƯA BAN HÀNH. Nội dung chưa xác nhận phải được hoàn thiện từ hồ sơ.",
+          "Điều 55–56 và Điều 58 Nghị định 217/2026/NĐ-CP; cần đối chiếu quy định thẩm quyền tại địa phương.",
+          "Phiên bản đối chiếu: 2026-07.v2"
+        ]
+      },
+      {
+        "text": [
+          "Tham chiếu Mẫu 03 Phụ lục II NĐ 217/2026/NĐ-CP."
+        ]
+      },
+      {
+        "heading": "1. Cấp cho",
+        "text": [
+          "Chủ đầu tư: {{r.investor|%5Bch%C6%B0a%20x%C3%A1c%20nh%E1%BA%ADn%5D}}",
+          "Số định danh / mã số doanh nghiệp: {{details.ownerIdentity}}",
+          "Địa chỉ: {{details.ownerAddress}}",
+          "Người đại diện, chức vụ, số định danh: {{details.representative}}",
+          "Liên hệ: {{details.contact}}"
+        ]
+      },
+      {
+        "heading": "2. Nội dung cấp phép",
+        "text": [
+          "Công trình: {{project}}",
+          "Địa điểm: {{r.location}}",
+          "Phạm vi: {{r.scope}}",
+          "Theo thiết kế: {{r.designBasis}}",
+          "Mã định danh công trình: {{details.buildingId}}",
+          "Loại, cấp công trình: {{details.buildingClass}}",
+          "Tổ chức/cá nhân thiết kế và mã chứng chỉ: {{details.designer}}",
+          "Chủ nhiệm, chủ trì thiết kế và mã chứng chỉ: {{details.designLead}}",
+          "Tổ chức và chủ trì thẩm tra, mã chứng chỉ: {{details.verifier}}",
+          "Cốt xây dựng (m): {{details.elevation}}",
+          "Khoảng lùi (m): {{details.setback}}",
+          "Mật độ xây dựng (%): {{details.density}}",
+          "Hệ số sử dụng đất: {{details.landRatio}}",
+          "Chỉ giới đường đỏ, chỉ giới xây dựng: {{details.boundaries}}",
+          "Diện tích xây dựng (m²): {{details.area}}",
+          "Tổng diện tích sàn, phân theo tầng (m²): {{details.floorArea}}",
+          "Chiều cao, phân theo tầng (m): {{details.height}}",
+          "Chiều sâu (m): {{details.depth}}",
+          "Số tầng, tầng hầm, kỹ thuật, lửng, tum: {{details.floors}}",
+          "Màu sắc: {{details.color}}",
+          "Tuyến, điểm đầu/cuối, chiều dài, rộng, tĩnh không và độ sâu theo đoạn: {{details.route}}",
+          "Phạm vi, thông số từng giai đoạn / từng công trình: {{details.stages}}"
+        ]
+      },
+      {
+        "heading": "3. Giấy tờ về đất và quyền sở hữu",
+        "text": [
+          "Lô/thửa đất, diện tích đất và giấy tờ về đất: {{details.land}}"
+        ]
+      },
+      {
+        "heading": "4. Tiến độ dự kiến",
+        "text": [
+          "{{details.schedule}} tháng"
+        ]
+      },
+      {
+        "heading": "5. Hiệu lực khởi công",
+        "text": [
+          "Giấy phép có hiệu lực khởi công 12 tháng kể từ ngày cấp; quá thời hạn phải đề nghị gia hạn theo quy định."
+        ]
+      },
+      {
+        "heading": "Yêu cầu đối với chủ đầu tư",
+        "text": [
+          "Bảo đảm quyền hợp pháp của chủ sở hữu liền kề; thực hiện quy định đất đai, xây dựng và nội dung giấy phép.",
+          "Thông báo khởi công; xuất trình giấy phép và treo biển báo theo quy định. Điều chỉnh thiết kế thuộc Điều 63 phải điều chỉnh giấy phép.",
+          "{{r.conditions}}"
+        ]
+      },
+      {
+        "text": [
+          "Nguồn biểu mẫu: https://datafiles.chinhphu.vn/cpp/files/vbpq/2026/6/pl217.pdf"
+        ]
+      },
+      {
+        "keepTogether": true,
+        "heading": "Nơi nhận và ký ban hành",
+        "text": [
+          "[Hoàn thiện nơi nhận theo hồ sơ và thẩm quyền].",
+          "[Người có thẩm quyền ký, ghi rõ chức vụ, họ tên và đóng dấu — chưa ký]"
+        ]
+      }
+    ]
+  },
+  "gpxd/stage/application": {
+    "title": "DỰ THẢO ĐƠN ĐỀ NGHỊ CẤP GIẤY PHÉP XÂY DỰNG THEO GIAI ĐOẠN",
+    "blocks": [
+      {
+        "letterhead": true,
+        "nationalOnly": true,
+        "agency": "{{r.investor|%5Bch%C6%B0a%20x%C3%A1c%20nh%E1%BA%ADn%5D}}"
+      },
+      {
+        "text": [
+          "DỰ THẢO CHƯA KÝ, CHƯA BAN HÀNH. Nội dung chưa xác nhận phải được hoàn thiện từ hồ sơ.",
+          "Điều 55–56 và Điều 58 Nghị định 217/2026/NĐ-CP; cần đối chiếu quy định thẩm quyền tại địa phương.",
+          "Phiên bản đối chiếu: 2026-07.v2"
+        ]
+      },
+      {
+        "text": [
+          "Tham chiếu Mẫu 01 Phụ lục II NĐ 217/2026/NĐ-CP.",
+          "Kính gửi: {{r.authority}}"
+        ]
+      },
+      {
+        "heading": "1. Chủ đầu tư",
+        "text": [
+          "Chủ đầu tư: {{r.investor|%5Bch%C6%B0a%20x%C3%A1c%20nh%E1%BA%ADn%5D}}",
+          "Số định danh / mã số doanh nghiệp: {{details.ownerIdentity}}",
+          "Địa chỉ: {{details.ownerAddress}}",
+          "Người đại diện, chức vụ, số định danh: {{details.representative}}",
+          "Liên hệ: {{details.contact}}"
+        ]
+      },
+      {
+        "heading": "2. Địa điểm xây dựng",
+        "text": [
+          "{{r.location}}",
+          "Lô/thửa đất, diện tích đất và giấy tờ về đất: {{details.land}}"
+        ]
+      },
+      {
+        "heading": "3. Tổ chức, cá nhân thiết kế và thẩm tra",
+        "text": [
+          "Tổ chức/cá nhân thiết kế và mã chứng chỉ: {{details.designer}}",
+          "Chủ nhiệm, chủ trì thiết kế và mã chứng chỉ: {{details.designLead}}",
+          "Tổ chức và chủ trì thẩm tra, mã chứng chỉ: {{details.verifier}}"
+        ]
+      },
+      {
+        "heading": "4. Nội dung đề nghị",
+        "text": [
+          "Dự án: {{project}}",
+          "Phạm vi: {{r.scope}}",
+          "Mã định danh công trình: {{details.buildingId}}",
+          "Loại, cấp công trình: {{details.buildingClass}}",
+          "Cốt xây dựng (m): {{details.elevation}}",
+          "Khoảng lùi (m): {{details.setback}}",
+          "Mật độ xây dựng (%): {{details.density}}",
+          "Hệ số sử dụng đất: {{details.landRatio}}",
+          "Chỉ giới đường đỏ, chỉ giới xây dựng: {{details.boundaries}}",
+          "Diện tích xây dựng (m²): {{details.area}}",
+          "Tổng diện tích sàn, phân theo tầng (m²): {{details.floorArea}}",
+          "Chiều cao, phân theo tầng (m): {{details.height}}",
+          "Chiều sâu (m): {{details.depth}}",
+          "Số tầng, tầng hầm, kỹ thuật, lửng, tum: {{details.floors}}",
+          "Màu sắc: {{details.color}}",
+          "Tuyến, điểm đầu/cuối, chiều dài, rộng, tĩnh không và độ sâu theo đoạn: {{details.route}}",
+          "Phạm vi, thông số từng giai đoạn / từng công trình: {{details.stages}}"
+        ]
+      },
+      {
+        "heading": "5. Thời gian hoàn thành dự kiến",
+        "text": [
+          "{{details.schedule}} tháng"
+        ]
+      },
+      {
+        "heading": "6. Cam kết",
+        "text": [
+          "[Người làm đơn xác nhận cam kết thực hiện đúng giấy phép và chịu trách nhiệm theo pháp luật trước khi ký]."
+        ]
+      },
+      {
+        "heading": "Tài liệu gửi kèm",
+        "text": [
+          "{{document.name}}"
+        ]
+      },
+      {
+        "text": [
+          "Nguồn biểu mẫu: https://datafiles.chinhphu.vn/cpp/files/vbpq/2026/6/pl217.pdf"
+        ]
+      },
+      {
+        "keepTogether": true,
+        "heading": "Nơi nhận và ký xác nhận",
+        "text": [
+          "[Hoàn thiện nơi nhận theo hồ sơ và thẩm quyền].",
+          "[Người làm đơn/đại diện chủ đầu tư ký, ghi rõ họ tên; đóng dấu nếu có — chưa ký]"
+        ]
+      }
+    ]
+  },
+  "gpxd/group/draft": {
+    "title": "DỰ THẢO GIẤY PHÉP XÂY DỰNG NHÓM CÔNG TRÌNH",
+    "blocks": [
+      {
+        "letterhead": true,
+        "nationalOnly": false,
+        "agency": "{{r.authority|%5Bch%C6%B0a%20x%C3%A1c%20nh%E1%BA%ADn%5D}}"
+      },
+      {
+        "text": [
+          "DỰ THẢO CHƯA KÝ, CHƯA BAN HÀNH. Nội dung chưa xác nhận phải được hoàn thiện từ hồ sơ.",
+          "Điều 55–56 và Điều 59 Nghị định 217/2026/NĐ-CP; cần đối chiếu quy định thẩm quyền tại địa phương.",
+          "Phiên bản đối chiếu: 2026-07.v2"
+        ]
+      },
+      {
+        "text": [
+          "Tham chiếu Mẫu 03 Phụ lục II NĐ 217/2026/NĐ-CP."
+        ]
+      },
+      {
+        "heading": "1. Cấp cho",
+        "text": [
+          "Chủ đầu tư: {{r.investor|%5Bch%C6%B0a%20x%C3%A1c%20nh%E1%BA%ADn%5D}}",
+          "Số định danh / mã số doanh nghiệp: {{details.ownerIdentity}}",
+          "Địa chỉ: {{details.ownerAddress}}",
+          "Người đại diện, chức vụ, số định danh: {{details.representative}}",
+          "Liên hệ: {{details.contact}}"
+        ]
+      },
+      {
+        "heading": "2. Nội dung cấp phép",
+        "text": [
+          "Công trình: {{project}}",
+          "Địa điểm: {{r.location}}",
+          "Phạm vi: {{r.scope}}",
+          "Theo thiết kế: {{r.designBasis}}",
+          "Mã định danh công trình: {{details.buildingId}}",
+          "Loại, cấp công trình: {{details.buildingClass}}",
+          "Tổ chức/cá nhân thiết kế và mã chứng chỉ: {{details.designer}}",
+          "Chủ nhiệm, chủ trì thiết kế và mã chứng chỉ: {{details.designLead}}",
+          "Tổ chức và chủ trì thẩm tra, mã chứng chỉ: {{details.verifier}}",
+          "Cốt xây dựng (m): {{details.elevation}}",
+          "Khoảng lùi (m): {{details.setback}}",
+          "Mật độ xây dựng (%): {{details.density}}",
+          "Hệ số sử dụng đất: {{details.landRatio}}",
+          "Chỉ giới đường đỏ, chỉ giới xây dựng: {{details.boundaries}}",
+          "Diện tích xây dựng (m²): {{details.area}}",
+          "Tổng diện tích sàn, phân theo tầng (m²): {{details.floorArea}}",
+          "Chiều cao, phân theo tầng (m): {{details.height}}",
+          "Chiều sâu (m): {{details.depth}}",
+          "Số tầng, tầng hầm, kỹ thuật, lửng, tum: {{details.floors}}",
+          "Màu sắc: {{details.color}}",
+          "Tuyến, điểm đầu/cuối, chiều dài, rộng, tĩnh không và độ sâu theo đoạn: {{details.route}}",
+          "Phạm vi, thông số từng giai đoạn / từng công trình: {{details.stages}}",
+          "Số công trình, công trình đã khởi công: {{details.groupCount}}"
+        ]
+      },
+      {
+        "heading": "3. Giấy tờ về đất và quyền sở hữu",
+        "text": [
+          "Lô/thửa đất, diện tích đất và giấy tờ về đất: {{details.land}}"
+        ]
+      },
+      {
+        "heading": "4. Tiến độ dự kiến",
+        "text": [
+          "{{details.schedule}} tháng"
+        ]
+      },
+      {
+        "heading": "5. Hiệu lực khởi công",
+        "text": [
+          "Giấy phép có hiệu lực khởi công 12 tháng kể từ ngày cấp; quá thời hạn phải đề nghị gia hạn theo quy định."
+        ]
+      },
+      {
+        "heading": "Yêu cầu đối với chủ đầu tư",
+        "text": [
+          "Bảo đảm quyền hợp pháp của chủ sở hữu liền kề; thực hiện quy định đất đai, xây dựng và nội dung giấy phép.",
+          "Thông báo khởi công; xuất trình giấy phép và treo biển báo theo quy định. Điều chỉnh thiết kế thuộc Điều 63 phải điều chỉnh giấy phép.",
+          "{{r.conditions}}"
+        ]
+      },
+      {
+        "text": [
+          "Nguồn biểu mẫu: https://datafiles.chinhphu.vn/cpp/files/vbpq/2026/6/pl217.pdf"
+        ]
+      },
+      {
+        "keepTogether": true,
+        "heading": "Nơi nhận và ký ban hành",
+        "text": [
+          "[Hoàn thiện nơi nhận theo hồ sơ và thẩm quyền].",
+          "[Người có thẩm quyền ký, ghi rõ chức vụ, họ tên và đóng dấu — chưa ký]"
+        ]
+      }
+    ]
+  },
+  "gpxd/group/application": {
+    "title": "DỰ THẢO ĐƠN ĐỀ NGHỊ CẤP GIẤY PHÉP XÂY DỰNG NHÓM CÔNG TRÌNH",
+    "blocks": [
+      {
+        "letterhead": true,
+        "nationalOnly": true,
+        "agency": "{{r.investor|%5Bch%C6%B0a%20x%C3%A1c%20nh%E1%BA%ADn%5D}}"
+      },
+      {
+        "text": [
+          "DỰ THẢO CHƯA KÝ, CHƯA BAN HÀNH. Nội dung chưa xác nhận phải được hoàn thiện từ hồ sơ.",
+          "Điều 55–56 và Điều 59 Nghị định 217/2026/NĐ-CP; cần đối chiếu quy định thẩm quyền tại địa phương.",
+          "Phiên bản đối chiếu: 2026-07.v2"
+        ]
+      },
+      {
+        "text": [
+          "Tham chiếu Mẫu 01 Phụ lục II NĐ 217/2026/NĐ-CP.",
+          "Kính gửi: {{r.authority}}"
+        ]
+      },
+      {
+        "heading": "1. Chủ đầu tư",
+        "text": [
+          "Chủ đầu tư: {{r.investor|%5Bch%C6%B0a%20x%C3%A1c%20nh%E1%BA%ADn%5D}}",
+          "Số định danh / mã số doanh nghiệp: {{details.ownerIdentity}}",
+          "Địa chỉ: {{details.ownerAddress}}",
+          "Người đại diện, chức vụ, số định danh: {{details.representative}}",
+          "Liên hệ: {{details.contact}}"
+        ]
+      },
+      {
+        "heading": "2. Địa điểm xây dựng",
+        "text": [
+          "{{r.location}}",
+          "Lô/thửa đất, diện tích đất và giấy tờ về đất: {{details.land}}"
+        ]
+      },
+      {
+        "heading": "3. Tổ chức, cá nhân thiết kế và thẩm tra",
+        "text": [
+          "Tổ chức/cá nhân thiết kế và mã chứng chỉ: {{details.designer}}",
+          "Chủ nhiệm, chủ trì thiết kế và mã chứng chỉ: {{details.designLead}}",
+          "Tổ chức và chủ trì thẩm tra, mã chứng chỉ: {{details.verifier}}"
+        ]
+      },
+      {
+        "heading": "4. Nội dung đề nghị",
+        "text": [
+          "Dự án: {{project}}",
+          "Phạm vi: {{r.scope}}",
+          "Mã định danh công trình: {{details.buildingId}}",
+          "Loại, cấp công trình: {{details.buildingClass}}",
+          "Cốt xây dựng (m): {{details.elevation}}",
+          "Khoảng lùi (m): {{details.setback}}",
+          "Mật độ xây dựng (%): {{details.density}}",
+          "Hệ số sử dụng đất: {{details.landRatio}}",
+          "Chỉ giới đường đỏ, chỉ giới xây dựng: {{details.boundaries}}",
+          "Diện tích xây dựng (m²): {{details.area}}",
+          "Tổng diện tích sàn, phân theo tầng (m²): {{details.floorArea}}",
+          "Chiều cao, phân theo tầng (m): {{details.height}}",
+          "Chiều sâu (m): {{details.depth}}",
+          "Số tầng, tầng hầm, kỹ thuật, lửng, tum: {{details.floors}}",
+          "Màu sắc: {{details.color}}",
+          "Tuyến, điểm đầu/cuối, chiều dài, rộng, tĩnh không và độ sâu theo đoạn: {{details.route}}",
+          "Phạm vi, thông số từng giai đoạn / từng công trình: {{details.stages}}",
+          "Số công trình, công trình đã khởi công: {{details.groupCount}}"
+        ]
+      },
+      {
+        "heading": "5. Thời gian hoàn thành dự kiến",
+        "text": [
+          "{{details.schedule}} tháng"
+        ]
+      },
+      {
+        "heading": "6. Cam kết",
+        "text": [
+          "[Người làm đơn xác nhận cam kết thực hiện đúng giấy phép và chịu trách nhiệm theo pháp luật trước khi ký]."
+        ]
+      },
+      {
+        "heading": "Tài liệu gửi kèm",
+        "text": [
+          "{{document.name}}"
+        ]
+      },
+      {
+        "text": [
+          "Nguồn biểu mẫu: https://datafiles.chinhphu.vn/cpp/files/vbpq/2026/6/pl217.pdf"
+        ]
+      },
+      {
+        "keepTogether": true,
+        "heading": "Nơi nhận và ký xác nhận",
+        "text": [
+          "[Hoàn thiện nơi nhận theo hồ sơ và thẩm quyền].",
+          "[Người làm đơn/đại diện chủ đầu tư ký, ghi rõ họ tên; đóng dấu nếu có — chưa ký]"
+        ]
+      }
+    ]
+  },
+  "gpxd/house/draft": {
+    "title": "DỰ THẢO GIẤY PHÉP XÂY DỰNG NHÀ Ở RIÊNG LẺ",
+    "blocks": [
+      {
+        "letterhead": true,
+        "nationalOnly": false,
+        "agency": "{{r.authority|%5Bch%C6%B0a%20x%C3%A1c%20nh%E1%BA%ADn%5D}}"
+      },
+      {
+        "text": [
+          "DỰ THẢO CHƯA KÝ, CHƯA BAN HÀNH. Nội dung chưa xác nhận phải được hoàn thiện từ hồ sơ.",
+          "Điều 55–56 và Điều 60 Nghị định 217/2026/NĐ-CP; cần đối chiếu quy định thẩm quyền tại địa phương.",
+          "Phiên bản đối chiếu: 2026-07.v2"
+        ]
+      },
+      {
+        "text": [
+          "Tham chiếu Mẫu 03 Phụ lục II NĐ 217/2026/NĐ-CP."
+        ]
+      },
+      {
+        "heading": "1. Cấp cho",
+        "text": [
+          "Chủ đầu tư: {{r.investor|%5Bch%C6%B0a%20x%C3%A1c%20nh%E1%BA%ADn%5D}}",
+          "Số định danh / mã số doanh nghiệp: {{details.ownerIdentity}}",
+          "Địa chỉ: {{details.ownerAddress}}",
+          "Người đại diện, chức vụ, số định danh: {{details.representative}}",
+          "Liên hệ: {{details.contact}}"
+        ]
+      },
+      {
+        "heading": "2. Nội dung cấp phép",
+        "text": [
+          "Công trình: {{project}}",
+          "Địa điểm: {{r.location}}",
+          "Phạm vi: {{r.scope}}",
+          "Theo thiết kế: {{r.designBasis}}",
+          "Mã định danh công trình: {{details.buildingId}}",
+          "Loại, cấp công trình: {{details.buildingClass}}",
+          "Tổ chức/cá nhân thiết kế và mã chứng chỉ: {{details.designer}}",
+          "Chủ nhiệm, chủ trì thiết kế và mã chứng chỉ: {{details.designLead}}",
+          "Tổ chức và chủ trì thẩm tra, mã chứng chỉ: {{details.verifier}}",
+          "Cốt xây dựng (m): {{details.elevation}}",
+          "Khoảng lùi (m): {{details.setback}}",
+          "Mật độ xây dựng (%): {{details.density}}",
+          "Hệ số sử dụng đất: {{details.landRatio}}",
+          "Chỉ giới đường đỏ, chỉ giới xây dựng: {{details.boundaries}}",
+          "Diện tích xây dựng (m²): {{details.area}}",
+          "Tổng diện tích sàn, phân theo tầng (m²): {{details.floorArea}}",
+          "Chiều cao, phân theo tầng (m): {{details.height}}",
+          "Chiều sâu (m): {{details.depth}}",
+          "Số tầng, tầng hầm, kỹ thuật, lửng, tum: {{details.floors}}",
+          "Màu sắc: {{details.color}}",
+          "Tuyến, điểm đầu/cuối, chiều dài, rộng, tĩnh không và độ sâu theo đoạn: {{details.route}}"
+        ]
+      },
+      {
+        "heading": "3. Giấy tờ về đất và quyền sở hữu",
+        "text": [
+          "Lô/thửa đất, diện tích đất và giấy tờ về đất: {{details.land}}"
+        ]
+      },
+      {
+        "heading": "4. Tiến độ dự kiến",
+        "text": [
+          "{{details.schedule}} tháng"
+        ]
+      },
+      {
+        "heading": "5. Hiệu lực khởi công",
+        "text": [
+          "Giấy phép có hiệu lực khởi công 12 tháng kể từ ngày cấp; quá thời hạn phải đề nghị gia hạn theo quy định."
+        ]
+      },
+      {
+        "heading": "Yêu cầu đối với chủ đầu tư",
+        "text": [
+          "Bảo đảm quyền hợp pháp của chủ sở hữu liền kề; thực hiện quy định đất đai, xây dựng và nội dung giấy phép.",
+          "Thông báo khởi công; xuất trình giấy phép và treo biển báo theo quy định. Điều chỉnh thiết kế thuộc Điều 63 phải điều chỉnh giấy phép.",
+          "{{r.conditions}}"
+        ]
+      },
+      {
+        "text": [
+          "Nguồn biểu mẫu: https://datafiles.chinhphu.vn/cpp/files/vbpq/2026/6/pl217.pdf"
+        ]
+      },
+      {
+        "keepTogether": true,
+        "heading": "Nơi nhận và ký ban hành",
+        "text": [
+          "[Hoàn thiện nơi nhận theo hồ sơ và thẩm quyền].",
+          "[Người có thẩm quyền ký, ghi rõ chức vụ, họ tên và đóng dấu — chưa ký]"
+        ]
+      }
+    ]
+  },
+  "gpxd/house/application": {
+    "title": "DỰ THẢO ĐƠN ĐỀ NGHỊ CẤP GIẤY PHÉP XÂY DỰNG NHÀ Ở RIÊNG LẺ",
+    "blocks": [
+      {
+        "letterhead": true,
+        "nationalOnly": true,
+        "agency": "{{r.investor|%5Bch%C6%B0a%20x%C3%A1c%20nh%E1%BA%ADn%5D}}"
+      },
+      {
+        "text": [
+          "DỰ THẢO CHƯA KÝ, CHƯA BAN HÀNH. Nội dung chưa xác nhận phải được hoàn thiện từ hồ sơ.",
+          "Điều 55–56 và Điều 60 Nghị định 217/2026/NĐ-CP; cần đối chiếu quy định thẩm quyền tại địa phương.",
+          "Phiên bản đối chiếu: 2026-07.v2"
+        ]
+      },
+      {
+        "text": [
+          "Tham chiếu Mẫu 01 Phụ lục II NĐ 217/2026/NĐ-CP.",
+          "Kính gửi: {{r.authority}}"
+        ]
+      },
+      {
+        "heading": "1. Chủ đầu tư",
+        "text": [
+          "Chủ đầu tư: {{r.investor|%5Bch%C6%B0a%20x%C3%A1c%20nh%E1%BA%ADn%5D}}",
+          "Số định danh / mã số doanh nghiệp: {{details.ownerIdentity}}",
+          "Địa chỉ: {{details.ownerAddress}}",
+          "Người đại diện, chức vụ, số định danh: {{details.representative}}",
+          "Liên hệ: {{details.contact}}"
+        ]
+      },
+      {
+        "heading": "2. Địa điểm xây dựng",
+        "text": [
+          "{{r.location}}",
+          "Lô/thửa đất, diện tích đất và giấy tờ về đất: {{details.land}}"
+        ]
+      },
+      {
+        "heading": "3. Tổ chức, cá nhân thiết kế và thẩm tra",
+        "text": [
+          "Tổ chức/cá nhân thiết kế và mã chứng chỉ: {{details.designer}}",
+          "Chủ nhiệm, chủ trì thiết kế và mã chứng chỉ: {{details.designLead}}",
+          "Tổ chức và chủ trì thẩm tra, mã chứng chỉ: {{details.verifier}}"
+        ]
+      },
+      {
+        "heading": "4. Nội dung đề nghị",
+        "text": [
+          "Dự án: {{project}}",
+          "Phạm vi: {{r.scope}}",
+          "Mã định danh công trình: {{details.buildingId}}",
+          "Loại, cấp công trình: {{details.buildingClass}}",
+          "Cốt xây dựng (m): {{details.elevation}}",
+          "Khoảng lùi (m): {{details.setback}}",
+          "Mật độ xây dựng (%): {{details.density}}",
+          "Hệ số sử dụng đất: {{details.landRatio}}",
+          "Chỉ giới đường đỏ, chỉ giới xây dựng: {{details.boundaries}}",
+          "Diện tích xây dựng (m²): {{details.area}}",
+          "Tổng diện tích sàn, phân theo tầng (m²): {{details.floorArea}}",
+          "Chiều cao, phân theo tầng (m): {{details.height}}",
+          "Chiều sâu (m): {{details.depth}}",
+          "Số tầng, tầng hầm, kỹ thuật, lửng, tum: {{details.floors}}",
+          "Màu sắc: {{details.color}}",
+          "Tuyến, điểm đầu/cuối, chiều dài, rộng, tĩnh không và độ sâu theo đoạn: {{details.route}}"
+        ]
+      },
+      {
+        "heading": "5. Thời gian hoàn thành dự kiến",
+        "text": [
+          "{{details.schedule}} tháng"
+        ]
+      },
+      {
+        "heading": "6. Cam kết",
+        "text": [
+          "[Người làm đơn xác nhận cam kết thực hiện đúng giấy phép và chịu trách nhiệm theo pháp luật trước khi ký]."
+        ]
+      },
+      {
+        "heading": "Tài liệu gửi kèm",
+        "text": [
+          "{{document.name}}"
+        ]
+      },
+      {
+        "text": [
+          "Nguồn biểu mẫu: https://datafiles.chinhphu.vn/cpp/files/vbpq/2026/6/pl217.pdf"
+        ]
+      },
+      {
+        "keepTogether": true,
+        "heading": "Nơi nhận và ký xác nhận",
+        "text": [
+          "[Hoàn thiện nơi nhận theo hồ sơ và thẩm quyền].",
+          "[Người làm đơn/đại diện chủ đầu tư ký, ghi rõ họ tên; đóng dấu nếu có — chưa ký]"
+        ]
+      }
+    ]
+  },
+  "gpxd/repair/draft": {
+    "title": "DỰ THẢO GIẤY PHÉP SỬA CHỮA, CẢI TẠO",
+    "blocks": [
+      {
+        "letterhead": true,
+        "nationalOnly": false,
+        "agency": "{{r.authority|%5Bch%C6%B0a%20x%C3%A1c%20nh%E1%BA%ADn%5D}}"
+      },
+      {
+        "text": [
+          "DỰ THẢO CHƯA KÝ, CHƯA BAN HÀNH. Nội dung chưa xác nhận phải được hoàn thiện từ hồ sơ.",
+          "Điều 55–56 và Điều 61 Nghị định 217/2026/NĐ-CP; cần đối chiếu quy định thẩm quyền tại địa phương.",
+          "Phiên bản đối chiếu: 2026-07.v2"
+        ]
+      },
+      {
+        "text": [
+          "Tham chiếu Mẫu 04 Phụ lục II NĐ 217/2026/NĐ-CP."
+        ]
+      },
+      {
+        "heading": "1. Cấp cho",
+        "text": [
+          "Chủ đầu tư: {{r.investor|%5Bch%C6%B0a%20x%C3%A1c%20nh%E1%BA%ADn%5D}}",
+          "Số định danh / mã số doanh nghiệp: {{details.ownerIdentity}}",
+          "Địa chỉ: {{details.ownerAddress}}",
+          "Người đại diện, chức vụ, số định danh: {{details.representative}}",
+          "Liên hệ: {{details.contact}}"
+        ]
+      },
+      {
+        "heading": "2. Nội dung cấp phép",
+        "text": [
+          "Công trình: {{project}}",
+          "Địa điểm: {{r.location}}",
+          "Phạm vi: {{r.scope}}",
+          "Theo thiết kế: {{r.designBasis}}",
+          "Mã định danh công trình: {{details.buildingId}}",
+          "Loại, cấp công trình: {{details.buildingClass}}",
+          "Tổ chức/cá nhân thiết kế và mã chứng chỉ: {{details.designer}}",
+          "Chủ nhiệm, chủ trì thiết kế và mã chứng chỉ: {{details.designLead}}",
+          "Tổ chức và chủ trì thẩm tra, mã chứng chỉ: {{details.verifier}}",
+          "Cốt xây dựng (m): {{details.elevation}}",
+          "Khoảng lùi (m): {{details.setback}}",
+          "Mật độ xây dựng (%): {{details.density}}",
+          "Hệ số sử dụng đất: {{details.landRatio}}",
+          "Chỉ giới đường đỏ, chỉ giới xây dựng: {{details.boundaries}}",
+          "Diện tích xây dựng (m²): {{details.area}}",
+          "Tổng diện tích sàn, phân theo tầng (m²): {{details.floorArea}}",
+          "Chiều cao, phân theo tầng (m): {{details.height}}",
+          "Chiều sâu (m): {{details.depth}}",
+          "Số tầng, tầng hầm, kỹ thuật, lửng, tum: {{details.floors}}",
+          "Màu sắc: {{details.color}}",
+          "Tuyến, điểm đầu/cuối, chiều dài, rộng, tĩnh không và độ sâu theo đoạn: {{details.route}}",
+          "Hiện trạng trước sửa chữa, di dời: {{details.existing}}"
+        ]
+      },
+      {
+        "heading": "3. Giấy tờ về đất và quyền sở hữu",
+        "text": [
+          "Lô/thửa đất, diện tích đất và giấy tờ về đất: {{details.land}}"
+        ]
+      },
+      {
+        "heading": "4. Tiến độ dự kiến",
+        "text": [
+          "{{details.schedule}} tháng"
+        ]
+      },
+      {
+        "heading": "5. Hiệu lực khởi công",
+        "text": [
+          "Giấy phép có hiệu lực khởi công 12 tháng kể từ ngày cấp; quá thời hạn phải đề nghị gia hạn theo quy định."
+        ]
+      },
+      {
+        "heading": "Yêu cầu đối với chủ đầu tư",
+        "text": [
+          "Bảo đảm quyền hợp pháp của chủ sở hữu liền kề; thực hiện quy định đất đai, xây dựng và nội dung giấy phép.",
+          "Thông báo khởi công; xuất trình giấy phép và treo biển báo theo quy định. Điều chỉnh thiết kế thuộc Điều 63 phải điều chỉnh giấy phép.",
+          "{{r.conditions}}"
+        ]
+      },
+      {
+        "text": [
+          "Nguồn biểu mẫu: https://datafiles.chinhphu.vn/cpp/files/vbpq/2026/6/pl217.pdf"
+        ]
+      },
+      {
+        "keepTogether": true,
+        "heading": "Nơi nhận và ký ban hành",
+        "text": [
+          "[Hoàn thiện nơi nhận theo hồ sơ và thẩm quyền].",
+          "[Người có thẩm quyền ký, ghi rõ chức vụ, họ tên và đóng dấu — chưa ký]"
+        ]
+      }
+    ]
+  },
+  "gpxd/repair/application": {
+    "title": "DỰ THẢO ĐƠN ĐỀ NGHỊ CẤP GIẤY PHÉP SỬA CHỮA, CẢI TẠO",
+    "blocks": [
+      {
+        "letterhead": true,
+        "nationalOnly": true,
+        "agency": "{{r.investor|%5Bch%C6%B0a%20x%C3%A1c%20nh%E1%BA%ADn%5D}}"
+      },
+      {
+        "text": [
+          "DỰ THẢO CHƯA KÝ, CHƯA BAN HÀNH. Nội dung chưa xác nhận phải được hoàn thiện từ hồ sơ.",
+          "Điều 55–56 và Điều 61 Nghị định 217/2026/NĐ-CP; cần đối chiếu quy định thẩm quyền tại địa phương.",
+          "Phiên bản đối chiếu: 2026-07.v2"
+        ]
+      },
+      {
+        "text": [
+          "Tham chiếu Mẫu 01 Phụ lục II NĐ 217/2026/NĐ-CP.",
+          "Kính gửi: {{r.authority}}"
+        ]
+      },
+      {
+        "heading": "1. Chủ đầu tư",
+        "text": [
+          "Chủ đầu tư: {{r.investor|%5Bch%C6%B0a%20x%C3%A1c%20nh%E1%BA%ADn%5D}}",
+          "Số định danh / mã số doanh nghiệp: {{details.ownerIdentity}}",
+          "Địa chỉ: {{details.ownerAddress}}",
+          "Người đại diện, chức vụ, số định danh: {{details.representative}}",
+          "Liên hệ: {{details.contact}}"
+        ]
+      },
+      {
+        "heading": "2. Địa điểm xây dựng",
+        "text": [
+          "{{r.location}}",
+          "Lô/thửa đất, diện tích đất và giấy tờ về đất: {{details.land}}"
+        ]
+      },
+      {
+        "heading": "3. Tổ chức, cá nhân thiết kế và thẩm tra",
+        "text": [
+          "Tổ chức/cá nhân thiết kế và mã chứng chỉ: {{details.designer}}",
+          "Chủ nhiệm, chủ trì thiết kế và mã chứng chỉ: {{details.designLead}}",
+          "Tổ chức và chủ trì thẩm tra, mã chứng chỉ: {{details.verifier}}"
+        ]
+      },
+      {
+        "heading": "4. Nội dung đề nghị",
+        "text": [
+          "Dự án: {{project}}",
+          "Phạm vi: {{r.scope}}",
+          "Mã định danh công trình: {{details.buildingId}}",
+          "Loại, cấp công trình: {{details.buildingClass}}",
+          "Cốt xây dựng (m): {{details.elevation}}",
+          "Khoảng lùi (m): {{details.setback}}",
+          "Mật độ xây dựng (%): {{details.density}}",
+          "Hệ số sử dụng đất: {{details.landRatio}}",
+          "Chỉ giới đường đỏ, chỉ giới xây dựng: {{details.boundaries}}",
+          "Diện tích xây dựng (m²): {{details.area}}",
+          "Tổng diện tích sàn, phân theo tầng (m²): {{details.floorArea}}",
+          "Chiều cao, phân theo tầng (m): {{details.height}}",
+          "Chiều sâu (m): {{details.depth}}",
+          "Số tầng, tầng hầm, kỹ thuật, lửng, tum: {{details.floors}}",
+          "Màu sắc: {{details.color}}",
+          "Tuyến, điểm đầu/cuối, chiều dài, rộng, tĩnh không và độ sâu theo đoạn: {{details.route}}",
+          "Hiện trạng trước sửa chữa, di dời: {{details.existing}}"
+        ]
+      },
+      {
+        "heading": "5. Thời gian hoàn thành dự kiến",
+        "text": [
+          "{{details.schedule}} tháng"
+        ]
+      },
+      {
+        "heading": "6. Cam kết",
+        "text": [
+          "[Người làm đơn xác nhận cam kết thực hiện đúng giấy phép và chịu trách nhiệm theo pháp luật trước khi ký]."
+        ]
+      },
+      {
+        "heading": "Tài liệu gửi kèm",
+        "text": [
+          "{{document.name}}"
+        ]
+      },
+      {
+        "text": [
+          "Nguồn biểu mẫu: https://datafiles.chinhphu.vn/cpp/files/vbpq/2026/6/pl217.pdf"
+        ]
+      },
+      {
+        "keepTogether": true,
+        "heading": "Nơi nhận và ký xác nhận",
+        "text": [
+          "[Hoàn thiện nơi nhận theo hồ sơ và thẩm quyền].",
+          "[Người làm đơn/đại diện chủ đầu tư ký, ghi rõ họ tên; đóng dấu nếu có — chưa ký]"
+        ]
+      }
+    ]
+  },
+  "gpxd/relocation/draft": {
+    "title": "DỰ THẢO GIẤY PHÉP DI DỜI CÔNG TRÌNH",
+    "blocks": [
+      {
+        "letterhead": true,
+        "nationalOnly": false,
+        "agency": "{{r.authority|%5Bch%C6%B0a%20x%C3%A1c%20nh%E1%BA%ADn%5D}}"
+      },
+      {
+        "text": [
+          "DỰ THẢO CHƯA KÝ, CHƯA BAN HÀNH. Nội dung chưa xác nhận phải được hoàn thiện từ hồ sơ.",
+          "Điều 55–56 và Điều 61 Nghị định 217/2026/NĐ-CP; cần đối chiếu quy định thẩm quyền tại địa phương.",
+          "Phiên bản đối chiếu: 2026-07.v2"
+        ]
+      },
+      {
+        "text": [
+          "Tham chiếu Mẫu 04 Phụ lục II NĐ 217/2026/NĐ-CP."
+        ]
+      },
+      {
+        "heading": "1. Cấp cho",
+        "text": [
+          "Chủ đầu tư: {{r.investor|%5Bch%C6%B0a%20x%C3%A1c%20nh%E1%BA%ADn%5D}}",
+          "Số định danh / mã số doanh nghiệp: {{details.ownerIdentity}}",
+          "Địa chỉ: {{details.ownerAddress}}",
+          "Người đại diện, chức vụ, số định danh: {{details.representative}}",
+          "Liên hệ: {{details.contact}}"
+        ]
+      },
+      {
+        "heading": "2. Nội dung cấp phép",
+        "text": [
+          "Công trình: {{project}}",
+          "Địa điểm: {{r.location}}",
+          "Phạm vi: {{r.scope}}",
+          "Theo thiết kế: {{r.designBasis}}",
+          "Mã định danh công trình: {{details.buildingId}}",
+          "Loại, cấp công trình: {{details.buildingClass}}",
+          "Tổ chức/cá nhân thiết kế và mã chứng chỉ: {{details.designer}}",
+          "Chủ nhiệm, chủ trì thiết kế và mã chứng chỉ: {{details.designLead}}",
+          "Tổ chức và chủ trì thẩm tra, mã chứng chỉ: {{details.verifier}}",
+          "Cốt xây dựng (m): {{details.elevation}}",
+          "Khoảng lùi (m): {{details.setback}}",
+          "Mật độ xây dựng (%): {{details.density}}",
+          "Hệ số sử dụng đất: {{details.landRatio}}",
+          "Chỉ giới đường đỏ, chỉ giới xây dựng: {{details.boundaries}}",
+          "Diện tích xây dựng (m²): {{details.area}}",
+          "Tổng diện tích sàn, phân theo tầng (m²): {{details.floorArea}}",
+          "Chiều cao, phân theo tầng (m): {{details.height}}",
+          "Chiều sâu (m): {{details.depth}}",
+          "Số tầng, tầng hầm, kỹ thuật, lửng, tum: {{details.floors}}",
+          "Màu sắc: {{details.color}}",
+          "Tuyến, điểm đầu/cuối, chiều dài, rộng, tĩnh không và độ sâu theo đoạn: {{details.route}}",
+          "Hiện trạng trước sửa chữa, di dời: {{details.existing}}",
+          "Vị trí trước di dời: {{details.originLocation}}",
+          "Thời gian bắt đầu và kết thúc di dời: {{details.relocationSchedule}}"
+        ]
+      },
+      {
+        "heading": "3. Giấy tờ về đất và quyền sở hữu",
+        "text": [
+          "Lô/thửa đất, diện tích đất và giấy tờ về đất: {{details.land}}"
+        ]
+      },
+      {
+        "heading": "4. Tiến độ dự kiến",
+        "text": [
+          "{{details.schedule}} tháng"
+        ]
+      },
+      {
+        "heading": "5. Hiệu lực khởi công",
+        "text": [
+          "Giấy phép có hiệu lực khởi công 12 tháng kể từ ngày cấp; quá thời hạn phải đề nghị gia hạn theo quy định."
+        ]
+      },
+      {
+        "heading": "Yêu cầu đối với chủ đầu tư",
+        "text": [
+          "Bảo đảm quyền hợp pháp của chủ sở hữu liền kề; thực hiện quy định đất đai, xây dựng và nội dung giấy phép.",
+          "Thông báo khởi công; xuất trình giấy phép và treo biển báo theo quy định. Điều chỉnh thiết kế thuộc Điều 63 phải điều chỉnh giấy phép.",
+          "{{r.conditions}}"
+        ]
+      },
+      {
+        "text": [
+          "Nguồn biểu mẫu: https://datafiles.chinhphu.vn/cpp/files/vbpq/2026/6/pl217.pdf"
+        ]
+      },
+      {
+        "keepTogether": true,
+        "heading": "Nơi nhận và ký ban hành",
+        "text": [
+          "[Hoàn thiện nơi nhận theo hồ sơ và thẩm quyền].",
+          "[Người có thẩm quyền ký, ghi rõ chức vụ, họ tên và đóng dấu — chưa ký]"
+        ]
+      }
+    ]
+  },
+  "gpxd/relocation/application": {
+    "title": "DỰ THẢO ĐƠN ĐỀ NGHỊ CẤP GIẤY PHÉP DI DỜI CÔNG TRÌNH",
+    "blocks": [
+      {
+        "letterhead": true,
+        "nationalOnly": true,
+        "agency": "{{r.investor|%5Bch%C6%B0a%20x%C3%A1c%20nh%E1%BA%ADn%5D}}"
+      },
+      {
+        "text": [
+          "DỰ THẢO CHƯA KÝ, CHƯA BAN HÀNH. Nội dung chưa xác nhận phải được hoàn thiện từ hồ sơ.",
+          "Điều 55–56 và Điều 61 Nghị định 217/2026/NĐ-CP; cần đối chiếu quy định thẩm quyền tại địa phương.",
+          "Phiên bản đối chiếu: 2026-07.v2"
+        ]
+      },
+      {
+        "text": [
+          "Tham chiếu Mẫu 01 Phụ lục II NĐ 217/2026/NĐ-CP.",
+          "Kính gửi: {{r.authority}}"
+        ]
+      },
+      {
+        "heading": "1. Chủ đầu tư",
+        "text": [
+          "Chủ đầu tư: {{r.investor|%5Bch%C6%B0a%20x%C3%A1c%20nh%E1%BA%ADn%5D}}",
+          "Số định danh / mã số doanh nghiệp: {{details.ownerIdentity}}",
+          "Địa chỉ: {{details.ownerAddress}}",
+          "Người đại diện, chức vụ, số định danh: {{details.representative}}",
+          "Liên hệ: {{details.contact}}"
+        ]
+      },
+      {
+        "heading": "2. Địa điểm xây dựng",
+        "text": [
+          "{{r.location}}",
+          "Lô/thửa đất, diện tích đất và giấy tờ về đất: {{details.land}}"
+        ]
+      },
+      {
+        "heading": "3. Tổ chức, cá nhân thiết kế và thẩm tra",
+        "text": [
+          "Tổ chức/cá nhân thiết kế và mã chứng chỉ: {{details.designer}}",
+          "Chủ nhiệm, chủ trì thiết kế và mã chứng chỉ: {{details.designLead}}",
+          "Tổ chức và chủ trì thẩm tra, mã chứng chỉ: {{details.verifier}}"
+        ]
+      },
+      {
+        "heading": "4. Nội dung đề nghị",
+        "text": [
+          "Dự án: {{project}}",
+          "Phạm vi: {{r.scope}}",
+          "Mã định danh công trình: {{details.buildingId}}",
+          "Loại, cấp công trình: {{details.buildingClass}}",
+          "Cốt xây dựng (m): {{details.elevation}}",
+          "Khoảng lùi (m): {{details.setback}}",
+          "Mật độ xây dựng (%): {{details.density}}",
+          "Hệ số sử dụng đất: {{details.landRatio}}",
+          "Chỉ giới đường đỏ, chỉ giới xây dựng: {{details.boundaries}}",
+          "Diện tích xây dựng (m²): {{details.area}}",
+          "Tổng diện tích sàn, phân theo tầng (m²): {{details.floorArea}}",
+          "Chiều cao, phân theo tầng (m): {{details.height}}",
+          "Chiều sâu (m): {{details.depth}}",
+          "Số tầng, tầng hầm, kỹ thuật, lửng, tum: {{details.floors}}",
+          "Màu sắc: {{details.color}}",
+          "Tuyến, điểm đầu/cuối, chiều dài, rộng, tĩnh không và độ sâu theo đoạn: {{details.route}}",
+          "Hiện trạng trước sửa chữa, di dời: {{details.existing}}",
+          "Vị trí trước di dời: {{details.originLocation}}",
+          "Thời gian bắt đầu và kết thúc di dời: {{details.relocationSchedule}}"
+        ]
+      },
+      {
+        "heading": "5. Thời gian hoàn thành dự kiến",
+        "text": [
+          "{{details.schedule}} tháng"
+        ]
+      },
+      {
+        "heading": "6. Cam kết",
+        "text": [
+          "[Người làm đơn xác nhận cam kết thực hiện đúng giấy phép và chịu trách nhiệm theo pháp luật trước khi ký]."
+        ]
+      },
+      {
+        "heading": "Tài liệu gửi kèm",
+        "text": [
+          "{{document.name}}"
+        ]
+      },
+      {
+        "text": [
+          "Nguồn biểu mẫu: https://datafiles.chinhphu.vn/cpp/files/vbpq/2026/6/pl217.pdf"
+        ]
+      },
+      {
+        "keepTogether": true,
+        "heading": "Nơi nhận và ký xác nhận",
+        "text": [
+          "[Hoàn thiện nơi nhận theo hồ sơ và thẩm quyền].",
+          "[Người làm đơn/đại diện chủ đầu tư ký, ghi rõ họ tên; đóng dấu nếu có — chưa ký]"
+        ]
+      }
+    ]
+  },
+  "gpxd/temporary/draft": {
+    "title": "DỰ THẢO GIẤY PHÉP XÂY DỰNG CÓ THỜI HẠN",
+    "blocks": [
+      {
+        "letterhead": true,
+        "nationalOnly": false,
+        "agency": "{{r.authority|%5Bch%C6%B0a%20x%C3%A1c%20nh%E1%BA%ADn%5D}}"
+      },
+      {
+        "text": [
+          "DỰ THẢO CHƯA KÝ, CHƯA BAN HÀNH. Nội dung chưa xác nhận phải được hoàn thiện từ hồ sơ.",
+          "Điều 55–56 và Điều 62 Nghị định 217/2026/NĐ-CP; cần đối chiếu quy định thẩm quyền tại địa phương.",
+          "Phiên bản đối chiếu: 2026-07.v2"
+        ]
+      },
+      {
+        "text": [
+          "Tham chiếu Mẫu 05 Phụ lục II NĐ 217/2026/NĐ-CP."
+        ]
+      },
+      {
+        "heading": "1. Cấp cho",
+        "text": [
+          "Chủ đầu tư: {{r.investor|%5Bch%C6%B0a%20x%C3%A1c%20nh%E1%BA%ADn%5D}}",
+          "Số định danh / mã số doanh nghiệp: {{details.ownerIdentity}}",
+          "Địa chỉ: {{details.ownerAddress}}",
+          "Người đại diện, chức vụ, số định danh: {{details.representative}}",
+          "Liên hệ: {{details.contact}}"
+        ]
+      },
+      {
+        "heading": "2. Nội dung cấp phép",
+        "text": [
+          "Công trình: {{project}}",
+          "Địa điểm: {{r.location}}",
+          "Phạm vi: {{r.scope}}",
+          "Theo thiết kế: {{r.designBasis}}",
+          "Mã định danh công trình: {{details.buildingId}}",
+          "Loại, cấp công trình: {{details.buildingClass}}",
+          "Tổ chức/cá nhân thiết kế và mã chứng chỉ: {{details.designer}}",
+          "Chủ nhiệm, chủ trì thiết kế và mã chứng chỉ: {{details.designLead}}",
+          "Tổ chức và chủ trì thẩm tra, mã chứng chỉ: {{details.verifier}}",
+          "Cốt xây dựng (m): {{details.elevation}}",
+          "Khoảng lùi (m): {{details.setback}}",
+          "Mật độ xây dựng (%): {{details.density}}",
+          "Hệ số sử dụng đất: {{details.landRatio}}",
+          "Chỉ giới đường đỏ, chỉ giới xây dựng: {{details.boundaries}}",
+          "Diện tích xây dựng (m²): {{details.area}}",
+          "Tổng diện tích sàn, phân theo tầng (m²): {{details.floorArea}}",
+          "Chiều cao, phân theo tầng (m): {{details.height}}",
+          "Chiều sâu (m): {{details.depth}}",
+          "Số tầng, tầng hầm, kỹ thuật, lửng, tum: {{details.floors}}",
+          "Màu sắc: {{details.color}}",
+          "Tuyến, điểm đầu/cuối, chiều dài, rộng, tĩnh không và độ sâu theo đoạn: {{details.route}}",
+          "Thời hạn tồn tại: {{details.temporaryTerm}}"
+        ]
+      },
+      {
+        "heading": "3. Giấy tờ về đất và quyền sở hữu",
+        "text": [
+          "Lô/thửa đất, diện tích đất và giấy tờ về đất: {{details.land}}"
+        ]
+      },
+      {
+        "heading": "4. Tiến độ dự kiến",
+        "text": [
+          "{{details.schedule}} tháng"
+        ]
+      },
+      {
+        "heading": "5. Hiệu lực khởi công",
+        "text": [
+          "Giấy phép có hiệu lực khởi công 12 tháng kể từ ngày cấp; quá thời hạn phải đề nghị gia hạn theo quy định."
+        ]
+      },
+      {
+        "heading": "Yêu cầu đối với chủ đầu tư",
+        "text": [
+          "Bảo đảm quyền hợp pháp của chủ sở hữu liền kề; thực hiện quy định đất đai, xây dựng và nội dung giấy phép.",
+          "Thông báo khởi công; xuất trình giấy phép và treo biển báo theo quy định. Điều chỉnh thiết kế thuộc Điều 63 phải điều chỉnh giấy phép.",
+          "{{r.conditions}}"
+        ]
+      },
+      {
+        "text": [
+          "Thời hạn tồn tại: {{details.temporaryTerm}}",
+          "Tháo dỡ theo thời hạn, quy hoạch và nghĩa vụ quy định tại Mẫu 05; hoàn thiện nội dung cụ thể từ căn cứ địa phương trước khi ký."
+        ]
+      },
+      {
+        "text": [
+          "Nguồn biểu mẫu: https://datafiles.chinhphu.vn/cpp/files/vbpq/2026/6/pl217.pdf"
+        ]
+      },
+      {
+        "keepTogether": true,
+        "heading": "Nơi nhận và ký ban hành",
+        "text": [
+          "[Hoàn thiện nơi nhận theo hồ sơ và thẩm quyền].",
+          "[Người có thẩm quyền ký, ghi rõ chức vụ, họ tên và đóng dấu — chưa ký]"
+        ]
+      }
+    ]
+  },
+  "gpxd/temporary/application": {
+    "title": "DỰ THẢO ĐƠN ĐỀ NGHỊ CẤP GIẤY PHÉP XÂY DỰNG CÓ THỜI HẠN",
+    "blocks": [
+      {
+        "letterhead": true,
+        "nationalOnly": true,
+        "agency": "{{r.investor|%5Bch%C6%B0a%20x%C3%A1c%20nh%E1%BA%ADn%5D}}"
+      },
+      {
+        "text": [
+          "DỰ THẢO CHƯA KÝ, CHƯA BAN HÀNH. Nội dung chưa xác nhận phải được hoàn thiện từ hồ sơ.",
+          "Điều 55–56 và Điều 62 Nghị định 217/2026/NĐ-CP; cần đối chiếu quy định thẩm quyền tại địa phương.",
+          "Phiên bản đối chiếu: 2026-07.v2"
+        ]
+      },
+      {
+        "text": [
+          "Tham chiếu Mẫu 01 Phụ lục II NĐ 217/2026/NĐ-CP.",
+          "Kính gửi: {{r.authority}}"
+        ]
+      },
+      {
+        "heading": "1. Chủ đầu tư",
+        "text": [
+          "Chủ đầu tư: {{r.investor|%5Bch%C6%B0a%20x%C3%A1c%20nh%E1%BA%ADn%5D}}",
+          "Số định danh / mã số doanh nghiệp: {{details.ownerIdentity}}",
+          "Địa chỉ: {{details.ownerAddress}}",
+          "Người đại diện, chức vụ, số định danh: {{details.representative}}",
+          "Liên hệ: {{details.contact}}"
+        ]
+      },
+      {
+        "heading": "2. Địa điểm xây dựng",
+        "text": [
+          "{{r.location}}",
+          "Lô/thửa đất, diện tích đất và giấy tờ về đất: {{details.land}}"
+        ]
+      },
+      {
+        "heading": "3. Tổ chức, cá nhân thiết kế và thẩm tra",
+        "text": [
+          "Tổ chức/cá nhân thiết kế và mã chứng chỉ: {{details.designer}}",
+          "Chủ nhiệm, chủ trì thiết kế và mã chứng chỉ: {{details.designLead}}",
+          "Tổ chức và chủ trì thẩm tra, mã chứng chỉ: {{details.verifier}}"
+        ]
+      },
+      {
+        "heading": "4. Nội dung đề nghị",
+        "text": [
+          "Dự án: {{project}}",
+          "Phạm vi: {{r.scope}}",
+          "Mã định danh công trình: {{details.buildingId}}",
+          "Loại, cấp công trình: {{details.buildingClass}}",
+          "Cốt xây dựng (m): {{details.elevation}}",
+          "Khoảng lùi (m): {{details.setback}}",
+          "Mật độ xây dựng (%): {{details.density}}",
+          "Hệ số sử dụng đất: {{details.landRatio}}",
+          "Chỉ giới đường đỏ, chỉ giới xây dựng: {{details.boundaries}}",
+          "Diện tích xây dựng (m²): {{details.area}}",
+          "Tổng diện tích sàn, phân theo tầng (m²): {{details.floorArea}}",
+          "Chiều cao, phân theo tầng (m): {{details.height}}",
+          "Chiều sâu (m): {{details.depth}}",
+          "Số tầng, tầng hầm, kỹ thuật, lửng, tum: {{details.floors}}",
+          "Màu sắc: {{details.color}}",
+          "Tuyến, điểm đầu/cuối, chiều dài, rộng, tĩnh không và độ sâu theo đoạn: {{details.route}}",
+          "Thời hạn tồn tại: {{details.temporaryTerm}}"
+        ]
+      },
+      {
+        "heading": "5. Thời gian hoàn thành dự kiến",
+        "text": [
+          "{{details.schedule}} tháng"
+        ]
+      },
+      {
+        "heading": "6. Cam kết",
+        "text": [
+          "[Người làm đơn xác nhận cam kết thực hiện đúng giấy phép và chịu trách nhiệm theo pháp luật trước khi ký]."
+        ]
+      },
+      {
+        "heading": "Tài liệu gửi kèm",
+        "text": [
+          "{{document.name}}"
+        ]
+      },
+      {
+        "text": [
+          "Nguồn biểu mẫu: https://datafiles.chinhphu.vn/cpp/files/vbpq/2026/6/pl217.pdf"
+        ]
+      },
+      {
+        "keepTogether": true,
+        "heading": "Nơi nhận và ký xác nhận",
+        "text": [
+          "[Hoàn thiện nơi nhận theo hồ sơ và thẩm quyền].",
+          "[Người làm đơn/đại diện chủ đầu tư ký, ghi rõ họ tên; đóng dấu nếu có — chưa ký]"
+        ]
+      }
+    ]
+  },
+  "gpxd/amendment/draft": {
+    "title": "DỰ THẢO NỘI DUNG ĐIỀU CHỈNH GIẤY PHÉP XÂY DỰNG",
+    "blocks": [
+      {
+        "letterhead": true,
+        "nationalOnly": false,
+        "agency": "{{r.authority|%5Bch%C6%B0a%20x%C3%A1c%20nh%E1%BA%ADn%5D}}"
+      },
+      {
+        "text": [
+          "DỰ THẢO CHƯA KÝ, CHƯA BAN HÀNH. Nội dung chưa xác nhận phải được hoàn thiện từ hồ sơ.",
+          "Điều 55–56 và Điều 63 Nghị định 217/2026/NĐ-CP; cần đối chiếu quy định thẩm quyền tại địa phương.",
+          "Phiên bản đối chiếu: 2026-07.v2"
+        ]
+      },
+      {
+        "text": [
+          "Ghi trực tiếp trên bản chính hoặc lập phụ lục bổ sung kèm giấy phép đã cấp theo điểm c khoản 3 Điều 63.",
+          "Mẫu giấy phép gốc: {{r.originalForm|%5Bch%C6%B0a%20x%C3%A1c%20%C4%91%E1%BB%8Bnh%20m%E1%BA%ABu%20gi%E1%BA%A5y%20ph%C3%A9p%20g%E1%BB%91c%5D}} Phụ lục II.",
+          "Giấy phép đã cấp: {{r.priorPermit}}",
+          "Chủ đầu tư: {{r.investor}}",
+          "Công trình: {{project}}",
+          "Địa điểm: {{r.location}}"
+        ]
+      },
+      {
+        "heading": "Nội dung điều chỉnh",
+        "text": [
+          "{{details.adjustment}}",
+          "Căn cứ thiết kế điều chỉnh: {{r.designBasis}}",
+          "Thời điểm có hiệu lực và mốc kết thúc: [cơ quan có thẩm quyền xác định].",
+          "{{r.conditions}}"
+        ]
+      },
+      {
+        "text": [
+          "Nguồn biểu mẫu: https://datafiles.chinhphu.vn/cpp/files/vbpq/2026/6/pl217.pdf"
+        ]
+      },
+      {
+        "keepTogether": true,
+        "heading": "Nơi nhận và ký ban hành",
+        "text": [
+          "[Hoàn thiện nơi nhận theo hồ sơ và thẩm quyền].",
+          "[Người có thẩm quyền ký, ghi rõ chức vụ, họ tên và đóng dấu — chưa ký]"
+        ]
+      }
+    ]
+  },
+  "gpxd/amendment/application": {
+    "title": "DỰ THẢO ĐƠN ĐỀ NGHỊ ĐIỀU CHỈNH GIẤY PHÉP XÂY DỰNG",
+    "blocks": [
+      {
+        "letterhead": true,
+        "nationalOnly": true,
+        "agency": "{{r.investor|%5Bch%C6%B0a%20x%C3%A1c%20nh%E1%BA%ADn%5D}}"
+      },
+      {
+        "text": [
+          "DỰ THẢO CHƯA KÝ, CHƯA BAN HÀNH. Nội dung chưa xác nhận phải được hoàn thiện từ hồ sơ.",
+          "Điều 55–56 và Điều 63 Nghị định 217/2026/NĐ-CP; cần đối chiếu quy định thẩm quyền tại địa phương.",
+          "Phiên bản đối chiếu: 2026-07.v2"
+        ]
+      },
+      {
+        "text": [
+          "Tham chiếu Mẫu 02 Phụ lục II NĐ 217/2026/NĐ-CP.",
+          "Kính gửi: {{r.authority}}"
+        ]
+      },
+      {
+        "heading": "1. Chủ đầu tư",
+        "text": [
+          "Chủ đầu tư: {{r.investor|%5Bch%C6%B0a%20x%C3%A1c%20nh%E1%BA%ADn%5D}}",
+          "Số định danh / mã số doanh nghiệp: {{details.ownerIdentity}}",
+          "Địa chỉ: {{details.ownerAddress}}",
+          "Người đại diện, chức vụ, số định danh: {{details.representative}}",
+          "Liên hệ: {{details.contact}}"
+        ]
+      },
+      {
+        "heading": "2. Địa điểm xây dựng",
+        "text": [
+          "{{r.location}}",
+          "Lô/thửa đất, diện tích đất và giấy tờ về đất: {{details.land}}"
+        ]
+      },
+      {
+        "heading": "3. Giấy phép đã cấp",
+        "text": [
+          "{{r.priorPermit}}",
+          "Nội dung giấy phép đã cấp: {{details.existing}}"
+        ]
+      },
+      {
+        "heading": "4. Nội dung đề nghị",
+        "text": [
+          "{{details.adjustment}}",
+          "Lý do: {{r.conditions}}"
+        ]
+      },
+      {
+        "heading": "5. Thời gian hoàn thành dự kiến",
+        "text": [
+          "{{details.schedule}} tháng"
+        ]
+      },
+      {
+        "heading": "6. Cam kết",
+        "text": [
+          "[Người làm đơn xác nhận cam kết thực hiện đúng giấy phép và chịu trách nhiệm theo pháp luật trước khi ký]."
+        ]
+      },
+      {
+        "heading": "Tài liệu gửi kèm",
+        "text": [
+          "{{document.name}}"
+        ]
+      },
+      {
+        "text": [
+          "Nguồn biểu mẫu: https://datafiles.chinhphu.vn/cpp/files/vbpq/2026/6/pl217.pdf"
+        ]
+      },
+      {
+        "keepTogether": true,
+        "heading": "Nơi nhận và ký xác nhận",
+        "text": [
+          "[Hoàn thiện nơi nhận theo hồ sơ và thẩm quyền].",
+          "[Người làm đơn/đại diện chủ đầu tư ký, ghi rõ họ tên; đóng dấu nếu có — chưa ký]"
+        ]
+      }
+    ]
+  },
+  "gpxd/extension/draft": {
+    "title": "DỰ THẢO NỘI DUNG GIA HẠN GIẤY PHÉP XÂY DỰNG",
+    "blocks": [
+      {
+        "letterhead": true,
+        "nationalOnly": false,
+        "agency": "{{r.authority|%5Bch%C6%B0a%20x%C3%A1c%20nh%E1%BA%ADn%5D}}"
+      },
+      {
+        "text": [
+          "DỰ THẢO CHƯA KÝ, CHƯA BAN HÀNH. Nội dung chưa xác nhận phải được hoàn thiện từ hồ sơ.",
+          "Điều 55–56 và Điều 63 Nghị định 217/2026/NĐ-CP; cần đối chiếu quy định thẩm quyền tại địa phương.",
+          "Phiên bản đối chiếu: 2026-07.v2"
+        ]
+      },
+      {
+        "text": [
+          "Ghi trực tiếp trên bản chính hoặc lập phụ lục bổ sung kèm giấy phép đã cấp theo điểm c khoản 3 Điều 63.",
+          "Mẫu giấy phép gốc: {{r.originalForm|%5Bch%C6%B0a%20x%C3%A1c%20%C4%91%E1%BB%8Bnh%20m%E1%BA%ABu%20gi%E1%BA%A5y%20ph%C3%A9p%20g%E1%BB%91c%5D}} Phụ lục II.",
+          "Giấy phép đã cấp: {{r.priorPermit}}",
+          "Chủ đầu tư: {{r.investor}}",
+          "Công trình: {{project}}",
+          "Địa điểm: {{r.location}}"
+        ]
+      },
+      {
+        "heading": "Nội dung gia hạn",
+        "text": [
+          "{{details.adjustment}}",
+          "Lần gia hạn: {{r.extensionCount|%5Bch%C6%B0a%20x%C3%A1c%20nh%E1%BA%ADn%5D}}; thời gian gia hạn: 12 tháng. Tối đa 02 lần.",
+          "Thời điểm có hiệu lực và mốc kết thúc: [cơ quan có thẩm quyền xác định].",
+          "{{r.conditions}}"
+        ]
+      },
+      {
+        "text": [
+          "Nguồn biểu mẫu: https://datafiles.chinhphu.vn/cpp/files/vbpq/2026/6/pl217.pdf"
+        ]
+      },
+      {
+        "keepTogether": true,
+        "heading": "Nơi nhận và ký ban hành",
+        "text": [
+          "[Hoàn thiện nơi nhận theo hồ sơ và thẩm quyền].",
+          "[Người có thẩm quyền ký, ghi rõ chức vụ, họ tên và đóng dấu — chưa ký]"
+        ]
+      }
+    ]
+  },
+  "gpxd/extension/application": {
+    "title": "DỰ THẢO ĐƠN ĐỀ NGHỊ GIA HẠN GIẤY PHÉP XÂY DỰNG",
+    "blocks": [
+      {
+        "letterhead": true,
+        "nationalOnly": true,
+        "agency": "{{r.investor|%5Bch%C6%B0a%20x%C3%A1c%20nh%E1%BA%ADn%5D}}"
+      },
+      {
+        "text": [
+          "DỰ THẢO CHƯA KÝ, CHƯA BAN HÀNH. Nội dung chưa xác nhận phải được hoàn thiện từ hồ sơ.",
+          "Điều 55–56 và Điều 63 Nghị định 217/2026/NĐ-CP; cần đối chiếu quy định thẩm quyền tại địa phương.",
+          "Phiên bản đối chiếu: 2026-07.v2"
+        ]
+      },
+      {
+        "text": [
+          "Tham chiếu Mẫu 02 Phụ lục II NĐ 217/2026/NĐ-CP.",
+          "Kính gửi: {{r.authority}}"
+        ]
+      },
+      {
+        "heading": "1. Chủ đầu tư",
+        "text": [
+          "Chủ đầu tư: {{r.investor|%5Bch%C6%B0a%20x%C3%A1c%20nh%E1%BA%ADn%5D}}",
+          "Số định danh / mã số doanh nghiệp: {{details.ownerIdentity}}",
+          "Địa chỉ: {{details.ownerAddress}}",
+          "Người đại diện, chức vụ, số định danh: {{details.representative}}",
+          "Liên hệ: {{details.contact}}"
+        ]
+      },
+      {
+        "heading": "2. Địa điểm xây dựng",
+        "text": [
+          "{{r.location}}",
+          "Lô/thửa đất, diện tích đất và giấy tờ về đất: {{details.land}}"
+        ]
+      },
+      {
+        "heading": "3. Giấy phép đã cấp",
+        "text": [
+          "{{r.priorPermit}}",
+          "Nội dung giấy phép đã cấp: {{details.existing}}"
+        ]
+      },
+      {
+        "heading": "4. Nội dung đề nghị",
+        "text": [
+          "{{details.adjustment}}",
+          "Lý do: {{r.conditions}}"
+        ]
+      },
+      {
+        "heading": "5. Thời gian hoàn thành dự kiến",
+        "text": [
+          "{{details.schedule}} tháng"
+        ]
+      },
+      {
+        "heading": "6. Cam kết",
+        "text": [
+          "[Người làm đơn xác nhận cam kết thực hiện đúng giấy phép và chịu trách nhiệm theo pháp luật trước khi ký]."
+        ]
+      },
+      {
+        "heading": "Tài liệu gửi kèm",
+        "text": [
+          "{{document.name}}"
+        ]
+      },
+      {
+        "text": [
+          "Nguồn biểu mẫu: https://datafiles.chinhphu.vn/cpp/files/vbpq/2026/6/pl217.pdf"
+        ]
+      },
+      {
+        "keepTogether": true,
+        "heading": "Nơi nhận và ký xác nhận",
+        "text": [
+          "[Hoàn thiện nơi nhận theo hồ sơ và thẩm quyền].",
+          "[Người làm đơn/đại diện chủ đầu tư ký, ghi rõ họ tên; đóng dấu nếu có — chưa ký]"
+        ]
+      }
+    ]
+  },
+  "gpxd/reissue/draft": {
+    "title": "PHIẾU CHUẨN BỊ BẢN SAO GIẤY PHÉP CẤP LẠI",
+    "blocks": [
+      {
+        "letterhead": true,
+        "nationalOnly": false,
+        "agency": "{{r.authority|%5Bch%C6%B0a%20x%C3%A1c%20nh%E1%BA%ADn%5D}}"
+      },
+      {
+        "text": [
+          "DỰ THẢO CHƯA KÝ, CHƯA BAN HÀNH. Nội dung chưa xác nhận phải được hoàn thiện từ hồ sơ.",
+          "Điều 55–56 và Điều 64 Nghị định 217/2026/NĐ-CP; cần đối chiếu quy định thẩm quyền tại địa phương.",
+          "Phiên bản đối chiếu: 2026-07.v2"
+        ]
+      },
+      {
+        "text": [
+          "Điều 64: giấy phép cấp lại là bản sao giấy phép đã cấp. Phiếu này để chuẩn bị bản sao, không phải giấy phép mới.",
+          "Giấy phép gốc: {{r.priorPermit}}",
+          "Lý do cấp lại: {{r.conditions}}",
+          "Nguồn để lập bản sao: [hồ sơ lưu đã xác minh]."
+        ]
+      }
+    ]
+  },
+  "gpxd/reissue/application": {
+    "title": "DỰ THẢO ĐƠN ĐỀ NGHỊ CẤP LẠI GIẤY PHÉP XÂY DỰNG",
+    "blocks": [
+      {
+        "letterhead": true,
+        "nationalOnly": true,
+        "agency": "{{r.investor|%5Bch%C6%B0a%20x%C3%A1c%20nh%E1%BA%ADn%5D}}"
+      },
+      {
+        "text": [
+          "DỰ THẢO CHƯA KÝ, CHƯA BAN HÀNH. Nội dung chưa xác nhận phải được hoàn thiện từ hồ sơ.",
+          "Điều 55–56 và Điều 64 Nghị định 217/2026/NĐ-CP; cần đối chiếu quy định thẩm quyền tại địa phương.",
+          "Phiên bản đối chiếu: 2026-07.v2"
+        ]
+      },
+      {
+        "text": [
+          "Tham chiếu Mẫu 02 Phụ lục II NĐ 217/2026/NĐ-CP.",
+          "Kính gửi: {{r.authority}}"
+        ]
+      },
+      {
+        "heading": "1. Chủ đầu tư",
+        "text": [
+          "Chủ đầu tư: {{r.investor|%5Bch%C6%B0a%20x%C3%A1c%20nh%E1%BA%ADn%5D}}",
+          "Số định danh / mã số doanh nghiệp: {{details.ownerIdentity}}",
+          "Địa chỉ: {{details.ownerAddress}}",
+          "Người đại diện, chức vụ, số định danh: {{details.representative}}",
+          "Liên hệ: {{details.contact}}"
+        ]
+      },
+      {
+        "heading": "2. Địa điểm xây dựng",
+        "text": [
+          "{{r.location}}",
+          "Lô/thửa đất, diện tích đất và giấy tờ về đất: {{details.land}}"
+        ]
+      },
+      {
+        "heading": "3. Giấy phép đã cấp",
+        "text": [
+          "{{r.priorPermit}}",
+          "Nội dung giấy phép đã cấp: {{details.existing}}"
+        ]
+      },
+      {
+        "heading": "4. Nội dung đề nghị",
+        "text": [
+          "{{details.adjustment}}",
+          "Lý do: {{r.conditions}}"
+        ]
+      },
+      {
+        "heading": "5. Thời gian hoàn thành dự kiến",
+        "text": [
+          "{{details.schedule}} tháng"
+        ]
+      },
+      {
+        "heading": "6. Cam kết",
+        "text": [
+          "[Người làm đơn xác nhận cam kết thực hiện đúng giấy phép và chịu trách nhiệm theo pháp luật trước khi ký]."
+        ]
+      },
+      {
+        "heading": "Tài liệu gửi kèm",
+        "text": [
+          "{{document.name}}"
+        ]
+      },
+      {
+        "text": [
+          "Nguồn biểu mẫu: https://datafiles.chinhphu.vn/cpp/files/vbpq/2026/6/pl217.pdf"
+        ]
+      },
+      {
+        "keepTogether": true,
+        "heading": "Nơi nhận và ký xác nhận",
+        "text": [
+          "[Hoàn thiện nơi nhận theo hồ sơ và thẩm quyền].",
+          "[Người làm đơn/đại diện chủ đầu tư ký, ghi rõ họ tên; đóng dấu nếu có — chưa ký]"
+        ]
+      }
+    ]
+  },
+  "nghiem_thu/start_notice/draft": {
+    "title": "DỰ THẢO PHIẾU TIẾP NHẬN THÔNG BÁO KHỞI CÔNG VÀ KẾ HOẠCH KIỂM TRA",
+    "blocks": [
+      {
+        "letterhead": true,
+        "nationalOnly": false,
+        "agency": "{{r.authority|%5Bch%C6%B0a%20x%C3%A1c%20nh%E1%BA%ADn%5D}}"
+      },
+      {
+        "text": [
+          "DỰ THẢO CHƯA KÝ, CHƯA BAN HÀNH. Nội dung chưa xác nhận phải được hoàn thiện từ hồ sơ.",
+          "Điều 48 Luật Xây dựng 135/2025; khoản 2 Điều 12, Điều 25–27, Phụ lục V NĐ 207/2026; điểm c khoản 2 Điều 67 NĐ 217/2026.",
+          "Phiên bản đối chiếu: 2026-07.v2"
+        ]
+      },
+      {
+        "text": [
+          "Đối chiếu Phụ lục V, khoản 2 Điều 12 và Điều 27 NĐ 207/2026/NĐ-CP.",
+          "Kính gửi: {{r.investor}}"
+        ]
+      },
+      {
+        "heading": "1. Thông tin khởi công",
+        "text": [
+          "Công trình: {{project}}; phạm vi: {{r.scope}}",
+          "Địa điểm: {{r.location}}",
+          "Mã định danh dự án: {{details.projectNationalId}}",
+          "Mã định danh công trình: {{details.buildingId}}",
+          "Loại, cấp công trình: {{details.buildingClass}}",
+          "Ngày khởi công (theo thông báo): {{details.startDate}}",
+          "Nhà thầu khảo sát, thiết kế, thi công, giám sát: {{details.contractors}}",
+          "Người liên hệ và số điện thoại: {{details.contact}}"
+        ]
+      },
+      {
+        "heading": "2. Căn cứ khởi công",
+        "text": [
+          "Số giấy phép xây dựng (nếu thuộc diện): {{details.permitNumber}}",
+          "Số, ngày thông báo kết quả thẩm định BCNCKT (công trình miễn phép): {{details.appraisalNotice}}",
+          "Công trình miễn phép: kiểm tra điều kiện miễn phép, sự phù hợp quy hoạch và thông số chủ yếu của thiết kế tại BCNCKT đã thẩm định (điểm c khoản 2 Điều 67 NĐ 217/2026)."
+        ]
+      },
+      {
+        "heading": "3. Cập nhật cơ sở dữ liệu và kế hoạch kiểm tra",
+        "text": [
+          "Cập nhật dữ liệu thông báo khởi công vào cơ sở dữ liệu quốc gia về hoạt động xây dựng.",
+          "Kế hoạch kiểm tra trong thi công (thời điểm, nội dung): {{details.inspectionPlan}}",
+          "Số lần kiểm tra trong thi công không quá 03 lần (cấp đặc biệt, cấp I) hoặc 02 lần (công trình khác), trừ trường hợp có sự cố hoặc nghiệm thu từng phần, có điều kiện.",
+          "{{r.conditions}}"
+        ]
+      },
+      {
+        "text": [
+          "Nguồn biểu mẫu: https://datafiles.chinhphu.vn/cpp/files/vbpq/2026/6/207-ndcp.signed.pdf"
+        ]
+      },
+      {
+        "keepTogether": true,
+        "heading": "Nơi nhận và ký ban hành",
+        "text": [
+          "[Hoàn thiện nơi nhận theo hồ sơ và thẩm quyền].",
+          "[Người có thẩm quyền ký, ghi rõ chức vụ, họ tên và đóng dấu — chưa ký]"
+        ]
+      }
+    ]
+  },
+  "nghiem_thu/start_notice/application": {
+    "title": "DỰ THẢO THÔNG BÁO KHỞI CÔNG XÂY DỰNG (PHỤ LỤC V)",
+    "blocks": [
+      {
+        "letterhead": true,
+        "nationalOnly": false,
+        "agency": "{{r.investor|%5Bch%C6%B0a%20x%C3%A1c%20nh%E1%BA%ADn%5D}}"
+      },
+      {
+        "text": [
+          "DỰ THẢO CHƯA KÝ, CHƯA BAN HÀNH. Nội dung chưa xác nhận phải được hoàn thiện từ hồ sơ.",
+          "Điều 48 Luật Xây dựng 135/2025; khoản 2 Điều 12, Điều 25–27, Phụ lục V NĐ 207/2026; điểm c khoản 2 Điều 67 NĐ 217/2026.",
+          "Phiên bản đối chiếu: 2026-07.v2"
+        ]
+      },
+      {
+        "text": [
+          "Đối chiếu Phụ lục V, khoản 2 Điều 12 và Điều 27 NĐ 207/2026/NĐ-CP.",
+          "Kính gửi: {{r.investor}}"
+        ]
+      },
+      {
+        "heading": "1. Thông tin khởi công",
+        "text": [
+          "Công trình: {{project}}; phạm vi: {{r.scope}}",
+          "Địa điểm: {{r.location}}",
+          "Mã định danh dự án: {{details.projectNationalId}}",
+          "Mã định danh công trình: {{details.buildingId}}",
+          "Loại, cấp công trình: {{details.buildingClass}}",
+          "Ngày khởi công (theo thông báo): {{details.startDate}}",
+          "Nhà thầu khảo sát, thiết kế, thi công, giám sát: {{details.contractors}}",
+          "Người liên hệ và số điện thoại: {{details.contact}}"
+        ]
+      },
+      {
+        "heading": "2. Căn cứ khởi công",
+        "text": [
+          "Số giấy phép xây dựng (nếu thuộc diện): {{details.permitNumber}}",
+          "Số, ngày thông báo kết quả thẩm định BCNCKT (công trình miễn phép): {{details.appraisalNotice}}",
+          "Công trình miễn phép: kiểm tra điều kiện miễn phép, sự phù hợp quy hoạch và thông số chủ yếu của thiết kế tại BCNCKT đã thẩm định (điểm c khoản 2 Điều 67 NĐ 217/2026)."
+        ]
+      },
+      {
+        "heading": "3. Cập nhật cơ sở dữ liệu và kế hoạch kiểm tra",
+        "text": [
+          "Cập nhật dữ liệu thông báo khởi công vào cơ sở dữ liệu quốc gia về hoạt động xây dựng.",
+          "Kế hoạch kiểm tra trong thi công (thời điểm, nội dung): {{details.inspectionPlan}}",
+          "Số lần kiểm tra trong thi công không quá 03 lần (cấp đặc biệt, cấp I) hoặc 02 lần (công trình khác), trừ trường hợp có sự cố hoặc nghiệm thu từng phần, có điều kiện.",
+          "{{r.conditions}}"
+        ]
+      },
+      {
+        "text": [
+          "Nguồn biểu mẫu: https://datafiles.chinhphu.vn/cpp/files/vbpq/2026/6/207-ndcp.signed.pdf"
+        ]
+      },
+      {
+        "keepTogether": true,
+        "heading": "Nơi nhận và ký xác nhận",
+        "text": [
+          "[Hoàn thiện nơi nhận theo hồ sơ và thẩm quyền].",
+          "[Người làm đơn/đại diện chủ đầu tư ký, ghi rõ họ tên; đóng dấu nếu có — chưa ký]"
+        ]
+      }
+    ]
+  },
+  "nghiem_thu/during/draft": {
+    "title": "DỰ THẢO THÔNG BÁO KẾT QUẢ KIỂM TRA CÔNG TÁC NGHIỆM THU TRONG QUÁ TRÌNH THI CÔNG",
+    "blocks": [
+      {
+        "letterhead": true,
+        "nationalOnly": false,
+        "agency": "{{r.authority|%5Bch%C6%B0a%20x%C3%A1c%20nh%E1%BA%ADn%5D}}"
+      },
+      {
+        "text": [
+          "DỰ THẢO CHƯA KÝ, CHƯA BAN HÀNH. Nội dung chưa xác nhận phải được hoàn thiện từ hồ sơ.",
+          "Điều 8, 25–27 NĐ 207/2026/NĐ-CP (không quá 03 lần với cấp đặc biệt, cấp I; 02 lần với công trình khác).",
+          "Phiên bản đối chiếu: 2026-07.v2"
+        ]
+      },
+      {
+        "text": [
+          "Điểm a khoản 1, khoản 3 Điều 27 NĐ 207/2026/NĐ-CP; thời hạn ra văn bản không quá 10 ngày làm việc kể từ ngày kiểm tra.",
+          "Kính gửi: {{r.investor}}",
+          "Căn cứ xác định thẩm quyền: {{details.authorityBasis}}"
+        ]
+      },
+      {
+        "heading": "1. Công trình được kiểm tra",
+        "text": [
+          "Tên: {{project}}; phạm vi: {{r.scope}}",
+          "Địa điểm: {{r.location}}",
+          "Loại, cấp công trình: {{details.buildingClass}}",
+          "Ngày khởi công (theo thông báo): {{details.startDate}}",
+          "Nhà thầu khảo sát, thiết kế, thi công, giám sát: {{details.contractors}}"
+        ]
+      },
+      {
+        "heading": "2. Kiểm tra hiện trường",
+        "text": [
+          "Ngày kiểm tra: {{dates.visitDate|%5Bch%C6%B0a%20x%C3%A1c%20nh%E1%BA%ADn%5D}}",
+          "Thành phần: {{r.participants}}",
+          "{{r.observations}}"
+        ]
+      },
+      {
+        "heading": "3. Kết quả kiểm tra việc tuân thủ quản lý chất lượng, an toàn",
+        "text": [
+          "Đánh giá chất lượng so với thiết kế được phê duyệt: {{details.qualityAssessment}}",
+          "Yêu cầu thí nghiệm đối chứng, kiểm định (Điều 8 NĐ 207/2026): {{details.verificationTests}}",
+          "Lý do kiểm tra vượt số lần (sự cố; nghiệm thu từng phần, có điều kiện): {{details.extraReason}}",
+          "- {{defect.description}} ({{defect.responsible}})"
+        ]
+      },
+      {
+        "heading": "4. Yêu cầu đối với chủ đầu tư",
+        "text": [
+          "{{r.conditions|%5BC%C3%A1c%20t%E1%BB%93n%20t%E1%BA%A1i%20c%E1%BA%A7n%20kh%E1%BA%AFc%20ph%E1%BB%A5c%2C%20th%E1%BB%9Di%20h%E1%BA%A1n%20b%C3%A1o%20c%C3%A1o%5D.}}"
+        ]
+      },
+      {
+        "text": [
+          "Nguồn biểu mẫu: https://datafiles.chinhphu.vn/cpp/files/vbpq/2026/6/207-ndcp.signed.pdf"
+        ]
+      },
+      {
+        "keepTogether": true,
+        "heading": "Nơi nhận và ký ban hành",
+        "text": [
+          "[Hoàn thiện nơi nhận theo hồ sơ và thẩm quyền].",
+          "[Người có thẩm quyền ký, ghi rõ chức vụ, họ tên và đóng dấu — chưa ký]"
+        ]
+      }
+    ]
+  },
+  "nghiem_thu/during/application": {
+    "title": "DỰ THẢO THÔNG BÁO KẾT QUẢ KIỂM TRA CÔNG TÁC NGHIỆM THU TRONG QUÁ TRÌNH THI CÔNG",
+    "blocks": [
+      {
+        "letterhead": true,
+        "nationalOnly": false,
+        "agency": "{{r.investor|%5Bch%C6%B0a%20x%C3%A1c%20nh%E1%BA%ADn%5D}}"
+      },
+      {
+        "text": [
+          "DỰ THẢO CHƯA KÝ, CHƯA BAN HÀNH. Nội dung chưa xác nhận phải được hoàn thiện từ hồ sơ.",
+          "Điều 8, 25–27 NĐ 207/2026/NĐ-CP (không quá 03 lần với cấp đặc biệt, cấp I; 02 lần với công trình khác).",
+          "Phiên bản đối chiếu: 2026-07.v2"
+        ]
+      },
+      {
+        "text": [
+          "Điểm a khoản 1, khoản 3 Điều 27 NĐ 207/2026/NĐ-CP; thời hạn ra văn bản không quá 10 ngày làm việc kể từ ngày kiểm tra.",
+          "Kính gửi: {{r.investor}}",
+          "Căn cứ xác định thẩm quyền: {{details.authorityBasis}}"
+        ]
+      },
+      {
+        "heading": "1. Công trình được kiểm tra",
+        "text": [
+          "Tên: {{project}}; phạm vi: {{r.scope}}",
+          "Địa điểm: {{r.location}}",
+          "Loại, cấp công trình: {{details.buildingClass}}",
+          "Ngày khởi công (theo thông báo): {{details.startDate}}",
+          "Nhà thầu khảo sát, thiết kế, thi công, giám sát: {{details.contractors}}"
+        ]
+      },
+      {
+        "heading": "2. Kiểm tra hiện trường",
+        "text": [
+          "Ngày kiểm tra: {{dates.visitDate|%5Bch%C6%B0a%20x%C3%A1c%20nh%E1%BA%ADn%5D}}",
+          "Thành phần: {{r.participants}}",
+          "{{r.observations}}"
+        ]
+      },
+      {
+        "heading": "3. Kết quả kiểm tra việc tuân thủ quản lý chất lượng, an toàn",
+        "text": [
+          "Đánh giá chất lượng so với thiết kế được phê duyệt: {{details.qualityAssessment}}",
+          "Yêu cầu thí nghiệm đối chứng, kiểm định (Điều 8 NĐ 207/2026): {{details.verificationTests}}",
+          "Lý do kiểm tra vượt số lần (sự cố; nghiệm thu từng phần, có điều kiện): {{details.extraReason}}",
+          "- {{defect.description}} ({{defect.responsible}})"
+        ]
+      },
+      {
+        "heading": "4. Yêu cầu đối với chủ đầu tư",
+        "text": [
+          "{{r.conditions|%5BC%C3%A1c%20t%E1%BB%93n%20t%E1%BA%A1i%20c%E1%BA%A7n%20kh%E1%BA%AFc%20ph%E1%BB%A5c%2C%20th%E1%BB%9Di%20h%E1%BA%A1n%20b%C3%A1o%20c%C3%A1o%5D.}}"
+        ]
+      },
+      {
+        "text": [
+          "Nguồn biểu mẫu: https://datafiles.chinhphu.vn/cpp/files/vbpq/2026/6/207-ndcp.signed.pdf"
+        ]
+      },
+      {
+        "keepTogether": true,
+        "heading": "Nơi nhận và ký xác nhận",
+        "text": [
+          "[Hoàn thiện nơi nhận theo hồ sơ và thẩm quyền].",
+          "[Người làm đơn/đại diện chủ đầu tư ký, ghi rõ họ tên; đóng dấu nếu có — chưa ký]"
+        ]
+      }
+    ]
+  },
+  "nghiem_thu/complete/draft": {
+    "title": "DỰ THẢO THÔNG BÁO KẾT QUẢ KIỂM TRA CÔNG TÁC NGHIỆM THU",
+    "blocks": [
+      {
+        "letterhead": true,
+        "nationalOnly": false,
+        "agency": "{{r.authority|%5Bch%C6%B0a%20x%C3%A1c%20nh%E1%BA%ADn%5D}}"
+      },
+      {
+        "text": [
+          "DỰ THẢO CHƯA KÝ, CHƯA BAN HÀNH. Nội dung chưa xác nhận phải được hoàn thiện từ hồ sơ.",
+          "Điều 24–30, Phụ lục VI, VII, VIII, X NĐ 207/2026/NĐ-CP; Điều 2–5 TT 32/2026/TT-BXD theo đối tượng.",
+          "Phiên bản đối chiếu: 2026-07.v2"
+        ]
+      },
+      {
+        "text": [
+          "Khung Phụ lục VIII NĐ 207/2026/NĐ-CP.",
+          "Kính gửi: {{r.investor}}",
+          "Căn cứ xác định thẩm quyền: {{details.authorityBasis}}",
+          "Căn cứ giấy phép (nếu thuộc diện): {{r.priorPermit}}",
+          "Căn cứ thiết kế được duyệt, điều chỉnh: {{r.designBasis}}",
+          "Báo cáo hoàn thành thi công (số, ngày): {{details.completionReport}}",
+          "Báo cáo khắc phục (nếu có): {{details.correctionReport}}",
+          "Biên bản nghiệm thu của chủ đầu tư (số, ngày): {{details.acceptanceRecord}}",
+          "Văn bản PCCC, môi trường, chuyên ngành: {{details.specializedBasis}}"
+        ]
+      },
+      {
+        "heading": "Kết quả kiểm tra",
+        "text": [
+          "[Cơ quan có thẩm quyền xác định chấp thuận hoặc không chấp thuận kết quả nghiệm thu hoàn thành của chủ đầu tư; chưa lựa chọn kết luận]."
+        ]
+      },
+      {
+        "heading": "1. Công trình, hạng mục và phạm vi",
+        "text": [
+          "Tên: {{project}}",
+          "Mã định danh dự án: {{details.projectNationalId}}",
+          "Mã định danh công trình: {{details.buildingId}}",
+          "Địa điểm: {{r.location}}",
+          "Loại, cấp công trình: {{details.buildingClass}}",
+          "Thông số: {{r.parameters}}",
+          "Phạm vi: {{r.scope}}"
+        ]
+      },
+      {
+        "heading": "2. Yêu cầu đối với chủ đầu tư",
+        "text": [
+          "Lưu trữ hồ sơ hoàn thành; quản lý, khai thác, vận hành theo công năng và thiết kế được duyệt.",
+          "Điều kiện, giới hạn sử dụng và yêu cầu cụ thể: {{r.conditions|%5Bch%C6%B0a%20x%C3%A1c%20nh%E1%BA%ADn%5D}}"
+        ]
+      },
+      {
+        "heading": "Công việc còn lại và theo dõi khắc phục",
+        "text": [
+          "{{defect.description}} — Phụ trách: {{defect.responsible}}; hạn: {{dates.defectDue|%5Bch%C6%B0a%20x%C3%A1c%20nh%E1%BA%ADn%5D}}; {{defect.statusLabel}}. {{defect.resolution}}"
+        ]
+      },
+      {
+        "text": [
+          "Nguồn biểu mẫu: https://datafiles.chinhphu.vn/cpp/files/vbpq/2026/6/207-ndcp.signed.pdf"
+        ]
+      },
+      {
+        "keepTogether": true,
+        "heading": "Nơi nhận và ký ban hành",
+        "text": [
+          "[Hoàn thiện nơi nhận theo hồ sơ và thẩm quyền].",
+          "[Người có thẩm quyền ký, ghi rõ chức vụ, họ tên và đóng dấu — chưa ký]"
+        ]
+      }
+    ]
+  },
+  "nghiem_thu/complete/application": {
+    "title": "DỰ THẢO BÁO CÁO HOÀN THÀNH THI CÔNG XÂY DỰNG",
+    "blocks": [
+      {
+        "letterhead": true,
+        "nationalOnly": false,
+        "agency": "{{r.investor|%5Bch%C6%B0a%20x%C3%A1c%20nh%E1%BA%ADn%5D}}"
+      },
+      {
+        "text": [
+          "DỰ THẢO CHƯA KÝ, CHƯA BAN HÀNH. Nội dung chưa xác nhận phải được hoàn thiện từ hồ sơ.",
+          "Điều 24–30, Phụ lục VI, VII, VIII, X NĐ 207/2026/NĐ-CP; Điều 2–5 TT 32/2026/TT-BXD theo đối tượng.",
+          "Phiên bản đối chiếu: 2026-07.v2"
+        ]
+      },
+      {
+        "text": [
+          "Khung Phụ lục VI NĐ 207/2026/NĐ-CP.",
+          "Kính gửi: {{r.authority}}"
+        ]
+      },
+      {
+        "heading": "Thông tin và kết quả thi công",
+        "text": [
+          "1. Tên công trình, phần công trình thuộc dự án: {{project}}; phạm vi: {{r.scope}}",
+          "2. Mã định danh dự án: {{details.projectNationalId}}; mã định danh công trình: {{details.buildingId}}",
+          "3. Địa điểm: {{r.location}}",
+          "4. Người liên hệ, số điện thoại: {{details.contact}}",
+          "5. Quy mô, thông số kỹ thuật: {{r.parameters}}",
+          "6. Nhà thầu khảo sát, thiết kế, thi công, giám sát: {{details.contractors}}",
+          "7. Ngày khởi công, ngày hoàn thành: {{details.constructionPeriod}}",
+          "8. Khối lượng thực hiện: {{details.completedQuantities}}",
+          "9. Đánh giá chất lượng so với thiết kế: {{details.qualityAssessment}}",
+          "10. Điều kiện đưa vào sử dụng: {{r.conditions}}",
+          "11. Danh mục hồ sơ hoàn thành được gửi kèm dưới đây."
+        ]
+      },
+      {
+        "heading": "Tài liệu gửi kèm",
+        "text": [
+          "{{document.name}}"
+        ]
+      },
+      {
+        "heading": "Cam kết của chủ đầu tư",
+        "text": [
+          "[Chủ đầu tư đối chiếu và xác nhận việc thi công theo thiết kế, đáp ứng điều kiện nghiệm thu và tính chính xác của báo cáo trước khi ký]."
+        ]
+      },
+      {
+        "text": [
+          "Nguồn biểu mẫu: https://datafiles.chinhphu.vn/cpp/files/vbpq/2026/6/207-ndcp.signed.pdf"
+        ]
+      },
+      {
+        "keepTogether": true,
+        "heading": "Nơi nhận và ký xác nhận",
+        "text": [
+          "[Hoàn thiện nơi nhận theo hồ sơ và thẩm quyền].",
+          "[Người làm đơn/đại diện chủ đầu tư ký, ghi rõ họ tên; đóng dấu nếu có — chưa ký]"
+        ]
+      }
+    ]
+  },
+  "nghiem_thu/conditional/draft": {
+    "title": "DỰ THẢO THÔNG BÁO KẾT QUẢ KIỂM TRA CÔNG TÁC NGHIỆM THU",
+    "blocks": [
+      {
+        "letterhead": true,
+        "nationalOnly": false,
+        "agency": "{{r.authority|%5Bch%C6%B0a%20x%C3%A1c%20nh%E1%BA%ADn%5D}}"
+      },
+      {
+        "text": [
+          "DỰ THẢO CHƯA KÝ, CHƯA BAN HÀNH. Nội dung chưa xác nhận phải được hoàn thiện từ hồ sơ.",
+          "Điều 24–30, Phụ lục VI, VII, VIII, X NĐ 207/2026/NĐ-CP; Điều 2–5 TT 32/2026/TT-BXD theo đối tượng.",
+          "Phiên bản đối chiếu: 2026-07.v2"
+        ]
+      },
+      {
+        "text": [
+          "Khung Phụ lục VIII NĐ 207/2026/NĐ-CP.",
+          "Kính gửi: {{r.investor}}",
+          "Căn cứ xác định thẩm quyền: {{details.authorityBasis}}",
+          "Căn cứ giấy phép (nếu thuộc diện): {{r.priorPermit}}",
+          "Căn cứ thiết kế được duyệt, điều chỉnh: {{r.designBasis}}",
+          "Báo cáo hoàn thành thi công (số, ngày): {{details.completionReport}}",
+          "Báo cáo khắc phục (nếu có): {{details.correctionReport}}",
+          "Biên bản nghiệm thu của chủ đầu tư (số, ngày): {{details.acceptanceRecord}}",
+          "Văn bản PCCC, môi trường, chuyên ngành: {{details.specializedBasis}}"
+        ]
+      },
+      {
+        "heading": "Kết quả kiểm tra",
+        "text": [
+          "[Cơ quan có thẩm quyền xác định chấp thuận hoặc không chấp thuận kết quả nghiệm thu có điều kiện của chủ đầu tư; chưa lựa chọn kết luận]."
+        ]
+      },
+      {
+        "heading": "1. Công trình, hạng mục và phạm vi",
+        "text": [
+          "Tên: {{project}}",
+          "Mã định danh dự án: {{details.projectNationalId}}",
+          "Mã định danh công trình: {{details.buildingId}}",
+          "Địa điểm: {{r.location}}",
+          "Loại, cấp công trình: {{details.buildingClass}}",
+          "Thông số: {{r.parameters}}",
+          "Phạm vi: {{r.scope}}"
+        ]
+      },
+      {
+        "heading": "2. Yêu cầu đối với chủ đầu tư",
+        "text": [
+          "Lưu trữ hồ sơ hoàn thành; quản lý, khai thác, vận hành theo công năng và thiết kế được duyệt.",
+          "Điều kiện, giới hạn sử dụng và yêu cầu cụ thể: {{r.conditions|%5Bch%C6%B0a%20x%C3%A1c%20nh%E1%BA%ADn%5D}}"
+        ]
+      },
+      {
+        "heading": "Công việc còn lại và theo dõi khắc phục",
+        "text": [
+          "{{defect.description}} — Phụ trách: {{defect.responsible}}; hạn: {{dates.defectDue|%5Bch%C6%B0a%20x%C3%A1c%20nh%E1%BA%ADn%5D}}; {{defect.statusLabel}}. {{defect.resolution}}"
+        ]
+      },
+      {
+        "text": [
+          "Chủ đầu tư hoàn thành tồn tại, tổ chức nghiệm thu hoàn thành và báo cáo kèm báo cáo nhà thầu để cơ quan chuyên môn xem xét theo khoản 5 Điều 27."
+        ]
+      },
+      {
+        "text": [
+          "Nguồn biểu mẫu: https://datafiles.chinhphu.vn/cpp/files/vbpq/2026/6/207-ndcp.signed.pdf"
+        ]
+      },
+      {
+        "keepTogether": true,
+        "heading": "Nơi nhận và ký ban hành",
+        "text": [
+          "[Hoàn thiện nơi nhận theo hồ sơ và thẩm quyền].",
+          "[Người có thẩm quyền ký, ghi rõ chức vụ, họ tên và đóng dấu — chưa ký]"
+        ]
+      }
+    ]
+  },
+  "nghiem_thu/conditional/application": {
+    "title": "DỰ THẢO BÁO CÁO HOÀN THÀNH THI CÔNG XÂY DỰNG",
+    "blocks": [
+      {
+        "letterhead": true,
+        "nationalOnly": false,
+        "agency": "{{r.investor|%5Bch%C6%B0a%20x%C3%A1c%20nh%E1%BA%ADn%5D}}"
+      },
+      {
+        "text": [
+          "DỰ THẢO CHƯA KÝ, CHƯA BAN HÀNH. Nội dung chưa xác nhận phải được hoàn thiện từ hồ sơ.",
+          "Điều 24–30, Phụ lục VI, VII, VIII, X NĐ 207/2026/NĐ-CP; Điều 2–5 TT 32/2026/TT-BXD theo đối tượng.",
+          "Phiên bản đối chiếu: 2026-07.v2"
+        ]
+      },
+      {
+        "text": [
+          "Khung Phụ lục VI NĐ 207/2026/NĐ-CP.",
+          "Kính gửi: {{r.authority}}"
+        ]
+      },
+      {
+        "heading": "Thông tin và kết quả thi công",
+        "text": [
+          "1. Tên công trình, phần công trình thuộc dự án: {{project}}; phạm vi: {{r.scope}}",
+          "2. Mã định danh dự án: {{details.projectNationalId}}; mã định danh công trình: {{details.buildingId}}",
+          "3. Địa điểm: {{r.location}}",
+          "4. Người liên hệ, số điện thoại: {{details.contact}}",
+          "5. Quy mô, thông số kỹ thuật: {{r.parameters}}",
+          "6. Nhà thầu khảo sát, thiết kế, thi công, giám sát: {{details.contractors}}",
+          "7. Ngày khởi công, ngày hoàn thành: {{details.constructionPeriod}}",
+          "8. Khối lượng thực hiện: {{details.completedQuantities}}",
+          "9. Đánh giá chất lượng so với thiết kế: {{details.qualityAssessment}}",
+          "10. Điều kiện đưa vào sử dụng: {{r.conditions}}",
+          "11. Danh mục hồ sơ hoàn thành được gửi kèm dưới đây."
+        ]
+      },
+      {
+        "heading": "Tài liệu gửi kèm",
+        "text": [
+          "{{document.name}}"
+        ]
+      },
+      {
+        "heading": "Cam kết của chủ đầu tư",
+        "text": [
+          "[Chủ đầu tư đối chiếu và xác nhận việc thi công theo thiết kế, đáp ứng điều kiện nghiệm thu và tính chính xác của báo cáo trước khi ký]."
+        ]
+      },
+      {
+        "text": [
+          "Nguồn biểu mẫu: https://datafiles.chinhphu.vn/cpp/files/vbpq/2026/6/207-ndcp.signed.pdf"
+        ]
+      },
+      {
+        "keepTogether": true,
+        "heading": "Nơi nhận và ký xác nhận",
+        "text": [
+          "[Hoàn thiện nơi nhận theo hồ sơ và thẩm quyền].",
+          "[Người làm đơn/đại diện chủ đầu tư ký, ghi rõ họ tên; đóng dấu nếu có — chưa ký]"
+        ]
+      }
+    ]
+  },
+  "nghiem_thu/partial/draft": {
+    "title": "DỰ THẢO THÔNG BÁO KẾT QUẢ KIỂM TRA CÔNG TÁC NGHIỆM THU",
+    "blocks": [
+      {
+        "letterhead": true,
+        "nationalOnly": false,
+        "agency": "{{r.authority|%5Bch%C6%B0a%20x%C3%A1c%20nh%E1%BA%ADn%5D}}"
+      },
+      {
+        "text": [
+          "DỰ THẢO CHƯA KÝ, CHƯA BAN HÀNH. Nội dung chưa xác nhận phải được hoàn thiện từ hồ sơ.",
+          "Điều 24–30, Phụ lục VI, VII, VIII, X NĐ 207/2026/NĐ-CP; Điều 2–5 TT 32/2026/TT-BXD theo đối tượng.",
+          "Phiên bản đối chiếu: 2026-07.v2"
+        ]
+      },
+      {
+        "text": [
+          "Khung Phụ lục VIII NĐ 207/2026/NĐ-CP.",
+          "Kính gửi: {{r.investor}}",
+          "Căn cứ xác định thẩm quyền: {{details.authorityBasis}}",
+          "Căn cứ giấy phép (nếu thuộc diện): {{r.priorPermit}}",
+          "Căn cứ thiết kế được duyệt, điều chỉnh: {{r.designBasis}}",
+          "Báo cáo hoàn thành thi công (số, ngày): {{details.completionReport}}",
+          "Báo cáo khắc phục (nếu có): {{details.correctionReport}}",
+          "Biên bản nghiệm thu của chủ đầu tư (số, ngày): {{details.acceptanceRecord}}",
+          "Văn bản PCCC, môi trường, chuyên ngành: {{details.specializedBasis}}"
+        ]
+      },
+      {
+        "heading": "Kết quả kiểm tra",
+        "text": [
+          "[Cơ quan có thẩm quyền xác định chấp thuận hoặc không chấp thuận kết quả nghiệm thu một phần của chủ đầu tư; chưa lựa chọn kết luận]."
+        ]
+      },
+      {
+        "heading": "1. Công trình, hạng mục và phạm vi",
+        "text": [
+          "Tên: {{project}}",
+          "Mã định danh dự án: {{details.projectNationalId}}",
+          "Mã định danh công trình: {{details.buildingId}}",
+          "Địa điểm: {{r.location}}",
+          "Loại, cấp công trình: {{details.buildingClass}}",
+          "Thông số: {{r.parameters}}",
+          "Phạm vi: {{r.scope}}"
+        ]
+      },
+      {
+        "heading": "2. Yêu cầu đối với chủ đầu tư",
+        "text": [
+          "Lưu trữ hồ sơ hoàn thành; quản lý, khai thác, vận hành theo công năng và thiết kế được duyệt.",
+          "Điều kiện, giới hạn sử dụng và yêu cầu cụ thể: {{r.conditions|%5Bch%C6%B0a%20x%C3%A1c%20nh%E1%BA%ADn%5D}}"
+        ]
+      },
+      {
+        "text": [
+          "An toàn, vận hành khi tiếp tục thi công: {{details.remainingSafety}}"
+        ]
+      },
+      {
+        "heading": "Công việc còn lại và theo dõi khắc phục",
+        "text": [
+          "{{defect.description}} — Phụ trách: {{defect.responsible}}; hạn: {{dates.defectDue|%5Bch%C6%B0a%20x%C3%A1c%20nh%E1%BA%ADn%5D}}; {{defect.statusLabel}}. {{defect.resolution}}"
+        ]
+      },
+      {
+        "text": [
+          "Nguồn biểu mẫu: https://datafiles.chinhphu.vn/cpp/files/vbpq/2026/6/207-ndcp.signed.pdf"
+        ]
+      },
+      {
+        "keepTogether": true,
+        "heading": "Nơi nhận và ký ban hành",
+        "text": [
+          "[Hoàn thiện nơi nhận theo hồ sơ và thẩm quyền].",
+          "[Người có thẩm quyền ký, ghi rõ chức vụ, họ tên và đóng dấu — chưa ký]"
+        ]
+      }
+    ]
+  },
+  "nghiem_thu/partial/application": {
+    "title": "DỰ THẢO BÁO CÁO HOÀN THÀNH THI CÔNG XÂY DỰNG",
+    "blocks": [
+      {
+        "letterhead": true,
+        "nationalOnly": false,
+        "agency": "{{r.investor|%5Bch%C6%B0a%20x%C3%A1c%20nh%E1%BA%ADn%5D}}"
+      },
+      {
+        "text": [
+          "DỰ THẢO CHƯA KÝ, CHƯA BAN HÀNH. Nội dung chưa xác nhận phải được hoàn thiện từ hồ sơ.",
+          "Điều 24–30, Phụ lục VI, VII, VIII, X NĐ 207/2026/NĐ-CP; Điều 2–5 TT 32/2026/TT-BXD theo đối tượng.",
+          "Phiên bản đối chiếu: 2026-07.v2"
+        ]
+      },
+      {
+        "text": [
+          "Khung Phụ lục VI NĐ 207/2026/NĐ-CP.",
+          "Kính gửi: {{r.authority}}"
+        ]
+      },
+      {
+        "heading": "Thông tin và kết quả thi công",
+        "text": [
+          "1. Tên công trình, phần công trình thuộc dự án: {{project}}; phạm vi: {{r.scope}}",
+          "2. Mã định danh dự án: {{details.projectNationalId}}; mã định danh công trình: {{details.buildingId}}",
+          "3. Địa điểm: {{r.location}}",
+          "4. Người liên hệ, số điện thoại: {{details.contact}}",
+          "5. Quy mô, thông số kỹ thuật: {{r.parameters}}",
+          "6. Nhà thầu khảo sát, thiết kế, thi công, giám sát: {{details.contractors}}",
+          "7. Ngày khởi công, ngày hoàn thành: {{details.constructionPeriod}}",
+          "8. Khối lượng thực hiện: {{details.completedQuantities}}",
+          "9. Đánh giá chất lượng so với thiết kế: {{details.qualityAssessment}}",
+          "10. Điều kiện đưa vào sử dụng: {{r.conditions}}",
+          "11. Danh mục hồ sơ hoàn thành được gửi kèm dưới đây."
+        ]
+      },
+      {
+        "heading": "Tài liệu gửi kèm",
+        "text": [
+          "{{document.name}}"
+        ]
+      },
+      {
+        "heading": "Cam kết của chủ đầu tư",
+        "text": [
+          "[Chủ đầu tư đối chiếu và xác nhận việc thi công theo thiết kế, đáp ứng điều kiện nghiệm thu và tính chính xác của báo cáo trước khi ký]."
+        ]
+      },
+      {
+        "text": [
+          "Nguồn biểu mẫu: https://datafiles.chinhphu.vn/cpp/files/vbpq/2026/6/207-ndcp.signed.pdf"
+        ]
+      },
+      {
+        "keepTogether": true,
+        "heading": "Nơi nhận và ký xác nhận",
+        "text": [
+          "[Hoàn thiện nơi nhận theo hồ sơ và thẩm quyền].",
+          "[Người làm đơn/đại diện chủ đầu tư ký, ghi rõ họ tên; đóng dấu nếu có — chưa ký]"
+        ]
+      }
+    ]
+  }
+}

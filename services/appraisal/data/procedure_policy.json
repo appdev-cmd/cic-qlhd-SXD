@@ -1,0 +1,68 @@
+{
+  "VERSION": "nd217-nd207-2026.07",
+  "POLICY": {
+    "bcnckt": {
+      "intakeDays": 5,
+      "intakeBasis": "Khoản 3 Điều 36 NĐ 217/2026/NĐ-CP",
+      "supplement": {
+        "max": 1,
+        "form": "Mẫu số 15 Phụ lục I NĐ 217/2026",
+        "waitDays": 20,
+        "phase": "intake",
+        "basis": "Điểm a khoản 3, khoản 5 Điều 36 NĐ 217/2026/NĐ-CP"
+      },
+      "suspend": {
+        "max": 1,
+        "form": "Mẫu số 16 Phụ lục I NĐ 217/2026",
+        "waitDays": 20,
+        "basis": "Khoản 4, khoản 5 Điều 36 NĐ 217/2026/NĐ-CP"
+      },
+      "extend": {
+        "max": 1,
+        "basis": "Khoản 2 Điều 37 NĐ 217/2026/NĐ-CP"
+      },
+      "restartBasis": "Khoản 5 Điều 36 NĐ 217/2026/NĐ-CP (thời hạn thẩm định được tính lại từ đầu)",
+      "resultForm": "Mẫu số 03 Phụ lục I NĐ 217/2026",
+      "stampForm": "Mẫu số 14 Phụ lục I NĐ 217/2026"
+    },
+    "gpxd": {
+      "intakeDays": 5,
+      "intakeDaysHouse": 3,
+      "intakeDaysRenewal": 2,
+      "intakeBasis": "Điểm a khoản 2, điểm a khoản 3 Điều 54 NĐ 217/2026/NĐ-CP",
+      "supplement": {
+        "max": 1,
+        "form": "Thông báo bổ sung một lần (thư điện tử/tin nhắn)",
+        "waitDays": 2,
+        "waitDaysRenewal": 1,
+        "refuseDays": 1,
+        "phase": "review",
+        "basis": "Điểm b khoản 2, điểm b khoản 3 Điều 54 NĐ 217/2026/NĐ-CP"
+      },
+      "suspend": null,
+      "extend": null,
+      "consultDays": 2,
+      "consultBasis": "Điểm c khoản 2 Điều 54 NĐ 217/2026/NĐ-CP",
+      "resultForm": "Mẫu số 03/04/05 Phụ lục II NĐ 217/2026"
+    },
+    "nghiem_thu": {
+      "intakeDays": null,
+      "supplement": {
+        "max": null,
+        "form": "Văn bản yêu cầu bổ sung, giải trình",
+        "waitDays": null,
+        "phase": "review",
+        "basis": "Điểm a khoản 4 Điều 25 NĐ 207/2026/NĐ-CP"
+      },
+      "suspend": null,
+      "extend": null,
+      "duringResultDays": 10,
+      "duringChecks": {
+        "high": 3,
+        "other": 2
+      },
+      "duringBasis": "Khoản 3 Điều 27 NĐ 207/2026/NĐ-CP",
+      "resultForm": "Phụ lục VIII NĐ 207/2026"
+    }
+  }
+}

@@ -6,6 +6,19 @@ import { transaction } from './database.js';
 import { HttpError } from './errors.js';
 import { checkConnection, configured, status } from './provider.js';
 import { openDemoDatabase } from './sqlite.js';
+import { casesRouter } from './routes-cases.js';
+import { documentsRouter } from './routes-documents.js';
+import { reviewRouter } from './routes-review.js';
+import { catalogRouter } from './routes-catalog.js';
+import { validateQuery } from './validation.js';
+import { exportsRouter } from './routes-exports.js';
+import { projectsRouter } from './routes-projects.js';
+import { permitsRouter } from './permits.js';
+import { bimRouter } from './routes-bim.js';
+import { testLoginRouter } from './test-login.js';
+import { importSample, buildSamplesZip } from './samples.js';
+import { requestStore } from './routes-cases.js';
+import { contract } from './validation.js';
 
 export interface RequestContext {
   actor: Actor;
@@ -15,7 +28,7 @@ export function requestContext(res: express.Response): RequestContext {
   return res.locals.context as RequestContext;
 }
 
-/** Runtime composition remains opt-in until all existing business routes have been ported. */
+/** Native Node worker, shared by loopback development and Vercel Functions. */
 export function createWorkerApp(secret = process.env.APPRAISAL_INTERNAL_TOKEN) {
   if (!secret) throw new Error('APPRAISAL_INTERNAL_TOKEN is required. Use pnpm dev.');
   const app = express();
@@ -39,12 +52,33 @@ export function createWorkerApp(secret = process.env.APPRAISAL_INTERNAL_TOKEN) {
       authenticationRequired: mode !== 'demo',
     });
   });
+  app.use(express.json({ limit: '27mb' }));
+  app.use('/v1/test-login', testLoginRouter());
+  if (!process.env.VERCEL) app.get('/openapi.json', (_req, res) => res.json(contract));
   app.use('/v1', async (req, res, next) => {
     const token = req.get('authorization') || '';
     res.locals.context = { token, actor: await actorFor(token) } satisfies RequestContext;
     next();
   });
-  app.use(express.json({ limit: '27mb' }));
+  app.use(validateQuery);
+  app.use('/v1', casesRouter());
+  app.use('/v1', documentsRouter());
+  app.use('/v1', reviewRouter());
+  app.use('/v1', catalogRouter());
+  app.use('/v1', exportsRouter());
+  app.use('/v1', projectsRouter());
+  app.use('/v1', permitsRouter());
+  app.use('/v1', bimRouter());
+  app.post('/v1/samples/:scenario', async (req, res) =>
+    res.json(await importSample(requestStore(res), req.params.scenario)),
+  );
+  app.get('/v1/samples.zip', async (_req, res) => {
+    if (process.env.VERCEL) throw new HttpError(404, 'Bộ mẫu chỉ có ở môi trường cục bộ.');
+    res
+      .type('application/zip')
+      .attachment('bo-ho-so-mau-bcnckt.zip')
+      .send(await buildSamplesZip());
+  });
   app.get('/v1/health', (_req, res) => {
     res.json({
       status: 'ok',

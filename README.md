@@ -8,9 +8,11 @@
 
 **Cập nhật 28/09/2026:** Đã khắc phục quyền anonymous cloud, bổ sung gallery bền vững, dữ liệu demo và tối ưu truy vấn. Xem [bằng chứng kiểm thử và các gate còn lại](docs/IMPLEMENTATION_DELIVERY_2026_09_28.md), [ma trận quyền](docs/SECURITY_MATRIX.md) và [runbook](docs/RUNBOOK_2026_09_28.md). Theo yêu cầu người dùng, đã đổi bộ cổng để tránh dải Windows dành riêng: Web/API dùng chung địa chỉ 8208, Core/Worker dùng cổng nội bộ 8201/8200. Đã đăng nhập và tải hồ sơ cloud qua trình duyệt; AI/OCR thật chưa sẵn sàng. Thông tin provider ở các bàn giao ngày 27/09 là trạng thái lịch sử.
 
+**Runtime mới 29/10/2026:** Node.js 24 thay backend cũ; xem [hướng dẫn chuyển đổi và kiểm thử](docs/CHUYEN_PYTHON_SANG_NODE.md). Các báo cáo tháng 9 bên dưới là lịch sử.
+
 ## Chạy trên máy
 
-Yêu cầu Node.js 22 trở lên, pnpm và Python 3.11 trở lên. Script tự tìm Python đi kèm Codex; máy khác có thể đặt APPRAISAL_PYTHON.
+Yêu cầu Node.js 24 và pnpm. Backend, OCR, sinh tài liệu và CI đều dùng JavaScript/TypeScript.
 
 ```powershell
 pnpm install
@@ -28,8 +30,8 @@ Cổng cố định đọc từ `config/runtime-ports.json`, không tự nhảy 
 | Thành phần | Công nghệ và vị trí | Cổng |
 |---|---|---|
 | Web và API công khai trên máy | React 19, Vite, TypeScript, Tailwind tại src/; proxy `/api/appraisal` | 8208 |
-| Core nội bộ | NestJS tại services/core/, chỉ loopback | 8201 |
-| Worker nội bộ | FastAPI tại ai/app/, chỉ loopback | 8200 |
+| Core nội bộ | Express 5 tại services/core/, chỉ loopback | 8201 |
+| Worker nội bộ | Node.js/Express tại services/appraisal/, chỉ loopback | 8200 |
 | Lưu dùng thử | SQLite và bản gốc trong .appraisal-data/ | — |
 | Lưu nghiệp vụ | Supabase Auth, PostgreSQL với RLS, private Storage và signed upload | — |
 
@@ -50,7 +52,7 @@ Repository hiện tại chưa phải Turborepo/Next.js. Redis, Prisma và vector
 
 Mặc định APPRAISAL_MODE=demo, dữ liệu lưu cục bộ. OPENAI_API_KEY và OPENAI_MODEL chỉ đặt phía server; không dùng tiền tố VITE_. Chưa cấu hình vẫn dùng được bộ quy tắc, giao diện hiển thị đúng trạng thái.
 
-OCR tiếng Việt dùng Tesseract vie+eng, chạy qua hàng đợi khi bấm Đọc OCR: tối đa 300 trang, 18 MB và 15 phút/công việc. Bản gốc giữ nguyên; dữ liệu trích xuất cần chuyên viên xác nhận. Cấu hình TESSERACT_CMD, TESSDATA_PREFIX, APPRAISAL_OCR_SPOOL ở runtime riêng.
+OCR dùng AI qua provider đã cấu hình, đọc từng trang PDF và lưu điểm tiếp tục trong PostgreSQL. Vercel Queues xử lý nền với lease và retry; không cài Python hoặc Tesseract. Giới hạn 300 trang/18 MB, giữ SHA-256 bản gốc và nguồn từng trang; dữ liệu OCR cần chuyên viên xác nhận. OPENAI_API_KEY/OPENAI_MODEL chỉ đặt phía server.
 
 Xem [phạm vi triển khai và phần còn lại](docs/APPRAISAL_IMPLEMENTATION.md), [kế hoạch](implementation_plan.md) và [hướng dẫn bộ mẫu](output/appraisal/HUONG-DAN.md).
 

@@ -10,7 +10,7 @@
             "type": "string"
           },
           "revision": {
-            "minimum": 1.0,
+            "minimum": 1,
             "title": "Revision",
             "type": "integer"
           }
@@ -54,7 +54,7 @@
             "type": "string"
           },
           "revision": {
-            "minimum": 1.0,
+            "minimum": 1,
             "title": "Revision",
             "type": "integer"
           },
@@ -95,7 +95,7 @@
             "type": "string"
           },
           "revision": {
-            "minimum": 1.0,
+            "minimum": 1,
             "title": "Revision",
             "type": "integer"
           }
@@ -135,7 +135,7 @@
             "type": "string"
           },
           "revision": {
-            "minimum": 1.0,
+            "minimum": 1,
             "title": "Revision",
             "type": "integer"
           }
@@ -212,7 +212,7 @@
         "properties": {
           "revision": {
             "default": 1,
-            "minimum": 1.0,
+            "minimum": 1,
             "title": "Revision",
             "type": "integer"
           },
@@ -293,7 +293,7 @@
             "type": "string"
           },
           "revision": {
-            "minimum": 1.0,
+            "minimum": 1,
             "title": "Revision",
             "type": "integer"
           },
@@ -346,7 +346,7 @@
             "type": "string"
           },
           "revision": {
-            "minimum": 1.0,
+            "minimum": 1,
             "title": "Revision",
             "type": "integer"
           },
@@ -476,8 +476,8 @@
             "type": "string"
           },
           "investment_cost": {
-            "maximum": 9000000000000000.0,
-            "minimum": 0.0,
+            "maximum": 9000000000000000,
+            "minimum": 0,
             "title": "Investment Cost",
             "type": "integer"
           },
@@ -598,8 +598,8 @@
           },
           "sheets": {
             "default": 1,
-            "maximum": 2000.0,
-            "minimum": 1.0,
+            "maximum": 2000,
+            "minimum": 1,
             "title": "Sheets",
             "type": "integer"
           }
@@ -646,7 +646,7 @@
             "title": "Dien Tich Van Khuon"
           },
           "express_id": {
-            "minimum": 1.0,
+            "minimum": 1,
             "title": "Express Id",
             "type": "integer"
           },
@@ -795,7 +795,7 @@
             "type": "string"
           },
           "revision": {
-            "minimum": 1.0,
+            "minimum": 1,
             "title": "Revision",
             "type": "integer"
           },
@@ -822,8 +822,8 @@
             "type": "string"
           },
           "size": {
-            "maximum": 209715200.0,
-            "minimum": 1.0,
+            "maximum": 209715200,
+            "minimum": 1,
             "title": "Size",
             "type": "integer"
           }
@@ -853,7 +853,7 @@
             "type": "string"
           },
           "revision": {
-            "minimum": 1.0,
+            "minimum": 1,
             "title": "Revision",
             "type": "integer"
           }
@@ -900,7 +900,7 @@
             "type": "string"
           },
           "revision": {
-            "minimum": 1.0,
+            "minimum": 1,
             "title": "Revision",
             "type": "integer"
           },
@@ -988,7 +988,7 @@
             "type": "array"
           },
           "revision": {
-            "minimum": 1.0,
+            "minimum": 1,
             "title": "Revision",
             "type": "integer"
           }
@@ -1020,8 +1020,8 @@
             "type": "string"
           },
           "element_count": {
-            "maximum": 1000000.0,
-            "minimum": 1.0,
+            "maximum": 1000000,
+            "minimum": 1,
             "title": "Element Count",
             "type": "integer"
           },
@@ -1069,7 +1069,7 @@
         "additionalProperties": false,
         "properties": {
           "revision": {
-            "minimum": 1.0,
+            "minimum": 1,
             "title": "Revision",
             "type": "integer"
           }
@@ -1116,7 +1116,7 @@
           "revision": {
             "anyOf": [
               {
-                "minimum": 1.0,
+                "minimum": 1,
                 "type": "integer"
               },
               {
@@ -1207,7 +1207,7 @@
             "type": "string"
           },
           "revision": {
-            "minimum": 1.0,
+            "minimum": 1,
             "title": "Revision",
             "type": "integer"
           }
@@ -1236,7 +1236,7 @@
             "type": "string"
           },
           "revision": {
-            "minimum": 1.0,
+            "minimum": 1,
             "title": "Revision",
             "type": "integer"
           },
@@ -1255,8 +1255,8 @@
             "type": "string"
           },
           "size": {
-            "maximum": 18874368.0,
-            "minimum": 1.0,
+            "maximum": 18874368,
+            "minimum": 1,
             "title": "Size",
             "type": "integer"
           }
@@ -1293,7 +1293,7 @@
             "type": "string"
           },
           "revision": {
-            "minimum": 1.0,
+            "minimum": 1,
             "title": "Revision",
             "type": "integer"
           }
@@ -1317,7 +1317,7 @@
             "type": "string"
           },
           "revision": {
-            "minimum": 1.0,
+            "minimum": 1,
             "title": "Revision",
             "type": "integer"
           }
@@ -1339,7 +1339,7 @@
             "type": "string"
           },
           "revision": {
-            "minimum": 1.0,
+            "minimum": 1,
             "title": "Revision",
             "type": "integer"
           },
@@ -1364,7 +1364,7 @@
       "Revision": {
         "properties": {
           "revision": {
-            "minimum": 1.0,
+            "minimum": 1,
             "title": "Revision",
             "type": "integer"
           }
@@ -1388,7 +1388,7 @@
             "type": "string"
           },
           "revision": {
-            "minimum": 1.0,
+            "minimum": 1,
             "title": "Revision",
             "type": "integer"
           },
@@ -1492,7 +1492,7 @@
             "type": "string"
           },
           "revision": {
-            "minimum": 1.0,
+            "minimum": 1,
             "title": "Revision",
             "type": "integer"
           },
@@ -1557,7 +1557,7 @@
             "type": "string"
           },
           "revision": {
-            "minimum": 1.0,
+            "minimum": 1,
             "title": "Revision",
             "type": "integer"
           }
@@ -1596,7 +1596,7 @@
             "type": "string"
           },
           "revision": {
-            "minimum": 1.0,
+            "minimum": 1,
             "title": "Revision",
             "type": "integer"
           }
@@ -1651,7 +1651,7 @@
             "type": "string"
           },
           "revision": {
-            "minimum": 1.0,
+            "minimum": 1,
             "title": "Revision",
             "type": "integer"
           },
@@ -1690,7 +1690,7 @@
             "type": "string"
           },
           "revision": {
-            "minimum": 1.0,
+            "minimum": 1,
             "title": "Revision",
             "type": "integer"
           },
@@ -1782,7 +1782,7 @@
             "type": "string"
           },
           "revision": {
-            "minimum": 1.0,
+            "minimum": 1,
             "title": "Revision",
             "type": "integer"
           },
@@ -1866,8 +1866,8 @@
           "extensionCount": {
             "anyOf": [
               {
-                "maximum": 2.0,
-                "minimum": 1.0,
+                "maximum": 2,
+                "minimum": 1,
                 "type": "integer"
               },
               {
@@ -1924,7 +1924,7 @@
             "type": "string"
           },
           "revision": {
-            "minimum": 1.0,
+            "minimum": 1,
             "title": "Revision",
             "type": "integer"
           },
@@ -1985,7 +1985,7 @@
             "type": "string"
           },
           "revision": {
-            "minimum": 1.0,
+            "minimum": 1,
             "title": "Revision",
             "type": "integer"
           }

@@ -1,0 +1,903 @@
+{
+  "initial": [
+    {
+      "requirementId": "TTR",
+      "filename": "TTR_v1.docx",
+      "title": "Tờ trình thẩm định BCNCKT mô phỏng",
+      "blocks": [
+        {
+          "letterhead": true,
+          "agency": "CƠ QUAN CHUẨN BỊ DỰ ÁN MÔ PHỎNG"
+        },
+        {
+          "text": [
+            "Bản mô phỏng phục vụ phát triển và kiểm thử phần mềm. Không phải bản sao đầy đủ văn bản chính thức; không có chữ ký, con dấu hoặc giá trị chứng minh pháp lý.",
+            "Tên dự án: Trường liên cấp Hương Xuân — hồ sơ mô phỏng",
+            "Địa phương công trình: Hà Tĩnh"
+          ]
+        },
+        {
+          "heading": "I. THÔNG TIN CHUNG DỰ ÁN — khung Mẫu số 01",
+          "text": [
+            "Kính gửi: [Cơ quan chuyên môn có thẩm quyền — chưa xác nhận].",
+            "Căn cứ quy trình: Luật 135/2025/QH15; Nghị định 217/2026/NĐ-CP. Căn cứ riêng của dự án phải kiểm tra bản chính thức.",
+            "1. Tên dự án: Trường liên cấp Hương Xuân — hồ sơ mô phỏng",
+            "2. Nhóm B; công trình dân dụng; cấp III giả lập, cần kiểm tra TT 34/2026. Thời hạn sử dụng thiết kế: chưa xác nhận.",
+            "3. Mã định danh: chưa có mã chính thức.",
+            "4. Quy mô giả lập: 37 lớp; đất 46.694 m²; tối đa 3 tầng; giải pháp kỹ thuật xem tài liệu KT03/KT04.",
+            "5. Phạm vi giả lập: toàn bộ dự án. Cấp từng công trình và thời hạn sử dụng: cần xác nhận.",
+            "6. Người quyết định đầu tư: chưa xác nhận.",
+            "7. Cơ quan chuẩn bị dự án: Ban quản lý dự án mẫu; địa chỉ, điện thoại chưa cung cấp.",
+            "8. Địa điểm nghiên cứu: Hương Xuân, Hà Tĩnh; ranh giới và địa danh hành chính hiện hành cần xác nhận.",
+            "9. Tổng mức đầu tư: 217.230.000.000 đồng",
+            "10. Nguồn vốn: đầu tư công trong kịch bản giả lập, chưa có xác nhận bố trí vốn.",
+            "11. Thời gian giả lập: 2026–2027; không chia phân kỳ trong kịch bản này.",
+            "12. Danh mục quy chuẩn/tiêu chuẩn: các dòng bên dưới chỉ phục vụ đối chiếu; cần hoàn thiện phiên bản và phạm vi áp dụng.",
+            "13. Nhà thầu lập BCNCKT/thiết kế: đơn vị mẫu trong NL01; không có mã doanh nghiệp thật.",
+            "14. Nhà thầu khảo sát: đơn vị mẫu trong NL01; không có mã doanh nghiệp thật.",
+            "15. Nhà thầu thẩm tra: chưa cung cấp; cần xác định điều kiện bắt buộc thẩm tra.",
+            "16. Thông tin khác: đây là bộ mẫu cố ý có thiếu sót để kiểm tra quy trình bổ sung."
+          ]
+        },
+        {
+          "heading": "II. DANH MỤC HỒ SƠ VÀ DỮ LIỆU ĐỐI CHIẾU",
+          "text": [
+            "Ngày trình giả lập: 27/09/2026. Áp dụng quy trình sau 01/07/2026 theo Nghị định 217/2026/NĐ-CP.",
+            "Kịch bản mới phục vụ thử nghiệm; không thay đổi ngày tháng hoặc kết quả hồ sơ Hương Xuân gốc.",
+            "Cấp công trình: III",
+            "Tổng mức đầu tư: 217.230.000.000 đồng",
+            "Chi phí GPMB: 9.000.000.000 đồng",
+            "Chi phí xây dựng: 170.129.000.000 đồng",
+            "Chi phí thiết bị: 10.744.000.000 đồng",
+            "Chi phí quản lý dự án: 3.090.000.000 đồng",
+            "Chi phí tư vấn: 9.530.000.000 đồng",
+            "Chi phí khác: 1.587.000.000 đồng",
+            "Chi phí dự phòng: 13.150.000.000 đồng",
+            "Chứng chỉ chủ trì MEP: SAMPLE-MEP-001",
+            "Chứng chỉ chủ trì khảo sát: SAMPLE-KS-001",
+            "Tiêu chuẩn trường tiểu học: TCVN 8793:2011",
+            "Tiêu chuẩn trường trung học: TCVN 8794:2011",
+            "Danh mục hồ sơ gửi kèm:",
+            "PL01: Thông báo 81-TB/TW về trường xã biên giới",
+            "PL02: Nghị quyết 298/NQ-CP",
+            "PL03: Kế hoạch 564/KH-UBND của Hà Tĩnh",
+            "PL04: Quyết định 539/QĐ-UBND giao chủ đầu tư",
+            "PL05: Văn bản 1989/BGDĐT-KHTC",
+            "PL06: Quyết định 119/QĐ-BQLDA và đề cương",
+            "PL07: Văn bản 545/UBND-KT và tổng mặt bằng",
+            "KT01: Hồ sơ khảo sát địa hình",
+            "KT02: Hồ sơ khảo sát địa chất",
+            "KT03: Thuyết minh BCNCKT",
+            "KT04: Hồ sơ thiết kế cơ sở",
+            "KT05: Tổng mức đầu tư và bảng tính",
+            "NL01: Năng lực tổ chức và nhân sự chủ chốt",
+            "Các mã SAMPLE là định danh giả lập, không phải chứng chỉ hành nghề."
+          ]
+        },
+        {
+          "text": [
+            "Danh sách mã chứng chỉ hành nghề chủ nhiệm/chủ trì: tham chiếu NL01; các mã SAMPLE không có giá trị tra cứu năng lực.",
+            "Nơi nhận: [theo thẩm quyền được xác nhận]; lưu hồ sơ mẫu.",
+            "CƠ QUAN CHUẨN BỊ DỰ ÁN — không ký, không đóng dấu trong bộ mẫu."
+          ]
+        }
+      ]
+    },
+    {
+      "requirementId": "PL01",
+      "filename": "PL01_v1.docx",
+      "title": "Phiếu dữ liệu pháp lý mô phỏng PL01",
+      "blocks": [
+        {
+          "text": [
+            "Bản mô phỏng phục vụ phát triển và kiểm thử phần mềm. Không phải bản sao đầy đủ văn bản chính thức; không có chữ ký, con dấu hoặc giá trị chứng minh pháp lý.",
+            "Tên dự án: Trường liên cấp Hương Xuân — hồ sơ mô phỏng",
+            "Địa phương công trình: Hà Tĩnh"
+          ]
+        },
+        {
+          "heading": "Nội dung phục vụ kiểm tra",
+          "text": [
+            "Tham chiếu nghiên cứu: Thông báo 81-TB/TW ngày 18/07/2025.",
+            "Tình huống mô phỏng: xây dựng trường nội trú liên cấp phục vụ địa bàn biên giới.",
+            "Cần văn bản chính thức và danh mục để xác nhận đối tượng."
+          ]
+        }
+      ]
+    },
+    {
+      "requirementId": "PL02",
+      "filename": "PL02_v1.docx",
+      "title": "Phiếu dữ liệu pháp lý mô phỏng PL02",
+      "blocks": [
+        {
+          "text": [
+            "Bản mô phỏng phục vụ phát triển và kiểm thử phần mềm. Không phải bản sao đầy đủ văn bản chính thức; không có chữ ký, con dấu hoặc giá trị chứng minh pháp lý.",
+            "Tên dự án: Trường liên cấp Hương Xuân — hồ sơ mô phỏng",
+            "Địa phương công trình: Hà Tĩnh"
+          ]
+        },
+        {
+          "heading": "Nội dung phục vụ kiểm tra",
+          "text": [
+            "Tham chiếu nghiên cứu: Nghị quyết 298/NQ-CP ngày 26/09/2025.",
+            "Kế hoạch mô phỏng: chuẩn bị và thực hiện dự án giai đoạn 2026–2027.",
+            "Chưa chứng minh nguồn vốn đã được bố trí."
+          ]
+        }
+      ]
+    },
+    {
+      "requirementId": "PL03",
+      "filename": "PL03_v1.docx",
+      "title": "Phiếu dữ liệu pháp lý mô phỏng PL03",
+      "blocks": [
+        {
+          "text": [
+            "Bản mô phỏng phục vụ phát triển và kiểm thử phần mềm. Không phải bản sao đầy đủ văn bản chính thức; không có chữ ký, con dấu hoặc giá trị chứng minh pháp lý.",
+            "Tên dự án: Trường liên cấp Hương Xuân — hồ sơ mô phỏng",
+            "Địa phương công trình: Hà Tĩnh"
+          ]
+        },
+        {
+          "heading": "Nội dung phục vụ kiểm tra",
+          "text": [
+            "Tham chiếu nghiên cứu: Kế hoạch 564/KH-UBND ngày 20/10/2025.",
+            "Tên trường và địa phương cần được đối chiếu phụ lục kế hoạch tỉnh."
+          ]
+        }
+      ]
+    },
+    {
+      "requirementId": "PL04",
+      "filename": "PL04_v1.docx",
+      "title": "Phiếu dữ liệu pháp lý mô phỏng PL04",
+      "blocks": [
+        {
+          "text": [
+            "Bản mô phỏng phục vụ phát triển và kiểm thử phần mềm. Không phải bản sao đầy đủ văn bản chính thức; không có chữ ký, con dấu hoặc giá trị chứng minh pháp lý.",
+            "Tên dự án: Trường liên cấp Hương Xuân — hồ sơ mô phỏng",
+            "Địa phương công trình: Hà Tĩnh"
+          ]
+        },
+        {
+          "heading": "Nội dung phục vụ kiểm tra",
+          "text": [
+            "Tham chiếu nghiên cứu: Quyết định 539/QĐ-UBND ngày 04/03/2026.",
+            "Chủ đầu tư mô phỏng: Ban quản lý dự án mẫu.",
+            "Phạm vi mô phỏng: tổ chức chuẩn bị đầu tư và tiếp nhận tư vấn."
+          ]
+        }
+      ]
+    },
+    {
+      "requirementId": "PL05",
+      "filename": "PL05_v1.docx",
+      "title": "Phiếu dữ liệu pháp lý mô phỏng PL05",
+      "blocks": [
+        {
+          "text": [
+            "Bản mô phỏng phục vụ phát triển và kiểm thử phần mềm. Không phải bản sao đầy đủ văn bản chính thức; không có chữ ký, con dấu hoặc giá trị chứng minh pháp lý.",
+            "Tên dự án: Trường liên cấp Hương Xuân — hồ sơ mô phỏng",
+            "Địa phương công trình: Hà Tĩnh"
+          ]
+        },
+        {
+          "heading": "Nội dung phục vụ kiểm tra",
+          "text": [
+            "Tham chiếu nghiên cứu: Văn bản 1989/BGDĐT-KHTC ngày 17/04/2026.",
+            "Tổng số lớp: 37",
+            "Số lớp tiểu học: 19",
+            "Số lớp THCS: 18",
+            "Số học sinh và chỗ nội trú chưa được xác nhận."
+          ]
+        }
+      ]
+    },
+    {
+      "requirementId": "PL06",
+      "filename": "PL06_v1.docx",
+      "title": "Phiếu dữ liệu pháp lý mô phỏng PL06",
+      "blocks": [
+        {
+          "text": [
+            "Bản mô phỏng phục vụ phát triển và kiểm thử phần mềm. Không phải bản sao đầy đủ văn bản chính thức; không có chữ ký, con dấu hoặc giá trị chứng minh pháp lý.",
+            "Tên dự án: Trường liên cấp Hương Xuân — hồ sơ mô phỏng",
+            "Địa phương công trình: Hà Tĩnh"
+          ]
+        },
+        {
+          "heading": "Nội dung phục vụ kiểm tra",
+          "text": [
+            "Tham chiếu nghiên cứu: Quyết định 119/QĐ-BQLDA ngày 20/04/2026.",
+            "Đề cương mô phỏng: khảo sát địa hình, địa chất và lập BCNCKT.",
+            "Phụ lục nhiệm vụ/thí nghiệm chính thức phải được chuyên viên kiểm tra."
+          ]
+        }
+      ]
+    },
+    {
+      "requirementId": "PL07",
+      "filename": "PL07_v1.docx",
+      "title": "Phiếu dữ liệu pháp lý mô phỏng PL07",
+      "blocks": [
+        {
+          "text": [
+            "Bản mô phỏng phục vụ phát triển và kiểm thử phần mềm. Không phải bản sao đầy đủ văn bản chính thức; không có chữ ký, con dấu hoặc giá trị chứng minh pháp lý.",
+            "Tên dự án: Trường liên cấp Hương Xuân — hồ sơ mô phỏng",
+            "Địa phương công trình: Hà Tĩnh"
+          ]
+        },
+        {
+          "heading": "Nội dung phục vụ kiểm tra",
+          "text": [
+            "Tham chiếu nghiên cứu: Văn bản 545/UBND-KT ngày 15/05/2026.",
+            "Diện tích khu đất: 46.694 m²",
+            "Diện tích xây dựng: 8.338 m²",
+            "Số tầng tối đa: 3 tầng",
+            "Chưa có bản đồ được cơ quan có thẩm quyền đóng dấu."
+          ]
+        }
+      ]
+    },
+    {
+      "requirementId": "KT01",
+      "filename": "KT01_v1.docx",
+      "title": "Báo cáo khảo sát địa hình mô phỏng",
+      "blocks": [
+        {
+          "text": [
+            "Bản mô phỏng phục vụ phát triển và kiểm thử phần mềm. Không phải bản sao đầy đủ văn bản chính thức; không có chữ ký, con dấu hoặc giá trị chứng minh pháp lý.",
+            "Tên dự án: Trường liên cấp Hương Xuân — hồ sơ mô phỏng",
+            "Địa phương công trình: Hà Tĩnh"
+          ]
+        },
+        {
+          "heading": "Nội dung phục vụ kiểm tra",
+          "text": [
+            "Diện tích khu đất: 46.694 m²",
+            "Cao độ mô phỏng từ +97,50 m đến +100,55 m.",
+            "Hệ tọa độ dự kiến VN-2000; chưa xác minh kinh tuyến trục và múi chiếu.",
+            "Dữ liệu mô phỏng không đại diện kết quả đo thực địa. Cần bảng tọa độ, lưới khống chế và nghiệm thu trước khi sử dụng thiết kế."
+          ]
+        }
+      ]
+    },
+    {
+      "requirementId": "KT02",
+      "filename": "KT02_v1.docx",
+      "title": "Báo cáo khảo sát địa chất mô phỏng",
+      "blocks": [
+        {
+          "text": [
+            "Bản mô phỏng phục vụ phát triển và kiểm thử phần mềm. Không phải bản sao đầy đủ văn bản chính thức; không có chữ ký, con dấu hoặc giá trị chứng minh pháp lý.",
+            "Tên dự án: Trường liên cấp Hương Xuân — hồ sơ mô phỏng",
+            "Địa phương công trình: Hà Tĩnh"
+          ]
+        },
+        {
+          "heading": "Nội dung phục vụ kiểm tra",
+          "text": [
+            "Tình huống giả lập có lớp đất đắp và lớp đất chịu lực; chưa cung cấp số liệu thí nghiệm.",
+            "Đề xuất kiểm tra: A1–A4 móng băng; A5, A6, B, C móng cọc; D móng đơn.",
+            "Chưa có cơ sở tính sức chịu tải, độ lún hoặc xác nhận giải pháp móng."
+          ]
+        }
+      ]
+    },
+    {
+      "requirementId": "KT03",
+      "filename": "KT03_v1.docx",
+      "title": "Thuyết minh BCNCKT mô phỏng",
+      "blocks": [
+        {
+          "text": [
+            "Bản mô phỏng phục vụ phát triển và kiểm thử phần mềm. Không phải bản sao đầy đủ văn bản chính thức; không có chữ ký, con dấu hoặc giá trị chứng minh pháp lý.",
+            "Tên dự án: Trường liên cấp Hương Xuân — hồ sơ mô phỏng",
+            "Địa phương công trình: Hà Tĩnh"
+          ]
+        },
+        {
+          "heading": "Nội dung phục vụ kiểm tra",
+          "text": [
+            "Cấp công trình: III",
+            "Tổng mức đầu tư: 217.230.000.000 đồng",
+            "Diện tích khu đất: 46.694 m²",
+            "Diện tích xây dựng: 8.338 m²",
+            "Tổng diện tích sàn: 17.140 m²",
+            "Mật độ xây dựng: 17,9 %",
+            "Hệ số sử dụng đất: 0,37 lần",
+            "Tổng số lớp: 37",
+            "Số lớp tiểu học: 19",
+            "Số lớp THCS: 18",
+            "Tiêu chuẩn trường tiểu học: TCVN 8793:2021",
+            "Tiêu chuẩn trường trung học: TCVN 8794:2021",
+            "Mục tiêu mô phỏng: cơ sở học tập và nội trú. Chưa xác nhận sĩ số, số chỗ nội trú và phương án vận hành.",
+            "Bản v2 chỉ minh họa phản hồi kiểm tra, không sửa số liệu hồ sơ Hương Xuân thực tế."
+          ]
+        }
+      ]
+    },
+    {
+      "requirementId": "KT04",
+      "filename": "KT04_v1.docx",
+      "title": "Thuyết minh thiết kế cơ sở mô phỏng",
+      "blocks": [
+        {
+          "text": [
+            "Bản mô phỏng phục vụ phát triển và kiểm thử phần mềm. Không phải bản sao đầy đủ văn bản chính thức; không có chữ ký, con dấu hoặc giá trị chứng minh pháp lý.",
+            "Tên dự án: Trường liên cấp Hương Xuân — hồ sơ mô phỏng",
+            "Địa phương công trình: Hà Tĩnh"
+          ]
+        },
+        {
+          "heading": "Nội dung phục vụ kiểm tra",
+          "text": [
+            "Diện tích sàn A1: 1.800 m²",
+            "Diện tích sàn A2: 1.343 m²",
+            "Diện tích sàn A3: 2.006 m²",
+            "Diện tích sàn A4: 1.712 m²",
+            "Diện tích sàn A5: 2.200 m²",
+            "Diện tích sàn A6: 2.175 m²",
+            "Diện tích sàn B: 2.357 m²",
+            "Diện tích sàn C: 1.658 m²",
+            "Diện tích sàn D: 1.577 m²",
+            "Diện tích sàn G1: 503 m²",
+            "Diện tích sàn G2: 220 m²",
+            "Dung tích bể hữu ích: 45 m³",
+            "Chiều dài ngoài bể: 7,12 m",
+            "Chiều rộng ngoài bể: 5,35 m",
+            "Chiều cao ngoài bể: 2,25 m",
+            "Bố trí khối học, hiệu bộ, nội trú, bếp ăn và hành lang cầu theo tình huống minh họa.",
+            "Chưa có bản vẽ đủ tỷ lệ, bảng tính kết cấu, thoát nạn và chữa cháy; không dùng để thi công."
+          ]
+        }
+      ]
+    },
+    {
+      "requirementId": "KT05",
+      "filename": "KT05_v1.docx",
+      "title": "Bảng tổng mức đầu tư mô phỏng lần đầu",
+      "blocks": [
+        {
+          "text": [
+            "Bản mô phỏng phục vụ phát triển và kiểm thử phần mềm. Không phải bản sao đầy đủ văn bản chính thức; không có chữ ký, con dấu hoặc giá trị chứng minh pháp lý.",
+            "Tên dự án: Trường liên cấp Hương Xuân — hồ sơ mô phỏng",
+            "Địa phương công trình: Hà Tĩnh"
+          ]
+        },
+        {
+          "heading": "Nội dung phục vụ kiểm tra",
+          "text": [
+            "Tổng mức đầu tư: 217.230.000.000 đồng",
+            "Chi phí GPMB: 9.000.000.000 đồng",
+            "Chi phí xây dựng: 170.129.000.000 đồng",
+            "Chi phí thiết bị: 10.744.000.000 đồng",
+            "Chi phí quản lý dự án: 3.090.000.000 đồng",
+            "Chi phí tư vấn: 9.530.000.000 đồng",
+            "Chi phí khác: 1.587.000.000 đồng",
+            "Chi phí dự phòng: 13.150.000.000 đồng",
+            "Đơn vị: đồng Việt Nam. Dữ liệu tổng hợp dùng kiểm tra số học, chưa kèm khối lượng và căn cứ đơn giá."
+          ]
+        }
+      ]
+    },
+    {
+      "requirementId": "NL01",
+      "filename": "NL01_v1.docx",
+      "title": "Danh mục năng lực mô phỏng",
+      "blocks": [
+        {
+          "text": [
+            "Bản mô phỏng phục vụ phát triển và kiểm thử phần mềm. Không phải bản sao đầy đủ văn bản chính thức; không có chữ ký, con dấu hoặc giá trị chứng minh pháp lý.",
+            "Tên dự án: Trường liên cấp Hương Xuân — hồ sơ mô phỏng",
+            "Địa phương công trình: Hà Tĩnh"
+          ]
+        },
+        {
+          "heading": "Nội dung phục vụ kiểm tra",
+          "text": [
+            "Đơn vị tư vấn mẫu A: SAMPLE-ORG-001; đơn vị tư vấn mẫu B: SAMPLE-ORG-002.",
+            "Nhân sự mẫu A — chủ nhiệm; B — kiến trúc; C — kết cấu; D — MEP; E — chi phí; F — khảo sát.",
+            "Chứng chỉ chủ trì MEP: SAMPLE-MEP-002",
+            "Chứng chỉ chủ trì khảo sát: SAMPLE-KS-002",
+            "Không sử dụng tên/chứng chỉ cá nhân thật. Chưa có chứng chỉ có giá trị pháp lý hoặc kết quả tra cứu."
+          ]
+        }
+      ]
+    }
+  ],
+  "revised": [
+    {
+      "requirementId": "TTR",
+      "filename": "TTR_v1.docx",
+      "title": "Tờ trình thẩm định BCNCKT mô phỏng",
+      "blocks": [
+        {
+          "letterhead": true,
+          "agency": "CƠ QUAN CHUẨN BỊ DỰ ÁN MÔ PHỎNG"
+        },
+        {
+          "text": [
+            "Bản mô phỏng phục vụ phát triển và kiểm thử phần mềm. Không phải bản sao đầy đủ văn bản chính thức; không có chữ ký, con dấu hoặc giá trị chứng minh pháp lý.",
+            "Tên dự án: Trường liên cấp Hương Xuân — hồ sơ mô phỏng",
+            "Địa phương công trình: Hà Tĩnh"
+          ]
+        },
+        {
+          "heading": "I. THÔNG TIN CHUNG DỰ ÁN — khung Mẫu số 01",
+          "text": [
+            "Kính gửi: [Cơ quan chuyên môn có thẩm quyền — chưa xác nhận].",
+            "Căn cứ quy trình: Luật 135/2025/QH15; Nghị định 217/2026/NĐ-CP. Căn cứ riêng của dự án phải kiểm tra bản chính thức.",
+            "1. Tên dự án: Trường liên cấp Hương Xuân — hồ sơ mô phỏng",
+            "2. Nhóm B; công trình dân dụng; cấp III giả lập, cần kiểm tra TT 34/2026. Thời hạn sử dụng thiết kế: chưa xác nhận.",
+            "3. Mã định danh: chưa có mã chính thức.",
+            "4. Quy mô giả lập: 37 lớp; đất 46.694 m²; tối đa 3 tầng; giải pháp kỹ thuật xem tài liệu KT03/KT04.",
+            "5. Phạm vi giả lập: toàn bộ dự án. Cấp từng công trình và thời hạn sử dụng: cần xác nhận.",
+            "6. Người quyết định đầu tư: chưa xác nhận.",
+            "7. Cơ quan chuẩn bị dự án: Ban quản lý dự án mẫu; địa chỉ, điện thoại chưa cung cấp.",
+            "8. Địa điểm nghiên cứu: Hương Xuân, Hà Tĩnh; ranh giới và địa danh hành chính hiện hành cần xác nhận.",
+            "9. Tổng mức đầu tư: 217.230.000.000 đồng",
+            "10. Nguồn vốn: đầu tư công trong kịch bản giả lập, chưa có xác nhận bố trí vốn.",
+            "11. Thời gian giả lập: 2026–2027; không chia phân kỳ trong kịch bản này.",
+            "12. Danh mục quy chuẩn/tiêu chuẩn: các dòng bên dưới chỉ phục vụ đối chiếu; cần hoàn thiện phiên bản và phạm vi áp dụng.",
+            "13. Nhà thầu lập BCNCKT/thiết kế: đơn vị mẫu trong NL01; không có mã doanh nghiệp thật.",
+            "14. Nhà thầu khảo sát: đơn vị mẫu trong NL01; không có mã doanh nghiệp thật.",
+            "15. Nhà thầu thẩm tra: chưa cung cấp; cần xác định điều kiện bắt buộc thẩm tra.",
+            "16. Thông tin khác: đây là bộ mẫu cố ý có thiếu sót để kiểm tra quy trình bổ sung."
+          ]
+        },
+        {
+          "heading": "II. DANH MỤC HỒ SƠ VÀ DỮ LIỆU ĐỐI CHIẾU",
+          "text": [
+            "Ngày trình giả lập: 27/09/2026. Áp dụng quy trình sau 01/07/2026 theo Nghị định 217/2026/NĐ-CP.",
+            "Kịch bản mới phục vụ thử nghiệm; không thay đổi ngày tháng hoặc kết quả hồ sơ Hương Xuân gốc.",
+            "Cấp công trình: III",
+            "Tổng mức đầu tư: 217.230.000.000 đồng",
+            "Chi phí GPMB: 9.000.000.000 đồng",
+            "Chi phí xây dựng: 170.129.000.000 đồng",
+            "Chi phí thiết bị: 10.744.000.000 đồng",
+            "Chi phí quản lý dự án: 3.090.000.000 đồng",
+            "Chi phí tư vấn: 9.530.000.000 đồng",
+            "Chi phí khác: 1.587.000.000 đồng",
+            "Chi phí dự phòng: 13.150.000.000 đồng",
+            "Chứng chỉ chủ trì MEP: SAMPLE-MEP-001",
+            "Chứng chỉ chủ trì khảo sát: SAMPLE-KS-001",
+            "Tiêu chuẩn trường tiểu học: TCVN 8793:2011",
+            "Tiêu chuẩn trường trung học: TCVN 8794:2011",
+            "Danh mục hồ sơ gửi kèm:",
+            "PL01: Thông báo 81-TB/TW về trường xã biên giới",
+            "PL02: Nghị quyết 298/NQ-CP",
+            "PL03: Kế hoạch 564/KH-UBND của Hà Tĩnh",
+            "PL04: Quyết định 539/QĐ-UBND giao chủ đầu tư",
+            "PL05: Văn bản 1989/BGDĐT-KHTC",
+            "PL06: Quyết định 119/QĐ-BQLDA và đề cương",
+            "PL07: Văn bản 545/UBND-KT và tổng mặt bằng",
+            "KT01: Hồ sơ khảo sát địa hình",
+            "KT02: Hồ sơ khảo sát địa chất",
+            "KT03: Thuyết minh BCNCKT",
+            "KT04: Hồ sơ thiết kế cơ sở",
+            "KT05: Tổng mức đầu tư và bảng tính",
+            "NL01: Năng lực tổ chức và nhân sự chủ chốt",
+            "Các mã SAMPLE là định danh giả lập, không phải chứng chỉ hành nghề."
+          ]
+        },
+        {
+          "text": [
+            "Danh sách mã chứng chỉ hành nghề chủ nhiệm/chủ trì: tham chiếu NL01; các mã SAMPLE không có giá trị tra cứu năng lực.",
+            "Nơi nhận: [theo thẩm quyền được xác nhận]; lưu hồ sơ mẫu.",
+            "CƠ QUAN CHUẨN BỊ DỰ ÁN — không ký, không đóng dấu trong bộ mẫu."
+          ]
+        }
+      ]
+    },
+    {
+      "requirementId": "PL01",
+      "filename": "PL01_v1.docx",
+      "title": "Phiếu dữ liệu pháp lý mô phỏng PL01",
+      "blocks": [
+        {
+          "text": [
+            "Bản mô phỏng phục vụ phát triển và kiểm thử phần mềm. Không phải bản sao đầy đủ văn bản chính thức; không có chữ ký, con dấu hoặc giá trị chứng minh pháp lý.",
+            "Tên dự án: Trường liên cấp Hương Xuân — hồ sơ mô phỏng",
+            "Địa phương công trình: Hà Tĩnh"
+          ]
+        },
+        {
+          "heading": "Nội dung phục vụ kiểm tra",
+          "text": [
+            "Tham chiếu nghiên cứu: Thông báo 81-TB/TW ngày 18/07/2025.",
+            "Tình huống mô phỏng: xây dựng trường nội trú liên cấp phục vụ địa bàn biên giới.",
+            "Cần văn bản chính thức và danh mục để xác nhận đối tượng."
+          ]
+        }
+      ]
+    },
+    {
+      "requirementId": "PL02",
+      "filename": "PL02_v1.docx",
+      "title": "Phiếu dữ liệu pháp lý mô phỏng PL02",
+      "blocks": [
+        {
+          "text": [
+            "Bản mô phỏng phục vụ phát triển và kiểm thử phần mềm. Không phải bản sao đầy đủ văn bản chính thức; không có chữ ký, con dấu hoặc giá trị chứng minh pháp lý.",
+            "Tên dự án: Trường liên cấp Hương Xuân — hồ sơ mô phỏng",
+            "Địa phương công trình: Hà Tĩnh"
+          ]
+        },
+        {
+          "heading": "Nội dung phục vụ kiểm tra",
+          "text": [
+            "Tham chiếu nghiên cứu: Nghị quyết 298/NQ-CP ngày 26/09/2025.",
+            "Kế hoạch mô phỏng: chuẩn bị và thực hiện dự án giai đoạn 2026–2027.",
+            "Chưa chứng minh nguồn vốn đã được bố trí."
+          ]
+        }
+      ]
+    },
+    {
+      "requirementId": "PL03",
+      "filename": "PL03_v1.docx",
+      "title": "Phiếu dữ liệu pháp lý mô phỏng PL03",
+      "blocks": [
+        {
+          "text": [
+            "Bản mô phỏng phục vụ phát triển và kiểm thử phần mềm. Không phải bản sao đầy đủ văn bản chính thức; không có chữ ký, con dấu hoặc giá trị chứng minh pháp lý.",
+            "Tên dự án: Trường liên cấp Hương Xuân — hồ sơ mô phỏng",
+            "Địa phương công trình: Hà Tĩnh"
+          ]
+        },
+        {
+          "heading": "Nội dung phục vụ kiểm tra",
+          "text": [
+            "Tham chiếu nghiên cứu: Kế hoạch 564/KH-UBND ngày 20/10/2025.",
+            "Tên trường và địa phương cần được đối chiếu phụ lục kế hoạch tỉnh."
+          ]
+        }
+      ]
+    },
+    {
+      "requirementId": "PL04",
+      "filename": "PL04_v1.docx",
+      "title": "Phiếu dữ liệu pháp lý mô phỏng PL04",
+      "blocks": [
+        {
+          "text": [
+            "Bản mô phỏng phục vụ phát triển và kiểm thử phần mềm. Không phải bản sao đầy đủ văn bản chính thức; không có chữ ký, con dấu hoặc giá trị chứng minh pháp lý.",
+            "Tên dự án: Trường liên cấp Hương Xuân — hồ sơ mô phỏng",
+            "Địa phương công trình: Hà Tĩnh"
+          ]
+        },
+        {
+          "heading": "Nội dung phục vụ kiểm tra",
+          "text": [
+            "Tham chiếu nghiên cứu: Quyết định 539/QĐ-UBND ngày 04/03/2026.",
+            "Chủ đầu tư mô phỏng: Ban quản lý dự án mẫu.",
+            "Phạm vi mô phỏng: tổ chức chuẩn bị đầu tư và tiếp nhận tư vấn."
+          ]
+        }
+      ]
+    },
+    {
+      "requirementId": "PL05",
+      "filename": "PL05_v1.docx",
+      "title": "Phiếu dữ liệu pháp lý mô phỏng PL05",
+      "blocks": [
+        {
+          "text": [
+            "Bản mô phỏng phục vụ phát triển và kiểm thử phần mềm. Không phải bản sao đầy đủ văn bản chính thức; không có chữ ký, con dấu hoặc giá trị chứng minh pháp lý.",
+            "Tên dự án: Trường liên cấp Hương Xuân — hồ sơ mô phỏng",
+            "Địa phương công trình: Hà Tĩnh"
+          ]
+        },
+        {
+          "heading": "Nội dung phục vụ kiểm tra",
+          "text": [
+            "Tham chiếu nghiên cứu: Văn bản 1989/BGDĐT-KHTC ngày 17/04/2026.",
+            "Tổng số lớp: 37",
+            "Số lớp tiểu học: 19",
+            "Số lớp THCS: 18",
+            "Số học sinh và chỗ nội trú chưa được xác nhận."
+          ]
+        }
+      ]
+    },
+    {
+      "requirementId": "PL06",
+      "filename": "PL06_v1.docx",
+      "title": "Phiếu dữ liệu pháp lý mô phỏng PL06",
+      "blocks": [
+        {
+          "text": [
+            "Bản mô phỏng phục vụ phát triển và kiểm thử phần mềm. Không phải bản sao đầy đủ văn bản chính thức; không có chữ ký, con dấu hoặc giá trị chứng minh pháp lý.",
+            "Tên dự án: Trường liên cấp Hương Xuân — hồ sơ mô phỏng",
+            "Địa phương công trình: Hà Tĩnh"
+          ]
+        },
+        {
+          "heading": "Nội dung phục vụ kiểm tra",
+          "text": [
+            "Tham chiếu nghiên cứu: Quyết định 119/QĐ-BQLDA ngày 20/04/2026.",
+            "Đề cương mô phỏng: khảo sát địa hình, địa chất và lập BCNCKT.",
+            "Phụ lục nhiệm vụ/thí nghiệm chính thức phải được chuyên viên kiểm tra."
+          ]
+        }
+      ]
+    },
+    {
+      "requirementId": "PL07",
+      "filename": "PL07_v1.docx",
+      "title": "Phiếu dữ liệu pháp lý mô phỏng PL07",
+      "blocks": [
+        {
+          "text": [
+            "Bản mô phỏng phục vụ phát triển và kiểm thử phần mềm. Không phải bản sao đầy đủ văn bản chính thức; không có chữ ký, con dấu hoặc giá trị chứng minh pháp lý.",
+            "Tên dự án: Trường liên cấp Hương Xuân — hồ sơ mô phỏng",
+            "Địa phương công trình: Hà Tĩnh"
+          ]
+        },
+        {
+          "heading": "Nội dung phục vụ kiểm tra",
+          "text": [
+            "Tham chiếu nghiên cứu: Văn bản 545/UBND-KT ngày 15/05/2026.",
+            "Diện tích khu đất: 46.694 m²",
+            "Diện tích xây dựng: 8.338 m²",
+            "Số tầng tối đa: 3 tầng",
+            "Chưa có bản đồ được cơ quan có thẩm quyền đóng dấu."
+          ]
+        }
+      ]
+    },
+    {
+      "requirementId": "KT01",
+      "filename": "KT01_v1.docx",
+      "title": "Báo cáo khảo sát địa hình mô phỏng",
+      "blocks": [
+        {
+          "text": [
+            "Bản mô phỏng phục vụ phát triển và kiểm thử phần mềm. Không phải bản sao đầy đủ văn bản chính thức; không có chữ ký, con dấu hoặc giá trị chứng minh pháp lý.",
+            "Tên dự án: Trường liên cấp Hương Xuân — hồ sơ mô phỏng",
+            "Địa phương công trình: Hà Tĩnh"
+          ]
+        },
+        {
+          "heading": "Nội dung phục vụ kiểm tra",
+          "text": [
+            "Diện tích khu đất: 46.694 m²",
+            "Cao độ mô phỏng từ +97,50 m đến +100,55 m.",
+            "Hệ tọa độ dự kiến VN-2000; chưa xác minh kinh tuyến trục và múi chiếu.",
+            "Dữ liệu mô phỏng không đại diện kết quả đo thực địa. Cần bảng tọa độ, lưới khống chế và nghiệm thu trước khi sử dụng thiết kế."
+          ]
+        }
+      ]
+    },
+    {
+      "requirementId": "KT02",
+      "filename": "KT02_v1.docx",
+      "title": "Báo cáo khảo sát địa chất mô phỏng",
+      "blocks": [
+        {
+          "text": [
+            "Bản mô phỏng phục vụ phát triển và kiểm thử phần mềm. Không phải bản sao đầy đủ văn bản chính thức; không có chữ ký, con dấu hoặc giá trị chứng minh pháp lý.",
+            "Tên dự án: Trường liên cấp Hương Xuân — hồ sơ mô phỏng",
+            "Địa phương công trình: Hà Tĩnh"
+          ]
+        },
+        {
+          "heading": "Nội dung phục vụ kiểm tra",
+          "text": [
+            "Tình huống giả lập có lớp đất đắp và lớp đất chịu lực; chưa cung cấp số liệu thí nghiệm.",
+            "Đề xuất kiểm tra: A1–A4 móng băng; A5, A6, B, C móng cọc; D móng đơn.",
+            "Chưa có cơ sở tính sức chịu tải, độ lún hoặc xác nhận giải pháp móng."
+          ]
+        }
+      ]
+    },
+    {
+      "requirementId": "KT03",
+      "filename": "KT03_v1.docx",
+      "title": "Thuyết minh BCNCKT mô phỏng",
+      "blocks": [
+        {
+          "text": [
+            "Bản mô phỏng phục vụ phát triển và kiểm thử phần mềm. Không phải bản sao đầy đủ văn bản chính thức; không có chữ ký, con dấu hoặc giá trị chứng minh pháp lý.",
+            "Tên dự án: Trường liên cấp Hương Xuân — hồ sơ mô phỏng",
+            "Địa phương công trình: Hà Tĩnh"
+          ]
+        },
+        {
+          "heading": "Nội dung phục vụ kiểm tra",
+          "text": [
+            "Cấp công trình: III",
+            "Tổng mức đầu tư: 217.230.000.000 đồng",
+            "Diện tích khu đất: 46.694 m²",
+            "Diện tích xây dựng: 8.338 m²",
+            "Tổng diện tích sàn: 17.140 m²",
+            "Mật độ xây dựng: 17,9 %",
+            "Hệ số sử dụng đất: 0,37 lần",
+            "Tổng số lớp: 37",
+            "Số lớp tiểu học: 19",
+            "Số lớp THCS: 18",
+            "Tiêu chuẩn trường tiểu học: TCVN 8793:2021",
+            "Tiêu chuẩn trường trung học: TCVN 8794:2021",
+            "Mục tiêu mô phỏng: cơ sở học tập và nội trú. Chưa xác nhận sĩ số, số chỗ nội trú và phương án vận hành.",
+            "Bản v2 chỉ minh họa phản hồi kiểm tra, không sửa số liệu hồ sơ Hương Xuân thực tế."
+          ]
+        }
+      ]
+    },
+    {
+      "requirementId": "KT04",
+      "filename": "KT04_v1.docx",
+      "title": "Thuyết minh thiết kế cơ sở mô phỏng",
+      "blocks": [
+        {
+          "text": [
+            "Bản mô phỏng phục vụ phát triển và kiểm thử phần mềm. Không phải bản sao đầy đủ văn bản chính thức; không có chữ ký, con dấu hoặc giá trị chứng minh pháp lý.",
+            "Tên dự án: Trường liên cấp Hương Xuân — hồ sơ mô phỏng",
+            "Địa phương công trình: Hà Tĩnh"
+          ]
+        },
+        {
+          "heading": "Nội dung phục vụ kiểm tra",
+          "text": [
+            "Diện tích sàn A1: 1.800 m²",
+            "Diện tích sàn A2: 1.343 m²",
+            "Diện tích sàn A3: 2.006 m²",
+            "Diện tích sàn A4: 1.712 m²",
+            "Diện tích sàn A5: 2.200 m²",
+            "Diện tích sàn A6: 2.175 m²",
+            "Diện tích sàn B: 2.357 m²",
+            "Diện tích sàn C: 1.658 m²",
+            "Diện tích sàn D: 1.577 m²",
+            "Diện tích sàn G1: 503 m²",
+            "Diện tích sàn G2: 220 m²",
+            "Dung tích bể hữu ích: 45 m³",
+            "Chiều dài ngoài bể: 7,12 m",
+            "Chiều rộng ngoài bể: 5,35 m",
+            "Chiều cao ngoài bể: 2,25 m",
+            "Bố trí khối học, hiệu bộ, nội trú, bếp ăn và hành lang cầu theo tình huống minh họa.",
+            "Chưa có bản vẽ đủ tỷ lệ, bảng tính kết cấu, thoát nạn và chữa cháy; không dùng để thi công."
+          ]
+        }
+      ]
+    },
+    {
+      "requirementId": "KT05",
+      "filename": "KT05_v1.docx",
+      "title": "Bảng tổng mức đầu tư mô phỏng lần đầu",
+      "blocks": [
+        {
+          "text": [
+            "Bản mô phỏng phục vụ phát triển và kiểm thử phần mềm. Không phải bản sao đầy đủ văn bản chính thức; không có chữ ký, con dấu hoặc giá trị chứng minh pháp lý.",
+            "Tên dự án: Trường liên cấp Hương Xuân — hồ sơ mô phỏng",
+            "Địa phương công trình: Hà Tĩnh"
+          ]
+        },
+        {
+          "heading": "Nội dung phục vụ kiểm tra",
+          "text": [
+            "Tổng mức đầu tư: 217.230.000.000 đồng",
+            "Chi phí GPMB: 9.000.000.000 đồng",
+            "Chi phí xây dựng: 170.129.000.000 đồng",
+            "Chi phí thiết bị: 10.744.000.000 đồng",
+            "Chi phí quản lý dự án: 3.090.000.000 đồng",
+            "Chi phí tư vấn: 9.530.000.000 đồng",
+            "Chi phí khác: 1.587.000.000 đồng",
+            "Chi phí dự phòng: 13.150.000.000 đồng",
+            "Đơn vị: đồng Việt Nam. Dữ liệu tổng hợp dùng kiểm tra số học, chưa kèm khối lượng và căn cứ đơn giá."
+          ]
+        }
+      ]
+    },
+    {
+      "requirementId": "NL01",
+      "filename": "NL01_v1.docx",
+      "title": "Danh mục năng lực mô phỏng",
+      "blocks": [
+        {
+          "text": [
+            "Bản mô phỏng phục vụ phát triển và kiểm thử phần mềm. Không phải bản sao đầy đủ văn bản chính thức; không có chữ ký, con dấu hoặc giá trị chứng minh pháp lý.",
+            "Tên dự án: Trường liên cấp Hương Xuân — hồ sơ mô phỏng",
+            "Địa phương công trình: Hà Tĩnh"
+          ]
+        },
+        {
+          "heading": "Nội dung phục vụ kiểm tra",
+          "text": [
+            "Đơn vị tư vấn mẫu A: SAMPLE-ORG-001; đơn vị tư vấn mẫu B: SAMPLE-ORG-002.",
+            "Nhân sự mẫu A — chủ nhiệm; B — kiến trúc; C — kết cấu; D — MEP; E — chi phí; F — khảo sát.",
+            "Chứng chỉ chủ trì MEP: SAMPLE-MEP-002",
+            "Chứng chỉ chủ trì khảo sát: SAMPLE-KS-002",
+            "Không sử dụng tên/chứng chỉ cá nhân thật. Chưa có chứng chỉ có giá trị pháp lý hoặc kết quả tra cứu."
+          ]
+        }
+      ]
+    },
+    {
+      "requirementId": "KT03",
+      "filename": "KT03_v2.docx",
+      "title": "Thuyết minh BCNCKT mô phỏng",
+      "blocks": [
+        {
+          "text": [
+            "Bản mô phỏng phục vụ phát triển và kiểm thử phần mềm. Không phải bản sao đầy đủ văn bản chính thức; không có chữ ký, con dấu hoặc giá trị chứng minh pháp lý.",
+            "Tên dự án: Trường liên cấp Hương Xuân — hồ sơ mô phỏng",
+            "Địa phương công trình: Hà Tĩnh"
+          ]
+        },
+        {
+          "heading": "Nội dung phục vụ kiểm tra",
+          "text": [
+            "Cấp công trình: III",
+            "Tổng mức đầu tư: 217.230.000.000 đồng",
+            "Diện tích khu đất: 46.694 m²",
+            "Diện tích xây dựng: 8.338 m²",
+            "Tổng diện tích sàn: 17.551 m²",
+            "Mật độ xây dựng: 17,9 %",
+            "Hệ số sử dụng đất: 0,38 lần",
+            "Tổng số lớp: 37",
+            "Số lớp tiểu học: 19",
+            "Số lớp THCS: 18",
+            "Tiêu chuẩn trường tiểu học: TCVN 8793:2011",
+            "Tiêu chuẩn trường trung học: TCVN 8794:2011",
+            "Mục tiêu mô phỏng: cơ sở học tập và nội trú. Chưa xác nhận sĩ số, số chỗ nội trú và phương án vận hành.",
+            "Bản v2 chỉ minh họa phản hồi kiểm tra, không sửa số liệu hồ sơ Hương Xuân thực tế."
+          ]
+        }
+      ]
+    },
+    {
+      "requirementId": "KT05",
+      "filename": "KT05_v2.docx",
+      "title": "Bảng tổng mức đầu tư mô phỏng điều chỉnh",
+      "blocks": [
+        {
+          "text": [
+            "Bản mô phỏng phục vụ phát triển và kiểm thử phần mềm. Không phải bản sao đầy đủ văn bản chính thức; không có chữ ký, con dấu hoặc giá trị chứng minh pháp lý.",
+            "Tên dự án: Trường liên cấp Hương Xuân — hồ sơ mô phỏng",
+            "Địa phương công trình: Hà Tĩnh"
+          ]
+        },
+        {
+          "heading": "Nội dung phục vụ kiểm tra",
+          "text": [
+            "Tổng mức đầu tư: 217.230.000.000 đồng",
+            "Chi phí GPMB: 14.352.000.000 đồng",
+            "Chi phí xây dựng: 173.075.000.000 đồng",
+            "Chi phí thiết bị: 6.033.000.000 đồng",
+            "Chi phí quản lý dự án: 3.101.000.000 đồng",
+            "Chi phí tư vấn: 9.391.000.000 đồng",
+            "Chi phí khác: 1.194.000.000 đồng",
+            "Chi phí dự phòng: 10.084.000.000 đồng",
+            "Giải trình mô phỏng: điều chỉnh cơ cấu khoản mục, tổng không thay đổi. Chưa chứng minh tính hợp lý của từng điều chỉnh."
+          ]
+        }
+      ]
+    },
+    {
+      "requirementId": "NL01",
+      "filename": "NL01_v2.docx",
+      "title": "Danh mục năng lực mô phỏng",
+      "blocks": [
+        {
+          "text": [
+            "Bản mô phỏng phục vụ phát triển và kiểm thử phần mềm. Không phải bản sao đầy đủ văn bản chính thức; không có chữ ký, con dấu hoặc giá trị chứng minh pháp lý.",
+            "Tên dự án: Trường liên cấp Hương Xuân — hồ sơ mô phỏng",
+            "Địa phương công trình: Hà Tĩnh"
+          ]
+        },
+        {
+          "heading": "Nội dung phục vụ kiểm tra",
+          "text": [
+            "Đơn vị tư vấn mẫu A: SAMPLE-ORG-001; đơn vị tư vấn mẫu B: SAMPLE-ORG-002.",
+            "Nhân sự mẫu A — chủ nhiệm; B — kiến trúc; C — kết cấu; D — MEP; E — chi phí; F — khảo sát.",
+            "Chứng chỉ chủ trì MEP: SAMPLE-MEP-001",
+            "Chứng chỉ chủ trì khảo sát: SAMPLE-KS-001",
+            "Không sử dụng tên/chứng chỉ cá nhân thật. Chưa có chứng chỉ có giá trị pháp lý hoặc kết quả tra cứu."
+          ]
+        }
+      ]
+    }
+  ]
+}

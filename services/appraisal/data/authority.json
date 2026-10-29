@@ -1,0 +1,49 @@
+{
+  "SO_XD": "so_xay_dung",
+  "LABELS": {
+    "so_xay_dung": "Sở Xây dựng (cơ quan chuyên môn về xây dựng thuộc UBND tỉnh)",
+    "ubnd_xa": "Cơ quan chuyên môn về xây dựng thuộc UBND cấp xã",
+    "bql_kcn": "Ban Quản lý khu công nghiệp, khu kinh tế",
+    "bo_chuyen_nganh": "Cơ quan chuyên môn về xây dựng thuộc bộ quản lý công trình chuyên ngành",
+    "so_nnmt": "Sở Nông nghiệp và Môi trường",
+    "so_cong_thuong": "Sở Công Thương",
+    "hoi_dong": "Hội đồng kiểm tra nhà nước về công tác nghiệm thu",
+    "khong_thuoc_dien": "Không thuộc đối tượng phải thực hiện tại cơ quan chuyên môn về xây dựng",
+    "mien_phep": "Miễn giấy phép xây dựng — chủ đầu tư gửi thông báo khởi công",
+    "chua_xac_dinh": "Chưa đủ thông tin để xác định"
+  },
+  "GRADE_RANK": {
+    "DB": 4,
+    "I": 3,
+    "II": 2,
+    "III": 1,
+    "IV": 0
+  },
+  "SO_XD_FIELDS": [
+    "dân dụng",
+    "tôn giáo",
+    "tín ngưỡng",
+    "giao thông",
+    "hạ tầng kỹ thuật",
+    "khu đô thị",
+    "nhà ở",
+    "vật liệu xây dựng",
+    "công nghiệp nhẹ"
+  ],
+  "AGRICULTURE_FIELDS": [
+    "nông nghiệp",
+    "thủy lợi",
+    "đê điều",
+    "môi trường"
+  ],
+  "INDUSTRY_FIELDS": [
+    "công nghiệp"
+  ],
+  "ZONE_WORDS": [
+    "khu công nghiệp",
+    "khu kinh tế",
+    "khu chế xuất",
+    "khu công nghệ cao",
+    "kcn"
+  ]
+}

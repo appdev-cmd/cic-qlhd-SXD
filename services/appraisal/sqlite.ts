@@ -60,6 +60,14 @@ export function openDemoDatabase(path?: string): DatabaseSync {
       snapshot TEXT NOT NULL,state TEXT NOT NULL DEFAULT 'queued',attempts INTEGER NOT NULL DEFAULT 0,
       lease_owner TEXT,lease_until REAL,created_at REAL NOT NULL);`);
   ensureSummary(db);
+  if (
+    !db
+      .prepare('pragma table_info(jobs)')
+      .all()
+      .some((row) => row.name === 'runtime_input')
+  ) {
+    db.exec("alter table jobs add column runtime_input TEXT NOT NULL DEFAULT '{}'");
+  }
   return db;
 }
 

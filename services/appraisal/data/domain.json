@@ -1,0 +1,262 @@
+{
+  "REQUIREMENTS": [
+    [
+      "TTR",
+      "Tờ trình thẩm định BCNCKT",
+      "Tiếp nhận"
+    ],
+    [
+      "PL01",
+      "Thông báo 81-TB/TW về trường xã biên giới",
+      "Pháp lý"
+    ],
+    [
+      "PL02",
+      "Nghị quyết 298/NQ-CP",
+      "Pháp lý"
+    ],
+    [
+      "PL03",
+      "Kế hoạch 564/KH-UBND của Hà Tĩnh",
+      "Pháp lý"
+    ],
+    [
+      "PL04",
+      "Quyết định 539/QĐ-UBND giao chủ đầu tư",
+      "Pháp lý"
+    ],
+    [
+      "PL05",
+      "Văn bản 1989/BGDĐT-KHTC",
+      "Pháp lý"
+    ],
+    [
+      "PL06",
+      "Quyết định 119/QĐ-BQLDA và đề cương",
+      "Pháp lý"
+    ],
+    [
+      "PL07",
+      "Văn bản 545/UBND-KT và tổng mặt bằng",
+      "Pháp lý"
+    ],
+    [
+      "KT01",
+      "Hồ sơ khảo sát địa hình",
+      "Khảo sát"
+    ],
+    [
+      "KT02",
+      "Hồ sơ khảo sát địa chất",
+      "Khảo sát"
+    ],
+    [
+      "KT03",
+      "Thuyết minh BCNCKT",
+      "Thiết kế"
+    ],
+    [
+      "KT04",
+      "Hồ sơ thiết kế cơ sở",
+      "Thiết kế"
+    ],
+    [
+      "KT05",
+      "Tổng mức đầu tư và bảng tính",
+      "Chi phí"
+    ],
+    [
+      "NL01",
+      "Năng lực tổ chức và nhân sự chủ chốt",
+      "Năng lực"
+    ]
+  ],
+  "COSTS": [
+    [
+      "land",
+      "Chi phí GPMB"
+    ],
+    [
+      "construction",
+      "Chi phí xây dựng"
+    ],
+    [
+      "equipment",
+      "Chi phí thiết bị"
+    ],
+    [
+      "management",
+      "Chi phí quản lý dự án"
+    ],
+    [
+      "consulting",
+      "Chi phí tư vấn"
+    ],
+    [
+      "other",
+      "Chi phí khác"
+    ],
+    [
+      "contingency",
+      "Chi phí dự phòng"
+    ]
+  ],
+  "FIELDS": {
+    "total": [
+      "Tổng mức đầu tư",
+      "VNĐ"
+    ],
+    "land_area": [
+      "Diện tích khu đất",
+      "m²"
+    ],
+    "footprint": [
+      "Diện tích xây dựng",
+      "m²"
+    ],
+    "floor_area": [
+      "Tổng diện tích sàn",
+      "m²"
+    ],
+    "density": [
+      "Mật độ xây dựng",
+      "%"
+    ],
+    "far": [
+      "Hệ số sử dụng đất",
+      "lần"
+    ],
+    "class_count": [
+      "Tổng số lớp",
+      "lớp"
+    ],
+    "primary_classes": [
+      "Số lớp tiểu học",
+      "lớp"
+    ],
+    "secondary_classes": [
+      "Số lớp THCS",
+      "lớp"
+    ],
+    "tank_capacity": [
+      "Dung tích bể hữu ích",
+      "m³"
+    ],
+    "tank_length": [
+      "Chiều dài ngoài bể",
+      "m"
+    ],
+    "tank_width": [
+      "Chiều rộng ngoài bể",
+      "m"
+    ],
+    "tank_height": [
+      "Chiều cao ngoài bể",
+      "m"
+    ],
+    "max_floors": [
+      "Số tầng tối đa",
+      "tầng"
+    ],
+    "mep_certificate": [
+      "Chứng chỉ chủ trì MEP",
+      ""
+    ],
+    "survey_certificate": [
+      "Chứng chỉ chủ trì khảo sát",
+      ""
+    ],
+    "project_name": [
+      "Tên dự án",
+      ""
+    ],
+    "province": [
+      "Địa phương công trình",
+      ""
+    ],
+    "building_grade": [
+      "Cấp công trình",
+      ""
+    ],
+    "standard_primary": [
+      "Tiêu chuẩn trường tiểu học",
+      ""
+    ],
+    "standard_secondary": [
+      "Tiêu chuẩn trường trung học",
+      ""
+    ],
+    "cost.land": [
+      "Chi phí GPMB",
+      "VNĐ"
+    ],
+    "cost.construction": [
+      "Chi phí xây dựng",
+      "VNĐ"
+    ],
+    "cost.equipment": [
+      "Chi phí thiết bị",
+      "VNĐ"
+    ],
+    "cost.management": [
+      "Chi phí quản lý dự án",
+      "VNĐ"
+    ],
+    "cost.consulting": [
+      "Chi phí tư vấn",
+      "VNĐ"
+    ],
+    "cost.other": [
+      "Chi phí khác",
+      "VNĐ"
+    ],
+    "cost.contingency": [
+      "Chi phí dự phòng",
+      "VNĐ"
+    ],
+    "floor.A1": [
+      "Diện tích sàn A1",
+      "m²"
+    ],
+    "floor.A2": [
+      "Diện tích sàn A2",
+      "m²"
+    ],
+    "floor.A3": [
+      "Diện tích sàn A3",
+      "m²"
+    ],
+    "floor.A4": [
+      "Diện tích sàn A4",
+      "m²"
+    ],
+    "floor.A5": [
+      "Diện tích sàn A5",
+      "m²"
+    ],
+    "floor.A6": [
+      "Diện tích sàn A6",
+      "m²"
+    ],
+    "floor.B": [
+      "Diện tích sàn B",
+      "m²"
+    ],
+    "floor.C": [
+      "Diện tích sàn C",
+      "m²"
+    ],
+    "floor.D": [
+      "Diện tích sàn D",
+      "m²"
+    ],
+    "floor.G1": [
+      "Diện tích sàn G1",
+      "m²"
+    ],
+    "floor.G2": [
+      "Diện tích sàn G2",
+      "m²"
+    ]
+  }
+}

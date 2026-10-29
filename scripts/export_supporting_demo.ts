@@ -47,6 +47,6 @@ const catalogs = {
     supplier: p.supplier,
   })),
 };
-mkdirSync('ai/app/data', { recursive: true });
-writeFileSync('ai/app/data/demo_catalog.json', JSON.stringify(catalogs, null, 2) + '\n');
+mkdirSync('services/appraisal/data', { recursive: true });
+writeFileSync('services/appraisal/data/demo_catalog.json', JSON.stringify(catalogs, null, 2) + '\n');
 console.log(JSON.stringify(Object.fromEntries(Object.entries(catalogs).map(([key, rows]) => [key, rows.length]))));

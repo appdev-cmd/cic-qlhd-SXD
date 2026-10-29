@@ -1,0 +1,1242 @@
+{
+  "VERSION": "2026-07.v2",
+  "permits": {
+    "new": [
+      {
+        "id": "authority",
+        "label": "Đối tượng, trường hợp miễn phép và căn cứ thẩm quyền cụ thể",
+        "citation": "Điều 53–54, 56 NĐ 217/2026; quy định áp dụng tại địa phương",
+        "conditional": false,
+        "condition": "Cấp xã: công trình cấp III, IV và nhà ở hộ gia đình/cá nhân; ban quản lý khu theo khoản 2; Sở Xây dựng: các đối tượng còn lại. Xét ngoại lệ, công trình cấp cao nhất và thay đổi cấp theo khoản 4 Điều 53.",
+        "url": "https://datafiles.chinhphu.vn/cpp/files/vbpq/2026/6/217-ndcp.signed.pdf"
+      },
+      {
+        "id": "application",
+        "label": "Đơn đề nghị Mẫu 01, Phụ lục II, đúng loại thủ tục",
+        "citation": "Điều 57 NĐ 217/2026; Mẫu 01 Phụ lục II",
+        "conditional": false,
+        "condition": "",
+        "url": "https://datafiles.chinhphu.vn/cpp/files/vbpq/2026/6/217-ndcp.signed.pdf"
+      },
+      {
+        "id": "formality",
+        "label": "Tính hợp lệ của bản chính, bản sao / hồ sơ điện tử, chữ ký và bản vẽ",
+        "citation": "Điều 56 NĐ 217/2026",
+        "conditional": false,
+        "condition": "Khai thác dữ liệu đã có hợp lệ trong cơ sở dữ liệu; không mặc định yêu cầu nộp lại bản giấy.",
+        "url": "https://datafiles.chinhphu.vn/cpp/files/vbpq/2026/6/217-ndcp.signed.pdf"
+      },
+      {
+        "id": "land",
+        "label": "Giấy tờ đất đai hoặc dữ liệu được khai thác hợp lệ theo phạm vi công trình",
+        "citation": "Điều 55, 56 và Điều 57 NĐ 217/2026",
+        "conditional": false,
+        "condition": "Đối chiếu phương án thay thế được pháp luật cho phép: văn bản chấp thuận vị trí, phương án tuyến hoặc quyết định thu hồi đất; phạm vi đất tương ứng giai đoạn.",
+        "url": "https://datafiles.chinhphu.vn/cpp/files/vbpq/2026/6/217-ndcp.signed.pdf"
+      },
+      {
+        "id": "design",
+        "label": "Bản vẽ thiết kế tương ứng loại công trình, phạm vi đề nghị cấp phép",
+        "citation": "Điều 57 NĐ 217/2026",
+        "conditional": false,
+        "condition": "",
+        "url": "https://datafiles.chinhphu.vn/cpp/files/vbpq/2026/6/217-ndcp.signed.pdf"
+      },
+      {
+        "id": "approval",
+        "label": "Quyết định phê duyệt dự án",
+        "citation": "Điều 57; điểm c khoản 1 Điều 57 NĐ 217/2026",
+        "conditional": false,
+        "condition": "",
+        "url": "https://datafiles.chinhphu.vn/cpp/files/vbpq/2026/6/217-ndcp.signed.pdf"
+      },
+      {
+        "id": "verification",
+        "label": "Báo cáo thẩm tra thiết kế nếu thuộc trường hợp phải thẩm tra",
+        "citation": "Điều 56; điểm c khoản 1 Điều 57 NĐ 217/2026",
+        "conditional": true,
+        "condition": "Áp dụng theo đối tượng, quy mô và yêu cầu về thẩm tra thiết kế.",
+        "url": "https://datafiles.chinhphu.vn/cpp/files/vbpq/2026/6/217-ndcp.signed.pdf"
+      },
+      {
+        "id": "specialized",
+        "label": "Kết quả thủ tục PCCC, môi trường, văn hóa theo đối tượng áp dụng",
+        "citation": "Điều 57 NĐ 217/2026",
+        "conditional": true,
+        "condition": "Xác định từng đối tượng theo pháp luật chuyên ngành; giải thích nếu không áp dụng.",
+        "url": "https://datafiles.chinhphu.vn/cpp/files/vbpq/2026/6/217-ndcp.signed.pdf"
+      },
+      {
+        "id": "special_building",
+        "label": "Yêu cầu riêng đối với công trình tôn giáo, tín ngưỡng, tượng đài, quảng cáo, ngoại giao",
+        "citation": "Khoản 2–5 Điều 57 NĐ 217/2026",
+        "conditional": true,
+        "condition": "Đối chiếu loại công trình và pháp luật chuyên ngành tương ứng.",
+        "url": "https://datafiles.chinhphu.vn/cpp/files/vbpq/2026/6/217-ndcp.signed.pdf"
+      },
+      {
+        "id": "safety",
+        "label": "An toàn kết cấu, lân cận, hạ tầng; môi trường, PCCC và thiết kế được duyệt",
+        "citation": "Khoản 3, 4 Điều 50; Điều 51–52 NĐ 217/2026",
+        "conditional": false,
+        "condition": "",
+        "url": "https://datafiles.chinhphu.vn/cpp/files/vbpq/2026/6/217-ndcp.signed.pdf"
+      },
+      {
+        "id": "planning",
+        "label": "Mục đích sử dụng đất, quy hoạch và điều kiện theo loại giấy phép",
+        "citation": "Điều 50–52 NĐ 217/2026",
+        "conditional": false,
+        "condition": "Sửa chữa giữ nguyên quy mô, chức năng: áp dụng ngoại lệ khoản 1 Điều 51 đối với yêu cầu quy hoạch; mục đích sử dụng đất vẫn phải đáp ứng.",
+        "url": "https://datafiles.chinhphu.vn/cpp/files/vbpq/2026/6/217-ndcp.signed.pdf"
+      }
+    ],
+    "stage": [
+      {
+        "id": "authority",
+        "label": "Đối tượng, trường hợp miễn phép và căn cứ thẩm quyền cụ thể",
+        "citation": "Điều 53–54, 56 NĐ 217/2026; quy định áp dụng tại địa phương",
+        "conditional": false,
+        "condition": "Cấp xã: công trình cấp III, IV và nhà ở hộ gia đình/cá nhân; ban quản lý khu theo khoản 2; Sở Xây dựng: các đối tượng còn lại. Xét ngoại lệ, công trình cấp cao nhất và thay đổi cấp theo khoản 4 Điều 53.",
+        "url": "https://datafiles.chinhphu.vn/cpp/files/vbpq/2026/6/217-ndcp.signed.pdf"
+      },
+      {
+        "id": "application",
+        "label": "Đơn đề nghị Mẫu 01, Phụ lục II, đúng loại thủ tục",
+        "citation": "Điều 58 NĐ 217/2026; Mẫu 01 Phụ lục II",
+        "conditional": false,
+        "condition": "",
+        "url": "https://datafiles.chinhphu.vn/cpp/files/vbpq/2026/6/217-ndcp.signed.pdf"
+      },
+      {
+        "id": "formality",
+        "label": "Tính hợp lệ của bản chính, bản sao / hồ sơ điện tử, chữ ký và bản vẽ",
+        "citation": "Điều 56 NĐ 217/2026",
+        "conditional": false,
+        "condition": "Khai thác dữ liệu đã có hợp lệ trong cơ sở dữ liệu; không mặc định yêu cầu nộp lại bản giấy.",
+        "url": "https://datafiles.chinhphu.vn/cpp/files/vbpq/2026/6/217-ndcp.signed.pdf"
+      },
+      {
+        "id": "land",
+        "label": "Giấy tờ đất đai hoặc dữ liệu được khai thác hợp lệ theo phạm vi công trình",
+        "citation": "Điều 55, 56 và Điều 58 NĐ 217/2026",
+        "conditional": false,
+        "condition": "Đối chiếu phương án thay thế được pháp luật cho phép: văn bản chấp thuận vị trí, phương án tuyến hoặc quyết định thu hồi đất; phạm vi đất tương ứng giai đoạn.",
+        "url": "https://datafiles.chinhphu.vn/cpp/files/vbpq/2026/6/217-ndcp.signed.pdf"
+      },
+      {
+        "id": "design",
+        "label": "Bản vẽ thiết kế tương ứng loại công trình, phạm vi đề nghị cấp phép",
+        "citation": "Điều 58 NĐ 217/2026",
+        "conditional": false,
+        "condition": "",
+        "url": "https://datafiles.chinhphu.vn/cpp/files/vbpq/2026/6/217-ndcp.signed.pdf"
+      },
+      {
+        "id": "approval",
+        "label": "Quyết định phê duyệt dự án",
+        "citation": "Điều 58; điểm c khoản 1 Điều 57 NĐ 217/2026",
+        "conditional": false,
+        "condition": "",
+        "url": "https://datafiles.chinhphu.vn/cpp/files/vbpq/2026/6/217-ndcp.signed.pdf"
+      },
+      {
+        "id": "verification",
+        "label": "Báo cáo thẩm tra thiết kế nếu thuộc trường hợp phải thẩm tra",
+        "citation": "Điều 56; điểm c khoản 1 Điều 57 NĐ 217/2026",
+        "conditional": true,
+        "condition": "Áp dụng theo đối tượng, quy mô và yêu cầu về thẩm tra thiết kế.",
+        "url": "https://datafiles.chinhphu.vn/cpp/files/vbpq/2026/6/217-ndcp.signed.pdf"
+      },
+      {
+        "id": "specialized",
+        "label": "Kết quả thủ tục PCCC, môi trường, văn hóa theo đối tượng áp dụng",
+        "citation": "Điều 58 NĐ 217/2026",
+        "conditional": true,
+        "condition": "Xác định từng đối tượng theo pháp luật chuyên ngành; giải thích nếu không áp dụng.",
+        "url": "https://datafiles.chinhphu.vn/cpp/files/vbpq/2026/6/217-ndcp.signed.pdf"
+      },
+      {
+        "id": "special_building",
+        "label": "Yêu cầu riêng đối với công trình tôn giáo, tín ngưỡng, tượng đài, quảng cáo, ngoại giao",
+        "citation": "Khoản 2–5 Điều 57 NĐ 217/2026",
+        "conditional": true,
+        "condition": "Đối chiếu loại công trình và pháp luật chuyên ngành tương ứng.",
+        "url": "https://datafiles.chinhphu.vn/cpp/files/vbpq/2026/6/217-ndcp.signed.pdf"
+      },
+      {
+        "id": "stage_scope",
+        "label": "Đất, thiết kế và phạm vi công việc của giai đoạn xin phép",
+        "citation": "Điều 58 NĐ 217/2026",
+        "conditional": false,
+        "condition": "",
+        "url": "https://datafiles.chinhphu.vn/cpp/files/vbpq/2026/6/217-ndcp.signed.pdf"
+      },
+      {
+        "id": "safety",
+        "label": "An toàn kết cấu, lân cận, hạ tầng; môi trường, PCCC và thiết kế được duyệt",
+        "citation": "Khoản 3, 4 Điều 50; Điều 51–52 NĐ 217/2026",
+        "conditional": false,
+        "condition": "",
+        "url": "https://datafiles.chinhphu.vn/cpp/files/vbpq/2026/6/217-ndcp.signed.pdf"
+      },
+      {
+        "id": "planning",
+        "label": "Mục đích sử dụng đất, quy hoạch và điều kiện theo loại giấy phép",
+        "citation": "Điều 50–52 NĐ 217/2026",
+        "conditional": false,
+        "condition": "Sửa chữa giữ nguyên quy mô, chức năng: áp dụng ngoại lệ khoản 1 Điều 51 đối với yêu cầu quy hoạch; mục đích sử dụng đất vẫn phải đáp ứng.",
+        "url": "https://datafiles.chinhphu.vn/cpp/files/vbpq/2026/6/217-ndcp.signed.pdf"
+      }
+    ],
+    "group": [
+      {
+        "id": "authority",
+        "label": "Đối tượng, trường hợp miễn phép và căn cứ thẩm quyền cụ thể",
+        "citation": "Điều 53–54, 56 NĐ 217/2026; quy định áp dụng tại địa phương",
+        "conditional": false,
+        "condition": "Cấp xã: công trình cấp III, IV và nhà ở hộ gia đình/cá nhân; ban quản lý khu theo khoản 2; Sở Xây dựng: các đối tượng còn lại. Xét ngoại lệ, công trình cấp cao nhất và thay đổi cấp theo khoản 4 Điều 53.",
+        "url": "https://datafiles.chinhphu.vn/cpp/files/vbpq/2026/6/217-ndcp.signed.pdf"
+      },
+      {
+        "id": "application",
+        "label": "Đơn đề nghị Mẫu 01, Phụ lục II, đúng loại thủ tục",
+        "citation": "Điều 59 NĐ 217/2026; Mẫu 01 Phụ lục II",
+        "conditional": false,
+        "condition": "",
+        "url": "https://datafiles.chinhphu.vn/cpp/files/vbpq/2026/6/217-ndcp.signed.pdf"
+      },
+      {
+        "id": "formality",
+        "label": "Tính hợp lệ của bản chính, bản sao / hồ sơ điện tử, chữ ký và bản vẽ",
+        "citation": "Điều 56 NĐ 217/2026",
+        "conditional": false,
+        "condition": "Khai thác dữ liệu đã có hợp lệ trong cơ sở dữ liệu; không mặc định yêu cầu nộp lại bản giấy.",
+        "url": "https://datafiles.chinhphu.vn/cpp/files/vbpq/2026/6/217-ndcp.signed.pdf"
+      },
+      {
+        "id": "land",
+        "label": "Giấy tờ đất đai hoặc dữ liệu được khai thác hợp lệ theo phạm vi công trình",
+        "citation": "Điều 55, 56 và Điều 59 NĐ 217/2026",
+        "conditional": false,
+        "condition": "",
+        "url": "https://datafiles.chinhphu.vn/cpp/files/vbpq/2026/6/217-ndcp.signed.pdf"
+      },
+      {
+        "id": "design",
+        "label": "Bản vẽ thiết kế tương ứng loại công trình, phạm vi đề nghị cấp phép",
+        "citation": "Điều 59 NĐ 217/2026",
+        "conditional": false,
+        "condition": "",
+        "url": "https://datafiles.chinhphu.vn/cpp/files/vbpq/2026/6/217-ndcp.signed.pdf"
+      },
+      {
+        "id": "approval",
+        "label": "Quyết định phê duyệt dự án",
+        "citation": "Điều 59; điểm c khoản 1 Điều 57 NĐ 217/2026",
+        "conditional": false,
+        "condition": "",
+        "url": "https://datafiles.chinhphu.vn/cpp/files/vbpq/2026/6/217-ndcp.signed.pdf"
+      },
+      {
+        "id": "verification",
+        "label": "Báo cáo thẩm tra thiết kế nếu thuộc trường hợp phải thẩm tra",
+        "citation": "Điều 56; điểm c khoản 1 Điều 57 NĐ 217/2026",
+        "conditional": true,
+        "condition": "Áp dụng theo đối tượng, quy mô và yêu cầu về thẩm tra thiết kế.",
+        "url": "https://datafiles.chinhphu.vn/cpp/files/vbpq/2026/6/217-ndcp.signed.pdf"
+      },
+      {
+        "id": "specialized",
+        "label": "Kết quả thủ tục PCCC, môi trường, văn hóa theo đối tượng áp dụng",
+        "citation": "Điều 59 NĐ 217/2026",
+        "conditional": true,
+        "condition": "Xác định từng đối tượng theo pháp luật chuyên ngành; giải thích nếu không áp dụng.",
+        "url": "https://datafiles.chinhphu.vn/cpp/files/vbpq/2026/6/217-ndcp.signed.pdf"
+      },
+      {
+        "id": "special_building",
+        "label": "Yêu cầu riêng đối với công trình tôn giáo, tín ngưỡng, tượng đài, quảng cáo, ngoại giao",
+        "citation": "Khoản 2–5 Điều 57 NĐ 217/2026",
+        "conditional": true,
+        "condition": "Đối chiếu loại công trình và pháp luật chuyên ngành tương ứng.",
+        "url": "https://datafiles.chinhphu.vn/cpp/files/vbpq/2026/6/217-ndcp.signed.pdf"
+      },
+      {
+        "id": "group_scope",
+        "label": "Danh mục và bản vẽ của từng công trình trong nhóm",
+        "citation": "Điều 59 NĐ 217/2026",
+        "conditional": false,
+        "condition": "",
+        "url": "https://datafiles.chinhphu.vn/cpp/files/vbpq/2026/6/217-ndcp.signed.pdf"
+      },
+      {
+        "id": "safety",
+        "label": "An toàn kết cấu, lân cận, hạ tầng; môi trường, PCCC và thiết kế được duyệt",
+        "citation": "Khoản 3, 4 Điều 50; Điều 51–52 NĐ 217/2026",
+        "conditional": false,
+        "condition": "",
+        "url": "https://datafiles.chinhphu.vn/cpp/files/vbpq/2026/6/217-ndcp.signed.pdf"
+      },
+      {
+        "id": "planning",
+        "label": "Mục đích sử dụng đất, quy hoạch và điều kiện theo loại giấy phép",
+        "citation": "Điều 50–52 NĐ 217/2026",
+        "conditional": false,
+        "condition": "Sửa chữa giữ nguyên quy mô, chức năng: áp dụng ngoại lệ khoản 1 Điều 51 đối với yêu cầu quy hoạch; mục đích sử dụng đất vẫn phải đáp ứng.",
+        "url": "https://datafiles.chinhphu.vn/cpp/files/vbpq/2026/6/217-ndcp.signed.pdf"
+      }
+    ],
+    "house": [
+      {
+        "id": "authority",
+        "label": "Đối tượng, trường hợp miễn phép và căn cứ thẩm quyền cụ thể",
+        "citation": "Điều 53–54, 56 NĐ 217/2026; quy định áp dụng tại địa phương",
+        "conditional": false,
+        "condition": "Cấp xã: công trình cấp III, IV và nhà ở hộ gia đình/cá nhân; ban quản lý khu theo khoản 2; Sở Xây dựng: các đối tượng còn lại. Xét ngoại lệ, công trình cấp cao nhất và thay đổi cấp theo khoản 4 Điều 53.",
+        "url": "https://datafiles.chinhphu.vn/cpp/files/vbpq/2026/6/217-ndcp.signed.pdf"
+      },
+      {
+        "id": "application",
+        "label": "Đơn đề nghị Mẫu 01, Phụ lục II, đúng loại thủ tục",
+        "citation": "Điều 60 NĐ 217/2026; Mẫu 01 Phụ lục II",
+        "conditional": false,
+        "condition": "",
+        "url": "https://datafiles.chinhphu.vn/cpp/files/vbpq/2026/6/217-ndcp.signed.pdf"
+      },
+      {
+        "id": "formality",
+        "label": "Tính hợp lệ của bản chính, bản sao / hồ sơ điện tử, chữ ký và bản vẽ",
+        "citation": "Điều 56 NĐ 217/2026",
+        "conditional": false,
+        "condition": "Khai thác dữ liệu đã có hợp lệ trong cơ sở dữ liệu; không mặc định yêu cầu nộp lại bản giấy.",
+        "url": "https://datafiles.chinhphu.vn/cpp/files/vbpq/2026/6/217-ndcp.signed.pdf"
+      },
+      {
+        "id": "land",
+        "label": "Giấy tờ đất đai hoặc dữ liệu được khai thác hợp lệ theo phạm vi công trình",
+        "citation": "Điều 55, 56 và Điều 60 NĐ 217/2026",
+        "conditional": false,
+        "condition": "",
+        "url": "https://datafiles.chinhphu.vn/cpp/files/vbpq/2026/6/217-ndcp.signed.pdf"
+      },
+      {
+        "id": "design",
+        "label": "Bản vẽ thiết kế tương ứng loại công trình, phạm vi đề nghị cấp phép",
+        "citation": "Điều 60 NĐ 217/2026",
+        "conditional": false,
+        "condition": "",
+        "url": "https://datafiles.chinhphu.vn/cpp/files/vbpq/2026/6/217-ndcp.signed.pdf"
+      },
+      {
+        "id": "verification",
+        "label": "Điều kiện thiết kế, thẩm tra và PCCC theo đối tượng nhà ở",
+        "citation": "Điều 60 NĐ 217/2026",
+        "conditional": true,
+        "condition": "Phân biệt chủ đầu tư cá nhân và tổ chức; đối chiếu diện phải thẩm tra/PCCC.",
+        "url": "https://datafiles.chinhphu.vn/cpp/files/vbpq/2026/6/217-ndcp.signed.pdf"
+      },
+      {
+        "id": "heritage",
+        "label": "Chấp thuận về di tích, di sản khi thuộc khu vực bảo vệ",
+        "citation": "Điều 60 NĐ 217/2026",
+        "conditional": true,
+        "condition": "Chỉ áp dụng khi nhà thuộc trường hợp bảo vệ di tích, di sản theo quy định.",
+        "url": "https://datafiles.chinhphu.vn/cpp/files/vbpq/2026/6/217-ndcp.signed.pdf"
+      },
+      {
+        "id": "adjacent",
+        "label": "Cam kết bảo đảm an toàn công trình liền kề",
+        "citation": "Điều 60 NĐ 217/2026",
+        "conditional": false,
+        "condition": "",
+        "url": "https://datafiles.chinhphu.vn/cpp/files/vbpq/2026/6/217-ndcp.signed.pdf"
+      },
+      {
+        "id": "safety",
+        "label": "An toàn kết cấu, lân cận, hạ tầng; môi trường, PCCC và thiết kế được duyệt",
+        "citation": "Khoản 3, 4 Điều 50; Điều 51–52 NĐ 217/2026",
+        "conditional": false,
+        "condition": "",
+        "url": "https://datafiles.chinhphu.vn/cpp/files/vbpq/2026/6/217-ndcp.signed.pdf"
+      },
+      {
+        "id": "planning",
+        "label": "Mục đích sử dụng đất, quy hoạch và điều kiện theo loại giấy phép",
+        "citation": "Điều 50–52 NĐ 217/2026",
+        "conditional": false,
+        "condition": "Sửa chữa giữ nguyên quy mô, chức năng: áp dụng ngoại lệ khoản 1 Điều 51 đối với yêu cầu quy hoạch; mục đích sử dụng đất vẫn phải đáp ứng.",
+        "url": "https://datafiles.chinhphu.vn/cpp/files/vbpq/2026/6/217-ndcp.signed.pdf"
+      }
+    ],
+    "repair": [
+      {
+        "id": "authority",
+        "label": "Đối tượng, trường hợp miễn phép và căn cứ thẩm quyền cụ thể",
+        "citation": "Điều 53–54, 56 NĐ 217/2026; quy định áp dụng tại địa phương",
+        "conditional": false,
+        "condition": "Cấp xã: công trình cấp III, IV và nhà ở hộ gia đình/cá nhân; ban quản lý khu theo khoản 2; Sở Xây dựng: các đối tượng còn lại. Xét ngoại lệ, công trình cấp cao nhất và thay đổi cấp theo khoản 4 Điều 53.",
+        "url": "https://datafiles.chinhphu.vn/cpp/files/vbpq/2026/6/217-ndcp.signed.pdf"
+      },
+      {
+        "id": "application",
+        "label": "Đơn đề nghị Mẫu 01, Phụ lục II, đúng loại thủ tục",
+        "citation": "Điều 61 NĐ 217/2026; Mẫu 01 Phụ lục II",
+        "conditional": false,
+        "condition": "",
+        "url": "https://datafiles.chinhphu.vn/cpp/files/vbpq/2026/6/217-ndcp.signed.pdf"
+      },
+      {
+        "id": "formality",
+        "label": "Tính hợp lệ của bản chính, bản sao / hồ sơ điện tử, chữ ký và bản vẽ",
+        "citation": "Điều 56 NĐ 217/2026",
+        "conditional": false,
+        "condition": "Khai thác dữ liệu đã có hợp lệ trong cơ sở dữ liệu; không mặc định yêu cầu nộp lại bản giấy.",
+        "url": "https://datafiles.chinhphu.vn/cpp/files/vbpq/2026/6/217-ndcp.signed.pdf"
+      },
+      {
+        "id": "land",
+        "label": "Giấy tờ đất đai hoặc dữ liệu được khai thác hợp lệ theo phạm vi công trình",
+        "citation": "Điều 55, 56 và Điều 61 NĐ 217/2026",
+        "conditional": false,
+        "condition": "",
+        "url": "https://datafiles.chinhphu.vn/cpp/files/vbpq/2026/6/217-ndcp.signed.pdf"
+      },
+      {
+        "id": "existing",
+        "label": "Bản vẽ hiện trạng được duyệt và ảnh hiện trạng, lân cận tối thiểu 10 × 15 cm",
+        "citation": "Điểm b khoản 2 Điều 61 NĐ 217/2026",
+        "conditional": false,
+        "condition": "",
+        "url": "https://datafiles.chinhphu.vn/cpp/files/vbpq/2026/6/217-ndcp.signed.pdf"
+      },
+      {
+        "id": "design",
+        "label": "Bản vẽ thiết kế tương ứng loại công trình, phạm vi đề nghị cấp phép",
+        "citation": "Điều 61 NĐ 217/2026",
+        "conditional": false,
+        "condition": "",
+        "url": "https://datafiles.chinhphu.vn/cpp/files/vbpq/2026/6/217-ndcp.signed.pdf"
+      },
+      {
+        "id": "specialized",
+        "label": "Kết quả thủ tục PCCC, môi trường, văn hóa theo đối tượng áp dụng",
+        "citation": "Điều 61 NĐ 217/2026",
+        "conditional": true,
+        "condition": "Xác định từng đối tượng theo pháp luật chuyên ngành; giải thích nếu không áp dụng.",
+        "url": "https://datafiles.chinhphu.vn/cpp/files/vbpq/2026/6/217-ndcp.signed.pdf"
+      },
+      {
+        "id": "safety",
+        "label": "An toàn kết cấu, lân cận, hạ tầng; môi trường, PCCC và thiết kế được duyệt",
+        "citation": "Khoản 3, 4 Điều 50; Điều 51–52 NĐ 217/2026",
+        "conditional": false,
+        "condition": "",
+        "url": "https://datafiles.chinhphu.vn/cpp/files/vbpq/2026/6/217-ndcp.signed.pdf"
+      },
+      {
+        "id": "planning",
+        "label": "Mục đích sử dụng đất, quy hoạch và điều kiện theo loại giấy phép",
+        "citation": "Điều 50–52 NĐ 217/2026",
+        "conditional": true,
+        "condition": "Sửa chữa giữ nguyên quy mô, chức năng: áp dụng ngoại lệ khoản 1 Điều 51 đối với yêu cầu quy hoạch; mục đích sử dụng đất vẫn phải đáp ứng.",
+        "url": "https://datafiles.chinhphu.vn/cpp/files/vbpq/2026/6/217-ndcp.signed.pdf"
+      }
+    ],
+    "relocation": [
+      {
+        "id": "authority",
+        "label": "Đối tượng, trường hợp miễn phép và căn cứ thẩm quyền cụ thể",
+        "citation": "Điều 53–54, 56 NĐ 217/2026; quy định áp dụng tại địa phương",
+        "conditional": false,
+        "condition": "Cấp xã: công trình cấp III, IV và nhà ở hộ gia đình/cá nhân; ban quản lý khu theo khoản 2; Sở Xây dựng: các đối tượng còn lại. Xét ngoại lệ, công trình cấp cao nhất và thay đổi cấp theo khoản 4 Điều 53.",
+        "url": "https://datafiles.chinhphu.vn/cpp/files/vbpq/2026/6/217-ndcp.signed.pdf"
+      },
+      {
+        "id": "application",
+        "label": "Đơn đề nghị Mẫu 01, Phụ lục II, đúng loại thủ tục",
+        "citation": "Điều 61 NĐ 217/2026; Mẫu 01 Phụ lục II",
+        "conditional": false,
+        "condition": "",
+        "url": "https://datafiles.chinhphu.vn/cpp/files/vbpq/2026/6/217-ndcp.signed.pdf"
+      },
+      {
+        "id": "formality",
+        "label": "Tính hợp lệ của bản chính, bản sao / hồ sơ điện tử, chữ ký và bản vẽ",
+        "citation": "Điều 56 NĐ 217/2026",
+        "conditional": false,
+        "condition": "Khai thác dữ liệu đã có hợp lệ trong cơ sở dữ liệu; không mặc định yêu cầu nộp lại bản giấy.",
+        "url": "https://datafiles.chinhphu.vn/cpp/files/vbpq/2026/6/217-ndcp.signed.pdf"
+      },
+      {
+        "id": "land",
+        "label": "Quyền sử dụng đất nơi di dời đến và giấy tờ hợp pháp về sở hữu công trình",
+        "citation": "Điểm a khoản 3 Điều 61 NĐ 217/2026",
+        "conditional": false,
+        "condition": "",
+        "url": "https://datafiles.chinhphu.vn/cpp/files/vbpq/2026/6/217-ndcp.signed.pdf"
+      },
+      {
+        "id": "existing",
+        "label": "Hoàn công hoặc bản vẽ thực trạng, kết cấu; tổng mặt bằng và móng nơi di dời đến",
+        "citation": "Điểm b khoản 3 Điều 61 NĐ 217/2026",
+        "conditional": false,
+        "condition": "",
+        "url": "https://datafiles.chinhphu.vn/cpp/files/vbpq/2026/6/217-ndcp.signed.pdf"
+      },
+      {
+        "id": "survey",
+        "label": "Khảo sát đánh giá chất lượng do tổ chức có chức năng thiết kế hoặc kiểm định thực hiện",
+        "citation": "Điểm c khoản 3 Điều 61 NĐ 217/2026",
+        "conditional": false,
+        "condition": "",
+        "url": "https://datafiles.chinhphu.vn/cpp/files/vbpq/2026/6/217-ndcp.signed.pdf"
+      },
+      {
+        "id": "relocation_plan",
+        "label": "Phương án di dời: biện pháp, nhân lực, thiết bị, an toàn, môi trường, tiến độ",
+        "citation": "Điểm d khoản 3 Điều 61 NĐ 217/2026",
+        "conditional": false,
+        "condition": "",
+        "url": "https://datafiles.chinhphu.vn/cpp/files/vbpq/2026/6/217-ndcp.signed.pdf"
+      },
+      {
+        "id": "safety",
+        "label": "An toàn kết cấu, lân cận, hạ tầng; môi trường, PCCC và thiết kế được duyệt",
+        "citation": "Khoản 3, 4 Điều 50; Điều 51–52 NĐ 217/2026",
+        "conditional": false,
+        "condition": "",
+        "url": "https://datafiles.chinhphu.vn/cpp/files/vbpq/2026/6/217-ndcp.signed.pdf"
+      },
+      {
+        "id": "planning",
+        "label": "Mục đích sử dụng đất, quy hoạch và điều kiện theo loại giấy phép",
+        "citation": "Điều 50–52 NĐ 217/2026",
+        "conditional": false,
+        "condition": "Sửa chữa giữ nguyên quy mô, chức năng: áp dụng ngoại lệ khoản 1 Điều 51 đối với yêu cầu quy hoạch; mục đích sử dụng đất vẫn phải đáp ứng.",
+        "url": "https://datafiles.chinhphu.vn/cpp/files/vbpq/2026/6/217-ndcp.signed.pdf"
+      }
+    ],
+    "temporary": [
+      {
+        "id": "authority",
+        "label": "Đối tượng, trường hợp miễn phép và căn cứ thẩm quyền cụ thể",
+        "citation": "Điều 53–54, 56 NĐ 217/2026; quy định áp dụng tại địa phương",
+        "conditional": false,
+        "condition": "Cấp xã: công trình cấp III, IV và nhà ở hộ gia đình/cá nhân; ban quản lý khu theo khoản 2; Sở Xây dựng: các đối tượng còn lại. Xét ngoại lệ, công trình cấp cao nhất và thay đổi cấp theo khoản 4 Điều 53.",
+        "url": "https://datafiles.chinhphu.vn/cpp/files/vbpq/2026/6/217-ndcp.signed.pdf"
+      },
+      {
+        "id": "application",
+        "label": "Đơn đề nghị Mẫu 01, Phụ lục II, đúng loại thủ tục",
+        "citation": "Điều 62 NĐ 217/2026; Mẫu 01 Phụ lục II",
+        "conditional": false,
+        "condition": "",
+        "url": "https://datafiles.chinhphu.vn/cpp/files/vbpq/2026/6/217-ndcp.signed.pdf"
+      },
+      {
+        "id": "formality",
+        "label": "Tính hợp lệ của bản chính, bản sao / hồ sơ điện tử, chữ ký và bản vẽ",
+        "citation": "Điều 56 NĐ 217/2026",
+        "conditional": false,
+        "condition": "Khai thác dữ liệu đã có hợp lệ trong cơ sở dữ liệu; không mặc định yêu cầu nộp lại bản giấy.",
+        "url": "https://datafiles.chinhphu.vn/cpp/files/vbpq/2026/6/217-ndcp.signed.pdf"
+      },
+      {
+        "id": "land",
+        "label": "Giấy tờ đất đai hoặc dữ liệu được khai thác hợp lệ theo phạm vi công trình",
+        "citation": "Điều 55, 56 và Điều 62 NĐ 217/2026",
+        "conditional": false,
+        "condition": "",
+        "url": "https://datafiles.chinhphu.vn/cpp/files/vbpq/2026/6/217-ndcp.signed.pdf"
+      },
+      {
+        "id": "design",
+        "label": "Bản vẽ thiết kế tương ứng loại công trình, phạm vi đề nghị cấp phép",
+        "citation": "Điều 62 NĐ 217/2026",
+        "conditional": false,
+        "condition": "",
+        "url": "https://datafiles.chinhphu.vn/cpp/files/vbpq/2026/6/217-ndcp.signed.pdf"
+      },
+      {
+        "id": "approval",
+        "label": "Quyết định phê duyệt dự án",
+        "citation": "Điều 62; điểm c khoản 1 Điều 57 NĐ 217/2026",
+        "conditional": false,
+        "condition": "",
+        "url": "https://datafiles.chinhphu.vn/cpp/files/vbpq/2026/6/217-ndcp.signed.pdf"
+      },
+      {
+        "id": "verification",
+        "label": "Báo cáo thẩm tra thiết kế nếu thuộc trường hợp phải thẩm tra",
+        "citation": "Điều 56; điểm c khoản 1 Điều 57 NĐ 217/2026",
+        "conditional": true,
+        "condition": "Áp dụng theo đối tượng, quy mô và yêu cầu về thẩm tra thiết kế.",
+        "url": "https://datafiles.chinhphu.vn/cpp/files/vbpq/2026/6/217-ndcp.signed.pdf"
+      },
+      {
+        "id": "specialized",
+        "label": "Kết quả thủ tục PCCC, môi trường, văn hóa theo đối tượng áp dụng",
+        "citation": "Điều 62 NĐ 217/2026",
+        "conditional": true,
+        "condition": "Xác định từng đối tượng theo pháp luật chuyên ngành; giải thích nếu không áp dụng.",
+        "url": "https://datafiles.chinhphu.vn/cpp/files/vbpq/2026/6/217-ndcp.signed.pdf"
+      },
+      {
+        "id": "special_building",
+        "label": "Yêu cầu riêng đối với công trình tôn giáo, tín ngưỡng, tượng đài, quảng cáo, ngoại giao",
+        "citation": "Khoản 2–5 Điều 57 NĐ 217/2026",
+        "conditional": true,
+        "condition": "Đối chiếu loại công trình và pháp luật chuyên ngành tương ứng.",
+        "url": "https://datafiles.chinhphu.vn/cpp/files/vbpq/2026/6/217-ndcp.signed.pdf"
+      },
+      {
+        "id": "local",
+        "label": "Quy định cấp tỉnh về quy mô, chiều cao và thời hạn tồn tại",
+        "citation": "Khoản 1 Điều 62 NĐ 217/2026",
+        "conditional": false,
+        "condition": "",
+        "url": "https://datafiles.chinhphu.vn/cpp/files/vbpq/2026/6/217-ndcp.signed.pdf"
+      },
+      {
+        "id": "temporary",
+        "label": "Đơn có tiêu đề cấp phép có thời hạn và nghĩa vụ tháo dỡ theo mẫu",
+        "citation": "Khoản 2 Điều 62; Mẫu 05 Phụ lục II NĐ 217/2026",
+        "conditional": false,
+        "condition": "",
+        "url": "https://datafiles.chinhphu.vn/cpp/files/vbpq/2026/6/217-ndcp.signed.pdf"
+      },
+      {
+        "id": "safety",
+        "label": "An toàn kết cấu, lân cận, hạ tầng; môi trường, PCCC và thiết kế được duyệt",
+        "citation": "Khoản 3, 4 Điều 50; Điều 51–52 NĐ 217/2026",
+        "conditional": false,
+        "condition": "",
+        "url": "https://datafiles.chinhphu.vn/cpp/files/vbpq/2026/6/217-ndcp.signed.pdf"
+      },
+      {
+        "id": "planning",
+        "label": "Mục đích sử dụng đất, quy hoạch và điều kiện theo loại giấy phép",
+        "citation": "Điều 50–52 NĐ 217/2026",
+        "conditional": false,
+        "condition": "Sửa chữa giữ nguyên quy mô, chức năng: áp dụng ngoại lệ khoản 1 Điều 51 đối với yêu cầu quy hoạch; mục đích sử dụng đất vẫn phải đáp ứng.",
+        "url": "https://datafiles.chinhphu.vn/cpp/files/vbpq/2026/6/217-ndcp.signed.pdf"
+      },
+      {
+        "id": "temporary_eligibility",
+        "label": "Quy hoạch chưa thực hiện, thu hồi đất, kế hoạch sử dụng đất và cam kết phá dỡ",
+        "citation": "Khoản 1–4 Điều 52 NĐ 217/2026",
+        "conditional": false,
+        "condition": "Không đồng nhất thời hạn tồn tại với 12 tháng hiệu lực khởi công. Kiểm tra trường hợp đã có kế hoạch sử dụng đất cấp xã và ngoại lệ sau 02 năm.",
+        "url": "https://datafiles.chinhphu.vn/cpp/files/vbpq/2026/6/217-ndcp.signed.pdf"
+      }
+    ],
+    "amendment": [
+      {
+        "id": "authority",
+        "label": "Đối tượng, trường hợp miễn phép và căn cứ thẩm quyền cụ thể",
+        "citation": "Điều 53–54, 56 NĐ 217/2026; quy định áp dụng tại địa phương",
+        "conditional": false,
+        "condition": "Cấp xã: công trình cấp III, IV và nhà ở hộ gia đình/cá nhân; ban quản lý khu theo khoản 2; Sở Xây dựng: các đối tượng còn lại. Xét ngoại lệ, công trình cấp cao nhất và thay đổi cấp theo khoản 4 Điều 53.",
+        "url": "https://datafiles.chinhphu.vn/cpp/files/vbpq/2026/6/217-ndcp.signed.pdf"
+      },
+      {
+        "id": "application",
+        "label": "Đơn đề nghị Mẫu 02, Phụ lục II, đúng loại thủ tục",
+        "citation": "Điều 63 NĐ 217/2026; Mẫu 02 Phụ lục II",
+        "conditional": false,
+        "condition": "",
+        "url": "https://datafiles.chinhphu.vn/cpp/files/vbpq/2026/6/217-ndcp.signed.pdf"
+      },
+      {
+        "id": "formality",
+        "label": "Tính hợp lệ của bản chính, bản sao / hồ sơ điện tử, chữ ký và bản vẽ",
+        "citation": "Điều 56 NĐ 217/2026",
+        "conditional": false,
+        "condition": "Khai thác dữ liệu đã có hợp lệ trong cơ sở dữ liệu; không mặc định yêu cầu nộp lại bản giấy.",
+        "url": "https://datafiles.chinhphu.vn/cpp/files/vbpq/2026/6/217-ndcp.signed.pdf"
+      },
+      {
+        "id": "reason",
+        "label": "Nội dung thay đổi thuộc trường hợp phải điều chỉnh giấy phép",
+        "citation": "Khoản 1 Điều 63 NĐ 217/2026",
+        "conditional": false,
+        "condition": "",
+        "url": "https://datafiles.chinhphu.vn/cpp/files/vbpq/2026/6/217-ndcp.signed.pdf"
+      },
+      {
+        "id": "prior",
+        "label": "Giấy phép đã cấp và bản vẽ kèm theo",
+        "citation": "Điểm b khoản 2 Điều 63 NĐ 217/2026",
+        "conditional": false,
+        "condition": "",
+        "url": "https://datafiles.chinhphu.vn/cpp/files/vbpq/2026/6/217-ndcp.signed.pdf"
+      },
+      {
+        "id": "design",
+        "label": "Thiết kế điều chỉnh; thiết kế trong BCNCKT nếu điều chỉnh dự án",
+        "citation": "Điểm c khoản 2 Điều 63 NĐ 217/2026",
+        "conditional": false,
+        "condition": "",
+        "url": "https://datafiles.chinhphu.vn/cpp/files/vbpq/2026/6/217-ndcp.signed.pdf"
+      },
+      {
+        "id": "approval",
+        "label": "Kết quả thẩm định, phê duyệt thiết kế điều chỉnh; an toàn, PCCC, môi trường",
+        "citation": "Điểm d khoản 2 Điều 63 NĐ 217/2026",
+        "conditional": false,
+        "condition": "",
+        "url": "https://datafiles.chinhphu.vn/cpp/files/vbpq/2026/6/217-ndcp.signed.pdf"
+      },
+      {
+        "id": "land",
+        "label": "Giấy tờ đất khi thay đổi diện tích hoặc chức năng sử dụng đất",
+        "citation": "Điểm đ khoản 2 Điều 63 NĐ 217/2026",
+        "conditional": true,
+        "condition": "Chỉ áp dụng nếu thay đổi diện tích hoặc chức năng sử dụng đất.",
+        "url": "https://datafiles.chinhphu.vn/cpp/files/vbpq/2026/6/217-ndcp.signed.pdf"
+      },
+      {
+        "id": "safety",
+        "label": "An toàn kết cấu, lân cận, hạ tầng; môi trường, PCCC và thiết kế được duyệt",
+        "citation": "Khoản 3, 4 Điều 50; Điều 51–52 NĐ 217/2026",
+        "conditional": false,
+        "condition": "",
+        "url": "https://datafiles.chinhphu.vn/cpp/files/vbpq/2026/6/217-ndcp.signed.pdf"
+      },
+      {
+        "id": "planning",
+        "label": "Mục đích sử dụng đất, quy hoạch và điều kiện theo loại giấy phép",
+        "citation": "Điều 50–52 NĐ 217/2026",
+        "conditional": false,
+        "condition": "Sửa chữa giữ nguyên quy mô, chức năng: áp dụng ngoại lệ khoản 1 Điều 51 đối với yêu cầu quy hoạch; mục đích sử dụng đất vẫn phải đáp ứng.",
+        "url": "https://datafiles.chinhphu.vn/cpp/files/vbpq/2026/6/217-ndcp.signed.pdf"
+      }
+    ],
+    "extension": [
+      {
+        "id": "authority",
+        "label": "Đối tượng, trường hợp miễn phép và căn cứ thẩm quyền cụ thể",
+        "citation": "Điều 53–54, 56 NĐ 217/2026; quy định áp dụng tại địa phương",
+        "conditional": false,
+        "condition": "Cấp xã: công trình cấp III, IV và nhà ở hộ gia đình/cá nhân; ban quản lý khu theo khoản 2; Sở Xây dựng: các đối tượng còn lại. Xét ngoại lệ, công trình cấp cao nhất và thay đổi cấp theo khoản 4 Điều 53.",
+        "url": "https://datafiles.chinhphu.vn/cpp/files/vbpq/2026/6/217-ndcp.signed.pdf"
+      },
+      {
+        "id": "application",
+        "label": "Đơn đề nghị Mẫu 02, Phụ lục II, đúng loại thủ tục",
+        "citation": "Điều 63 NĐ 217/2026; Mẫu 02 Phụ lục II",
+        "conditional": false,
+        "condition": "",
+        "url": "https://datafiles.chinhphu.vn/cpp/files/vbpq/2026/6/217-ndcp.signed.pdf"
+      },
+      {
+        "id": "formality",
+        "label": "Tính hợp lệ của bản chính, bản sao / hồ sơ điện tử, chữ ký và bản vẽ",
+        "citation": "Điều 56 NĐ 217/2026",
+        "conditional": false,
+        "condition": "Khai thác dữ liệu đã có hợp lệ trong cơ sở dữ liệu; không mặc định yêu cầu nộp lại bản giấy.",
+        "url": "https://datafiles.chinhphu.vn/cpp/files/vbpq/2026/6/217-ndcp.signed.pdf"
+      },
+      {
+        "id": "prior",
+        "label": "Giấy phép: bản chính, bản sao chứng thực hoặc bản điện tử đã cấp",
+        "citation": "Điểm b khoản 3 Điều 63 NĐ 217/2026",
+        "conditional": false,
+        "condition": "",
+        "url": "https://datafiles.chinhphu.vn/cpp/files/vbpq/2026/6/217-ndcp.signed.pdf"
+      },
+      {
+        "id": "reason",
+        "label": "Chưa khởi công khi hết hiệu lực khởi công; tối đa 02 lần, mỗi lần 12 tháng",
+        "citation": "Điểm a khoản 3 Điều 63 NĐ 217/2026",
+        "conditional": false,
+        "condition": "",
+        "url": "https://datafiles.chinhphu.vn/cpp/files/vbpq/2026/6/217-ndcp.signed.pdf"
+      }
+    ],
+    "reissue": [
+      {
+        "id": "authority",
+        "label": "Đối tượng, trường hợp miễn phép và căn cứ thẩm quyền cụ thể",
+        "citation": "Điều 53–54, 56 NĐ 217/2026; quy định áp dụng tại địa phương",
+        "conditional": false,
+        "condition": "Cấp xã: công trình cấp III, IV và nhà ở hộ gia đình/cá nhân; ban quản lý khu theo khoản 2; Sở Xây dựng: các đối tượng còn lại. Xét ngoại lệ, công trình cấp cao nhất và thay đổi cấp theo khoản 4 Điều 53.",
+        "url": "https://datafiles.chinhphu.vn/cpp/files/vbpq/2026/6/217-ndcp.signed.pdf"
+      },
+      {
+        "id": "application",
+        "label": "Đơn đề nghị Mẫu 02, Phụ lục II, đúng loại thủ tục",
+        "citation": "Điều 64 NĐ 217/2026; Mẫu 02 Phụ lục II",
+        "conditional": false,
+        "condition": "",
+        "url": "https://datafiles.chinhphu.vn/cpp/files/vbpq/2026/6/217-ndcp.signed.pdf"
+      },
+      {
+        "id": "formality",
+        "label": "Tính hợp lệ của bản chính, bản sao / hồ sơ điện tử, chữ ký và bản vẽ",
+        "citation": "Điều 56 NĐ 217/2026",
+        "conditional": false,
+        "condition": "Khai thác dữ liệu đã có hợp lệ trong cơ sở dữ liệu; không mặc định yêu cầu nộp lại bản giấy.",
+        "url": "https://datafiles.chinhphu.vn/cpp/files/vbpq/2026/6/217-ndcp.signed.pdf"
+      },
+      {
+        "id": "reason",
+        "label": "Lý do rách, nát hoặc mất giấy phép; cấp lại là bản sao giấy phép cũ",
+        "citation": "Khoản 1, 3 Điều 64 NĐ 217/2026",
+        "conditional": false,
+        "condition": "",
+        "url": "https://datafiles.chinhphu.vn/cpp/files/vbpq/2026/6/217-ndcp.signed.pdf"
+      },
+      {
+        "id": "prior",
+        "label": "Bản chính hoặc bản sao chứng thực giấy phép bị rách, nát",
+        "citation": "Điểm b khoản 2 Điều 64 NĐ 217/2026",
+        "conditional": true,
+        "condition": "Trường hợp mất phải nêu rõ lý do; không bắt buộc nộp bản giấy đã mất.",
+        "url": "https://datafiles.chinhphu.vn/cpp/files/vbpq/2026/6/217-ndcp.signed.pdf"
+      }
+    ]
+  },
+  "inspections": {
+    "start_notice": [
+      {
+        "id": "notice",
+        "label": "Nội dung thông báo khởi công: công trình, mã định danh, địa điểm, chủ đầu tư, quy mô, nhà thầu, ngày khởi công",
+        "citation": "Khoản 2 Điều 12; Phụ lục V NĐ 207/2026",
+        "conditional": false,
+        "condition": "",
+        "url": "https://datafiles.chinhphu.vn/cpp/files/vbpq/2026/6/207-ndcp.signed.pdf"
+      },
+      {
+        "id": "start_conditions",
+        "label": "Điều kiện khởi công: mặt bằng, giấy phép (hoặc miễn phép), thiết kế bản vẽ thi công được duyệt, hợp đồng",
+        "citation": "Khoản 1 Điều 48 Luật Xây dựng 135/2025",
+        "conditional": false,
+        "condition": "",
+        "url": "https://vanban.chinhphu.vn/?classid=1&docid=216514&orggroupid=1&pageid=27160"
+      },
+      {
+        "id": "permit_link",
+        "label": "Đối chiếu giấy phép đã cấp: số giấy phép, còn thời hạn khởi công",
+        "citation": "Khoản 10 Điều 49; điểm b khoản 2 Điều 67 NĐ 217/2026",
+        "conditional": true,
+        "condition": "Áp dụng khi công trình phải có giấy phép xây dựng.",
+        "url": "https://datafiles.chinhphu.vn/cpp/files/vbpq/2026/6/217-ndcp.signed.pdf"
+      },
+      {
+        "id": "exempt",
+        "label": "Công trình miễn phép: điều kiện miễn phép, phù hợp quy hoạch, phù hợp thông số chủ yếu của thiết kế tại BCNCKT đã thẩm định; hồ sơ gửi kèm",
+        "citation": "Khoản 2, 3 Điều 43 Luật 135/2025; điểm c khoản 2 Điều 67 NĐ 217/2026",
+        "conditional": true,
+        "condition": "Áp dụng khi công trình thuộc diện miễn giấy phép xây dựng.",
+        "url": "https://vanban.chinhphu.vn/?classid=1&docid=216514&orggroupid=1&pageid=27160"
+      },
+      {
+        "id": "database",
+        "label": "Cập nhật dữ liệu thông báo khởi công vào cơ sở dữ liệu quốc gia về hoạt động xây dựng",
+        "citation": "Khoản 2 Điều 12 NĐ 207/2026",
+        "conditional": false,
+        "condition": "",
+        "url": "https://datafiles.chinhphu.vn/cpp/files/vbpq/2026/6/207-ndcp.signed.pdf"
+      },
+      {
+        "id": "plan",
+        "label": "Kế hoạch kiểm tra công tác nghiệm thu trong thi công (số lần tối đa theo cấp công trình)",
+        "citation": "Điểm a, b khoản 3 Điều 27 NĐ 207/2026",
+        "conditional": true,
+        "condition": "Áp dụng khi công trình thuộc đối tượng kiểm tra (khoản 1 Điều 25).",
+        "url": "https://datafiles.chinhphu.vn/cpp/files/vbpq/2026/6/207-ndcp.signed.pdf"
+      }
+    ],
+    "during": [
+      {
+        "id": "authority",
+        "label": "Đối tượng phải kiểm tra, cơ quan có thẩm quyền",
+        "citation": "Điều 25, 26 NĐ 207/2026",
+        "conditional": false,
+        "condition": "",
+        "url": "https://datafiles.chinhphu.vn/cpp/files/vbpq/2026/6/207-ndcp.signed.pdf"
+      },
+      {
+        "id": "plan_notice",
+        "label": "Thông báo kế hoạch kiểm tra cho chủ đầu tư; số lần kiểm tra trong giới hạn hoặc có lý do vượt",
+        "citation": "Điểm a, b khoản 3 Điều 27 NĐ 207/2026",
+        "conditional": false,
+        "condition": "",
+        "url": "https://datafiles.chinhphu.vn/cpp/files/vbpq/2026/6/207-ndcp.signed.pdf"
+      },
+      {
+        "id": "quality_management",
+        "label": "Tuân thủ quy định về quản lý chất lượng, an toàn của chủ đầu tư và nhà thầu từ khi khởi công",
+        "citation": "Điểm a khoản 1 Điều 27 NĐ 207/2026",
+        "conditional": false,
+        "condition": "",
+        "url": "https://datafiles.chinhphu.vn/cpp/files/vbpq/2026/6/207-ndcp.signed.pdf"
+      },
+      {
+        "id": "acceptance_records",
+        "label": "Nghiệm thu công việc, giai đoạn, bộ phận công trình đã thực hiện",
+        "citation": "Điều 22, 23 NĐ 207/2026",
+        "conditional": false,
+        "condition": "",
+        "url": "https://datafiles.chinhphu.vn/cpp/files/vbpq/2026/6/207-ndcp.signed.pdf"
+      },
+      {
+        "id": "verification",
+        "label": "Yêu cầu thí nghiệm đối chứng, kiểm định, thử nghiệm khả năng chịu lực",
+        "citation": "Điểm a khoản 4 Điều 25; Điều 8 NĐ 207/2026",
+        "conditional": true,
+        "condition": "Áp dụng khi có dấu hiệu không bảo đảm chất lượng.",
+        "url": "https://datafiles.chinhphu.vn/cpp/files/vbpq/2026/6/207-ndcp.signed.pdf"
+      },
+      {
+        "id": "result_notice",
+        "label": "Văn bản thông báo kết quả kiểm tra gửi chủ đầu tư trong 10 ngày làm việc từ ngày kiểm tra",
+        "citation": "Điểm b khoản 3 Điều 27 NĐ 207/2026",
+        "conditional": false,
+        "condition": "",
+        "url": "https://datafiles.chinhphu.vn/cpp/files/vbpq/2026/6/207-ndcp.signed.pdf"
+      }
+    ],
+    "complete": [
+      {
+        "id": "authority",
+        "label": "Đối tượng phải kiểm tra, cơ quan có thẩm quyền và phạm vi kiểm tra",
+        "citation": "Điều 25–27 NĐ 207/2026",
+        "conditional": false,
+        "condition": "",
+        "url": "https://datafiles.chinhphu.vn/cpp/files/vbpq/2026/6/207-ndcp.signed.pdf"
+      },
+      {
+        "id": "completion",
+        "label": "Báo cáo hoàn thành thi công, mã định danh dự án/công trình và danh mục hồ sơ",
+        "citation": "Điểm a khoản 4 Điều 27; Phụ lục VI NĐ 207/2026",
+        "conditional": false,
+        "condition": "",
+        "url": "https://datafiles.chinhphu.vn/cpp/files/vbpq/2026/6/207-ndcp.signed.pdf"
+      },
+      {
+        "id": "acceptance",
+        "label": "Biên bản nghiệm thu của chủ đầu tư, thành phần ký và điều kiện nghiệm thu",
+        "citation": "Điều 24 NĐ 207/2026",
+        "conditional": false,
+        "condition": "",
+        "url": "https://datafiles.chinhphu.vn/cpp/files/vbpq/2026/6/207-ndcp.signed.pdf"
+      },
+      {
+        "id": "design",
+        "label": "Thiết kế được duyệt, điều chỉnh; giấy phép nếu thuộc diện",
+        "citation": "Điều 24, 27; Phụ lục VII NĐ 207/2026",
+        "conditional": false,
+        "condition": "",
+        "url": "https://datafiles.chinhphu.vn/cpp/files/vbpq/2026/6/207-ndcp.signed.pdf"
+      },
+      {
+        "id": "quality",
+        "label": "Hồ sơ nghiệm thu công việc, thí nghiệm, chất lượng và chạy thử theo thiết kế",
+        "citation": "Khoản 1 Điều 24; Phụ lục VII NĐ 207/2026",
+        "conditional": false,
+        "condition": "",
+        "url": "https://datafiles.chinhphu.vn/cpp/files/vbpq/2026/6/207-ndcp.signed.pdf"
+      },
+      {
+        "id": "technical_checks",
+        "label": "Kế hoạch, năng lực và kết quả thí nghiệm, quan trắc, kiểm định theo đối tượng",
+        "citation": "Điều 2–5 TT 32/2026/TT-BXD; Điều 8 NĐ 207/2026",
+        "conditional": true,
+        "condition": "Áp dụng khi có yêu cầu thí nghiệm, quan trắc, kiểm định; không mặc định bắt kiểm định mọi công trình.",
+        "url": "https://datafiles.chinhphu.vn/cpp/files/vbpq/2026/6/32-bxd.pdf"
+      },
+      {
+        "id": "specialized",
+        "label": "Hồ sơ PCCC, môi trường và chuyên ngành nếu thuộc diện",
+        "citation": "Điểm d khoản 1 Điều 24; Điều 29 NĐ 207/2026",
+        "conditional": true,
+        "condition": "Xác định từng đối tượng; ghi rõ căn cứ nếu không áp dụng.",
+        "url": "https://datafiles.chinhphu.vn/cpp/files/vbpq/2026/6/207-ndcp.signed.pdf"
+      },
+      {
+        "id": "site",
+        "label": "Kết quả kiểm tra, các tồn tại, công việc còn lại và xử lý theo đúng loại nghiệm thu",
+        "citation": "Điều 24, 27 NĐ 207/2026",
+        "conditional": false,
+        "condition": "",
+        "url": "https://datafiles.chinhphu.vn/cpp/files/vbpq/2026/6/207-ndcp.signed.pdf"
+      },
+      {
+        "id": "archive",
+        "label": "Danh mục và lưu trữ hồ sơ hoàn thành công trình",
+        "citation": "Điều 28; Phụ lục VII NĐ 207/2026",
+        "conditional": false,
+        "condition": "",
+        "url": "https://datafiles.chinhphu.vn/cpp/files/vbpq/2026/6/207-ndcp.signed.pdf"
+      },
+      {
+        "id": "handover",
+        "label": "Hồ sơ phục vụ quản lý, sử dụng; vận hành và bảo trì khi bàn giao",
+        "citation": "Điều 30; Phụ lục X NĐ 207/2026",
+        "conditional": true,
+        "condition": "Đối chiếu khi bàn giao/đưa phần công trình vào sử dụng; không thay thế danh mục hồ sơ hoàn thành Phụ lục VII.",
+        "url": "https://datafiles.chinhphu.vn/cpp/files/vbpq/2026/6/207-ndcp.signed.pdf"
+      }
+    ],
+    "conditional": [
+      {
+        "id": "authority",
+        "label": "Đối tượng phải kiểm tra, cơ quan có thẩm quyền và phạm vi kiểm tra",
+        "citation": "Điều 25–27 NĐ 207/2026",
+        "conditional": false,
+        "condition": "",
+        "url": "https://datafiles.chinhphu.vn/cpp/files/vbpq/2026/6/207-ndcp.signed.pdf"
+      },
+      {
+        "id": "completion",
+        "label": "Báo cáo hoàn thành thi công, mã định danh dự án/công trình và danh mục hồ sơ",
+        "citation": "Điểm a khoản 4 Điều 27; Phụ lục VI NĐ 207/2026",
+        "conditional": false,
+        "condition": "",
+        "url": "https://datafiles.chinhphu.vn/cpp/files/vbpq/2026/6/207-ndcp.signed.pdf"
+      },
+      {
+        "id": "acceptance",
+        "label": "Biên bản nghiệm thu của chủ đầu tư, thành phần ký và điều kiện nghiệm thu",
+        "citation": "Điều 24 NĐ 207/2026",
+        "conditional": false,
+        "condition": "",
+        "url": "https://datafiles.chinhphu.vn/cpp/files/vbpq/2026/6/207-ndcp.signed.pdf"
+      },
+      {
+        "id": "design",
+        "label": "Thiết kế được duyệt, điều chỉnh; giấy phép nếu thuộc diện",
+        "citation": "Điều 24, 27; Phụ lục VII NĐ 207/2026",
+        "conditional": false,
+        "condition": "",
+        "url": "https://datafiles.chinhphu.vn/cpp/files/vbpq/2026/6/207-ndcp.signed.pdf"
+      },
+      {
+        "id": "quality",
+        "label": "Hồ sơ nghiệm thu công việc, thí nghiệm, chất lượng và chạy thử theo thiết kế",
+        "citation": "Khoản 1 Điều 24; Phụ lục VII NĐ 207/2026",
+        "conditional": false,
+        "condition": "",
+        "url": "https://datafiles.chinhphu.vn/cpp/files/vbpq/2026/6/207-ndcp.signed.pdf"
+      },
+      {
+        "id": "technical_checks",
+        "label": "Kế hoạch, năng lực và kết quả thí nghiệm, quan trắc, kiểm định theo đối tượng",
+        "citation": "Điều 2–5 TT 32/2026/TT-BXD; Điều 8 NĐ 207/2026",
+        "conditional": true,
+        "condition": "Áp dụng khi có yêu cầu thí nghiệm, quan trắc, kiểm định; không mặc định bắt kiểm định mọi công trình.",
+        "url": "https://datafiles.chinhphu.vn/cpp/files/vbpq/2026/6/32-bxd.pdf"
+      },
+      {
+        "id": "specialized",
+        "label": "Hồ sơ PCCC, môi trường và chuyên ngành nếu thuộc diện",
+        "citation": "Điểm d khoản 1 Điều 24; Điều 29 NĐ 207/2026",
+        "conditional": true,
+        "condition": "Xác định từng đối tượng; ghi rõ căn cứ nếu không áp dụng.",
+        "url": "https://datafiles.chinhphu.vn/cpp/files/vbpq/2026/6/207-ndcp.signed.pdf"
+      },
+      {
+        "id": "site",
+        "label": "Kết quả kiểm tra, các tồn tại, công việc còn lại và xử lý theo đúng loại nghiệm thu",
+        "citation": "Điều 24, 27 NĐ 207/2026",
+        "conditional": false,
+        "condition": "",
+        "url": "https://datafiles.chinhphu.vn/cpp/files/vbpq/2026/6/207-ndcp.signed.pdf"
+      },
+      {
+        "id": "archive",
+        "label": "Danh mục và lưu trữ hồ sơ hoàn thành công trình",
+        "citation": "Điều 28; Phụ lục VII NĐ 207/2026",
+        "conditional": false,
+        "condition": "",
+        "url": "https://datafiles.chinhphu.vn/cpp/files/vbpq/2026/6/207-ndcp.signed.pdf"
+      },
+      {
+        "id": "handover",
+        "label": "Hồ sơ phục vụ quản lý, sử dụng; vận hành và bảo trì khi bàn giao",
+        "citation": "Điều 30; Phụ lục X NĐ 207/2026",
+        "conditional": true,
+        "condition": "Đối chiếu khi bàn giao/đưa phần công trình vào sử dụng; không thay thế danh mục hồ sơ hoàn thành Phụ lục VII.",
+        "url": "https://datafiles.chinhphu.vn/cpp/files/vbpq/2026/6/207-ndcp.signed.pdf"
+      },
+      {
+        "id": "conditional_safety",
+        "label": "Tồn tại không ảnh hưởng chịu lực, thời hạn sử dụng, công năng; có hạn hoàn thành và giới hạn sử dụng",
+        "citation": "Khoản 3 Điều 24; khoản 5 Điều 27 và khoản 5 Điều 29 NĐ 207/2026",
+        "conditional": false,
+        "condition": "",
+        "url": "https://datafiles.chinhphu.vn/cpp/files/vbpq/2026/6/207-ndcp.signed.pdf"
+      }
+    ],
+    "partial": [
+      {
+        "id": "authority",
+        "label": "Đối tượng phải kiểm tra, cơ quan có thẩm quyền và phạm vi kiểm tra",
+        "citation": "Điều 25–27 NĐ 207/2026",
+        "conditional": false,
+        "condition": "",
+        "url": "https://datafiles.chinhphu.vn/cpp/files/vbpq/2026/6/207-ndcp.signed.pdf"
+      },
+      {
+        "id": "completion",
+        "label": "Báo cáo hoàn thành thi công, mã định danh dự án/công trình và danh mục hồ sơ",
+        "citation": "Điểm a khoản 4 Điều 27; Phụ lục VI NĐ 207/2026",
+        "conditional": false,
+        "condition": "",
+        "url": "https://datafiles.chinhphu.vn/cpp/files/vbpq/2026/6/207-ndcp.signed.pdf"
+      },
+      {
+        "id": "acceptance",
+        "label": "Biên bản nghiệm thu của chủ đầu tư, thành phần ký và điều kiện nghiệm thu",
+        "citation": "Điều 24 NĐ 207/2026",
+        "conditional": false,
+        "condition": "",
+        "url": "https://datafiles.chinhphu.vn/cpp/files/vbpq/2026/6/207-ndcp.signed.pdf"
+      },
+      {
+        "id": "design",
+        "label": "Thiết kế được duyệt, điều chỉnh; giấy phép nếu thuộc diện",
+        "citation": "Điều 24, 27; Phụ lục VII NĐ 207/2026",
+        "conditional": false,
+        "condition": "",
+        "url": "https://datafiles.chinhphu.vn/cpp/files/vbpq/2026/6/207-ndcp.signed.pdf"
+      },
+      {
+        "id": "quality",
+        "label": "Hồ sơ nghiệm thu công việc, thí nghiệm, chất lượng và chạy thử theo thiết kế",
+        "citation": "Khoản 1 Điều 24; Phụ lục VII NĐ 207/2026",
+        "conditional": false,
+        "condition": "",
+        "url": "https://datafiles.chinhphu.vn/cpp/files/vbpq/2026/6/207-ndcp.signed.pdf"
+      },
+      {
+        "id": "technical_checks",
+        "label": "Kế hoạch, năng lực và kết quả thí nghiệm, quan trắc, kiểm định theo đối tượng",
+        "citation": "Điều 2–5 TT 32/2026/TT-BXD; Điều 8 NĐ 207/2026",
+        "conditional": true,
+        "condition": "Áp dụng khi có yêu cầu thí nghiệm, quan trắc, kiểm định; không mặc định bắt kiểm định mọi công trình.",
+        "url": "https://datafiles.chinhphu.vn/cpp/files/vbpq/2026/6/32-bxd.pdf"
+      },
+      {
+        "id": "specialized",
+        "label": "Hồ sơ PCCC, môi trường và chuyên ngành nếu thuộc diện",
+        "citation": "Điểm d khoản 1 Điều 24; Điều 29 NĐ 207/2026",
+        "conditional": true,
+        "condition": "Xác định từng đối tượng; ghi rõ căn cứ nếu không áp dụng.",
+        "url": "https://datafiles.chinhphu.vn/cpp/files/vbpq/2026/6/207-ndcp.signed.pdf"
+      },
+      {
+        "id": "site",
+        "label": "Kết quả kiểm tra, các tồn tại, công việc còn lại và xử lý theo đúng loại nghiệm thu",
+        "citation": "Điều 24, 27 NĐ 207/2026",
+        "conditional": false,
+        "condition": "",
+        "url": "https://datafiles.chinhphu.vn/cpp/files/vbpq/2026/6/207-ndcp.signed.pdf"
+      },
+      {
+        "id": "archive",
+        "label": "Danh mục và lưu trữ hồ sơ hoàn thành công trình",
+        "citation": "Điều 28; Phụ lục VII NĐ 207/2026",
+        "conditional": false,
+        "condition": "",
+        "url": "https://datafiles.chinhphu.vn/cpp/files/vbpq/2026/6/207-ndcp.signed.pdf"
+      },
+      {
+        "id": "handover",
+        "label": "Hồ sơ phục vụ quản lý, sử dụng; vận hành và bảo trì khi bàn giao",
+        "citation": "Điều 30; Phụ lục X NĐ 207/2026",
+        "conditional": true,
+        "condition": "Đối chiếu khi bàn giao/đưa phần công trình vào sử dụng; không thay thế danh mục hồ sơ hoàn thành Phụ lục VII.",
+        "url": "https://datafiles.chinhphu.vn/cpp/files/vbpq/2026/6/207-ndcp.signed.pdf"
+      },
+      {
+        "id": "partial_safety",
+        "label": "Phần đưa vào sử dụng đã hoàn thành, đủ điều kiện; phần thi công tiếp không ảnh hưởng an toàn, vận hành",
+        "citation": "Khoản 2 Điều 24; khoản 6 Điều 30 NĐ 207/2026",
+        "conditional": false,
+        "condition": "",
+        "url": "https://datafiles.chinhphu.vn/cpp/files/vbpq/2026/6/207-ndcp.signed.pdf"
+      }
+    ]
+  },
+  "templates": {
+    "new": {
+      "input": "Đơn Mẫu 01 — Phụ lục II",
+      "output": "Mẫu 03 — Giấy phép xây dựng",
+      "url": "https://datafiles.chinhphu.vn/cpp/files/vbpq/2026/6/pl217.pdf"
+    },
+    "stage": {
+      "input": "Đơn Mẫu 01 — Phụ lục II",
+      "output": "Mẫu 03 — Giấy phép xây dựng",
+      "url": "https://datafiles.chinhphu.vn/cpp/files/vbpq/2026/6/pl217.pdf"
+    },
+    "group": {
+      "input": "Đơn Mẫu 01 — Phụ lục II",
+      "output": "Mẫu 03 — Giấy phép xây dựng",
+      "url": "https://datafiles.chinhphu.vn/cpp/files/vbpq/2026/6/pl217.pdf"
+    },
+    "house": {
+      "input": "Đơn Mẫu 01 — Phụ lục II",
+      "output": "Mẫu 03 — Giấy phép xây dựng",
+      "url": "https://datafiles.chinhphu.vn/cpp/files/vbpq/2026/6/pl217.pdf"
+    },
+    "repair": {
+      "input": "Đơn Mẫu 01 — Phụ lục II",
+      "output": "Mẫu 04 — Sửa chữa, cải tạo, di dời",
+      "url": "https://datafiles.chinhphu.vn/cpp/files/vbpq/2026/6/pl217.pdf"
+    },
+    "relocation": {
+      "input": "Đơn Mẫu 01 — Phụ lục II",
+      "output": "Mẫu 04 — Sửa chữa, cải tạo, di dời",
+      "url": "https://datafiles.chinhphu.vn/cpp/files/vbpq/2026/6/pl217.pdf"
+    },
+    "temporary": {
+      "input": "Đơn Mẫu 01 — Phụ lục II",
+      "output": "Mẫu 05 — Xây dựng có thời hạn",
+      "url": "https://datafiles.chinhphu.vn/cpp/files/vbpq/2026/6/pl217.pdf"
+    },
+    "amendment": {
+      "input": "Đơn Mẫu 02 — Phụ lục II",
+      "output": "Ghi trên giấy phép gốc / phụ lục bổ sung đúng mẫu gốc",
+      "url": "https://datafiles.chinhphu.vn/cpp/files/vbpq/2026/6/pl217.pdf"
+    },
+    "extension": {
+      "input": "Đơn Mẫu 02 — Phụ lục II",
+      "output": "Ghi trên giấy phép gốc / phụ lục bổ sung đúng mẫu gốc",
+      "url": "https://datafiles.chinhphu.vn/cpp/files/vbpq/2026/6/pl217.pdf"
+    },
+    "reissue": {
+      "input": "Đơn Mẫu 02 — Phụ lục II",
+      "output": "Bản sao giấy phép đã cấp",
+      "url": "https://datafiles.chinhphu.vn/cpp/files/vbpq/2026/6/pl217.pdf"
+    },
+    "start_notice": {
+      "input": "Thông báo khởi công — Phụ lục V",
+      "output": "Phiếu tiếp nhận và kế hoạch kiểm tra",
+      "url": "https://datafiles.chinhphu.vn/cpp/files/vbpq/2026/6/207-ndcp.signed.pdf"
+    },
+    "during": {
+      "input": "Kế hoạch kiểm tra và hồ sơ quản lý chất lượng",
+      "output": "Thông báo kết quả kiểm tra trong quá trình thi công",
+      "url": "https://datafiles.chinhphu.vn/cpp/files/vbpq/2026/6/207-ndcp.signed.pdf"
+    },
+    "complete": {
+      "input": "Báo cáo hoàn thành — Phụ lục VI",
+      "output": "Thông báo kết quả — Phụ lục VIII",
+      "url": "https://datafiles.chinhphu.vn/cpp/files/vbpq/2026/6/207-ndcp.signed.pdf"
+    },
+    "conditional": {
+      "input": "Báo cáo hoàn thành — Phụ lục VI",
+      "output": "Thông báo kết quả — Phụ lục VIII",
+      "url": "https://datafiles.chinhphu.vn/cpp/files/vbpq/2026/6/207-ndcp.signed.pdf"
+    },
+    "partial": {
+      "input": "Báo cáo hoàn thành — Phụ lục VI",
+      "output": "Thông báo kết quả — Phụ lục VIII",
+      "url": "https://datafiles.chinhphu.vn/cpp/files/vbpq/2026/6/207-ndcp.signed.pdf"
+    }
+  }
+}

@@ -10,6 +10,8 @@ import { closePools, transaction } from '../services/appraisal/database.js';
 import { pageText } from '../services/appraisal/ocr.js';
 import { configured } from '../services/appraisal/provider.js';
 import { scope } from '../services/appraisal/bim-suite.js';
+import { Store } from '../services/appraisal/store.js';
+import { dashboard } from '../services/appraisal/analytics.js';
 
 if (process.env.APPRAISAL_NODE_CLOUD_VERIFY !== '1') {
   throw new Error('Set APPRAISAL_NODE_CLOUD_VERIFY=1 for the authenticated cloud verification.');
@@ -63,6 +65,21 @@ try {
   });
   assert.ok(counts.models >= 12 && counts.elements >= 38_739, 'Imported BIM dataset missing.');
   console.log(JSON.stringify({ cloudAuth: 'passed', rls: 'passed', bimWorkspace: 'passed', ...counts }));
+  const repository = new Store(token, actor);
+  const pageOfCases = await repository.page({ limit: 1 });
+  if (pageOfCases.items[0])
+    assert.equal((await repository.get(String(pageOfCases.items[0].id))).id, pageOfCases.items[0].id);
+  console.log(JSON.stringify({ nodeCaseRepository: 'passed', visibleCases: pageOfCases.total }));
+  const summary = await dashboard(repository);
+  assert.equal(
+    summary.procedures.reduce((n, row) => n + row.total, 0),
+    summary.cases.total,
+  );
+  assert.equal(
+    summary.sla.reduce((n, row) => n + row.total, 0),
+    summary.cases.total,
+  );
+  console.log(JSON.stringify({ nodeDashboard: 'passed', scopedCases: summary.cases.total }));
   if (!process.argv.includes('--database-only')) {
     assert.ok(configured(), 'AI provider is not configured for real OCR verification.');
     const document = await PDFDocument.create();

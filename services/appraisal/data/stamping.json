@@ -1,0 +1,55 @@
+{
+  "PDF_COPY_DAYS": 5,
+  "STATUSES": {
+    "not_started": "Chưa có kết quả thẩm định",
+    "to_stamp": "Chờ kiểm tra, đóng dấu bản vẽ",
+    "awaiting_request": "Chờ đề nghị đóng dấu kèm hồ sơ đã chỉnh sửa",
+    "unstamped": "Trả hồ sơ không đóng dấu (chưa đủ điều kiện)",
+    "stamped": "Đã đóng dấu; chờ bản chụp PDF",
+    "archived": "Đã nhận bản chụp PDF; lưu trữ"
+  },
+  "BASIS": {
+    "to_stamp": "Điểm b khoản 8 Điều 36 NĐ 217/2026",
+    "awaiting_request": "Điểm c, d khoản 8 Điều 36 NĐ 217/2026",
+    "unstamped": "Điểm c khoản 8 Điều 36 NĐ 217/2026",
+    "stamped": "Điểm a khoản 8, điểm b khoản 9 Điều 36 NĐ 217/2026; Mẫu số 14 Phụ lục I",
+    "archived": "Khoản 9 Điều 36 NĐ 217/2026"
+  },
+  "ACTIONS": {
+    "request": [
+      [
+        "awaiting_request"
+      ],
+      "to_stamp"
+    ],
+    "refuse": [
+      [
+        "to_stamp"
+      ],
+      "awaiting_request"
+    ],
+    "stamp": [
+      [
+        "to_stamp"
+      ],
+      "stamped"
+    ],
+    "pdf_received": [
+      [
+        "stamped"
+      ],
+      "archived"
+    ]
+  },
+  "LABELS": {
+    "request": "Tiếp nhận đề nghị đóng dấu",
+    "refuse": "Hồ sơ chỉnh sửa chưa đáp ứng; trả lại",
+    "stamp": "Đóng dấu thẩm định bản vẽ (Mẫu số 14)",
+    "pdf_received": "Nhận bản chụp PDF bản vẽ đã đóng dấu"
+  },
+  "LEADERS": [
+    "head_of_department",
+    "director",
+    "admin"
+  ]
+}

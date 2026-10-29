@@ -1,25 +1,21 @@
-# Deploy the Vite frontend and the authenticated Python API, without local dependencies or tests.
-/ai/.deps/
-/ai/tests/
-/ai/__pycache__/
-/ai/evaluation/*
-!/ai/evaluation/legal_retrieval.json
+# Native Node Functions and Vite assets only.
+/ai/
 /scripts/*
 !/scripts/prepare-bim-assets.mjs
 /supabase/
 /tests/
+/services/**/*.test.ts
+/services/appraisal/fixtures/
+/services/appraisal/data/demo-dossiers.json
 /docs/*
-# The in-app help page (src/pages/HelpPage.tsx) bundles the user guide with `?raw`.
 !/docs/HUONG_DAN_QUY_TRINH_THAM_DINH_AI.md
 /01_phap_ly_quy_chuan/*
 !/01_phap_ly_quy_chuan/*.md
 /knowledge-base/
 /output/
 /tmp/
-/pyproject.toml
 /*.pdf
 /*.docx
 /*.xlsx
 /*.esd
-/services/
-/tsconfig.core.json
+/.appraisal-data/

@@ -1,6 +1,10 @@
 import { expect, test } from '@playwright/test';
 
 test('deployed static demo displays all twelve actual BIM models without an API', async ({ page }) => {
+  test.skip(
+    process.env.E2E_ENABLE_STATIC_BIM !== '1',
+    'Legacy standalone static build requires an explicit opt-in; cloud BIM is tested separately.',
+  );
   test.setTimeout(300000);
   const errors: string[] = [];
   page.on('pageerror', (error) => errors.push(error.message));

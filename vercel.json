@@ -5,14 +5,20 @@
   "buildCommand": "pnpm run build:vercel",
   "outputDirectory": "dist",
   "functions": {
-    "api/index.py": {
+    "api/index.ts": {
       "maxDuration": 300,
-      "includeFiles": "{ai/app/**,01_phap_ly_quy_chuan/*.md,ai/evaluation/legal_retrieval.json}",
-      "excludeFiles": "{ai/.deps/**,.appraisal-data/**,public/**,output/**,tests/**,**/__pycache__/**,**/*.pyc}"
+      "includeFiles": "{services/appraisal/assets/**,services/appraisal/data/**,01_phap_ly_quy_chuan/*.md}",
+      "excludeFiles": "{ai/**,.appraisal-data/**,public/**,output/**,tests/**,services/appraisal/fixtures/**,services/**/*.test.ts}"
+    },
+    "api/jobs.ts": {
+      "maxDuration": 300,
+      "includeFiles": "{services/appraisal/assets/**,services/appraisal/data/**}",
+      "excludeFiles": "{ai/**,.appraisal-data/**,public/**,output/**,tests/**,services/appraisal/fixtures/**,services/**/*.test.ts}",
+      "experimentalTriggers": [{ "type": "queue/v2beta", "topic": "appraisal-node-jobs" }]
     }
   },
   "rewrites": [
-    { "source": "/api/appraisal/:path*", "destination": "/api/index.py" },
+    { "source": "/api/appraisal/:path*", "destination": "/api/index" },
     { "source": "/((?!api/).*)", "destination": "/index.html" }
   ]
 }

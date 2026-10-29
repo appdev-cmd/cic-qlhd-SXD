@@ -1,0 +1,199 @@
+{
+  "STATES": {
+    "received": "Tiếp nhận, kiểm tra hồ sơ",
+    "assigned": "Đã phân công",
+    "processing": "Đang xử lý",
+    "awaiting_supplement": "Chờ bổ sung hồ sơ",
+    "suspended": "Tạm dừng thẩm định",
+    "pending_review": "Chờ lãnh đạo rà soát",
+    "site_visit": "Kiểm tra hiện trường",
+    "correction": "Theo dõi khắc phục",
+    "reviewed": "Hoàn tất rà soát nội bộ",
+    "rejected": "Từ chối tiếp nhận",
+    "stopped": "Dừng xử lý"
+  },
+  "TERMINAL": [
+    "reviewed",
+    "rejected",
+    "stopped"
+  ],
+  "TRANSITIONS": {
+    "start": [
+      [
+        "received",
+        "assigned"
+      ],
+      "processing",
+      [
+        "officer",
+        "head_of_department",
+        "director"
+      ]
+    ],
+    "request_supplement": [
+      [
+        "received",
+        "assigned",
+        "processing",
+        "pending_review"
+      ],
+      "awaiting_supplement",
+      [
+        "officer",
+        "head_of_department",
+        "director"
+      ]
+    ],
+    "suspend": [
+      [
+        "processing",
+        "pending_review"
+      ],
+      "suspended",
+      [
+        "officer",
+        "head_of_department",
+        "director"
+      ]
+    ],
+    "resume": [
+      [
+        "awaiting_supplement",
+        "suspended"
+      ],
+      "processing",
+      [
+        "officer",
+        "head_of_department",
+        "director"
+      ]
+    ],
+    "extend": [
+      [
+        "processing",
+        "pending_review"
+      ],
+      null,
+      [
+        "head_of_department",
+        "director"
+      ]
+    ],
+    "reject_intake": [
+      [
+        "received",
+        "assigned"
+      ],
+      "rejected",
+      [
+        "head_of_department",
+        "director"
+      ]
+    ],
+    "stop": [
+      [
+        "awaiting_supplement",
+        "suspended",
+        "processing"
+      ],
+      "stopped",
+      [
+        "head_of_department",
+        "director"
+      ]
+    ],
+    "submit_review": [
+      [
+        "processing",
+        "site_visit",
+        "correction"
+      ],
+      "pending_review",
+      [
+        "officer",
+        "head_of_department",
+        "director"
+      ]
+    ],
+    "return": [
+      [
+        "pending_review"
+      ],
+      "processing",
+      [
+        "head_of_department",
+        "director"
+      ]
+    ],
+    "approve": [
+      [
+        "pending_review"
+      ],
+      "reviewed",
+      [
+        "head_of_department",
+        "director"
+      ]
+    ],
+    "schedule_visit": [
+      [
+        "processing"
+      ],
+      "site_visit",
+      [
+        "officer",
+        "head_of_department",
+        "director"
+      ]
+    ],
+    "require_correction": [
+      [
+        "site_visit"
+      ],
+      "correction",
+      [
+        "officer",
+        "head_of_department",
+        "director"
+      ]
+    ],
+    "confirm_correction": [
+      [
+        "correction"
+      ],
+      "processing",
+      [
+        "officer",
+        "head_of_department",
+        "director"
+      ]
+    ]
+  },
+  "LABELS": {
+    "start": "Xác nhận hồ sơ hợp lệ, bắt đầu xử lý",
+    "request_supplement": "Yêu cầu bổ sung hồ sơ",
+    "suspend": "Tạm dừng thẩm định",
+    "resume": "Tiếp nhận hồ sơ bổ sung",
+    "extend": "Gia hạn thẩm định",
+    "reject_intake": "Từ chối tiếp nhận hồ sơ",
+    "stop": "Dừng thẩm định",
+    "submit_review": "Trình lãnh đạo rà soát",
+    "return": "Trả chuyên viên xử lý",
+    "approve": "Hoàn tất rà soát nội bộ",
+    "schedule_visit": "Ghi lịch kiểm tra hiện trường",
+    "require_correction": "Yêu cầu khắc phục",
+    "confirm_correction": "Xác nhận theo dõi khắc phục"
+  },
+  "ONLY_INSPECTION": [
+    "schedule_visit",
+    "require_correction",
+    "confirm_correction"
+  ],
+  "PROCEDURE_LABELS": {
+    "gpxd/stop": "Thông báo không cấp giấy phép",
+    "gpxd/request_supplement": "Thông báo bổ sung hồ sơ (một lần)",
+    "bcnckt/request_supplement": "Yêu cầu bổ sung hồ sơ (Mẫu 15)",
+    "bcnckt/suspend": "Tạm dừng thẩm định (Mẫu 16)",
+    "nghiem_thu/stop": "Dừng kiểm tra"
+  }
+}

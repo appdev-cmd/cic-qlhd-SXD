@@ -1,0 +1,1747 @@
+{
+  "performance": {
+    "demo": {
+      "all": {
+        "officer": [
+          {
+            "sql": "select coalesce(sum(case when substr(\"createdAt\",1,10)>=? and substr(\"createdAt\",1,10)<=? then 1 else 0 end),0) as current_received,coalesce(sum(case when (\"slaCompletedAt\" is not null and not coalesce(\"slaOutcome\",'') in ('rejected','stopped') and (\"slaDueDate\" is null or \"slaCompletedAt\"<=\"slaDueDate\")) and substr(\"slaCompletedAt\",1,10)>=? and substr(\"slaCompletedAt\",1,10)<=? then 1 else 0 end),0) as current_completed,coalesce(sum(case when (\"slaCompletedAt\" is not null and not coalesce(\"slaOutcome\",'') in ('rejected','stopped') and \"slaCompletedAt\">\"slaDueDate\") and substr(\"slaCompletedAt\",1,10)>=? and substr(\"slaCompletedAt\",1,10)<=? then 1 else 0 end),0) as current_completed_late,avg(case when ((\"slaCompletedAt\" is not null and not coalesce(\"slaOutcome\",'') in ('rejected','stopped') and (\"slaDueDate\" is null or \"slaCompletedAt\"<=\"slaDueDate\")) or (\"slaCompletedAt\" is not null and not coalesce(\"slaOutcome\",'') in ('rejected','stopped') and \"slaCompletedAt\">\"slaDueDate\")) and substr(\"slaCompletedAt\",1,10)>=? and substr(\"slaCompletedAt\",1,10)<=? then julianday(substr(\"slaCompletedAt\",1,10))-julianday(substr(\"createdAt\",1,10)) end) as current_days,coalesce(sum(case when substr(\"createdAt\",1,10)>=? and substr(\"createdAt\",1,10)<=? then 1 else 0 end),0) as previous_received,coalesce(sum(case when (\"slaCompletedAt\" is not null and not coalesce(\"slaOutcome\",'') in ('rejected','stopped') and (\"slaDueDate\" is null or \"slaCompletedAt\"<=\"slaDueDate\")) and substr(\"slaCompletedAt\",1,10)>=? and substr(\"slaCompletedAt\",1,10)<=? then 1 else 0 end),0) as previous_completed,coalesce(sum(case when (\"slaCompletedAt\" is not null and not coalesce(\"slaOutcome\",'') in ('rejected','stopped') and \"slaCompletedAt\">\"slaDueDate\") and substr(\"slaCompletedAt\",1,10)>=? and substr(\"slaCompletedAt\",1,10)<=? then 1 else 0 end),0) as previous_completed_late,avg(case when ((\"slaCompletedAt\" is not null and not coalesce(\"slaOutcome\",'') in ('rejected','stopped') and (\"slaDueDate\" is null or \"slaCompletedAt\"<=\"slaDueDate\")) or (\"slaCompletedAt\" is not null and not coalesce(\"slaOutcome\",'') in ('rejected','stopped') and \"slaCompletedAt\">\"slaDueDate\")) and substr(\"slaCompletedAt\",1,10)>=? and substr(\"slaCompletedAt\",1,10)<=? then julianday(substr(\"slaCompletedAt\",1,10))-julianday(substr(\"createdAt\",1,10)) end) as previous_days from case_summaries",
+            "params": [
+              {
+                "ref": "dateOffset",
+                "days": -29
+              },
+              {
+                "ref": "today"
+              },
+              {
+                "ref": "dateOffset",
+                "days": -29
+              },
+              {
+                "ref": "today"
+              },
+              {
+                "ref": "dateOffset",
+                "days": -29
+              },
+              {
+                "ref": "today"
+              },
+              {
+                "ref": "dateOffset",
+                "days": -29
+              },
+              {
+                "ref": "today"
+              },
+              {
+                "ref": "dateOffset",
+                "days": -59
+              },
+              {
+                "ref": "dateOffset",
+                "days": -30
+              },
+              {
+                "ref": "dateOffset",
+                "days": -59
+              },
+              {
+                "ref": "dateOffset",
+                "days": -30
+              },
+              {
+                "ref": "dateOffset",
+                "days": -59
+              },
+              {
+                "ref": "dateOffset",
+                "days": -30
+              },
+              {
+                "ref": "dateOffset",
+                "days": -59
+              },
+              {
+                "ref": "dateOffset",
+                "days": -30
+              }
+            ]
+          },
+          {
+            "sql": "select coalesce(\"assigneeId\",'') as id,max(\"assignee\") as name,coalesce(sum(case when not (\"slaCompletedAt\" is not null) and not exists(select 1 from case_summaries n where n.\"previousSubmissionId\"=case_summaries.id) and not coalesce(\"slaPaused\",0)=1 and \"slaDueDate\">? then 1 else 0 end),0) as on_track,coalesce(sum(case when not (\"slaCompletedAt\" is not null) and not exists(select 1 from case_summaries n where n.\"previousSubmissionId\"=case_summaries.id) and not coalesce(\"slaPaused\",0)=1 and \"slaDueDate\">=? and \"slaDueDate\"<=? then 1 else 0 end),0) as due_soon,coalesce(sum(case when not (\"slaCompletedAt\" is not null) and not exists(select 1 from case_summaries n where n.\"previousSubmissionId\"=case_summaries.id) and not coalesce(\"slaPaused\",0)=1 and \"slaDueDate\"<? then 1 else 0 end),0) as overdue,coalesce(sum(case when not (\"slaCompletedAt\" is not null) and not exists(select 1 from case_summaries n where n.\"previousSubmissionId\"=case_summaries.id) and coalesce(\"slaPaused\",0)=1 and (\"slaWaitingDue\" is null or \"slaWaitingDue\">=?) then 1 else 0 end),0) as paused,coalesce(sum(case when not (\"slaCompletedAt\" is not null) and not exists(select 1 from case_summaries n where n.\"previousSubmissionId\"=case_summaries.id) and coalesce(\"slaPaused\",0)=1 and \"slaWaitingDue\"<? then 1 else 0 end),0) as supplement_overdue,coalesce(sum(case when \"slaCompletedAt\" is not null and not coalesce(\"slaOutcome\",'') in ('rejected','stopped') and (\"slaDueDate\" is null or \"slaCompletedAt\"<=\"slaDueDate\") then 1 else 0 end),0) as completed,coalesce(sum(case when \"slaCompletedAt\" is not null and not coalesce(\"slaOutcome\",'') in ('rejected','stopped') and \"slaCompletedAt\">\"slaDueDate\" then 1 else 0 end),0) as completed_late from case_summaries group by coalesce(\"assigneeId\",'')",
+            "params": [
+              {
+                "ref": "soon"
+              },
+              {
+                "ref": "today"
+              },
+              {
+                "ref": "soon"
+              },
+              {
+                "ref": "today"
+              },
+              {
+                "ref": "today"
+              },
+              {
+                "ref": "today"
+              }
+            ]
+          },
+          {
+            "sql": "select coalesce(\"procedure\",'bcnckt') as procedure,coalesce(sum(case when \"assigneeId\"=? and coalesce(\"workflowState\",'received') in (?,?,?,?,?) then 1 else 0 end),0) as queue,coalesce(sum(case when \"assigneeId\"=? and not (\"slaCompletedAt\" is not null) and not exists(select 1 from case_summaries n where n.\"previousSubmissionId\"=case_summaries.id) and not coalesce(\"slaPaused\",0)=1 and \"slaDueDate\"<? then 1 else 0 end),0) as overdue,coalesce(sum(case when \"assigneeId\"=? and not (\"slaCompletedAt\" is not null) and not exists(select 1 from case_summaries n where n.\"previousSubmissionId\"=case_summaries.id) and not coalesce(\"slaPaused\",0)=1 and \"slaDueDate\">=? and \"slaDueDate\"<=? then 1 else 0 end),0) as due_soon,coalesce(sum(case when \"assigneeId\"=? and not (\"slaCompletedAt\" is not null) and not exists(select 1 from case_summaries n where n.\"previousSubmissionId\"=case_summaries.id) and coalesce(\"slaPaused\",0)=1 and \"slaWaitingDue\"<? then 1 else 0 end),0) as supplement_overdue from case_summaries group by coalesce(\"procedure\",'bcnckt')",
+            "params": [
+              {
+                "ref": "actorId"
+              },
+              {
+                "literal": "received"
+              },
+              {
+                "literal": "assigned"
+              },
+              {
+                "literal": "processing"
+              },
+              {
+                "literal": "site_visit"
+              },
+              {
+                "literal": "correction"
+              },
+              {
+                "ref": "actorId"
+              },
+              {
+                "ref": "today"
+              },
+              {
+                "ref": "actorId"
+              },
+              {
+                "ref": "today"
+              },
+              {
+                "ref": "soon"
+              },
+              {
+                "ref": "actorId"
+              },
+              {
+                "ref": "today"
+              }
+            ]
+          }
+        ],
+        "head_of_department": [
+          {
+            "sql": "select coalesce(sum(case when substr(\"createdAt\",1,10)>=? and substr(\"createdAt\",1,10)<=? then 1 else 0 end),0) as current_received,coalesce(sum(case when (\"slaCompletedAt\" is not null and not coalesce(\"slaOutcome\",'') in ('rejected','stopped') and (\"slaDueDate\" is null or \"slaCompletedAt\"<=\"slaDueDate\")) and substr(\"slaCompletedAt\",1,10)>=? and substr(\"slaCompletedAt\",1,10)<=? then 1 else 0 end),0) as current_completed,coalesce(sum(case when (\"slaCompletedAt\" is not null and not coalesce(\"slaOutcome\",'') in ('rejected','stopped') and \"slaCompletedAt\">\"slaDueDate\") and substr(\"slaCompletedAt\",1,10)>=? and substr(\"slaCompletedAt\",1,10)<=? then 1 else 0 end),0) as current_completed_late,avg(case when ((\"slaCompletedAt\" is not null and not coalesce(\"slaOutcome\",'') in ('rejected','stopped') and (\"slaDueDate\" is null or \"slaCompletedAt\"<=\"slaDueDate\")) or (\"slaCompletedAt\" is not null and not coalesce(\"slaOutcome\",'') in ('rejected','stopped') and \"slaCompletedAt\">\"slaDueDate\")) and substr(\"slaCompletedAt\",1,10)>=? and substr(\"slaCompletedAt\",1,10)<=? then julianday(substr(\"slaCompletedAt\",1,10))-julianday(substr(\"createdAt\",1,10)) end) as current_days,coalesce(sum(case when substr(\"createdAt\",1,10)>=? and substr(\"createdAt\",1,10)<=? then 1 else 0 end),0) as previous_received,coalesce(sum(case when (\"slaCompletedAt\" is not null and not coalesce(\"slaOutcome\",'') in ('rejected','stopped') and (\"slaDueDate\" is null or \"slaCompletedAt\"<=\"slaDueDate\")) and substr(\"slaCompletedAt\",1,10)>=? and substr(\"slaCompletedAt\",1,10)<=? then 1 else 0 end),0) as previous_completed,coalesce(sum(case when (\"slaCompletedAt\" is not null and not coalesce(\"slaOutcome\",'') in ('rejected','stopped') and \"slaCompletedAt\">\"slaDueDate\") and substr(\"slaCompletedAt\",1,10)>=? and substr(\"slaCompletedAt\",1,10)<=? then 1 else 0 end),0) as previous_completed_late,avg(case when ((\"slaCompletedAt\" is not null and not coalesce(\"slaOutcome\",'') in ('rejected','stopped') and (\"slaDueDate\" is null or \"slaCompletedAt\"<=\"slaDueDate\")) or (\"slaCompletedAt\" is not null and not coalesce(\"slaOutcome\",'') in ('rejected','stopped') and \"slaCompletedAt\">\"slaDueDate\")) and substr(\"slaCompletedAt\",1,10)>=? and substr(\"slaCompletedAt\",1,10)<=? then julianday(substr(\"slaCompletedAt\",1,10))-julianday(substr(\"createdAt\",1,10)) end) as previous_days from case_summaries",
+            "params": [
+              {
+                "ref": "dateOffset",
+                "days": -29
+              },
+              {
+                "ref": "today"
+              },
+              {
+                "ref": "dateOffset",
+                "days": -29
+              },
+              {
+                "ref": "today"
+              },
+              {
+                "ref": "dateOffset",
+                "days": -29
+              },
+              {
+                "ref": "today"
+              },
+              {
+                "ref": "dateOffset",
+                "days": -29
+              },
+              {
+                "ref": "today"
+              },
+              {
+                "ref": "dateOffset",
+                "days": -59
+              },
+              {
+                "ref": "dateOffset",
+                "days": -30
+              },
+              {
+                "ref": "dateOffset",
+                "days": -59
+              },
+              {
+                "ref": "dateOffset",
+                "days": -30
+              },
+              {
+                "ref": "dateOffset",
+                "days": -59
+              },
+              {
+                "ref": "dateOffset",
+                "days": -30
+              },
+              {
+                "ref": "dateOffset",
+                "days": -59
+              },
+              {
+                "ref": "dateOffset",
+                "days": -30
+              }
+            ]
+          },
+          {
+            "sql": "select coalesce(\"assigneeId\",'') as id,max(\"assignee\") as name,coalesce(sum(case when not (\"slaCompletedAt\" is not null) and not exists(select 1 from case_summaries n where n.\"previousSubmissionId\"=case_summaries.id) and not coalesce(\"slaPaused\",0)=1 and \"slaDueDate\">? then 1 else 0 end),0) as on_track,coalesce(sum(case when not (\"slaCompletedAt\" is not null) and not exists(select 1 from case_summaries n where n.\"previousSubmissionId\"=case_summaries.id) and not coalesce(\"slaPaused\",0)=1 and \"slaDueDate\">=? and \"slaDueDate\"<=? then 1 else 0 end),0) as due_soon,coalesce(sum(case when not (\"slaCompletedAt\" is not null) and not exists(select 1 from case_summaries n where n.\"previousSubmissionId\"=case_summaries.id) and not coalesce(\"slaPaused\",0)=1 and \"slaDueDate\"<? then 1 else 0 end),0) as overdue,coalesce(sum(case when not (\"slaCompletedAt\" is not null) and not exists(select 1 from case_summaries n where n.\"previousSubmissionId\"=case_summaries.id) and coalesce(\"slaPaused\",0)=1 and (\"slaWaitingDue\" is null or \"slaWaitingDue\">=?) then 1 else 0 end),0) as paused,coalesce(sum(case when not (\"slaCompletedAt\" is not null) and not exists(select 1 from case_summaries n where n.\"previousSubmissionId\"=case_summaries.id) and coalesce(\"slaPaused\",0)=1 and \"slaWaitingDue\"<? then 1 else 0 end),0) as supplement_overdue,coalesce(sum(case when \"slaCompletedAt\" is not null and not coalesce(\"slaOutcome\",'') in ('rejected','stopped') and (\"slaDueDate\" is null or \"slaCompletedAt\"<=\"slaDueDate\") then 1 else 0 end),0) as completed,coalesce(sum(case when \"slaCompletedAt\" is not null and not coalesce(\"slaOutcome\",'') in ('rejected','stopped') and \"slaCompletedAt\">\"slaDueDate\" then 1 else 0 end),0) as completed_late from case_summaries group by coalesce(\"assigneeId\",'')",
+            "params": [
+              {
+                "ref": "soon"
+              },
+              {
+                "ref": "today"
+              },
+              {
+                "ref": "soon"
+              },
+              {
+                "ref": "today"
+              },
+              {
+                "ref": "today"
+              },
+              {
+                "ref": "today"
+              }
+            ]
+          },
+          {
+            "sql": "select coalesce(\"procedure\",'bcnckt') as procedure,coalesce(sum(case when coalesce(\"workflowState\",'received')=? then 1 else 0 end),0) as queue,coalesce(sum(case when \"assigneeId\"=? and coalesce(\"workflowState\",'received') in (?,?,?,?,?) then 1 else 0 end),0) as own_queue,coalesce(sum(case when \"assigneeId\"=? and not (\"slaCompletedAt\" is not null) and not exists(select 1 from case_summaries n where n.\"previousSubmissionId\"=case_summaries.id) and not coalesce(\"slaPaused\",0)=1 and \"slaDueDate\"<? then 1 else 0 end),0) as overdue,coalesce(sum(case when \"assigneeId\"=? and not (\"slaCompletedAt\" is not null) and not exists(select 1 from case_summaries n where n.\"previousSubmissionId\"=case_summaries.id) and not coalesce(\"slaPaused\",0)=1 and \"slaDueDate\">=? and \"slaDueDate\"<=? then 1 else 0 end),0) as due_soon,coalesce(sum(case when \"assigneeId\"=? and not (\"slaCompletedAt\" is not null) and not exists(select 1 from case_summaries n where n.\"previousSubmissionId\"=case_summaries.id) and coalesce(\"slaPaused\",0)=1 and \"slaWaitingDue\"<? then 1 else 0 end),0) as supplement_overdue from case_summaries group by coalesce(\"procedure\",'bcnckt')",
+            "params": [
+              {
+                "literal": "pending_review"
+              },
+              {
+                "ref": "actorId"
+              },
+              {
+                "literal": "received"
+              },
+              {
+                "literal": "assigned"
+              },
+              {
+                "literal": "processing"
+              },
+              {
+                "literal": "site_visit"
+              },
+              {
+                "literal": "correction"
+              },
+              {
+                "ref": "actorId"
+              },
+              {
+                "ref": "today"
+              },
+              {
+                "ref": "actorId"
+              },
+              {
+                "ref": "today"
+              },
+              {
+                "ref": "soon"
+              },
+              {
+                "ref": "actorId"
+              },
+              {
+                "ref": "today"
+              }
+            ]
+          }
+        ]
+      },
+      "sample": {
+        "officer": [
+          {
+            "sql": "select coalesce(sum(case when substr(\"createdAt\",1,10)>=? and substr(\"createdAt\",1,10)<=? then 1 else 0 end),0) as current_received,coalesce(sum(case when (\"slaCompletedAt\" is not null and not coalesce(\"slaOutcome\",'') in ('rejected','stopped') and (\"slaDueDate\" is null or \"slaCompletedAt\"<=\"slaDueDate\")) and substr(\"slaCompletedAt\",1,10)>=? and substr(\"slaCompletedAt\",1,10)<=? then 1 else 0 end),0) as current_completed,coalesce(sum(case when (\"slaCompletedAt\" is not null and not coalesce(\"slaOutcome\",'') in ('rejected','stopped') and \"slaCompletedAt\">\"slaDueDate\") and substr(\"slaCompletedAt\",1,10)>=? and substr(\"slaCompletedAt\",1,10)<=? then 1 else 0 end),0) as current_completed_late,avg(case when ((\"slaCompletedAt\" is not null and not coalesce(\"slaOutcome\",'') in ('rejected','stopped') and (\"slaDueDate\" is null or \"slaCompletedAt\"<=\"slaDueDate\")) or (\"slaCompletedAt\" is not null and not coalesce(\"slaOutcome\",'') in ('rejected','stopped') and \"slaCompletedAt\">\"slaDueDate\")) and substr(\"slaCompletedAt\",1,10)>=? and substr(\"slaCompletedAt\",1,10)<=? then julianday(substr(\"slaCompletedAt\",1,10))-julianday(substr(\"createdAt\",1,10)) end) as current_days,coalesce(sum(case when substr(\"createdAt\",1,10)>=? and substr(\"createdAt\",1,10)<=? then 1 else 0 end),0) as previous_received,coalesce(sum(case when (\"slaCompletedAt\" is not null and not coalesce(\"slaOutcome\",'') in ('rejected','stopped') and (\"slaDueDate\" is null or \"slaCompletedAt\"<=\"slaDueDate\")) and substr(\"slaCompletedAt\",1,10)>=? and substr(\"slaCompletedAt\",1,10)<=? then 1 else 0 end),0) as previous_completed,coalesce(sum(case when (\"slaCompletedAt\" is not null and not coalesce(\"slaOutcome\",'') in ('rejected','stopped') and \"slaCompletedAt\">\"slaDueDate\") and substr(\"slaCompletedAt\",1,10)>=? and substr(\"slaCompletedAt\",1,10)<=? then 1 else 0 end),0) as previous_completed_late,avg(case when ((\"slaCompletedAt\" is not null and not coalesce(\"slaOutcome\",'') in ('rejected','stopped') and (\"slaDueDate\" is null or \"slaCompletedAt\"<=\"slaDueDate\")) or (\"slaCompletedAt\" is not null and not coalesce(\"slaOutcome\",'') in ('rejected','stopped') and \"slaCompletedAt\">\"slaDueDate\")) and substr(\"slaCompletedAt\",1,10)>=? and substr(\"slaCompletedAt\",1,10)<=? then julianday(substr(\"slaCompletedAt\",1,10))-julianday(substr(\"createdAt\",1,10)) end) as previous_days from case_summaries where coalesce(sample,0)=1",
+            "params": [
+              {
+                "ref": "dateOffset",
+                "days": -29
+              },
+              {
+                "ref": "today"
+              },
+              {
+                "ref": "dateOffset",
+                "days": -29
+              },
+              {
+                "ref": "today"
+              },
+              {
+                "ref": "dateOffset",
+                "days": -29
+              },
+              {
+                "ref": "today"
+              },
+              {
+                "ref": "dateOffset",
+                "days": -29
+              },
+              {
+                "ref": "today"
+              },
+              {
+                "ref": "dateOffset",
+                "days": -59
+              },
+              {
+                "ref": "dateOffset",
+                "days": -30
+              },
+              {
+                "ref": "dateOffset",
+                "days": -59
+              },
+              {
+                "ref": "dateOffset",
+                "days": -30
+              },
+              {
+                "ref": "dateOffset",
+                "days": -59
+              },
+              {
+                "ref": "dateOffset",
+                "days": -30
+              },
+              {
+                "ref": "dateOffset",
+                "days": -59
+              },
+              {
+                "ref": "dateOffset",
+                "days": -30
+              }
+            ]
+          },
+          {
+            "sql": "select coalesce(\"assigneeId\",'') as id,max(\"assignee\") as name,coalesce(sum(case when not (\"slaCompletedAt\" is not null) and not exists(select 1 from case_summaries n where n.\"previousSubmissionId\"=case_summaries.id) and not coalesce(\"slaPaused\",0)=1 and \"slaDueDate\">? then 1 else 0 end),0) as on_track,coalesce(sum(case when not (\"slaCompletedAt\" is not null) and not exists(select 1 from case_summaries n where n.\"previousSubmissionId\"=case_summaries.id) and not coalesce(\"slaPaused\",0)=1 and \"slaDueDate\">=? and \"slaDueDate\"<=? then 1 else 0 end),0) as due_soon,coalesce(sum(case when not (\"slaCompletedAt\" is not null) and not exists(select 1 from case_summaries n where n.\"previousSubmissionId\"=case_summaries.id) and not coalesce(\"slaPaused\",0)=1 and \"slaDueDate\"<? then 1 else 0 end),0) as overdue,coalesce(sum(case when not (\"slaCompletedAt\" is not null) and not exists(select 1 from case_summaries n where n.\"previousSubmissionId\"=case_summaries.id) and coalesce(\"slaPaused\",0)=1 and (\"slaWaitingDue\" is null or \"slaWaitingDue\">=?) then 1 else 0 end),0) as paused,coalesce(sum(case when not (\"slaCompletedAt\" is not null) and not exists(select 1 from case_summaries n where n.\"previousSubmissionId\"=case_summaries.id) and coalesce(\"slaPaused\",0)=1 and \"slaWaitingDue\"<? then 1 else 0 end),0) as supplement_overdue,coalesce(sum(case when \"slaCompletedAt\" is not null and not coalesce(\"slaOutcome\",'') in ('rejected','stopped') and (\"slaDueDate\" is null or \"slaCompletedAt\"<=\"slaDueDate\") then 1 else 0 end),0) as completed,coalesce(sum(case when \"slaCompletedAt\" is not null and not coalesce(\"slaOutcome\",'') in ('rejected','stopped') and \"slaCompletedAt\">\"slaDueDate\" then 1 else 0 end),0) as completed_late from case_summaries where coalesce(sample,0)=1 group by coalesce(\"assigneeId\",'')",
+            "params": [
+              {
+                "ref": "soon"
+              },
+              {
+                "ref": "today"
+              },
+              {
+                "ref": "soon"
+              },
+              {
+                "ref": "today"
+              },
+              {
+                "ref": "today"
+              },
+              {
+                "ref": "today"
+              }
+            ]
+          },
+          {
+            "sql": "select coalesce(\"procedure\",'bcnckt') as procedure,coalesce(sum(case when \"assigneeId\"=? and coalesce(\"workflowState\",'received') in (?,?,?,?,?) then 1 else 0 end),0) as queue,coalesce(sum(case when \"assigneeId\"=? and not (\"slaCompletedAt\" is not null) and not exists(select 1 from case_summaries n where n.\"previousSubmissionId\"=case_summaries.id) and not coalesce(\"slaPaused\",0)=1 and \"slaDueDate\"<? then 1 else 0 end),0) as overdue,coalesce(sum(case when \"assigneeId\"=? and not (\"slaCompletedAt\" is not null) and not exists(select 1 from case_summaries n where n.\"previousSubmissionId\"=case_summaries.id) and not coalesce(\"slaPaused\",0)=1 and \"slaDueDate\">=? and \"slaDueDate\"<=? then 1 else 0 end),0) as due_soon,coalesce(sum(case when \"assigneeId\"=? and not (\"slaCompletedAt\" is not null) and not exists(select 1 from case_summaries n where n.\"previousSubmissionId\"=case_summaries.id) and coalesce(\"slaPaused\",0)=1 and \"slaWaitingDue\"<? then 1 else 0 end),0) as supplement_overdue from case_summaries where coalesce(sample,0)=1 group by coalesce(\"procedure\",'bcnckt')",
+            "params": [
+              {
+                "ref": "actorId"
+              },
+              {
+                "literal": "received"
+              },
+              {
+                "literal": "assigned"
+              },
+              {
+                "literal": "processing"
+              },
+              {
+                "literal": "site_visit"
+              },
+              {
+                "literal": "correction"
+              },
+              {
+                "ref": "actorId"
+              },
+              {
+                "ref": "today"
+              },
+              {
+                "ref": "actorId"
+              },
+              {
+                "ref": "today"
+              },
+              {
+                "ref": "soon"
+              },
+              {
+                "ref": "actorId"
+              },
+              {
+                "ref": "today"
+              }
+            ]
+          }
+        ],
+        "head_of_department": [
+          {
+            "sql": "select coalesce(sum(case when substr(\"createdAt\",1,10)>=? and substr(\"createdAt\",1,10)<=? then 1 else 0 end),0) as current_received,coalesce(sum(case when (\"slaCompletedAt\" is not null and not coalesce(\"slaOutcome\",'') in ('rejected','stopped') and (\"slaDueDate\" is null or \"slaCompletedAt\"<=\"slaDueDate\")) and substr(\"slaCompletedAt\",1,10)>=? and substr(\"slaCompletedAt\",1,10)<=? then 1 else 0 end),0) as current_completed,coalesce(sum(case when (\"slaCompletedAt\" is not null and not coalesce(\"slaOutcome\",'') in ('rejected','stopped') and \"slaCompletedAt\">\"slaDueDate\") and substr(\"slaCompletedAt\",1,10)>=? and substr(\"slaCompletedAt\",1,10)<=? then 1 else 0 end),0) as current_completed_late,avg(case when ((\"slaCompletedAt\" is not null and not coalesce(\"slaOutcome\",'') in ('rejected','stopped') and (\"slaDueDate\" is null or \"slaCompletedAt\"<=\"slaDueDate\")) or (\"slaCompletedAt\" is not null and not coalesce(\"slaOutcome\",'') in ('rejected','stopped') and \"slaCompletedAt\">\"slaDueDate\")) and substr(\"slaCompletedAt\",1,10)>=? and substr(\"slaCompletedAt\",1,10)<=? then julianday(substr(\"slaCompletedAt\",1,10))-julianday(substr(\"createdAt\",1,10)) end) as current_days,coalesce(sum(case when substr(\"createdAt\",1,10)>=? and substr(\"createdAt\",1,10)<=? then 1 else 0 end),0) as previous_received,coalesce(sum(case when (\"slaCompletedAt\" is not null and not coalesce(\"slaOutcome\",'') in ('rejected','stopped') and (\"slaDueDate\" is null or \"slaCompletedAt\"<=\"slaDueDate\")) and substr(\"slaCompletedAt\",1,10)>=? and substr(\"slaCompletedAt\",1,10)<=? then 1 else 0 end),0) as previous_completed,coalesce(sum(case when (\"slaCompletedAt\" is not null and not coalesce(\"slaOutcome\",'') in ('rejected','stopped') and \"slaCompletedAt\">\"slaDueDate\") and substr(\"slaCompletedAt\",1,10)>=? and substr(\"slaCompletedAt\",1,10)<=? then 1 else 0 end),0) as previous_completed_late,avg(case when ((\"slaCompletedAt\" is not null and not coalesce(\"slaOutcome\",'') in ('rejected','stopped') and (\"slaDueDate\" is null or \"slaCompletedAt\"<=\"slaDueDate\")) or (\"slaCompletedAt\" is not null and not coalesce(\"slaOutcome\",'') in ('rejected','stopped') and \"slaCompletedAt\">\"slaDueDate\")) and substr(\"slaCompletedAt\",1,10)>=? and substr(\"slaCompletedAt\",1,10)<=? then julianday(substr(\"slaCompletedAt\",1,10))-julianday(substr(\"createdAt\",1,10)) end) as previous_days from case_summaries where coalesce(sample,0)=1",
+            "params": [
+              {
+                "ref": "dateOffset",
+                "days": -29
+              },
+              {
+                "ref": "today"
+              },
+              {
+                "ref": "dateOffset",
+                "days": -29
+              },
+              {
+                "ref": "today"
+              },
+              {
+                "ref": "dateOffset",
+                "days": -29
+              },
+              {
+                "ref": "today"
+              },
+              {
+                "ref": "dateOffset",
+                "days": -29
+              },
+              {
+                "ref": "today"
+              },
+              {
+                "ref": "dateOffset",
+                "days": -59
+              },
+              {
+                "ref": "dateOffset",
+                "days": -30
+              },
+              {
+                "ref": "dateOffset",
+                "days": -59
+              },
+              {
+                "ref": "dateOffset",
+                "days": -30
+              },
+              {
+                "ref": "dateOffset",
+                "days": -59
+              },
+              {
+                "ref": "dateOffset",
+                "days": -30
+              },
+              {
+                "ref": "dateOffset",
+                "days": -59
+              },
+              {
+                "ref": "dateOffset",
+                "days": -30
+              }
+            ]
+          },
+          {
+            "sql": "select coalesce(\"assigneeId\",'') as id,max(\"assignee\") as name,coalesce(sum(case when not (\"slaCompletedAt\" is not null) and not exists(select 1 from case_summaries n where n.\"previousSubmissionId\"=case_summaries.id) and not coalesce(\"slaPaused\",0)=1 and \"slaDueDate\">? then 1 else 0 end),0) as on_track,coalesce(sum(case when not (\"slaCompletedAt\" is not null) and not exists(select 1 from case_summaries n where n.\"previousSubmissionId\"=case_summaries.id) and not coalesce(\"slaPaused\",0)=1 and \"slaDueDate\">=? and \"slaDueDate\"<=? then 1 else 0 end),0) as due_soon,coalesce(sum(case when not (\"slaCompletedAt\" is not null) and not exists(select 1 from case_summaries n where n.\"previousSubmissionId\"=case_summaries.id) and not coalesce(\"slaPaused\",0)=1 and \"slaDueDate\"<? then 1 else 0 end),0) as overdue,coalesce(sum(case when not (\"slaCompletedAt\" is not null) and not exists(select 1 from case_summaries n where n.\"previousSubmissionId\"=case_summaries.id) and coalesce(\"slaPaused\",0)=1 and (\"slaWaitingDue\" is null or \"slaWaitingDue\">=?) then 1 else 0 end),0) as paused,coalesce(sum(case when not (\"slaCompletedAt\" is not null) and not exists(select 1 from case_summaries n where n.\"previousSubmissionId\"=case_summaries.id) and coalesce(\"slaPaused\",0)=1 and \"slaWaitingDue\"<? then 1 else 0 end),0) as supplement_overdue,coalesce(sum(case when \"slaCompletedAt\" is not null and not coalesce(\"slaOutcome\",'') in ('rejected','stopped') and (\"slaDueDate\" is null or \"slaCompletedAt\"<=\"slaDueDate\") then 1 else 0 end),0) as completed,coalesce(sum(case when \"slaCompletedAt\" is not null and not coalesce(\"slaOutcome\",'') in ('rejected','stopped') and \"slaCompletedAt\">\"slaDueDate\" then 1 else 0 end),0) as completed_late from case_summaries where coalesce(sample,0)=1 group by coalesce(\"assigneeId\",'')",
+            "params": [
+              {
+                "ref": "soon"
+              },
+              {
+                "ref": "today"
+              },
+              {
+                "ref": "soon"
+              },
+              {
+                "ref": "today"
+              },
+              {
+                "ref": "today"
+              },
+              {
+                "ref": "today"
+              }
+            ]
+          },
+          {
+            "sql": "select coalesce(\"procedure\",'bcnckt') as procedure,coalesce(sum(case when coalesce(\"workflowState\",'received')=? then 1 else 0 end),0) as queue,coalesce(sum(case when \"assigneeId\"=? and coalesce(\"workflowState\",'received') in (?,?,?,?,?) then 1 else 0 end),0) as own_queue,coalesce(sum(case when \"assigneeId\"=? and not (\"slaCompletedAt\" is not null) and not exists(select 1 from case_summaries n where n.\"previousSubmissionId\"=case_summaries.id) and not coalesce(\"slaPaused\",0)=1 and \"slaDueDate\"<? then 1 else 0 end),0) as overdue,coalesce(sum(case when \"assigneeId\"=? and not (\"slaCompletedAt\" is not null) and not exists(select 1 from case_summaries n where n.\"previousSubmissionId\"=case_summaries.id) and not coalesce(\"slaPaused\",0)=1 and \"slaDueDate\">=? and \"slaDueDate\"<=? then 1 else 0 end),0) as due_soon,coalesce(sum(case when \"assigneeId\"=? and not (\"slaCompletedAt\" is not null) and not exists(select 1 from case_summaries n where n.\"previousSubmissionId\"=case_summaries.id) and coalesce(\"slaPaused\",0)=1 and \"slaWaitingDue\"<? then 1 else 0 end),0) as supplement_overdue from case_summaries where coalesce(sample,0)=1 group by coalesce(\"procedure\",'bcnckt')",
+            "params": [
+              {
+                "literal": "pending_review"
+              },
+              {
+                "ref": "actorId"
+              },
+              {
+                "literal": "received"
+              },
+              {
+                "literal": "assigned"
+              },
+              {
+                "literal": "processing"
+              },
+              {
+                "literal": "site_visit"
+              },
+              {
+                "literal": "correction"
+              },
+              {
+                "ref": "actorId"
+              },
+              {
+                "ref": "today"
+              },
+              {
+                "ref": "actorId"
+              },
+              {
+                "ref": "today"
+              },
+              {
+                "ref": "soon"
+              },
+              {
+                "ref": "actorId"
+              },
+              {
+                "ref": "today"
+              }
+            ]
+          }
+        ]
+      },
+      "real": {
+        "officer": [
+          {
+            "sql": "select coalesce(sum(case when substr(\"createdAt\",1,10)>=? and substr(\"createdAt\",1,10)<=? then 1 else 0 end),0) as current_received,coalesce(sum(case when (\"slaCompletedAt\" is not null and not coalesce(\"slaOutcome\",'') in ('rejected','stopped') and (\"slaDueDate\" is null or \"slaCompletedAt\"<=\"slaDueDate\")) and substr(\"slaCompletedAt\",1,10)>=? and substr(\"slaCompletedAt\",1,10)<=? then 1 else 0 end),0) as current_completed,coalesce(sum(case when (\"slaCompletedAt\" is not null and not coalesce(\"slaOutcome\",'') in ('rejected','stopped') and \"slaCompletedAt\">\"slaDueDate\") and substr(\"slaCompletedAt\",1,10)>=? and substr(\"slaCompletedAt\",1,10)<=? then 1 else 0 end),0) as current_completed_late,avg(case when ((\"slaCompletedAt\" is not null and not coalesce(\"slaOutcome\",'') in ('rejected','stopped') and (\"slaDueDate\" is null or \"slaCompletedAt\"<=\"slaDueDate\")) or (\"slaCompletedAt\" is not null and not coalesce(\"slaOutcome\",'') in ('rejected','stopped') and \"slaCompletedAt\">\"slaDueDate\")) and substr(\"slaCompletedAt\",1,10)>=? and substr(\"slaCompletedAt\",1,10)<=? then julianday(substr(\"slaCompletedAt\",1,10))-julianday(substr(\"createdAt\",1,10)) end) as current_days,coalesce(sum(case when substr(\"createdAt\",1,10)>=? and substr(\"createdAt\",1,10)<=? then 1 else 0 end),0) as previous_received,coalesce(sum(case when (\"slaCompletedAt\" is not null and not coalesce(\"slaOutcome\",'') in ('rejected','stopped') and (\"slaDueDate\" is null or \"slaCompletedAt\"<=\"slaDueDate\")) and substr(\"slaCompletedAt\",1,10)>=? and substr(\"slaCompletedAt\",1,10)<=? then 1 else 0 end),0) as previous_completed,coalesce(sum(case when (\"slaCompletedAt\" is not null and not coalesce(\"slaOutcome\",'') in ('rejected','stopped') and \"slaCompletedAt\">\"slaDueDate\") and substr(\"slaCompletedAt\",1,10)>=? and substr(\"slaCompletedAt\",1,10)<=? then 1 else 0 end),0) as previous_completed_late,avg(case when ((\"slaCompletedAt\" is not null and not coalesce(\"slaOutcome\",'') in ('rejected','stopped') and (\"slaDueDate\" is null or \"slaCompletedAt\"<=\"slaDueDate\")) or (\"slaCompletedAt\" is not null and not coalesce(\"slaOutcome\",'') in ('rejected','stopped') and \"slaCompletedAt\">\"slaDueDate\")) and substr(\"slaCompletedAt\",1,10)>=? and substr(\"slaCompletedAt\",1,10)<=? then julianday(substr(\"slaCompletedAt\",1,10))-julianday(substr(\"createdAt\",1,10)) end) as previous_days from case_summaries where coalesce(sample,0)=0",
+            "params": [
+              {
+                "ref": "dateOffset",
+                "days": -29
+              },
+              {
+                "ref": "today"
+              },
+              {
+                "ref": "dateOffset",
+                "days": -29
+              },
+              {
+                "ref": "today"
+              },
+              {
+                "ref": "dateOffset",
+                "days": -29
+              },
+              {
+                "ref": "today"
+              },
+              {
+                "ref": "dateOffset",
+                "days": -29
+              },
+              {
+                "ref": "today"
+              },
+              {
+                "ref": "dateOffset",
+                "days": -59
+              },
+              {
+                "ref": "dateOffset",
+                "days": -30
+              },
+              {
+                "ref": "dateOffset",
+                "days": -59
+              },
+              {
+                "ref": "dateOffset",
+                "days": -30
+              },
+              {
+                "ref": "dateOffset",
+                "days": -59
+              },
+              {
+                "ref": "dateOffset",
+                "days": -30
+              },
+              {
+                "ref": "dateOffset",
+                "days": -59
+              },
+              {
+                "ref": "dateOffset",
+                "days": -30
+              }
+            ]
+          },
+          {
+            "sql": "select coalesce(\"assigneeId\",'') as id,max(\"assignee\") as name,coalesce(sum(case when not (\"slaCompletedAt\" is not null) and not exists(select 1 from case_summaries n where n.\"previousSubmissionId\"=case_summaries.id) and not coalesce(\"slaPaused\",0)=1 and \"slaDueDate\">? then 1 else 0 end),0) as on_track,coalesce(sum(case when not (\"slaCompletedAt\" is not null) and not exists(select 1 from case_summaries n where n.\"previousSubmissionId\"=case_summaries.id) and not coalesce(\"slaPaused\",0)=1 and \"slaDueDate\">=? and \"slaDueDate\"<=? then 1 else 0 end),0) as due_soon,coalesce(sum(case when not (\"slaCompletedAt\" is not null) and not exists(select 1 from case_summaries n where n.\"previousSubmissionId\"=case_summaries.id) and not coalesce(\"slaPaused\",0)=1 and \"slaDueDate\"<? then 1 else 0 end),0) as overdue,coalesce(sum(case when not (\"slaCompletedAt\" is not null) and not exists(select 1 from case_summaries n where n.\"previousSubmissionId\"=case_summaries.id) and coalesce(\"slaPaused\",0)=1 and (\"slaWaitingDue\" is null or \"slaWaitingDue\">=?) then 1 else 0 end),0) as paused,coalesce(sum(case when not (\"slaCompletedAt\" is not null) and not exists(select 1 from case_summaries n where n.\"previousSubmissionId\"=case_summaries.id) and coalesce(\"slaPaused\",0)=1 and \"slaWaitingDue\"<? then 1 else 0 end),0) as supplement_overdue,coalesce(sum(case when \"slaCompletedAt\" is not null and not coalesce(\"slaOutcome\",'') in ('rejected','stopped') and (\"slaDueDate\" is null or \"slaCompletedAt\"<=\"slaDueDate\") then 1 else 0 end),0) as completed,coalesce(sum(case when \"slaCompletedAt\" is not null and not coalesce(\"slaOutcome\",'') in ('rejected','stopped') and \"slaCompletedAt\">\"slaDueDate\" then 1 else 0 end),0) as completed_late from case_summaries where coalesce(sample,0)=0 group by coalesce(\"assigneeId\",'')",
+            "params": [
+              {
+                "ref": "soon"
+              },
+              {
+                "ref": "today"
+              },
+              {
+                "ref": "soon"
+              },
+              {
+                "ref": "today"
+              },
+              {
+                "ref": "today"
+              },
+              {
+                "ref": "today"
+              }
+            ]
+          },
+          {
+            "sql": "select coalesce(\"procedure\",'bcnckt') as procedure,coalesce(sum(case when \"assigneeId\"=? and coalesce(\"workflowState\",'received') in (?,?,?,?,?) then 1 else 0 end),0) as queue,coalesce(sum(case when \"assigneeId\"=? and not (\"slaCompletedAt\" is not null) and not exists(select 1 from case_summaries n where n.\"previousSubmissionId\"=case_summaries.id) and not coalesce(\"slaPaused\",0)=1 and \"slaDueDate\"<? then 1 else 0 end),0) as overdue,coalesce(sum(case when \"assigneeId\"=? and not (\"slaCompletedAt\" is not null) and not exists(select 1 from case_summaries n where n.\"previousSubmissionId\"=case_summaries.id) and not coalesce(\"slaPaused\",0)=1 and \"slaDueDate\">=? and \"slaDueDate\"<=? then 1 else 0 end),0) as due_soon,coalesce(sum(case when \"assigneeId\"=? and not (\"slaCompletedAt\" is not null) and not exists(select 1 from case_summaries n where n.\"previousSubmissionId\"=case_summaries.id) and coalesce(\"slaPaused\",0)=1 and \"slaWaitingDue\"<? then 1 else 0 end),0) as supplement_overdue from case_summaries where coalesce(sample,0)=0 group by coalesce(\"procedure\",'bcnckt')",
+            "params": [
+              {
+                "ref": "actorId"
+              },
+              {
+                "literal": "received"
+              },
+              {
+                "literal": "assigned"
+              },
+              {
+                "literal": "processing"
+              },
+              {
+                "literal": "site_visit"
+              },
+              {
+                "literal": "correction"
+              },
+              {
+                "ref": "actorId"
+              },
+              {
+                "ref": "today"
+              },
+              {
+                "ref": "actorId"
+              },
+              {
+                "ref": "today"
+              },
+              {
+                "ref": "soon"
+              },
+              {
+                "ref": "actorId"
+              },
+              {
+                "ref": "today"
+              }
+            ]
+          }
+        ],
+        "head_of_department": [
+          {
+            "sql": "select coalesce(sum(case when substr(\"createdAt\",1,10)>=? and substr(\"createdAt\",1,10)<=? then 1 else 0 end),0) as current_received,coalesce(sum(case when (\"slaCompletedAt\" is not null and not coalesce(\"slaOutcome\",'') in ('rejected','stopped') and (\"slaDueDate\" is null or \"slaCompletedAt\"<=\"slaDueDate\")) and substr(\"slaCompletedAt\",1,10)>=? and substr(\"slaCompletedAt\",1,10)<=? then 1 else 0 end),0) as current_completed,coalesce(sum(case when (\"slaCompletedAt\" is not null and not coalesce(\"slaOutcome\",'') in ('rejected','stopped') and \"slaCompletedAt\">\"slaDueDate\") and substr(\"slaCompletedAt\",1,10)>=? and substr(\"slaCompletedAt\",1,10)<=? then 1 else 0 end),0) as current_completed_late,avg(case when ((\"slaCompletedAt\" is not null and not coalesce(\"slaOutcome\",'') in ('rejected','stopped') and (\"slaDueDate\" is null or \"slaCompletedAt\"<=\"slaDueDate\")) or (\"slaCompletedAt\" is not null and not coalesce(\"slaOutcome\",'') in ('rejected','stopped') and \"slaCompletedAt\">\"slaDueDate\")) and substr(\"slaCompletedAt\",1,10)>=? and substr(\"slaCompletedAt\",1,10)<=? then julianday(substr(\"slaCompletedAt\",1,10))-julianday(substr(\"createdAt\",1,10)) end) as current_days,coalesce(sum(case when substr(\"createdAt\",1,10)>=? and substr(\"createdAt\",1,10)<=? then 1 else 0 end),0) as previous_received,coalesce(sum(case when (\"slaCompletedAt\" is not null and not coalesce(\"slaOutcome\",'') in ('rejected','stopped') and (\"slaDueDate\" is null or \"slaCompletedAt\"<=\"slaDueDate\")) and substr(\"slaCompletedAt\",1,10)>=? and substr(\"slaCompletedAt\",1,10)<=? then 1 else 0 end),0) as previous_completed,coalesce(sum(case when (\"slaCompletedAt\" is not null and not coalesce(\"slaOutcome\",'') in ('rejected','stopped') and \"slaCompletedAt\">\"slaDueDate\") and substr(\"slaCompletedAt\",1,10)>=? and substr(\"slaCompletedAt\",1,10)<=? then 1 else 0 end),0) as previous_completed_late,avg(case when ((\"slaCompletedAt\" is not null and not coalesce(\"slaOutcome\",'') in ('rejected','stopped') and (\"slaDueDate\" is null or \"slaCompletedAt\"<=\"slaDueDate\")) or (\"slaCompletedAt\" is not null and not coalesce(\"slaOutcome\",'') in ('rejected','stopped') and \"slaCompletedAt\">\"slaDueDate\")) and substr(\"slaCompletedAt\",1,10)>=? and substr(\"slaCompletedAt\",1,10)<=? then julianday(substr(\"slaCompletedAt\",1,10))-julianday(substr(\"createdAt\",1,10)) end) as previous_days from case_summaries where coalesce(sample,0)=0",
+            "params": [
+              {
+                "ref": "dateOffset",
+                "days": -29
+              },
+              {
+                "ref": "today"
+              },
+              {
+                "ref": "dateOffset",
+                "days": -29
+              },
+              {
+                "ref": "today"
+              },
+              {
+                "ref": "dateOffset",
+                "days": -29
+              },
+              {
+                "ref": "today"
+              },
+              {
+                "ref": "dateOffset",
+                "days": -29
+              },
+              {
+                "ref": "today"
+              },
+              {
+                "ref": "dateOffset",
+                "days": -59
+              },
+              {
+                "ref": "dateOffset",
+                "days": -30
+              },
+              {
+                "ref": "dateOffset",
+                "days": -59
+              },
+              {
+                "ref": "dateOffset",
+                "days": -30
+              },
+              {
+                "ref": "dateOffset",
+                "days": -59
+              },
+              {
+                "ref": "dateOffset",
+                "days": -30
+              },
+              {
+                "ref": "dateOffset",
+                "days": -59
+              },
+              {
+                "ref": "dateOffset",
+                "days": -30
+              }
+            ]
+          },
+          {
+            "sql": "select coalesce(\"assigneeId\",'') as id,max(\"assignee\") as name,coalesce(sum(case when not (\"slaCompletedAt\" is not null) and not exists(select 1 from case_summaries n where n.\"previousSubmissionId\"=case_summaries.id) and not coalesce(\"slaPaused\",0)=1 and \"slaDueDate\">? then 1 else 0 end),0) as on_track,coalesce(sum(case when not (\"slaCompletedAt\" is not null) and not exists(select 1 from case_summaries n where n.\"previousSubmissionId\"=case_summaries.id) and not coalesce(\"slaPaused\",0)=1 and \"slaDueDate\">=? and \"slaDueDate\"<=? then 1 else 0 end),0) as due_soon,coalesce(sum(case when not (\"slaCompletedAt\" is not null) and not exists(select 1 from case_summaries n where n.\"previousSubmissionId\"=case_summaries.id) and not coalesce(\"slaPaused\",0)=1 and \"slaDueDate\"<? then 1 else 0 end),0) as overdue,coalesce(sum(case when not (\"slaCompletedAt\" is not null) and not exists(select 1 from case_summaries n where n.\"previousSubmissionId\"=case_summaries.id) and coalesce(\"slaPaused\",0)=1 and (\"slaWaitingDue\" is null or \"slaWaitingDue\">=?) then 1 else 0 end),0) as paused,coalesce(sum(case when not (\"slaCompletedAt\" is not null) and not exists(select 1 from case_summaries n where n.\"previousSubmissionId\"=case_summaries.id) and coalesce(\"slaPaused\",0)=1 and \"slaWaitingDue\"<? then 1 else 0 end),0) as supplement_overdue,coalesce(sum(case when \"slaCompletedAt\" is not null and not coalesce(\"slaOutcome\",'') in ('rejected','stopped') and (\"slaDueDate\" is null or \"slaCompletedAt\"<=\"slaDueDate\") then 1 else 0 end),0) as completed,coalesce(sum(case when \"slaCompletedAt\" is not null and not coalesce(\"slaOutcome\",'') in ('rejected','stopped') and \"slaCompletedAt\">\"slaDueDate\" then 1 else 0 end),0) as completed_late from case_summaries where coalesce(sample,0)=0 group by coalesce(\"assigneeId\",'')",
+            "params": [
+              {
+                "ref": "soon"
+              },
+              {
+                "ref": "today"
+              },
+              {
+                "ref": "soon"
+              },
+              {
+                "ref": "today"
+              },
+              {
+                "ref": "today"
+              },
+              {
+                "ref": "today"
+              }
+            ]
+          },
+          {
+            "sql": "select coalesce(\"procedure\",'bcnckt') as procedure,coalesce(sum(case when coalesce(\"workflowState\",'received')=? then 1 else 0 end),0) as queue,coalesce(sum(case when \"assigneeId\"=? and coalesce(\"workflowState\",'received') in (?,?,?,?,?) then 1 else 0 end),0) as own_queue,coalesce(sum(case when \"assigneeId\"=? and not (\"slaCompletedAt\" is not null) and not exists(select 1 from case_summaries n where n.\"previousSubmissionId\"=case_summaries.id) and not coalesce(\"slaPaused\",0)=1 and \"slaDueDate\"<? then 1 else 0 end),0) as overdue,coalesce(sum(case when \"assigneeId\"=? and not (\"slaCompletedAt\" is not null) and not exists(select 1 from case_summaries n where n.\"previousSubmissionId\"=case_summaries.id) and not coalesce(\"slaPaused\",0)=1 and \"slaDueDate\">=? and \"slaDueDate\"<=? then 1 else 0 end),0) as due_soon,coalesce(sum(case when \"assigneeId\"=? and not (\"slaCompletedAt\" is not null) and not exists(select 1 from case_summaries n where n.\"previousSubmissionId\"=case_summaries.id) and coalesce(\"slaPaused\",0)=1 and \"slaWaitingDue\"<? then 1 else 0 end),0) as supplement_overdue from case_summaries where coalesce(sample,0)=0 group by coalesce(\"procedure\",'bcnckt')",
+            "params": [
+              {
+                "literal": "pending_review"
+              },
+              {
+                "ref": "actorId"
+              },
+              {
+                "literal": "received"
+              },
+              {
+                "literal": "assigned"
+              },
+              {
+                "literal": "processing"
+              },
+              {
+                "literal": "site_visit"
+              },
+              {
+                "literal": "correction"
+              },
+              {
+                "ref": "actorId"
+              },
+              {
+                "ref": "today"
+              },
+              {
+                "ref": "actorId"
+              },
+              {
+                "ref": "today"
+              },
+              {
+                "ref": "soon"
+              },
+              {
+                "ref": "actorId"
+              },
+              {
+                "ref": "today"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    "cloud": {
+      "all": {
+        "officer": [
+          {
+            "sql": "select coalesce(sum(case when substr(payload->>'createdAt',1,10)>=? and substr(payload->>'createdAt',1,10)<=? then 1 else 0 end),0) as current_received,coalesce(sum(case when (payload->'sla'->>'completedAt' is not null and not coalesce(payload->'sla'->>'outcome','') in ('rejected','stopped') and (payload->'sla'->>'dueDate' is null or payload->'sla'->>'completedAt'<=payload->'sla'->>'dueDate')) and substr(payload->'sla'->>'completedAt',1,10)>=? and substr(payload->'sla'->>'completedAt',1,10)<=? then 1 else 0 end),0) as current_completed,coalesce(sum(case when (payload->'sla'->>'completedAt' is not null and not coalesce(payload->'sla'->>'outcome','') in ('rejected','stopped') and payload->'sla'->>'completedAt'>payload->'sla'->>'dueDate') and substr(payload->'sla'->>'completedAt',1,10)>=? and substr(payload->'sla'->>'completedAt',1,10)<=? then 1 else 0 end),0) as current_completed_late,avg(case when ((payload->'sla'->>'completedAt' is not null and not coalesce(payload->'sla'->>'outcome','') in ('rejected','stopped') and (payload->'sla'->>'dueDate' is null or payload->'sla'->>'completedAt'<=payload->'sla'->>'dueDate')) or (payload->'sla'->>'completedAt' is not null and not coalesce(payload->'sla'->>'outcome','') in ('rejected','stopped') and payload->'sla'->>'completedAt'>payload->'sla'->>'dueDate')) and substr(payload->'sla'->>'completedAt',1,10)>=? and substr(payload->'sla'->>'completedAt',1,10)<=? then (substr(payload->'sla'->>'completedAt',1,10))::date-(substr(payload->>'createdAt',1,10))::date end) as current_days,coalesce(sum(case when substr(payload->>'createdAt',1,10)>=? and substr(payload->>'createdAt',1,10)<=? then 1 else 0 end),0) as previous_received,coalesce(sum(case when (payload->'sla'->>'completedAt' is not null and not coalesce(payload->'sla'->>'outcome','') in ('rejected','stopped') and (payload->'sla'->>'dueDate' is null or payload->'sla'->>'completedAt'<=payload->'sla'->>'dueDate')) and substr(payload->'sla'->>'completedAt',1,10)>=? and substr(payload->'sla'->>'completedAt',1,10)<=? then 1 else 0 end),0) as previous_completed,coalesce(sum(case when (payload->'sla'->>'completedAt' is not null and not coalesce(payload->'sla'->>'outcome','') in ('rejected','stopped') and payload->'sla'->>'completedAt'>payload->'sla'->>'dueDate') and substr(payload->'sla'->>'completedAt',1,10)>=? and substr(payload->'sla'->>'completedAt',1,10)<=? then 1 else 0 end),0) as previous_completed_late,avg(case when ((payload->'sla'->>'completedAt' is not null and not coalesce(payload->'sla'->>'outcome','') in ('rejected','stopped') and (payload->'sla'->>'dueDate' is null or payload->'sla'->>'completedAt'<=payload->'sla'->>'dueDate')) or (payload->'sla'->>'completedAt' is not null and not coalesce(payload->'sla'->>'outcome','') in ('rejected','stopped') and payload->'sla'->>'completedAt'>payload->'sla'->>'dueDate')) and substr(payload->'sla'->>'completedAt',1,10)>=? and substr(payload->'sla'->>'completedAt',1,10)<=? then (substr(payload->'sla'->>'completedAt',1,10))::date-(substr(payload->>'createdAt',1,10))::date end) as previous_days from public.appraisal_cases",
+            "params": [
+              {
+                "ref": "dateOffset",
+                "days": -29
+              },
+              {
+                "ref": "today"
+              },
+              {
+                "ref": "dateOffset",
+                "days": -29
+              },
+              {
+                "ref": "today"
+              },
+              {
+                "ref": "dateOffset",
+                "days": -29
+              },
+              {
+                "ref": "today"
+              },
+              {
+                "ref": "dateOffset",
+                "days": -29
+              },
+              {
+                "ref": "today"
+              },
+              {
+                "ref": "dateOffset",
+                "days": -59
+              },
+              {
+                "ref": "dateOffset",
+                "days": -30
+              },
+              {
+                "ref": "dateOffset",
+                "days": -59
+              },
+              {
+                "ref": "dateOffset",
+                "days": -30
+              },
+              {
+                "ref": "dateOffset",
+                "days": -59
+              },
+              {
+                "ref": "dateOffset",
+                "days": -30
+              },
+              {
+                "ref": "dateOffset",
+                "days": -59
+              },
+              {
+                "ref": "dateOffset",
+                "days": -30
+              }
+            ]
+          },
+          {
+            "sql": "select coalesce(payload->'workflow'->>'assigneeId','') as id,max(payload->>'assignee') as name,coalesce(sum(case when not (payload->'sla'->>'completedAt' is not null) and not exists(select 1 from public.appraisal_cases n where n.previous_submission_id=appraisal_cases.id) and not coalesce((payload->'sla'->>'paused')::boolean,false) and payload->'sla'->>'dueDate'>? then 1 else 0 end),0) as on_track,coalesce(sum(case when not (payload->'sla'->>'completedAt' is not null) and not exists(select 1 from public.appraisal_cases n where n.previous_submission_id=appraisal_cases.id) and not coalesce((payload->'sla'->>'paused')::boolean,false) and payload->'sla'->>'dueDate'>=? and payload->'sla'->>'dueDate'<=? then 1 else 0 end),0) as due_soon,coalesce(sum(case when not (payload->'sla'->>'completedAt' is not null) and not exists(select 1 from public.appraisal_cases n where n.previous_submission_id=appraisal_cases.id) and not coalesce((payload->'sla'->>'paused')::boolean,false) and payload->'sla'->>'dueDate'<? then 1 else 0 end),0) as overdue,coalesce(sum(case when not (payload->'sla'->>'completedAt' is not null) and not exists(select 1 from public.appraisal_cases n where n.previous_submission_id=appraisal_cases.id) and coalesce((payload->'sla'->>'paused')::boolean,false) and (payload->'sla'->>'waitingDueDate' is null or payload->'sla'->>'waitingDueDate'>=?) then 1 else 0 end),0) as paused,coalesce(sum(case when not (payload->'sla'->>'completedAt' is not null) and not exists(select 1 from public.appraisal_cases n where n.previous_submission_id=appraisal_cases.id) and coalesce((payload->'sla'->>'paused')::boolean,false) and payload->'sla'->>'waitingDueDate'<? then 1 else 0 end),0) as supplement_overdue,coalesce(sum(case when payload->'sla'->>'completedAt' is not null and not coalesce(payload->'sla'->>'outcome','') in ('rejected','stopped') and (payload->'sla'->>'dueDate' is null or payload->'sla'->>'completedAt'<=payload->'sla'->>'dueDate') then 1 else 0 end),0) as completed,coalesce(sum(case when payload->'sla'->>'completedAt' is not null and not coalesce(payload->'sla'->>'outcome','') in ('rejected','stopped') and payload->'sla'->>'completedAt'>payload->'sla'->>'dueDate' then 1 else 0 end),0) as completed_late from public.appraisal_cases group by coalesce(payload->'workflow'->>'assigneeId','')",
+            "params": [
+              {
+                "ref": "soon"
+              },
+              {
+                "ref": "today"
+              },
+              {
+                "ref": "soon"
+              },
+              {
+                "ref": "today"
+              },
+              {
+                "ref": "today"
+              },
+              {
+                "ref": "today"
+              }
+            ]
+          },
+          {
+            "sql": "select coalesce(payload->>'procedure','bcnckt') as procedure,coalesce(sum(case when payload->'workflow'->>'assigneeId'=? and coalesce(payload->'workflow'->>'state','received') in (?,?,?,?,?) then 1 else 0 end),0) as queue,coalesce(sum(case when payload->'workflow'->>'assigneeId'=? and not (payload->'sla'->>'completedAt' is not null) and not exists(select 1 from public.appraisal_cases n where n.previous_submission_id=appraisal_cases.id) and not coalesce((payload->'sla'->>'paused')::boolean,false) and payload->'sla'->>'dueDate'<? then 1 else 0 end),0) as overdue,coalesce(sum(case when payload->'workflow'->>'assigneeId'=? and not (payload->'sla'->>'completedAt' is not null) and not exists(select 1 from public.appraisal_cases n where n.previous_submission_id=appraisal_cases.id) and not coalesce((payload->'sla'->>'paused')::boolean,false) and payload->'sla'->>'dueDate'>=? and payload->'sla'->>'dueDate'<=? then 1 else 0 end),0) as due_soon,coalesce(sum(case when payload->'workflow'->>'assigneeId'=? and not (payload->'sla'->>'completedAt' is not null) and not exists(select 1 from public.appraisal_cases n where n.previous_submission_id=appraisal_cases.id) and coalesce((payload->'sla'->>'paused')::boolean,false) and payload->'sla'->>'waitingDueDate'<? then 1 else 0 end),0) as supplement_overdue from public.appraisal_cases group by coalesce(payload->>'procedure','bcnckt')",
+            "params": [
+              {
+                "ref": "actorId"
+              },
+              {
+                "literal": "received"
+              },
+              {
+                "literal": "assigned"
+              },
+              {
+                "literal": "processing"
+              },
+              {
+                "literal": "site_visit"
+              },
+              {
+                "literal": "correction"
+              },
+              {
+                "ref": "actorId"
+              },
+              {
+                "ref": "today"
+              },
+              {
+                "ref": "actorId"
+              },
+              {
+                "ref": "today"
+              },
+              {
+                "ref": "soon"
+              },
+              {
+                "ref": "actorId"
+              },
+              {
+                "ref": "today"
+              }
+            ]
+          }
+        ],
+        "head_of_department": [
+          {
+            "sql": "select coalesce(sum(case when substr(payload->>'createdAt',1,10)>=? and substr(payload->>'createdAt',1,10)<=? then 1 else 0 end),0) as current_received,coalesce(sum(case when (payload->'sla'->>'completedAt' is not null and not coalesce(payload->'sla'->>'outcome','') in ('rejected','stopped') and (payload->'sla'->>'dueDate' is null or payload->'sla'->>'completedAt'<=payload->'sla'->>'dueDate')) and substr(payload->'sla'->>'completedAt',1,10)>=? and substr(payload->'sla'->>'completedAt',1,10)<=? then 1 else 0 end),0) as current_completed,coalesce(sum(case when (payload->'sla'->>'completedAt' is not null and not coalesce(payload->'sla'->>'outcome','') in ('rejected','stopped') and payload->'sla'->>'completedAt'>payload->'sla'->>'dueDate') and substr(payload->'sla'->>'completedAt',1,10)>=? and substr(payload->'sla'->>'completedAt',1,10)<=? then 1 else 0 end),0) as current_completed_late,avg(case when ((payload->'sla'->>'completedAt' is not null and not coalesce(payload->'sla'->>'outcome','') in ('rejected','stopped') and (payload->'sla'->>'dueDate' is null or payload->'sla'->>'completedAt'<=payload->'sla'->>'dueDate')) or (payload->'sla'->>'completedAt' is not null and not coalesce(payload->'sla'->>'outcome','') in ('rejected','stopped') and payload->'sla'->>'completedAt'>payload->'sla'->>'dueDate')) and substr(payload->'sla'->>'completedAt',1,10)>=? and substr(payload->'sla'->>'completedAt',1,10)<=? then (substr(payload->'sla'->>'completedAt',1,10))::date-(substr(payload->>'createdAt',1,10))::date end) as current_days,coalesce(sum(case when substr(payload->>'createdAt',1,10)>=? and substr(payload->>'createdAt',1,10)<=? then 1 else 0 end),0) as previous_received,coalesce(sum(case when (payload->'sla'->>'completedAt' is not null and not coalesce(payload->'sla'->>'outcome','') in ('rejected','stopped') and (payload->'sla'->>'dueDate' is null or payload->'sla'->>'completedAt'<=payload->'sla'->>'dueDate')) and substr(payload->'sla'->>'completedAt',1,10)>=? and substr(payload->'sla'->>'completedAt',1,10)<=? then 1 else 0 end),0) as previous_completed,coalesce(sum(case when (payload->'sla'->>'completedAt' is not null and not coalesce(payload->'sla'->>'outcome','') in ('rejected','stopped') and payload->'sla'->>'completedAt'>payload->'sla'->>'dueDate') and substr(payload->'sla'->>'completedAt',1,10)>=? and substr(payload->'sla'->>'completedAt',1,10)<=? then 1 else 0 end),0) as previous_completed_late,avg(case when ((payload->'sla'->>'completedAt' is not null and not coalesce(payload->'sla'->>'outcome','') in ('rejected','stopped') and (payload->'sla'->>'dueDate' is null or payload->'sla'->>'completedAt'<=payload->'sla'->>'dueDate')) or (payload->'sla'->>'completedAt' is not null and not coalesce(payload->'sla'->>'outcome','') in ('rejected','stopped') and payload->'sla'->>'completedAt'>payload->'sla'->>'dueDate')) and substr(payload->'sla'->>'completedAt',1,10)>=? and substr(payload->'sla'->>'completedAt',1,10)<=? then (substr(payload->'sla'->>'completedAt',1,10))::date-(substr(payload->>'createdAt',1,10))::date end) as previous_days from public.appraisal_cases",
+            "params": [
+              {
+                "ref": "dateOffset",
+                "days": -29
+              },
+              {
+                "ref": "today"
+              },
+              {
+                "ref": "dateOffset",
+                "days": -29
+              },
+              {
+                "ref": "today"
+              },
+              {
+                "ref": "dateOffset",
+                "days": -29
+              },
+              {
+                "ref": "today"
+              },
+              {
+                "ref": "dateOffset",
+                "days": -29
+              },
+              {
+                "ref": "today"
+              },
+              {
+                "ref": "dateOffset",
+                "days": -59
+              },
+              {
+                "ref": "dateOffset",
+                "days": -30
+              },
+              {
+                "ref": "dateOffset",
+                "days": -59
+              },
+              {
+                "ref": "dateOffset",
+                "days": -30
+              },
+              {
+                "ref": "dateOffset",
+                "days": -59
+              },
+              {
+                "ref": "dateOffset",
+                "days": -30
+              },
+              {
+                "ref": "dateOffset",
+                "days": -59
+              },
+              {
+                "ref": "dateOffset",
+                "days": -30
+              }
+            ]
+          },
+          {
+            "sql": "select coalesce(payload->'workflow'->>'assigneeId','') as id,max(payload->>'assignee') as name,coalesce(sum(case when not (payload->'sla'->>'completedAt' is not null) and not exists(select 1 from public.appraisal_cases n where n.previous_submission_id=appraisal_cases.id) and not coalesce((payload->'sla'->>'paused')::boolean,false) and payload->'sla'->>'dueDate'>? then 1 else 0 end),0) as on_track,coalesce(sum(case when not (payload->'sla'->>'completedAt' is not null) and not exists(select 1 from public.appraisal_cases n where n.previous_submission_id=appraisal_cases.id) and not coalesce((payload->'sla'->>'paused')::boolean,false) and payload->'sla'->>'dueDate'>=? and payload->'sla'->>'dueDate'<=? then 1 else 0 end),0) as due_soon,coalesce(sum(case when not (payload->'sla'->>'completedAt' is not null) and not exists(select 1 from public.appraisal_cases n where n.previous_submission_id=appraisal_cases.id) and not coalesce((payload->'sla'->>'paused')::boolean,false) and payload->'sla'->>'dueDate'<? then 1 else 0 end),0) as overdue,coalesce(sum(case when not (payload->'sla'->>'completedAt' is not null) and not exists(select 1 from public.appraisal_cases n where n.previous_submission_id=appraisal_cases.id) and coalesce((payload->'sla'->>'paused')::boolean,false) and (payload->'sla'->>'waitingDueDate' is null or payload->'sla'->>'waitingDueDate'>=?) then 1 else 0 end),0) as paused,coalesce(sum(case when not (payload->'sla'->>'completedAt' is not null) and not exists(select 1 from public.appraisal_cases n where n.previous_submission_id=appraisal_cases.id) and coalesce((payload->'sla'->>'paused')::boolean,false) and payload->'sla'->>'waitingDueDate'<? then 1 else 0 end),0) as supplement_overdue,coalesce(sum(case when payload->'sla'->>'completedAt' is not null and not coalesce(payload->'sla'->>'outcome','') in ('rejected','stopped') and (payload->'sla'->>'dueDate' is null or payload->'sla'->>'completedAt'<=payload->'sla'->>'dueDate') then 1 else 0 end),0) as completed,coalesce(sum(case when payload->'sla'->>'completedAt' is not null and not coalesce(payload->'sla'->>'outcome','') in ('rejected','stopped') and payload->'sla'->>'completedAt'>payload->'sla'->>'dueDate' then 1 else 0 end),0) as completed_late from public.appraisal_cases group by coalesce(payload->'workflow'->>'assigneeId','')",
+            "params": [
+              {
+                "ref": "soon"
+              },
+              {
+                "ref": "today"
+              },
+              {
+                "ref": "soon"
+              },
+              {
+                "ref": "today"
+              },
+              {
+                "ref": "today"
+              },
+              {
+                "ref": "today"
+              }
+            ]
+          },
+          {
+            "sql": "select coalesce(payload->>'procedure','bcnckt') as procedure,coalesce(sum(case when coalesce(payload->'workflow'->>'state','received')=? then 1 else 0 end),0) as queue,coalesce(sum(case when payload->'workflow'->>'assigneeId'=? and coalesce(payload->'workflow'->>'state','received') in (?,?,?,?,?) then 1 else 0 end),0) as own_queue,coalesce(sum(case when payload->'workflow'->>'assigneeId'=? and not (payload->'sla'->>'completedAt' is not null) and not exists(select 1 from public.appraisal_cases n where n.previous_submission_id=appraisal_cases.id) and not coalesce((payload->'sla'->>'paused')::boolean,false) and payload->'sla'->>'dueDate'<? then 1 else 0 end),0) as overdue,coalesce(sum(case when payload->'workflow'->>'assigneeId'=? and not (payload->'sla'->>'completedAt' is not null) and not exists(select 1 from public.appraisal_cases n where n.previous_submission_id=appraisal_cases.id) and not coalesce((payload->'sla'->>'paused')::boolean,false) and payload->'sla'->>'dueDate'>=? and payload->'sla'->>'dueDate'<=? then 1 else 0 end),0) as due_soon,coalesce(sum(case when payload->'workflow'->>'assigneeId'=? and not (payload->'sla'->>'completedAt' is not null) and not exists(select 1 from public.appraisal_cases n where n.previous_submission_id=appraisal_cases.id) and coalesce((payload->'sla'->>'paused')::boolean,false) and payload->'sla'->>'waitingDueDate'<? then 1 else 0 end),0) as supplement_overdue from public.appraisal_cases group by coalesce(payload->>'procedure','bcnckt')",
+            "params": [
+              {
+                "literal": "pending_review"
+              },
+              {
+                "ref": "actorId"
+              },
+              {
+                "literal": "received"
+              },
+              {
+                "literal": "assigned"
+              },
+              {
+                "literal": "processing"
+              },
+              {
+                "literal": "site_visit"
+              },
+              {
+                "literal": "correction"
+              },
+              {
+                "ref": "actorId"
+              },
+              {
+                "ref": "today"
+              },
+              {
+                "ref": "actorId"
+              },
+              {
+                "ref": "today"
+              },
+              {
+                "ref": "soon"
+              },
+              {
+                "ref": "actorId"
+              },
+              {
+                "ref": "today"
+              }
+            ]
+          }
+        ]
+      },
+      "sample": {
+        "officer": [
+          {
+            "sql": "select coalesce(sum(case when substr(payload->>'createdAt',1,10)>=? and substr(payload->>'createdAt',1,10)<=? then 1 else 0 end),0) as current_received,coalesce(sum(case when (payload->'sla'->>'completedAt' is not null and not coalesce(payload->'sla'->>'outcome','') in ('rejected','stopped') and (payload->'sla'->>'dueDate' is null or payload->'sla'->>'completedAt'<=payload->'sla'->>'dueDate')) and substr(payload->'sla'->>'completedAt',1,10)>=? and substr(payload->'sla'->>'completedAt',1,10)<=? then 1 else 0 end),0) as current_completed,coalesce(sum(case when (payload->'sla'->>'completedAt' is not null and not coalesce(payload->'sla'->>'outcome','') in ('rejected','stopped') and payload->'sla'->>'completedAt'>payload->'sla'->>'dueDate') and substr(payload->'sla'->>'completedAt',1,10)>=? and substr(payload->'sla'->>'completedAt',1,10)<=? then 1 else 0 end),0) as current_completed_late,avg(case when ((payload->'sla'->>'completedAt' is not null and not coalesce(payload->'sla'->>'outcome','') in ('rejected','stopped') and (payload->'sla'->>'dueDate' is null or payload->'sla'->>'completedAt'<=payload->'sla'->>'dueDate')) or (payload->'sla'->>'completedAt' is not null and not coalesce(payload->'sla'->>'outcome','') in ('rejected','stopped') and payload->'sla'->>'completedAt'>payload->'sla'->>'dueDate')) and substr(payload->'sla'->>'completedAt',1,10)>=? and substr(payload->'sla'->>'completedAt',1,10)<=? then (substr(payload->'sla'->>'completedAt',1,10))::date-(substr(payload->>'createdAt',1,10))::date end) as current_days,coalesce(sum(case when substr(payload->>'createdAt',1,10)>=? and substr(payload->>'createdAt',1,10)<=? then 1 else 0 end),0) as previous_received,coalesce(sum(case when (payload->'sla'->>'completedAt' is not null and not coalesce(payload->'sla'->>'outcome','') in ('rejected','stopped') and (payload->'sla'->>'dueDate' is null or payload->'sla'->>'completedAt'<=payload->'sla'->>'dueDate')) and substr(payload->'sla'->>'completedAt',1,10)>=? and substr(payload->'sla'->>'completedAt',1,10)<=? then 1 else 0 end),0) as previous_completed,coalesce(sum(case when (payload->'sla'->>'completedAt' is not null and not coalesce(payload->'sla'->>'outcome','') in ('rejected','stopped') and payload->'sla'->>'completedAt'>payload->'sla'->>'dueDate') and substr(payload->'sla'->>'completedAt',1,10)>=? and substr(payload->'sla'->>'completedAt',1,10)<=? then 1 else 0 end),0) as previous_completed_late,avg(case when ((payload->'sla'->>'completedAt' is not null and not coalesce(payload->'sla'->>'outcome','') in ('rejected','stopped') and (payload->'sla'->>'dueDate' is null or payload->'sla'->>'completedAt'<=payload->'sla'->>'dueDate')) or (payload->'sla'->>'completedAt' is not null and not coalesce(payload->'sla'->>'outcome','') in ('rejected','stopped') and payload->'sla'->>'completedAt'>payload->'sla'->>'dueDate')) and substr(payload->'sla'->>'completedAt',1,10)>=? and substr(payload->'sla'->>'completedAt',1,10)<=? then (substr(payload->'sla'->>'completedAt',1,10))::date-(substr(payload->>'createdAt',1,10))::date end) as previous_days from public.appraisal_cases where coalesce((payload->>'sample')::boolean,false)=true",
+            "params": [
+              {
+                "ref": "dateOffset",
+                "days": -29
+              },
+              {
+                "ref": "today"
+              },
+              {
+                "ref": "dateOffset",
+                "days": -29
+              },
+              {
+                "ref": "today"
+              },
+              {
+                "ref": "dateOffset",
+                "days": -29
+              },
+              {
+                "ref": "today"
+              },
+              {
+                "ref": "dateOffset",
+                "days": -29
+              },
+              {
+                "ref": "today"
+              },
+              {
+                "ref": "dateOffset",
+                "days": -59
+              },
+              {
+                "ref": "dateOffset",
+                "days": -30
+              },
+              {
+                "ref": "dateOffset",
+                "days": -59
+              },
+              {
+                "ref": "dateOffset",
+                "days": -30
+              },
+              {
+                "ref": "dateOffset",
+                "days": -59
+              },
+              {
+                "ref": "dateOffset",
+                "days": -30
+              },
+              {
+                "ref": "dateOffset",
+                "days": -59
+              },
+              {
+                "ref": "dateOffset",
+                "days": -30
+              }
+            ]
+          },
+          {
+            "sql": "select coalesce(payload->'workflow'->>'assigneeId','') as id,max(payload->>'assignee') as name,coalesce(sum(case when not (payload->'sla'->>'completedAt' is not null) and not exists(select 1 from public.appraisal_cases n where n.previous_submission_id=appraisal_cases.id) and not coalesce((payload->'sla'->>'paused')::boolean,false) and payload->'sla'->>'dueDate'>? then 1 else 0 end),0) as on_track,coalesce(sum(case when not (payload->'sla'->>'completedAt' is not null) and not exists(select 1 from public.appraisal_cases n where n.previous_submission_id=appraisal_cases.id) and not coalesce((payload->'sla'->>'paused')::boolean,false) and payload->'sla'->>'dueDate'>=? and payload->'sla'->>'dueDate'<=? then 1 else 0 end),0) as due_soon,coalesce(sum(case when not (payload->'sla'->>'completedAt' is not null) and not exists(select 1 from public.appraisal_cases n where n.previous_submission_id=appraisal_cases.id) and not coalesce((payload->'sla'->>'paused')::boolean,false) and payload->'sla'->>'dueDate'<? then 1 else 0 end),0) as overdue,coalesce(sum(case when not (payload->'sla'->>'completedAt' is not null) and not exists(select 1 from public.appraisal_cases n where n.previous_submission_id=appraisal_cases.id) and coalesce((payload->'sla'->>'paused')::boolean,false) and (payload->'sla'->>'waitingDueDate' is null or payload->'sla'->>'waitingDueDate'>=?) then 1 else 0 end),0) as paused,coalesce(sum(case when not (payload->'sla'->>'completedAt' is not null) and not exists(select 1 from public.appraisal_cases n where n.previous_submission_id=appraisal_cases.id) and coalesce((payload->'sla'->>'paused')::boolean,false) and payload->'sla'->>'waitingDueDate'<? then 1 else 0 end),0) as supplement_overdue,coalesce(sum(case when payload->'sla'->>'completedAt' is not null and not coalesce(payload->'sla'->>'outcome','') in ('rejected','stopped') and (payload->'sla'->>'dueDate' is null or payload->'sla'->>'completedAt'<=payload->'sla'->>'dueDate') then 1 else 0 end),0) as completed,coalesce(sum(case when payload->'sla'->>'completedAt' is not null and not coalesce(payload->'sla'->>'outcome','') in ('rejected','stopped') and payload->'sla'->>'completedAt'>payload->'sla'->>'dueDate' then 1 else 0 end),0) as completed_late from public.appraisal_cases where coalesce((payload->>'sample')::boolean,false)=true group by coalesce(payload->'workflow'->>'assigneeId','')",
+            "params": [
+              {
+                "ref": "soon"
+              },
+              {
+                "ref": "today"
+              },
+              {
+                "ref": "soon"
+              },
+              {
+                "ref": "today"
+              },
+              {
+                "ref": "today"
+              },
+              {
+                "ref": "today"
+              }
+            ]
+          },
+          {
+            "sql": "select coalesce(payload->>'procedure','bcnckt') as procedure,coalesce(sum(case when payload->'workflow'->>'assigneeId'=? and coalesce(payload->'workflow'->>'state','received') in (?,?,?,?,?) then 1 else 0 end),0) as queue,coalesce(sum(case when payload->'workflow'->>'assigneeId'=? and not (payload->'sla'->>'completedAt' is not null) and not exists(select 1 from public.appraisal_cases n where n.previous_submission_id=appraisal_cases.id) and not coalesce((payload->'sla'->>'paused')::boolean,false) and payload->'sla'->>'dueDate'<? then 1 else 0 end),0) as overdue,coalesce(sum(case when payload->'workflow'->>'assigneeId'=? and not (payload->'sla'->>'completedAt' is not null) and not exists(select 1 from public.appraisal_cases n where n.previous_submission_id=appraisal_cases.id) and not coalesce((payload->'sla'->>'paused')::boolean,false) and payload->'sla'->>'dueDate'>=? and payload->'sla'->>'dueDate'<=? then 1 else 0 end),0) as due_soon,coalesce(sum(case when payload->'workflow'->>'assigneeId'=? and not (payload->'sla'->>'completedAt' is not null) and not exists(select 1 from public.appraisal_cases n where n.previous_submission_id=appraisal_cases.id) and coalesce((payload->'sla'->>'paused')::boolean,false) and payload->'sla'->>'waitingDueDate'<? then 1 else 0 end),0) as supplement_overdue from public.appraisal_cases where coalesce((payload->>'sample')::boolean,false)=true group by coalesce(payload->>'procedure','bcnckt')",
+            "params": [
+              {
+                "ref": "actorId"
+              },
+              {
+                "literal": "received"
+              },
+              {
+                "literal": "assigned"
+              },
+              {
+                "literal": "processing"
+              },
+              {
+                "literal": "site_visit"
+              },
+              {
+                "literal": "correction"
+              },
+              {
+                "ref": "actorId"
+              },
+              {
+                "ref": "today"
+              },
+              {
+                "ref": "actorId"
+              },
+              {
+                "ref": "today"
+              },
+              {
+                "ref": "soon"
+              },
+              {
+                "ref": "actorId"
+              },
+              {
+                "ref": "today"
+              }
+            ]
+          }
+        ],
+        "head_of_department": [
+          {
+            "sql": "select coalesce(sum(case when substr(payload->>'createdAt',1,10)>=? and substr(payload->>'createdAt',1,10)<=? then 1 else 0 end),0) as current_received,coalesce(sum(case when (payload->'sla'->>'completedAt' is not null and not coalesce(payload->'sla'->>'outcome','') in ('rejected','stopped') and (payload->'sla'->>'dueDate' is null or payload->'sla'->>'completedAt'<=payload->'sla'->>'dueDate')) and substr(payload->'sla'->>'completedAt',1,10)>=? and substr(payload->'sla'->>'completedAt',1,10)<=? then 1 else 0 end),0) as current_completed,coalesce(sum(case when (payload->'sla'->>'completedAt' is not null and not coalesce(payload->'sla'->>'outcome','') in ('rejected','stopped') and payload->'sla'->>'completedAt'>payload->'sla'->>'dueDate') and substr(payload->'sla'->>'completedAt',1,10)>=? and substr(payload->'sla'->>'completedAt',1,10)<=? then 1 else 0 end),0) as current_completed_late,avg(case when ((payload->'sla'->>'completedAt' is not null and not coalesce(payload->'sla'->>'outcome','') in ('rejected','stopped') and (payload->'sla'->>'dueDate' is null or payload->'sla'->>'completedAt'<=payload->'sla'->>'dueDate')) or (payload->'sla'->>'completedAt' is not null and not coalesce(payload->'sla'->>'outcome','') in ('rejected','stopped') and payload->'sla'->>'completedAt'>payload->'sla'->>'dueDate')) and substr(payload->'sla'->>'completedAt',1,10)>=? and substr(payload->'sla'->>'completedAt',1,10)<=? then (substr(payload->'sla'->>'completedAt',1,10))::date-(substr(payload->>'createdAt',1,10))::date end) as current_days,coalesce(sum(case when substr(payload->>'createdAt',1,10)>=? and substr(payload->>'createdAt',1,10)<=? then 1 else 0 end),0) as previous_received,coalesce(sum(case when (payload->'sla'->>'completedAt' is not null and not coalesce(payload->'sla'->>'outcome','') in ('rejected','stopped') and (payload->'sla'->>'dueDate' is null or payload->'sla'->>'completedAt'<=payload->'sla'->>'dueDate')) and substr(payload->'sla'->>'completedAt',1,10)>=? and substr(payload->'sla'->>'completedAt',1,10)<=? then 1 else 0 end),0) as previous_completed,coalesce(sum(case when (payload->'sla'->>'completedAt' is not null and not coalesce(payload->'sla'->>'outcome','') in ('rejected','stopped') and payload->'sla'->>'completedAt'>payload->'sla'->>'dueDate') and substr(payload->'sla'->>'completedAt',1,10)>=? and substr(payload->'sla'->>'completedAt',1,10)<=? then 1 else 0 end),0) as previous_completed_late,avg(case when ((payload->'sla'->>'completedAt' is not null and not coalesce(payload->'sla'->>'outcome','') in ('rejected','stopped') and (payload->'sla'->>'dueDate' is null or payload->'sla'->>'completedAt'<=payload->'sla'->>'dueDate')) or (payload->'sla'->>'completedAt' is not null and not coalesce(payload->'sla'->>'outcome','') in ('rejected','stopped') and payload->'sla'->>'completedAt'>payload->'sla'->>'dueDate')) and substr(payload->'sla'->>'completedAt',1,10)>=? and substr(payload->'sla'->>'completedAt',1,10)<=? then (substr(payload->'sla'->>'completedAt',1,10))::date-(substr(payload->>'createdAt',1,10))::date end) as previous_days from public.appraisal_cases where coalesce((payload->>'sample')::boolean,false)=true",
+            "params": [
+              {
+                "ref": "dateOffset",
+                "days": -29
+              },
+              {
+                "ref": "today"
+              },
+              {
+                "ref": "dateOffset",
+                "days": -29
+              },
+              {
+                "ref": "today"
+              },
+              {
+                "ref": "dateOffset",
+                "days": -29
+              },
+              {
+                "ref": "today"
+              },
+              {
+                "ref": "dateOffset",
+                "days": -29
+              },
+              {
+                "ref": "today"
+              },
+              {
+                "ref": "dateOffset",
+                "days": -59
+              },
+              {
+                "ref": "dateOffset",
+                "days": -30
+              },
+              {
+                "ref": "dateOffset",
+                "days": -59
+              },
+              {
+                "ref": "dateOffset",
+                "days": -30
+              },
+              {
+                "ref": "dateOffset",
+                "days": -59
+              },
+              {
+                "ref": "dateOffset",
+                "days": -30
+              },
+              {
+                "ref": "dateOffset",
+                "days": -59
+              },
+              {
+                "ref": "dateOffset",
+                "days": -30
+              }
+            ]
+          },
+          {
+            "sql": "select coalesce(payload->'workflow'->>'assigneeId','') as id,max(payload->>'assignee') as name,coalesce(sum(case when not (payload->'sla'->>'completedAt' is not null) and not exists(select 1 from public.appraisal_cases n where n.previous_submission_id=appraisal_cases.id) and not coalesce((payload->'sla'->>'paused')::boolean,false) and payload->'sla'->>'dueDate'>? then 1 else 0 end),0) as on_track,coalesce(sum(case when not (payload->'sla'->>'completedAt' is not null) and not exists(select 1 from public.appraisal_cases n where n.previous_submission_id=appraisal_cases.id) and not coalesce((payload->'sla'->>'paused')::boolean,false) and payload->'sla'->>'dueDate'>=? and payload->'sla'->>'dueDate'<=? then 1 else 0 end),0) as due_soon,coalesce(sum(case when not (payload->'sla'->>'completedAt' is not null) and not exists(select 1 from public.appraisal_cases n where n.previous_submission_id=appraisal_cases.id) and not coalesce((payload->'sla'->>'paused')::boolean,false) and payload->'sla'->>'dueDate'<? then 1 else 0 end),0) as overdue,coalesce(sum(case when not (payload->'sla'->>'completedAt' is not null) and not exists(select 1 from public.appraisal_cases n where n.previous_submission_id=appraisal_cases.id) and coalesce((payload->'sla'->>'paused')::boolean,false) and (payload->'sla'->>'waitingDueDate' is null or payload->'sla'->>'waitingDueDate'>=?) then 1 else 0 end),0) as paused,coalesce(sum(case when not (payload->'sla'->>'completedAt' is not null) and not exists(select 1 from public.appraisal_cases n where n.previous_submission_id=appraisal_cases.id) and coalesce((payload->'sla'->>'paused')::boolean,false) and payload->'sla'->>'waitingDueDate'<? then 1 else 0 end),0) as supplement_overdue,coalesce(sum(case when payload->'sla'->>'completedAt' is not null and not coalesce(payload->'sla'->>'outcome','') in ('rejected','stopped') and (payload->'sla'->>'dueDate' is null or payload->'sla'->>'completedAt'<=payload->'sla'->>'dueDate') then 1 else 0 end),0) as completed,coalesce(sum(case when payload->'sla'->>'completedAt' is not null and not coalesce(payload->'sla'->>'outcome','') in ('rejected','stopped') and payload->'sla'->>'completedAt'>payload->'sla'->>'dueDate' then 1 else 0 end),0) as completed_late from public.appraisal_cases where coalesce((payload->>'sample')::boolean,false)=true group by coalesce(payload->'workflow'->>'assigneeId','')",
+            "params": [
+              {
+                "ref": "soon"
+              },
+              {
+                "ref": "today"
+              },
+              {
+                "ref": "soon"
+              },
+              {
+                "ref": "today"
+              },
+              {
+                "ref": "today"
+              },
+              {
+                "ref": "today"
+              }
+            ]
+          },
+          {
+            "sql": "select coalesce(payload->>'procedure','bcnckt') as procedure,coalesce(sum(case when coalesce(payload->'workflow'->>'state','received')=? then 1 else 0 end),0) as queue,coalesce(sum(case when payload->'workflow'->>'assigneeId'=? and coalesce(payload->'workflow'->>'state','received') in (?,?,?,?,?) then 1 else 0 end),0) as own_queue,coalesce(sum(case when payload->'workflow'->>'assigneeId'=? and not (payload->'sla'->>'completedAt' is not null) and not exists(select 1 from public.appraisal_cases n where n.previous_submission_id=appraisal_cases.id) and not coalesce((payload->'sla'->>'paused')::boolean,false) and payload->'sla'->>'dueDate'<? then 1 else 0 end),0) as overdue,coalesce(sum(case when payload->'workflow'->>'assigneeId'=? and not (payload->'sla'->>'completedAt' is not null) and not exists(select 1 from public.appraisal_cases n where n.previous_submission_id=appraisal_cases.id) and not coalesce((payload->'sla'->>'paused')::boolean,false) and payload->'sla'->>'dueDate'>=? and payload->'sla'->>'dueDate'<=? then 1 else 0 end),0) as due_soon,coalesce(sum(case when payload->'workflow'->>'assigneeId'=? and not (payload->'sla'->>'completedAt' is not null) and not exists(select 1 from public.appraisal_cases n where n.previous_submission_id=appraisal_cases.id) and coalesce((payload->'sla'->>'paused')::boolean,false) and payload->'sla'->>'waitingDueDate'<? then 1 else 0 end),0) as supplement_overdue from public.appraisal_cases where coalesce((payload->>'sample')::boolean,false)=true group by coalesce(payload->>'procedure','bcnckt')",
+            "params": [
+              {
+                "literal": "pending_review"
+              },
+              {
+                "ref": "actorId"
+              },
+              {
+                "literal": "received"
+              },
+              {
+                "literal": "assigned"
+              },
+              {
+                "literal": "processing"
+              },
+              {
+                "literal": "site_visit"
+              },
+              {
+                "literal": "correction"
+              },
+              {
+                "ref": "actorId"
+              },
+              {
+                "ref": "today"
+              },
+              {
+                "ref": "actorId"
+              },
+              {
+                "ref": "today"
+              },
+              {
+                "ref": "soon"
+              },
+              {
+                "ref": "actorId"
+              },
+              {
+                "ref": "today"
+              }
+            ]
+          }
+        ]
+      },
+      "real": {
+        "officer": [
+          {
+            "sql": "select coalesce(sum(case when substr(payload->>'createdAt',1,10)>=? and substr(payload->>'createdAt',1,10)<=? then 1 else 0 end),0) as current_received,coalesce(sum(case when (payload->'sla'->>'completedAt' is not null and not coalesce(payload->'sla'->>'outcome','') in ('rejected','stopped') and (payload->'sla'->>'dueDate' is null or payload->'sla'->>'completedAt'<=payload->'sla'->>'dueDate')) and substr(payload->'sla'->>'completedAt',1,10)>=? and substr(payload->'sla'->>'completedAt',1,10)<=? then 1 else 0 end),0) as current_completed,coalesce(sum(case when (payload->'sla'->>'completedAt' is not null and not coalesce(payload->'sla'->>'outcome','') in ('rejected','stopped') and payload->'sla'->>'completedAt'>payload->'sla'->>'dueDate') and substr(payload->'sla'->>'completedAt',1,10)>=? and substr(payload->'sla'->>'completedAt',1,10)<=? then 1 else 0 end),0) as current_completed_late,avg(case when ((payload->'sla'->>'completedAt' is not null and not coalesce(payload->'sla'->>'outcome','') in ('rejected','stopped') and (payload->'sla'->>'dueDate' is null or payload->'sla'->>'completedAt'<=payload->'sla'->>'dueDate')) or (payload->'sla'->>'completedAt' is not null and not coalesce(payload->'sla'->>'outcome','') in ('rejected','stopped') and payload->'sla'->>'completedAt'>payload->'sla'->>'dueDate')) and substr(payload->'sla'->>'completedAt',1,10)>=? and substr(payload->'sla'->>'completedAt',1,10)<=? then (substr(payload->'sla'->>'completedAt',1,10))::date-(substr(payload->>'createdAt',1,10))::date end) as current_days,coalesce(sum(case when substr(payload->>'createdAt',1,10)>=? and substr(payload->>'createdAt',1,10)<=? then 1 else 0 end),0) as previous_received,coalesce(sum(case when (payload->'sla'->>'completedAt' is not null and not coalesce(payload->'sla'->>'outcome','') in ('rejected','stopped') and (payload->'sla'->>'dueDate' is null or payload->'sla'->>'completedAt'<=payload->'sla'->>'dueDate')) and substr(payload->'sla'->>'completedAt',1,10)>=? and substr(payload->'sla'->>'completedAt',1,10)<=? then 1 else 0 end),0) as previous_completed,coalesce(sum(case when (payload->'sla'->>'completedAt' is not null and not coalesce(payload->'sla'->>'outcome','') in ('rejected','stopped') and payload->'sla'->>'completedAt'>payload->'sla'->>'dueDate') and substr(payload->'sla'->>'completedAt',1,10)>=? and substr(payload->'sla'->>'completedAt',1,10)<=? then 1 else 0 end),0) as previous_completed_late,avg(case when ((payload->'sla'->>'completedAt' is not null and not coalesce(payload->'sla'->>'outcome','') in ('rejected','stopped') and (payload->'sla'->>'dueDate' is null or payload->'sla'->>'completedAt'<=payload->'sla'->>'dueDate')) or (payload->'sla'->>'completedAt' is not null and not coalesce(payload->'sla'->>'outcome','') in ('rejected','stopped') and payload->'sla'->>'completedAt'>payload->'sla'->>'dueDate')) and substr(payload->'sla'->>'completedAt',1,10)>=? and substr(payload->'sla'->>'completedAt',1,10)<=? then (substr(payload->'sla'->>'completedAt',1,10))::date-(substr(payload->>'createdAt',1,10))::date end) as previous_days from public.appraisal_cases where coalesce((payload->>'sample')::boolean,false)=false",
+            "params": [
+              {
+                "ref": "dateOffset",
+                "days": -29
+              },
+              {
+                "ref": "today"
+              },
+              {
+                "ref": "dateOffset",
+                "days": -29
+              },
+              {
+                "ref": "today"
+              },
+              {
+                "ref": "dateOffset",
+                "days": -29
+              },
+              {
+                "ref": "today"
+              },
+              {
+                "ref": "dateOffset",
+                "days": -29
+              },
+              {
+                "ref": "today"
+              },
+              {
+                "ref": "dateOffset",
+                "days": -59
+              },
+              {
+                "ref": "dateOffset",
+                "days": -30
+              },
+              {
+                "ref": "dateOffset",
+                "days": -59
+              },
+              {
+                "ref": "dateOffset",
+                "days": -30
+              },
+              {
+                "ref": "dateOffset",
+                "days": -59
+              },
+              {
+                "ref": "dateOffset",
+                "days": -30
+              },
+              {
+                "ref": "dateOffset",
+                "days": -59
+              },
+              {
+                "ref": "dateOffset",
+                "days": -30
+              }
+            ]
+          },
+          {
+            "sql": "select coalesce(payload->'workflow'->>'assigneeId','') as id,max(payload->>'assignee') as name,coalesce(sum(case when not (payload->'sla'->>'completedAt' is not null) and not exists(select 1 from public.appraisal_cases n where n.previous_submission_id=appraisal_cases.id) and not coalesce((payload->'sla'->>'paused')::boolean,false) and payload->'sla'->>'dueDate'>? then 1 else 0 end),0) as on_track,coalesce(sum(case when not (payload->'sla'->>'completedAt' is not null) and not exists(select 1 from public.appraisal_cases n where n.previous_submission_id=appraisal_cases.id) and not coalesce((payload->'sla'->>'paused')::boolean,false) and payload->'sla'->>'dueDate'>=? and payload->'sla'->>'dueDate'<=? then 1 else 0 end),0) as due_soon,coalesce(sum(case when not (payload->'sla'->>'completedAt' is not null) and not exists(select 1 from public.appraisal_cases n where n.previous_submission_id=appraisal_cases.id) and not coalesce((payload->'sla'->>'paused')::boolean,false) and payload->'sla'->>'dueDate'<? then 1 else 0 end),0) as overdue,coalesce(sum(case when not (payload->'sla'->>'completedAt' is not null) and not exists(select 1 from public.appraisal_cases n where n.previous_submission_id=appraisal_cases.id) and coalesce((payload->'sla'->>'paused')::boolean,false) and (payload->'sla'->>'waitingDueDate' is null or payload->'sla'->>'waitingDueDate'>=?) then 1 else 0 end),0) as paused,coalesce(sum(case when not (payload->'sla'->>'completedAt' is not null) and not exists(select 1 from public.appraisal_cases n where n.previous_submission_id=appraisal_cases.id) and coalesce((payload->'sla'->>'paused')::boolean,false) and payload->'sla'->>'waitingDueDate'<? then 1 else 0 end),0) as supplement_overdue,coalesce(sum(case when payload->'sla'->>'completedAt' is not null and not coalesce(payload->'sla'->>'outcome','') in ('rejected','stopped') and (payload->'sla'->>'dueDate' is null or payload->'sla'->>'completedAt'<=payload->'sla'->>'dueDate') then 1 else 0 end),0) as completed,coalesce(sum(case when payload->'sla'->>'completedAt' is not null and not coalesce(payload->'sla'->>'outcome','') in ('rejected','stopped') and payload->'sla'->>'completedAt'>payload->'sla'->>'dueDate' then 1 else 0 end),0) as completed_late from public.appraisal_cases where coalesce((payload->>'sample')::boolean,false)=false group by coalesce(payload->'workflow'->>'assigneeId','')",
+            "params": [
+              {
+                "ref": "soon"
+              },
+              {
+                "ref": "today"
+              },
+              {
+                "ref": "soon"
+              },
+              {
+                "ref": "today"
+              },
+              {
+                "ref": "today"
+              },
+              {
+                "ref": "today"
+              }
+            ]
+          },
+          {
+            "sql": "select coalesce(payload->>'procedure','bcnckt') as procedure,coalesce(sum(case when payload->'workflow'->>'assigneeId'=? and coalesce(payload->'workflow'->>'state','received') in (?,?,?,?,?) then 1 else 0 end),0) as queue,coalesce(sum(case when payload->'workflow'->>'assigneeId'=? and not (payload->'sla'->>'completedAt' is not null) and not exists(select 1 from public.appraisal_cases n where n.previous_submission_id=appraisal_cases.id) and not coalesce((payload->'sla'->>'paused')::boolean,false) and payload->'sla'->>'dueDate'<? then 1 else 0 end),0) as overdue,coalesce(sum(case when payload->'workflow'->>'assigneeId'=? and not (payload->'sla'->>'completedAt' is not null) and not exists(select 1 from public.appraisal_cases n where n.previous_submission_id=appraisal_cases.id) and not coalesce((payload->'sla'->>'paused')::boolean,false) and payload->'sla'->>'dueDate'>=? and payload->'sla'->>'dueDate'<=? then 1 else 0 end),0) as due_soon,coalesce(sum(case when payload->'workflow'->>'assigneeId'=? and not (payload->'sla'->>'completedAt' is not null) and not exists(select 1 from public.appraisal_cases n where n.previous_submission_id=appraisal_cases.id) and coalesce((payload->'sla'->>'paused')::boolean,false) and payload->'sla'->>'waitingDueDate'<? then 1 else 0 end),0) as supplement_overdue from public.appraisal_cases where coalesce((payload->>'sample')::boolean,false)=false group by coalesce(payload->>'procedure','bcnckt')",
+            "params": [
+              {
+                "ref": "actorId"
+              },
+              {
+                "literal": "received"
+              },
+              {
+                "literal": "assigned"
+              },
+              {
+                "literal": "processing"
+              },
+              {
+                "literal": "site_visit"
+              },
+              {
+                "literal": "correction"
+              },
+              {
+                "ref": "actorId"
+              },
+              {
+                "ref": "today"
+              },
+              {
+                "ref": "actorId"
+              },
+              {
+                "ref": "today"
+              },
+              {
+                "ref": "soon"
+              },
+              {
+                "ref": "actorId"
+              },
+              {
+                "ref": "today"
+              }
+            ]
+          }
+        ],
+        "head_of_department": [
+          {
+            "sql": "select coalesce(sum(case when substr(payload->>'createdAt',1,10)>=? and substr(payload->>'createdAt',1,10)<=? then 1 else 0 end),0) as current_received,coalesce(sum(case when (payload->'sla'->>'completedAt' is not null and not coalesce(payload->'sla'->>'outcome','') in ('rejected','stopped') and (payload->'sla'->>'dueDate' is null or payload->'sla'->>'completedAt'<=payload->'sla'->>'dueDate')) and substr(payload->'sla'->>'completedAt',1,10)>=? and substr(payload->'sla'->>'completedAt',1,10)<=? then 1 else 0 end),0) as current_completed,coalesce(sum(case when (payload->'sla'->>'completedAt' is not null and not coalesce(payload->'sla'->>'outcome','') in ('rejected','stopped') and payload->'sla'->>'completedAt'>payload->'sla'->>'dueDate') and substr(payload->'sla'->>'completedAt',1,10)>=? and substr(payload->'sla'->>'completedAt',1,10)<=? then 1 else 0 end),0) as current_completed_late,avg(case when ((payload->'sla'->>'completedAt' is not null and not coalesce(payload->'sla'->>'outcome','') in ('rejected','stopped') and (payload->'sla'->>'dueDate' is null or payload->'sla'->>'completedAt'<=payload->'sla'->>'dueDate')) or (payload->'sla'->>'completedAt' is not null and not coalesce(payload->'sla'->>'outcome','') in ('rejected','stopped') and payload->'sla'->>'completedAt'>payload->'sla'->>'dueDate')) and substr(payload->'sla'->>'completedAt',1,10)>=? and substr(payload->'sla'->>'completedAt',1,10)<=? then (substr(payload->'sla'->>'completedAt',1,10))::date-(substr(payload->>'createdAt',1,10))::date end) as current_days,coalesce(sum(case when substr(payload->>'createdAt',1,10)>=? and substr(payload->>'createdAt',1,10)<=? then 1 else 0 end),0) as previous_received,coalesce(sum(case when (payload->'sla'->>'completedAt' is not null and not coalesce(payload->'sla'->>'outcome','') in ('rejected','stopped') and (payload->'sla'->>'dueDate' is null or payload->'sla'->>'completedAt'<=payload->'sla'->>'dueDate')) and substr(payload->'sla'->>'completedAt',1,10)>=? and substr(payload->'sla'->>'completedAt',1,10)<=? then 1 else 0 end),0) as previous_completed,coalesce(sum(case when (payload->'sla'->>'completedAt' is not null and not coalesce(payload->'sla'->>'outcome','') in ('rejected','stopped') and payload->'sla'->>'completedAt'>payload->'sla'->>'dueDate') and substr(payload->'sla'->>'completedAt',1,10)>=? and substr(payload->'sla'->>'completedAt',1,10)<=? then 1 else 0 end),0) as previous_completed_late,avg(case when ((payload->'sla'->>'completedAt' is not null and not coalesce(payload->'sla'->>'outcome','') in ('rejected','stopped') and (payload->'sla'->>'dueDate' is null or payload->'sla'->>'completedAt'<=payload->'sla'->>'dueDate')) or (payload->'sla'->>'completedAt' is not null and not coalesce(payload->'sla'->>'outcome','') in ('rejected','stopped') and payload->'sla'->>'completedAt'>payload->'sla'->>'dueDate')) and substr(payload->'sla'->>'completedAt',1,10)>=? and substr(payload->'sla'->>'completedAt',1,10)<=? then (substr(payload->'sla'->>'completedAt',1,10))::date-(substr(payload->>'createdAt',1,10))::date end) as previous_days from public.appraisal_cases where coalesce((payload->>'sample')::boolean,false)=false",
+            "params": [
+              {
+                "ref": "dateOffset",
+                "days": -29
+              },
+              {
+                "ref": "today"
+              },
+              {
+                "ref": "dateOffset",
+                "days": -29
+              },
+              {
+                "ref": "today"
+              },
+              {
+                "ref": "dateOffset",
+                "days": -29
+              },
+              {
+                "ref": "today"
+              },
+              {
+                "ref": "dateOffset",
+                "days": -29
+              },
+              {
+                "ref": "today"
+              },
+              {
+                "ref": "dateOffset",
+                "days": -59
+              },
+              {
+                "ref": "dateOffset",
+                "days": -30
+              },
+              {
+                "ref": "dateOffset",
+                "days": -59
+              },
+              {
+                "ref": "dateOffset",
+                "days": -30
+              },
+              {
+                "ref": "dateOffset",
+                "days": -59
+              },
+              {
+                "ref": "dateOffset",
+                "days": -30
+              },
+              {
+                "ref": "dateOffset",
+                "days": -59
+              },
+              {
+                "ref": "dateOffset",
+                "days": -30
+              }
+            ]
+          },
+          {
+            "sql": "select coalesce(payload->'workflow'->>'assigneeId','') as id,max(payload->>'assignee') as name,coalesce(sum(case when not (payload->'sla'->>'completedAt' is not null) and not exists(select 1 from public.appraisal_cases n where n.previous_submission_id=appraisal_cases.id) and not coalesce((payload->'sla'->>'paused')::boolean,false) and payload->'sla'->>'dueDate'>? then 1 else 0 end),0) as on_track,coalesce(sum(case when not (payload->'sla'->>'completedAt' is not null) and not exists(select 1 from public.appraisal_cases n where n.previous_submission_id=appraisal_cases.id) and not coalesce((payload->'sla'->>'paused')::boolean,false) and payload->'sla'->>'dueDate'>=? and payload->'sla'->>'dueDate'<=? then 1 else 0 end),0) as due_soon,coalesce(sum(case when not (payload->'sla'->>'completedAt' is not null) and not exists(select 1 from public.appraisal_cases n where n.previous_submission_id=appraisal_cases.id) and not coalesce((payload->'sla'->>'paused')::boolean,false) and payload->'sla'->>'dueDate'<? then 1 else 0 end),0) as overdue,coalesce(sum(case when not (payload->'sla'->>'completedAt' is not null) and not exists(select 1 from public.appraisal_cases n where n.previous_submission_id=appraisal_cases.id) and coalesce((payload->'sla'->>'paused')::boolean,false) and (payload->'sla'->>'waitingDueDate' is null or payload->'sla'->>'waitingDueDate'>=?) then 1 else 0 end),0) as paused,coalesce(sum(case when not (payload->'sla'->>'completedAt' is not null) and not exists(select 1 from public.appraisal_cases n where n.previous_submission_id=appraisal_cases.id) and coalesce((payload->'sla'->>'paused')::boolean,false) and payload->'sla'->>'waitingDueDate'<? then 1 else 0 end),0) as supplement_overdue,coalesce(sum(case when payload->'sla'->>'completedAt' is not null and not coalesce(payload->'sla'->>'outcome','') in ('rejected','stopped') and (payload->'sla'->>'dueDate' is null or payload->'sla'->>'completedAt'<=payload->'sla'->>'dueDate') then 1 else 0 end),0) as completed,coalesce(sum(case when payload->'sla'->>'completedAt' is not null and not coalesce(payload->'sla'->>'outcome','') in ('rejected','stopped') and payload->'sla'->>'completedAt'>payload->'sla'->>'dueDate' then 1 else 0 end),0) as completed_late from public.appraisal_cases where coalesce((payload->>'sample')::boolean,false)=false group by coalesce(payload->'workflow'->>'assigneeId','')",
+            "params": [
+              {
+                "ref": "soon"
+              },
+              {
+                "ref": "today"
+              },
+              {
+                "ref": "soon"
+              },
+              {
+                "ref": "today"
+              },
+              {
+                "ref": "today"
+              },
+              {
+                "ref": "today"
+              }
+            ]
+          },
+          {
+            "sql": "select coalesce(payload->>'procedure','bcnckt') as procedure,coalesce(sum(case when coalesce(payload->'workflow'->>'state','received')=? then 1 else 0 end),0) as queue,coalesce(sum(case when payload->'workflow'->>'assigneeId'=? and coalesce(payload->'workflow'->>'state','received') in (?,?,?,?,?) then 1 else 0 end),0) as own_queue,coalesce(sum(case when payload->'workflow'->>'assigneeId'=? and not (payload->'sla'->>'completedAt' is not null) and not exists(select 1 from public.appraisal_cases n where n.previous_submission_id=appraisal_cases.id) and not coalesce((payload->'sla'->>'paused')::boolean,false) and payload->'sla'->>'dueDate'<? then 1 else 0 end),0) as overdue,coalesce(sum(case when payload->'workflow'->>'assigneeId'=? and not (payload->'sla'->>'completedAt' is not null) and not exists(select 1 from public.appraisal_cases n where n.previous_submission_id=appraisal_cases.id) and not coalesce((payload->'sla'->>'paused')::boolean,false) and payload->'sla'->>'dueDate'>=? and payload->'sla'->>'dueDate'<=? then 1 else 0 end),0) as due_soon,coalesce(sum(case when payload->'workflow'->>'assigneeId'=? and not (payload->'sla'->>'completedAt' is not null) and not exists(select 1 from public.appraisal_cases n where n.previous_submission_id=appraisal_cases.id) and coalesce((payload->'sla'->>'paused')::boolean,false) and payload->'sla'->>'waitingDueDate'<? then 1 else 0 end),0) as supplement_overdue from public.appraisal_cases where coalesce((payload->>'sample')::boolean,false)=false group by coalesce(payload->>'procedure','bcnckt')",
+            "params": [
+              {
+                "literal": "pending_review"
+              },
+              {
+                "ref": "actorId"
+              },
+              {
+                "literal": "received"
+              },
+              {
+                "literal": "assigned"
+              },
+              {
+                "literal": "processing"
+              },
+              {
+                "literal": "site_visit"
+              },
+              {
+                "literal": "correction"
+              },
+              {
+                "ref": "actorId"
+              },
+              {
+                "ref": "today"
+              },
+              {
+                "ref": "actorId"
+              },
+              {
+                "ref": "today"
+              },
+              {
+                "ref": "soon"
+              },
+              {
+                "ref": "actorId"
+              },
+              {
+                "ref": "today"
+              }
+            ]
+          }
+        ]
+      }
+    }
+  },
+  "dashboard": {
+    "all": [
+      {
+        "sql": "select count(*) as total,count(distinct dossier_id) as dossiers,count(*) filter(where payload->>'status' in ('intake','analyzing','analyzed','processing','suspended')) as in_progress,coalesce(sum(jsonb_array_length(payload->'documents')),0) as documents,count(*) filter(where payload->>'status'='reviewed') as reviewed,count(*) filter(where payload->>'status'='request_supplement') as supplements from public.appraisal_cases",
+        "params": []
+      },
+      {
+        "sql": "select count(*) as total from public.projects",
+        "params": []
+      },
+      {
+        "sql": "select procedure as id,count(*) as total from public.appraisal_cases group by procedure order by procedure",
+        "params": []
+      },
+      {
+        "sql": "select to_char(coalesce(nullif(payload->>'createdAt','')::timestamptz::date,created_at::date),'YYYY-MM') as id,procedure,count(*) as total from public.appraisal_cases group by 1,2 order by 1 asc,2",
+        "params": []
+      },
+      {
+        "sql": "select coalesce(payload->>'status','unknown') as id,count(*) as total from public.appraisal_cases group by 1 order by 1",
+        "params": []
+      },
+      {
+        "sql": "with scoped as (select project_id,dossier_id from public.appraisal_cases) select p.id,p.title as name,count(*) as total,count(distinct c.dossier_id) as dossiers from scoped c join public.projects p on p.id=c.project_id group by p.id,p.title order by total desc,p.title,p.id limit 6",
+        "params": []
+      },
+      {
+        "sql": "select id,payload->>'name' as name,payload->>'projectName' as project_name,project_id,payload->>'status' as status from public.appraisal_cases order by updated_at desc,id limit 10",
+        "params": []
+      }
+    ],
+    "sample": [
+      {
+        "sql": "select count(*) as total,count(distinct dossier_id) as dossiers,count(*) filter(where payload->>'status' in ('intake','analyzing','analyzed','processing','suspended')) as in_progress,coalesce(sum(jsonb_array_length(payload->'documents')),0) as documents,count(*) filter(where payload->>'status'='reviewed') as reviewed,count(*) filter(where payload->>'status'='request_supplement') as supplements from public.appraisal_cases where coalesce((payload->>'sample')::boolean,false)=true",
+        "params": []
+      },
+      {
+        "sql": "select count(*) as total from public.projects",
+        "params": []
+      },
+      {
+        "sql": "select procedure as id,count(*) as total from public.appraisal_cases where coalesce((payload->>'sample')::boolean,false)=true group by procedure order by procedure",
+        "params": []
+      },
+      {
+        "sql": "select to_char(coalesce(nullif(payload->>'createdAt','')::timestamptz::date,created_at::date),'YYYY-MM') as id,procedure,count(*) as total from public.appraisal_cases where coalesce((payload->>'sample')::boolean,false)=true group by 1,2 order by 1 asc,2",
+        "params": []
+      },
+      {
+        "sql": "select coalesce(payload->>'status','unknown') as id,count(*) as total from public.appraisal_cases where coalesce((payload->>'sample')::boolean,false)=true group by 1 order by 1",
+        "params": []
+      },
+      {
+        "sql": "with scoped as (select project_id,dossier_id from public.appraisal_cases where coalesce((payload->>'sample')::boolean,false)=true) select p.id,p.title as name,count(*) as total,count(distinct c.dossier_id) as dossiers from scoped c join public.projects p on p.id=c.project_id group by p.id,p.title order by total desc,p.title,p.id limit 6",
+        "params": []
+      },
+      {
+        "sql": "select id,payload->>'name' as name,payload->>'projectName' as project_name,project_id,payload->>'status' as status from public.appraisal_cases where coalesce((payload->>'sample')::boolean,false)=true order by updated_at desc,id limit 10",
+        "params": []
+      }
+    ],
+    "real": [
+      {
+        "sql": "select count(*) as total,count(distinct dossier_id) as dossiers,count(*) filter(where payload->>'status' in ('intake','analyzing','analyzed','processing','suspended')) as in_progress,coalesce(sum(jsonb_array_length(payload->'documents')),0) as documents,count(*) filter(where payload->>'status'='reviewed') as reviewed,count(*) filter(where payload->>'status'='request_supplement') as supplements from public.appraisal_cases where coalesce((payload->>'sample')::boolean,false)=false",
+        "params": []
+      },
+      {
+        "sql": "select count(*) as total from public.projects",
+        "params": []
+      },
+      {
+        "sql": "select procedure as id,count(*) as total from public.appraisal_cases where coalesce((payload->>'sample')::boolean,false)=false group by procedure order by procedure",
+        "params": []
+      },
+      {
+        "sql": "select to_char(coalesce(nullif(payload->>'createdAt','')::timestamptz::date,created_at::date),'YYYY-MM') as id,procedure,count(*) as total from public.appraisal_cases where coalesce((payload->>'sample')::boolean,false)=false group by 1,2 order by 1 asc,2",
+        "params": []
+      },
+      {
+        "sql": "select coalesce(payload->>'status','unknown') as id,count(*) as total from public.appraisal_cases where coalesce((payload->>'sample')::boolean,false)=false group by 1 order by 1",
+        "params": []
+      },
+      {
+        "sql": "with scoped as (select project_id,dossier_id from public.appraisal_cases where coalesce((payload->>'sample')::boolean,false)=false) select p.id,p.title as name,count(*) as total,count(distinct c.dossier_id) as dossiers from scoped c join public.projects p on p.id=c.project_id group by p.id,p.title order by total desc,p.title,p.id limit 6",
+        "params": []
+      },
+      {
+        "sql": "select id,payload->>'name' as name,payload->>'projectName' as project_name,project_id,payload->>'status' as status from public.appraisal_cases where coalesce((payload->>'sample')::boolean,false)=false order by updated_at desc,id limit 10",
+        "params": []
+      }
+    ]
+  },
+  "performanceStates": [
+    "on_track",
+    "due_soon",
+    "overdue",
+    "paused",
+    "supplement_overdue",
+    "completed",
+    "completed_late"
+  ]
+}

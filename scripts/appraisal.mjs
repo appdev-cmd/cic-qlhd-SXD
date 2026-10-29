@@ -1,7 +1,5 @@
 import { spawn } from 'node:child_process';
-import { existsSync } from 'node:fs';
-import { resolve, delimiter } from 'node:path';
-import { homedir } from 'node:os';
+import { resolve } from 'node:path';
 import { randomBytes } from 'node:crypto';
 import { loadEnvironment } from './environment.mjs';
 import { probePort } from './runtime_ports.mjs';
@@ -9,9 +7,6 @@ import ports from '../config/runtime-ports.json' with { type: 'json' };
 
 const root = resolve(import.meta.dirname, '..');
 loadEnvironment(root);
-const bundled = resolve(homedir(), '.cache/codex-runtimes/codex-primary-runtime/dependencies/python/python.exe');
-const python =
-  process.env.APPRAISAL_PYTHON || (existsSync(bundled) ? bundled : process.platform === 'win32' ? 'python' : 'python3');
 const workerPort = String(ports.worker);
 if (
   new Set(Object.values(ports)).size !== 3 ||
@@ -20,9 +15,6 @@ if (
   throw new Error('Cấu hình cổng không hợp lệ hoặc trùng nhau.');
 const env = {
   ...process.env,
-  PYTHONPATH: [resolve(root, 'ai/.deps'), resolve(root, 'ai'), process.env.PYTHONPATH].filter(Boolean).join(delimiter),
-  PYTHONIOENCODING: 'utf-8',
-  APPRAISAL_PYTHON: python,
   APPRAISAL_INTERNAL_TOKEN: process.env.APPRAISAL_INTERNAL_TOKEN || randomBytes(32).toString('hex'),
   APPRAISAL_WORKER_PORT: workerPort,
 };
@@ -102,7 +94,7 @@ if (command === 'dev') {
           'Kiểm tra log phía trên; có thể tăng thời gian chờ bằng biến APPRAISAL_READY_TIMEOUT_MS.',
       );
     };
-    start(python, ['-m', 'uvicorn', 'app.main:app', '--host', '127.0.0.1', '--port', workerPort]);
+    start(process.execPath, ['--import', 'tsx', 'services/appraisal/main.ts']);
     await ready(`AI Worker (cổng ${ports.worker})`, `http://127.0.0.1:${ports.worker}/v1/runtime`, timeout(30_000), {
       'x-internal-token': env.APPRAISAL_INTERNAL_TOKEN,
     });
@@ -128,13 +120,15 @@ if (command === 'dev') {
     process.exitCode = code ?? 1;
   });
 } else {
+  if (command === 'setup') {
+    console.log('Backend dùng Node.js 24; chạy pnpm install để cài phụ thuộc.');
+    process.exit();
+  }
   const args =
     command === 'samples'
-      ? ['scripts/build_appraisal_samples.py']
-      : command === 'test'
-        ? ['-m', 'unittest', 'discover', '-s', 'ai/tests', '-v']
-        : ['-m', 'pip', 'install', '--target', 'ai/.deps', '-r', 'ai/requirements.txt'];
-  const p = start(python, args);
+      ? ['--import', 'tsx', 'scripts/build_appraisal_samples.ts']
+      : ['--import', 'tsx', '--test', 'services/appraisal/**/*.test.ts'];
+  const p = start(process.execPath, args);
   p.on('exit', (code) => {
     process.exitCode = code ?? 1;
   });

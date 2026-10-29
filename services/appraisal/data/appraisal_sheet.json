@@ -1,0 +1,129 @@
+{
+  "VERSION": "bcnckt-sheet-2026.09",
+  "PLANNING_BASES": {
+    "framework": {
+      "label": "Dự án hạ tầng kỹ thuật khung",
+      "basis": "Điểm a khoản 1 Điều 38 NĐ 217/2026",
+      "criteria": [
+        "Định hướng, bố trí hệ thống công trình hạ tầng kỹ thuật so với quy hoạch làm căn cứ lập dự án"
+      ]
+    },
+    "detailed": {
+      "label": "Quy hoạch chi tiết đô thị và nông thôn",
+      "basis": "Điểm b khoản 1 Điều 38 NĐ 217/2026",
+      "criteria": [
+        "Chức năng sử dụng đất, quy mô dân số (nếu có), diện tích",
+        "Chỉ tiêu sử dụng đất quy hoạch: mật độ xây dựng, hệ số sử dụng đất, tầng cao",
+        "Yêu cầu tổ chức không gian, kiến trúc cảnh quan"
+      ]
+    },
+    "sector": {
+      "label": "Quy hoạch chi tiết ngành, phương án tuyến hoặc vị trí được chấp thuận",
+      "basis": "Điểm c khoản 1 Điều 38 NĐ 217/2026",
+      "criteria": [
+        "Vị trí, hướng tuyến, vùng tuyến (công trình theo tuyến)",
+        "Thông số kỹ thuật chủ yếu so với quy hoạch ngành hoặc phương án được chấp thuận"
+      ]
+    },
+    "forest": {
+      "label": "Đề án du lịch sinh thái, nghỉ dưỡng, giải trí trong rừng",
+      "basis": "Điểm d khoản 1 Điều 38 NĐ 217/2026",
+      "criteria": [
+        "Chỉ tiêu mặt bằng, vị trí, quy mô, vật liệu, chiều cao, mật độ, thời gian tồn tại công trình",
+        "Định hướng đấu nối hạ tầng kỹ thuật, giao thông; phương án quản lý rừng bền vững (nếu có)"
+      ]
+    }
+  },
+  "SECTIONS": [
+    {
+      "id": "legal",
+      "title": "Tuân thủ quy định về lập dự án, thiết kế xây dựng; điều kiện năng lực hành nghề",
+      "form": "Mục V.1 Mẫu số 03",
+      "basis": "Khoản 4 Điều 27 Luật Xây dựng 135/2025",
+      "categories": [
+        "Pháp lý và năng lực",
+        "Nhất quán",
+        "Thành phần theo pháp luật",
+        "Hồ sơ đầu vào",
+        "Dữ liệu",
+        "Phạm vi thẩm định"
+      ],
+      "criteria": [
+        "Thành phần và tính pháp lý của hồ sơ theo khoản 2 Điều 35 NĐ 217/2026",
+        "Nội dung Báo cáo nghiên cứu khả thi, thiết kế xây dựng theo quy định",
+        "Năng lực hành nghề của chủ nhiệm, chủ trì (nếu cần thiết)"
+      ]
+    },
+    {
+      "id": "planning",
+      "title": "Sự phù hợp của thiết kế xây dựng với quy hoạch làm căn cứ lập dự án",
+      "form": "Mục V.2 Mẫu số 03",
+      "basis": "Khoản 1 Điều 38 NĐ 217/2026",
+      "categories": [
+        "Quy hoạch",
+        "Thiết kế"
+      ],
+      "criteria": []
+    },
+    {
+      "id": "infrastructure",
+      "title": "Khả năng kết nối hạ tầng kỹ thuật khu vực",
+      "form": "Mục V.3 Mẫu số 03",
+      "basis": "Khoản 2 Điều 38 NĐ 217/2026",
+      "categories": [
+        "Hạ tầng"
+      ],
+      "criteria": [
+        "Danh mục văn bản thỏa thuận hoặc hướng dẫn kết nối với hạ tầng kỹ thuật bên ngoài dự án"
+      ]
+    },
+    {
+      "id": "standards",
+      "title": "Quy chuẩn kỹ thuật, tiêu chuẩn; an toàn xây dựng; giải pháp phòng cháy và chữa cháy",
+      "form": "Mục V.4 Mẫu số 03",
+      "basis": "Khoản 3, 4 Điều 38 NĐ 217/2026",
+      "categories": [
+        "Quy chuẩn",
+        "Khảo sát và kết cấu",
+        "PCCC và môi trường"
+      ],
+      "criteria": [
+        "Danh mục quy chuẩn kỹ thuật, tiêu chuẩn áp dụng (điểm a khoản 3)",
+        "Giải pháp thiết kế tuân thủ quy chuẩn kỹ thuật bắt buộc (điểm b khoản 3)",
+        "Nội dung thiết kế theo Điều 20, 21 hoặc 22 và xác nhận an toàn của thẩm tra (điểm a khoản 4)",
+        "Hồ sơ thiết kế phòng cháy và chữa cháy tương ứng Báo cáo nghiên cứu khả thi (điểm b khoản 4)"
+      ]
+    },
+    {
+      "id": "cost",
+      "title": "Tuân thủ quy định về quản lý chi phí đầu tư xây dựng",
+      "form": "Mục V.5 Mẫu số 03",
+      "basis": "Khoản 5 Điều 38 NĐ 217/2026; NĐ 206/2026/NĐ-CP",
+      "categories": [
+        "Chi phí"
+      ],
+      "criteria": [
+        "Tổng mức đầu tư của dự án đầu tư công, dự án PPP theo quy định quản lý chi phí"
+      ]
+    }
+  ],
+  "SECTION_IDS": [
+    "legal",
+    "planning",
+    "infrastructure",
+    "standards",
+    "cost"
+  ],
+  "STATUSES": {
+    "pending": "Chưa đánh giá",
+    "meets": "Đáp ứng",
+    "revise": "Đáp ứng sau khi chỉnh sửa, hoàn thiện",
+    "fails": "Không đáp ứng",
+    "not_applicable": "Không áp dụng"
+  },
+  "CONCLUSIONS": {
+    "eligible": "Đủ điều kiện để tổng hợp, trình phê duyệt và triển khai các bước tiếp theo",
+    "eligible_after_revision": "Chỉ đủ điều kiện sau khi hoàn thiện các nội dung yêu cầu",
+    "ineligible": "Chưa đủ điều kiện để tổng hợp, trình phê duyệt"
+  }
+}

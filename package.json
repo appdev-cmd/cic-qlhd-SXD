@@ -17,12 +17,12 @@
     "lint:ui": "node scripts/lint-ui.mjs",
     "typecheck:core": "tsc -p tsconfig.core.json",
     "check:runtime": "node scripts/check_runtime.mjs",
-    "api:types": "python scripts/export_openapi.py && npx -y openapi-typescript@7 docs/api/openapi.json --default-non-nullable false -o src/types/api.gen.ts",
+    "api:types": "node scripts/export_openapi.mjs && npx -y openapi-typescript@7 docs/api/openapi.json --default-non-nullable false -o src/types/api.gen.ts",
     "format": "npx -y prettier@3.6.2 --write \"src/**/*.{ts,tsx}\" \"services/**/*.ts\" \"scripts/*.{mjs,ts}\"",
     "format:check": "npx -y prettier@3.6.2 --check \"src/**/*.{ts,tsx}\" \"services/**/*.ts\" \"scripts/*.{mjs,ts}\"",
     "typecheck": "tsc -p tsconfig.json --noEmit",
     "rules:check": "node scripts/sync-rules.mjs --check",
-    "benchmark:http": "python scripts/benchmark_http.py",
+    "benchmark:http": "node --import tsx scripts/benchmark_http.ts",
     "test:web": "node --import tsx --test \"src/**/*.test.ts\"",
     "test:backend:node": "node --import tsx --test \"services/appraisal/**/*.test.ts\"",
     "test:e2e": "cd tests/e2e && npx playwright test"
@@ -34,10 +34,13 @@
     "@thatopen/components-front": "3.4.5",
     "@thatopen/fragments": "3.4.8",
     "@types/leaflet": "^1.9.22",
+    "@vercel/queue": "^0.10.0",
     "ajv": "^8.20.0",
+    "ajv-formats": "^3.0.1",
     "camera-controls": "3.1.2",
     "clsx": "^2.1.1",
     "date-fns": "^4.1.0",
+    "decimal.js": "^10.6.0",
     "docx": "9.9.0",
     "express": "^5.2.1",
     "fast-xml-parser": "^5.11.2",
@@ -49,12 +52,14 @@
     "papaparse": "5.7.0",
     "pdf-lib": "^1.17.1",
     "pdfjs-dist": "^6.3.289",
+    "pdfkit": "^0.20.2",
     "pg": "^8.23.1",
     "qrcode-generator": "2.0.4",
     "react": "^19.2.4",
     "react-dom": "^19.2.4",
     "react-router-dom": "^6.30.3",
     "recharts": "^3.8.0",
+    "sharp": "^0.35.5",
     "tailwind-merge": "^3.5.0",
     "three": "0.186.1",
     "three-mesh-bvh": "0.9.9",
@@ -64,6 +69,7 @@
   "devDependencies": {
     "@types/express": "^5.0.6",
     "@types/papaparse": "5.5.2",
+    "@types/pdfkit": "^0.17.7",
     "@types/pg": "^8.23.1",
     "@types/react": "^19.2.3",
     "@types/react-dom": "^19.2.3",
@@ -76,5 +82,8 @@
     "tsx": "^4.23.15",
     "typescript": "^5.9.3",
     "vite": "^7.3.1"
+  },
+  "engines": {
+    "node": "24.x"
   }
 }

@@ -22,7 +22,7 @@ let normIndex: Array<{ work: Work; text: string }> | undefined;
 function normData() {
   if (!normsData) {
     normsData = JSON.parse(
-      readFileSync(fileURLToPath(new URL('../../ai/app/data/constructionNorms.json', import.meta.url)), 'utf8'),
+      readFileSync(fileURLToPath(new URL('./data/constructionNorms.json', import.meta.url)), 'utf8'),
     ) as NormData;
     normIndex = normsData.works.map((work) => ({ work, text: normalizeSearch(work.code + ' ' + work.title) }));
   }

@@ -1,0 +1,68 @@
+{
+  "registry": [
+    [
+      "nd217",
+      "NĐ 217/2026/NĐ-CP",
+      "nd_cp_217_2026_quan_ly_hoat_dong_xay_dung.md",
+      "https://vanban.chinhphu.vn/?classid=1&docid=218509&pageid=27160&typegroupid=4"
+    ],
+    [
+      "pl217",
+      "Phụ lục I NĐ 217/2026/NĐ-CP",
+      "nd_cp_217_2026_quan_ly_hoat_dong_xay_dung_phu_luc_i.md",
+      "https://datafiles.chinhphu.vn/cpp/files/vbpq/2026/6/pl217.pdf"
+    ],
+    [
+      "nd206",
+      "NĐ 206/2026/NĐ-CP",
+      "nd_cp_206_2026_quan_ly_chi_phi_dau_tu_xay_dung.md",
+      "https://vanban.chinhphu.vn/?docid=218454&orggroupid=2&pageid=27160"
+    ],
+    [
+      "nd207",
+      "NĐ 207/2026/NĐ-CP",
+      "nd_cp_207_2026_quan_ly_chat_luong_thi_cong_xay_dung_va_bao_tri_cong_trinh_xay_dung.md",
+      "https://xaydungchinhsach.chinhphu.vn/nghi-dinh-so-207-2026-nd-cp-ve-quan-ly-chat-iuong-thi-cong-bao-tri-cong-trinh-xay-dung-119260616081951719.htm"
+    ],
+    [
+      "luat135",
+      "Luật 135/2025/QH15",
+      "luat_qh15_135_2025_xay_dung.md",
+      "https://vanban.chinhphu.vn/?classid=1&docid=216514&orggroupid=1&pageid=27160"
+    ],
+    [
+      "pl207",
+      "Phụ lục NĐ 207/2026/NĐ-CP",
+      "nd_cp_207_2026_quan_ly_chat_luong_thi_cong_xay_dung_va_bao_tri_cong_trinh_xay_dung_phu_luc_i.md",
+      "https://datafiles.chinhphu.vn/cpp/files/vbpq/2026/6/207-ndcp.signed.pdf"
+    ],
+    [
+      "tt32",
+      "TT 32/2026/TT-BXD",
+      "tt_bxd_32_2026_so_207_2026_nd_cp_ngay_15_thang.docx.md",
+      "https://datafiles.chinhphu.vn/cpp/files/vbpq/2026/6/32-bxd.pdf"
+    ]
+  ],
+  "stop": [
+    "cac",
+    "cho",
+    "co",
+    "cua",
+    "duoc",
+    "gi",
+    "gom",
+    "khong",
+    "la",
+    "mot",
+    "nao",
+    "nhieu",
+    "nhu",
+    "nhung",
+    "tai",
+    "theo",
+    "trong",
+    "va",
+    "ve",
+    "voi"
+  ]
+}

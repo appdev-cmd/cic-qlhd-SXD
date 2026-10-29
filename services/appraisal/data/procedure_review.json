@@ -1,0 +1,158 @@
+{
+  "VERSION": "2026-07.v2",
+  "PERMITS": {
+    "new": [
+      "Xây dựng mới",
+      57
+    ],
+    "stage": [
+      "Theo giai đoạn",
+      58
+    ],
+    "group": [
+      "Nhóm công trình",
+      59
+    ],
+    "house": [
+      "Nhà ở riêng lẻ",
+      60
+    ],
+    "repair": [
+      "Sửa chữa, cải tạo",
+      61
+    ],
+    "relocation": [
+      "Di dời",
+      61
+    ],
+    "temporary": [
+      "Có thời hạn",
+      62
+    ],
+    "amendment": [
+      "Điều chỉnh",
+      63
+    ],
+    "extension": [
+      "Gia hạn",
+      63
+    ],
+    "reissue": [
+      "Cấp lại",
+      64
+    ]
+  },
+  "DETAILS": {
+    "ownerIdentity": "Số định danh / mã số doanh nghiệp",
+    "ownerAddress": "Địa chỉ chủ đầu tư",
+    "buildingId": "Mã định danh công trình",
+    "buildingClass": "Loại và cấp công trình",
+    "designer": "Tổ chức tư vấn thiết kế",
+    "designLead": "Chủ nhiệm, chủ trì thiết kế",
+    "verifier": "Đơn vị và chủ trì thẩm tra",
+    "land": "Giấy tờ đất đai, lô đất, thửa đất",
+    "elevation": "Cốt xây dựng (m)",
+    "setback": "Khoảng lùi (m)",
+    "density": "Mật độ xây dựng (%)",
+    "landRatio": "Hệ số sử dụng đất",
+    "boundaries": "Chỉ giới đường đỏ và chỉ giới xây dựng",
+    "area": "Diện tích xây dựng tầng 1 (m²)",
+    "floorArea": "Tổng diện tích sàn (m²)",
+    "height": "Chiều cao công trình (m)",
+    "depth": "Chiều sâu công trình (m)",
+    "floors": "Số tầng, tầng hầm, tầng lửng",
+    "color": "Màu sắc công trình",
+    "schedule": "Thời gian hoàn thành dự kiến (tháng)",
+    "route": "Tuyến, hướng tuyến, chiều dài, quy mô theo đoạn",
+    "stages": "Nội dung và phạm vi các giai đoạn / công trình trong nhóm",
+    "existing": "Hiện trạng trước sửa chữa / di dời",
+    "temporaryTerm": "Thời hạn tồn tại được xác định theo quy định địa phương",
+    "adjustment": "Nội dung điều chỉnh / gia hạn",
+    "completionReport": "Số, ngày báo cáo hoàn thành thi công",
+    "acceptanceRecord": "Số, ngày biên bản nghiệm thu của chủ đầu tư",
+    "correctionReport": "Báo cáo khắc phục tồn tại (nếu có)",
+    "projectNationalId": "Mã định danh dự án trên cơ sở dữ liệu quốc gia",
+    "authorityBasis": "Số, ngày và điều khoản văn bản xác định thẩm quyền",
+    "specializedBasis": "Số, ngày các văn bản PCCC, môi trường, chuyên ngành áp dụng",
+    "originLocation": "Địa điểm công trình trước di dời",
+    "relocationSchedule": "Ngày bắt đầu, kết thúc di dời dự kiến",
+    "groupCount": "Số công trình trong nhóm; công trình đã khởi công",
+    "contractors": "Nhà thầu khảo sát, thiết kế, thi công, giám sát",
+    "constructionPeriod": "Ngày khởi công và ngày hoàn thành",
+    "completedQuantities": "Khối lượng đã thực hiện theo thiết kế",
+    "qualityAssessment": "Đánh giá chất lượng so với thiết kế được phê duyệt",
+    "contact": "Người liên hệ và số điện thoại",
+    "representative": "Người đại diện, chức vụ, số định danh",
+    "remainingSafety": "Biện pháp bảo đảm an toàn khi tiếp tục thi công phần còn lại",
+    "startDate": "Ngày khởi công (theo thông báo)",
+    "permitNumber": "Số giấy phép xây dựng (nếu thuộc diện)",
+    "appraisalNotice": "Số, ngày thông báo kết quả thẩm định BCNCKT (công trình miễn phép)",
+    "inspectionPlan": "Kế hoạch kiểm tra trong thi công (thời điểm, nội dung)",
+    "extraReason": "Lý do kiểm tra vượt số lần (sự cố; nghiệm thu từng phần, có điều kiện)",
+    "verificationTests": "Yêu cầu thí nghiệm đối chứng, kiểm định (Điều 8 NĐ 207/2026)"
+  },
+  "INSPECTIONS": {
+    "start_notice": "Tiếp nhận thông báo khởi công",
+    "during": "Kiểm tra trong quá trình thi công",
+    "complete": "Nghiệm thu hoàn thành",
+    "conditional": "Nghiệm thu có điều kiện",
+    "partial": "Nghiệm thu một phần"
+  },
+  "INSPECTION_DETAILS": {
+    "start_notice": [
+      "projectNationalId",
+      "buildingId",
+      "buildingClass",
+      "authorityBasis",
+      "startDate",
+      "permitNumber",
+      "appraisalNotice",
+      "contractors",
+      "contact",
+      "inspectionPlan"
+    ],
+    "during": [
+      "projectNationalId",
+      "buildingId",
+      "buildingClass",
+      "authorityBasis",
+      "startDate",
+      "extraReason",
+      "verificationTests",
+      "contractors",
+      "qualityAssessment"
+    ]
+  },
+  "COMPLETION_DETAILS": [
+    "projectNationalId",
+    "buildingId",
+    "buildingClass",
+    "authorityBasis",
+    "specializedBasis",
+    "completionReport",
+    "acceptanceRecord",
+    "correctionReport",
+    "contractors",
+    "constructionPeriod",
+    "completedQuantities",
+    "qualityAssessment",
+    "remainingSafety",
+    "verificationTests"
+  ],
+  "PERMIT_EXCLUDED": [
+    "completionReport",
+    "acceptanceRecord",
+    "correctionReport",
+    "contractors",
+    "constructionPeriod",
+    "completedQuantities",
+    "qualityAssessment",
+    "remainingSafety",
+    "startDate",
+    "permitNumber",
+    "appraisalNotice",
+    "inspectionPlan",
+    "extraReason",
+    "verificationTests"
+  ]
+}

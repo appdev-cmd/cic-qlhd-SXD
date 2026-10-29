@@ -1,0 +1,325 @@
+{
+  "notice": {
+    "title": "DỰ THẢO THÔNG BÁO KẾT QUẢ THẨM ĐỊNH BCNCKT",
+    "blocks": [
+      {
+        "letterhead": true,
+        "agency": "[CƠ QUAN CHUYÊN MÔN VỀ XÂY DỰNG]"
+      },
+      {
+        "text": [
+          "Khung nội dung Mẫu số 03, Phụ lục I NĐ 217/2026/NĐ-CP.",
+          "Dự án: {{project}}",
+          "Chưa xác nhận đủ điều kiện; các chỗ trong ngoặc vuông do chuyên viên hoàn thiện từ hồ sơ đã kiểm tra.",
+          "Phạm vi pháp lý: đang chờ chuyên viên xác nhận."
+        ]
+      },
+      {
+        "text": [
+          "Kính gửi: [Cơ quan chuẩn bị dự án].",
+          "Tờ trình số [chưa xác nhận], ngày [chưa xác nhận].",
+          "Luật Xây dựng số 135/2025/QH15; Nghị định 217/2026/NĐ-CP.",
+          "[Bổ sung căn cứ giao thẩm quyền, văn bản dự án và các căn cứ áp dụng cụ thể đã xác minh]."
+        ]
+      },
+      {
+        "heading": "I. THÔNG TIN CHUNG VỀ DỰ ÁN",
+        "text": [
+          "1. Tên dự án: {{project}}",
+          "2. Nhóm dự án; loại, cấp công trình chính; thời hạn sử dụng theo thiết kế: [Chưa xác nhận]",
+          "3. Mã định danh dự án: [Chưa xác nhận]",
+          "4. Quy mô đầu tư; phạm vi công trình trình thẩm định: [Chưa xác nhận]",
+          "5. Người quyết định đầu tư: [Chưa xác nhận]",
+          "6. Cơ quan chuẩn bị dự án và thông tin liên hệ: [Chưa xác nhận]",
+          "7. Địa điểm cấp xã, tỉnh; vị trí, hướng tuyến nếu có; diện tích đất: [Chưa xác nhận]",
+          "8. Tổng mức đầu tư; chi phí hạng mục trình thẩm định nếu có: [Chưa xác nhận]",
+          "9. Nguồn vốn đầu tư: [Chưa xác nhận]",
+          "10. Thời gian thực hiện; phân kỳ và thời hạn hoạt động nếu có: [Chưa xác nhận]",
+          "11. Quy chuẩn, tiêu chuẩn áp dụng: [Chưa xác nhận]",
+          "12. Nhà thầu lập BCNCKT, thiết kế; mã số doanh nghiệp: [Chưa xác nhận]",
+          "13. Nhà thầu khảo sát; mã số doanh nghiệp: [Chưa xác nhận]",
+          "14. Nhà thầu thẩm tra nếu có; mã số doanh nghiệp: [Chưa xác nhận]",
+          "15. Thông tin khác nếu có: [Chưa xác nhận]"
+        ]
+      },
+      {
+        "heading": "II. HỒ SƠ TRÌNH THẨM ĐỊNH",
+        "text": [
+          "1. Văn bản pháp lý; 2. Hồ sơ dự án, khảo sát, thiết kế; 3. Báo cáo thẩm tra nếu có."
+        ]
+      },
+      {
+        "heading": "III. NỘI DUNG HỒ SƠ TRÌNH THẨM ĐỊNH",
+        "text": [
+          "[Tóm tắt nội dung đã xác nhận; với nhà: diện tích xây dựng/sàn, mật độ, hệ số sử dụng đất, tầng, chiều cao, chỉ giới, cốt xây dựng, công năng]."
+        ]
+      },
+      {
+        "heading": "IV. PHẠM VI VÀ NGUYÊN TẮC THẨM ĐỊNH",
+        "text": [
+          "Đối chiếu Điều 27 Luật 135/2025, Điều 38 và khoản 5 Điều 7 NĐ 217/2026.",
+          "[Xác định phạm vi công trình, nội dung thuộc thẩm quyền; trường hợp khắc phục xử phạt nếu có]."
+        ]
+      },
+      {
+        "heading": "V. KẾT QUẢ THẨM ĐỊNH",
+        "text": [
+          "Các mục dưới đây là đề xuất rà soát, chưa phải kết luận được cơ quan thẩm định chấp thuận."
+        ]
+      },
+      {
+        "heading": "1. Tuân thủ quy định về lập dự án, thiết kế xây dựng; điều kiện năng lực hành nghề",
+        "text": [
+          "[Chưa có đánh giá chuyên môn được xác nhận]."
+        ]
+      },
+      {
+        "heading": "2. Sự phù hợp của thiết kế xây dựng với quy hoạch làm căn cứ lập dự án",
+        "text": [
+          "[Chưa có đánh giá chuyên môn được xác nhận]."
+        ]
+      },
+      {
+        "heading": "3. Khả năng kết nối hạ tầng kỹ thuật khu vực",
+        "text": [
+          "[Chưa có đánh giá chuyên môn được xác nhận]."
+        ]
+      },
+      {
+        "heading": "4. Quy chuẩn kỹ thuật, tiêu chuẩn; an toàn xây dựng; giải pháp phòng cháy và chữa cháy",
+        "text": [
+          "[Chưa có đánh giá chuyên môn được xác nhận]."
+        ]
+      },
+      {
+        "heading": "5. Tuân thủ quy định về quản lý chi phí đầu tư xây dựng",
+        "text": [
+          "[Chưa có đánh giá chuyên môn được xác nhận]."
+        ]
+      },
+      {
+        "heading": "VI. KẾT LUẬN VÀ KIẾN NGHỊ",
+        "text": [
+          "1. Kết luận: [Chưa lựa chọn. Người có thẩm quyền xác định: đủ điều kiện / chưa đủ điều kiện / chỉ đủ điều kiện sau khi hoàn thiện để tổng hợp, trình phê duyệt].",
+          "2. Kiến nghị: [Hoàn thiện các vấn đề đã được chuyên viên xác nhận; không dùng toàn bộ cảnh báo máy làm yêu cầu hành chính]."
+        ]
+      },
+      {
+        "heading": "Nơi nhận và ký ban hành",
+        "text": [
+          "Nơi nhận: Như trên; cơ quan quản lý nhà nước về xây dựng tại địa phương (khoản 6 Điều 38); lưu.",
+          "[Chức danh, họ tên người ký — để trống chữ ký và con dấu].",
+          "Nguồn cấu trúc biểu mẫu: https://datafiles.chinhphu.vn/cpp/files/vbpq/2026/6/pl217.pdf"
+        ]
+      }
+    ]
+  },
+  "decision": {
+    "title": "KHUNG DỰ THẢO QUYẾT ĐỊNH PHÊ DUYỆT DỰ ÁN",
+    "blocks": [
+      {
+        "letterhead": true,
+        "agency": "[CƠ QUAN/TỔ CHỨC PHÊ DUYỆT]"
+      },
+      {
+        "text": [
+          "Khung nội dung Mẫu số 09, Phụ lục I NĐ 217/2026/NĐ-CP.",
+          "Dự án: {{project}}",
+          "Chưa xác nhận đủ điều kiện; các chỗ trong ngoặc vuông do chuyên viên hoàn thiện từ hồ sơ đã kiểm tra.",
+          "Phạm vi pháp lý: đang chờ chuyên viên xác nhận."
+        ]
+      },
+      {
+        "text": [
+          "Luật Xây dựng số 135/2025/QH15; Nghị định 217/2026/NĐ-CP.",
+          "[Bổ sung căn cứ giao thẩm quyền, văn bản dự án và các căn cứ áp dụng cụ thể đã xác minh].",
+          "NĐ 206/2026/NĐ-CP và căn cứ quản lý chi phí áp dụng.",
+          "[Số, ngày thông báo kết quả thẩm định của CQ chuyên môn và đơn vị được người quyết định đầu tư giao thẩm định].",
+          "[Tờ trình đề nghị phê duyệt; chức danh, căn cứ thẩm quyền người ký]."
+        ]
+      },
+      {
+        "heading": "Điều 1. Nội dung dự án đề nghị phê duyệt",
+        "text": [
+          "1. Tên dự án: {{project}}",
+          "2. Loại, nhóm dự án; loại, cấp công trình chính; thời hạn sử dụng theo thiết kế: [Chưa xác nhận; bổ sung từ hồ sơ và kết quả thẩm định]",
+          "3. Mã định danh dự án: [Chưa xác nhận; bổ sung từ hồ sơ và kết quả thẩm định]",
+          "4. Địa điểm, vị trí/hướng tuyến, diện tích đất: [Chưa xác nhận; bổ sung từ hồ sơ và kết quả thẩm định]",
+          "5. Người quyết định đầu tư: [Chưa xác nhận; bổ sung từ hồ sơ và kết quả thẩm định]",
+          "6. Chủ đầu tư: [Chưa xác nhận; bổ sung từ hồ sơ và kết quả thẩm định]",
+          "7. Nhà thầu lập BCNCKT, thiết kế, khảo sát; mã số doanh nghiệp: [Chưa xác nhận; bổ sung từ hồ sơ và kết quả thẩm định]",
+          "8. Mục tiêu: [Chưa xác nhận; bổ sung từ hồ sơ và kết quả thẩm định]",
+          "9. Quy mô dự án và phạm vi được phê duyệt: [Chưa xác nhận; bổ sung từ hồ sơ và kết quả thẩm định]",
+          "10. Số bước thiết kế; danh mục quy chuẩn, tiêu chuẩn: [Chưa xác nhận; bổ sung từ hồ sơ và kết quả thẩm định]",
+          "11. Tổng mức đầu tư và các khoản mục; chi phí theo phân kỳ nếu có: [Chưa xác nhận; bổ sung từ hồ sơ và kết quả thẩm định]",
+          "12. Thời gian thực hiện; phân kỳ và thời hạn hoạt động nếu có: [Chưa xác nhận; bổ sung từ hồ sơ và kết quả thẩm định]",
+          "13. Nguồn vốn và kế hoạch bố trí vốn: [Chưa xác nhận; bổ sung từ hồ sơ và kết quả thẩm định]",
+          "14. Hình thức quản lý dự án: [Chưa xác nhận; bổ sung từ hồ sơ và kết quả thẩm định]",
+          "15. Phân chia gói thầu; dự toán EPC/EC/EP nếu có: [Chưa xác nhận; bổ sung từ hồ sơ và kết quả thẩm định]",
+          "16. Kế hoạch tổng thể lựa chọn nhà thầu nếu có: [Chưa xác nhận; bổ sung từ hồ sơ và kết quả thẩm định]",
+          "17. Đào tạo, chuyển giao công nghệ nếu có: [Chưa xác nhận; bổ sung từ hồ sơ và kết quả thẩm định]",
+          "18. Nguồn lực, tài nguyên; bồi thường, hỗ trợ, tái định cư nếu có: [Chưa xác nhận; bổ sung từ hồ sơ và kết quả thẩm định]",
+          "19. Nội dung khác nếu có: [Chưa xác nhận; bổ sung từ hồ sơ và kết quả thẩm định]"
+        ]
+      },
+      {
+        "heading": "Điều 2. Tổ chức thực hiện",
+        "text": [
+          "[Nhiệm vụ và trách nhiệm của chủ đầu tư, đơn vị liên quan; điều kiện cần hoàn thành]."
+        ]
+      },
+      {
+        "heading": "Điều 3. Trách nhiệm thi hành",
+        "text": [
+          "[Tổ chức, cá nhân chịu trách nhiệm; nội dung hiệu lực do người có thẩm quyền xác định]."
+        ]
+      },
+      {
+        "heading": "Nơi nhận và ký ban hành",
+        "text": [
+          "[Nơi nhận theo mẫu và thẩm quyền; lưu hồ sơ].",
+          "[Chức danh, họ tên người ký — để trống chữ ký và con dấu].",
+          "Nguồn cấu trúc biểu mẫu: https://datafiles.chinhphu.vn/cpp/files/vbpq/2026/6/pl217.pdf"
+        ]
+      }
+    ]
+  },
+  "supplement": {
+    "title": "DỰ THẢO PHIẾU THÔNG BÁO BỔ SUNG, HOÀN THIỆN HỒ SƠ",
+    "blocks": [
+      {
+        "letterhead": true,
+        "agency": "[CƠ QUAN CHUYÊN MÔN VỀ XÂY DỰNG]"
+      },
+      {
+        "text": [
+          "Khung nội dung Mẫu số 15, Phụ lục I NĐ 217/2026/NĐ-CP.",
+          "Dự án: {{project}}",
+          "Chưa xác nhận đủ điều kiện; các chỗ trong ngoặc vuông do chuyên viên hoàn thiện từ hồ sơ đã kiểm tra.",
+          "Phạm vi pháp lý: đang chờ chuyên viên xác nhận."
+        ]
+      },
+      {
+        "text": [
+          "Kính gửi: [Cơ quan chuẩn bị dự án].",
+          "Tờ trình số [chưa xác nhận], ngày [chưa xác nhận].",
+          "Đối chiếu khoản 3 Điều 36 (bổ sung thành phần hồ sơ). Người thụ lý phải xác định đúng giai đoạn và nội dung trước khi phát hành.",
+          "Danh sách bên dưới là ứng viên cần rà soát; mục chưa biết điều kiện áp dụng chưa được coi là tài liệu bắt buộc còn thiếu."
+        ]
+      },
+      {
+        "heading": "Nội dung đề xuất cần xác minh",
+        "text": [
+          "Chưa phát hiện nội dung phù hợp loại phiếu này. Không có căn cứ tự phát hành phiếu."
+        ]
+      },
+      {
+        "heading": "Thời hạn và xử lý tiếp theo",
+        "text": [
+          "Khoản 5 Điều 36: thời hạn khắc phục là 20 ngày làm việc từ ngày nhận yêu cầu, không kể thời gian bất khả kháng; hết hạn không bổ sung thì xử lý dừng thẩm định theo quy định.",
+          "Bổ sung thành phần trong 05 ngày làm việc từ tiếp nhận, tối đa một lần; tạm dừng theo khoản 4 tối đa một lần. Chưa ghi ngày nhận, ngày hết hạn hoặc tình trạng ban hành trong bản dự thảo này.",
+          "Hồ sơ trình lại sau khi đã dừng được tính lại thời hạn theo quy định. Cần lịch nghỉ và dữ liệu tiếp nhận thực tế để tính hạn."
+        ]
+      },
+      {
+        "heading": "Nơi nhận và ký ban hành",
+        "text": [
+          "[Nơi nhận theo mẫu và thẩm quyền; lưu hồ sơ].",
+          "[Chức danh, họ tên người ký — để trống chữ ký và con dấu].",
+          "Nguồn cấu trúc biểu mẫu: https://datafiles.chinhphu.vn/cpp/files/vbpq/2026/6/pl217.pdf"
+        ]
+      }
+    ]
+  },
+  "suspension": {
+    "title": "DỰ THẢO PHIẾU THÔNG BÁO TẠM DỪNG THẨM ĐỊNH",
+    "blocks": [
+      {
+        "letterhead": true,
+        "agency": "[CƠ QUAN CHUYÊN MÔN VỀ XÂY DỰNG]"
+      },
+      {
+        "text": [
+          "Khung nội dung Mẫu số 16, Phụ lục I NĐ 217/2026/NĐ-CP.",
+          "Dự án: {{project}}",
+          "Chưa xác nhận đủ điều kiện; các chỗ trong ngoặc vuông do chuyên viên hoàn thiện từ hồ sơ đã kiểm tra.",
+          "Phạm vi pháp lý: đang chờ chuyên viên xác nhận."
+        ]
+      },
+      {
+        "text": [
+          "Kính gửi: [Cơ quan chuẩn bị dự án].",
+          "Tờ trình số [chưa xác nhận], ngày [chưa xác nhận].",
+          "Đối chiếu khoản 4 Điều 36 (lỗi/sai sót cản trở kết luận trong quá trình thẩm định). Người thụ lý phải xác định đúng giai đoạn và nội dung trước khi phát hành.",
+          "Danh sách bên dưới là ứng viên cần rà soát; mục chưa biết điều kiện áp dụng chưa được coi là tài liệu bắt buộc còn thiếu."
+        ]
+      },
+      {
+        "heading": "Nội dung đề xuất cần xác minh",
+        "text": [
+          "Chưa phát hiện nội dung phù hợp loại phiếu này. Không có căn cứ tự phát hành phiếu."
+        ]
+      },
+      {
+        "heading": "Thời hạn và xử lý tiếp theo",
+        "text": [
+          "Khoản 5 Điều 36: thời hạn khắc phục là 20 ngày làm việc từ ngày nhận yêu cầu, không kể thời gian bất khả kháng; hết hạn không bổ sung thì xử lý dừng thẩm định theo quy định.",
+          "Bổ sung thành phần trong 05 ngày làm việc từ tiếp nhận, tối đa một lần; tạm dừng theo khoản 4 tối đa một lần. Chưa ghi ngày nhận, ngày hết hạn hoặc tình trạng ban hành trong bản dự thảo này.",
+          "Hồ sơ trình lại sau khi đã dừng được tính lại thời hạn theo quy định. Cần lịch nghỉ và dữ liệu tiếp nhận thực tế để tính hạn."
+        ]
+      },
+      {
+        "heading": "Nơi nhận và ký ban hành",
+        "text": [
+          "[Nơi nhận theo mẫu và thẩm quyền; lưu hồ sơ].",
+          "[Chức danh, họ tên người ký — để trống chữ ký và con dấu].",
+          "Nguồn cấu trúc biểu mẫu: https://datafiles.chinhphu.vn/cpp/files/vbpq/2026/6/pl217.pdf"
+        ]
+      }
+    ]
+  },
+  "stamp": {
+    "title": "DANH MỤC BẢN VẼ ĐÓNG DẤU THẨM ĐỊNH (MẪU SỐ 14)",
+    "blocks": [
+      {
+        "letterhead": true,
+        "agency": "[CƠ QUAN CHUYÊN MÔN VỀ XÂY DỰNG]"
+      },
+      {
+        "heading": "Nội dung dấu thẩm định thiết kế xây dựng",
+        "text": [
+          "THẨM ĐỊNH THIẾT KẾ XÂY DỰNG",
+          "Căn cứ thông báo kết quả thẩm định số: [chưa ghi]",
+          "Hồ sơ thiết kế: {{project}}",
+          "Kết luận: [Chưa có kết luận]",
+          "Người phê duyệt/thẩm định: [chưa đóng dấu] (ký, ghi rõ họ tên)",
+          "Kích thước mẫu dấu: rộng 4–6 cm, dài 6–9 cm. Hồ sơ trực tuyến xác nhận bằng chữ ký số."
+        ]
+      },
+      {
+        "heading": "Bản vẽ đã đóng dấu (01 bộ)",
+        "rows": [
+          [
+            "STT",
+            "Ký hiệu",
+            "Tên bản vẽ",
+            "Số tờ"
+          ]
+        ]
+      },
+      {
+        "heading": "Trả kết quả và lưu trữ",
+        "text": [
+          "Trạng thái: Chưa có kết quả thẩm định.",
+          "Ngày đóng dấu: [chưa đóng dấu]",
+          "Hạn nộp bản chụp PDF (05 ngày làm việc, điểm b khoản 9 Điều 36): —",
+          "Tờ trình thẩm định: còn thiếu",
+          "Hồ sơ pháp lý trình thẩm định: còn thiếu",
+          "Kết luận của tổ chức, cá nhân tham gia thẩm định (nếu có): nếu có",
+          "Thông báo kết quả thẩm định (Mẫu số 03): còn thiếu",
+          "Bản chụp PDF bản vẽ đã đóng dấu thẩm định: còn thiếu"
+        ]
+      }
+    ]
+  }
+}

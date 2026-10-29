@@ -3,6 +3,9 @@ import { X509Certificate } from 'node:crypto';
 import pg, { type PoolClient, type PoolConfig, type QueryResultRow } from 'pg';
 import { databaseError, HttpError } from './errors.js';
 
+// PostgreSQL DATE is a calendar day, never a local-midnight JavaScript timestamp.
+pg.types.setTypeParser(1082, (value) => value);
+
 const pools = new Map<string, pg.Pool>();
 const UUID = /^[\da-f]{8}-[\da-f]{4}-[\da-f]{4}-[\da-f]{4}-[\da-f]{12}$/i;
 

@@ -1,0 +1,126 @@
+{
+  "ANNEX217": "https://datafiles.chinhphu.vn/cpp/files/vbpq/2026/6/pl217.pdf",
+  "CONCLUSIONS": {
+    "eligible": "Đủ điều kiện để tổng hợp, trình phê duyệt và triển khai các bước tiếp theo",
+    "eligible_after_revision": "Chỉ đủ điều kiện sau khi hoàn thiện các nội dung yêu cầu",
+    "ineligible": "Chưa đủ điều kiện để tổng hợp, trình phê duyệt"
+  },
+  "SECTIONS": [
+    {
+      "id": "legal",
+      "title": "Tuân thủ quy định về lập dự án, thiết kế xây dựng; điều kiện năng lực hành nghề",
+      "form": "Mục V.1 Mẫu số 03",
+      "basis": "Khoản 4 Điều 27 Luật Xây dựng 135/2025",
+      "categories": [
+        "Pháp lý và năng lực",
+        "Nhất quán",
+        "Thành phần theo pháp luật",
+        "Hồ sơ đầu vào",
+        "Dữ liệu",
+        "Phạm vi thẩm định"
+      ],
+      "criteria": [
+        "Thành phần và tính pháp lý của hồ sơ theo khoản 2 Điều 35 NĐ 217/2026",
+        "Nội dung Báo cáo nghiên cứu khả thi, thiết kế xây dựng theo quy định",
+        "Năng lực hành nghề của chủ nhiệm, chủ trì (nếu cần thiết)"
+      ]
+    },
+    {
+      "id": "planning",
+      "title": "Sự phù hợp của thiết kế xây dựng với quy hoạch làm căn cứ lập dự án",
+      "form": "Mục V.2 Mẫu số 03",
+      "basis": "Khoản 1 Điều 38 NĐ 217/2026",
+      "categories": [
+        "Quy hoạch",
+        "Thiết kế"
+      ],
+      "criteria": []
+    },
+    {
+      "id": "infrastructure",
+      "title": "Khả năng kết nối hạ tầng kỹ thuật khu vực",
+      "form": "Mục V.3 Mẫu số 03",
+      "basis": "Khoản 2 Điều 38 NĐ 217/2026",
+      "categories": [
+        "Hạ tầng"
+      ],
+      "criteria": [
+        "Danh mục văn bản thỏa thuận hoặc hướng dẫn kết nối với hạ tầng kỹ thuật bên ngoài dự án"
+      ]
+    },
+    {
+      "id": "standards",
+      "title": "Quy chuẩn kỹ thuật, tiêu chuẩn; an toàn xây dựng; giải pháp phòng cháy và chữa cháy",
+      "form": "Mục V.4 Mẫu số 03",
+      "basis": "Khoản 3, 4 Điều 38 NĐ 217/2026",
+      "categories": [
+        "Quy chuẩn",
+        "Khảo sát và kết cấu",
+        "PCCC và môi trường"
+      ],
+      "criteria": [
+        "Danh mục quy chuẩn kỹ thuật, tiêu chuẩn áp dụng (điểm a khoản 3)",
+        "Giải pháp thiết kế tuân thủ quy chuẩn kỹ thuật bắt buộc (điểm b khoản 3)",
+        "Nội dung thiết kế theo Điều 20, 21 hoặc 22 và xác nhận an toàn của thẩm tra (điểm a khoản 4)",
+        "Hồ sơ thiết kế phòng cháy và chữa cháy tương ứng Báo cáo nghiên cứu khả thi (điểm b khoản 4)"
+      ]
+    },
+    {
+      "id": "cost",
+      "title": "Tuân thủ quy định về quản lý chi phí đầu tư xây dựng",
+      "form": "Mục V.5 Mẫu số 03",
+      "basis": "Khoản 5 Điều 38 NĐ 217/2026; NĐ 206/2026/NĐ-CP",
+      "categories": [
+        "Chi phí"
+      ],
+      "criteria": [
+        "Tổng mức đầu tư của dự án đầu tư công, dự án PPP theo quy định quản lý chi phí"
+      ]
+    }
+  ],
+  "STATUSES": {
+    "pending": "Chưa đánh giá",
+    "meets": "Đáp ứng",
+    "revise": "Đáp ứng sau khi chỉnh sửa, hoàn thiện",
+    "fails": "Không đáp ứng",
+    "not_applicable": "Không áp dụng"
+  },
+  "GENERAL_FIELDS": [
+    "Tên dự án",
+    "Nhóm dự án; loại, cấp công trình chính; thời hạn sử dụng theo thiết kế",
+    "Mã định danh dự án",
+    "Quy mô đầu tư; phạm vi công trình trình thẩm định",
+    "Người quyết định đầu tư",
+    "Cơ quan chuẩn bị dự án và thông tin liên hệ",
+    "Địa điểm cấp xã, tỉnh; vị trí, hướng tuyến nếu có; diện tích đất",
+    "Tổng mức đầu tư; chi phí hạng mục trình thẩm định nếu có",
+    "Nguồn vốn đầu tư",
+    "Thời gian thực hiện; phân kỳ và thời hạn hoạt động nếu có",
+    "Quy chuẩn, tiêu chuẩn áp dụng",
+    "Nhà thầu lập BCNCKT, thiết kế; mã số doanh nghiệp",
+    "Nhà thầu khảo sát; mã số doanh nghiệp",
+    "Nhà thầu thẩm tra nếu có; mã số doanh nghiệp",
+    "Thông tin khác nếu có"
+  ],
+  "DECISION_FIELDS": [
+    "Tên dự án",
+    "Loại, nhóm dự án; loại, cấp công trình chính; thời hạn sử dụng theo thiết kế",
+    "Mã định danh dự án",
+    "Địa điểm, vị trí/hướng tuyến, diện tích đất",
+    "Người quyết định đầu tư",
+    "Chủ đầu tư",
+    "Nhà thầu lập BCNCKT, thiết kế, khảo sát; mã số doanh nghiệp",
+    "Mục tiêu",
+    "Quy mô dự án và phạm vi được phê duyệt",
+    "Số bước thiết kế; danh mục quy chuẩn, tiêu chuẩn",
+    "Tổng mức đầu tư và các khoản mục; chi phí theo phân kỳ nếu có",
+    "Thời gian thực hiện; phân kỳ và thời hạn hoạt động nếu có",
+    "Nguồn vốn và kế hoạch bố trí vốn",
+    "Hình thức quản lý dự án",
+    "Phân chia gói thầu; dự toán EPC/EC/EP nếu có",
+    "Kế hoạch tổng thể lựa chọn nhà thầu nếu có",
+    "Đào tạo, chuyển giao công nghệ nếu có",
+    "Nguồn lực, tài nguyên; bồi thường, hỗ trợ, tái định cư nếu có",
+    "Nội dung khác nếu có"
+  ]
+}
