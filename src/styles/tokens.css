@@ -1,16 +1,18 @@
 /* DESIGN TOKENS (CSS Variables) - Đồng bộ 100% cic-ibst */
 :root {
-  /* Primary Colors — New Palette (Accent #00668c) */
-  --color-primary-50: #f2f8fc;
-  --color-primary-100: #d4eaf7;
-  --color-primary-200: #b6ccd8;
-  --color-primary-300: #71c4ef;
-  --color-primary-400: #3995b8;
-  --color-primary-500: #00668c;
-  --color-primary-600: #005273;
-  --color-primary-700: #00415a;
-  --color-primary-800: #003047;
-  --color-primary-900: #001f30;
+  /* Primary scale — kênh "r g b" (Tailwind dùng rgb(var(--color-primary-N) / <alpha-value>)).
+     Dự phòng lần vẽ đầu = bộ "Lam công vụ"; ThemeContext ghi đè theo bộ màu đang chọn. */
+  --color-primary: #00668c;
+  --color-primary-50: 238 246 250; /* #eef6fa */
+  --color-primary-100: 223 238 245; /* #dfeef5 */
+  --color-primary-200: 182 214 228; /* #b6d6e4 */
+  --color-primary-300: 128 179 198; /* #80b3c6 */
+  --color-primary-400: 64 140 169; /* #408ca9 */
+  --color-primary-500: 0 102 140; /* #00668c */
+  --color-primary-600: 0 85 122; /* #00557a */
+  --color-primary-700: 0 74 107; /* #004a6b */
+  --color-primary-800: 0 52 75; /* #00344b */
+  --color-primary-900: 0 33 48; /* #002130 */
 
   /* Accent Colors — Đỏ cờ (branding cơ quan nhà nước) */
   --color-accent-100: #fde3e3;
@@ -56,17 +58,17 @@
   --color-slate-900: #0f172a;
   --color-slate-950: #020617;
 
-  /* RGB CHANNELS — cho Tailwind alpha (<alpha-value>) */
-  --color-primary-50-rgb: 242 248 252;
-  --color-primary-100-rgb: 212 234 247;
-  --color-primary-200-rgb: 182 204 216;
-  --color-primary-300-rgb: 113 196 239;
-  --color-primary-400-rgb: 57 149 184;
+  /* RGB CHANNELS — cho Tailwind alpha (<alpha-value>); primary-*-rgb = bản sao thang ở trên */
+  --color-primary-50-rgb: 238 246 250;
+  --color-primary-100-rgb: 223 238 245;
+  --color-primary-200-rgb: 182 214 228;
+  --color-primary-300-rgb: 128 179 198;
+  --color-primary-400-rgb: 64 140 169;
   --color-primary-500-rgb: 0 102 140;
-  --color-primary-600-rgb: 0 82 115;
-  --color-primary-700-rgb: 0 65 90;
-  --color-primary-800-rgb: 0 48 71;
-  --color-primary-900-rgb: 0 31 48;
+  --color-primary-600-rgb: 0 85 122;
+  --color-primary-700-rgb: 0 74 107;
+  --color-primary-800-rgb: 0 52 75;
+  --color-primary-900-rgb: 0 33 48;
 
   --color-slate-50-rgb: 248 250 252;
   --color-slate-100-rgb: 241 245 249;
@@ -95,22 +97,45 @@
   --shadow-card-hover: 0 8px 20px -4px rgb(74 49 16 / 0.10), 0 4px 8px -4px rgb(74 49 16 / 0.06);
   --shadow-dropdown: 0 10px 15px -3px rgb(74 49 16 / 0.10), 0 4px 6px -4px rgb(74 49 16 / 0.06);
 
-  /* Fallback Surfaces — Nature Theme (Bảo vệ mắt, cát ấm dịu sáng thanh lịch) */
-  --bg-app: #F8F6F0;
-  --bg-surface: #FFFFFF;
-  --bg-subtle: #F5F2EB;
-  --bg-muted: #ECE8DF;
-  --bg-elevated: #FFFFFF;
-  --border-default: #E6E1D6;
-  --border-subtle: #EFEBE2;
+  /* Fallback Surfaces — Nature Theme (Bảo vệ mắt, cát ấm) — đồng bộ cic-hud.
+     Nguồn chân lý runtime: THEME_TOKENS trong context/ThemeContext.tsx. */
+  --bg-app: #F0ECE1;
+  --bg-surface: #FCF9F2;
+  --bg-subtle: #F5EFE6;
+  --bg-muted: #EDE8DF;
+  --bg-elevated: #FDFAF4;
+  --border-default: #ece7de;
+  --border-subtle: #e5dfd4;
   --text-primary: #1d1c1c;
   --text-secondary: #4a3426;
   --text-muted: #6d665f;
   --text-placeholder: #736b62;
-  --bg-hover-row: #F7F5EE;
-  --bg-active-row: #ECE8DF;
-  --bg-stripe: #FAF8F3;
+  --input-bg: #FCF9F2;
+  --input-border: #d6cfc4;
+  --bg-hover-row: #F5EFE6;
+  --bg-active-row: #EDE8DF;
+  --bg-stripe: #F8F5EC;
+  --bg-overlay: rgba(45, 30, 10, 0.50);
   --ring-focus: #00668c;
+
+  /* Bộ màu chủ đạo — dự phòng lần vẽ đầu = "Lam công vụ" (src/config/palettes.ts);
+     ThemeContext ghi đè theo bộ người dùng chọn. Kênh "r g b" cho Tailwind <alpha-value>. */
+  --brand-sidebar-rgb: 14 38 51;
+  --brand-sidebar-active-rgb: 29 70 89;
+  --brand-sidebar-panel-rgb: 23 54 70;
+  --brand-sidebar-border-rgb: 51 86 106;
+  --brand-sidebar-status-rgb: 227 200 151;
+  --brand-sidebar-status-dot-rgb: 212 169 87;
+  --brand-accent-rgb: 201 162 90;
+  --brand-logo-rgb: 201 162 90;
+  --brand-hero-start-rgb: 14 51 70;
+  --brand-hero-middle-rgb: 11 88 116;
+  --brand-hero-end-rgb: 10 115 152;
+  --brand-hero-label-rgb: 234 211 165;
+  --brand-hero-copy-rgb: 214 233 241;
+  --brand-nav-active-text-rgb: 255 255 255;
+  --brand-banner-text-rgb: 47 106 133;
+  --brand-toast-rgb: 18 56 75;
 }
 
 /* Light Theme Variables */

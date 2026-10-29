@@ -22,6 +22,9 @@ import { useTheme, PRIMARY_COLORS } from '../../context/ThemeContext';
 import { SearchableSelect } from '../ui/SearchableSelect';
 import { Tooltip } from '../ui/Tooltip';
 
+// Bộ màu chọn nhanh ở màn đăng nhập (đủ 12 bộ trong menu Cài đặt cá nhân)
+const LOGIN_PALETTES: string[] = ['congvu', 'hud', 'navy', 'teal', 'forest', 'son'];
+
 type TestAccount = { role: string; label: string; description: string };
 const field =
   'flex items-center gap-3 rounded-xl border border-border dark:border-slate-700 bg-subtle dark:bg-slate-900 px-3.5 py-3 focus-within:border-primary-500 dark:focus-within:border-primary-400 focus-within:ring-2 focus-within:ring-primary-500/20';
@@ -156,14 +159,14 @@ export function RequireAuth({ children }: { children: React.ReactNode }) {
     !auth.loading && ((auth.mode === 'cloud' && !auth.session && !recovery) || (recovery && auth.session));
   return (
     <main className="min-h-screen lg:h-screen lg:overflow-hidden grid lg:grid-cols-2 bg-page dark:bg-slate-900 text-ink dark:text-slate-100">
-      <aside className="hidden lg:flex flex-col justify-between gap-8 border-r border-border dark:border-slate-800 bg-subtle dark:bg-slate-950 p-10 xl:p-14 overflow-y-auto">
+      <aside className="hidden lg:flex flex-col justify-between gap-8 bg-gradient-to-br from-brand-hero-start via-brand-hero-middle to-brand-hero-end dark:from-brand-hero-start dark:via-brand-hero-middle dark:to-brand-hero-end text-white dark:text-white p-10 xl:p-14 overflow-y-auto">
         <div className="flex items-center gap-4">
           <Brand />
           <div>
             <p className="text-lg font-black tracking-wider">
-              BUILD<span className="text-primary-600 dark:text-primary-400">APPRAISAL AI</span>
+              BUILD<span className="text-brand-accent dark:text-brand-accent">APPRAISAL AI</span>
             </p>
-            <p className="mt-1 text-[10px] uppercase font-semibold tracking-wider text-ink-muted dark:text-slate-400">
+            <p className="mt-1 text-[10px] uppercase font-semibold tracking-wider text-white/65 dark:text-white/65">
               Hệ thống nghiệp vụ Sở Xây dựng
             </p>
           </div>
@@ -172,48 +175,55 @@ export function RequireAuth({ children }: { children: React.ReactNode }) {
           <h1 className="text-4xl xl:text-5xl font-black leading-[1.15] tracking-tight">
             Quản lý xây dựng.
             <br />
-            <span className="text-primary-600 dark:text-primary-400">Hỗ trợ thẩm định dự án.</span>
+            <span className="text-brand-hero-label dark:text-brand-hero-label">Hỗ trợ thẩm định dự án.</span>
           </h1>
-          <p className="mt-5 max-w-lg text-base leading-relaxed text-ink-secondary dark:text-slate-300">
+          <p className="mt-5 max-w-lg text-base leading-relaxed text-brand-hero-copy dark:text-brand-hero-copy">
             Kết nối dự án, hồ sơ và dữ liệu. Hỗ trợ chuyên viên rà soát từ tiếp nhận đến dự thảo kết quả.
           </p>
           <div className="mt-8 space-y-3">
             {features.map(({ icon: Icon, title, text }) => (
               <article
                 key={title}
-                className="flex gap-4 rounded-2xl border border-border dark:border-slate-800 bg-surface dark:bg-slate-900 p-4"
+                className="flex gap-4 rounded-2xl border border-white/10 dark:border-white/10 bg-white/[0.06] dark:bg-white/[0.06] p-4 backdrop-blur-sm"
               >
-                <Icon size={23} className="mt-1 shrink-0 text-primary-600 dark:text-primary-400" />
+                <Icon size={23} className="mt-1 shrink-0 text-brand-accent dark:text-brand-accent" />
                 <div>
                   <h2 className="text-sm font-bold">{title}</h2>
-                  <p className="mt-1 text-xs leading-relaxed text-ink-muted dark:text-slate-400">{text}</p>
+                  <p className="mt-1 text-xs leading-relaxed text-brand-hero-copy/85 dark:text-brand-hero-copy/85">
+                    {text}
+                  </p>
                 </div>
               </article>
             ))}
           </div>
         </div>
-        <p className="text-[10px] tracking-wider uppercase font-semibold text-ink-muted dark:text-slate-400">
+        <p className="text-[10px] tracking-wider uppercase font-semibold text-white/65 dark:text-white/65">
           Sở Xây dựng tỉnh Điện Biên · BuildAppraisal AI
         </p>
       </aside>
       <section className="relative flex flex-col lg:h-screen lg:overflow-y-auto px-6 sm:px-12 py-6">
         <div className="flex flex-wrap justify-end gap-3 mb-8" aria-label="Tùy chọn giao diện đăng nhập">
           <div className="flex items-center gap-2 rounded-full border border-border dark:border-slate-700 bg-surface dark:bg-slate-800 px-3 py-2">
-            {PRIMARY_COLORS.slice(0, 3).map((color) => (
-              <Tooltip key={color.id} content={color.name} placement="bottom">
+            {PRIMARY_COLORS.filter((c) => LOGIN_PALETTES.includes(c.id)).map((color) => (
+              <Tooltip key={color.id} content={color.name + ' · ' + color.description} placement="bottom">
                 <button
                   type="button"
-                  aria-label={color.name}
+                  aria-label={'Bộ màu ' + color.name}
                   aria-pressed={primaryColor === color.id}
                   onClick={() => setPrimaryColor(color.id)}
                   className={
-                    'h-5 w-5 rounded-full border-2 ' +
+                    'relative h-6 w-6 rounded-md border transition-transform hover:scale-110 ' +
                     (primaryColor === color.id
-                      ? 'border-ink dark:border-white ring-2 ring-offset-2 ring-primary-300 dark:ring-primary-400 dark:ring-offset-slate-800'
-                      : 'border-transparent dark:border-transparent')
+                      ? 'border-transparent dark:border-transparent ring-2 ring-offset-2 ring-primary-400 dark:ring-primary-300 ring-offset-surface dark:ring-offset-slate-800'
+                      : 'border-black/10 dark:border-white/10')
                   }
-                  style={{ backgroundColor: color.hex }}
-                />
+                  style={{ backgroundColor: color.base }}
+                >
+                  <span
+                    className="absolute -bottom-0.5 -right-0.5 h-2.5 w-2.5 rounded-full border-2 border-surface dark:border-slate-800"
+                    style={{ backgroundColor: color.accent }}
+                  />
+                </button>
               </Tooltip>
             ))}
           </div>

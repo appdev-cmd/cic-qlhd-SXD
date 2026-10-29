@@ -74,6 +74,28 @@ export default {
           muted: 'var(--text-muted)',
           placeholder: 'var(--text-placeholder)',
         },
+        // Bộ màu chủ đạo cho khung ứng dụng (src/config/palettes.ts → ThemeContext ghi --brand-*-rgb).
+        // bg-brand-sidebar, text-brand-accent, border-brand-sidebar-border… — đồng bộ cic-hud.
+        brand: Object.fromEntries(
+          [
+            'sidebar',
+            'sidebar-active',
+            'sidebar-panel',
+            'sidebar-border',
+            'sidebar-status',
+            'sidebar-status-dot',
+            'accent',
+            'logo',
+            'hero-start',
+            'hero-middle',
+            'hero-end',
+            'hero-label',
+            'hero-copy',
+            'nav-active-text',
+            'banner-text',
+            'toast',
+          ].map((k) => [k, `rgb(var(--brand-${k}-rgb) / <alpha-value>)`]),
+        ),
       },
       fontFamily: {
         sans: ['Inter', 'system-ui', '-apple-system', 'sans-serif'],

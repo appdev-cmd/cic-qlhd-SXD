@@ -18,7 +18,6 @@ import {
   Moon,
   Leaf,
   ShieldCheck,
-  Check,
   ZoomIn,
   ZoomOut,
   LogOut,
@@ -26,7 +25,8 @@ import {
   Sliders,
 } from 'lucide-react';
 import { cn } from '../lib/utils';
-import { useTheme, PRIMARY_COLORS, type Theme, type PrimaryColor } from '../context/ThemeContext';
+import { useTheme } from '../context/ThemeContext';
+import { PalettePicker } from '../components/ui/PalettePicker';
 import { SlidePanelStack } from '../components/SlidePanelStack';
 import { AiChatWidget } from '../components/ai/AiChatWidget';
 import { Tooltip } from '../components/ui/Tooltip';
@@ -48,10 +48,10 @@ interface NavItem {
 
 // Danh sách Menu chuẩn 9 phân hệ nghiệp vụ — đánh số thứ tự chuẩn chỉ theo mẫu quản trị
 const NAV_ITEMS: NavItem[] = [
-  { to: '/dashboard', label: '1. Dashboard & Thống kê', shortLabel: 'Dashboard', icon: LayoutDashboard },
+  { to: '/dashboard', label: 'Dashboard & Thống kê', shortLabel: 'Dashboard', icon: LayoutDashboard },
   {
     to: '/projects',
-    label: '2. Quản lý Dự án',
+    label: 'Quản lý Dự án',
     shortLabel: 'Dự án',
     icon: FolderKanban,
     children: [
@@ -70,13 +70,13 @@ const NAV_ITEMS: NavItem[] = [
       },
     ],
   },
-  { to: '/organizations', label: '3. Tổ chức tham gia', shortLabel: 'Tổ chức', icon: Building2 },
-  { to: '/personnel', label: '4. Cá nhân hành nghề', shortLabel: 'Cá nhân', icon: UserCheck },
-  { to: '/legal-ai', label: '5. Trợ lý AI Pháp luật', shortLabel: 'AI Luật', icon: Bot, isAi: true },
-  { to: '/cost-database', label: '6. Giá & Định mức ĐB', shortLabel: 'Giá VLXD', icon: Coins },
-  { to: '/gis-map', label: '7. Bản đồ Quy hoạch', shortLabel: 'Bản đồ GIS', icon: MapPin },
-  { to: '/documents', label: '8. Văn bản & In ấn A4', shortLabel: 'Văn bản A4', icon: FileText },
-  { to: '/settings', label: '9. Cài đặt Hệ thống', shortLabel: 'Cài đặt', icon: Settings },
+  { to: '/organizations', label: 'Tổ chức tham gia', shortLabel: 'Tổ chức', icon: Building2 },
+  { to: '/personnel', label: 'Cá nhân hành nghề', shortLabel: 'Cá nhân', icon: UserCheck },
+  { to: '/legal-ai', label: 'Trợ lý AI Pháp luật', shortLabel: 'AI Luật', icon: Bot, isAi: true },
+  { to: '/cost-database', label: 'Giá & Định mức ĐB', shortLabel: 'Giá VLXD', icon: Coins },
+  { to: '/gis-map', label: 'Bản đồ Quy hoạch', shortLabel: 'Bản đồ GIS', icon: MapPin },
+  { to: '/documents', label: 'Văn bản & In ấn A4', shortLabel: 'Văn bản A4', icon: FileText },
+  { to: '/settings', label: 'Cài đặt Hệ thống', shortLabel: 'Cài đặt', icon: Settings },
 ];
 
 export function AppLayout() {
@@ -100,7 +100,7 @@ export function AppLayout() {
   }, []);
   const [userMenuOpen, setUserMenuOpen] = useState(false);
   const userMenuRef = useRef<HTMLDivElement>(null);
-  const { theme, setTheme, primaryColor, setPrimaryColor, zoom, setZoom } = useTheme();
+  const { theme, setTheme, zoom, setZoom } = useTheme();
   const { closeAllPanels } = useSlidePanel();
   const location = useLocation();
   const modulePath =
@@ -137,40 +137,32 @@ export function AppLayout() {
 
   return (
     <div className="flex h-screen w-screen overflow-hidden bg-page text-ink select-none">
-      {/* ─── SIDEBAR TRÁI ─── */}
+      {/* ─── SIDEBAR TRÁI — nền tối hai tông theo bộ màu chủ đạo (--brand-*, đồng bộ cic-hud) ─── */}
       <aside
         style={{ width: compactMenu ? '76px' : '272px' }}
-        className={cn(
-          'h-full border-r border-border bg-surface flex flex-col justify-between shrink-0 transition-all duration-300 z-30',
-        )}
+        className="h-full bg-brand-sidebar dark:bg-brand-sidebar text-white dark:text-white border-r border-brand-sidebar-border dark:border-brand-sidebar-border flex flex-col justify-between shrink-0 transition-[width] duration-300 z-30"
       >
         <div className="flex flex-col h-full overflow-hidden">
-          {/* Logo & Đơn vị chủ quản: UBND TỈNH ĐIỆN BIÊN (vàng ánh kim) & SỞ XÂY DỰNG (xanh óng ánh) */}
-          <div className="h-20 px-3.5 border-b border-border flex items-center justify-between shrink-0 bg-surface">
+          {/* Logo & đơn vị chủ quản */}
+          <div className="h-20 px-3.5 border-b border-brand-sidebar-border dark:border-brand-sidebar-border flex items-center justify-between shrink-0">
             <div className="flex items-center gap-3 min-w-0 flex-1">
-              {/* Huy hiệu biểu tượng chính quyền & ngành xây dựng */}
-              <div className="relative w-11 h-11 shrink-0 rounded-xl p-[2px] bg-gradient-to-br from-amber-400 via-yellow-200 to-amber-600 shadow-md">
-                <div className="w-full h-full rounded-[10px] bg-gradient-to-br from-blue-900 via-blue-700 to-blue-600 flex flex-col items-center justify-center text-white">
-                  <Building size={16} className="text-amber-300 drop-shadow-sm" />
-                  <span className="text-[8px] font-black tracking-widest text-yellow-200 leading-none mt-0.5">SXD</span>
-                </div>
+              <div className="w-11 h-11 shrink-0 rounded-xl border border-brand-accent/60 dark:border-brand-accent/60 bg-brand-sidebar-panel dark:bg-brand-sidebar-panel flex flex-col items-center justify-center shadow-md">
+                <Building size={17} className="text-brand-logo dark:text-brand-logo" />
+                <span className="text-2xs font-black tracking-widest text-brand-accent dark:text-brand-accent leading-none mt-0.5">
+                  SXD
+                </span>
               </div>
 
               {!compactMenu && (
                 <div className="flex flex-col min-w-0 justify-center flex-1 pr-1">
-                  {/* Dòng trên: UBND TỈNH ĐIỆN BIÊN — Vàng ánh kim */}
-                  <h2 className="text-gold-metallic text-[11.5px] font-black uppercase tracking-wider leading-tight whitespace-nowrap">
+                  <p className="text-2xs font-bold uppercase tracking-wider leading-tight whitespace-nowrap text-brand-accent dark:text-brand-accent">
                     UBND Tỉnh Điện Biên
-                  </h2>
-
-                  {/* Dòng dưới: SỞ XÂY DỰNG — Màu xanh giống hệt Bộ Xây dựng bên IBST */}
-                  <h1 className="bg-gradient-to-r from-blue-700 via-blue-400 to-blue-800 dark:from-blue-400 dark:via-blue-200 dark:to-blue-400 bg-clip-text text-[14px] font-black uppercase leading-tight tracking-wide text-transparent drop-shadow-sm whitespace-nowrap mt-0.5">
+                  </p>
+                  <h1 className="text-sm font-black uppercase leading-tight tracking-wide whitespace-nowrap mt-0.5 text-white dark:text-white">
                     Sở Xây dựng
                   </h1>
-
-                  {/* Phụ đề hệ thống */}
-                  <p className="text-[8.5px] font-bold text-ink-muted uppercase tracking-tight whitespace-nowrap">
-                    Hệ thống Thẩm định • AI
+                  <p className="text-2xs font-medium tracking-tight whitespace-nowrap text-white/60 dark:text-white/60">
+                    Hệ thống thẩm định · AI
                   </p>
                 </div>
               )}
@@ -180,13 +172,12 @@ export function AppLayout() {
               type="button"
               onClick={() => setIsCollapsed(!isCollapsed)}
               aria-label={isCollapsed ? 'Mở rộng menu' : 'Thu gọn menu'}
-              className="hidden md:block p-1.5 rounded-lg hover:bg-subtle dark:hover:bg-slate-800 text-ink-muted dark:text-slate-400 hover:text-ink dark:hover:text-slate-200 transition-colors shrink-0"
+              className="hidden md:block p-1.5 rounded-lg text-white/60 dark:text-white/60 hover:bg-white/10 dark:hover:bg-white/10 hover:text-white dark:hover:text-white transition-colors shrink-0"
             >
               {isCollapsed ? <ChevronRight size={16} /> : <ChevronLeft size={16} />}
             </button>
           </div>
 
-          {/* Menu Điều hướng với số thứ tự chuẩn mực */}
           <nav className="p-3 space-y-1 overflow-y-auto flex-1">
             {NAV_ITEMS.map((item) => {
               const Icon = item.icon;
@@ -194,6 +185,7 @@ export function AppLayout() {
               const parentActive =
                 !!item.children &&
                 (location.pathname.startsWith('/projects') || location.pathname.startsWith('/dossiers/'));
+              const highlighted = active || parentActive;
               return (
                 <div key={item.to}>
                   <div className="flex items-center gap-1 [&>div:first-child]:flex-1 [&>div:first-child]:min-w-0">
@@ -203,17 +195,31 @@ export function AppLayout() {
                         end
                         aria-label={item.label}
                         className={cn(
-                          'flex flex-1 items-center gap-3 px-3 py-2.5 rounded-xl text-xs transition-colors',
-                          active || parentActive
-                            ? 'bg-primary-50 dark:bg-slate-800 text-primary-800 dark:text-primary-300 font-semibold'
-                            : 'text-ink-secondary dark:text-ink-secondary hover:bg-subtle dark:hover:bg-subtle',
+                          'relative flex flex-1 items-center gap-3 px-3 py-2.5 rounded-xl text-sm transition-colors',
+                          highlighted
+                            ? 'bg-brand-sidebar-active dark:bg-brand-sidebar-active text-brand-nav-active-text dark:text-brand-nav-active-text font-semibold'
+                            : 'text-white/75 dark:text-white/75 hover:bg-white/[0.07] dark:hover:bg-white/[0.07] hover:text-white dark:hover:text-white',
                           compactMenu && 'justify-center px-1',
                         )}
                       >
-                        <Icon size={18} className="shrink-0" />
-                        {!compactMenu && <span className="flex-1">{item.label}</span>}
+                        {highlighted && (
+                          <span
+                            aria-hidden
+                            className="absolute left-0 top-2 bottom-2 w-1 rounded-r-full bg-brand-accent dark:bg-brand-accent"
+                          />
+                        )}
+                        <Icon
+                          size={18}
+                          className={cn(
+                            'shrink-0',
+                            highlighted
+                              ? 'text-brand-accent dark:text-brand-accent'
+                              : 'text-white/70 dark:text-white/70',
+                          )}
+                        />
+                        {!compactMenu && <span className="flex-1 truncate">{item.label}</span>}
                         {!compactMenu && item.badge && (
-                          <span className="text-[10px] rounded-full bg-slate-100 dark:bg-slate-700 px-1.5">
+                          <span className="px-1.5 py-0.5 text-2xs font-black rounded-md leading-none bg-brand-accent dark:bg-brand-accent text-brand-sidebar dark:text-brand-sidebar">
                             {item.badge}
                           </span>
                         )}
@@ -229,7 +235,7 @@ export function AppLayout() {
                           aria-label="Các phân hệ quản lý dự án"
                           aria-expanded={projectsExpanded}
                           onClick={() => setProjectsExpanded(!projectsExpanded)}
-                          className="p-1.5 rounded-lg text-ink-secondary dark:text-ink-secondary hover:bg-subtle dark:hover:bg-subtle"
+                          className="p-1.5 rounded-lg text-white/60 dark:text-white/60 hover:bg-white/10 dark:hover:bg-white/10 hover:text-white dark:hover:text-white"
                         >
                           {projectsExpanded ? <ChevronDown size={14} /> : <ChevronRight size={14} />}
                         </button>
@@ -240,7 +246,8 @@ export function AppLayout() {
                     <div
                       className={cn(
                         'space-y-1 mt-1 [&>div]:block',
-                        !compactMenu && 'ml-5 pl-2 border-l border-border dark:border-border',
+                        !compactMenu &&
+                          'ml-5 pl-2 border-l border-brand-sidebar-border dark:border-brand-sidebar-border',
                       )}
                     >
                       {item.children.map((child) => {
@@ -252,15 +259,23 @@ export function AppLayout() {
                               to={child.to}
                               aria-label={child.label}
                               className={cn(
-                                'flex items-center gap-2 rounded-lg px-2 py-2.5 text-xs',
+                                'flex items-center gap-2 rounded-lg px-2 py-2 text-sm transition-colors',
                                 selected
-                                  ? 'bg-primary-100 dark:bg-primary-900 text-primary-800 dark:text-primary-200 font-semibold'
-                                  : 'text-ink-secondary dark:text-ink-secondary hover:bg-subtle dark:hover:bg-subtle',
+                                  ? 'bg-brand-sidebar-panel dark:bg-brand-sidebar-panel text-white dark:text-white font-semibold'
+                                  : 'text-white/70 dark:text-white/70 hover:bg-white/[0.07] dark:hover:bg-white/[0.07] hover:text-white dark:hover:text-white',
                                 compactMenu && 'justify-center',
                               )}
                             >
-                              <ChildIcon size={15} className="shrink-0" />
-                              {!compactMenu && <span>{child.label}</span>}
+                              <ChildIcon
+                                size={15}
+                                className={cn(
+                                  'shrink-0',
+                                  selected
+                                    ? 'text-brand-accent dark:text-brand-accent'
+                                    : 'text-white/60 dark:text-white/60',
+                                )}
+                              />
+                              {!compactMenu && <span className="truncate">{child.label}</span>}
                             </NavLink>
                           </Tooltip>
                         );
@@ -272,11 +287,14 @@ export function AppLayout() {
             })}
           </nav>
 
-          {/* Footer Sidebar (Thông tin quy định pháp lý) */}
+          {/* Chân menu — ghi chú pháp lý */}
           {!compactMenu && (
-            <div className="p-3.5 border-t border-border bg-subtle/50 text-3xs text-ink-muted leading-tight shrink-0">
-              <p className="font-bold text-ink">BCNCKT: căn cứ theo thời điểm hồ sơ</p>
-              <p className="mt-0.5">Kết quả tự động cần chuyên viên rà soát</p>
+            <div className="m-3 rounded-xl border border-brand-sidebar-border dark:border-brand-sidebar-border bg-brand-sidebar-panel dark:bg-brand-sidebar-panel p-3 text-2xs leading-snug shrink-0">
+              <p className="flex items-center gap-1.5 font-bold text-brand-sidebar-status dark:text-brand-sidebar-status">
+                <span className="h-1.5 w-1.5 rounded-full bg-brand-sidebar-status-dot dark:bg-brand-sidebar-status-dot" />
+                BCNCKT: căn cứ theo thời điểm hồ sơ
+              </p>
+              <p className="mt-1 text-white/60 dark:text-white/60">Kết quả tự động cần chuyên viên rà soát</p>
             </div>
           )}
         </div>
@@ -332,7 +350,7 @@ export function AppLayout() {
 
               {/* Popup Dropdown CÀI ĐẶT CÁ NHÂN (Chuẩn IBST) */}
               {userMenuOpen && (
-                <div className="absolute right-0 top-full mt-2 w-80 rounded-2xl bg-surface border border-border shadow-xl p-4 z-50 animate-fade-in text-xs space-y-4">
+                <div className="absolute right-0 top-full mt-2 w-80 max-h-[calc(100vh-5rem)] overflow-y-auto rounded-2xl bg-surface dark:bg-slate-800 border border-border dark:border-slate-700 shadow-xl p-4 z-50 animate-fade-in text-xs space-y-4">
                   {/* Header Thông tin User */}
                   <div className="flex items-center gap-3 pb-3 border-b border-border">
                     <div
@@ -407,38 +425,12 @@ export function AppLayout() {
                       </div>
                     </div>
 
-                    {/* 2. Màu sắc chủ đạo (Bảng chọn 9 Chấm Màu Chuẩn IBST) */}
+                    {/* 2. Bộ màu chủ đạo — 12 bộ hai tông, đồng bộ cic-hud */}
                     <div className="space-y-1.5">
-                      <div className="text-2xs font-semibold text-ink-secondary">Màu sắc chủ đạo</div>
-                      <div className="grid grid-cols-9 gap-1.5 justify-items-center rounded-xl bg-muted p-2">
-                        {PRIMARY_COLORS.map(({ id, name, hex }) => {
-                          const isCurrent = primaryColor === id;
-                          return (
-                            <button
-                              key={id}
-                              type="button"
-                              onClick={() => setPrimaryColor(id)}
-                              data-tooltip={name}
-                              className={cn(
-                                'relative w-5 h-5 rounded-full transition-transform hover:scale-115 cursor-pointer flex items-center justify-center',
-                                isCurrent && 'scale-110 ring-2 ring-offset-2 ring-offset-surface',
-                              )}
-                              style={{
-                                backgroundColor: hex,
-                                ...(isCurrent ? { boxShadow: `0 0 0 2px var(--bg-surface), 0 0 0 3.5px ${hex}` } : {}),
-                              }}
-                            >
-                              {isCurrent && <Check size={11} className="text-white" strokeWidth={3} />}
-                            </button>
-                          );
-                        })}
+                      <div className="text-2xs font-semibold text-ink-secondary dark:text-slate-300">
+                        Bộ màu chủ đạo
                       </div>
-                      <p className="text-3xs text-ink-muted">
-                        Đang chọn:{' '}
-                        <span className="font-bold text-ink">
-                          {PRIMARY_COLORS.find((c) => c.id === primaryColor)?.name}
-                        </span>
-                      </p>
+                      <PalettePicker />
                     </div>
 
                     {/* 3. Cỡ chữ giao diện (Thu phóng Zoom) */}
