@@ -1,4 +1,6 @@
 import { supabase } from '../lib/supabase';
+import { handleStaticApiFallback } from './staticFallback';
+
 export class ApiError extends Error {
   constructor(
     message: string,
@@ -8,6 +10,7 @@ export class ApiError extends Error {
     this.name = 'ApiError';
   }
 }
+
 export async function apiResponse(path: string, init: RequestInit = {}): Promise<Response> {
   const { data } = await supabase.auth.getSession();
   const headers = new Headers(init.headers);
@@ -22,8 +25,19 @@ export async function apiResponse(path: string, init: RequestInit = {}): Promise
     });
   } catch (error) {
     if (init.signal?.aborted) throw error;
-    throw new ApiError('Không kết nối được Core API. Kiểm tra dịch vụ hoặc thử lại.', 503);
+    return handleStaticApiFallback(path, init);
   }
+
+  const contentType = (response.headers.get('content-type') || '').toLowerCase();
+  const isStaticNoBackend =
+    contentType.includes('text/html') ||
+    ((response.status === 404 || response.status === 502 || response.status === 503) &&
+      !contentType.includes('application/json'));
+
+  if (isStaticNoBackend) {
+    return handleStaticApiFallback(path, init);
+  }
+
   if (!response.ok) {
     const body = await response.json().catch(() => ({}));
     throw new ApiError(
@@ -39,16 +53,20 @@ export async function apiResponse(path: string, init: RequestInit = {}): Promise
     window.dispatchEvent(new Event('appraisal:changed'));
   return response;
 }
+
 export async function apiRequest<T>(path: string, init: RequestInit = {}): Promise<T> {
   return (await apiResponse(path, init)).json();
 }
+
 export interface Runtime {
   mode: 'demo' | 'cloud';
   environment: string;
   authenticationRequired: boolean;
 }
+
 let runtimePromise: Promise<Runtime> | null = null,
   runtimeUntil = 0;
+
 export function getRuntime() {
   if (!runtimePromise || Date.now() > runtimeUntil) {
     runtimeUntil = Date.now() + 10_000;
@@ -59,9 +77,11 @@ export function getRuntime() {
   }
   return runtimePromise;
 }
+
 window.addEventListener('appraisal:session-changed', () => {
   runtimePromise = null;
 });
+
 export interface Page<T> {
   items: T[];
   total: number;

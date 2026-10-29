@@ -19,6 +19,7 @@ writeFileSync(
       routes: [
         { src: '/assets/(.*)', headers: { 'cache-control': 'public, max-age=31536000, immutable' }, continue: true },
         { handle: 'filesystem' },
+        { src: '/api/appraisal/(.*)', status: 404 },
         // Single-page app: every other path renders index.html (React Router).
         { src: '/(.*)', dest: '/index.html' },
       ],
