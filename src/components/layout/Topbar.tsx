@@ -1,13 +1,15 @@
-import { useLocation } from 'react-router-dom';
-import { ChevronRight, Search } from 'lucide-react';
+import { NavLink, useLocation } from 'react-router-dom';
+import { ChevronRight, CircleHelp, Search } from 'lucide-react';
 import { Tooltip } from '../ui/Tooltip';
 import { AiChatWidget } from '../ai/AiChatWidget';
 import { DeadlineBell } from './DeadlineBell';
 import { UserMenu } from './UserMenu';
 import { findNav } from '../../layouts/navigation';
+import { cn } from '../../lib/utils';
+import { HELP_PATH } from '../../lib/helpAnchors';
 import type { WorkCounts } from '../../hooks/useWorkCounts';
 
-/** Thanh trên: breadcrumb đầy đủ, ô tìm nhanh (Ctrl+K), Trợ lý AI, chuông hạn, tài khoản. */
+/** Thanh trên: breadcrumb đầy đủ, ô tìm nhanh (Ctrl+K), Trợ lý AI, hướng dẫn, chuông hạn, tài khoản. */
 export function Topbar({ counts, onSearch }: { counts: WorkCounts | null; onSearch: () => void }) {
   const location = useLocation();
   const { group, item } = findNav(location.pathname);
@@ -59,6 +61,20 @@ export function Topbar({ counts, onSearch }: { counts: WorkCounts | null; onSear
 
       <div className="flex items-center gap-1.5 sm:gap-2">
         <AiChatWidget />
+        <Tooltip content="Hướng dẫn sử dụng và phím tắt" placement="bottom">
+          <NavLink
+            to={HELP_PATH}
+            aria-label="Hướng dẫn sử dụng"
+            className={({ isActive }) =>
+              cn(
+                'block rounded-xl p-2 text-ink-secondary dark:text-slate-300 transition-colors hover:bg-subtle dark:hover:bg-slate-800 hover:text-ink dark:hover:text-slate-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus',
+                isActive && 'bg-primary-50 dark:bg-slate-800 text-primary-700 dark:text-primary-200',
+              )
+            }
+          >
+            <CircleHelp size={18} aria-hidden="true" />
+          </NavLink>
+        </Tooltip>
         <DeadlineBell counts={counts} />
         <span aria-hidden className="mx-1 hidden h-6 w-px bg-border dark:bg-slate-700 sm:block" />
         <UserMenu />

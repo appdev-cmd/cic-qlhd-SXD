@@ -21,6 +21,10 @@ const ALLOW = {
     'src/components/layout/Sidebar.tsx',
     'src/components/layout/CommandPalette.tsx',
     'src/components/layout/DeadlineBell.tsx',
+    // Help button opens the in-app user guide page.
+    'src/components/layout/Topbar.tsx',
+    // First-run quick start buttons open the lists and guide sections they describe.
+    'src/components/dashboard/QuickStart.tsx',
     // Dashboard drill-down opens the list filtered by scope/SLA.
     'src/components/dashboard/RoleOverview.tsx',
   ],

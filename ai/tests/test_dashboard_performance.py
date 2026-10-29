@@ -28,7 +28,7 @@ def case(name, assignee, state, procedure='bcnckt'):
 
 class PerformanceTests(unittest.TestCase):
     def setUp(self):
-        self.tmp = tempfile.TemporaryDirectory()
+        self.tmp = tempfile.TemporaryDirectory(ignore_cleanup_errors=True)
         self.patch = patch('app.store.DATA_DIR', Path(self.tmp.name))
         self.patch.start()
         store = Store(actor=DEMO_ACTOR)

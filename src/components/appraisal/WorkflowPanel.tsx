@@ -9,6 +9,13 @@ import { DossierGrid } from './DossierGrid';
 import { formatDate, formatDateTime } from '../../lib/utils';
 import { SlaSummary } from './SlaBadge';
 import { ProcedureInfo, type AuthoritySuggestion, type ProcedurePolicy } from './ProcedureInfo';
+import { AlertTriangle, History, RotateCcw, UserPlus } from 'lucide-react';
+import { Button } from '../ui/Button';
+import { toast } from '../ui/Toast';
+
+// Actions that move the dossier forward get the primary style; irreversible outcomes are danger.
+const PRIMARY_ACTIONS = ['start', 'submit_review', 'approve', 'resume', 'confirm_correction'];
+const DANGER_ACTIONS = ['reject_intake', 'stop'];
 type Info = {
   authority?: AuthoritySuggestion;
   policy?: ProcedurePolicy;
@@ -82,6 +89,7 @@ export function WorkflowPanel({ dossier: d, onChange }: { dossier: Dossier; onCh
           { revision: d.revision, ...(modal.id === 'reopen' ? { note: form.note } : body) },
         ),
       );
+      toast.success('Đã lưu: ' + modal.label);
       setModal(null);
     } catch (e) {
       setError((e as Error).message);
@@ -93,9 +101,9 @@ export function WorkflowPanel({ dossier: d, onChange }: { dossier: Dossier; onCh
     <section className="rounded-xl border border-border dark:border-border bg-surface dark:bg-surface p-4 space-y-3 text-ink dark:text-ink">
       <div className="flex flex-wrap justify-between gap-3">
         <h3 className="font-semibold">Quy trình xử lý · {info?.label || 'Đang tải…'}</h3>
-        <button className={button} onClick={() => setHistory(!history)}>
+        <Button variant="ghost" size="sm" leftIcon={<History size={15} />} onClick={() => setHistory(!history)}>
           {history ? 'Ẩn lịch sử' : 'Lịch sử quy trình'}
-        </button>
+        </Button>
       </div>
       <div className="flex flex-wrap gap-4 text-sm text-ink-muted dark:text-ink-muted">
         <p>Phụ trách: {info?.workflow.assigneeName || 'Chưa phân công'}</p>
@@ -110,28 +118,49 @@ export function WorkflowPanel({ dossier: d, onChange }: { dossier: Dossier; onCh
         </p>
       )}
       <div className="flex flex-wrap gap-2">
+        {info?.actions.map((a) => (
+          <Button
+            key={a.id}
+            size="sm"
+            variant={
+              PRIMARY_ACTIONS.includes(a.id) ? 'primary' : DANGER_ACTIONS.includes(a.id) ? 'danger' : 'secondary'
+            }
+            disabled={busy || d.job?.status === 'running'}
+            onClick={() => open(a)}
+          >
+            {a.label}
+          </Button>
+        ))}
         {info?.canAssign && (
-          <button className={button} onClick={() => open({ id: 'assign', label: 'Phân công xử lý' })}>
+          <Button
+            size="sm"
+            variant="outline"
+            leftIcon={<UserPlus size={15} />}
+            onClick={() => open({ id: 'assign', label: 'Phân công xử lý' })}
+          >
             Phân công
-          </button>
+          </Button>
         )}
         {info?.canReopen && (
-          <button className={button} onClick={() => open({ id: 'reopen', label: 'Mở lại để rà soát' })}>
+          <Button
+            size="sm"
+            variant="outline"
+            leftIcon={<RotateCcw size={15} />}
+            onClick={() => open({ id: 'reopen', label: 'Mở lại để rà soát' })}
+          >
             Mở lại để rà soát
-          </button>
+          </Button>
         )}
-        {info?.actions.map((a) => (
-          <button key={a.id} disabled={busy || d.job?.status === 'running'} className={button} onClick={() => open(a)}>
-            {a.label}
-          </button>
-        ))}
       </div>
       <p className="text-xs text-ink-muted dark:text-ink-muted">
         Luồng xử lý nội bộ phục vụ rà soát. Hoàn tất bước này chưa ký hoặc ban hành giấy phép/thông báo nghiệm thu. Hạn
         nội bộ do người phụ trách xác nhận.
       </p>
       {error && !modal && (
-        <p role="alert" className="text-sm text-red-700 dark:text-red-300">
+        <p
+          role="alert"
+          className="rounded-lg border border-danger-200 dark:border-danger-800 bg-danger-50 dark:bg-danger-900 px-3 py-2 text-sm text-danger-800 dark:text-danger-100"
+        >
           {error}
         </p>
       )}
@@ -157,6 +186,12 @@ export function WorkflowPanel({ dossier: d, onChange }: { dossier: Dossier; onCh
           }}
         >
           <form className="space-y-4" onSubmit={submit}>
+            {DANGER_ACTIONS.includes(modal.id) && (
+              <p className="flex items-start gap-2 rounded-xl border border-danger-200 dark:border-danger-800 bg-danger-50 dark:bg-danger-900 p-3 text-sm text-danger-800 dark:text-danger-100">
+                <AlertTriangle size={16} className="mt-0.5 shrink-0" />
+                Thao tác kết thúc xử lý hồ sơ và không hoàn tác được. Nêu rõ lý do và căn cứ pháp lý.
+              </p>
+            )}
             {modal.id === 'assign' && (
               <>
                 <label className="block text-sm">
@@ -202,16 +237,24 @@ export function WorkflowPanel({ dossier: d, onChange }: { dossier: Dossier; onCh
               />
             </label>
             {error && (
-              <p role="alert" className="text-red-700 dark:text-red-300">
+              <p role="alert" className="text-sm text-danger-700 dark:text-danger-300">
                 {error}
               </p>
             )}
-            <button
-              className={button + ' !bg-primary-500 dark:!bg-primary-500 !text-white dark:!text-white'}
-              disabled={busy || form.note.trim().length < 10 || (modal.id === 'assign' && !form.assigneeId)}
-            >
-              {busy ? 'Đang lưu…' : 'Lưu xử lý'}
-            </button>
+            <div className="flex items-center justify-between gap-3">
+              <span className="text-xs text-ink-muted dark:text-slate-400">
+                {form.note.trim().length < 10 ? 'Nội dung tối thiểu 10 ký tự.' : ''}
+              </span>
+              <Button
+                type="submit"
+                variant={DANGER_ACTIONS.includes(modal.id) ? 'danger' : 'primary'}
+                loading={busy}
+                loadingText="Đang lưu…"
+                disabled={form.note.trim().length < 10 || (modal.id === 'assign' && !form.assigneeId)}
+              >
+                {DANGER_ACTIONS.includes(modal.id) ? 'Xác nhận ' + modal.label.toLowerCase() : 'Lưu xử lý'}
+              </Button>
+            </div>
           </form>
         </ReviewModal>
       )}

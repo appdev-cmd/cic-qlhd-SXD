@@ -151,6 +151,81 @@ def add(s, id, body):
         raise
 
 
+def _editable(s, id, revision, image_id):
+    """Apply the same role and revision checks as add() and return the gallery plus the target image."""
+    if s.actor['role'] not in ('officer', 'head_of_department', 'admin'):
+        raise HTTPException(403, 'Tài khoản không có quyền chỉnh sửa thư viện ảnh.')
+    current = read(s, id)
+    if revision != current['revision']:
+        raise HTTPException(409, 'Thư viện ảnh đã thay đổi. Tải lại trước khi lưu.')
+    image = next((i for i in current['images'] if i.get('id') == image_id), None)
+    if not image:
+        raise HTTPException(404, 'Không tìm thấy ảnh trong thư viện dự án.')
+    return current, image
+
+
+def _save(s, id, revision, images, detail, image_id=None):
+    """Persist a changed gallery with compare-and-set; image_id also drops a demo original."""
+    if MODE == 'demo':
+        with db() as con:
+            schema(con)
+            con.execute('BEGIN IMMEDIATE')
+            row = con.execute('select revision from project_galleries where project_id=?', (id,)).fetchone()
+            if (row[0] if row else 1) != revision:
+                raise HTTPException(409, 'Thư viện ảnh đã thay đổi. Tải lại trước khi lưu.')
+            con.execute(
+                'insert into project_galleries values(?,?,?) on conflict(project_id) do update set revision=excluded.revision,payload=excluded.payload',
+                (id, revision + 1, json.dumps(images, ensure_ascii=False)),
+            )
+            if image_id:
+                con.execute('delete from project_image_files where project_id=? and id=?', (id, image_id))
+            con.execute(
+                'insert into project_image_audit values(?,?,?,?,?)',
+                (
+                    str(uuid4()),
+                    id,
+                    json.dumps(s.actor, ensure_ascii=False),
+                    datetime.now(timezone.utc).isoformat(),
+                    detail,
+                ),
+            )
+        return {'images': images, 'revision': revision + 1}
+    # Cloud: the RPC re-checks role, scope and revision; the projects audit trigger records the change.
+    with connection(s.actor['id']) as con:
+        return con.execute(
+            'select public.save_project_images(%s,%s,%s) as result', (id, revision, Jsonb(images))
+        ).fetchone()['result']
+
+
+def update(s, id, image_id, body):
+    current, image = _editable(s, id, body.revision, image_id)
+    if not body.title.strip():
+        raise HTTPException(422, 'Nhập tiêu đề ảnh.')
+    changed = {
+        **image,
+        'title': body.title.strip(),
+        'category': body.category,
+        'categoryLabel': LABELS[body.category],
+        'description': body.description.strip(),
+    }
+    images = [changed if i.get('id') == image_id else i for i in current['images']]
+    return _save(s, id, body.revision, images, 'Sửa thông tin ảnh: ' + changed['title'])
+
+
+def remove(s, id, image_id, revision):
+    current, image = _editable(s, id, revision, image_id)
+    images = [i for i in current['images'] if i.get('id') != image_id]
+    result = _save(s, id, revision, images, 'Xóa ảnh: ' + image['title'], image_id if MODE == 'demo' else None)
+    if MODE != 'demo' and image.get('storagePath'):
+        # Same cleanup call add() uses for orphans. Storage RLS only lets the uploader delete the object,
+        # so for other officers the original stays in the private bucket but is no longer served.
+        try:
+            remote('/storage/v1/object/' + BUCKET, s.token, 'DELETE', json={'prefixes': [image['storagePath']]})
+        except HTTPException:
+            log.warning('Could not remove the original of deleted image %s', image['storagePath'], exc_info=True)
+    return result
+
+
 def content(s, project_id, image_id):
     gallery = read(s, project_id)
     image = next((i for i in gallery['images'] if i['id'] == image_id and i.get('storagePath')), None)

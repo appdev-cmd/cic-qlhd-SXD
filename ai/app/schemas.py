@@ -54,6 +54,13 @@ class AddProjectImage(Payload):
     contentBase64: str | None = Field(default=None, max_length=7_000_000)
 
 
+class UpdateProjectImage(Payload):
+    revision: int = Field(ge=1)
+    title: str = Field(min_length=1, max_length=240)
+    category: Literal['phoi_canh', 'hien_trang', 'ban_ve', 'tien_do']
+    description: str = Field(default='', max_length=2000)
+
+
 class Mutation(Payload):
     revision: int = Field(ge=1)
 

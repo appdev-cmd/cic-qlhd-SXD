@@ -13,7 +13,7 @@ import { useSlidePanel } from '../context/SlidePanelContext';
 import { useFilterState } from '../hooks/useFilterState';
 import { useAuth } from '../context/AuthContext';
 import { listCache } from '../lib/listCache';
-import { formatDate, formatDateTime } from '../lib/utils';
+import { formatDate, formatDateTime, todayIso } from '../lib/utils';
 
 import type { Project } from '../types/project';
 import { projectService } from '../services/projectService';
@@ -84,7 +84,7 @@ export function AppraisalPage({ procedure = 'bcnckt', project }: { procedure?: P
     projectId: project?.id || '',
     name: '',
     province: project?.location || 'Điện Biên',
-    legalDate: new Date().toISOString().slice(0, 10),
+    legalDate: todayIso(),
   });
   const [initial, setInitial] = useState('');
   const [storedFilters, setFilters] = useFilterState(
@@ -389,9 +389,18 @@ export function AppraisalPage({ procedure = 'bcnckt', project }: { procedure?: P
       {error && (
         <div
           role="alert"
-          className="rounded-xl border border-danger-200 dark:border-danger-800 bg-danger-50 dark:bg-danger-900 p-4 text-sm text-danger-800 dark:text-danger-100"
+          className="flex flex-wrap items-center justify-between gap-3 rounded-xl border border-danger-200 dark:border-danger-800 bg-danger-50 dark:bg-danger-900 p-4 text-sm text-danger-800 dark:text-danger-100"
         >
-          {error}
+          <span>{error}</span>
+          <Button
+            size="sm"
+            variant="secondary"
+            leftIcon={<RefreshCw size={14} />}
+            disabled={busy}
+            onClick={() => action(load)}
+          >
+            Thử lại
+          </Button>
         </div>
       )}
       {!project && (

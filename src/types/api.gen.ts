@@ -4,6 +4,213 @@
  */
 
 export interface paths {
+    "/v1/bim/assistant": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Assistant */
+        post: operations["assistant_v1_bim_assistant_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/bim/assistant/policy": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Policy */
+        get: operations["policy_v1_bim_assistant_policy_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/bim/models/{id}/archive": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Archive */
+        post: operations["archive_v1_bim_models__id__archive_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/bim/models/{id}/elements": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Elements */
+        get: operations["elements_v1_bim_models__id__elements_get"];
+        put?: never;
+        /** Upload Elements */
+        post: operations["upload_elements_v1_bim_models__id__elements_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/bim/models/{id}/files/{kind}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Content */
+        get: operations["content_v1_bim_models__id__files__kind__get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/bim/models/{id}/files/{kind}/{part}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Chunk */
+        post: operations["chunk_v1_bim_models__id__files__kind___part__post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/bim/models/{id}/finalize": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Finish */
+        post: operations["finish_v1_bim_models__id__finalize_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/bim/models/{id}/notes": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Notes */
+        get: operations["notes_v1_bim_models__id__notes_get"];
+        put?: never;
+        /** Save Note */
+        post: operations["save_note_v1_bim_models__id__notes_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/bim/models/{id}/summary": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Summary */
+        get: operations["summary_v1_bim_models__id__summary_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/bim/norms": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Norms */
+        get: operations["norms_v1_bim_norms_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/bim/projects/{project_id}/history": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** History */
+        get: operations["history_v1_bim_projects__project_id__history_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/bim/projects/{project_id}/models": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Models */
+        get: operations["models_v1_bim_projects__project_id__models_get"];
+        put?: never;
+        /** Create Model */
+        post: operations["create_model_v1_bim_projects__project_id__models_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/v1/cases": {
         parameters: {
             query?: never;
@@ -846,6 +1053,24 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/v1/projects/{id}/images/{image_id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post?: never;
+        /** Delete Project Image */
+        delete: operations["delete_project_image_v1_projects__id__images__image_id__delete"];
+        options?: never;
+        head?: never;
+        /** Update Project Image */
+        patch: operations["update_project_image_v1_projects__id__images__image_id__patch"];
+        trace?: never;
+    };
     "/v1/projects/{id}/images/{image_id}/content": {
         parameters: {
             query?: never;
@@ -1040,6 +1265,28 @@ export interface components {
             /** Revision */
             revision: number;
         };
+        /** AssistantRequest */
+        AssistantRequest: {
+            /** History */
+            history?: {
+                [key: string]: unknown;
+            }[];
+            /** Modelids */
+            modelIds?: string[];
+            /** Organizationid */
+            organizationId?: string | null;
+            /**
+             * Projectid
+             * Format: uuid
+             */
+            projectId: string;
+            /** Question */
+            question: string;
+            /** Selection */
+            selection?: {
+                [key: string]: unknown;
+            }[];
+        };
         /** CatalogMutation */
         CatalogMutation: {
             /**
@@ -1069,6 +1316,11 @@ export interface components {
              * @enum {string}
              */
             status?: "pending" | "satisfied" | "missing" | "not_applicable";
+        };
+        /** Chunk */
+        Chunk: {
+            /** Data */
+            data: string;
         };
         /** Consultation */
         Consultation: {
@@ -1208,6 +1460,44 @@ export interface components {
              */
             sheets?: number;
         };
+        /** Element */
+        Element: {
+            /** Chieu Dai */
+            chieu_dai?: number | null;
+            /** Dien Tich */
+            dien_tich?: number | null;
+            /** Dien Tich Van Khuon */
+            dien_tich_van_khuon?: number | null;
+            /** Express Id */
+            express_id: number;
+            /** Global Id */
+            global_id: string;
+            /** Hash Noi Dung */
+            hash_noi_dung?: string | null;
+            /** Loai Cau Kien */
+            loai_cau_kien: string;
+            /** Nguon Khoi Luong */
+            nguon_khoi_luong?: ("qto" | "pset" | "hinh_hoc") | null;
+            /** Phan Doan Tang */
+            phan_doan_tang?: string | null;
+            /** Ten Cau Kien */
+            ten_cau_kien?: string | null;
+            /** The Tich Be Tong */
+            the_tich_be_tong?: number | null;
+            /** Thuoc Tinh */
+            thuoc_tinh?: {
+                [key: string]: unknown;
+            };
+            /** Trong Luong */
+            trong_luong?: number | null;
+            /** Vat Lieu */
+            vat_lieu?: string | null;
+        };
+        /** ElementBatch */
+        ElementBatch: {
+            /** Items */
+            items: components["schemas"]["Element"][];
+        };
         /** FactReview */
         FactReview: {
             /**
@@ -1221,6 +1511,13 @@ export interface components {
             revision: number;
             /** Value */
             value: string;
+        };
+        /** FileInfo */
+        FileInfo: {
+            /** Sha256 */
+            sha256: string;
+            /** Size */
+            size: number;
         };
         /** FinalReview */
         FinalReview: {
@@ -1290,10 +1587,62 @@ export interface components {
             /** Revision */
             revision: number;
         };
+        /** ModelInput */
+        ModelInput: {
+            /**
+             * Discipline
+             * @enum {string}
+             */
+            discipline: "TOAN_THE" | "KIEN_TRUC" | "KET_CAU" | "MEP" | "DIEN" | "CAP_THOAT_NUOC" | "PCCC" | "HA_TANG" | "KHAC";
+            /** Element Count */
+            element_count: number;
+            /** File Name */
+            file_name: string;
+            /** Files */
+            files: {
+                [key: string]: components["schemas"]["FileInfo"];
+            };
+            /**
+             * Ifc Schema
+             * @default
+             */
+            ifc_schema?: string;
+            /** Previous Id */
+            previous_id?: string | null;
+        };
         /** Mutation */
         Mutation: {
             /** Revision */
             revision: number;
+        };
+        /** Note */
+        Note: {
+            /**
+             * Description
+             * @default
+             */
+            description?: string;
+            /** Id */
+            id?: string | null;
+            /**
+             * Kind
+             * @enum {string}
+             */
+            kind: "view" | "issue";
+            /** Name */
+            name: string;
+            /** Revision */
+            revision?: number | null;
+            /**
+             * Status
+             * @default open
+             * @enum {string}
+             */
+            status?: "open" | "resolved";
+            /** Viewpoint */
+            viewpoint?: {
+                [key: string]: unknown;
+            } | null;
         };
         /** PermitCommand */
         PermitCommand: {
@@ -1384,6 +1733,11 @@ export interface components {
              * @enum {string}
              */
             status: "submitted" | "verified" | "needs_supplement";
+        };
+        /** Revision */
+        Revision: {
+            /** Revision */
+            revision: number;
         };
         /** RunRequest */
         RunRequest: {
@@ -1506,6 +1860,23 @@ export interface components {
              * @enum {string}
              */
             role: "officer" | "head_of_department" | "director" | "admin";
+        };
+        /** UpdateProjectImage */
+        UpdateProjectImage: {
+            /**
+             * Category
+             * @enum {string}
+             */
+            category: "phoi_canh" | "hien_trang" | "ban_ve" | "tien_do";
+            /**
+             * Description
+             * @default
+             */
+            description?: string;
+            /** Revision */
+            revision: number;
+            /** Title */
+            title: string;
         };
         /** Upload */
         Upload: {
@@ -1658,6 +2029,550 @@ export interface components {
 }
 export type $defs = Record<string, never>;
 export interface operations {
+    assistant_v1_bim_assistant_post: {
+        parameters: {
+            query?: never;
+            header?: {
+                "x-internal-token"?: string;
+                authorization?: string;
+            };
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["AssistantRequest"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": unknown;
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    policy_v1_bim_assistant_policy_get: {
+        parameters: {
+            query: {
+                projectId: string;
+            };
+            header?: {
+                "x-internal-token"?: string;
+                authorization?: string;
+            };
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": unknown;
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    archive_v1_bim_models__id__archive_post: {
+        parameters: {
+            query?: never;
+            header?: {
+                "x-internal-token"?: string;
+                authorization?: string;
+            };
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["Revision"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": unknown;
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    elements_v1_bim_models__id__elements_get: {
+        parameters: {
+            query?: {
+                search?: string;
+                category?: string;
+                storey?: string;
+                offset?: number;
+                limit?: number;
+            };
+            header?: {
+                "x-internal-token"?: string;
+                authorization?: string;
+            };
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": unknown;
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    upload_elements_v1_bim_models__id__elements_post: {
+        parameters: {
+            query?: never;
+            header?: {
+                "x-internal-token"?: string;
+                authorization?: string;
+            };
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["ElementBatch"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": unknown;
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    content_v1_bim_models__id__files__kind__get: {
+        parameters: {
+            query?: never;
+            header?: {
+                "x-internal-token"?: string;
+                authorization?: string;
+            };
+            path: {
+                id: string;
+                kind: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": unknown;
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    chunk_v1_bim_models__id__files__kind___part__post: {
+        parameters: {
+            query?: never;
+            header?: {
+                "x-internal-token"?: string;
+                authorization?: string;
+            };
+            path: {
+                id: string;
+                kind: string;
+                part: number;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["Chunk"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": unknown;
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    finish_v1_bim_models__id__finalize_post: {
+        parameters: {
+            query?: never;
+            header?: {
+                "x-internal-token"?: string;
+                authorization?: string;
+            };
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": unknown;
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    notes_v1_bim_models__id__notes_get: {
+        parameters: {
+            query?: never;
+            header?: {
+                "x-internal-token"?: string;
+                authorization?: string;
+            };
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": unknown;
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    save_note_v1_bim_models__id__notes_post: {
+        parameters: {
+            query?: never;
+            header?: {
+                "x-internal-token"?: string;
+                authorization?: string;
+            };
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["Note"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": unknown;
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    summary_v1_bim_models__id__summary_get: {
+        parameters: {
+            query?: never;
+            header?: {
+                "x-internal-token"?: string;
+                authorization?: string;
+            };
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": unknown;
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    norms_v1_bim_norms_get: {
+        parameters: {
+            query?: {
+                q?: string;
+                book?: string;
+            };
+            header?: {
+                "x-internal-token"?: string;
+                authorization?: string;
+            };
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": unknown;
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    history_v1_bim_projects__project_id__history_get: {
+        parameters: {
+            query?: {
+                offset?: number;
+            };
+            header?: {
+                "x-internal-token"?: string;
+                authorization?: string;
+            };
+            path: {
+                project_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": unknown;
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    models_v1_bim_projects__project_id__models_get: {
+        parameters: {
+            query?: never;
+            header?: {
+                "x-internal-token"?: string;
+                authorization?: string;
+            };
+            path: {
+                project_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": unknown;
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    create_model_v1_bim_projects__project_id__models_post: {
+        parameters: {
+            query?: never;
+            header?: {
+                "x-internal-token"?: string;
+                authorization?: string;
+            };
+            path: {
+                project_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["ModelInput"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": unknown;
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
     cases_v1_cases_get: {
         parameters: {
             query?: {
@@ -3754,6 +4669,82 @@ export interface operations {
         requestBody: {
             content: {
                 "application/json": components["schemas"]["AddProjectImage"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": unknown;
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    delete_project_image_v1_projects__id__images__image_id__delete: {
+        parameters: {
+            query: {
+                revision: number;
+            };
+            header?: {
+                "x-internal-token"?: string;
+                authorization?: string;
+            };
+            path: {
+                id: string;
+                image_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": unknown;
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    update_project_image_v1_projects__id__images__image_id__patch: {
+        parameters: {
+            query?: never;
+            header?: {
+                "x-internal-token"?: string;
+                authorization?: string;
+            };
+            path: {
+                id: string;
+                image_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["UpdateProjectImage"];
             };
         };
         responses: {

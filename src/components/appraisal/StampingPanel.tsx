@@ -7,7 +7,11 @@ import { ReviewModal } from './ReviewModal';
 import { DateInput } from '../ui/DateInput';
 import { NumberInput } from '../ui/NumberInput';
 import { Tooltip } from '../ui/Tooltip';
-import { formatDate, formatDateTime } from '../../lib/utils';
+import { Button } from '../ui/Button';
+import { SkeletonText } from '../ui/Skeleton';
+import { confirm } from '../ui/ConfirmDialog';
+import { toast } from '../ui/Toast';
+import { formatDate, formatDateTime, todayIso } from '../../lib/utils';
 
 const button =
   'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-500 dark:focus-visible:ring-primary-400 transition-colors inline-flex items-center gap-2 rounded-lg border border-border dark:border-border bg-surface dark:bg-surface px-3 py-2 text-xs font-semibold text-ink-secondary dark:text-ink-secondary hover:bg-subtle dark:hover:bg-subtle disabled:opacity-50';
@@ -24,10 +28,10 @@ interface Form {
   note: string;
   drawings: StampDrawing[];
 }
-const today = () => new Date().toISOString().slice(0, 10);
+const today = () => todayIso();
 const archiveIcon = {
-  done: <CheckCircle2 size={15} className="text-emerald-600 dark:text-emerald-400" />,
-  missing: <Circle size={15} className="text-amber-600 dark:text-amber-400" />,
+  done: <CheckCircle2 size={15} className="text-success-600 dark:text-success-400" />,
+  missing: <Circle size={15} className="text-warning-600 dark:text-warning-400" />,
   optional: <MinusCircle size={15} className="text-slate-400 dark:text-slate-500" />,
 };
 
@@ -70,10 +74,23 @@ export function StampingPanel({ dossier, onChange }: { dossier: Dossier; onChang
   }
   async function submit() {
     if (!modal || !form) return;
+    if (modal.id === 'stamp' || modal.id === 'refuse') {
+      const ok = await confirm({
+        title: modal.label + '?',
+        description:
+          modal.id === 'stamp'
+            ? `Ghi nhận đóng dấu ${form.drawings.length} bản vẽ theo Mẫu số 14 và mở hạn nộp bản chụp PDF.`
+            : 'Trả hồ sơ chỉnh sửa chưa đáp ứng về bước chờ đề nghị đóng dấu.',
+        confirmLabel: modal.label,
+        tone: modal.id === 'refuse' ? 'danger' : 'default',
+      });
+      if (!ok) return;
+    }
     setBusy(true);
     setError('');
     try {
       onChange(await api.mutate(dossier.id, '/stamping', { revision: dossier.revision, action: modal.id, ...form }));
+      toast.success('Đã lưu: ' + modal.label);
       setModal(null);
     } catch (e) {
       setError((e as Error).message);
@@ -81,7 +98,14 @@ export function StampingPanel({ dossier, onChange }: { dossier: Dossier; onChang
       setBusy(false);
     }
   }
-  if (!view) return error ? <p role="alert">{error}</p> : <p className="text-sm">Đang tải…</p>;
+  if (!view)
+    return error ? (
+      <p role="alert" className="text-sm text-danger-700 dark:text-danger-300">
+        {error}
+      </p>
+    ) : (
+      <SkeletonText lines={4} />
+    );
   const setDrawing = (i: number, patch: Partial<StampDrawing>) =>
     form && setForm({ ...form, drawings: form.drawings.map((d, j) => (j === i ? { ...d, ...patch } : d)) });
   return (
@@ -109,14 +133,15 @@ export function StampingPanel({ dossier, onChange }: { dossier: Dossier; onChang
         )}
         <div className="flex flex-wrap gap-2">
           {view.actions.map((a) => (
-            <button
+            <Button
               key={a.id}
-              className={a.id === 'refuse' ? button : primary}
+              size="sm"
+              variant={a.id === 'refuse' ? 'outline' : 'primary'}
               disabled={busy || !!dossier.readOnly}
               onClick={() => open(a)}
             >
               {a.label}
-            </button>
+            </Button>
           ))}
         </div>
       </div>

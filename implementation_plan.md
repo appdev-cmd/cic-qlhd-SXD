@@ -29,7 +29,13 @@
   - bảng hạn xử lý theo chuyên viên cho trưởng phòng và lãnh đạo;
   - xuất báo cáo CSV cho Excel;
   - số liệu tính trong cùng một lượt truy vấn cloud.
-- **Tiếp theo:** U6 (trải nghiệm chung), U7, B1, B2, B4. Dữ liệu staging dừng ở tháng 9 nên KPI 30 ngày đang bằng 0; B4 (dữ liệu demo sống) sẽ xử lý.
+- **Xong 29/10:** U6, trải nghiệm chung:
+  - trang `/help` (hướng dẫn trong ứng dụng, mục lục, tìm không dấu), thẻ "Bắt đầu nhanh";
+  - xác nhận trước khi cấp, thu hồi hoặc hủy GP và đóng dấu; toast sau thao tác; lỗi có nút "Thử lại";
+  - gallery có xem ảnh lớn, sửa/xóa ảnh (API PATCH/DELETE);
+  - `EntityLink` trong panel dự án;
+  - ngày mặc định theo giờ máy (`todayIso`).
+- **Tiếp theo:** U7 (kiểm tra hình ảnh, responsive), B1, B2, B4. Dữ liệu staging dừng ở tháng 9 nên KPI 30 ngày đang bằng 0; B4 (dữ liệu demo sống) sẽ xử lý.
 - **Ghi nhận cho B2:** trên cloud staging, `GET /cases/{id}` mất khoảng 4 giây, danh sách khoảng 1,5 giây, trong khi xử lý trong tiến trình Worker chỉ mất 20–40 ms. Thời gian dồn vào các vòng truy vấn tới Supabase (Tokyo), cần gộp truy vấn hoặc cache.
 **Quyết định đã chốt:**
 1. **Bộ màu theo cic-hud:** 12 bộ màu hai tông (`config/palettes.ts` của cic-hud — nền menu tối trầm + màu nhấn ánh kim + màu chủ đạo), bộ chọn bộ màu, menu trái nền tối theo bộ màu, nền "bảo vệ mắt" cát ấm của cic-hud. Mặc định cho Sở Xây dựng: **"Lam công vụ"** (teal `#00668c` + vàng đồng), đổi được sang bộ "HUD" hoặc bộ khác.

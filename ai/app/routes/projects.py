@@ -3,10 +3,10 @@
 from fastapi import APIRouter
 from typing import Literal
 from uuid import UUID
-from fastapi import Depends, HTTPException, Response, Query
+from fastapi import Depends, HTTPException, Path, Response, Query
 from ..store import Store, MODE
 from ..deps import store, writable
-from ..schemas import AddProjectImage, CreateProject
+from ..schemas import AddProjectImage, CreateProject, UpdateProjectImage
 
 router = APIRouter()
 
@@ -23,6 +23,24 @@ def add_project_image(id: str, body: AddProjectImage, s: Store = Depends(store))
     from ..gallery import add
 
     return add(s, id, body)
+
+
+@router.patch('/v1/projects/{id}/images/{image_id}')
+def update_project_image(
+    id: str, body: UpdateProjectImage, image_id: str = Path(max_length=100), s: Store = Depends(store)
+):
+    from ..gallery import update
+
+    return update(s, id, image_id, body)
+
+
+@router.delete('/v1/projects/{id}/images/{image_id}')
+def delete_project_image(
+    id: str, image_id: str = Path(max_length=100), revision: int = Query(ge=1), s: Store = Depends(store)
+):
+    from ..gallery import remove
+
+    return remove(s, id, image_id, revision)
 
 
 @router.get('/v1/projects/{id}/images/{image_id}/content')

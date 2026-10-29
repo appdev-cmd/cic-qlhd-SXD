@@ -237,7 +237,7 @@ class PermitNumberTests(unittest.TestCase):
         from app.routes.permits import permit_action
 
         with (
-            tempfile.TemporaryDirectory() as directory,
+            tempfile.TemporaryDirectory(ignore_cleanup_errors=True) as directory,
             patch('app.store.DATA_DIR', Path(directory)),
             patch.object(Store, 'project', return_value={'id': 'p1'}),
         ):

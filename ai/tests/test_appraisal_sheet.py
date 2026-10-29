@@ -211,7 +211,10 @@ class StampingTests(unittest.TestCase):
         from app.routes.review import stamping_action
         from app.store import Store
 
-        with tempfile.TemporaryDirectory() as directory, patch('app.store.DATA_DIR', Path(directory)):
+        with (
+            tempfile.TemporaryDirectory(ignore_cleanup_errors=True) as directory,
+            patch('app.store.DATA_DIR', Path(directory)),
+        ):
             store = Store(actor=DEMO_ACTOR)
             case = new_case('BCNCKT', 'Điện Biên', DEMO_ACTOR, '2026-09-01', None)
             case['finalReview'] = {'decision': 'reviewed'}

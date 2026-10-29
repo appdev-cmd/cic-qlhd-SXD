@@ -1,4 +1,7 @@
 import { useEffect, useState } from 'react';
+import { Button } from '../ui/Button';
+import { confirm } from '../ui/ConfirmDialog';
+import { toast } from '../ui/Toast';
 import { FileBadge, Send } from 'lucide-react';
 import { appraisalService as api } from '../../services/appraisalService';
 import type { Dossier, PermitConsultation, PermitView } from '../../types/appraisal';
@@ -6,7 +9,7 @@ import { DossierGrid } from './DossierGrid';
 import { ReviewModal } from './ReviewModal';
 import { DateInput } from '../ui/DateInput';
 import { SearchableSelect } from '../ui/SearchableSelect';
-import { formatDate } from '../../lib/utils';
+import { formatDate, todayIso } from '../../lib/utils';
 
 const button =
   'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-500 dark:focus-visible:ring-primary-400 transition-colors inline-flex items-center gap-2 rounded-lg border border-border dark:border-border bg-surface dark:bg-surface px-3 py-2 text-xs font-semibold text-ink-secondary dark:text-ink-secondary hover:bg-subtle dark:hover:bg-subtle disabled:opacity-50';
@@ -15,7 +18,7 @@ const primary =
   ' !bg-primary-500 dark:!bg-primary-500 !text-white dark:!text-white !border-primary-500 dark:!border-primary-500 hover:!bg-primary-600 dark:hover:!bg-primary-600';
 const input =
   'focus:outline-none focus:border-primary-500 dark:focus:border-primary-400 focus:ring-2 focus:ring-primary-500/20 dark:focus:ring-primary-400/20 w-full rounded-lg border border-border dark:border-border bg-surface dark:bg-surface p-2 text-sm text-ink dark:text-ink';
-const today = () => new Date().toISOString().slice(0, 10);
+const today = () => todayIso();
 const consultStatus: Record<PermitConsultation['status'], string> = {
   waiting: 'Đang chờ trả lời',
   responded: 'Đã trả lời',
@@ -81,6 +84,19 @@ export function PermitPanel({ dossier, onChange }: { dossier: Dossier; onChange:
   }
   async function submit() {
     if (!modal) return;
+    // Issuing allocates a permit number; revoking/cancelling ends the permit — confirm first.
+    if (modal.kind === 'permit' && ['issue', 'revoke', 'cancel'].includes(modal.action)) {
+      const ok = await confirm({
+        title: actionLabels[modal.action] + '?',
+        description:
+          modal.action === 'issue'
+            ? 'Hệ thống cấp số giấy phép tiếp theo và ghi vào sổ giấy phép. Số đã cấp không dùng lại.'
+            : 'Thao tác được ghi vào sổ giấy phép và không hoàn tác được.',
+        confirmLabel: actionLabels[modal.action],
+        tone: modal.action === 'issue' ? 'default' : 'danger',
+      });
+      if (!ok) return;
+    }
     setBusy(true);
     setError('');
     try {
@@ -105,6 +121,13 @@ export function PermitPanel({ dossier, onChange }: { dossier: Dossier; onChange:
               response: form.response,
             });
       onChange(result);
+      toast.success(
+        modal.kind === 'permit'
+          ? actionLabels[modal.action] + (result.permit?.number ? ' — số ' + result.permit.number : '')
+          : modal.kind === 'send'
+            ? 'Đã ghi nhận gửi lấy ý kiến'
+            : 'Đã ghi nhận ý kiến trả lời',
+      );
       setModal(null);
     } catch (e) {
       setError((e as Error).message);
@@ -112,7 +135,12 @@ export function PermitPanel({ dossier, onChange }: { dossier: Dossier; onChange:
       setBusy(false);
     }
   }
-  if (!view) return error ? <p role="alert">{error}</p> : null;
+  if (!view)
+    return error ? (
+      <p role="alert" className="text-sm text-danger-700 dark:text-danger-300">
+        {error}
+      </p>
+    ) : null;
   const permit = view.permit;
   const renewal = ['amendment', 'extension', 'reissue'].includes(view.subtype || '');
   return (
@@ -123,19 +151,26 @@ export function PermitPanel({ dossier, onChange }: { dossier: Dossier; onChange:
         </h3>
         <div className="flex flex-wrap gap-2">
           {!view.reviewed && (
-            <button className={button} disabled={busy || !!dossier.readOnly} onClick={() => open({ kind: 'send' })}>
-              <Send size={14} /> Gửi lấy ý kiến
-            </button>
+            <Button
+              variant="secondary"
+              size="sm"
+              leftIcon={<Send size={14} />}
+              disabled={busy || !!dossier.readOnly}
+              onClick={() => open({ kind: 'send' })}
+            >
+              Gửi lấy ý kiến
+            </Button>
           )}
           {view.actions.map((a) => (
-            <button
+            <Button
               key={a}
-              className={a === 'issue' ? primary : button}
+              size="sm"
+              variant={a === 'issue' ? 'primary' : a === 'revoke' || a === 'cancel' ? 'danger' : 'secondary'}
               disabled={busy || !!dossier.readOnly}
               onClick={() => open({ kind: 'permit', action: a })}
             >
               {actionLabels[a]}
-            </button>
+            </Button>
           ))}
         </div>
       </header>
@@ -180,7 +215,7 @@ export function PermitPanel({ dossier, onChange }: { dossier: Dossier; onChange:
             {formatDate(permit.publicUntil)} (Điều 66)
           </p>
           {view.returnDueDate && view.status === 'revoked' && (
-            <p className="text-amber-800 dark:text-amber-200">
+            <p className="text-warning-800 dark:text-warning-200">
               Chủ đầu tư nộp lại bản gốc trước {formatDate(view.returnDueDate)}; quá 10 ngày làm việc (từ{' '}
               {view.cancelFromDate ? formatDate(view.cancelFromDate) : ''}) thì ban hành quyết định hủy (khoản 2 Điều
               65).

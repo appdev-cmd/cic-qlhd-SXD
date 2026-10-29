@@ -8,6 +8,7 @@ import {
   FileText,
   FolderKanban,
   LayoutDashboard,
+  LifeBuoy,
   MapPin,
   Printer,
   Settings,
@@ -127,7 +128,16 @@ export const NAV_GROUPS: NavGroup[] = [
   {
     id: 'system',
     label: 'Hệ thống',
-    items: [{ to: '/settings', label: 'Cài đặt Hệ thống', shortLabel: 'Cài đặt', icon: Settings, keywords: 'cai dat' }],
+    items: [
+      { to: '/settings', label: 'Cài đặt Hệ thống', shortLabel: 'Cài đặt', icon: Settings, keywords: 'cai dat' },
+      {
+        to: '/help',
+        label: 'Hướng dẫn sử dụng',
+        shortLabel: 'Hướng dẫn',
+        icon: LifeBuoy,
+        keywords: 'huong dan tro giup help phim tat cach dung quy trinh tai lieu',
+      },
+    ],
   },
 ];
 

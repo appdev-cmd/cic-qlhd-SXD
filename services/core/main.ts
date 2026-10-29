@@ -33,7 +33,7 @@ app.use('/api/appraisal', async (req: express.Request, res: express.Response) =>
     res.status(403).json({ detail: 'Nguồn yêu cầu không được phép.' });
     return;
   }
-  if (!['GET', 'POST', 'PATCH'].includes(req.method)) {
+  if (!['GET', 'POST', 'PATCH', 'DELETE'].includes(req.method)) {
     res.sendStatus(405);
     return;
   }
@@ -47,7 +47,7 @@ app.use('/api/appraisal', async (req: express.Request, res: express.Response) =>
         ...(testLoginPath && localTestLogin ? { 'x-local-test-login': 'true' } : {}),
         ...(req.headers.authorization ? { Authorization: req.headers.authorization } : {}),
       },
-      body: req.method === 'GET' ? undefined : req.body,
+      body: ['GET', 'DELETE'].includes(req.method) ? undefined : req.body,
       signal: AbortSignal.timeout(120_000),
     });
     res.status(response.status);

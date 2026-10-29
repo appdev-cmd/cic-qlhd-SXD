@@ -22,6 +22,7 @@ const SettingsPage = lazy(() => import('./pages/SettingsPage').then((module) => 
 const AppraisalPage = lazy(() => import('./pages/AppraisalPage').then((module) => ({ default: module.AppraisalPage })));
 const UiGallery = lazy(() => import('./pages/dev/UiGallery').then((module) => ({ default: module.UiGallery })));
 const BimPage = lazy(() => import('./pages/BimPage').then((module) => ({ default: module.BimPage })));
+const HelpPage = lazy(() => import('./pages/HelpPage').then((module) => ({ default: module.HelpPage })));
 
 export function App() {
   return (
@@ -59,6 +60,7 @@ function AuthenticatedApp() {
               <Route path="bim" element={<BimPage />} />
               <Route path="documents" element={<DocumentsPage />} />
               <Route path="settings" element={<SettingsPage />} />
+              <Route path="help" element={<HelpPage />} />
               <Route path="dev/ui" element={<UiGallery />} />
               <Route path="*" element={<Navigate to="/dashboard" replace />} />
             </Route>

@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
+import { todayIso } from '../lib/utils';
 import { appraisalService as api } from '../services/appraisalService';
 import type { Dossier, Health } from '../types/appraisal';
 import type { Project } from '../types/project';
@@ -123,7 +124,7 @@ export function useAppraisalCase({
           name: p.name,
           province: p.location,
           projectId: p.id,
-          legalDate: p.submissionDate || new Date().toISOString().slice(0, 10),
+          legalDate: p.submissionDate || todayIso(),
         }),
       ),
     );

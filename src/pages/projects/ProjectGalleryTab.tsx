@@ -1,18 +1,42 @@
-import React, { useEffect, useMemo, useState } from 'react';
-import { Camera, ChevronLeft, ChevronRight, Download, Plus } from 'lucide-react';
+import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import {
+  Camera,
+  ChevronLeft,
+  ChevronRight,
+  Download,
+  ImageOff,
+  Pencil,
+  Plus,
+  RefreshCw,
+  Trash2,
+  Maximize2,
+} from 'lucide-react';
 import type { Project, ProjectImage } from '../../types/project';
-import { apiRequest } from '../../services/apiClient';
+import { ApiError, apiRequest } from '../../services/apiClient';
 import { appraisalService } from '../../services/appraisalService';
-import { ReviewModal } from '../../components/appraisal/ReviewModal';
 import { SearchableSelect } from '../../components/ui/SearchableSelect';
-import { Tooltip } from '../../components/ui/Tooltip';
 import { EntityLink } from '../../components/ui/EntityLink';
+import {
+  Badge,
+  Button,
+  Card,
+  EmptyState,
+  FormField,
+  IconButton,
+  Modal,
+  Skeleton,
+  confirm,
+  toast,
+} from '../../components/ui';
 import { useAuth } from '../../context/AuthContext';
 import { useFilterState } from '../../hooks/useFilterState';
-import { formatDate } from '../../lib/utils';
+import { cn } from '../../lib/utils';
+import { contentPath, galleryImageDate, nextAfterRemoval, stepIndex } from './galleryUtils';
 
 type GalleryImage = ProjectImage & { storagePath?: string; sha256?: string };
 type Gallery = { images: GalleryImage[]; revision: number };
+type BlobCache = Map<string, Promise<Blob>>;
+
 const categories = [
   { value: 'phoi_canh', label: 'Phối cảnh 3D kiến trúc' },
   { value: 'hien_trang', label: 'Hiện trạng thực địa' },
@@ -20,29 +44,74 @@ const categories = [
   { value: 'tien_do', label: 'Tiến độ thi công' },
 ];
 const initial = { title: '', url: '', category: 'phoi_canh', description: '', file: null as File | null };
-const button =
-  'rounded-lg border border-border dark:border-slate-800 bg-surface dark:bg-slate-800 px-3 py-2 text-ink dark:text-slate-100 disabled:opacity-50';
 const input =
-  'w-full rounded-lg border border-border dark:border-slate-800 bg-subtle dark:bg-slate-900 px-3 py-2 text-ink dark:text-slate-100';
+  'w-full rounded-xl border border-border dark:border-slate-700 bg-surface dark:bg-slate-900 px-3 py-2 text-sm text-ink dark:text-slate-100 placeholder:text-ink-muted dark:placeholder:text-slate-500 focus:outline-none focus-visible:ring-2 focus-visible:ring-focus disabled:opacity-60';
 
-function ImageOriginal({ image, full = false }: { image: GalleryImage; full?: boolean }) {
+/**
+ * Renders one gallery image. Stored originals need an authenticated fetch, so they are loaded
+ * only once the tile scrolls near the viewport (or immediately when `eager`), shared through
+ * `cache`, and every object URL is revoked when the image changes or the component unmounts.
+ */
+function GalleryImageView({
+  image,
+  cache,
+  eager = false,
+  className,
+}: {
+  image: GalleryImage;
+  cache: BlobCache;
+  eager?: boolean;
+  className?: string;
+}) {
+  const holder = useRef<HTMLDivElement>(null);
+  const [visible, setVisible] = useState(eager);
   const [source, setSource] = useState('');
+  const [loaded, setLoaded] = useState(false);
   const [error, setError] = useState(false);
+
   useEffect(() => {
-    let active = true,
-      objectUrl = '';
+    if (visible) return;
+    const node = holder.current;
+    if (!node || typeof IntersectionObserver === 'undefined') {
+      setVisible(true);
+      return;
+    }
+    const observer = new IntersectionObserver(
+      (entries) => {
+        if (entries.some((entry) => entry.isIntersecting)) {
+          setVisible(true);
+          observer.disconnect();
+        }
+      },
+      { rootMargin: '200px' },
+    );
+    observer.observe(node);
+    return () => observer.disconnect();
+  }, [visible]);
+
+  useEffect(() => {
     setError(false);
+    setLoaded(false);
     setSource('');
+    if (!visible) return;
     if (!image.storagePath) {
       setSource(image.url);
       return;
     }
-    appraisalService
-      .blob(image.url.replace(/^\/api\/appraisal/, ''))
+    let active = true;
+    let objectUrl = '';
+    let pending = cache.get(image.url);
+    if (!pending) {
+      pending = appraisalService.blob(contentPath(image.url));
+      cache.set(image.url, pending);
+      // A failed fetch must not poison the cache for the next attempt.
+      pending.catch(() => cache.delete(image.url));
+    }
+    pending
       .then((blob) => {
+        if (!active) return;
         objectUrl = URL.createObjectURL(blob);
-        if (active) setSource(objectUrl);
-        else URL.revokeObjectURL(objectUrl);
+        setSource(objectUrl);
       })
       .catch(() => {
         if (active) setError(true);
@@ -51,28 +120,51 @@ function ImageOriginal({ image, full = false }: { image: GalleryImage; full?: bo
       active = false;
       if (objectUrl) URL.revokeObjectURL(objectUrl);
     };
-  }, [image.url, image.storagePath]);
-  if (error)
-    return (
-      <p role="alert" className="p-6 text-red-700 dark:text-red-300">
-        Không tải được ảnh gốc.
-      </p>
-    );
-  if (!source) return <p className="p-6 text-ink-muted dark:text-slate-400">Đang tải ảnh…</p>;
+  }, [visible, image.url, image.storagePath, cache]);
+
   return (
-    <img
-      src={source}
-      alt={image.title}
-      onError={() => setError(true)}
-      loading={full ? 'eager' : 'lazy'}
-      className={full ? 'mx-auto max-h-[65vh] max-w-full object-contain' : 'h-48 w-full object-cover'}
-    />
+    <div ref={holder} className={cn('relative overflow-hidden bg-subtle dark:bg-slate-950', className)}>
+      {error ? (
+        <div
+          role="alert"
+          className="flex h-full min-h-[8rem] flex-col items-center justify-center gap-2 p-4 text-xs text-danger-700 dark:text-danger-300"
+        >
+          <ImageOff size={22} aria-hidden="true" />
+          Không tải được ảnh.
+        </div>
+      ) : (
+        <>
+          {!loaded && <Skeleton variant="rectangular" className="absolute inset-0 h-full w-full" />}
+          {source && (
+            <img
+              src={source}
+              alt={image.title}
+              onLoad={() => setLoaded(true)}
+              onError={() => setError(true)}
+              loading={eager ? 'eager' : 'lazy'}
+              className={cn(
+                'h-full w-full transition-opacity duration-200',
+                eager ? 'object-contain' : 'object-cover',
+                loaded ? 'opacity-100' : 'opacity-0',
+              )}
+            />
+          )}
+        </>
+      )}
+    </div>
   );
 }
 
-function imageDate(value: string) {
-  const legacy = value.match(/^(\d{1,2})\/(\d{1,2})\/(\d{4})$/);
-  return formatDate(legacy ? `${legacy[3]}-${legacy[2].padStart(2, '0')}-${legacy[1].padStart(2, '0')}` : value);
+function GalleryTileSkeleton() {
+  return (
+    <div className="overflow-hidden rounded-2xl border border-border dark:border-slate-800 bg-surface dark:bg-slate-900">
+      <Skeleton variant="rectangular" className="aspect-[4/3] w-full" />
+      <div className="space-y-2 p-3">
+        <Skeleton width="70%" />
+        <Skeleton width="45%" height={12} />
+      </div>
+    </div>
+  );
 }
 
 export function ProjectGalleryTab({ project }: { project: Project }) {
@@ -82,11 +174,16 @@ export function ProjectGalleryTab({ project }: { project: Project }) {
   const [selected, setSelected] = useState<string | null>(null);
   const [adding, setAdding] = useState(false);
   const [form, setForm] = useState(initial);
-  const [loading, setLoading] = useState(true),
-    [busy, setBusy] = useState(false),
-    [error, setError] = useState('');
+  const [editing, setEditing] = useState<GalleryImage | null>(null);
+  const [edit, setEdit] = useState({ title: '', category: 'phoi_canh', description: '' });
+  const [confirming, setConfirming] = useState(false);
+  const [loading, setLoading] = useState(true);
+  const [busy, setBusy] = useState(false);
+  const [error, setError] = useState('');
   const [version, setVersion] = useState(0);
+  const cache = useRef<BlobCache>(new Map()).current;
   const path = '/projects/' + encodeURIComponent(project.id) + '/images';
+
   useEffect(() => {
     let active = true;
     setLoading(true);
@@ -107,21 +204,63 @@ export function ProjectGalleryTab({ project }: { project: Project }) {
       active = false;
     };
   }, [path, version]);
+
   const filtered = useMemo(
     () => gallery.images.filter((image) => category.category === 'all' || image.category === category.category),
     [gallery, category],
   );
   const index = filtered.findIndex((image) => image.id === selected);
-  const activeImage = filtered[index];
+  const activeImage = index >= 0 ? filtered[index] : undefined;
   const dirty =
     JSON.stringify({ ...form, file: form.file?.name || null }) !== JSON.stringify({ ...initial, file: null });
-  const canAdd = mode === 'demo' || ['officer', 'head_of_department', 'admin'].includes(profile?.role || '');
-  const close = () => {
+  const editDirty =
+    !!editing &&
+    JSON.stringify(edit) !==
+      JSON.stringify({ title: editing.title, category: editing.category, description: editing.description || '' });
+  // Same gate as the add button; the worker re-checks the role on every write.
+  const canEdit = mode === 'demo' || ['officer', 'head_of_department', 'admin'].includes(profile?.role || '');
+
+  const step = useCallback(
+    (delta: number) => {
+      if (filtered.length < 2 || index < 0) return;
+      setSelected(filtered[stepIndex(index, delta, filtered.length)].id);
+    },
+    [filtered, index],
+  );
+
+  // ←/→ browse the lightbox; Esc is handled by Modal and closes only the top layer.
+  useEffect(() => {
+    if (!activeImage || editing || confirming) return;
+    const onKey = (event: KeyboardEvent) => {
+      const target = event.target as HTMLElement | null;
+      if (target && ['INPUT', 'TEXTAREA'].includes(target.tagName)) return;
+      if (event.key === 'ArrowLeft') {
+        event.preventDefault();
+        step(-1);
+      } else if (event.key === 'ArrowRight') {
+        event.preventDefault();
+        step(1);
+      }
+    };
+    window.addEventListener('keydown', onKey);
+    return () => window.removeEventListener('keydown', onKey);
+  }, [activeImage, editing, confirming, step]);
+
+  const failed = (cause: unknown, title: string) => {
+    const message = (cause as Error).message;
+    toast.error(title, { description: message });
+    // Someone else changed the gallery: reload so the next attempt uses the new revision.
+    if (cause instanceof ApiError && cause.status === 409) setVersion((v) => v + 1);
+  };
+
+  const closeAdd = () => {
     if (!busy) {
       setAdding(false);
       setForm(initial);
+      setError('');
     }
   };
+
   const save = async (event: React.FormEvent) => {
     event.preventDefault();
     if (busy) return;
@@ -155,139 +294,395 @@ export function ProjectGalleryTab({ project }: { project: Project }) {
       setGallery(result);
       setAdding(false);
       setForm(initial);
+      toast.success('Đã bổ sung ảnh tư liệu');
     } catch (cause) {
       setError((cause as Error).message);
+      if (cause instanceof ApiError && cause.status === 409) setVersion((v) => v + 1);
     } finally {
       setBusy(false);
     }
   };
-  const download = async (image: GalleryImage) => {
+
+  const openEdit = (image: GalleryImage) => {
+    setEdit({ title: image.title, category: image.category, description: image.description || '' });
+    setEditing(image);
+  };
+
+  const saveEdit = async (event: React.FormEvent) => {
+    event.preventDefault();
+    if (!editing || busy) return;
+    setBusy(true);
     try {
-      if (image.storagePath) await appraisalService.download(image.url.replace(/^\/api\/appraisal/, ''), image.title);
-      else window.open(image.url, '_blank', 'noopener,noreferrer');
+      const result = await apiRequest<Gallery>(path + '/' + encodeURIComponent(editing.id), {
+        method: 'PATCH',
+        body: JSON.stringify({ revision: gallery.revision, ...edit }),
+      });
+      setGallery(result);
+      setEditing(null);
+      toast.success('Đã cập nhật thông tin ảnh');
     } catch (cause) {
-      setError((cause as Error).message);
+      failed(cause, 'Không lưu được thông tin ảnh');
+    } finally {
+      setBusy(false);
     }
   };
+
+  const remove = async (image: GalleryImage) => {
+    if (busy) return;
+    setConfirming(true);
+    const ok = await confirm({
+      title: 'Xóa ảnh khỏi thư viện?',
+      description: `Ảnh "${image.title}" sẽ bị gỡ khỏi thư viện dự án. Thao tác này không hoàn tác được.`,
+      confirmLabel: 'Xóa ảnh',
+      tone: 'danger',
+    });
+    setConfirming(false);
+    if (!ok) return;
+    setBusy(true);
+    try {
+      const result = await apiRequest<Gallery>(
+        path + '/' + encodeURIComponent(image.id) + '?revision=' + gallery.revision,
+        { method: 'DELETE' },
+      );
+      if (selected === image.id)
+        setSelected(
+          nextAfterRemoval(
+            filtered.map((i) => i.id),
+            image.id,
+          ),
+        );
+      cache.delete(image.url);
+      setGallery(result);
+      toast.success('Đã xóa ảnh khỏi thư viện');
+    } catch (cause) {
+      failed(cause, 'Không xóa được ảnh');
+    } finally {
+      setBusy(false);
+    }
+  };
+
+  const download = async (image: GalleryImage) => {
+    try {
+      if (image.storagePath) await appraisalService.download(contentPath(image.url), image.title);
+      else window.open(image.url, '_blank', 'noopener,noreferrer');
+    } catch (cause) {
+      toast.error('Không tải được ảnh gốc', { description: (cause as Error).message });
+    }
+  };
+
   return (
-    <section className="space-y-5 text-sm text-ink dark:text-slate-100">
-      <header className="flex flex-wrap items-center justify-between gap-3 rounded-xl border border-border dark:border-slate-800 bg-surface dark:bg-slate-900 p-4">
-        <div>
-          <h3 className="flex items-center gap-2 font-bold">
-            <Camera size={20} />
+    <section className="space-y-4 text-sm text-ink dark:text-slate-100">
+      <Card padding="md" className="flex flex-wrap items-center justify-between gap-3">
+        <div className="min-w-0">
+          <h3 className="flex items-center gap-2 font-bold text-ink dark:text-slate-100">
+            <Camera size={18} className="text-primary-600 dark:text-primary-300" aria-hidden="true" />
             Thư viện ảnh dự án & khảo sát
           </h3>
           <p className="mt-1 text-xs text-ink-muted dark:text-slate-400">
             {gallery.images.length} ảnh tư liệu · Người bổ sung được ghi nhận theo tài khoản.
           </p>
         </div>
-        <div className="flex gap-3">
-          <button type="button" className={button} disabled={loading || busy} onClick={() => setVersion((v) => v + 1)}>
-            Tải lại
-          </button>
-          {canAdd && (
-            <button type="button" className={button} disabled={loading} onClick={() => setAdding(true)}>
-              <Plus className="inline" size={15} /> Bổ sung ảnh
-            </button>
+        <div className="flex flex-wrap items-center gap-2">
+          <div className="w-60 max-w-full">
+            <SearchableSelect
+              value={category.category}
+              onChange={(value) => {
+                setCategory({ category: value });
+                setSelected(null);
+              }}
+              options={[{ value: 'all', label: 'Tất cả ảnh' }, ...categories]}
+            />
+          </div>
+          <IconButton
+            icon={<RefreshCw size={16} />}
+            aria-label="Tải lại thư viện"
+            tooltip="Tải lại thư viện"
+            variant="secondary"
+            disabled={loading || busy}
+            onClick={() => {
+              cache.clear();
+              setVersion((v) => v + 1);
+            }}
+          />
+          {canEdit && (
+            <Button size="sm" leftIcon={<Plus size={14} />} disabled={loading} onClick={() => setAdding(true)}>
+              Bổ sung ảnh
+            </Button>
           )}
         </div>
-      </header>
-      {error && (
-        <p role="alert" className="text-red-700 dark:text-red-300">
+      </Card>
+
+      {error && !adding && (
+        <p
+          role="alert"
+          className="rounded-xl border border-danger-200 dark:border-danger-800 bg-danger-50 dark:bg-danger-900 px-3 py-2 text-danger-700 dark:text-danger-200"
+        >
           {error}
         </p>
       )}
-      <div className="max-w-sm">
-        <SearchableSelect
-          value={category.category}
-          onChange={(value) => {
-            setCategory({ category: value });
-            setSelected(null);
-          }}
-          options={[{ value: 'all', label: 'Tất cả ảnh' }, ...categories]}
-        />
-      </div>
+
       {loading ? (
-        <p>Đang tải thư viện…</p>
+        <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-3" aria-busy="true" aria-label="Đang tải thư viện ảnh">
+          {Array.from({ length: 3 }).map((_, i) => (
+            <GalleryTileSkeleton key={i} />
+          ))}
+        </div>
       ) : filtered.length === 0 ? (
-        <p className="p-8 text-center text-ink-muted dark:text-slate-400">Chưa có ảnh trong phân loại này.</p>
+        <Card padding="none">
+          <EmptyState
+            icon={<Camera className="h-12 w-12" />}
+            title={gallery.images.length ? 'Chưa có ảnh trong phân loại này' : 'Thư viện ảnh còn trống'}
+            description={
+              gallery.images.length
+                ? 'Chọn phân loại khác hoặc "Tất cả ảnh" để xem toàn bộ tư liệu.'
+                : 'Bổ sung ảnh phối cảnh, hiện trạng hoặc tiến độ để lưu tư liệu cho dự án.'
+            }
+            actionLabel={canEdit && !gallery.images.length ? 'Bổ sung ảnh' : undefined}
+            onAction={canEdit ? () => setAdding(true) : undefined}
+          />
+        </Card>
       ) : (
         <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-3">
           {filtered.map((image) => (
             <article
               key={image.id}
-              className="overflow-hidden rounded-xl border border-border dark:border-slate-800 bg-surface dark:bg-slate-900"
+              className="group overflow-hidden rounded-2xl border border-border dark:border-slate-800 bg-surface dark:bg-slate-900 shadow-card transition-shadow hover:shadow-card-hover"
             >
               <button
                 type="button"
-                className="block w-full"
+                className="relative block w-full focus:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-focus"
                 aria-label={'Xem ảnh: ' + image.title}
                 onClick={() => setSelected(image.id)}
               >
-                <ImageOriginal image={image} />
+                <GalleryImageView image={image} cache={cache} className="aspect-[4/3] w-full" />
+                <span className="pointer-events-none absolute inset-0 flex items-center justify-center bg-black/30 text-white opacity-0 transition-opacity group-hover:opacity-100">
+                  <Maximize2 size={22} aria-hidden="true" />
+                </span>
               </button>
-              <div className="space-y-2 p-3">
-                <h4 className="font-semibold">{image.title}</h4>
-                <p className="text-xs text-ink-muted dark:text-slate-400">
-                  {image.categoryLabel} · {imageDate(image.date)}
-                </p>
-                <p className="text-xs">{image.author}</p>
-                <p className="text-xs text-ink-muted dark:text-slate-400">{image.description}</p>
+              <div className="space-y-1.5 p-3">
+                <div className="flex items-start justify-between gap-2">
+                  <h4 className="min-w-0 truncate font-semibold text-ink dark:text-slate-100">{image.title}</h4>
+                  {canEdit && (
+                    <div className="-mr-1 -mt-1 flex shrink-0 gap-1">
+                      <IconButton
+                        size="sm"
+                        icon={<Pencil size={14} />}
+                        aria-label={'Sửa thông tin ảnh: ' + image.title}
+                        tooltip="Sửa tiêu đề, phân loại, mô tả"
+                        disabled={busy}
+                        onClick={() => openEdit(image)}
+                      />
+                      <IconButton
+                        size="sm"
+                        icon={<Trash2 size={14} />}
+                        aria-label={'Xóa ảnh: ' + image.title}
+                        tooltip="Xóa ảnh"
+                        className="hover:text-danger-600 dark:hover:text-danger-400"
+                        disabled={busy}
+                        onClick={() => remove(image)}
+                      />
+                    </div>
+                  )}
+                </div>
+                <div className="flex flex-wrap items-center gap-2 text-xs text-ink-muted dark:text-slate-400">
+                  <Badge variant="neutral" size="xs">
+                    {image.categoryLabel}
+                  </Badge>
+                  <span>{galleryImageDate(image.date)}</span>
+                  <span aria-hidden="true">·</span>
+                  <span className="truncate">{image.author}</span>
+                </div>
+                {image.description && (
+                  <p className="line-clamp-2 text-xs text-ink-secondary dark:text-slate-300">{image.description}</p>
+                )}
               </div>
             </article>
           ))}
         </div>
       )}
+
       {activeImage && (
-        <ReviewModal heading={activeImage.title} onClose={() => setSelected(null)}>
-          <div className="space-y-4">
-            <EntityLink type="project" id={project.id} name={project.name} />
-            <ImageOriginal image={activeImage} full />
-            <div className="flex items-center justify-between gap-3">
-              <Tooltip content="Ảnh trước">
-                <button
-                  type="button"
-                  className={button}
-                  aria-label="Ảnh trước"
-                  disabled={filtered.length < 2}
-                  onClick={() => setSelected(filtered[(index - 1 + filtered.length) % filtered.length].id)}
-                >
-                  <ChevronLeft size={18} />
-                </button>
-              </Tooltip>
+        <Modal
+          heading={activeImage.title}
+          description={
+            <span className="flex flex-wrap items-center gap-2">
+              <Badge variant="neutral" size="xs">
+                {activeImage.categoryLabel}
+              </Badge>
               <span>
-                {index + 1} / {filtered.length}
+                {galleryImageDate(activeImage.date)} · {activeImage.author}
               </span>
-              <Tooltip content="Tải ảnh gốc">
-                <button type="button" className={button} aria-label="Tải ảnh gốc" onClick={() => download(activeImage)}>
-                  <Download size={18} />
-                </button>
-              </Tooltip>
-              <Tooltip content="Ảnh sau">
-                <button
-                  type="button"
-                  className={button}
-                  aria-label="Ảnh sau"
-                  disabled={filtered.length < 2}
-                  onClick={() => setSelected(filtered[(index + 1) % filtered.length].id)}
-                >
-                  <ChevronRight size={18} />
-                </button>
-              </Tooltip>
+            </span>
+          }
+          icon={<Camera size={20} />}
+          size="full"
+          onClose={() => setSelected(null)}
+          footer={
+            <>
+              <span className="mr-auto text-xs text-ink-muted dark:text-slate-400">
+                Ảnh {index + 1} / {filtered.length} · Dùng phím ← → để chuyển ảnh
+              </span>
+              {canEdit && (
+                <>
+                  <Button
+                    variant="ghost"
+                    size="sm"
+                    leftIcon={<Trash2 size={14} />}
+                    disabled={busy}
+                    onClick={() => remove(activeImage)}
+                  >
+                    Xóa
+                  </Button>
+                  <Button
+                    variant="secondary"
+                    size="sm"
+                    leftIcon={<Pencil size={14} />}
+                    disabled={busy}
+                    onClick={() => openEdit(activeImage)}
+                  >
+                    Sửa thông tin
+                  </Button>
+                </>
+              )}
+              <Button
+                variant="secondary"
+                size="sm"
+                leftIcon={<Download size={14} />}
+                onClick={() => download(activeImage)}
+              >
+                Tải ảnh gốc
+              </Button>
+            </>
+          }
+        >
+          <div className="space-y-4">
+            <div className="relative overflow-hidden rounded-xl bg-slate-950 dark:bg-slate-950">
+              <GalleryImageView
+                key={activeImage.id}
+                image={activeImage}
+                cache={cache}
+                eager
+                className="h-[62vh] bg-slate-950 dark:bg-slate-950"
+              />
+              {filtered.length > 1 && (
+                <>
+                  <IconButton
+                    icon={<ChevronLeft size={20} />}
+                    aria-label="Ảnh trước"
+                    tooltip="Ảnh trước (←)"
+                    variant="secondary"
+                    rounded
+                    className="absolute left-3 top-1/2 -translate-y-1/2 shadow-dropdown"
+                    onClick={() => step(-1)}
+                  />
+                  <IconButton
+                    icon={<ChevronRight size={20} />}
+                    aria-label="Ảnh sau"
+                    tooltip="Ảnh sau (→)"
+                    variant="secondary"
+                    rounded
+                    className="absolute right-3 top-1/2 -translate-y-1/2 shadow-dropdown"
+                    onClick={() => step(1)}
+                  />
+                </>
+              )}
             </div>
-            <p>{activeImage.description}</p>
+            {activeImage.description ? (
+              <p className="leading-relaxed text-ink dark:text-slate-200">{activeImage.description}</p>
+            ) : (
+              <p className="text-ink-muted dark:text-slate-400">Chưa có mô tả cho ảnh này.</p>
+            )}
             <p className="text-xs text-ink-muted dark:text-slate-400">
-              {activeImage.author} · {imageDate(activeImage.date)}
+              Dự án: <EntityLink type="project" id={project.id} name={project.name} />
             </p>
           </div>
-        </ReviewModal>
+        </Modal>
       )}
-      {adding && (
-        <ReviewModal heading="Bổ sung ảnh dự án / khảo sát" dirty={dirty || busy} onClose={close}>
-          <form onSubmit={save} className="space-y-4">
-            <label className="block">
-              Tiêu đề ảnh
+
+      {editing && (
+        <Modal
+          heading="Sửa thông tin ảnh"
+          description="Chỉ sửa tiêu đề, phân loại và mô tả; tệp ảnh, người bổ sung và ngày giữ nguyên."
+          icon={<Pencil size={18} />}
+          size="md"
+          dirty={editDirty || busy}
+          onClose={() => {
+            if (!busy) setEditing(null);
+          }}
+          footer={
+            <>
+              <Button variant="ghost" disabled={busy} onClick={() => setEditing(null)}>
+                Hủy
+              </Button>
+              <Button
+                type="submit"
+                form="gallery-edit-form"
+                loading={busy}
+                loadingText="Đang lưu…"
+                disabled={!editDirty}
+              >
+                Lưu thay đổi
+              </Button>
+            </>
+          }
+        >
+          <form id="gallery-edit-form" onSubmit={saveEdit} className="space-y-4">
+            <FormField label="Tiêu đề ảnh" required htmlFor="gallery-edit-title">
               <input
+                id="gallery-edit-title"
+                className={input}
+                required
+                maxLength={240}
+                disabled={busy}
+                value={edit.title}
+                onChange={(e) => setEdit({ ...edit, title: e.target.value })}
+              />
+            </FormField>
+            <FormField label="Phân loại" required>
+              <SearchableSelect
+                disabled={busy}
+                options={categories}
+                value={edit.category}
+                onChange={(value) => setEdit({ ...edit, category: value })}
+              />
+            </FormField>
+            <FormField label="Mô tả" htmlFor="gallery-edit-description">
+              <textarea
+                id="gallery-edit-description"
+                className={input}
+                disabled={busy}
+                maxLength={2000}
+                rows={4}
+                value={edit.description}
+                onChange={(e) => setEdit({ ...edit, description: e.target.value })}
+              />
+            </FormField>
+          </form>
+        </Modal>
+      )}
+
+      {adding && (
+        <Modal
+          heading="Bổ sung ảnh dự án / khảo sát"
+          icon={<Plus size={18} />}
+          size="md"
+          dirty={dirty || busy}
+          onClose={closeAdd}
+          footer={
+            <>
+              <Button variant="ghost" disabled={busy} onClick={closeAdd}>
+                Hủy
+              </Button>
+              <Button type="submit" form="gallery-add-form" loading={busy} loadingText="Đang lưu…">
+                Lưu ảnh tư liệu
+              </Button>
+            </>
+          }
+        >
+          <form id="gallery-add-form" onSubmit={save} className="space-y-4">
+            <FormField label="Tiêu đề ảnh" required htmlFor="gallery-add-title">
+              <input
+                id="gallery-add-title"
                 className={input}
                 required
                 maxLength={240}
@@ -295,29 +690,28 @@ export function ProjectGalleryTab({ project }: { project: Project }) {
                 value={form.title}
                 onChange={(e) => setForm({ ...form, title: e.target.value })}
               />
-            </label>
-            <label className="block">
-              Phân loại
+            </FormField>
+            <FormField label="Phân loại" required>
               <SearchableSelect
                 disabled={busy}
                 options={categories}
                 value={form.category}
-                onChange={(category) => setForm({ ...form, category })}
+                onChange={(value) => setForm({ ...form, category: value })}
               />
-            </label>
-            <label className="block">
-              Tệp ảnh (JPEG, PNG, WebP; tối đa 5 MB)
+            </FormField>
+            <FormField label="Tệp ảnh" hint="JPEG, PNG hoặc WebP; tối đa 5 MB." htmlFor="gallery-add-file">
               <input
+                id="gallery-add-file"
                 className={input}
                 type="file"
                 disabled={busy}
                 accept="image/jpeg,image/png,image/webp"
                 onChange={(e) => setForm({ ...form, file: e.target.files?.[0] || null })}
               />
-            </label>
-            <label className="block">
-              Hoặc liên kết ảnh HTTPS
+            </FormField>
+            <FormField label="Hoặc liên kết ảnh HTTPS" htmlFor="gallery-add-url">
               <input
+                id="gallery-add-url"
                 className={input}
                 type="url"
                 disabled={busy || !!form.file}
@@ -327,10 +721,10 @@ export function ProjectGalleryTab({ project }: { project: Project }) {
                 value={form.url}
                 onChange={(e) => setForm({ ...form, url: e.target.value })}
               />
-            </label>
-            <label className="block">
-              Mô tả
+            </FormField>
+            <FormField label="Mô tả" htmlFor="gallery-add-description">
               <textarea
+                id="gallery-add-description"
                 className={input}
                 disabled={busy}
                 maxLength={2000}
@@ -338,17 +732,14 @@ export function ProjectGalleryTab({ project }: { project: Project }) {
                 value={form.description}
                 onChange={(e) => setForm({ ...form, description: e.target.value })}
               />
-            </label>
+            </FormField>
             {error && (
-              <p role="alert" className="text-red-700 dark:text-red-300">
+              <p role="alert" className="text-danger-700 dark:text-danger-300">
                 {error}
               </p>
             )}
-            <button type="submit" className={button} disabled={busy}>
-              {busy ? 'Đang lưu…' : 'Lưu ảnh tư liệu'}
-            </button>
           </form>
-        </ReviewModal>
+        </Modal>
       )}
     </section>
   );

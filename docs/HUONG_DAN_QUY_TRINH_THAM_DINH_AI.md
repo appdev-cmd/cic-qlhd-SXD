@@ -1,9 +1,9 @@
 # HƯỚNG DẪN QUY TRÌNH THẨM ĐỊNH HỒ SƠ CÓ HỖ TRỢ AI
 
 **Hệ thống:** BuildAppraisal AI — Hỗ trợ nghiệp vụ Sở Xây dựng  
-**Phiên bản tài liệu:** 1.0 — ngày 27/09/2026  
+**Phiên bản tài liệu:** 1.1 — ngày 29/10/2026  
 **Đối tượng:** Chuyên viên, trưởng phòng, lãnh đạo và người trình diễn hệ thống  
-**Phạm vi:** Chức năng đã triển khai trên bản demo tại [localhost:3008](http://localhost:3008/projects/appraisal).
+**Phạm vi:** Chức năng đã triển khai trên bản demo tại [localhost:8208](http://localhost:8208/dashboard). Trong ứng dụng, mở lại tài liệu này bằng menu **Hệ thống → Hướng dẫn sử dụng** hoặc nút dấu hỏi trên thanh trên cùng.
 
 > Tài liệu hướng dẫn thao tác phần mềm hiện có. Các đầu ra là dự thảo phục vụ rà soát nội bộ. Việc ký, cấp số và ban hành văn bản thuộc người có thẩm quyền; chưa được thực hiện tự động trong hệ thống.
 
@@ -75,19 +75,31 @@ Trạng thái **Đã kiểm tra** chỉ cho biết đã có lượt xử lý. Mu
 
 Quyền thực tế phụ thuộc tỉnh, phòng ban, phân công và trạng thái hồ sơ. Một nút có thể không xuất hiện hoặc bị vô hiệu hóa khi tài khoản không có quyền hoặc hồ sơ không ở bước phù hợp.
 
-**Cách thử vai trò:** đăng xuất rồi chọn tài khoản đăng nhập nhanh tương ứng trên màn hình đăng nhập, nếu môi trường demo đang bật chức năng này. Thử vai trò Chuyên viên trước; chuyển Trưởng phòng khi đến bước phân công hoặc hoàn tất.
+**Cách thử vai trò:** đăng xuất rồi chọn vai trò trong ô **Chọn vai trò để đăng nhập ngay** trên màn hình đăng nhập, nếu môi trường demo đang bật chức năng này. Thử vai trò Chuyên viên trước; chuyển Trưởng phòng khi đến bước phân công hoặc hoàn tất.
 
 ## 3. Chuẩn bị trước khi thao tác
 
 ### 3.1. Điều kiện truy cập
 
-1. Mở [hệ thống](http://localhost:3008/projects/appraisal).
+1. Mở [hệ thống](http://localhost:8208/dashboard) tại địa chỉ `http://localhost:8208`.
 2. Đăng nhập bằng tài khoản được cấp hoặc tài khoản thử nghiệm theo vai trò.
 3. Kiểm tra thấy đúng dự án/hồ sơ thuộc phạm vi của mình.
-4. Nếu cần phân tích bằng AI, vào **Cài đặt hệ thống → Kiểm tra kết nối AI**.
+4. Nếu cần phân tích bằng AI, vào **Hệ thống → Cài đặt Hệ thống → Kiểm tra kết nối AI**.
 5. Chỉ coi kết nối đã được xác nhận khi có thông báo **Đã nhận phản hồi từ mô hình**. Trạng thái **Đã cấu hình** chưa phải kết quả kiểm tra kết nối.
 
 Thao tác kiểm tra kết nối gửi lời nhắn thử. Khi chạy phân tích hồ sơ có bật AI, các trích đoạn hồ sơ được gửi đến nhà cung cấp mô hình để xử lý.
+
+**Dành cho người cài đặt bản demo:**
+
+| Thành phần | Địa chỉ | Ghi chú |
+| --- | --- | --- |
+| Giao diện web và API | `http://localhost:8208` | API đi qua đường dẫn `/api/appraisal` trên cùng địa chỉ |
+| Core API | cổng `8201` | Chỉ dùng nội bộ trên máy chủ, người dùng không mở trực tiếp |
+| AI Worker | cổng `8200` | Chỉ dùng nội bộ trên máy chủ, người dùng không mở trực tiếp |
+
+- Khởi động cả bộ bằng một lệnh `pnpm dev` tại thư mục dự án. Lệnh chờ Worker và Core sẵn sàng rồi mới mở Web. Giữ cửa sổ lệnh chạy; bấm Ctrl+C để dừng cả bộ.
+- Cổng được cố định trong `config/runtime-ports.json`. Khi cổng bị chiếm, giải phóng cổng đó; không tự đổi sang cổng khác.
+- Các địa chỉ cũ `3008`, `3001`, `8000` không còn sử dụng.
 
 ### 3.2. Chọn cách thực hành
 
@@ -115,6 +127,32 @@ Hồ sơ mới do người dùng tạo có thể được hiển thị là **T�
 
 Nên đặt tên có nội dung và phiên bản, ví dụ `BCNCKT_ThuyetMinh_Lan02.pdf`, `TMĐT_Lan02.pdf`. Không dùng tên tệp để thay nội dung còn thiếu trong văn bản.
 
+### 3.4. Làm quen giao diện
+
+**Menu bên trái** chia theo nhóm công việc:
+
+| Nhóm | Mục trong menu |
+| --- | --- |
+| Tổng quan | Dashboard & Thống kê |
+| Hồ sơ nghiệp vụ | Thẩm định BCNCKT; Cấp giấy phép xây dựng; Hậu kiểm & Nghiệm thu; Danh mục dự án |
+| Danh mục | Tổ chức tham gia; Cá nhân hành nghề; Giá & Định mức |
+| Công cụ | Trợ lý AI Pháp luật; Bản đồ Quy hoạch; Mô hình BIM; Văn bản & In ấn A4 |
+| Hệ thống | Cài đặt Hệ thống; Hướng dẫn sử dụng |
+
+Các mục nghiệp vụ có hạn xử lý hiện số hồ sơ quá hạn hoặc sắp đến hạn ngay bên cạnh tên mục.
+
+**Tìm nhanh:** bấm **Ctrl+K** ở bất kỳ màn hình nào, hoặc phím **/** khi không đang gõ trong ô nhập. Gõ mã hồ sơ, tên hồ sơ, tên dự án hoặc tên trang. Có thể gõ không dấu và viết tắt như `gpxd`, `bcnckt`, `cdt`. Dùng phím mũi tên lên/xuống để chọn, **Enter** để mở, **Esc** để đóng.
+
+**Chuông hạn xử lý** trên thanh trên cùng cho biết số hồ sơ **Quá hạn**, **Quá hạn bổ sung** và **Sắp đến hạn (≤3 ngày làm việc)** theo từng nghiệp vụ. Bấm một dòng để mở danh sách đã lọc theo hạn. Số liệu được tính khi mở trang; hệ thống không gửi email nhắc hạn.
+
+**Dashboard & Thống kê:**
+
+- **Việc của tôi:** số hồ sơ chờ anh/chị xử lý (với trưởng phòng, lãnh đạo là chờ rà soát), quá hạn, sắp đến hạn, quá hạn bổ sung theo từng nghiệp vụ. Bấm vào một số để mở danh sách đã lọc.
+- **Chỉ số 30 ngày:** tiếp nhận, hoàn tất, tỷ lệ đúng hạn, thời gian xử lý trung bình, so với 30 ngày trước đó.
+- **Hạn xử lý theo chuyên viên:** bảng dành cho trưởng phòng, lãnh đạo và quản trị; mỗi dòng là một chuyên viên với số hồ sơ đang mở, quá hạn, sắp đến hạn, chờ bổ sung, hoàn tất đúng hạn/trễ.
+- **Xuất báo cáo:** tải tệp CSV mở được bằng Excel.
+- Lần đầu sử dụng, thẻ **Bắt đầu nhanh** ở đầu Dashboard gợi ý các bước làm quen. Bấm **Ẩn** khi không cần nữa.
+
 ## 4. Sơ đồ quy trình
 
 ```mermaid
@@ -140,12 +178,24 @@ Có thể chạy sơ bộ trước khi xác nhận hết dữ liệu để xác 
 
 ### 5.1. Hai đường vào cùng một hồ sơ
 
-- **Danh sách tổng:** Quản lý Dự án → Thẩm định BCNCKT.
-- **Theo dự án:** Quản lý Dự án → mở tên dự án → tab Thẩm định BCNCKT.
+- **Danh sách tổng:** Hồ sơ nghiệp vụ → Thẩm định BCNCKT.
+- **Theo dự án:** Hồ sơ nghiệp vụ → Danh mục dự án → mở tên dự án → tab Thẩm định BCNCKT.
 
 Danh sách tổng chứa hồ sơ của các dự án trong phạm vi quyền truy cập. Tab dự án chỉ hiển thị các lần nộp gắn với dự án đang mở. Đây là cùng dữ liệu, không cần tạo lại ở hai nơi.
 
-Bảng hiển thị tên hồ sơ, số tài liệu, loại dữ liệu, trạng thái/phòng thụ lý, địa điểm và thời gian. Có thể tìm kiếm, lọc, bấm tiêu đề để sắp xếp và kéo ranh giới cột để đổi độ rộng.
+Phía trên danh sách tổng có các tab xem nhanh:
+
+| Tab | Hiển thị |
+| --- | --- |
+| Tất cả | Mọi hồ sơ trong phạm vi quyền |
+| Của tôi | Hồ sơ được phân công cho anh/chị |
+| Chờ tôi xử lý | Hồ sơ đang chờ anh/chị thao tác ở bước hiện tại |
+| Sắp đến hạn | Hồ sơ còn ít ngày làm việc trước hạn; số bên cạnh tên tab là số hồ sơ |
+| Quá hạn | Hồ sơ đã quá hạn xử lý; số bên cạnh tên tab là số hồ sơ |
+
+Khi đang chọn một tab, dùng phím **←/→** để chuyển sang tab bên cạnh.
+
+Bảng hiển thị tên hồ sơ, số tài liệu, loại dữ liệu, trạng thái/phòng thụ lý, địa điểm và thời gian. Thanh lọc xếp theo thứ tự: ô tìm kiếm → phân loại → cán bộ → trạng thái hạn → thời gian. Có thể bấm tiêu đề cột để sắp xếp và kéo ranh giới cột để đổi độ rộng; bộ lọc và độ rộng cột được nhớ cho lần sau.
 
 ### 5.2. Tạo lần nộp
 
@@ -187,6 +237,27 @@ Nếu có thành phần chưa có trong danh mục, chọn **Thêm thành phần
 ### 5.5. Kiểm tra thành phần
 
 Bấm **Kiểm tra thành phần** tại từng dòng, ghi tình trạng và nhận xét. Không đánh dấu đã kiểm tra chỉ vì thấy tên tài liệu. Cần xem khả năng đọc, phạm vi nội dung, phụ lục và dấu hiệu thiếu trang.
+
+### 5.6. Đọc thanh tiến trình hồ sơ
+
+Ở đầu mỗi hồ sơ có **thanh tiến trình** theo các bước của thủ tục. Bước đang làm được tô nổi; bước đã qua có dấu hoàn thành; bước bị dừng (ví dụ từ chối tiếp nhận, dừng xử lý) được đánh dấu riêng. Rê chuột vào tên bước để xem ghi chú nếu có.
+
+| Thủ tục | Các bước trên thanh tiến trình |
+| --- | --- |
+| Thẩm định BCNCKT | Tiếp nhận → Kiểm tra hợp lệ → Thẩm định → Trình rà soát → Thông báo kết quả → Đóng dấu & lưu trữ |
+| Cấp giấy phép xây dựng | Tiếp nhận → Kiểm tra hồ sơ → Thẩm định, lấy ý kiến → Trình rà soát → Hoàn tất rà soát → Cấp giấy phép |
+| Hậu kiểm & Nghiệm thu | Tiếp nhận → Kiểm tra hồ sơ → Xem xét hồ sơ → Kiểm tra hiện trường → Trình rà soát → Thông báo kết quả |
+
+Thanh tiến trình được suy ra từ trạng thái xử lý của hồ sơ, chỉ để theo dõi; không thay việc chuyển bước tại **Quy trình xử lý**.
+
+Bên dưới các bước có ghi chú ngắn như ngày tiếp nhận, hạn xử lý hoặc tình trạng chờ (chờ bổ sung, tạm dừng).
+
+Khi hồ sơ đang ở bước xử lý, bên dưới thanh tiến trình có khối **Việc cần xong trước khi trình rà soát**, kèm số việc đã xong trên tổng số (ví dụ `3/5`). Khối tự mở khi còn việc chưa xong; bấm vào tiêu đề để thu gọn hoặc mở lại:
+
+- **BCNCKT:** có tài liệu đầu vào; đã chạy kiểm tra, kết quả còn hiệu lực; dữ liệu trích xuất đã được xác nhận; các nội dung cần làm rõ đã được đánh giá; phiếu thẩm định đã có kết luận.
+- **GPXD, Hậu kiểm & Nghiệm thu:** có tài liệu đầu vào; phiếu chuyên môn đã có kết luận.
+
+Danh sách này phản ánh các điều kiện hệ thống kiểm tra khi trình. Làm xong hết các việc trong danh sách trước khi bấm **Trình lãnh đạo rà soát** để tránh bị chặn.
 
 ## 6. Đọc PDF scan bằng OCR
 
@@ -315,7 +386,7 @@ Thực hiện cho từng đề xuất:
 4. Kiểm tra đơn vị, phiên bản, phạm vi tính toán và điều kiện áp dụng.
 5. Ghi ý kiến xử lý trong **Ý kiến và giải trình** nếu cần sử dụng nhận xét đó.
 
-Hiện phần đề xuất AI chưa có nút duyệt riêng cho từng thẻ. **Ghi đánh giá** nằm ở các dòng kiểm tra theo quy tắc bên dưới. Khi ghi ý kiến về đề xuất AI, nên chép nội dung vấn đề và nguồn, không chỉ ghi “đề xuất số 2” vì thứ tự có thể thay đổi ở lượt sau.
+Hiện phần đề xuất AI chưa có nút duyệt riêng cho từng thẻ. Các nút **Chấp nhận / Sửa / ghi chú / Bỏ qua** nằm trên thẻ đề xuất ở phần **Đối chiếu theo quy tắc** bên dưới. Khi ghi ý kiến về đề xuất AI, nên chép nội dung vấn đề và nguồn, không chỉ ghi “đề xuất số 2” vì thứ tự có thể thay đổi ở lượt sau.
 
 Ví dụ cách ghi:
 
@@ -323,7 +394,7 @@ Ví dụ cách ghi:
 
 ### 10.2. Đối chiếu theo quy tắc
 
-Bên dưới đề xuất AI là bảng **Đối chiếu theo quy tắc**.
+Bên dưới đề xuất AI là phần **Đối chiếu theo quy tắc**. Mỗi nhận xét hiện thành một **thẻ đề xuất** gồm tiêu đề, nhóm, kết quả, giải thích, công thức (nếu có), nội dung còn “Cần” và nút mở bằng chứng. Thanh **Đã xử lý x/y đề xuất** cho biết còn bao nhiêu thẻ chưa đánh giá; số trên tab **Nội dung thẩm định** là số thẻ chưa xử lý.
 
 | Kết quả | Cách hiểu |
 | --- | --- |
@@ -332,13 +403,21 @@ Bên dưới đề xuất AI là bảng **Đối chiếu theo quy tắc**.
 | Chưa đủ dữ liệu | Thiếu dữ liệu đọc được, liên kết chứng cứ hoặc xác nhận cần thiết |
 | Cần chuyên viên | Nội dung cần nhận định chuyên môn/pháp lý vượt phạm vi kiểm tra tự động |
 
-Với từng dòng:
+Với từng thẻ:
 
-1. Đọc **Kết quả và điều kiện**, công thức nếu có và nội dung “Cần”.
-2. Mở **Bằng chứng** và căn cứ liên quan.
-3. Bấm **Ghi đánh giá**.
-4. Chọn **Ghi nhận nhận xét**, **Không chấp nhận nhận xét** hoặc **Chờ làm rõ**.
-5. Ghi giải thích cụ thể, bấm **Lưu đánh giá**.
+1. Đọc kết quả, giải thích, công thức nếu có và nội dung “Cần”.
+2. Mở **nguồn chứng cứ** và căn cứ liên quan.
+3. Bấm một trong ba nút ở cuối thẻ (xem bảng dưới).
+4. Trong hộp thoại, kiểm tra lại lựa chọn (**Ghi nhận nhận xét**, **Không chấp nhận nhận xét** hoặc **Chờ làm rõ**).
+5. Ghi giải thích cụ thể, bấm **Lưu đánh giá**. Đánh giá đã lưu hiện ở cuối thẻ kèm tên người ghi.
+
+| Nút trên thẻ | Hộp thoại mở sẵn lựa chọn |
+| --- | --- |
+| Chấp nhận | **Ghi nhận nhận xét** |
+| Sửa / ghi chú | Lựa chọn đang có (hoặc **Chờ làm rõ** nếu chưa đánh giá), để sửa ghi chú |
+| Bỏ qua | **Không chấp nhận nhận xét** |
+
+Các nút bị khóa khi kết quả đã cũ (cần chạy lại), hồ sơ chỉ đọc hoặc đang có thao tác khác.
 
 Không chọn ghi nhận hàng loạt để vượt điều kiện trình duyệt. Nếu không chấp nhận, cần ghi rõ vì sao nhận xét không phù hợp hoặc đã được chứng cứ khác giải thích.
 
@@ -409,6 +488,8 @@ Lần cũ có lần bổ sung được giữ để đối chiếu và chuyển s
 - Nhận xét được đánh giá; các vấn đề chưa giải quyết được ghi rõ.
 - Có ý kiến/giải trình và tài liệu bổ sung tương ứng.
 
+Xem nhanh khối **Việc cần xong trước khi trình rà soát** ở đầu hồ sơ (mục 5.6): khi tất cả các việc đã có dấu hoàn thành, hồ sơ đáp ứng các điều kiện phần mềm kiểm tra khi trình.
+
 ### 13.2. Chuyên viên trình
 
 1. Mở **Quy trình xử lý**.
@@ -449,10 +530,10 @@ Trong **Dự thảo kết quả**:
 
 Đây là tên lựa chọn trong phần mềm. Chuyên viên cần kiểm tra đúng phạm vi và mẫu áp dụng; không dùng một mẫu thay mọi loại kết quả của các cơ quan khác nhau.
 
-1. Bấm **Xem A4** để đọc trước.
+1. Bấm **Xem A4** để đọc trước. Trong khung xem A4, dùng phím **PageUp/PageDown** để chuyển trang trước/sau, **Home/End** để về trang đầu/cuối.
 2. Bấm **PDF** hoặc **DOCX** để tải.
 3. Nếu cần lưu dữ liệu truy vết phục vụ kỹ thuật, dùng **Tải dữ liệu và nguồn JSON**.
-4. Có thể sử dụng phân hệ **Văn bản & In ấn A4** để truy cập các đầu ra được cung cấp.
+4. Có thể sử dụng **Công cụ → Văn bản & In ấn A4** để truy cập các đầu ra được cung cấp.
 
 ### 14.2. Kiểm tra trước khi sử dụng dự thảo
 
@@ -469,7 +550,7 @@ PDF đã được dựng và kiểm tra bằng ảnh trong đợt hoàn thiện 
 
 ### 15.1. Thao tác
 
-1. Mở **Trợ lý AI Pháp luật**.
+1. Mở **Công cụ → Trợ lý AI Pháp luật**.
 2. Nhập câu hỏi có nội dung, thời điểm và phạm vi rõ ràng.
 3. Bật **Dùng Gemini 3.8 Flash tổng hợp câu trả lời** nếu cần tổng hợp bằng mô hình; bỏ tích để xem kết quả truy hồi nguồn.
 4. Bấm **Tra cứu**.
@@ -492,7 +573,7 @@ Trợ lý pháp luật là luồng hỏi đáp nguồn, không tự đọc toàn
 
 ### 16.1. Luồng chung
 
-1. Vào phân hệ con hoặc tab tương ứng trong dự án.
+1. Vào **Hồ sơ nghiệp vụ → Cấp giấy phép xây dựng** hoặc **Hồ sơ nghiệp vụ → Hậu kiểm & Nghiệm thu**, hoặc tab tương ứng khi mở dự án. Danh sách có cùng các tab **Của tôi / Chờ tôi xử lý / Sắp đến hạn / Quá hạn** như BCNCKT (mục 5.1).
 2. Mở lần nộp mới nhất, nộp tài liệu theo nhóm.
 3. Đọc OCR nếu có PDF scan.
 4. Tại **Phiếu rà soát chuyên môn**, chọn **Lập phiếu rà soát/Cập nhật phiếu**.
@@ -502,6 +583,8 @@ Trợ lý pháp luật là luồng hỏi đáp nguồn, không tự đọc toàn
 8. Xuất phiếu và dự thảo tương ứng.
 
 ### 16.2. GPXD
+
+Danh sách GPXD có thêm nút chuyển **Hồ sơ đề nghị / Sổ giấy phép** để xem sổ các giấy phép đã cấp.
 
 Các loại đang hỗ trợ: **Xây dựng mới; Theo giai đoạn; Nhóm công trình; Nhà ở riêng lẻ; Sửa chữa, cải tạo; Di dời; Có thời hạn; Điều chỉnh; Gia hạn; Cấp lại**.
 
@@ -546,11 +629,11 @@ Các đầu ra: phiếu chuyên môn, dự thảo thông báo, **Báo cáo hoàn
 
 ### 17.1. Kịch bản trình diễn nhanh 15–20 phút
 
-1. **Chuẩn bị:** đăng nhập Chuyên viên, mở hồ sơ mẫu lần mới nhất và kiểm tra kết nối AI nếu chưa xác nhận.
+1. **Chuẩn bị:** đăng nhập Chuyên viên, xem **Việc của tôi** trên Dashboard, bấm **Ctrl+K** gõ mã hoặc tên hồ sơ mẫu để mở lần mới nhất; kiểm tra kết nối AI nếu chưa xác nhận. Chỉ ra thanh tiến trình và khối **Việc cần xong trước khi trình rà soát**.
 2. **Đầu vào:** chỉ ra các tài liệu, mở một nguồn và bản gốc.
 3. **Pháp lý/dữ liệu:** trình diễn cách xác nhận phạm vi và một trường số liệu.
 4. **Chạy:** bật AI, bấm Chạy kiểm tra hồ sơ; theo dõi tiến trình.
-5. **Kết quả:** đọc đề xuất AI ở đầu tab, mở nguồn và đối chiếu một nhận xét quy tắc.
+5. **Kết quả:** đọc đề xuất AI ở đầu tab, mở nguồn và xử lý một thẻ đề xuất theo quy tắc bằng **Chấp nhận / Sửa / ghi chú / Bỏ qua**.
 6. **Đầu ra:** mở Báo cáo hỗ trợ kiểm tra bằng Xem A4, tải PDF.
 7. **Nếu còn thời gian:** hỏi một câu trong Trợ lý AI Pháp luật và mở trích dẫn.
 
@@ -582,8 +665,12 @@ Không ghi cố định “phải có 6 đề xuất AI” hoặc “phải có 
 
 | Hiện tượng | Cách xử lý |
 | --- | --- |
+| Không mở được `http://localhost:8208` | Kiểm tra cửa sổ chạy `pnpm dev` còn hoạt động và đã báo sẵn sàng; nếu cổng bị chiếm, giải phóng cổng, không đổi sang cổng khác |
+| Không nhớ hồ sơ nằm ở menu nào | Bấm Ctrl+K (hoặc phím /), gõ mã/tên hồ sơ, tên dự án hoặc tên trang |
+| Không biết hồ sơ nào cần làm trước | Xem chuông hạn trên thanh trên cùng, tab Quá hạn / Sắp đến hạn của danh sách, hoặc Việc của tôi trên Dashboard |
+| Không trình được dù đã làm xong | Mở khối Việc cần xong trước khi trình rà soát ở đầu hồ sơ, xử lý các việc chưa có dấu hoàn thành |
 | Bấm chạy xong tưởng không có gì | Đọc khối kết quả dưới thanh chạy; bấm Xem kết quả hoặc mở Nội dung thẩm định |
-| Nút AI không bật được | Vào Cài đặt hệ thống kiểm tra cấu hình/kết nối; phần quy tắc vẫn có thể dùng |
+| Nút AI không bật được | Vào Hệ thống → Cài đặt Hệ thống kiểm tra cấu hình/kết nối; phần quy tắc vẫn có thể dùng |
 | Có kết quả nhưng không có đề xuất AI | Đọc thông báo AI; kiểm tra đã tích AI chưa, có lỗi mô hình hay không, hoặc mô hình không trả đề xuất có nguồn hợp lệ |
 | Đang chạy lâu | Theo dõi thời gian và thông báo; không bấm thêm lượt. Nếu cần, hủy rồi kiểm tra tình trạng trước khi chạy lại |
 | Không lấy được tiến trình | Hệ thống tự thử lại. Có thể dùng Tải lại khi kết nối ổn định; kiểm tra trạng thái trước khi tạo lượt mới |
@@ -637,4 +724,4 @@ Khi báo lỗi, gửi: **mã/tên dự án, tên lần nộp, vai trò, thời �
 - [Bộ mẫu GPXD và nghiệm thu](../output/appraisal/bo-mau-gpxd-nghiem-thu.zip).
 - [PDF scan thực hành OCR](../output/appraisal/gpxd-nghiem-thu/ho-so-scan-mau.pdf).
 
-**Ghi chú phiên bản:** tài liệu được đối chiếu với giao diện và luồng xử lý ngày 27/09/2026, gồm thông báo tiến trình, tự mở kết quả sau lượt chạy và đề xuất AI ở đầu tab. Khi thay đổi bộ quy tắc, biểu mẫu hoặc quyền, cần cập nhật hướng dẫn tương ứng. Domain, SMTP và triển khai production không thuộc tài liệu sử dụng bản demo này.
+**Ghi chú phiên bản:** bản 1.0 được đối chiếu với giao diện và luồng xử lý ngày 27/09/2026, gồm thông báo tiến trình, tự mở kết quả sau lượt chạy và đề xuất AI ở đầu tab. Bản 1.1 (29/10/2026) cập nhật địa chỉ `http://localhost:8208`, lệnh khởi động `pnpm dev`, menu theo nhóm, tìm nhanh Ctrl+K, chuông hạn, tab xem nhanh trong danh sách, thanh tiến trình hồ sơ, thẻ đề xuất và Dashboard theo vai trò. Khi thay đổi bộ quy tắc, biểu mẫu hoặc quyền, cần cập nhật hướng dẫn tương ứng. Domain, SMTP và triển khai production không thuộc tài liệu sử dụng bản demo này.

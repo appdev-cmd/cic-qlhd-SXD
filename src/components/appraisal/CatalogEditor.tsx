@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { toast } from '../ui/Toast';
 import { ReviewModal } from './ReviewModal';
 import { SearchableSelect } from '../ui/SearchableSelect';
 import { DateInput } from '../ui/DateInput';
@@ -154,6 +155,7 @@ export function CatalogEditor({
         body: JSON.stringify({ revision: row?.revision || 1, values }),
       });
       window.dispatchEvent(new Event('appraisal:changed'));
+      toast.success(row ? 'Đã cập nhật danh mục' : 'Đã thêm vào danh mục');
       onSaved();
     } catch (e) {
       setError((e as Error).message);

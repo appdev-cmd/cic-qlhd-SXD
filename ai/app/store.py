@@ -641,7 +641,8 @@ class Store:
               select a.value as event,json_extract(c.payload,'$.name') as name,c.id as case_id
               from cases c,json_each(c.payload,'$.audit') a where json_extract(c.payload,'$.projectId')=?
               union all select json_object('id',id,'at',created_at,'actor',json_extract(actor,'$.name'),
-                'action','Bổ sung ảnh','detail',detail),?,null from project_image_audit where project_id=?
+                'action',case when instr(detail,':')>0 then substr(detail,1,instr(detail,':')-1) else 'Bổ sung ảnh' end,
+                'detail',detail),?,null from project_image_audit where project_id=?
             ) events"""
             with db() as con:
                 schema(con)

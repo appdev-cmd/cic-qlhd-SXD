@@ -17,6 +17,15 @@ export function formatCurrency(amount: number | string | undefined | null): stri
 }
 
 /**
+ * Ngày hôm nay dạng yyyy-mm-dd theo giờ máy người dùng (không dùng toISOString — đó là giờ UTC,
+ * từ 0h–7h sáng giờ Việt Nam sẽ ra ngày hôm trước).
+ */
+export function todayIso(now: Date = new Date()): string {
+  const pad = (n: number) => String(n).padStart(2, '0');
+  return now.getFullYear() + '-' + pad(now.getMonth() + 1) + '-' + pad(now.getDate());
+}
+
+/**
  * Định dạng số theo kiểu Việt Nam (dấu chấm phân nhóm nghìn, dấu phẩy thập phân).
  * Dùng thay cho gọi trực tiếp `toLocaleString`. Ví dụ: 1234567.5 -> 1.234.567,5
  */

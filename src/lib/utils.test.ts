@@ -1,6 +1,6 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
-import { formatDate, formatDateTime, formatCurrency, formatNumber } from './utils.ts';
+import { formatDate, formatDateTime, formatCurrency, formatNumber, todayIso } from './utils.ts';
 
 test('formatDate returns dd/mm/yyyy and handles empty values', () => {
   assert.equal(formatDate('2026-09-28'), '28/09/2026');
@@ -21,4 +21,9 @@ test('formatNumber uses Vietnamese grouping and handles empty values', () => {
   assert.equal(formatNumber('42'), '42');
   assert.equal(formatNumber(null), '—');
   assert.equal(formatNumber('abc'), '—');
+});
+
+test('todayIso uses the local calendar day, not UTC', () => {
+  assert.equal(todayIso(new Date(2026, 9, 29, 6, 30)), '2026-10-29');
+  assert.equal(todayIso(new Date(2026, 0, 5)), '2026-01-05');
 });

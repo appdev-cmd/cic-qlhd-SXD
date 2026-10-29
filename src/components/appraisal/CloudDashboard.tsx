@@ -25,12 +25,14 @@ import {
 } from 'recharts';
 import { apiRequest } from '../../services/apiClient';
 import { RoleOverview, dashboardCsv } from '../dashboard/RoleOverview';
+import { QuickStart } from '../dashboard/QuickStart';
 import { PageHeader } from '../ui/PageHeader';
 import { Button, IconButton } from '../ui/Button';
 import { toast } from '../ui/Toast';
+import { SkeletonCard, SkeletonStatCard } from '../ui/Skeleton';
 import { useAuth } from '../../context/AuthContext';
 import { listCache } from '../../lib/listCache';
-import { formatDateTime } from '../../lib/utils';
+import { formatDateTime, todayIso } from '../../lib/utils';
 import { SUBMISSION_STATUS } from '../../lib/projectProcedures';
 import { DossierGrid } from './DossierGrid';
 import { EntityLink } from '../ui/EntityLink';
@@ -194,7 +196,7 @@ export function CloudDashboard() {
               leftIcon={<FileSpreadsheet size={16} />}
               disabled={!data}
               onClick={() => {
-                const today = new Date().toISOString().slice(0, 10);
+                const today = todayIso();
                 const csv = dashboardCsv(
                   data?.performance,
                   data?.sla,
@@ -232,13 +234,20 @@ export function CloudDashboard() {
         </p>
       )}
       {!data && !error && (
-        <div role="status" className={`${card} p-8 text-center ${muted}`}>
-          Đang tổng hợp dữ liệu…
+        <div role="status" aria-busy="true" className="space-y-5">
+          <span className="sr-only">Đang tổng hợp dữ liệu…</span>
+          <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
+            {[0, 1, 2, 3].map((i) => (
+              <SkeletonStatCard key={i} />
+            ))}
+          </div>
+          <SkeletonCard />
         </div>
       )}
 
       {data && (
         <>
+          <QuickStart />
           {data.performance && <RoleOverview performance={data.performance} role={profile?.role} />}
           <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
             {[
