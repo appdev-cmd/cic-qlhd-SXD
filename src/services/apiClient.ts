@@ -1,6 +1,8 @@
 import { supabase } from '../lib/supabase';
 import { handleStaticApiFallback } from './staticFallback';
 
+const requiresCloudBackend = import.meta.env.VITE_APPRAISAL_RUNTIME === 'cloud';
+
 export class ApiError extends Error {
   constructor(
     message: string,
@@ -25,6 +27,7 @@ export async function apiResponse(path: string, init: RequestInit = {}): Promise
     });
   } catch (error) {
     if (init.signal?.aborted) throw error;
+    if (requiresCloudBackend) throw new ApiError('Không kết nối được backend. Vui lòng thử lại.', 503);
     return handleStaticApiFallback(path, init);
   }
 
@@ -35,6 +38,7 @@ export async function apiResponse(path: string, init: RequestInit = {}): Promise
       !contentType.includes('application/json'));
 
   if (isStaticNoBackend) {
+    if (requiresCloudBackend) throw new ApiError('Backend chưa sẵn sàng. Vui lòng thử lại.', 503);
     return handleStaticApiFallback(path, init);
   }
 
