@@ -6,7 +6,7 @@ const DOSSIER = '/dossiers/a2283ef4-5e65-5788-aee8-2b6a553c033c';
 
 test('appraisal sheet shows the Điều 38 groups and the stamping loop of khoản 8 Điều 36', async ({ page }) => {
   await openAsOfficer(page, DOSSIER);
-  await page.getByRole('button', { name: 'Phiếu thẩm định', exact: true }).click();
+  await page.getByRole('tab', { name: 'Phiếu thẩm định', exact: true }).click();
   await expect(page.getByRole('heading', { name: 'Phiếu thẩm định Báo cáo nghiên cứu khả thi' })).toBeVisible();
   await expect(page.getByText('Phiếu đã đủ điều kiện để hoàn tất rà soát.')).toBeVisible();
   await expect(page.getByRole('heading', { name: /^4\. Quy chuẩn kỹ thuật/ })).toBeVisible();
@@ -14,7 +14,7 @@ test('appraisal sheet shows the Điều 38 groups and the stamping loop of kho�
   // Reviewed dossiers are locked until reopened.
   await expect(page.getByRole('button', { name: 'Lưu phiếu thẩm định' })).toBeDisabled();
 
-  await page.getByRole('button', { name: 'Đóng dấu & lưu trữ', exact: true }).click();
+  await page.getByRole('tab', { name: 'Đóng dấu & lưu trữ', exact: true }).click();
   await expect(page.getByRole('heading', { name: /Đã đóng dấu; chờ bản chụp PDF/ })).toBeVisible();
   await expect(page.getByText('Tổng mặt bằng và định vị công trình')).toBeVisible();
   await expect(page.getByText('Hồ sơ chỉnh sửa chưa đáp ứng; trả lại')).toBeVisible();

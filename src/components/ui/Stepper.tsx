@@ -20,19 +20,24 @@ export function Stepper({
   steps,
   current,
   blockedAt,
+  completed = false,
   onSelect,
   className,
 }: {
   steps: StepItem[];
   current: string;
   blockedAt?: string;
+  /** Mọi bước đã xong (tô xanh cả bước cuối). */
+  completed?: boolean;
   onSelect?: (id: string) => void;
   className?: string;
 }) {
-  const index = Math.max(
-    0,
-    steps.findIndex((s) => s.id === current),
-  );
+  const index = completed
+    ? steps.length
+    : Math.max(
+        0,
+        steps.findIndex((s) => s.id === current),
+      );
   return (
     <ol className={cn('flex w-full items-start', className)} aria-label="Tiến trình xử lý">
       {steps.map((step, i) => {

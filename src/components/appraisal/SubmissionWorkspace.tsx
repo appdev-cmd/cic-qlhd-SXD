@@ -3,6 +3,7 @@ import { ProcedureReview } from './ProcedureReview';
 import { PermitPanel } from './PermitPanel';
 import { OcrPanel } from './OcrPanel';
 import { SubmissionHistory } from './SubmissionHistory';
+import { CaseHeader } from './CaseHeader';
 import React, { useEffect, useState } from 'react';
 import { appraisalService as api } from '../../services/appraisalService';
 import type { Dossier, DossierDocument } from '../../types/appraisal';
@@ -11,6 +12,11 @@ import { SearchableSelect } from '../ui/SearchableSelect';
 import { DossierGrid } from './DossierGrid';
 import { ReviewModal } from './ReviewModal';
 import { formatDateTime } from '../../lib/utils';
+import { Download, FileDown, MessageSquarePlus, RefreshCw } from 'lucide-react';
+import { Button, IconButton } from '../ui/Button';
+import { Tabs } from '../ui/Tabs';
+import { SkeletonText } from '../ui/Skeleton';
+import { toast } from '../ui/Toast';
 
 const button =
   'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-500 dark:focus-visible:ring-primary-400 transition-colors rounded-lg border border-border dark:border-border bg-surface dark:bg-surface px-3 py-2 text-sm text-ink dark:text-ink disabled:opacity-50';
@@ -52,53 +58,64 @@ export function SubmissionWorkspace({ dossierId }: { dossierId: string }) {
   return (
     <div className="p-6 space-y-5 text-ink dark:text-ink">
       {error && (
-        <p role="alert" className="text-red-700 dark:text-red-400">
+        <p
+          role="alert"
+          className="rounded-xl border border-danger-200 dark:border-danger-800 bg-danger-50 dark:bg-danger-900 p-3 text-sm text-danger-800 dark:text-danger-100"
+        >
           {error}
         </p>
       )}
       {d ? (
         <>
-          <header>
-            <h2 className="text-xl font-semibold">{PROJECT_PROCEDURES[d.procedure || 'bcnckt'].label}</h2>
-            <p className="mt-2 text-sm text-ink-secondary dark:text-ink-secondary">
-              Tiếp nhận tài liệu của lần nộp này. Các nhóm dưới đây dùng để lưu trữ; chuyên viên xác định thành phần áp
-              dụng theo thủ tục cụ thể.
-            </p>
-          </header>
+          <CaseHeader dossier={d} />
           <SubmissionHistory dossier={d} />
           <WorkflowPanel dossier={d} onChange={setD} />
           <ProcedureReview dossier={d} onChange={setD} />
           {d.procedure === 'gpxd' && <PermitPanel dossier={d} onChange={setD} />}
           <OcrPanel dossier={d} onChange={setD} />
-          <div className="flex gap-3">
-            {['pdf', 'docx'].map((format) => (
-              <button
-                key={format}
-                className={button}
+          <div className="flex flex-wrap items-end justify-between gap-3 border-b border-border dark:border-slate-700">
+            <Tabs
+              ariaLabel="Nội dung hồ sơ"
+              className="border-b-0"
+              value={tab}
+              onChange={setTab}
+              items={[
+                { id: 'documents', label: 'Tài liệu đã nộp', count: d.documents.length },
+                { id: 'audit', label: 'Lịch sử xử lý', count: d.audit.length },
+              ]}
+            />
+            <div className="mb-2 flex flex-wrap items-center gap-2">
+              {['pdf', 'docx'].map((format) => (
+                <Button
+                  key={format}
+                  variant="secondary"
+                  size="sm"
+                  leftIcon={<FileDown size={15} />}
+                  disabled={busy}
+                  onClick={() =>
+                    action(() => api.download(`/cases/${d.id}/internal-record/${format}`, `phieu-xu-ly.${format}`))
+                  }
+                >
+                  Phiếu xử lý {format.toUpperCase()}
+                </Button>
+              ))}
+              <IconButton
+                aria-label="Tải lại hồ sơ"
+                tooltip="Tải lại hồ sơ"
+                variant="secondary"
+                size="sm"
+                icon={<RefreshCw size={15} />}
                 disabled={busy}
-                onClick={() =>
-                  action(() => api.download(`/cases/${d.id}/internal-record/${format}`, `phieu-xu-ly.${format}`))
-                }
-              >
-                Phiếu xử lý {format.toUpperCase()}
-              </button>
-            ))}
-          </div>
-          <div className="flex gap-3">
-            <button className={button} aria-pressed={tab === 'documents'} onClick={() => setTab('documents')}>
-              Tài liệu đã nộp ({d.documents.length})
-            </button>
-            <button className={button} aria-pressed={tab === 'audit'} onClick={() => setTab('audit')}>
-              Lịch sử xử lý
-            </button>
-            <button className={button} disabled={busy} onClick={() => action(async () => setD(await api.get(d.id)))}>
-              Tải lại
-            </button>
+                onClick={() => action(async () => setD(await api.get(d.id)))}
+              />
+            </div>
           </div>
           {tab === 'documents' ? (
             <>
-              <button
-                className={button}
+              <Button
+                variant="outline"
+                size="sm"
+                leftIcon={<MessageSquarePlus size={15} />}
                 disabled={busy || d.readOnly || !!d.finalReview}
                 onClick={() => {
                   setConsultation({ text: '', response: '' });
@@ -106,7 +123,7 @@ export function SubmissionWorkspace({ dossierId }: { dossierId: string }) {
                 }}
               >
                 Ghi ý kiến / giải trình
-              </button>
+              </Button>
               {d.consultations.length > 0 && (
                 <section className="space-y-3 rounded-lg border border-border dark:border-border p-4">
                   <h3 className="font-semibold">Nội dung xử lý và giải trình</h3>
@@ -188,13 +205,15 @@ export function SubmissionWorkspace({ dossierId }: { dossierId: string }) {
             <ReviewModal heading="Nội dung tài liệu" onClose={() => setPreview(null)}>
               <div className="space-y-4">
                 <p className="font-medium break-words">{preview.name}</p>
-                <button
-                  className={button}
+                <Button
+                  variant="secondary"
+                  size="sm"
+                  leftIcon={<Download size={15} />}
                   disabled={busy}
                   onClick={() => action(() => api.download(`/cases/${d.id}/documents/${preview.id}`, preview.name))}
                 >
                   Tải bản gốc
-                </button>
+                </Button>
                 <p className="text-xs text-ink-muted dark:text-ink-muted">
                   Nội dung đọc từ tệp; xem bản gốc để đối chiếu thể thức và bản vẽ.
                 </p>
@@ -227,6 +246,7 @@ export function SubmissionWorkspace({ dossierId }: { dossierId: string }) {
                   action(async () => {
                     setD(await api.mutate(d.id, '/consultations', { revision: d.revision, ...consultation }));
                     setConsultationOpen(false);
+                    toast.success('Đã lưu ý kiến xử lý');
                   });
                 }}
               >
@@ -255,22 +275,30 @@ export function SubmissionWorkspace({ dossierId }: { dossierId: string }) {
                   />
                 </label>
                 {error && (
-                  <p role="alert" className="text-red-700 dark:text-red-300">
+                  <p role="alert" className="text-sm text-danger-700 dark:text-danger-300">
                     {error}
                   </p>
                 )}
-                <button
-                  className={button + ' !bg-primary-500 dark:!bg-primary-500 !text-white dark:!text-white'}
-                  disabled={busy || consultation.text.trim().length < 3}
-                >
-                  {busy ? 'Đang lưu…' : 'Lưu ý kiến'}
-                </button>
+                <div className="flex justify-end">
+                  <Button
+                    type="submit"
+                    loading={busy}
+                    loadingText="Đang lưu…"
+                    disabled={consultation.text.trim().length < 3}
+                  >
+                    Lưu ý kiến
+                  </Button>
+                </div>
               </form>
             </ReviewModal>
           )}
         </>
       ) : (
-        <p>Đang tải hồ sơ…</p>
+        <div className="space-y-4" aria-busy="true">
+          <span className="sr-only">Đang tải hồ sơ…</span>
+          <SkeletonText lines={2} />
+          <SkeletonText lines={5} />
+        </div>
       )}
     </div>
   );

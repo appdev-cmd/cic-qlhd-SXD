@@ -443,7 +443,12 @@ export function DocumentHub() {
       {preview && (
         <ReviewModal heading="Xem trước văn bản A4" onClose={() => setPreview(null)}>
           <Suspense fallback={<p>Đang tải bản xem trước…</p>}>
-            <PdfPreview url={preview} />
+            <PdfPreview
+              url={preview}
+              onDownloadPdf={() => act('pdf')}
+              onDownloadDocx={() => act('docx')}
+              downloadBusy={busy}
+            />
           </Suspense>
         </ReviewModal>
       )}

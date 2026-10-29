@@ -149,6 +149,14 @@ export interface Dossier extends DossierSummary {
   };
   finalReview: null | { decision: string; note: string; actor: string; at: string; simulation: boolean };
   sla?: SlaFacts;
+  /** Workflow state from the worker payload (single source for the list status). */
+  workflow?: { state?: string; assigneeId?: string | null; counters?: Record<string, number> };
+  /** Procedure subtype (GPXD new/amendment…, nghiệm thu start_notice/during/completion). */
+  subtype?: string;
+  procedureReview?: { subtype?: string; conclusion?: string } | null;
+  appraisalSheet?: { conclusion?: string } | null;
+  stamping?: { status?: string } | null;
+  permit?: { number?: string; issueDate?: string } | null;
 }
 export interface ModelProvider {
   id: string;
