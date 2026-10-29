@@ -109,7 +109,7 @@ test('Vercel Node backend uploads an original, performs real AI OCR, saves facts
   );
   expect(sent.ok()).toBe(true);
   const finalize = await request.post(api + `/cases/${value.id}/uploads/${upload.id}/finalize`, { headers });
-  expect(finalize.status()).toBe(200);
+  expect(finalize.status(), finalize.status() === 200 ? '' : (await finalize.json()).detail).toBe(200);
   value = await finalize.json();
   expect(value.documents[0].hash).toBe(hash);
   expect(value.documents[0].segments).toHaveLength(0);

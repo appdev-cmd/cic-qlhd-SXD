@@ -204,7 +204,7 @@ export function documentsRouter() {
         (
           await q.run<{
             expected_revision: number;
-            file_size: number;
+            file_size: string | number;
             sha256: string;
             requirement_id: string;
             file_name: string;
@@ -226,7 +226,7 @@ export function documentsRouter() {
         )
       ).arrayBuffer(),
     );
-    if (data.length !== session.file_size || createHash('sha256').update(data).digest('hex') !== session.sha256)
+    if (data.length !== Number(session.file_size) || createHash('sha256').update(data).digest('hex') !== session.sha256)
       throw new HttpError(422, 'Dung lượng hoặc mã kiểm tra tệp không khớp.');
     await attach(
       store,
