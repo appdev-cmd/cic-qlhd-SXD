@@ -12,7 +12,7 @@ export interface BrowserConversionWarning {
 }
 
 const getIfcWasmUrl = (): string =>
-  typeof window !== 'undefined' ? new URL('/drawing-assets/ifc/', window.location.origin).href : '/drawing-assets/ifc/';
+  typeof window !== 'undefined' ? new URL('/bim/ifc/0.0.77/', window.location.origin).href : '/bim/ifc/0.0.77/';
 const BATCH_SIZE = 500;
 const activeModelConversions = new Set<string>();
 

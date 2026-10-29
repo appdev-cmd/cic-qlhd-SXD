@@ -1,4 +1,4 @@
-import { copyFile, mkdir } from 'node:fs/promises';
+import { copyFile, mkdir, readFile } from 'node:fs/promises';
 import { existsSync } from 'node:fs';
 import { resolve, dirname } from 'node:path';
 import { createRequire } from 'node:module';
@@ -24,12 +24,15 @@ const ifcEntry = resolvePackage('web-ifc');
 if (fragmentsEntry && ifcEntry) {
   const fragments = resolve(dirname(fragmentsEntry), '..');
   const ifc = dirname(ifcEntry);
+  const ifcVersion = JSON.parse(await readFile(resolve(ifc, 'package.json'), 'utf8')).version;
   await mkdir(resolve(root, 'public/bim/ifc'), { recursive: true });
   await copyFile(
     resolve(fragments, 'dist/Worker/worker.min.mjs'),
     resolve(root, 'public/bim/fragments-worker-3.4.8.js'),
   );
   await copyFile(resolve(ifc, 'web-ifc.wasm'), resolve(root, 'public/bim/ifc/web-ifc.wasm'));
+  await mkdir(resolve(root, `public/bim/ifc/${ifcVersion}`), { recursive: true });
+  await copyFile(resolve(ifc, 'web-ifc.wasm'), resolve(root, `public/bim/ifc/${ifcVersion}/web-ifc.wasm`));
   await mkdir(resolve(root, 'public/drawing-assets/ifc'), { recursive: true });
   await copyFile(resolve(ifc, 'web-ifc.wasm'), resolve(root, 'public/drawing-assets/ifc/web-ifc.wasm'));
 } else {

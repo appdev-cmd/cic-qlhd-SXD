@@ -17,7 +17,7 @@ self.onmessage = async (event: MessageEvent<{ bytes: Uint8Array; origin: string 
     }
     if (bytes.byteLength > 200 * 1024 * 1024) throw Error('Mô hình vượt giới hạn 200 MB sau giải nén.');
     progress('Đang đọc IFC và trích xuất thuộc tính, khối lượng…');
-    api.SetWasmPath(event.data.origin + '/bim/ifc/', true);
+    api.SetWasmPath(event.data.origin + '/bim/ifc/0.0.77/', true);
     await api.Init();
     model = api.OpenModel(bytes, { COORDINATE_TO_ORIGIN: true });
     const extracted = extractElements(api, model);
@@ -25,7 +25,7 @@ self.onmessage = async (event: MessageEvent<{ bytes: Uint8Array; origin: string 
     model = undefined;
     progress('Đang chuyển hình học sang Fragments…');
     const importer = new FRAGS.IfcImporter();
-    importer.wasm = { path: event.data.origin + '/bim/ifc/', absolute: true };
+    importer.wasm = { path: event.data.origin + '/bim/ifc/0.0.77/', absolute: true };
     importer.addAllAttributes();
     importer.addAllRelations();
     const frag = await importer.process({ bytes });

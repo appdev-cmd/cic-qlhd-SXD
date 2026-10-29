@@ -33,6 +33,6 @@ output/appraisal/e2e-report/
 .vercel
 supabase/.temp/
 public/bim/fragments-worker-*.js
-public/bim/ifc/*.wasm
+public/bim/ifc/
 public/bim/workers/
 public/drawing-assets/ifc/
