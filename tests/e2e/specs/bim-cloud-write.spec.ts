@@ -6,7 +6,7 @@ import { resolve } from 'node:path';
 test.use({ trace: 'off', actionTimeout: 30000, navigationTimeout: 45000 });
 test('authenticated cloud IFC upload and saved viewpoint survive a full reload', async ({ page, request }) => {
   test.skip(process.env.E2E_ENABLE_CLOUD_WRITES !== '1', 'Explicit opt-in required for real BIM writes.');
-  test.setTimeout(420000);
+  test.setTimeout(600000);
   if (process.env.E2E_VERCEL_SHARE_TOKEN) {
     console.log('BIM test: authenticating the deployment-scoped preview session.');
     const base = new URL(String(test.info().project.use.baseURL));
@@ -105,6 +105,30 @@ test('authenticated cloud IFC upload and saved viewpoint survive a full reload',
     return response.json();
   };
   try {
+    await page.goto('/bim');
+    await expect(page.locator('[data-bim-loaded-count]')).toHaveAttribute('data-bim-loaded-count', '12', {
+      timeout: 240000,
+    });
+    await expect(page.locator('[data-bim-loaded-count]')).toHaveAttribute('data-bim-loading-count', '0');
+    await expect(page.locator('[data-bim-loaded-count]')).toHaveAttribute('data-bim-failed-count', '0');
+    await expect(page.locator('.bim-suite canvas').first()).toBeVisible();
+    await page.screenshot({ path: resolve(root, 'output/appraisal/qa/bim-node-full-viewer.png'), fullPage: true });
+    for (const label of [
+      'Tiến độ',
+      'Chi phí',
+      'Bền vững',
+      'Phương án',
+      'Tài sản',
+      'Bàn giao',
+      'Kiểm tra mô hình',
+      'Chất lượng dữ liệu',
+      'Kết nối add-in',
+    ]) {
+      await page.getByRole('tab', { name: label, exact: true }).click();
+      await expect(page.getByRole('tab', { name: label, exact: true })).toHaveAttribute('aria-selected', 'true');
+      await expect(page.getByRole('heading', { name: 'Đã xảy ra lỗi', exact: false })).toHaveCount(0);
+    }
+    console.log('BIM test: all 12 original models rendered and all business tabs opened.');
     await page.goto('/bim?bimModel=1377ad57-a15b-4e0b-bad8-c4b8516eaf91');
     console.log('BIM test: opened the BIM workspace.');
     await expect(page.getByRole('button', { name: 'Tải IFC', exact: true })).toBeVisible({ timeout: 60000 });

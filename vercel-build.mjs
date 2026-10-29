@@ -31,4 +31,3 @@ const legacyOutput = resolve(root, '.vercel/output');
 if (!legacyOutput.startsWith(resolve(root, '.vercel') + sep)) throw new Error('Invalid legacy output path.');
 rmSync(legacyOutput, { recursive: true, force: true });
 console.log('Vercel frontend ready; /api/appraisal uses the authenticated Node.js Function.');
-

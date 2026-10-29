@@ -61,7 +61,7 @@ export async function prepareOcrInput(store: Store, value: CasePayload, document
     await remote('/storage/v1/object/sign/appraisal-originals/' + value.id + '/' + documentId, store.token, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ expiresIn: 3600 }),
+      body: JSON.stringify({ expiresIn: 86400 }),
     })
   ).json()) as { signedURL?: string; signedUrl?: string };
   const signed = response.signedURL || response.signedUrl;
@@ -357,6 +357,11 @@ export async function processJob(jobId: string): Promise<void> {
       await finish(job.id, worker, 'stale');
       return;
     }
+    console.error('Appraisal job retry', {
+      jobId: job.id,
+      mode: job.snapshot.job?.mode,
+      error: error instanceof HttpError ? error.message : error instanceof Error ? error.name : 'UnknownError',
+    });
     await retry(job, worker);
     throw new Error('Appraisal job will be retried.');
   } finally {

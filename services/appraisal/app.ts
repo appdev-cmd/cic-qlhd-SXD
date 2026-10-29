@@ -168,6 +168,7 @@ export function createServerlessGateway(options: { secret?: string; origins?: st
       options.origins || [
         process.env.APPRAISAL_ORIGIN || 'https://cic-qlhd-sxd.vercel.app',
         ...(process.env.VERCEL_URL ? [`https://${process.env.VERCEL_URL}`] : []),
+        ...(process.env.VERCEL_BRANCH_URL ? [`https://${process.env.VERCEL_BRANCH_URL}`] : []),
       ]
     ).map((origin) => origin.replace(/\/$/, '')),
   );
