@@ -139,7 +139,7 @@ test('authenticated cloud IFC upload and saved viewpoint survive a full reload',
     });
     await page.goto('/bim?bimModel=' + modelId);
     await expect(page.getByText(filename, { exact: false }).first()).toBeVisible({ timeout: 60000 });
-    await expect(page.locator('[data-bim-loaded-count]')).not.toHaveAttribute('data-bim-loaded-count', '0', {
+    await expect(page.locator('[data-bim-loaded-count]')).toHaveAttribute('data-bim-loaded-count', '1', {
       timeout: 180000,
     });
     await page.locator('button[data-tooltip="Góc nhìn đã lưu"]').click();
@@ -165,6 +165,12 @@ test('authenticated cloud IFC upload and saved viewpoint survive a full reload',
     await page.reload();
     await page.locator('button[data-tooltip="Góc nhìn đã lưu"]').click();
     await expect(page.getByText(viewName, { exact: true }).first()).toBeVisible({ timeout: 60000 });
+    await page.getByText(viewName, { exact: true }).first().click();
+    await expect(page.locator('[data-bim-loaded-count]')).toHaveAttribute('data-bim-loaded-count', '1', {
+      timeout: 120000,
+    });
+    await expect(page.locator('[data-bim-loaded-count]')).toHaveAttribute('data-bim-loading-count', '0');
+    await expect(page.locator('[data-bim-loaded-count]')).toHaveAttribute('data-bim-failed-count', '0');
     console.log('BIM test: model and saved viewpoint restored after reload.');
     expect((await models())[0].element_count).toBe(persisted.element_count);
     await page.screenshot({ path: resolve(root, 'output/appraisal/qa/bim-cloud-write.png'), fullPage: true });
