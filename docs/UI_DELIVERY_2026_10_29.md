@@ -22,7 +22,7 @@
 | U4 Hồ sơ | Phần đầu hồ sơ có thanh tiến trình theo bước pháp lý và việc cần xong trước khi trình; thẻ đề xuất; xem trước A4 có phóng to, chuyển trang, ảnh thu nhỏ | `1b2edc0` |
 | U5 Dashboard | KPI 30 ngày so với kỳ trước, "Việc của tôi", hạn xử lý theo chuyên viên, xuất CSV | `1b9f38b` |
 | U6 Trải nghiệm chung | Trang Hướng dẫn, thẻ "Bắt đầu nhanh", xác nhận trước thao tác không hoàn tác được, toast, "Thử lại", gallery xem/sửa/xóa ảnh, `EntityLink` trong panel dự án | `aaf08a6` |
-| U7 Hình ảnh và responsive | Test bố cục 4 khổ màn hình, ảnh sáng/tối để duyệt, sửa lỗi tràn ở tablet và thanh lọc 2 hàng ở 1366px | (commit U7) |
+| U7 Hình ảnh và responsive | Test bố cục 4 khổ màn hình, ảnh sáng/tối để duyệt, sửa lỗi tràn ở tablet và thanh lọc 2 hàng ở 1366px | `49ebe05` |
 
 ## 2. Kiểm tra bố cục tự động (U7)
 
