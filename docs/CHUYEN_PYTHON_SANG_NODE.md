@@ -8,7 +8,7 @@ Toàn bộ API theo hợp đồng OpenAPI đã có route Node: hồ sơ/lần n�
 
 - PostgreSQL: `pg`, tài khoản backend hạn chế, TLS xác minh CA, Auth xác minh phía Supabase và identity transaction-local cho RLS.
 - Demo: `node:sqlite`, tương thích dữ liệu cũ, ghi có transaction/revision và phục hồi job khi khởi động lại.
-- AI: OpenAI Responses hoặc Vertex qua adapter phía server; giữ provider/model trong biến môi trường. OCR gửi riêng từng trang PDF, ghi nguồn trang/SHA-256 và trạng thái chưa xác nhận; không thay bản gốc.
+- AI: Vercel AI Gateway qua OIDC, OpenAI Responses trực tiếp hoặc Vertex qua adapter phía server; giữ provider/model trong biến môi trường. OCR gửi riêng từng trang PDF, ghi nguồn trang/SHA-256 và trạng thái chưa xác nhận; không thay bản gốc.
 - Vercel Queues: topic `appraisal-node-jobs`, lease độc quyền, heartbeat, tối đa ba lần thử; OCR checkpoint mỗi trang, chia hai trang AI mỗi invocation. Gửi lại công việc đã hoàn tất không ghi kết quả trùng. Polling khôi phục gửi queue khi publish trước đó thất bại.
 - Tài liệu: PDF.js đọc PDF có chữ, JSZip/XML đọc DOCX, PDFKit/docx sinh A4 đúng lề. Font Liberation Serif kèm giấy phép được nhúng khi không có Times New Roman.
 - BIM: IFC/Fragments/WebAssembly chạy trong browser workers; Supabase lưu tệp và dữ liệu nghiệp vụ. Worker chuyển đổi IFC hiện có được giữ nguyên.
@@ -21,7 +21,7 @@ Bộ seed mới dùng 55 hồ sơ mô phỏng/296 tệp cố định, chỉ nạ
 
 ## Kiểm thử đã thực hiện
 
-- 35 bài backend Node: Auth/TLS/RLS, CAS, upload/download nguyên vẹn, OCR giả lập có checkpoint, queue lặp, IFC/Fragments/notes, cấp số GPXD đồng thời, A4/PDF/DOCX.
+- 36 bài backend Node: Auth/TLS/RLS, CAS, upload/download nguyên vẹn, OCR giả lập có checkpoint, queue lặp, IFC/Fragments/notes, cấp số GPXD đồng thời, A4/PDF/DOCX.
 - Đối chiếu dữ liệu hồi quy: 96 tình huống pháp lý, 360 deadline và 360 trạng thái SLA, 216 quyền workflow, mọi checklist GPXD/nghiệm thu, 120 biến thể văn bản và 34 tình huống văn bản BCNCKT.
 - 35 unit test frontend, typecheck backend/frontend, lint UI và build.
 - PostgreSQL 17 cách ly: replay baseline, RLS và quyền RPC, lease/retry/checkpoint, worker cũ không nhận job Node.
@@ -30,4 +30,7 @@ Bộ seed mới dùng 55 hồ sơ mô phỏng/296 tệp cố định, chỉ nạ
 
 ## Kiểm tra triển khai
 
-Migration `node_appraisal_jobs` đã áp dụng cho đúng dự án Supabase, chỉ bổ sung đầu vào/checkpoint và RPC backend; client thường không có quyền dispatcher. Chưa coi việc gọi AI thật, tải IFC và mở lại dữ liệu trên Vercel là đạt cho đến khi các bài `node-cloud.spec.ts` và `bim-cloud-write.spec.ts` chạy qua bản preview. Kết quả triển khai được cập nhật sau kiểm thử.
+Migration `node_appraisal_jobs` đã áp dụng cho đúng dự án Supabase, chỉ bổ sung đầu vào/checkpoint và RPC backend; client thường không có quyền dispatcher. Hai bài cloud đã chạy qua trên preview Vercel: tải đủ 12 mô hình, mở 9 tab nghiệp vụ, tải IFC mới (1.318 cấu kiện), lưu góc nhìn và mở lại sau reload; tải PDF scan, AI OCR thật qua Queue, lưu/mở lại hồ sơ, giữ SHA-256 bản gốc, chạy phân tích, đọc audit/dashboard và xuất lại PDF/DOCX A4. Trợ lý BIM đã gọi GPT-4o thật và ghi được ai_logs/audit_logs. Preview runtime kiểm thử cuối: commit 036d74e; bản Vercel dpl_ChEySyAPAZQJkuqHkrAY9DDgMZpP.
+
+
+Các lỗi chỉ xuất hiện trên cloud đã được sửa: kiểu bigint của kích thước upload; bundle worker/canvas của PDF.js; enum nhật ký trợ lý BIM. Production dùng AI_PROVIDER=gateway, AI_GATEWAY_MODEL=openai/gpt-4o qua OIDC; không cần khóa OpenAI trống trước đây. Không thay đổi gói dịch vụ, ngân sách hay thiết lập thanh toán.

@@ -72,10 +72,14 @@ test('Vercel Node backend uploads an original, performs real AI OCR, saves facts
     resolve(output, 'node-cloud-created.json'),
     JSON.stringify({ caseId: value.id, name: value.name, projectId: value.projectId }),
   );
+  writeFileSync(
+    resolve(output, `node-cloud-created-${value.id}.json`),
+    JSON.stringify({ caseId: value.id, name: value.name, projectId: value.projectId }),
+  );
   console.log('Node cloud: dossier created through authenticated API.');
   const png = await sharp(
     Buffer.from(
-      '<svg xmlns="http://www.w3.org/2000/svg" width="1400" height="600"><rect width="100%" height="100%" fill="white"/><g font-family="Arial" font-size="48" fill="black"><text x="70" y="150">CIC NODE AI OCR TEST</text><text x="70" y="250">Document code: TEST-12345</text><text x="70" y="350">Total investment: 123456789 VND</text><text x="70" y="450">Test data only. Not a real submission.</text></g></svg>',
+      '<svg xmlns="http://www.w3.org/2000/svg" width="1400" height="600"><rect width="100%" height="100%" fill="white"/><g font-family="Arial" font-size="48" fill="black"><text x="70" y="150">CIC NODE AI OCR TEST</text><text x="70" y="250">Document code: TEST-12345</text><text x="70" y="350">Tổng mức đầu tư: 123456789 đồng</text><text x="70" y="450">Test data only. Not a real submission.</text></g></svg>',
     ),
   )
     .png()
@@ -142,6 +146,22 @@ test('Vercel Node backend uploads an original, performs real AI OCR, saves facts
       .digest('hex'),
   ).toBe(hash);
   console.log('Node cloud: real scan AI OCR completed through Vercel Queue; original SHA-256 preserved.');
+  const fact = value.facts.find((item: { key: string }) => item.key === 'total');
+  expect(fact).toBeTruthy();
+  expect(fact.reviewStatus).toBe('pending');
+  const confirmed = await request.patch(api + `/cases/${value.id}/facts/${fact.id}`, {
+    headers,
+    data: {
+      revision: value.revision,
+      decision: 'confirmed',
+      value: '123456789',
+      note: 'Đối chiếu bản scan kiểm thử; không phải hồ sơ thật.',
+    },
+  });
+  expect(confirmed.status()).toBe(200);
+  value = await confirmed.json();
+  const reopened = await (await request.get(api + `/cases/${value.id}`, { headers })).json();
+  expect(reopened.facts.find((item: { id: string }) => item.id === fact.id).reviewStatus).toBe('confirmed');
   const analysis = await request.post(api + `/cases/${value.id}/analysis`, {
     headers,
     data: { revision: value.revision, mode: 'intake', useModel: false },
