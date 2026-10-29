@@ -10,7 +10,12 @@ from app.store import DEMO_ACTOR, Store
 
 OFFICER = DEMO_ACTOR
 OTHER = {**DEMO_ACTOR, 'id': '00000000-0000-4000-8000-000000000002', 'name': 'Chuyên viên khác'}
-HEAD = {**DEMO_ACTOR, 'id': '00000000-0000-4000-8000-000000000009', 'name': 'Trưởng phòng', 'role': 'head_of_department'}
+HEAD = {
+    **DEMO_ACTOR,
+    'id': '00000000-0000-4000-8000-000000000009',
+    'name': 'Trưởng phòng',
+    'role': 'head_of_department',
+}
 
 
 def case(name, assignee, state):

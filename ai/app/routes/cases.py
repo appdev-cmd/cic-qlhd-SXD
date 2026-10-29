@@ -41,7 +41,19 @@ def submissions(
     scope: Literal['', 'mine', 'queue'] = '',
 ):
     return s.page(
-        offset, limit, procedure, projectId, search, kind, status, dateFrom, dateTo, sort, direction, sla=sla, scope=scope
+        offset,
+        limit,
+        procedure,
+        projectId,
+        search,
+        kind,
+        status,
+        dateFrom,
+        dateTo,
+        sort,
+        direction,
+        sla=sla,
+        scope=scope,
     )
 
 

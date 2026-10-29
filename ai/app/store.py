@@ -855,7 +855,11 @@ class Store:
                 values.append(str(self.actor.get('id')))
                 if scope == 'queue':
                     clauses.append(
-                        'coalesce(' + field('workflowState') + ",'received') in (" + ','.join([mark] * len(open_states)) + ')'
+                        'coalesce('
+                        + field('workflowState')
+                        + ",'received') in ("
+                        + ','.join([mark] * len(open_states))
+                        + ')'
                     )
                     values.extend(open_states)
         if dossier_id:
