@@ -24,7 +24,11 @@ import type { DashboardSummary } from '../components/appraisal/dashboardData';
  */
 const STATIC_DOSSIERS: Dossier[] = MOCK_PROJECTS.slice(0, 18).map((proj, idx) => {
   const procedure =
-    proj.stage === 'gpxd' ? 'gpxd' : proj.stage === 'nghiem_thu' || proj.stage === 'hoan_thanh' ? 'nghiem_thu' : 'bcnckt';
+    proj.stage === 'gpxd'
+      ? 'gpxd'
+      : proj.stage === 'nghiem_thu' || proj.stage === 'hoan_thanh'
+        ? 'nghiem_thu'
+        : 'bcnckt';
   const statusList = ['reviewed', 'processing', 'analyzed', 'request_supplement', 'intake'] as const;
   const status =
     proj.slaStatus === 'da_tham_dinh'
@@ -411,7 +415,8 @@ function buildAppraisalSheet(dossier: Dossier): AppraisalSheetView {
         criteria: ['Mật độ xây dựng, hệ số sử dụng đất', 'Tầng cao & chiều cao tĩnh không Cảng HK Điện Biên'],
         applicable: true,
         status: 'meets',
-        assessment: 'Các chỉ tiêu quy hoạch tổng mặt bằng phù hợp với quyết định phê duyệt quy hoạch và QCVN 01:2021/BXD.',
+        assessment:
+          'Các chỉ tiêu quy hoạch tổng mặt bằng phù hợp với quyết định phê duyệt quy hoạch và QCVN 01:2021/BXD.',
         requirements: [],
         findingIds: [],
         suggestion: {
@@ -907,7 +912,10 @@ export async function handleStaticApiFallback(path: string, init: RequestInit = 
         active_projects_count: p.activeProjectsCount,
         has_conflict_warning: Boolean(p.hasConflictWarning),
       })).filter((r) => {
-        if (search && !matchesSmartSearch(`${r.full_name} ${r.code} ${r.certificate_number} ${r.organization_name}`, search))
+        if (
+          search &&
+          !matchesSmartSearch(`${r.full_name} ${r.code} ${r.certificate_number} ${r.organization_name}`, search)
+        )
           return false;
         if (status !== 'all' && r.status !== status) return false;
         return true;
@@ -998,7 +1006,8 @@ export async function handleStaticApiFallback(path: string, init: RequestInit = 
           id: 'cit-1',
           document: 'Nghị định 217/2026/NĐ-CP',
           section: 'Điều 37 & Điều 38',
-          quote: 'Nội dung và thời hạn thẩm định Báo cáo nghiên cứu khả thi đầu tư xây dựng tại cơ quan chuyên môn về xây dựng.',
+          quote:
+            'Nội dung và thời hạn thẩm định Báo cáo nghiên cứu khả thi đầu tư xây dựng tại cơ quan chuyên môn về xây dựng.',
           effectiveDate: '2026-07-01',
         },
         {

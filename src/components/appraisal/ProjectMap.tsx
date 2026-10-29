@@ -1182,10 +1182,7 @@ export function ProjectMap() {
               </div>
 
               {/* 3D Terrain Toggle giống hệt InteractiveMap.tsx bên qlda-ddcn-ht-selfhost */}
-              <Tooltip
-                content="Bật/tắt chế độ Địa hình 3D (AWS Terrarium DEM) nghiêng góc nhìn 60°"
-                placement="bottom"
-              >
+              <Tooltip content="Bật/tắt chế độ Địa hình 3D (AWS Terrarium DEM) nghiêng góc nhìn 60°" placement="bottom">
                 <button
                   type="button"
                   onClick={() => setIs3D((prev) => !prev)}
@@ -1259,9 +1256,7 @@ export function ProjectMap() {
                   return (
                     <Tooltip
                       key={cfg.key}
-                      content={
-                        filters.stage === cfg.key ? 'Bấm để hiển thị lại tất cả giai đoạn' : `Lọc: ${cfg.label}`
-                      }
+                      content={filters.stage === cfg.key ? 'Bấm để hiển thị lại tất cả giai đoạn' : `Lọc: ${cfg.label}`}
                       placement="left"
                     >
                       <button
