@@ -43,7 +43,7 @@ def main():
  token=call('http://127.0.0.1:8208/api/appraisal/test-login','POST',json={'role':'admin'}).json()['access_token']
  dh={'apikey':destination_key,'Authorization':'Bearer '+token}
  def rpc(name,data):return call(destination_url+'/rest/v1/rpc/'+name,'POST',headers=dh,json=data).json()
- workspace=rpc('sxd_bim_import_project',{'p_code':'BIM-QA-NOXH-HVT','p_name':'Mô hình BIM NOXH HVT — chuyển từ qa-si-xd'})
+ workspace=rpc('sxd_bim_import_project',{'p_code':'BIM-QA-NOXH-HVT','p_name':'Mô hình BIM NOXH HVT'})
  project=workspace['id']
  manifest_path=folder/'transfer.json'
  manifest=json.loads(manifest_path.read_text(encoding='utf-8')) if manifest_path.exists() else {'source':'qa-si-xd','targetProjectId':workspace['targetProjectId'],'bimProjectId':project,'models':{}}
