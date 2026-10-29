@@ -1,9 +1,7 @@
-import * as FRAGS from '@thatopen/fragments';
 import JSZip from 'jszip';
-import * as WEBIFC from 'web-ifc';
 import { supabase } from '../adapters/supabase';
-import { decodeIfcString, extractElements, type ExtractResult } from '../../../../worker/bim-converter/extractElements';
-import { extractTopology, type TopologyResult } from '../../../../worker/bim-converter/extractTopology';
+import { type ExtractResult } from '../../../../worker/bim-converter/extractElements';
+import { runIfcConversion } from './ifcConvertClient';
 import type { BimModel } from '../types/bim.types';
 
 export interface BrowserConversionWarning {
@@ -19,6 +17,7 @@ const BATCH_SIZE = 500;
 const activeModelConversions = new Set<string>();
 
 export interface BrowserConvertOptions {
+  signal?: AbortSignal;
   /** Nếu vừa tải lên từ trình duyệt, truyền trực tiếp file gốc để không phải tải lại từ Storage */
   sourceFile?: File | Blob | Uint8Array | null;
   onProgress?: (percent: number, message: string) => void;
@@ -121,6 +120,16 @@ export async function convertBimModelInBrowser(
   activeModelConversions.add(model.id);
   const startedAt = performance.now();
   let jobId: string | null = null;
+  const controller = new AbortController();
+  const abort = () => controller.abort();
+  options.signal?.addEventListener('abort', abort, { once: true });
+  if (options.signal?.aborted) controller.abort();
+  let heartbeat: ReturnType<typeof setInterval> | undefined;
+  let progress = 5;
+  const report = (percent: number, message: string) => {
+    progress = percent;
+    options.onProgress?.(percent, message);
+  };
 
   try {
     options.onProgress?.(5, 'Đang khởi tạo phiên chuyển đổi mô hình trên trình duyệt...');
@@ -134,31 +143,26 @@ export async function convertBimModelInBrowser(
       return { skipped: true };
     }
     jobId = String(claimedJobId);
+    heartbeat = setInterval(() => {
+      void supabase
+        .rpc('bim_browser_stage_elements', {
+          p_model: model.id,
+          p_job: jobId!,
+          p_elements: [],
+          p_progress: Math.min(84, Math.round(progress)),
+        })
+        .then(({ error }) => {
+          if (error) controller.abort();
+        });
+    }, 20_000);
 
     options.onProgress?.(10, 'Đang đọc tệp IFC...');
     const ifcBytes = await resolveIfcBytes(model, options.sourceFile);
 
     options.onProgress?.(15, 'Đang biên dịch hình học 3D (.frag) bằng WebAssembly...');
     const wasmUrl = getIfcWasmUrl();
-    const importer = new FRAGS.IfcImporter();
-    importer.wasm = {
-      path: wasmUrl,
-      absolute: true,
-    };
-    importer.addAllAttributes();
-    importer.addAllRelations();
-    const fragBytes = await importer.process({
-      bytes: ifcBytes.slice(),
-      raw: false,
-      progressCallback: (progress) => {
-        const pct = Math.min(48, Math.max(15, Math.round(15 + progress * 33)));
-        options.onProgress?.(pct, `Đang dựng hình học 3D (${Math.round(progress * 100)}%)...`);
-      },
-    });
-
-    if (!fragBytes || fragBytes.byteLength === 0) {
-      throw new Error('Không tạo được dữ liệu hình học 3D (.frag) từ tệp IFC');
-    }
+    const ifcByteLength = ifcBytes.byteLength;
+    const { fragBytes, extraction, topology } = await runIfcConversion(ifcBytes, wasmUrl, report, controller.signal);
 
     const fragPath = `frags/${model.project_id}/${model.id}.frag`;
     options.onProgress?.(50, 'Đang lưu tệp mô hình 3D (.frag) lên đám mây...');
@@ -174,36 +178,6 @@ export async function convertBimModelInBrowser(
     });
     if (uploadError) {
       throw new Error(`Không tải được tệp .frag lên Storage: ${uploadError.message}`);
-    }
-
-    options.onProgress?.(55, 'Đang trích xuất danh mục cấu kiện, thuộc tính & khối lượng Qto...');
-    const ifcApi = new WEBIFC.IfcAPI();
-    ifcApi.SetWasmPath(wasmUrl, true);
-    await ifcApi.Init();
-
-    let extraction: ExtractResult;
-    let topology: TopologyResult = { ports: 0, connections: [], systems: [], orphan: 0 };
-
-    const modelID = ifcApi.OpenModel(ifcBytes, { COORDINATE_TO_ORIGIN: true });
-    try {
-      extraction = extractElements(ifcApi, modelID, {
-        geometryFallback: true,
-        onProgress: (p, msg) => {
-          const pct = Math.min(84, Math.max(55, Math.round(55 + p * 0.29)));
-          options.onProgress?.(pct, msg);
-        },
-      });
-      try {
-        topology = extractTopology(ifcApi, modelID, decodeIfcString);
-      } catch (topoErr) {
-        console.warn('[BrowserIfcConverter] Không trích xuất được mạng MEP:', topoErr);
-      }
-    } finally {
-      try {
-        ifcApi.CloseModel(modelID);
-      } catch {
-        /* ignore */
-      }
     }
 
     const totalElements = extraction.elements.length;
@@ -232,6 +206,7 @@ export async function convertBimModelInBrowser(
       }
     }
 
+    clearInterval(heartbeat);
     options.onProgress?.(98, 'Đang hoàn tất xuất bản mô hình 3D...');
     const warnings = buildConversionWarnings(extraction);
     const totalMs = Math.round(performance.now() - startedAt);
@@ -245,7 +220,7 @@ export async function convertBimModelInBrowser(
       chi_so_xu_ly: {
         engine: 'browser-wasm',
         tong_ms: totalMs,
-        ifc_bytes: ifcBytes.byteLength,
+        ifc_bytes: ifcByteLength,
         frag_bytes: fragBytes.byteLength,
         so_cau_kien: totalElements,
         qto_thieu_ty_le: extraction.qtoMissingRatio,
@@ -290,6 +265,8 @@ export async function convertBimModelInBrowser(
     }
     throw err;
   } finally {
+    clearInterval(heartbeat);
+    options.signal?.removeEventListener('abort', abort);
     activeModelConversions.delete(model.id);
   }
 }

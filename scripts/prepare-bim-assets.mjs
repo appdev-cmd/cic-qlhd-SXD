@@ -37,7 +37,7 @@ if (fragmentsEntry && ifcEntry) {
 }
 
 const workers = [
-  ...['bimUpload', 'sectionBatch', 'clashBroadPhase', 'narrowPhase'].map((name) => [name, '']),
+  ...['bimUpload', 'ifcConvert', 'sectionBatch', 'clashBroadPhase', 'narrowPhase'].map((name) => [name, '']),
   ...['sun', 'phaseSun', 'facade', 'envelope'].map((name) => [name, 'sun/']),
 ];
 let built = 0;

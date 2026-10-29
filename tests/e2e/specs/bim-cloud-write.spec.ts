@@ -39,6 +39,9 @@ test('authenticated cloud IFC upload and saved viewpoint survive a full reload',
   expect(login.status()).toBe(200);
   const session = await login.json();
   const headers = { apikey: key, Authorization: 'Bearer ' + session.access_token };
+  page.on('console', (message) => {
+    if (message.type() === 'error' && message.text().includes('BrowserIfcConverter')) console.error(message.text());
+  });
   await page.addInitScript(
     ({ ref, session }) => {
       sessionStorage.setItem(`sb-${ref}-auth-token`, JSON.stringify(session));
@@ -58,7 +61,7 @@ test('authenticated cloud IFC upload and saved viewpoint survive a full reload',
       params: {
         project_id: 'eq.' + project,
         file_name: 'eq.' + filename,
-        select: 'id,status,element_count,frag_path,ifc_path',
+        select: 'id,status,element_count,frag_path,ifc_path,error_message',
         deleted_at: 'is.null',
       },
     });
@@ -69,10 +72,10 @@ test('authenticated cloud IFC upload and saved viewpoint survive a full reload',
     await page.goto('/bim');
     await expect(page.getByRole('button', { name: 'Tải IFC', exact: true })).toBeVisible({ timeout: 60000 });
     await page.getByRole('button', { name: 'Tải IFC', exact: true }).click();
-    const bytes = readFileSync(resolve(root, 'tests/e2e/fixtures/bim-sample.ifc'), 'utf8').replace(
-      'hand-written',
-      'e2e-' + nonce,
-    );
+    const bytes = readFileSync(
+      resolve(root, 'public/bim/demo/files/1377ad57-a15b-4e0b-bad8-c4b8516eaf91.ifc'),
+      'utf8',
+    ).replace('ISO-10303-21;', `ISO-10303-21;\n/* E2E ${nonce} */`);
     await page
       .locator('input[type=file][accept*=".ifc"]')
       .setInputFiles({ name: filename, mimeType: 'application/x-step', buffer: Buffer.from(bytes) });
@@ -131,7 +134,17 @@ test('authenticated cloud IFC upload and saved viewpoint survive a full reload',
       expect(response.ok()).toBeTruthy();
     }
     if (modelId) {
-      const response = await request.post(url + '/rest/v1/rpc/bim_delete_model', { headers, data: { p_id: modelId } });
+      const admin = accounts.accounts.find((value: { role: string }) => value.role === 'admin');
+      const cleanupLogin = await request.post(url + '/auth/v1/token?grant_type=password', {
+        headers: { apikey: key },
+        data: { email: admin.email, password: admin.password },
+      });
+      expect(cleanupLogin.status()).toBe(200);
+      const cleanupHeaders = { apikey: key, Authorization: 'Bearer ' + (await cleanupLogin.json()).access_token };
+      const response = await request.post(url + '/rest/v1/rpc/bim_delete_model', {
+        headers: cleanupHeaders,
+        data: { p_id: modelId },
+      });
       expect(response.ok()).toBeTruthy();
     }
   }

@@ -252,6 +252,7 @@ export class BimService {
     try {
       const converted = await convertBimModelInBrowser(model, {
         sourceFile: file,
+        signal,
         onProgress: (percent, message) => {
           onProgress?.({ phase: 'convert', percent, message });
         },
