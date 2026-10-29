@@ -35,7 +35,12 @@
   - gallery có xem ảnh lớn, sửa/xóa ảnh (API PATCH/DELETE);
   - `EntityLink` trong panel dự án;
   - ngày mặc định theo giờ máy (`todayIso`).
-- **Tiếp theo:** U7 (kiểm tra hình ảnh, responsive), B1, B2, B4. Dữ liệu staging dừng ở tháng 9 nên KPI 30 ngày đang bằng 0; B4 (dữ liệu demo sống) sẽ xử lý.
+- **Xong 29/10:** U7, kiểm tra hình ảnh và responsive:
+  - `tests/e2e/specs/layout.spec.ts` kiểm ở 768/1024/1366/1920px: không cuộn ngang, khung luôn hiển thị, không phần tử nổi che danh sách, nhãn hạn một dòng, thanh lọc một hàng từ 1366px;
+  - ảnh sáng/tối đính kèm báo cáo Playwright (thay cho so sánh pixel, vì font Windows/Linux khác nhau);
+  - sửa tràn ngang dashboard ở tablet (menu thu gọn dưới 1024px, `min-w-0`) và thanh lọc 2 hàng ở 1366px;
+  - báo cáo bàn giao: `docs/UI_DELIVERY_2026_10_29.md`.
+- **Tiếp theo:** B1, B2, B4. Dữ liệu staging dừng ở tháng 9 nên KPI 30 ngày đang bằng 0; B4 (dữ liệu demo sống) sẽ xử lý.
 - **Ghi nhận cho B2:** trên cloud staging, `GET /cases/{id}` mất khoảng 4 giây, danh sách khoảng 1,5 giây, trong khi xử lý trong tiến trình Worker chỉ mất 20–40 ms. Thời gian dồn vào các vòng truy vấn tới Supabase (Tokyo), cần gộp truy vấn hoặc cache.
 **Quyết định đã chốt:**
 1. **Bộ màu theo cic-hud:** 12 bộ màu hai tông (`config/palettes.ts` của cic-hud — nền menu tối trầm + màu nhấn ánh kim + màu chủ đạo), bộ chọn bộ màu, menu trái nền tối theo bộ màu, nền "bảo vệ mắt" cát ấm của cic-hud. Mặc định cho Sở Xây dựng: **"Lam công vụ"** (teal `#00668c` + vàng đồng), đổi được sang bộ "HUD" hoặc bộ khác.

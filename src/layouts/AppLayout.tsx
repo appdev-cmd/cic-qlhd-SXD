@@ -20,7 +20,7 @@ function readCollapsed() {
 /** Khung ứng dụng (U2): menu trái hai tông, thanh trên, tìm nhanh Ctrl+K, chuông hạn. */
 export function AppLayout() {
   const [collapsed, setCollapsed] = useState(readCollapsed);
-  const [isSmallScreen, setIsSmallScreen] = useState(() => window.matchMedia('(max-width: 767px)').matches);
+  const [isSmallScreen, setIsSmallScreen] = useState(() => window.matchMedia('(max-width: 1023px)').matches);
   const [paletteOpen, setPaletteOpen] = useState(false);
   const compact = collapsed || isSmallScreen;
   const counts = useWorkCounts();
@@ -28,7 +28,7 @@ export function AppLayout() {
   const location = useLocation();
 
   useEffect(() => {
-    const media = window.matchMedia('(max-width: 767px)');
+    const media = window.matchMedia('(max-width: 1023px)');
     const update = () => setIsSmallScreen(media.matches);
     media.addEventListener('change', update);
     return () => media.removeEventListener('change', update);

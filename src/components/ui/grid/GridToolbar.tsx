@@ -65,7 +65,7 @@ export function GridToolbar({
             className="inline-flex items-center gap-1.5 rounded-lg border border-dashed border-border dark:border-slate-600 px-2.5 py-2 text-sm text-ink-muted dark:text-slate-400 hover:border-primary-300 dark:hover:border-primary-700 hover:text-ink dark:hover:text-slate-100"
           >
             <SlidersHorizontal size={14} />
-            {showPeriod ? 'Ẩn lọc thời gian' : 'Lọc theo thời gian'}
+            {showPeriod ? 'Ẩn thời gian' : 'Thời gian'}
             <ChevronDown size={14} className={cn('transition-transform', showPeriod && 'rotate-180')} />
           </button>
         )}

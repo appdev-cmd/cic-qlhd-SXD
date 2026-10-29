@@ -14,7 +14,7 @@ test('filter bar keeps the standard order and SLA filter narrows the list', asyn
 
   await expect(page.getByRole('button', { name: 'Hạn xử lý', exact: true })).toBeVisible();
   await chooseOption(page, 'Tất cả hạn xử lý', 'Quá hạn');
-  await expect(page.getByText(/hồ sơ · trang 1/)).toBeVisible();
+  await expect(page.getByText(/^\d[\d.]* hồ sơ$/).first()).toBeVisible();
   const rows = page.locator('tbody tr');
   await expect(rows.first()).toBeVisible();
   // Auto-retrying: the list reloads asynchronously after the filter changes.

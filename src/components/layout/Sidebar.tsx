@@ -65,7 +65,7 @@ export function Sidebar({
             type="button"
             onClick={onToggle}
             aria-label={collapsed ? 'Mở rộng menu' : 'Thu gọn menu'}
-            className="hidden md:block p-1.5 rounded-lg text-white/60 dark:text-white/60 hover:bg-white/10 dark:hover:bg-white/10 hover:text-white dark:hover:text-white transition-colors shrink-0 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-accent"
+            className="hidden lg:block p-1.5 rounded-lg text-white/60 dark:text-white/60 hover:bg-white/10 dark:hover:bg-white/10 hover:text-white dark:hover:text-white transition-colors shrink-0 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-accent"
           >
             {collapsed ? <ChevronRight size={16} /> : <ChevronLeft size={16} />}
           </button>

@@ -449,11 +449,12 @@ export function AppraisalPage({ procedure = 'bcnckt', project }: { procedure?: P
                 onChange={(search) => setFilters({ ...filters, search })}
                 label="Tìm hồ sơ"
                 placeholder="Tìm theo tên hồ sơ, tên dự án, mã dự án…"
+                className="sm:w-56 2xl:w-72"
               />
             }
             people={
               !project && (
-                <div className="w-64">
+                <div className="w-48 2xl:w-64">
                   <ProjectSelect
                     value={filters.projectId}
                     onChange={(projectId) => {
@@ -467,14 +468,14 @@ export function AppraisalPage({ procedure = 'bcnckt', project }: { procedure?: P
             }
             status={
               <>
-                <div className="w-48">
+                <div className="w-40 2xl:w-48">
                   <SearchableSelect
                     value={filters.status}
                     onChange={(status) => setFilters({ ...filters, status })}
                     options={STATUS_OPTIONS}
                   />
                 </div>
-                <div className="w-48">
+                <div className="w-40 2xl:w-48">
                   <SearchableSelect
                     value={filters.sla || 'all'}
                     onChange={(sla) => setFilters({ ...filters, sla })}
@@ -507,7 +508,7 @@ export function AppraisalPage({ procedure = 'bcnckt', project }: { procedure?: P
             }}
             collapsePeriod
             periodActive={(filters.from ? 1 : 0) + (filters.to ? 1 : 0)}
-            count={<GridCount total={total} unit="hồ sơ" detail={`trang ${page + 1}`} />}
+            count={<GridCount total={total} unit="hồ sơ" />}
           />
           <FilterChips
             chips={filterChips}

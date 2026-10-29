@@ -342,12 +342,12 @@ export function RoleOverview({ performance, role }: { performance: DashboardPerf
   return (
     <div className="space-y-5">
       <PeriodKpis current={period.current} previous={period.previous} days={period.days} />
-      <div className={cn('grid gap-5', leader && 'xl:grid-cols-5')}>
-        <div className={leader ? 'xl:col-span-2' : undefined}>
+      <div className={cn('grid min-w-0 gap-5', leader && 'xl:grid-cols-5')}>
+        <div className={cn('min-w-0', leader && 'xl:col-span-2')}>
           <MyWorkCard mine={mine} leader={leader} />
         </div>
         {leader && (
-          <div className="xl:col-span-3">
+          <div className="min-w-0 xl:col-span-3">
             <OfficerTable officers={officers} />
           </div>
         )}
