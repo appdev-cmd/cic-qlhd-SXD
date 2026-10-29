@@ -1,6 +1,9 @@
-# Vercel serves the static Vite web app only (src/, public/, index.html, config/).
-# Patterns are anchored to the root (src/components/ai must stay). Keep Python and data folders out so the build is not detected as a Python/FastAPI project.
-/ai/
+# Deploy the Vite frontend and the authenticated Python API, without local dependencies or tests.
+/ai/.deps/
+/ai/tests/
+/ai/__pycache__/
+/ai/evaluation/*
+!/ai/evaluation/legal_retrieval.json
 /scripts/*
 !/scripts/prepare-bim-assets.mjs
 /supabase/
@@ -8,7 +11,6 @@
 /docs/*
 # The in-app help page (src/pages/HelpPage.tsx) bundles the user guide with `?raw`.
 !/docs/HUONG_DAN_QUY_TRINH_THAM_DINH_AI.md
-/01_phap_ly_quy_chuan/
 /knowledge-base/
 /output/
 /tmp/
