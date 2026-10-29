@@ -115,6 +115,9 @@ export interface DossierSummary {
   revision: number;
   slaDueDate?: string | null;
   slaState?: SlaState;
+  /** Người phụ trách (tên đã resolve) và mã — từ phân công trong workflow. */
+  assignee?: string;
+  assigneeId?: string | null;
 }
 export interface Dossier extends DossierSummary {
   readOnly?: boolean;

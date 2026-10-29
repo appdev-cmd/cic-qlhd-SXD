@@ -9,7 +9,14 @@
   - thanh trên có breadcrumb, tìm nhanh Ctrl+K / `/`, chuông báo hạn dẫn tới danh sách đã lọc `?sla=`, menu tài khoản;
   - nút Trợ lý AI lên thanh trên;
   - tách `LoginPage` khỏi `RequireAuth`.
-- **Tiếp theo:** U3 (danh sách và bộ lọc), sau đó U4–U7, B1, B2, B4.
+- **Xong 29/10:** U3, danh sách và bộ lọc:
+  - tab "Tất cả / Của tôi / Chờ tôi xử lý / Sắp đến hạn / Quá hạn" (API `scope=mine|queue`, cũng là B1.3);
+  - cột người phụ trách;
+  - chip bộ lọc, gập bộ lọc thời gian;
+  - cột phụ tự ẩn ở 1024px;
+  - `PageHeader`/`PaginationBar` cho Dự án, Danh mục, Kho văn bản, Sổ GP;
+  - Kho văn bản phân trang server; nhóm `QG` cho dự án.
+- **Tiếp theo:** U4 (không gian xử lý hồ sơ), sau đó U5–U7, B1, B2, B4.
 - **Ghi nhận cho B2:** trên cloud staging, `GET /cases/{id}` mất khoảng 4 giây, danh sách khoảng 1,5 giây, trong khi xử lý trong tiến trình Worker chỉ mất 20–40 ms. Thời gian dồn vào các vòng truy vấn tới Supabase (Tokyo), cần gộp truy vấn hoặc cache.
 **Quyết định đã chốt:**
 1. **Bộ màu theo cic-hud:** 12 bộ màu hai tông (`config/palettes.ts` của cic-hud — nền menu tối trầm + màu nhấn ánh kim + màu chủ đạo), bộ chọn bộ màu, menu trái nền tối theo bộ màu, nền "bảo vệ mắt" cát ấm của cic-hud. Mặc định cho Sở Xây dựng: **"Lam công vụ"** (teal `#00668c` + vàng đồng), đổi được sang bộ "HUD" hoặc bộ khác.

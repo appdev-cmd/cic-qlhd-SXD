@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useRef, lazy, Suspense } from 'react';
 import { useLocation, useParams } from 'react-router-dom';
-import { Plus, Download, RefreshCw } from 'lucide-react';
+import { Plus, Download, RefreshCw, FlaskConical } from 'lucide-react';
 import { appraisalService as api } from '../services/appraisalService';
 import type { DossierSummary, Health } from '../types/appraisal';
 import { AppraisalWorkspace } from './projects/appraisal/AppraisalWorkspace';
@@ -23,6 +23,36 @@ import { SubmissionWorkspace } from '../components/appraisal/SubmissionWorkspace
 import { PermitRegister } from '../components/appraisal/PermitRegister';
 import { SlaBadge, SLA_FILTER_OPTIONS } from '../components/appraisal/SlaBadge';
 import { GridToolbar, GridSearchInput, GridCount } from '../components/ui/grid/GridToolbar';
+import { FilterChips, type FilterChip } from '../components/ui/grid/FilterChips';
+import { PageHeader } from '../components/ui/PageHeader';
+import { Button, IconButton } from '../components/ui/Button';
+import { Tabs } from '../components/ui/Tabs';
+import { PaginationBar } from '../components/ui/PaginationBar';
+import { useWorkCounts } from '../hooks/useWorkCounts';
+
+type QuickView = 'all' | 'mine' | 'queue' | 'due_soon' | 'overdue';
+const EMPTY_FILTERS = {
+  search: '',
+  kind: 'all',
+  projectId: '',
+  status: 'all',
+  sla: 'all',
+  from: '',
+  to: '',
+  scope: '',
+};
+const STATUS_OPTIONS = [
+  { value: 'all', label: 'Tất cả trạng thái' },
+  { value: 'intake', label: 'Tiếp nhận' },
+  { value: 'analyzing', label: 'Đang kiểm tra' },
+  { value: 'analyzed', label: 'Đã kiểm tra' },
+  { value: 'request_supplement', label: 'Yêu cầu bổ sung' },
+  { value: 'processing', label: 'Đang xử lý' },
+  { value: 'reviewed', label: 'Đã rà soát nội bộ' },
+  { value: 'suspended', label: 'Tạm dừng thẩm định' },
+  { value: 'rejected', label: 'Từ chối tiếp nhận' },
+  { value: 'stopped', label: 'Dừng xử lý' },
+];
 const ProjectPanel = lazy(() =>
   import('./projects/ProjectDetailSlidePanel').then((m) => ({ default: m.ProjectDetailSlidePanel })),
 );
@@ -57,15 +87,26 @@ export function AppraisalPage({ procedure = 'bcnckt', project }: { procedure?: P
     legalDate: new Date().toISOString().slice(0, 10),
   });
   const [initial, setInitial] = useState('');
-  const [filters, setFilters] = useFilterState('submission-list-' + procedure + '-' + (project?.id || 'all'), {
-    search: '',
-    kind: 'all',
-    projectId: '',
-    status: 'all',
-    sla: 'all',
-    from: '',
-    to: '',
-  });
+  const [storedFilters, setFilters] = useFilterState(
+    'submission-list-' + procedure + '-' + (project?.id || 'all'),
+    EMPTY_FILTERS,
+  );
+  // Older saved filters have no `scope`; fill new keys from the defaults.
+  const filters = { ...EMPTY_FILTERS, ...storedFilters };
+  const counts = useWorkCounts();
+  const quickView: QuickView =
+    filters.scope === 'mine' || filters.scope === 'queue'
+      ? (filters.scope as QuickView)
+      : filters.sla === 'overdue' || filters.sla === 'due_soon'
+        ? (filters.sla as QuickView)
+        : 'all';
+  // Quick views are exclusive: each one replaces the scope and the quick SLA filter of the previous view.
+  const setQuickView = (view: QuickView) =>
+    setFilters({
+      ...filters,
+      scope: view === 'mine' || view === 'queue' ? view : '',
+      sla: view === 'overdue' || view === 'due_soon' ? view : 'all',
+    });
   // Deep link from the deadline bell: /projects/appraisal?sla=overdue applies the SLA filter once.
   const location = useLocation();
   useEffect(() => {
@@ -90,7 +131,8 @@ export function AppraisalPage({ procedure = 'bcnckt', project }: { procedure?: P
   const load = async () => {
     const current = ++requestId.current;
     const [h, result] = await Promise.all([
-      api.health(),
+      // Health only decides which actions are available; fetch it once per page visit.
+      health ? Promise.resolve(health) : api.health(),
       api.page({
         offset: page * 50,
         limit: 50,
@@ -102,6 +144,7 @@ export function AppraisalPage({ procedure = 'bcnckt', project }: { procedure?: P
         sla: filters.sla,
         dateFrom: filters.from,
         dateTo: filters.to,
+        scope: (filters.scope || '') as '' | 'mine' | 'queue',
         sort: sort.key,
         direction: sort.direction,
       }),
@@ -186,6 +229,64 @@ export function AppraisalPage({ procedure = 'bcnckt', project }: { procedure?: P
       ),
       storageKey: 'slidepanel-project-' + p.id,
     });
+  const statusLabel = (v: string) => STATUS_OPTIONS.find((o) => o.value === v)?.label || v;
+  const slaLabel = (v: string) => SLA_FILTER_OPTIONS.find((o) => o.value === v)?.label || v;
+  const clear = (patch: Partial<typeof EMPTY_FILTERS>) => {
+    setPage(0);
+    setFilters({ ...filters, ...patch });
+  };
+  const filterChips: FilterChip[] = [
+    filters.search && { id: 'search', label: 'Từ khóa', value: filters.search, onRemove: () => clear({ search: '' }) },
+    filters.scope === 'mine' && {
+      id: 'scope',
+      label: 'Góc nhìn',
+      value: 'Của tôi',
+      onRemove: () => clear({ scope: '' }),
+    },
+    filters.scope === 'queue' && {
+      id: 'scope',
+      label: 'Góc nhìn',
+      value: 'Chờ tôi xử lý',
+      onRemove: () => clear({ scope: '' }),
+    },
+    filters.projectId && {
+      id: 'project',
+      label: 'Dự án',
+      value: 'Đã chọn 1 dự án',
+      onRemove: () => clear({ projectId: '' }),
+    },
+    filters.status !== 'all' && {
+      id: 'status',
+      label: 'Trạng thái',
+      value: statusLabel(filters.status),
+      onRemove: () => clear({ status: 'all' }),
+    },
+    filters.sla &&
+      filters.sla !== 'all' && {
+        id: 'sla',
+        label: 'Hạn xử lý',
+        value: slaLabel(filters.sla),
+        onRemove: () => clear({ sla: 'all' }),
+      },
+    filters.from && {
+      id: 'from',
+      label: 'Đánh giá từ',
+      value: formatDate(filters.from),
+      onRemove: () => clear({ from: '' }),
+    },
+    filters.to && { id: 'to', label: 'Đánh giá đến', value: formatDate(filters.to), onRemove: () => clear({ to: '' }) },
+  ].filter(Boolean) as FilterChip[];
+  const startCreate = () => {
+    const next = {
+      ...form,
+      projectId: project?.id || '',
+      name: config.label + ' — lần nộp mới',
+      province: project?.location || 'Điện Biên',
+    };
+    setForm(next);
+    setInitial(JSON.stringify(next));
+    setCreate(true);
+  };
   const projectName = (d: DossierSummary) => d.projectName || 'Chưa gắn dự án';
   const rows = items;
   return (
@@ -195,107 +296,131 @@ export function AppraisalPage({ procedure = 'bcnckt', project }: { procedure?: P
         (project ? 'flex-1 min-h-[420px] py-4' : 'h-full min-h-[520px]')
       }
     >
-      <header>
-        <h1 className="text-2xl font-bold">{config.label}</h1>
-      </header>
+      {!project && (
+        <PageHeader
+          title={config.label}
+          description="Danh sách các lần nộp hồ sơ, hạn xử lý theo NĐ 217/2026 và NĐ 207/2026."
+          actions={
+            <>
+              {procedure === 'bcnckt' && health?.mode === 'demo' && (
+                <>
+                  <Button
+                    variant="ghost"
+                    size="sm"
+                    leftIcon={<FlaskConical size={15} />}
+                    disabled={busy}
+                    onClick={() =>
+                      action(async () => {
+                        const d = await api.sample('initial');
+                        await load();
+                        open(d);
+                      })
+                    }
+                  >
+                    Nạp hồ sơ lần đầu
+                  </Button>
+                  <Button
+                    variant="ghost"
+                    size="sm"
+                    disabled={busy}
+                    onClick={() =>
+                      action(async () => {
+                        const d = await api.sample('revised');
+                        await load();
+                        open(d);
+                      })
+                    }
+                  >
+                    Nạp hồ sơ đã bổ sung
+                  </Button>
+                </>
+              )}
+              {procedure === 'bcnckt' && (
+                <IconButton
+                  aria-label="Tải bộ đầu vào và đầu ra"
+                  tooltip="Tải bộ hồ sơ đầu vào và kết quả đầu ra (.zip)"
+                  variant="secondary"
+                  icon={<Download size={16} />}
+                  disabled={busy || !health}
+                  onClick={() => action(() => api.download('/samples.zip', 'bo-ho-so-bcnckt.zip'))}
+                />
+              )}
+              <IconButton
+                aria-label="Tải lại danh sách"
+                tooltip="Tải lại danh sách"
+                variant="secondary"
+                icon={<RefreshCw size={16} />}
+                disabled={busy}
+                onClick={() => action(load)}
+              />
+              <Button leftIcon={<Plus size={16} />} disabled={busy || !health} onClick={startCreate}>
+                Tạo lần nộp hồ sơ
+              </Button>
+            </>
+          }
+        />
+      )}
+      {project && (
+        <div className="flex flex-wrap items-center justify-between gap-3">
+          <h2 className="text-lg font-bold text-ink dark:text-slate-100">{config.label}</h2>
+          <div className="flex gap-2">
+            <IconButton
+              aria-label="Tải lại danh sách"
+              tooltip="Tải lại danh sách"
+              variant="secondary"
+              icon={<RefreshCw size={16} />}
+              disabled={busy}
+              onClick={() => action(load)}
+            />
+            <Button size="sm" leftIcon={<Plus size={15} />} disabled={busy || !health} onClick={startCreate}>
+              Tạo lần nộp hồ sơ
+            </Button>
+          </div>
+        </div>
+      )}
       {error && (
-        <div role="alert" className="rounded-lg bg-red-50 dark:bg-red-950 p-4 text-red-800 dark:text-red-200 text-sm">
+        <div
+          role="alert"
+          className="rounded-xl border border-danger-200 dark:border-danger-800 bg-danger-50 dark:bg-danger-900 p-4 text-sm text-danger-800 dark:text-danger-100"
+        >
           {error}
         </div>
       )}
-      <div className="flex flex-wrap gap-3">
-        <button
-          className={
-            button +
-            ' !bg-primary-500 !border-primary-500 !text-white dark:!bg-primary-500 dark:!border-primary-500 dark:!text-white hover:!bg-primary-600 dark:hover:!bg-primary-600'
-          }
-          disabled={busy || !health}
-          onClick={() => {
-            const next = {
-              ...form,
-              projectId: project?.id || '',
-              name: config.label + ' — lần nộp mới',
-              province: project?.location || 'Điện Biên',
-            };
-            setForm(next);
-            setInitial(JSON.stringify(next));
-            setCreate(true);
-          }}
-        >
-          <Plus size={16} />
-          Tạo lần nộp hồ sơ
-        </button>
-        {procedure === 'bcnckt' && !project && (
-          <>
-            {health?.mode === 'demo' && (
-              <>
-                <button
-                  className={button}
-                  disabled={busy || !health}
-                  onClick={() =>
-                    action(async () => {
-                      const d = await api.sample('initial');
-                      await load();
-                      open(d);
-                    })
-                  }
-                >
-                  Nạp hồ sơ lần đầu
-                </button>
-                <button
-                  className={button}
-                  disabled={busy || !health}
-                  onClick={() =>
-                    action(async () => {
-                      const d = await api.sample('revised');
-                      await load();
-                      open(d);
-                    })
-                  }
-                >
-                  Nạp hồ sơ đã bổ sung
-                </button>
-              </>
-            )}
-            <button
-              className={button}
-              disabled={busy || !health}
-              onClick={() => action(() => api.download('/samples.zip', 'bo-ho-so-bcnckt.zip'))}
-            >
-              <Download size={16} />
-              Tải bộ đầu vào và đầu ra
-            </button>
-          </>
-        )}
-        <button className={button} disabled={busy} onClick={() => action(load)}>
-          <RefreshCw size={16} />
-          Tải lại
-        </button>
-        {procedure === 'gpxd' && !project && (
-          <div className="ml-auto flex gap-2" role="group" aria-label="Chế độ xem">
-            <button
-              className={
-                button +
-                ' aria-pressed:!border-primary-500 dark:aria-pressed:!border-primary-400 aria-pressed:!text-primary-700 dark:aria-pressed:!text-primary-300'
-              }
-              aria-pressed={!register}
-              onClick={() => setView('list')}
-            >
-              Hồ sơ đề nghị
-            </button>
-            <button
-              className={
-                button +
-                ' aria-pressed:!border-primary-500 dark:aria-pressed:!border-primary-400 aria-pressed:!text-primary-700 dark:aria-pressed:!text-primary-300'
-              }
-              aria-pressed={register}
-              onClick={() => setView('register')}
-            >
-              Sổ giấy phép
-            </button>
-          </div>
-        )}
-      </div>
+      {!project && (
+        <div className="flex flex-wrap items-end justify-between gap-3 border-b border-border dark:border-slate-700">
+          {!register ? (
+            <Tabs<QuickView>
+              ariaLabel="Góc nhìn danh sách"
+              className="border-b-0"
+              value={quickView}
+              onChange={setQuickView}
+              items={[
+                { id: 'all', label: 'Tất cả' },
+                { id: 'mine', label: 'Của tôi' },
+                { id: 'queue', label: 'Chờ tôi xử lý' },
+                { id: 'due_soon', label: 'Sắp đến hạn', count: counts?.[procedure]?.dueSoon || undefined },
+                { id: 'overdue', label: 'Quá hạn', count: counts?.[procedure]?.overdue || undefined },
+              ]}
+            />
+          ) : (
+            <span />
+          )}
+          {procedure === 'gpxd' && (
+            <Tabs
+              variant="pills"
+              size="sm"
+              ariaLabel="Chế độ xem"
+              className="mb-2"
+              value={register ? 'register' : 'list'}
+              onChange={(v) => setView(v)}
+              items={[
+                { id: 'list', label: 'Hồ sơ đề nghị' },
+                { id: 'register', label: 'Sổ giấy phép' },
+              ]}
+            />
+          )}
+        </div>
+      )}
       {register ? (
         <PermitRegister />
       ) : (
@@ -329,18 +454,7 @@ export function AppraisalPage({ procedure = 'bcnckt', project }: { procedure?: P
                   <SearchableSelect
                     value={filters.status}
                     onChange={(status) => setFilters({ ...filters, status })}
-                    options={[
-                      { value: 'all', label: 'Tất cả trạng thái' },
-                      { value: 'intake', label: 'Tiếp nhận' },
-                      { value: 'analyzing', label: 'Đang kiểm tra' },
-                      { value: 'analyzed', label: 'Đã kiểm tra' },
-                      { value: 'request_supplement', label: 'Yêu cầu bổ sung' },
-                      { value: 'processing', label: 'Đang xử lý' },
-                      { value: 'reviewed', label: 'Đã rà soát nội bộ' },
-                      { value: 'suspended', label: 'Tạm dừng thẩm định' },
-                      { value: 'rejected', label: 'Từ chối tiếp nhận' },
-                      { value: 'stopped', label: 'Dừng xử lý' },
-                    ]}
+                    options={STATUS_OPTIONS}
                   />
                 </div>
                 <div className="w-48">
@@ -372,9 +486,18 @@ export function AppraisalPage({ procedure = 'bcnckt', project }: { procedure?: P
             }
             onReset={() => {
               setPage(0);
-              setFilters({ search: '', kind: 'all', projectId: '', status: 'all', sla: 'all', from: '', to: '' });
+              setFilters(EMPTY_FILTERS);
             }}
+            collapsePeriod
+            periodActive={(filters.from ? 1 : 0) + (filters.to ? 1 : 0)}
             count={<GridCount total={total} unit="hồ sơ" detail={`trang ${page + 1}`} />}
+          />
+          <FilterChips
+            chips={filterChips}
+            onClearAll={() => {
+              setPage(0);
+              setFilters(EMPTY_FILTERS);
+            }}
           />
           <DossierGrid
             fitWidth
@@ -443,7 +566,7 @@ export function AppraisalPage({ procedure = 'bcnckt', project }: { procedure?: P
                   ]
                 : []),
               {
-                label: 'Trạng thái / thụ lý',
+                label: 'Trạng thái / phụ trách',
                 sortKey: 'status',
                 value: (d) => SUBMISSION_STATUS[d.status] || 'Đang xử lý',
                 width: 220,
@@ -452,7 +575,10 @@ export function AppraisalPage({ procedure = 'bcnckt', project }: { procedure?: P
                     <span className="inline-block rounded-md bg-primary-50 dark:bg-slate-800 px-2 py-1 font-medium text-primary-800 dark:text-primary-300">
                       {SUBMISSION_STATUS[d.status] || 'Đang xử lý'}
                     </span>
-                    <p>{d.department}</p>
+                    <p className="text-ink-muted dark:text-slate-400">
+                      {d.assignee && d.assignee !== 'Chưa phân công' ? d.assignee : 'Chưa phân công'}
+                    </p>
+                    <p className="text-2xs text-ink-muted dark:text-slate-400">{d.department}</p>
                   </div>
                 ),
               },
@@ -475,6 +601,7 @@ export function AppraisalPage({ procedure = 'bcnckt', project }: { procedure?: P
                 sortKey: 'province',
                 value: (d) => d.province,
                 width: 200,
+                hideBelow: 'xl',
                 render: (d) => <p className="leading-relaxed">{d.province}</p>,
               },
               {
@@ -482,6 +609,7 @@ export function AppraisalPage({ procedure = 'bcnckt', project }: { procedure?: P
                 sortKey: 'updatedAt',
                 value: (d) => d.updatedAt,
                 width: 260,
+                hideBelow: 'lg',
                 render: (d) => (
                   <dl className="space-y-1.5 leading-relaxed">
                     {[
@@ -499,19 +627,13 @@ export function AppraisalPage({ procedure = 'bcnckt', project }: { procedure?: P
               },
             ]}
           />
-          <div className="flex shrink-0 flex-wrap items-center justify-between gap-3">
-            <span className="text-xs text-ink-muted dark:text-ink-muted">
-              {total ? `${page * 50 + 1}–${page * 50 + rows.length} / ${total} hồ sơ` : '0 hồ sơ'}
-            </span>
-            <div className="flex gap-3">
-              <button className={button} disabled={busy || page === 0} onClick={() => setPage(page - 1)}>
-                Trang trước
-              </button>
-              <button className={button} disabled={busy || (page + 1) * 50 >= total} onClick={() => setPage(page + 1)}>
-                Trang sau
-              </button>
-            </div>
-          </div>
+          <PaginationBar
+            page={page + 1}
+            totalPages={Math.max(1, Math.ceil(total / 50))}
+            total={total}
+            pageSize={50}
+            onPageChange={(next) => setPage(next - 1)}
+          />
         </>
       )}
       {create && (

@@ -1,7 +1,7 @@
 import React from 'react';
 import { Eye, Pencil, Trash2 } from 'lucide-react';
 import { Tooltip } from './ui/Tooltip';
-import { DataTable, type ColumnAlign, type DataTableColumn, type SortState } from './ui/DataTable';
+import { DataTable, type Breakpoint, type ColumnAlign, type DataTableColumn, type SortState } from './ui/DataTable';
 
 export interface Column<T> {
   header: string;
@@ -10,6 +10,10 @@ export interface Column<T> {
   width?: string | number;
   sortValue: (item: T) => string | number;
   sortKey?: string;
+  /** Hide this secondary column below the given breakpoint. */
+  hideBelow?: Breakpoint;
+  /** Header help text shown in a Tooltip. */
+  tooltip?: React.ReactNode;
 }
 
 export interface MasterTableProps<T extends { id: string }> {
@@ -24,6 +28,8 @@ export interface MasterTableProps<T extends { id: string }> {
   serverSort?: { key: string; direction: string };
   onSort?: (key: string, direction: string) => void;
   emptyMessage?: string;
+  /** Rendered in place of rows when there is nothing to show (overrides emptyMessage). */
+  empty?: React.ReactNode;
   /** Show skeleton rows instead of the empty message while the first result is pending. */
   loading?: boolean;
   className?: string;
@@ -51,6 +57,7 @@ export function MasterTable<T extends { id: string }>({
   onDelete,
   maxHeight = 'calc(100vh - 300px)',
   emptyMessage = 'Không tìm thấy dữ liệu phù hợp',
+  empty,
   loading = false,
   className,
   storageKey = 'master-table',
@@ -74,6 +81,8 @@ export function MasterTable<T extends { id: string }>({
     align: alignFrom(col.className),
     className: col.className,
     headerClassName: col.className,
+    hideBelow: col.hideBelow,
+    tooltip: col.tooltip,
   }));
   if (hasActions)
     tableColumns.push({
@@ -155,6 +164,7 @@ export function MasterTable<T extends { id: string }>({
       rowOffset={rowOffset}
       loading={loading}
       emptyMessage={emptyMessage}
+      empty={empty}
       columnChooser={columnChooser}
       showDensityToggle={columnChooser}
       maxHeight={maxHeight}

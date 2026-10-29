@@ -1,5 +1,5 @@
-import React from 'react';
-import { RotateCcw, Search, X } from 'lucide-react';
+import React, { useState } from 'react';
+import { ChevronDown, RotateCcw, Search, SlidersHorizontal, X } from 'lucide-react';
 import { cn, formatNumber } from '../../../lib/utils';
 import { Tooltip } from '../Tooltip';
 
@@ -18,6 +18,13 @@ export interface GridToolbarProps {
   count?: React.ReactNode;
   actions?: React.ReactNode;
   className?: string;
+  /**
+   * Gập nhóm thời gian (vị trí 5) sau nút "Bộ lọc khác" để thanh lọc gọn một hàng.
+   * Khi mở, nhóm vẫn hiện đúng vị trí 5 theo thứ tự chuẩn.
+   */
+  collapsePeriod?: boolean;
+  /** Số bộ lọc đang áp dụng trong nhóm bị gập — hiện trên nút. */
+  periodActive?: number;
 }
 
 export function GridToolbar({
@@ -30,8 +37,12 @@ export function GridToolbar({
   count,
   actions,
   className,
+  collapsePeriod = false,
+  periodActive = 0,
 }: GridToolbarProps) {
-  const slots = [classification, people, status, period].filter(Boolean);
+  const [showPeriod, setShowPeriod] = useState(false);
+  const periodVisible = !collapsePeriod || showPeriod || periodActive > 0;
+  const slots = [classification, people, status, periodVisible ? period : null].filter(Boolean);
   return (
     <div
       className={cn(
@@ -46,6 +57,18 @@ export function GridToolbar({
             {slot}
           </div>
         ))}
+        {collapsePeriod && period && periodActive === 0 && (
+          <button
+            type="button"
+            aria-expanded={showPeriod}
+            onClick={() => setShowPeriod(!showPeriod)}
+            className="inline-flex items-center gap-1.5 rounded-lg border border-dashed border-border dark:border-slate-600 px-2.5 py-2 text-sm text-ink-muted dark:text-slate-400 hover:border-primary-300 dark:hover:border-primary-700 hover:text-ink dark:hover:text-slate-100"
+          >
+            <SlidersHorizontal size={14} />
+            {showPeriod ? 'Ẩn lọc thời gian' : 'Lọc theo thời gian'}
+            <ChevronDown size={14} className={cn('transition-transform', showPeriod && 'rotate-180')} />
+          </button>
+        )}
       </div>
       <div className="ml-auto flex shrink-0 flex-wrap items-center gap-2">
         {onReset && <GridResetButton onClick={onReset} />}

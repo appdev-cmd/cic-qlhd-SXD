@@ -29,6 +29,8 @@ FIELDS = [
     'slaWaitingDue',
     'slaOutcome',
     'slaDueKind',
+    'assignee',
+    'assigneeId',
 ]
 # Summary columns read from nested payload paths.
 PATHS = {
@@ -39,6 +41,7 @@ PATHS = {
     'slaWaitingDue': '$.sla.waitingDueDate',
     'slaOutcome': '$.sla.outcome',
     'slaDueKind': '$.sla.dueKind',
+    'assigneeId': '$.workflow.assigneeId',
 }
 
 
@@ -116,6 +119,8 @@ def ensure(con):
         ) select id from ancestors order by depth desc limit 1)
         where previousSubmissionId is not null""")
         for name in (
+            'assigneeId',
+            'workflowState',
             'name',
             'updatedAt',
             'projectId',

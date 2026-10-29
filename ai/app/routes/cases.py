@@ -38,8 +38,11 @@ def submissions(
     sort: str = 'updatedAt',
     direction: str = 'desc',
     sla: str = Query(default='', max_length=30),
+    scope: Literal['', 'mine', 'queue'] = '',
 ):
-    return s.page(offset, limit, procedure, projectId, search, kind, status, dateFrom, dateTo, sort, direction, sla=sla)
+    return s.page(
+        offset, limit, procedure, projectId, search, kind, status, dateFrom, dateTo, sort, direction, sla=sla, scope=scope
+    )
 
 
 @router.get('/v1/cases')

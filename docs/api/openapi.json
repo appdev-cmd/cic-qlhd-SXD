@@ -5942,6 +5942,21 @@
             }
           },
           {
+            "in": "query",
+            "name": "scope",
+            "required": false,
+            "schema": {
+              "default": "",
+              "enum": [
+                "",
+                "mine",
+                "queue"
+              ],
+              "title": "Scope",
+              "type": "string"
+            }
+          },
+          {
             "in": "header",
             "name": "x-internal-token",
             "required": false,

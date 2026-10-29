@@ -3956,6 +3956,7 @@ export interface operations {
                 sort?: string;
                 direction?: string;
                 sla?: string;
+                scope?: "" | "mine" | "queue";
             };
             header?: {
                 "x-internal-token"?: string;
