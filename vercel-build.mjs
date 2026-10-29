@@ -1,4 +1,4 @@
-// Keep Vite's static output and native api/index.py Functions in the same Vercel deployment.
+// Keep Vite's static output and native api/index.ts Functions in the same Vercel deployment.
 import { existsSync, rmSync } from 'node:fs';
 import { resolve, sep } from 'node:path';
 
@@ -30,4 +30,5 @@ if (process.env.VITE_APPRAISAL_RUNTIME === 'cloud') rmSync(resolve(dist, 'bim/de
 const legacyOutput = resolve(root, '.vercel/output');
 if (!legacyOutput.startsWith(resolve(root, '.vercel') + sep)) throw new Error('Invalid legacy output path.');
 rmSync(legacyOutput, { recursive: true, force: true });
-console.log('Vercel frontend ready; /api/appraisal uses the authenticated Python Function.');
+console.log('Vercel frontend ready; /api/appraisal uses the authenticated Node.js Function.');
+
