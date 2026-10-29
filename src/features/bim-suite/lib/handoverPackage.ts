@@ -1,4 +1,4 @@
-import {formatDate as sxdFormatDate} from '@/lib/utils';
+import { formatDate as sxdFormatDate } from '@/lib/utils';
 import { formatNumber, formatDateTime } from '@/lib/utils';
 // Closeout package: ZIP with an Excel index (lib/xlsxWrite.ts), a Word review report (docx 9.9), the raw JSON data
 // and a SHA-256 list of every file. Runs in the browser and in Node (tests). Replaces cic-hud exceljs/file-saver.
@@ -177,11 +177,7 @@ async function buildReport(d: HandoverData, checklist: ChecklistRow[]): Promise<
   const assets = d.tai_san ?? [];
   const comp = assetCompleteness(assets);
   const children: DocBlock[] = [...buildTitleBlock('Báo cáo', `Rà soát gói hồ sơ bàn giao — ${projectName(d)}`)];
-  children.push(
-    p(
-      `Lập tự động ngày ${sxdFormatDate(new Date(d.lap_luc))} từ dữ liệu phân hệ BIM. ${HANDOVER_BASIS}`,
-    ),
-  );
+  children.push(p(`Lập tự động ngày ${sxdFormatDate(new Date(d.lap_luc))} từ dữ liệu phân hệ BIM. ${HANDOVER_BASIS}`));
   children.push(pHeading('I. THÔNG TIN CHUNG'));
   children.push(p(`- Dự án: ${projectName(d)}`));
   children.push(p(`- Mô hình đưa vào gói: ${handoverModels(d).length}; tài sản, thiết bị: ${assets.length}.`));

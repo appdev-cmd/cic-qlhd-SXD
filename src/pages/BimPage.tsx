@@ -46,7 +46,9 @@ import type { BimViewerRef, BimSelectedElement, BimMeasureMode } from '../featur
 import { disciplineLabels, getIfcLabel } from '../features/bim/lib/ifcLabels';
 
 const Viewer = lazy(() => import('../features/bim/components/BimViewer').then((m) => ({ default: m.BimViewer })));
-const SuiteWorkspace = lazy(() => import('../features/bim-suite/SxdBimWorkspace').then(m => ({default:m.SxdBimWorkspace})));
+const SuiteWorkspace = lazy(() =>
+  import('../features/bim-suite/SxdBimWorkspace').then((m) => ({ default: m.SxdBimWorkspace })),
+);
 const field =
   'w-full rounded-lg border border-border dark:border-slate-700 bg-surface dark:bg-slate-800 p-2 text-sm text-ink dark:text-slate-100';
 const messageOf = (e: unknown) => (e instanceof Error ? e.message : 'Không thể hoàn thành thao tác BIM.');
@@ -61,13 +63,20 @@ export function BimPage() {
   const [error, setError] = useState('');
   const onSearch = useCallback((value: string) => setSearch(value), []);
   useEffect(() => {
-    if(mode!=='cloud')return;
-    let alive=true;
-    supabase.rpc('sxd_bim_catalog').then(({data,error})=>{
-      if(alive&&!error&&data?.length)setProjectId((current:string)=>data.some((p:{target_project_id:string})=>p.target_project_id===current)?current:data[0].target_project_id);
+    if (mode !== 'cloud') return;
+    let alive = true;
+    supabase.rpc('sxd_bim_catalog').then(({ data, error }) => {
+      if (alive && !error && data?.length)
+        setProjectId((current: string) =>
+          data.some((p: { target_project_id: string }) => p.target_project_id === current)
+            ? current
+            : data[0].target_project_id,
+        );
     });
-    return()=>{alive=false;};
-  },[mode]);
+    return () => {
+      alive = false;
+    };
+  }, [mode]);
   useEffect(() => {
     let alive = true;
     const timer = setTimeout(() => {
@@ -134,7 +143,21 @@ export function BimPage() {
         </p>
       )}
       {selected ? (
-        mode==='cloud' ? <ErrorBoundary><Suspense fallback={<p role="status">Đang tải toàn bộ phân hệ BIM…</p>}><SuiteWorkspace key={selected.id} projectId={selected.id} projectName={selected.name}/><details className="mt-4 rounded-xl border border-border bg-surface p-4 dark:border-slate-800 dark:bg-slate-900"><summary className="cursor-pointer font-semibold text-ink dark:text-slate-100">Lịch sử và giải trình AI</summary><AuditHistoryTab projectId={selected.id}/></details></Suspense></ErrorBoundary> : <BimWorkspace key={selected.id} project={selected} />
+        mode === 'cloud' ? (
+          <ErrorBoundary>
+            <Suspense fallback={<p role="status">Đang tải toàn bộ phân hệ BIM…</p>}>
+              <SuiteWorkspace key={selected.id} projectId={selected.id} projectName={selected.name} />
+              <details className="mt-4 rounded-xl border border-border bg-surface p-4 dark:border-slate-800 dark:bg-slate-900">
+                <summary className="cursor-pointer font-semibold text-ink dark:text-slate-100">
+                  Lịch sử và giải trình AI
+                </summary>
+                <AuditHistoryTab projectId={selected.id} />
+              </details>
+            </Suspense>
+          </ErrorBoundary>
+        ) : (
+          <BimWorkspace key={selected.id} project={selected} />
+        )
       ) : (
         <div className="rounded-xl border border-dashed border-border dark:border-slate-800 bg-surface dark:bg-slate-900 p-12 text-center">
           <Box size={40} className="mx-auto mb-3 text-primary-600 dark:text-primary-300" />

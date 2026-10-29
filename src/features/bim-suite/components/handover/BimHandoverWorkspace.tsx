@@ -1,6 +1,6 @@
 import { formatNumber, formatDateTime } from '@/lib/utils';
 import { BimTable, BimSelect, BimInput } from '@/features/bim-suite/adapters/controls';
-'use client';
+('use client');
 // Closeout workspace of one project (tab "Bàn giao"): checks Phụ lục VII NĐ 207/2026, builds the ZIP (Excel index +
 // Word report), stores it in bim-models ban-giao/{project}/ and records its SHA-256 in the package log.
 import React, { useMemo, useState } from 'react';
@@ -32,10 +32,7 @@ const STATUS_STYLE: Record<ItemStatus, { icon: React.ElementType; cls: string }>
   chua_du: { icon: FileWarning, cls: 'text-amber-700 dark:text-amber-300' },
   chua_co: { icon: CircleDashed, cls: 'text-slate-500 dark:text-slate-400' },
 };
-const size = (b: number) =>
-  b > 1e6
-    ? `${formatNumber((b / 1e6), 1)} MB`
-    : `${formatNumber(Math.round(b / 1e3), 2)} kB`;
+const size = (b: number) => (b > 1e6 ? `${formatNumber(b / 1e6, 1)} MB` : `${formatNumber(Math.round(b / 1e3), 2)} kB`);
 const dataKey = (p: string) => ['bim-ban-giao-du-lieu', p] as const;
 const logKey = (p: string) => ['bim-ban-giao-so', p] as const;
 
@@ -272,10 +269,13 @@ export function BimHandoverWorkspace({ projectId, projectName }: BimHandoverWork
                     <div className="min-w-0 flex-1">
                       <div className="truncate font-medium">{g.ten}</div>
                       <div className="text-2xs text-txt-muted">
-                        {formatDateTime(new Date(g.created_at))} · {size(g.kich_thuoc)} · {g.so_du}/{g.so_muc}{' '}
-                        mục đủ · {g.so_thieu} mục chưa có
+                        {formatDateTime(new Date(g.created_at))} · {size(g.kich_thuoc)} · {g.so_du}/{g.so_muc} mục đủ ·{' '}
+                        {g.so_thieu} mục chưa có
                       </div>
-                      <div className="break-all font-mono text-2xs text-txt-secondary" data-tooltip="SHA-256 của tệp ZIP">
+                      <div
+                        className="break-all font-mono text-2xs text-txt-secondary"
+                        data-tooltip="SHA-256 của tệp ZIP"
+                      >
                         {g.sha256}
                       </div>
                     </div>

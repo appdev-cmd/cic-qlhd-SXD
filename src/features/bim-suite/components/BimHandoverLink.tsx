@@ -1,5 +1,5 @@
 import { BimTable, BimSelect, BimInput } from '@/features/bim-suite/adapters/controls';
-'use client';
+('use client');
 // Links one acceptance record (bim_nghiem_thu) to an "acceptance" item of the handover checklist. Meant for
 // BimAcceptanceModal after a record is saved; data loads only when the section is opened.
 import { useState } from 'react';

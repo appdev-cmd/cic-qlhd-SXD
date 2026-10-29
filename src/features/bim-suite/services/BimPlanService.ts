@@ -90,7 +90,7 @@ export const BimPlanService = {
   async norms(search: string, book?: string): Promise<{ items: Norm[]; books: NormBook[] }> {
     const params = new URLSearchParams({ q: search.trim().slice(0, 200), page: '1' });
     if (book) params.set('book', book);
-    const data = await apiRequest<{items:Norm[];books:NormBook[]}>('/bim/norms?' + params);
+    const data = await apiRequest<{ items: Norm[]; books: NormBook[] }>('/bim/norms?' + params);
     return { items: data.items ?? [], books: data.books ?? [] };
   },
 

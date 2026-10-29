@@ -25,8 +25,7 @@ import {
 import { StatusBadge } from './QcvnStatusBadge';
 
 const errorText = (e: unknown) => (e instanceof Error ? e.message : String(e));
-const fmt = (v: number | null | undefined, d = 1) =>
-  v === null || v === undefined ? '—' : formatNumber(Number(v), d);
+const fmt = (v: number | null | undefined, d = 1) => (v === null || v === undefined ? '—' : formatNumber(Number(v), d));
 const dmy = (s: string | null | undefined) => (s ? s.slice(0, 10).split('-').reverse().join('/') : '—');
 const field =
   'rounded-xl border border-border bg-white px-2.5 py-1.5 text-xs text-slate-900 dark:border-slate-600 dark:bg-slate-900 dark:text-white';
@@ -576,9 +575,7 @@ export const BimQcvnSection: React.FC<{ projectId: string; index: SustainIndex |
                 <tr key={a.id} className="border-t border-border/60 dark:border-slate-700">
                   <td className="py-1">
                     {AUDIT_TYPES[a.loai].label}
-                    {a.don_vi_thuc_hien && (
-                      <span className="block text-2xs text-txt-muted">{a.don_vi_thuc_hien}</span>
-                    )}
+                    {a.don_vi_thuc_hien && <span className="block text-2xs text-txt-muted">{a.don_vi_thuc_hien}</span>}
                   </td>
                   <td>{a.ky_bao_cao ?? '—'}</td>
                   <td>{dmy(a.ngay_thuc_hien)}</td>

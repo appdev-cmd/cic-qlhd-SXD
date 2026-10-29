@@ -1,5 +1,5 @@
 import { BimTable, BimSelect, BimInput } from '@/features/bim-suite/adapters/controls';
-'use client';
+('use client');
 // Periodic report (month / quarter / year) of one project from bim_bao_cao_ky: on screen, print window (In / PDF) and
 // Word. Replaces cic-hud's cross-project corporate report.
 import React, { useState } from 'react';

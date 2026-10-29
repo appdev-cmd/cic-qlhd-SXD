@@ -26,9 +26,7 @@ import type { SampleGrid } from '../../lib/sun/sunHours';
 
 const errorText = (e: unknown) => (e instanceof Error ? e.message : String(e));
 const fmt = (v: number | null | undefined, d = 1) =>
-  v === null || v === undefined || !Number.isFinite(v)
-    ? '—'
-    : formatNumber(Number(v), d);
+  v === null || v === undefined || !Number.isFinite(v) ? '—' : formatNumber(Number(v), d);
 const ty = (v: number | null | undefined) => (v === null || v === undefined ? '—' : `${fmt(v / 1e9, 1)} tỷ đồng`);
 const field =
   'w-full rounded-lg border border-border bg-white px-2 py-1 text-xs text-slate-900 dark:border-slate-600 dark:bg-slate-900 dark:text-white';

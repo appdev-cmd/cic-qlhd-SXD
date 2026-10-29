@@ -331,13 +331,9 @@ export const BimCostPanel: React.FC<BimCostPanelProps> = ({
                 </td>
                 <td className="px-2 py-1 text-right tabular-nums whitespace-nowrap">
                   {r.thanh_tien !== null ? (
-                    <span className="text-slate-800 dark:text-slate-100">
-                      {formatNumber(r.thanh_tien, 0)}
-                    </span>
+                    <span className="text-slate-800 dark:text-slate-100">{formatNumber(r.thanh_tien, 0)}</span>
                   ) : (
-                    <span className="text-2xs text-amber-600">
-                      {r.issue ? COST_ISSUES[r.issue] : 'Chưa tính được'}
-                    </span>
+                    <span className="text-2xs text-amber-600">{r.issue ? COST_ISSUES[r.issue] : 'Chưa tính được'}</span>
                   )}
                 </td>
               </tr>

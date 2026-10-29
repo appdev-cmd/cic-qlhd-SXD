@@ -310,7 +310,10 @@ export const BimSunPanel: React.FC<{
                 onChange={(e) => setEditLoc({ ...editLoc, lon: e.target.value })}
               />
             </label>
-            <label className="text-2xs" data-tooltip="Góc từ hướng −Z của trình xem tới Bắc thật, theo chiều kim đồng hồ">
+            <label
+              className="text-2xs"
+              data-tooltip="Góc từ hướng −Z của trình xem tới Bắc thật, theo chiều kim đồng hồ"
+            >
               Bắc thật (°)
               <BimInput
                 className={field}

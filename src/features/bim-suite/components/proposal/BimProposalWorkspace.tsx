@@ -10,8 +10,7 @@ import { barShare, compareMetrics } from '../../lib/proposalCompare';
 import { disciplineLabels } from '../../lib/ifcLabels';
 
 const errorText = (e: unknown) => (e instanceof Error ? e.message : String(e));
-const fmt = (v: number | null, d: number) =>
-  v === null ? '—' : formatNumber(v, d);
+const fmt = (v: number | null, d: number) => (v === null ? '—' : formatNumber(v, d));
 const btn =
   'inline-flex items-center gap-1 whitespace-nowrap rounded-lg border border-border px-2 py-1 text-2xs font-semibold text-txt-secondary hover:bg-bg-subtle disabled:opacity-40 dark:border-slate-600 dark:text-slate-200 dark:hover:bg-slate-700';
 const field =

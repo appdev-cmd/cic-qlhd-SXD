@@ -1,4 +1,4 @@
-import {BimGuide} from '@/features/bim-suite/adapters/controls';
+import { BimGuide } from '@/features/bim-suite/adapters/controls';
 import { formatNumber, formatDateTime } from '@/lib/utils';
 // features/bim/components/BimDataQualityPanel.tsx
 // Chất lượng dữ liệu mô hình theo người/đơn vị nộp hoặc bộ môn: % khối lượng khai báo, vật liệu, tầng, proxy.

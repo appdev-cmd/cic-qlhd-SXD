@@ -1,5 +1,5 @@
 import { BimTable, BimSelect, BimInput } from '@/features/bim-suite/adapters/controls';
-'use client';
+('use client');
 // Live IoT dashboard of a project: gateway readings (iot_latest snapshot + Realtime iot:<project>), sensor pins on the
 // 3D model filtered by floor/system, KPIs, systems / points / devices views and four live trends. Ported from cic-hud
 // BimIotLiveDashboard without the local demo source, HUD Tower texts, the shared insight scope and recharts.

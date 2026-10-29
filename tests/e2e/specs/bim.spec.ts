@@ -2,6 +2,8 @@ import {expect,test} from '@playwright/test';
 
 test('complete BIM workspace opens imported models and all business tabs',async({page})=>{
  test.setTimeout(300000);
+ const runtime=await page.request.get('/api/appraisal/runtime');
+ test.skip((await runtime.json()).mode==='demo','Imported IFC workspace requires cloud mode.');
  const errors:string[]=[];const failed:string[]=[];
  page.on('pageerror',e=>errors.push(e.message));
  page.on('response',r=>{if(r.status()>=400&&/bim|sxd_bim|facility|cde_/.test(r.url()))failed.push(r.status()+' '+new URL(r.url()).pathname);});

@@ -82,7 +82,11 @@ export async function fetchBimAssistantPolicy(
   fetcher: Fetcher = defaultFetch,
   signal?: AbortSignal,
 ): Promise<BimAssistantPolicy> {
-  if(fetcher===defaultFetch) return apiRequest<BimAssistantPolicy>('/bim/assistant/policy?projectId='+encodeURIComponent(scope.projectId||''),{signal});
+  if (fetcher === defaultFetch)
+    return apiRequest<BimAssistantPolicy>(
+      '/bim/assistant/policy?projectId=' + encodeURIComponent(scope.projectId || ''),
+      { signal },
+    );
   const query = new URLSearchParams();
   if (scope.organizationId) query.set('organizationId', scope.organizationId);
   if (scope.projectId) query.set('projectId', scope.projectId);
@@ -742,16 +746,31 @@ export async function streamBimAssistant(
   handlers: BimRunHandlers = {},
   deps: BimRunDeps = {},
 ): Promise<BimAssistantAnswer> {
-  if(!deps.fetcher) {
+  if (!deps.fetcher) {
     handlers.onProgress?.('Đang tổng hợp dữ liệu BIM và đối chiếu ngữ cảnh…');
-    const answer=await apiRequest<BimAssistantAnswer>('/bim/assistant',{method:'POST',body:JSON.stringify(request),signal:deps.signal});
-    if(answer.runId)handlers.onRun?.(answer.runId);
-    handlers.onText?.(answer.text,answer.text);
+    const answer = await apiRequest<BimAssistantAnswer>('/bim/assistant', {
+      method: 'POST',
+      body: JSON.stringify(request),
+      signal: deps.signal,
+    });
+    if (answer.runId) handlers.onRun?.(answer.runId);
+    handlers.onText?.(answer.text, answer.text);
     handlers.onEvidence?.(answer.evidence);
-    if(deps.runtime&&answer.viewerRequests.length){
-      const result=await runBrowserToolCalls(answer.viewerRequests.map(r=>({id:r.key,name:r.name,args:r.args})),{runtime:deps.runtime,projectId:request.projectId,resultSets:deps.resultSets||new Map(),approvePlan:handlers.approvePlan,onAction:handlers.onAction,onDraft:handlers.onDraft,signal:deps.signal});
-      answer.actions=result.actions;
-      answer.viewerRequests=[];
+    if (deps.runtime && answer.viewerRequests.length) {
+      const result = await runBrowserToolCalls(
+        answer.viewerRequests.map((r) => ({ id: r.key, name: r.name, args: r.args })),
+        {
+          runtime: deps.runtime,
+          projectId: request.projectId,
+          resultSets: deps.resultSets || new Map(),
+          approvePlan: handlers.approvePlan,
+          onAction: handlers.onAction,
+          onDraft: handlers.onDraft,
+          signal: deps.signal,
+        },
+      );
+      answer.actions = result.actions;
+      answer.viewerRequests = [];
     }
     return answer;
   }

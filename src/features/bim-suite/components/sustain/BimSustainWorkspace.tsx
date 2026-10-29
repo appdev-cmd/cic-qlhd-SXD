@@ -1,4 +1,4 @@
-import {formatDate as sxdFormatDate} from '@/lib/utils';
+import { formatDate as sxdFormatDate } from '@/lib/utils';
 import { formatNumber, formatDateTime } from '@/lib/utils';
 import { BimTable, BimSelect, BimInput } from '@/features/bim-suite/adapters/controls';
 // Project sustainability workspace (tab "Bền vững"): indicators and targets, emission factors and material mapping
@@ -56,9 +56,7 @@ const VIEWS: [View, string][] = [
 ];
 const errorText = (e: unknown) => (e instanceof Error ? e.message : String(e));
 const fmt = (v: number | null | undefined, d = 1) =>
-  v === null || v === undefined || Number.isNaN(Number(v))
-    ? '—'
-    : formatNumber(Number(v), d);
+  v === null || v === undefined || Number.isNaN(Number(v)) ? '—' : formatNumber(Number(v), d);
 const toNum = (v: string) => Number(v.trim().replace(/\./g, '').replace(',', '.'));
 const field =
   'rounded-xl border border-border bg-white px-2.5 py-1.5 text-xs text-slate-900 dark:border-slate-600 dark:bg-slate-900 dark:text-white';
@@ -362,9 +360,7 @@ function Indicators({
             </button>
           </div>
         )}
-        <p className="mt-1 text-2xs text-txt-muted">
-          Hệ thống theo dõi chỉ số so với mục tiêu, không cấp chứng nhận.
-        </p>
+        <p className="mt-1 text-2xs text-txt-muted">Hệ thống theo dõi chỉ số so với mục tiêu, không cấp chứng nhận.</p>
       </section>
     </div>
   );
@@ -1113,8 +1109,7 @@ function Lifecycle({ projectId, canWrite, canManage }: { projectId: string; canW
               {(assessments.data ?? []).map((a) => (
                 <tr key={a.id} className="border-t border-border/60 dark:border-slate-700">
                   <td className="py-1">
-                    {a.ten}{' '}
-                    <span className="text-txt-muted">· {sxdFormatDate(new Date(a.created_at))}</span>
+                    {a.ten} <span className="text-txt-muted">· {sxdFormatDate(new Date(a.created_at))}</span>
                   </td>
                   <td className="text-right font-mono">{fmt(a.ket_qua.lca_kg_m2)}</td>
                   <td className="text-right font-mono">{fmt(a.ket_qua.lcc, 0)}</td>

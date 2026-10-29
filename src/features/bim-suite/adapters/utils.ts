@@ -31,8 +31,7 @@ export function formatShortCurrency(amount: number): string {
     const billions = value / 1_000_000_000;
     return `${sign}${formatNumber(billions, 3)} tỷ`;
   }
-  if (value >= 1_000_000)
-    return `${sign}${formatNumber((value / 1_000_000), 0)} tr`;
+  if (value >= 1_000_000) return `${sign}${formatNumber(value / 1_000_000, 0)} tr`;
   return `${sign}${new Intl.NumberFormat('vi-VN', { maximumFractionDigits: 0 }).format(value)} VNĐ`;
 }
 

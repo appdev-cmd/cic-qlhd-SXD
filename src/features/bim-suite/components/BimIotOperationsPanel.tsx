@@ -1,5 +1,5 @@
 import { BimTable, BimSelect, BimInput } from '@/features/bim-suite/adapters/controls';
-'use client';
+('use client');
 // IoT section of the viewer's "Vận hành" panel: gateway status, live dashboard (sensors on the model), shared alerts
 // with work orders raised from them, and point history from the database (raw / 5-minute / hourly, CSV export).
 // Ported from cic-hud BimIotOperationsPanel. Dropped: the local demo source and its replay/scenario workspace

@@ -196,8 +196,7 @@ export const BimPriceVersions: React.FC<{
           {edition && (
             <>
               <p>
-                {edition.source} · {edition.rows.length} đơn giá · chốt{' '}
-                {formatDateTime(new Date(edition.created_at))}
+                {edition.source} · {edition.rows.length} đơn giá · chốt {formatDateTime(new Date(edition.created_at))}
               </p>
               <button onClick={exportCsv} className="text-primary-600">
                 Xuất bảng giá CSV

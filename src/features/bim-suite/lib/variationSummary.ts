@@ -43,13 +43,11 @@ export const contractTotals = (c: ContractVariations): ContractTotals => {
 export const formatMoneyShort = (vnd: number): string => {
   const sign = vnd < 0 ? '−' : '';
   const a = Math.abs(vnd);
-  if (a >= 1e9)
-    return `${sign}${formatNumber((a / 1e9), 1)} tỷ`;
+  if (a >= 1e9) return `${sign}${formatNumber(a / 1e9, 1)} tỷ`;
   if (a >= 1e6) return `${sign}${formatNumber(Math.round(a / 1e6), 2)} tr`;
   return `${sign}${formatNumber(Math.round(a), 2)} đ`;
 };
-export const formatPercent = (r: number | null): string =>
-  r === null ? 'chưa có' : `${formatNumber((r * 100), 1)}%`;
+export const formatPercent = (r: number | null): string => (r === null ? 'chưa có' : `${formatNumber(r * 100, 1)}%`);
 
 /** Chọn hợp đồng mặc định: hợp đồng có phụ lục, giá trị lớn nhất. */
 export const defaultContract = (list: ContractVariations[]): ContractVariations | null =>

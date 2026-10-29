@@ -1,4 +1,4 @@
-import {BimOverlay} from '@/features/bim-suite/adapters/controls';
+import { BimOverlay } from '@/features/bim-suite/adapters/controls';
 import { BimTable, BimSelect, BimInput } from '@/features/bim-suite/adapters/controls';
 // features/bim/components/BimAcceptanceModal.tsx
 // Tra cứu & lập biên bản nghiệm thu (BBNT) gắn với cấu kiện BIM 3D (Mục 14 CV 3219)

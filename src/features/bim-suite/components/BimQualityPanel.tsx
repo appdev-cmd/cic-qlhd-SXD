@@ -149,7 +149,7 @@ export const BimQualityPanel: React.FC<BimQualityPanelProps> = ({
                         </div>
                         {rule.count > rule.samples.length && (
                           <p className="pt-1 text-2xs text-slate-400">
-                            … và {formatNumber((rule.count - rule.samples.length), 2)} cấu kiện khác.
+                            … và {formatNumber(rule.count - rule.samples.length, 2)} cấu kiện khác.
                           </p>
                         )}
                       </>

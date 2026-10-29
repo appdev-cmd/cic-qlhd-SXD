@@ -1,5 +1,5 @@
 import { BimTable, BimSelect, BimInput } from '@/features/bim-suite/adapters/controls';
-'use client';
+('use client');
 // "Trợ lý mô hình": viewer-sidebar panel with two modes.
 // * Lệnh nhanh (default, always available): Vietnamese commands run on the 3D model WITHOUT a language model
 //   (ai/quickCommands + ai/quickUniclass through ai/runner), suggestion chips, undo and a short action log.
@@ -393,18 +393,20 @@ export function BimAiPanel({
       if (answer.viewerRequests.length)
         setProposals((prev) => [
           ...prev,
-          ...answer.viewerRequests.map((r): Proposal => ({
-            draft: {
-              kind: 'draft',
-              type: 'viewer_action',
-              item_key: r.key,
-              target: { module: 'bim', action: r.name },
-              fields: { name: r.name, args: r.args },
-              notice: r.notice,
-            },
-            runId: answer.runId,
-            status: 'pending',
-          })),
+          ...answer.viewerRequests.map(
+            (r): Proposal => ({
+              draft: {
+                kind: 'draft',
+                type: 'viewer_action',
+                item_key: r.key,
+                target: { module: 'bim', action: r.name },
+                fields: { name: r.name, args: r.args },
+                notice: r.notice,
+              },
+              runId: answer.runId,
+              status: 'pending',
+            }),
+          ),
         ]);
     } catch (e) {
       const aborted = abort.signal.aborted;
@@ -679,9 +681,7 @@ export function BimAiPanel({
                 {turn.text || (turn.status === 'streaming' ? (progress ?? 'Đang trả lời…') : '')}
               </span>
               {turn.role === 'model' && turn.quick ? (
-                <span className="mt-1 block text-2xs text-txt-muted">
-                  Chạy trực tiếp trên mô hình, không gọi AI.
-                </span>
+                <span className="mt-1 block text-2xs text-txt-muted">Chạy trực tiếp trên mô hình, không gọi AI.</span>
               ) : null}
               {turn.role === 'model' && turn.status === 'done' && !turn.quick && turn.verified === false ? (
                 <span className="mt-1 block text-2xs font-semibold text-amber-700 dark:text-amber-300">

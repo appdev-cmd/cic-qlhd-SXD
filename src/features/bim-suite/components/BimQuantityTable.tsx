@@ -295,7 +295,11 @@ export const BimQuantityTable: React.FC<BimQuantityTableProps> = ({
               }}
               className={`flex items-center justify-center gap-1 rounded-md px-2 py-1 text-2xs font-bold transition-colors ${mode === tab ? 'bg-white text-primary-600 shadow-xs dark:bg-slate-800' : 'text-slate-500 hover:text-slate-700'}`}
             >
-              {tab === 'element' ? <Boxes className="h-3.5 w-3.5 shrink-0" /> : <ClipboardCheck className="h-3.5 w-3.5 shrink-0" />}
+              {tab === 'element' ? (
+                <Boxes className="h-3.5 w-3.5 shrink-0" />
+              ) : (
+                <ClipboardCheck className="h-3.5 w-3.5 shrink-0" />
+              )}
               <span className="truncate">{tab === 'element' ? 'Theo Cấu kiện mô hình' : 'Theo BOQ Hợp đồng'}</span>
             </button>
           ))}
@@ -322,7 +326,10 @@ export const BimQuantityTable: React.FC<BimQuantityTableProps> = ({
               key={k.label}
               className="rounded-lg border border-slate-200 bg-white px-2 py-1.5 dark:border-slate-700 dark:bg-slate-900"
             >
-              <div className="truncate text-3xs font-semibold uppercase tracking-tight text-slate-500" data-tooltip={k.label}>
+              <div
+                className="truncate text-3xs font-semibold uppercase tracking-tight text-slate-500"
+                data-tooltip={k.label}
+              >
                 {k.label}
               </div>
               <div
@@ -455,8 +462,8 @@ export const BimQuantityTable: React.FC<BimQuantityTableProps> = ({
         )}
         {mode === 'boq' && boqList?.truncated && (
           <p role="status" className="text-amber-700 text-2xs">
-            Đang hiển thị {formatNumber(boqList.loaded, 2)}/{formatNumber(boqList.total, 2)} công tác BOQ;
-            thu hẹp theo hợp đồng để xem đủ.
+            Đang hiển thị {formatNumber(boqList.loaded, 2)}/{formatNumber(boqList.total, 2)} công tác BOQ; thu hẹp theo
+            hợp đồng để xem đủ.
           </p>
         )}
       </div>

@@ -57,8 +57,7 @@ export const BimBoqPanel: React.FC<{
   const queryError = contracts.error || overview.error || facets.error;
   const loading = contracts.isLoading || overview.isLoading || facets.isLoading;
   const cls = 'w-full rounded border p-1.5 bg-white dark:bg-slate-900 text-xs';
-  const number = (n: number | null | undefined) =>
-    n == null ? '—' : formatNumber(n, 3);
+  const number = (n: number | null | undefined) => (n == null ? '—' : formatNumber(n, 3));
   const choose = (id: string) => {
     setItemId(id);
     const saved = items.find((i) => i.ma_boq === id)?.mapping;

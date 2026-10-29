@@ -290,9 +290,7 @@ export const BimBasemapPanel: React.FC<BimBasemapPanelProps> = ({
             </button>
           )}
         </div>
-        {saved?.ten_nguoi_cap_nhat && (
-          <p className="text-2xs text-slate-400">Đã lưu bởi {saved.ten_nguoi_cap_nhat}</p>
-        )}
+        {saved?.ten_nguoi_cap_nhat && <p className="text-2xs text-slate-400">Đã lưu bởi {saved.ten_nguoi_cap_nhat}</p>}
       </div>
     </div>
   );

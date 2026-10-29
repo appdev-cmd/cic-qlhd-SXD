@@ -740,74 +740,88 @@ const num = (v: unknown): number | null => (v === null || v === undefined || v =
 
 export function normalizeHandoverData(raw: unknown, to_hop: string[] | null = null): HandoverData {
   const r = (raw && typeof raw === 'object' ? raw : {}) as Record<string, unknown>;
-  const cde = arr<Record<string, unknown>>(r.cde)?.map((c): CdeRow => ({
-    id: str(c.id),
-    ma: String(c.ma ?? c.ma_tep ?? ''),
-    ten: String(c.ten ?? c.tieu_de ?? ''),
-    loai: str(c.loai),
-    vung: String(c.vung ?? ''),
-    ma_phu_hop: String(c.ma_phu_hop ?? ''),
-    sua_doi: str(c.sua_doi ?? c.ma_sua_doi),
-    muc: str(c.muc ?? c.muc_phu_luc_vii),
-  }));
-  const nghiem_thu = arr<Record<string, unknown>>(r.nghiem_thu)?.map((x): AcceptanceRow => ({
-    id: str(x.id ?? x.ma_nghiem_thu),
-    cap: String(x.cap ?? x.cap_nghiem_thu ?? ''),
-    ten: String(x.ten ?? x.ten_nghiem_thu ?? ''),
-    hang_muc: str(x.hang_muc ?? x.ma_hang_muc),
-    ngay: str(x.ngay ?? x.ngay_nghiem_thu),
-    ket_luan: str(x.ket_luan),
-    trang_thai: str(x.trang_thai),
-    bim_guid: str(x.bim_guid),
-    tao_luc: str(x.tao_luc),
-  }));
-  const ban_giao = arr<Record<string, unknown>>(r.ban_giao)?.map((x): HandoverItemRow => ({
-    id: str(x.id),
-    he_thong: str(x.he_thong ?? x.system_name),
-    muc: String(x.muc ?? x.label ?? ''),
-    loai: String(x.loai ?? x.kind ?? 'check'),
-    bat_buoc: typeof (x.bat_buoc ?? x.required) === 'boolean' ? Boolean(x.bat_buoc ?? x.required) : null,
-    xong: Boolean(x.xong ?? x.done),
-    ngay: str(x.ngay ?? x.done_at),
-    tai_lieu: x.tai_lieu ?? x.document ?? null,
-    ghi_chu: str(x.ghi_chu ?? x.note),
-    acceptance_id: str(x.acceptance_id ?? x.nghiem_thu),
-  }));
-  const lod = arr<Record<string, unknown>>(r.lod)?.map((x): LodRow => ({
-    model_id: String(x.model_id),
-    muc: String(x.muc ?? x.muc_lod ?? '500'),
-    dat: Boolean(x.dat),
-    cau_kien: Number(x.cau_kien ?? x.so_cau_kien ?? 0),
-    trong_pham_vi: Number(x.trong_pham_vi ?? x.so_trong_pham_vi ?? 0),
-    ngoai_pham_vi: Number(x.ngoai_pham_vi ?? x.so_ngoai_pham_vi ?? 0),
-    ngay: str(x.ngay ?? x.created_at),
-  }));
-  const ifc = arr<Record<string, unknown>>(r.xac_minh_ifc ?? r.ifc)?.map((x): IfcCheckRow => ({
-    model_id: String(x.model_id),
-    dat: Boolean(x.dat),
-    diem_tong: num(x.diem_tong ?? x.diem),
-    diem_toi_thieu: num(x.diem_toi_thieu ?? x.toi_thieu),
-    giai_doan: str(x.giai_doan),
-    ngay: str(x.ngay ?? x.created_at),
-  }));
+  const cde = arr<Record<string, unknown>>(r.cde)?.map(
+    (c): CdeRow => ({
+      id: str(c.id),
+      ma: String(c.ma ?? c.ma_tep ?? ''),
+      ten: String(c.ten ?? c.tieu_de ?? ''),
+      loai: str(c.loai),
+      vung: String(c.vung ?? ''),
+      ma_phu_hop: String(c.ma_phu_hop ?? ''),
+      sua_doi: str(c.sua_doi ?? c.ma_sua_doi),
+      muc: str(c.muc ?? c.muc_phu_luc_vii),
+    }),
+  );
+  const nghiem_thu = arr<Record<string, unknown>>(r.nghiem_thu)?.map(
+    (x): AcceptanceRow => ({
+      id: str(x.id ?? x.ma_nghiem_thu),
+      cap: String(x.cap ?? x.cap_nghiem_thu ?? ''),
+      ten: String(x.ten ?? x.ten_nghiem_thu ?? ''),
+      hang_muc: str(x.hang_muc ?? x.ma_hang_muc),
+      ngay: str(x.ngay ?? x.ngay_nghiem_thu),
+      ket_luan: str(x.ket_luan),
+      trang_thai: str(x.trang_thai),
+      bim_guid: str(x.bim_guid),
+      tao_luc: str(x.tao_luc),
+    }),
+  );
+  const ban_giao = arr<Record<string, unknown>>(r.ban_giao)?.map(
+    (x): HandoverItemRow => ({
+      id: str(x.id),
+      he_thong: str(x.he_thong ?? x.system_name),
+      muc: String(x.muc ?? x.label ?? ''),
+      loai: String(x.loai ?? x.kind ?? 'check'),
+      bat_buoc: typeof (x.bat_buoc ?? x.required) === 'boolean' ? Boolean(x.bat_buoc ?? x.required) : null,
+      xong: Boolean(x.xong ?? x.done),
+      ngay: str(x.ngay ?? x.done_at),
+      tai_lieu: x.tai_lieu ?? x.document ?? null,
+      ghi_chu: str(x.ghi_chu ?? x.note),
+      acceptance_id: str(x.acceptance_id ?? x.nghiem_thu),
+    }),
+  );
+  const lod = arr<Record<string, unknown>>(r.lod)?.map(
+    (x): LodRow => ({
+      model_id: String(x.model_id),
+      muc: String(x.muc ?? x.muc_lod ?? '500'),
+      dat: Boolean(x.dat),
+      cau_kien: Number(x.cau_kien ?? x.so_cau_kien ?? 0),
+      trong_pham_vi: Number(x.trong_pham_vi ?? x.so_trong_pham_vi ?? 0),
+      ngoai_pham_vi: Number(x.ngoai_pham_vi ?? x.so_ngoai_pham_vi ?? 0),
+      ngay: str(x.ngay ?? x.created_at),
+    }),
+  );
+  const ifc = arr<Record<string, unknown>>(r.xac_minh_ifc ?? r.ifc)?.map(
+    (x): IfcCheckRow => ({
+      model_id: String(x.model_id),
+      dat: Boolean(x.dat),
+      diem_tong: num(x.diem_tong ?? x.diem),
+      diem_toi_thieu: num(x.diem_toi_thieu ?? x.toi_thieu),
+      giai_doan: str(x.giai_doan),
+      ngay: str(x.ngay ?? x.created_at),
+    }),
+  );
   // bim_phat_sinh_tong_hop: contracts with their change orders (`lenh`).
   const contracts = arr<Record<string, unknown>>(r.phat_sinh);
-  const hop_dong = contracts?.map((c): ContractRow => ({
-    so: String(c.so_hop_dong ?? c.so ?? ''),
-    ten: str(c.ten),
-    nha_thau: str(c.nha_thau),
-    trang_thai: String(c.trang_thai ?? ''),
-  }));
+  const hop_dong = contracts?.map(
+    (c): ContractRow => ({
+      so: String(c.so_hop_dong ?? c.so ?? ''),
+      ten: str(c.ten),
+      nha_thau: str(c.nha_thau),
+      trang_thai: String(c.trang_thai ?? ''),
+    }),
+  );
   const orders =
     arr<Record<string, unknown>>(r.lenh_thay_doi) ??
     (contracts ? contracts.flatMap((c) => arr<Record<string, unknown>>(c.lenh) ?? []) : null);
-  const co = orders?.map((x): ChangeOrderRow => ({
-    so: str(x.so),
-    tieu_de: String(x.tieu_de ?? x.ten ?? ''),
-    trang_thai: String(x.trang_thai ?? ''),
-    gia_tri: num(x.gia_tri ?? x.gia_tri_dieu_chinh),
-    ngay_duyet: str(x.ngay_duyet),
-  }));
+  const co = orders?.map(
+    (x): ChangeOrderRow => ({
+      so: str(x.so),
+      tieu_de: String(x.tieu_de ?? x.ten ?? ''),
+      trang_thai: String(x.trang_thai ?? ''),
+      gia_tri: num(x.gia_tri ?? x.gia_tri_dieu_chinh),
+      ngay_duyet: str(x.ngay_duyet),
+    }),
+  );
   const du_an = r.du_an && typeof r.du_an === 'object' ? (r.du_an as Record<string, unknown>) : null;
   return {
     du_an: du_an ? { id: str(du_an.id), ten: str(du_an.ten ?? du_an.name ?? du_an.ten_du_an) } : null,

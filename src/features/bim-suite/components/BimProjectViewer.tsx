@@ -1,6 +1,6 @@
 import { formatNumber } from '@/lib/utils';
 import { BimTable, BimSelect, BimInput } from '@/features/bim-suite/adapters/controls';
-'use client';
+('use client');
 // Không gian mô hình của một dự án: danh sách mô hình và phiên bản, tải IFC, trình xem 3D với thanh công cụ, cây cấu
 // kiện, bảng thuộc tính, so sánh hai phiên bản (B1); lọc theo loại/tầng/Uniclass, chọn nhanh và bộ chọn thông minh,
 // mặt cắt, góc nhìn đã lưu, bản vẽ cạnh mô hình (B2); vướng mắc/RFI và BCF, dò va chạm, liên kết cấu kiện với tài
@@ -309,10 +309,7 @@ export default function BimProjectViewer({
         window.removeEventListener('pointermove', onMove);
         window.removeEventListener('pointerup', onUp);
         try {
-          localStorage.setItem(
-            side === 'left' ? 'bim-left-panel-width' : 'bim-right-panel-width',
-            String(latestWidth),
-          );
+          localStorage.setItem(side === 'left' ? 'bim-left-panel-width' : 'bim-right-panel-width', String(latestWidth));
         } catch {
           /* ignore */
         }
@@ -448,7 +445,9 @@ export default function BimProjectViewer({
   // Tự động chuyển đổi các mô hình đang ở trạng thái 'uploaded' trực tiếp trên trình duyệt (WebAssembly, không cần Docker)
   useEffect(() => {
     if (!access.canWrite || uploadOpen) return;
-    const waiting = latest.find((m) => m.status === 'uploaded' && m.uploaded_by !== 'Chuyển từ qa-si-xd' && !isModelConvertingInBrowser(m.id));
+    const waiting = latest.find(
+      (m) => m.status === 'uploaded' && m.uploaded_by !== 'Chuyển từ qa-si-xd' && !isModelConvertingInBrowser(m.id),
+    );
     if (!waiting) return;
     void triggerBrowserConversion(waiting);
   }, [access.canWrite, latest, triggerBrowserConversion, uploadOpen]);
@@ -930,18 +929,13 @@ export default function BimProjectViewer({
             onClick={() => setSideTab('models')}
             className="flex shrink-0 cursor-pointer items-center justify-between gap-2 border-b border-amber-200 bg-amber-50/90 px-2.5 py-1 text-left text-2xs text-amber-900 hover:bg-amber-100/80 dark:border-amber-900 dark:bg-amber-950 dark:text-amber-200"
           >
-            <span className="truncate font-medium">
-              Có {pendingOrErrorCount} mô hình đang xử lý hoặc cần kiểm tra
-            </span>
+            <span className="truncate font-medium">Có {pendingOrErrorCount} mô hình đang xử lý hoặc cần kiểm tra</span>
             <span className="shrink-0 font-semibold underline">Xem →</span>
           </button>
         ) : null}
 
         {activeLeftTab === 'models' ? (
-          <section
-            aria-labelledby="bim-model-list"
-            className="flex min-h-0 flex-1 flex-col overflow-hidden"
-          >
+          <section aria-labelledby="bim-model-list" className="flex min-h-0 flex-1 flex-col overflow-hidden">
             <div className="flex shrink-0 items-center justify-between border-b border-border/60 px-2.5 py-1.5 text-2xs text-txt-muted">
               <h2 id="bim-model-list" className="font-semibold text-txt-secondary">
                 Danh sách mô hình ({latest.length})
@@ -1062,7 +1056,7 @@ export default function BimProjectViewer({
                             : `${statusLabel[model.status]}${model.status === 'processing' && model.tien_do ? ` ${model.tien_do}%` : ''}`}
                         </span>
                         {model.status === 'ready' ? (
-                          <span>· {formatNumber((model.element_count ?? 0), 2)} CK</span>
+                          <span>· {formatNumber(model.element_count ?? 0, 2)} CK</span>
                         ) : null}
                         <span>
                           · {disciplineLabels[model.discipline] ?? model.discipline} v{model.phien_ban ?? 1}
@@ -1441,13 +1435,18 @@ export default function BimProjectViewer({
               ) : null}
               <button
                 type="button"
-                className={'doc-button cursor-pointer bg-bg-surface/90 backdrop-blur-xs !px-2.5 !py-1.5 !text-xs shadow-sm ' + (wideMode ? 'doc-primary' : '')}
+                className={
+                  'doc-button cursor-pointer bg-bg-surface/90 backdrop-blur-xs !px-2.5 !py-1.5 !text-xs shadow-sm ' +
+                  (wideMode ? 'doc-primary' : '')
+                }
                 onClick={() => {
                   const nextWide = !wideMode;
                   setLeftCollapsed(nextWide);
                   setRightCollapsed(nextWide);
                 }}
-                data-tooltip={wideMode ? 'Khôi phục 2 bảng điều khiển hai bên' : 'Thu gọn 2 bảng bên để mở rộng tối đa mô hình 3D'}
+                data-tooltip={
+                  wideMode ? 'Khôi phục 2 bảng điều khiển hai bên' : 'Thu gọn 2 bảng bên để mở rộng tối đa mô hình 3D'
+                }
               >
                 {wideMode ? <Minimize2 size={14} /> : <Maximize2 size={14} />}
                 {wideMode ? 'Hiện 2 cột bên' : 'Mở rộng 3D'}
@@ -1456,7 +1455,10 @@ export default function BimProjectViewer({
                 <button
                   type="button"
                   aria-pressed={drawingOpen}
-                  className={'doc-button cursor-pointer bg-bg-surface/90 backdrop-blur-xs !px-2.5 !py-1.5 !text-xs shadow-sm ' + (drawingOpen ? 'doc-primary' : '')}
+                  className={
+                    'doc-button cursor-pointer bg-bg-surface/90 backdrop-blur-xs !px-2.5 !py-1.5 !text-xs shadow-sm ' +
+                    (drawingOpen ? 'doc-primary' : '')
+                  }
                   onClick={() => setDrawingOpen((v) => !v)}
                 >
                   <FileText size={14} />

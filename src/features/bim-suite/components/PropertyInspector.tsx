@@ -124,8 +124,7 @@ const PropertyGroups: React.FC<{ groups: Record<string, BimPropertyGroup>; match
   const shown = Object.entries(groups)
     .map(([name, values]) => [name, filterPropertyGroup(name, values, match ?? null) as BimPropertyGroup] as const)
     .filter(([, values]) => !match || Object.keys(values).length > 0);
-  if (match && shown.length === 0)
-    return <p className="text-2xs text-slate-400 italic">Không có thuộc tính khớp.</p>;
+  if (match && shown.length === 0) return <p className="text-2xs text-slate-400 italic">Không có thuộc tính khớp.</p>;
   return (
     <div className="space-y-1.5">
       {shown.map(([name, values]) => {

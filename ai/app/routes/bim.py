@@ -90,8 +90,11 @@ def chunk(id: UUID, kind: str, part: int, body: Chunk, s=Depends(store)):
 
 @router.get('/models/{id}/files/{kind}')
 def content(id: UUID, kind: str, s=Depends(store)):
-    return Response(bim.file_content(s, str(id), kind), media_type='application/octet-stream',
-                    headers={'Cache-Control': 'private, no-store', 'X-Content-Type-Options': 'nosniff'})
+    return Response(
+        bim.file_content(s, str(id), kind),
+        media_type='application/octet-stream',
+        headers={'Cache-Control': 'private, no-store', 'X-Content-Type-Options': 'nosniff'},
+    )
 
 
 @router.post('/models/{id}/elements')
@@ -106,8 +109,15 @@ def finish(id: UUID, s=Depends(store)):
 
 
 @router.get('/models/{id}/elements')
-def elements(id: UUID, search: str = Query(default='', max_length=200), category: str = '', storey: str = '',
-             offset: int = Query(default=0, ge=0), limit: int = Query(default=100, ge=1, le=100), s=Depends(store)):
+def elements(
+    id: UUID,
+    search: str = Query(default='', max_length=200),
+    category: str = '',
+    storey: str = '',
+    offset: int = Query(default=0, ge=0),
+    limit: int = Query(default=100, ge=1, le=100),
+    s=Depends(store),
+):
     return bim.elements(s, str(id), search, category, storey, offset, limit)
 
 

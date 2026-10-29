@@ -276,9 +276,7 @@ export const BimQuickSelect: React.FC<BimQuickSelectProps> = ({
                 </div>
               </div>
               <div>
-                <div className="text-2xs font-semibold uppercase tracking-wide text-slate-500 mb-1">
-                  Loại cấu kiện
-                </div>
+                <div className="text-2xs font-semibold uppercase tracking-wide text-slate-500 mb-1">Loại cấu kiện</div>
                 <div className="flex flex-wrap gap-1 max-h-24 overflow-y-auto">
                   {facets.types.map(([t, n]) => (
                     <button
@@ -340,9 +338,7 @@ export const BimQuickSelect: React.FC<BimQuickSelectProps> = ({
               )}
               {onGroupAcceptance && (
                 <div className="flex items-center gap-1">
-                  <span className="text-2xs font-semibold uppercase tracking-wide text-slate-500 mr-1">
-                    Nghiệm thu
-                  </span>
+                  <span className="text-2xs font-semibold uppercase tracking-wide text-slate-500 mr-1">Nghiệm thu</span>
                   {(
                     [
                       ['all', 'Tất cả'],

@@ -1,5 +1,5 @@
 import { BimTable, BimSelect, BimInput } from '@/features/bim-suite/adapters/controls';
-'use client';
+('use client');
 // Shared IoT alerts and IoT work orders of a project: acknowledge, operator workflow (status, assignee, notes),
 // raise a work order from an alert, open the asset / work order in the asset workspace. Ported from cic-hud
 // BimIotSharedPanel; the work-order editor (BimAssetWorkspace) is reached through onOpenWorkOrder / onOpenAsset

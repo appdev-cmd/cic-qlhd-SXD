@@ -345,9 +345,7 @@ export const BimToolbar: React.FC<BimToolbarProps> = (p) => {
                 </span>
               </MenuItem>
             )}
-            <p className="px-2.5 pt-1.5 pb-0.5 text-2xs uppercase tracking-wide text-slate-400">
-              Chất lượng hiển thị
-            </p>
+            <p className="px-2.5 pt-1.5 pb-0.5 text-2xs uppercase tracking-wide text-slate-400">Chất lượng hiển thị</p>
             <MenuItem
               active={p.quality === 'cao'}
               onClick={() => {

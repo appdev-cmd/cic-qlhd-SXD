@@ -35,8 +35,7 @@ type View = 'hop-dong' | 'dinh-muc' | 'du-thau' | 'dong-tien';
 const errorText = (e: unknown) => (e instanceof Error ? e.message : String(e));
 const money = (v: number | null | undefined) =>
   v === null || v === undefined || Number.isNaN(v) ? '—' : formatNumber(Math.round(Number(v)), 2);
-const qty = (v: number | null | undefined, d = 1) =>
-  v === null || v === undefined ? '—' : formatNumber(Number(v), d);
+const qty = (v: number | null | undefined, d = 1) => (v === null || v === undefined ? '—' : formatNumber(Number(v), d));
 const field =
   'rounded-xl border border-border bg-white px-2.5 py-1.5 text-xs text-slate-900 dark:border-slate-600 dark:bg-slate-900 dark:text-white';
 const btn =
@@ -262,7 +261,12 @@ function Bids({ project, canWrite }: { project: string; canWrite: boolean }) {
     <div className="space-y-3">
       <div className={`${card} flex flex-wrap items-center gap-2`}>
         {packs.length > 0 && (
-          <BimSelect aria-label="Gói thầu" value={activePack} onChange={(e) => setPack(e.target.value)} className={field}>
+          <BimSelect
+            aria-label="Gói thầu"
+            value={activePack}
+            onChange={(e) => setPack(e.target.value)}
+            className={field}
+          >
             {packs.map((p) => (
               <option key={p} value={p}>
                 {p}

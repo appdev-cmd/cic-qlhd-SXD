@@ -12,8 +12,7 @@ import { CARBON_MISSING, CARBON_RAMP, CARBON_STATUS_LABELS, carbonBreaks, carbon
 import { getIfcLabel } from '../../lib/ifcLabels';
 
 const errorText = (e: unknown) => (e instanceof Error ? e.message : String(e));
-const fmt = (v: number | null | undefined, d = 1) =>
-  v === null || v === undefined ? '—' : formatNumber(Number(v), d);
+const fmt = (v: number | null | undefined, d = 1) => (v === null || v === undefined ? '—' : formatNumber(Number(v), d));
 const btn =
   'inline-flex items-center gap-1 rounded-lg border border-border px-2 py-1 text-2xs font-semibold text-txt-secondary hover:bg-bg-subtle disabled:opacity-40 dark:border-slate-600 dark:text-slate-200 dark:hover:bg-slate-700';
 

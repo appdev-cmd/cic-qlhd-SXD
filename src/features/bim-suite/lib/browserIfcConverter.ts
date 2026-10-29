@@ -2,15 +2,8 @@ import * as FRAGS from '@thatopen/fragments';
 import JSZip from 'jszip';
 import * as WEBIFC from 'web-ifc';
 import { supabase } from '../adapters/supabase';
-import {
-  decodeIfcString,
-  extractElements,
-  type ExtractResult,
-} from '../../../../worker/bim-converter/extractElements';
-import {
-  extractTopology,
-  type TopologyResult,
-} from '../../../../worker/bim-converter/extractTopology';
+import { decodeIfcString, extractElements, type ExtractResult } from '../../../../worker/bim-converter/extractElements';
+import { extractTopology, type TopologyResult } from '../../../../worker/bim-converter/extractTopology';
 import type { BimModel } from '../types/bim.types';
 
 export interface BrowserConversionWarning {
@@ -21,9 +14,7 @@ export interface BrowserConversionWarning {
 }
 
 const getIfcWasmUrl = (): string =>
-  typeof window !== 'undefined'
-    ? new URL('/drawing-assets/ifc/', window.location.origin).href
-    : '/drawing-assets/ifc/';
+  typeof window !== 'undefined' ? new URL('/drawing-assets/ifc/', window.location.origin).href : '/drawing-assets/ifc/';
 const BATCH_SIZE = 500;
 const activeModelConversions = new Set<string>();
 
@@ -40,18 +31,12 @@ export interface BrowserConvertResult {
 }
 
 const isZipBytes = (bytes: Uint8Array): boolean =>
-  bytes.byteLength >= 4 &&
-  bytes[0] === 0x50 &&
-  bytes[1] === 0x4b &&
-  bytes[2] === 0x03 &&
-  bytes[3] === 0x04;
+  bytes.byteLength >= 4 && bytes[0] === 0x50 && bytes[1] === 0x4b && bytes[2] === 0x03 && bytes[3] === 0x04;
 
 async function unwrapIfcBytes(rawBytes: Uint8Array): Promise<Uint8Array> {
   if (!isZipBytes(rawBytes)) return rawBytes;
   const zip = await JSZip.loadAsync(rawBytes);
-  const ifcEntry = Object.values(zip.files).find(
-    (entry) => !entry.dir && /\.ifc$/i.test(entry.name),
-  );
+  const ifcEntry = Object.values(zip.files).find((entry) => !entry.dir && /\.ifc$/i.test(entry.name));
   if (!ifcEntry) {
     throw new Error('Không tìm thấy tệp .ifc bên trong gói nén .ifczip');
   }
@@ -94,8 +79,7 @@ function buildConversionWarnings(extraction: ExtractResult): BrowserConversionWa
     warnings.push({
       ma: 'MISSING_GEOREF',
       muc: 'info',
-      thong_bao:
-        'Mô hình chưa khai báo tọa độ địa lý (IfcMapConversion / IfcSite). Đã dùng gốc tọa độ cục bộ.',
+      thong_bao: 'Mô hình chưa khai báo tọa độ địa lý (IfcMapConversion / IfcSite). Đã dùng gốc tọa độ cục bộ.',
     });
   } else if (Math.abs(g.eastings ?? 0) > 10_000 || Math.abs(g.northings ?? 0) > 10_000) {
     warnings.push({
@@ -140,10 +124,9 @@ export async function convertBimModelInBrowser(
 
   try {
     options.onProgress?.(5, 'Đang khởi tạo phiên chuyển đổi mô hình trên trình duyệt...');
-    const { data: claimedJobId, error: claimError } = await supabase.rpc(
-      'bim_browser_claim_conversion',
-      { p_model: model.id },
-    );
+    const { data: claimedJobId, error: claimError } = await supabase.rpc('bim_browser_claim_conversion', {
+      p_model: model.id,
+    });
     if (claimError) {
       throw new Error(claimError.message || 'Không thể nhận quyền chuyển đổi mô hình');
     }
@@ -169,10 +152,7 @@ export async function convertBimModelInBrowser(
       raw: false,
       progressCallback: (progress) => {
         const pct = Math.min(48, Math.max(15, Math.round(15 + progress * 33)));
-        options.onProgress?.(
-          pct,
-          `Đang dựng hình học 3D (${Math.round(progress * 100)}%)...`,
-        );
+        options.onProgress?.(pct, `Đang dựng hình học 3D (${Math.round(progress * 100)}%)...`);
       },
     });
 
@@ -188,12 +168,10 @@ export async function convertBimModelInBrowser(
     ) as ArrayBuffer;
     const fragBlob = new Blob([fragBuffer], { type: 'application/octet-stream' });
 
-    const { error: uploadError } = await supabase.storage
-      .from('bim-models')
-      .upload(fragPath, fragBlob, {
-        contentType: 'application/octet-stream',
-        upsert: true,
-      });
+    const { error: uploadError } = await supabase.storage.from('bim-models').upload(fragPath, fragBlob, {
+      contentType: 'application/octet-stream',
+      upsert: true,
+    });
     if (uploadError) {
       throw new Error(`Không tải được tệp .frag lên Storage: ${uploadError.message}`);
     }
@@ -280,14 +258,11 @@ export async function convertBimModelInBrowser(
       ket_noi: topology.connections,
     };
 
-    const { data: completedModel, error: completeError } = await supabase.rpc(
-      'bim_browser_complete_conversion',
-      {
-        p_model: model.id,
-        p_job: jobId,
-        p_patch: patch,
-      },
-    );
+    const { data: completedModel, error: completeError } = await supabase.rpc('bim_browser_complete_conversion', {
+      p_model: model.id,
+      p_job: jobId,
+      p_patch: patch,
+    });
     if (completeError) {
       throw new Error(`Lỗi hoàn tất chuyển đổi: ${completeError.message}`);
     }

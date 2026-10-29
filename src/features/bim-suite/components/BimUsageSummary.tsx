@@ -1,5 +1,5 @@
 import { formatNumber, formatDateTime } from '@/lib/utils';
-'use client';
+('use client');
 // Use of the BIM viewer tools over the last 30 days (which tools reach real work), from bim_su_dung.
 import React from 'react';
 import { Activity } from 'lucide-react';

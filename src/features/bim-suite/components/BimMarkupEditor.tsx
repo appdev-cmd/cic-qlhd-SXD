@@ -1,4 +1,4 @@
-import {BimOverlay} from '@/features/bim-suite/adapters/controls';
+import { BimOverlay } from '@/features/bim-suite/adapters/controls';
 import { BimTable, BimSelect, BimInput } from '@/features/bim-suite/adapters/controls';
 // features/bim/components/BimMarkupEditor.tsx
 // Vẽ ghi chú lên ảnh chụp mô hình (mũi tên, khoanh vùng, bút tự do, chữ) — dùng cho vướng mắc (BCF markup)

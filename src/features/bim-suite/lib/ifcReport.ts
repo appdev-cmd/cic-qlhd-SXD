@@ -15,7 +15,7 @@ const esc = (v: unknown) =>
     /[&<>"']/g,
     (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[c]!,
   );
-const pct = (v: number) => `${formatNumber((Number(v) * 100), 1)}%`;
+const pct = (v: number) => `${formatNumber(Number(v) * 100, 1)}%`;
 
 export function ifcReportHtml(
   results: { result: IfcResult; fileName: string; projectName: string; cdeName?: string }[],

@@ -294,7 +294,7 @@ export const BimFilterPanel: React.FC<BimFilterPanelProps> = ({
                     {m.name}
                   </span>
                   <span className="text-2xs text-slate-400 tabular-nums">
-                    {formatNumber((modelTotals.get(m.id) ?? 0), 2)}
+                    {formatNumber(modelTotals.get(m.id) ?? 0, 2)}
                   </span>
                 </label>
               ))}

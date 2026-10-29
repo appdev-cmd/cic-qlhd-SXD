@@ -72,9 +72,7 @@ export interface PeriodicReport {
 }
 
 const n = (v: number | null | undefined, d = 0) =>
-  v === null || v === undefined || Number.isNaN(Number(v))
-    ? '—'
-    : formatNumber(Number(v), d);
+  v === null || v === undefined || Number.isNaN(Number(v)) ? '—' : formatNumber(Number(v), d);
 const vnDate = (iso?: string | null) => {
   const m = /^(\d{4})-(\d{2})-(\d{2})/.exec(iso ?? '');
   return m ? `${m[3]}/${m[2]}/${m[1]}` : '—';

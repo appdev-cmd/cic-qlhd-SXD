@@ -21,9 +21,7 @@ export async function readRpcPages<T>(fn: string, params: Record<string, unknown
     out.push(...batch);
     if (batch.length < PAGE) return out;
   }
-  throw new Error(
-    `${label}: phạm vi quá lớn (trên ${formatNumber(MAX_ROWS, 2)} cấu kiện), hãy thu hẹp điều kiện.`,
-  );
+  throw new Error(`${label}: phạm vi quá lớn (trên ${formatNumber(MAX_ROWS, 2)} cấu kiện), hãy thu hẹp điều kiện.`);
 }
 
 export interface QuickSelectParams {

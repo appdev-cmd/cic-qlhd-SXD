@@ -1,6 +1,6 @@
-import {formatDate as sxdFormatDate} from '@/lib/utils';
+import { formatDate as sxdFormatDate } from '@/lib/utils';
 import { BimTable, BimSelect, BimInput } from '@/features/bim-suite/adapters/controls';
-'use client';
+('use client');
 // Handover checklist per system (plus items of one asset), linked to acceptance records (bim_nghiem_thu) and
 // handover documents. The database blocks "handed over" while required items are open (facility_handover_gate).
 import React, { useMemo, useState } from 'react';

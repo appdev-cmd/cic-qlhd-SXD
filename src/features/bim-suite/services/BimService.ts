@@ -1032,7 +1032,10 @@ export class BimService {
     for (const row of rows || []) {
       if (row.bim_guid)
         map[row.bim_guid] = (row.ket_luan || 'cho_nghiem_thu') as
-          'dat' | 'khong_dat' | 'dat_co_dieu_kien' | 'cho_nghiem_thu';
+          | 'dat'
+          | 'khong_dat'
+          | 'dat_co_dieu_kien'
+          | 'cho_nghiem_thu';
     }
     return map;
   }

@@ -200,7 +200,14 @@ export interface BimViewpoint {
 }
 
 export type BimMeasurementKind =
-  'distance' | 'elevation' | 'area' | 'angle' | 'slope' | 'perpendicular' | 'clearance' | 'bbox';
+  | 'distance'
+  | 'elevation'
+  | 'area'
+  | 'angle'
+  | 'slope'
+  | 'perpendicular'
+  | 'clearance'
+  | 'bbox';
 
 /** Một phép đo lưu được: điểm theo toạ độ thế giới của trình xem (Y hướng lên), mét */
 export interface BimMeasurementRecord {
@@ -396,7 +403,18 @@ export interface BimCdeHistory {
 export type BimFieldRef = string | string[];
 
 export type BimSetOperator =
-  '=' | '!=' | 'chua' | 'khong_chua' | '>' | '>=' | '<' | '<=' | 'co' | 'khong_co' | 'trong' | 'khop_mau';
+  | '='
+  | '!='
+  | 'chua'
+  | 'khong_chua'
+  | '>'
+  | '>='
+  | '<'
+  | '<='
+  | 'co'
+  | 'khong_co'
+  | 'trong'
+  | 'khop_mau';
 
 export interface BimSetCondition {
   truong: BimFieldRef;

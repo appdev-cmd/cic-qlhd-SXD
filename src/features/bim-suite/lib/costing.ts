@@ -184,7 +184,7 @@ export const buildCostRows = (quantities: Bim5dGroup[], prices: BimUnitPrice[]):
 
 export const formatVnd = (value: number): string => {
   if (!value) return '0 ₫';
-  if (value >= 1e9) return `${formatNumber((value / 1e9), 2)} tỷ ₫`;
-  if (value >= 1e6) return `${formatNumber((value / 1e6), 1)} triệu ₫`;
+  if (value >= 1e9) return `${formatNumber(value / 1e9, 2)} tỷ ₫`;
+  if (value >= 1e6) return `${formatNumber(value / 1e6, 1)} triệu ₫`;
   return `${formatNumber(value, 0)} ₫`;
 };

@@ -463,8 +463,7 @@ export const BimSmartSetsPanel: React.FC<BimSmartSetsPanelProps> = ({
         {result && (
           <div className="p-2 rounded-lg bg-slate-50 dark:bg-slate-900 space-y-2">
             <p className="text-slate-600 dark:text-slate-300">
-              Tìm thấy <b className="text-slate-900 dark:text-white">{formatNumber(result.length, 2)}</b> cấu
-              kiện
+              Tìm thấy <b className="text-slate-900 dark:text-white">{formatNumber(result.length, 2)}</b> cấu kiện
               {groupByModel(result).length > 1 ? ` trong ${groupByModel(result).length} mô hình` : ''}.
             </p>
             {result.length > 0 && (

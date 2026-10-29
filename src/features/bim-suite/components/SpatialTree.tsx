@@ -741,10 +741,7 @@ export const SpatialTree: React.FC<SpatialTreeProps> = ({
           targets.map((m) => {
             const isOpen = !!openModels[m.id];
             return (
-              <div
-                key={m.id}
-                className="rounded-xl border border-slate-200/80 dark:border-slate-700 overflow-hidden"
-              >
+              <div key={m.id} className="rounded-xl border border-slate-200/80 dark:border-slate-700 overflow-hidden">
                 <button
                   type="button"
                   onClick={() => setOpenModels((prev) => ({ ...prev, [m.id]: !prev[m.id] }))}
@@ -772,7 +769,7 @@ export const SpatialTree: React.FC<SpatialTreeProps> = ({
                     </span>
                   </span>
                   <span className="px-1.5 py-0.5 rounded-md bg-slate-200/70 dark:bg-slate-700 text-slate-600 dark:text-slate-300 text-2xs shrink-0 font-medium tabular-nums">
-                    {formatNumber((m.element_count ?? 0), 2)}
+                    {formatNumber(m.element_count ?? 0, 2)}
                   </span>
                 </button>
                 {isOpen && (

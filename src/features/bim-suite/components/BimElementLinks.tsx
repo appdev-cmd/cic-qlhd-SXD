@@ -1,4 +1,4 @@
-import {BimOverlay} from '@/features/bim-suite/adapters/controls';
+import { BimOverlay } from '@/features/bim-suite/adapters/controls';
 import { BimTable, BimSelect, BimInput } from '@/features/bim-suite/adapters/controls';
 // Links of an element: documents of the project library (Hồ sơ tài liệu), workspace tasks (Nhiệm vụ) and acceptance
 // records. The database checks that each target belongs to the element's project.
@@ -7,8 +7,8 @@ import React, { useState } from 'react';
 import { createPortal } from 'react-dom';
 import { FileText, ClipboardCheck, Link2, Plus, X, Loader2, Search, Unlink, Check, ListTodo } from 'lucide-react';
 import type { BimLibraryDocument, BimLinkType, BimTask } from '@/features/bim-suite/types/bim.types';
-type TaskStatus='todo'|'in_progress'|'done';
-const taskStatuses={todo:'Chưa thực hiện',in_progress:'Đang thực hiện',done:'Hoàn thành'};
+type TaskStatus = 'todo' | 'in_progress' | 'done';
+const taskStatuses = { todo: 'Chưa thực hiện', in_progress: 'Đang thực hiện', done: 'Hoàn thành' };
 import {
   useBimElementLinks,
   useAddBimLinks,

@@ -137,8 +137,7 @@ export const iotDateTime = (value: number | string) => {
 };
 /** hh:mm in Vietnam time. */
 export const iotClock = (value: number) => timeFormat.format(new Date(value));
-export const numberLabel = (value: number, digits = 1) =>
-  formatNumber(value, digits);
+export const numberLabel = (value: number, digits = 1) => formatNumber(value, digits);
 
 const BOOLEAN_STATES: Record<string, [string, string]> = {
   leak_detected: ['Khô ráo', 'Phát hiện nước'],

@@ -1237,9 +1237,7 @@ export const BimClashPanel: React.FC<BimClashPanelProps> = ({
                           <span className="block truncate font-semibold text-slate-700 dark:text-slate-200">
                             {g.label}
                           </span>
-                          {g.sublabel && (
-                            <span className="block truncate text-2xs text-slate-400">{g.sublabel}</span>
-                          )}
+                          {g.sublabel && <span className="block truncate text-2xs text-slate-400">{g.sublabel}</span>}
                         </span>
                         <span className="px-1.5 rounded bg-amber-100 dark:bg-amber-900 text-amber-700 dark:text-amber-300 text-2xs font-bold">
                           {g.rows.length}

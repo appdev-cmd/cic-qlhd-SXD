@@ -1,4 +1,4 @@
-import {formatDate as sxdFormatDate} from '@/lib/utils';
+import { formatDate as sxdFormatDate } from '@/lib/utils';
 import { formatNumber, formatDateTime } from '@/lib/utils';
 import { BimTable, BimSelect, BimInput } from '@/features/bim-suite/adapters/controls';
 // Project schedule (ACC Schedule): WBS tasks imported from Excel/MS Project, generated from a sequence template or
@@ -545,7 +545,12 @@ function TaskEditor({
         </label>
         <label className={label}>
           Tên công việc
-          <BimInput value={t.ten ?? ''} maxLength={300} onChange={(e) => set({ ten: e.target.value })} className={field} />
+          <BimInput
+            value={t.ten ?? ''}
+            maxLength={300}
+            onChange={(e) => set({ ten: e.target.value })}
+            className={field}
+          />
         </label>
         <label className={label}>
           Bắt đầu (kế hoạch)
@@ -713,9 +718,7 @@ export const BimScheduleManager: React.FC<{
   );
   const byId = useMemo(() => new Map(list.map((t) => [t.id, t])), [list]);
   const freeze = async () => {
-    const name = window
-      .prompt('Tên kế hoạch chốt (baseline)', `Kế hoạch ${sxdFormatDate(new Date())}`)
-      ?.trim();
+    const name = window.prompt('Tên kế hoạch chốt (baseline)', `Kế hoạch ${sxdFormatDate(new Date())}`)?.trim();
     if (!name) return;
     try {
       await BimScheduleService.saveBaseline(projectId, name);
@@ -743,7 +746,7 @@ export const BimScheduleManager: React.FC<{
           ['Công việc', formatNumber(summary.leaves, 2)],
           ['Chậm so kế hoạch', String(summary.late)],
           ['Thực tế / kế hoạch', summary.kh === null ? 'Chưa có tỷ trọng' : `${summary.tt}% / ${summary.kh}%`],
-          ['Cấu kiện gắn tiến độ', formatNumber((links.data?.length ?? 0), 2)],
+          ['Cấu kiện gắn tiến độ', formatNumber(links.data?.length ?? 0, 2)],
         ].map(([k, v]) => (
           <div
             key={k}
@@ -848,7 +851,7 @@ export const BimScheduleManager: React.FC<{
                     {p === null ? '—' : Math.round(p)} / {t.phan_tram_thuc_te ?? '—'}
                   </td>
                   <td className="px-2 py-1.5 text-right font-mono tabular-nums">
-                    {t.la_tom_tat ? '' : formatNumber((linkCount.get(t.id) ?? 0), 2)}
+                    {t.la_tom_tat ? '' : formatNumber(linkCount.get(t.id) ?? 0, 2)}
                   </td>
                   <td className="px-3 py-1.5">
                     {canWrite && (
@@ -884,9 +887,7 @@ export const BimScheduleManager: React.FC<{
           </p>
         )}
         {shown.length > 500 && (
-          <p className="p-2 text-2xs text-txt-muted">
-            Hiển thị 500/{shown.length} công việc; dùng ô tìm để thu hẹp.
-          </p>
+          <p className="p-2 text-2xs text-txt-muted">Hiển thị 500/{shown.length} công việc; dùng ô tìm để thu hẹp.</p>
         )}
         <p className="border-t border-border px-3 py-1.5 text-2xs text-txt-muted dark:border-slate-700">
           Kế hoạch % là tỷ lệ thời gian đã qua của công việc; tổng hợp gia quyền theo tỷ trọng. Chậm: thực tế thấp hơn

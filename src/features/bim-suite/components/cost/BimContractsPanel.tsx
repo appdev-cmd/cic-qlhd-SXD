@@ -13,8 +13,7 @@ import { downloadTemplate, parseBidSheet, readFirstSheet, type BidImportRow } fr
 const errorText = (e: unknown) => (e instanceof Error ? e.message : String(e));
 const money = (v: number | null | undefined) =>
   v === null || v === undefined || Number.isNaN(v) ? '—' : formatNumber(Math.round(Number(v)), 2);
-const qty = (v: number | null | undefined) =>
-  v === null || v === undefined ? '—' : formatNumber(Number(v), 3);
+const qty = (v: number | null | undefined) => (v === null || v === undefined ? '—' : formatNumber(Number(v), 3));
 const field =
   'mt-1 w-full rounded-xl border border-border bg-white px-2.5 py-1.5 text-xs text-slate-900 dark:border-slate-600 dark:bg-slate-900 dark:text-white';
 const label = 'block text-xs font-semibold text-txt-secondary dark:text-slate-300';
@@ -133,7 +132,11 @@ function BudgetEditor({
         </label>
         <label className={`${label} sm:col-span-2`}>
           Ghi chú
-          <BimInput value={l.ghi_chu ?? ''} onChange={(e) => setL({ ...l, ghi_chu: e.target.value })} className={field} />
+          <BimInput
+            value={l.ghi_chu ?? ''}
+            onChange={(e) => setL({ ...l, ghi_chu: e.target.value })}
+            className={field}
+          />
         </label>
       </div>
     </Modal>

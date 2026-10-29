@@ -17,19 +17,50 @@ class BimTests(unittest.TestCase):
         self.addCleanup(temp.cleanup)
         self.directory = Path(temp.name)
         scoped = patch('app.store.DATA_DIR', self.directory)
-        scoped.start(); self.addCleanup(scoped.stop)
-        (self.directory / 'projects.json').write_text(json.dumps([{'id': 'demo-project', 'name': 'Dự án BIM'}]), encoding='utf-8')
+        scoped.start()
+        self.addCleanup(scoped.stop)
+        (self.directory / 'projects.json').write_text(
+            json.dumps([{'id': 'demo-project', 'name': 'Dự án BIM'}]), encoding='utf-8'
+        )
         self.s = Store(actor=DEMO_ACTOR)
         self.files = {'ifc': b'ISO-10303-21;BIM TEST', 'frag': b'FRAG-TEST'}
 
     def create(self, previous=None):
-        return bim.create(self.s, 'demo-project', ModelInput(file_name='architecture.ifc', discipline='KIEN_TRUC',
-            previous_id=previous, files={kind: {'size': len(data), 'sha256': hashlib.sha256(data).hexdigest()} for kind, data in self.files.items()}, element_count=3))
+        return bim.create(
+            self.s,
+            'demo-project',
+            ModelInput(
+                file_name='architecture.ifc',
+                discipline='KIEN_TRUC',
+                previous_id=previous,
+                files={
+                    kind: {'size': len(data), 'sha256': hashlib.sha256(data).hexdigest()}
+                    for kind, data in self.files.items()
+                },
+                element_count=3,
+            ),
+        )
 
     def finish(self, m):
         for kind, data in self.files.items():
             bim.put_chunk(self.s, m['id'], kind, 0, base64.b64encode(data).decode())
-        bim.put_elements(self.s, m['id'], [dict(express_id=i, global_id=f'guid-{i}', ten_cau_kien=f'Tường tầng {i}', loai_cau_kien='IFCWALL', phan_doan_tang=f'Tầng {i}', the_tich_be_tong=1.5 if i != 3 else None, dien_tich=3, chieu_dai=None) for i in range(1,4)])
+        bim.put_elements(
+            self.s,
+            m['id'],
+            [
+                dict(
+                    express_id=i,
+                    global_id=f'guid-{i}',
+                    ten_cau_kien=f'Tường tầng {i}',
+                    loai_cau_kien='IFCWALL',
+                    phan_doan_tang=f'Tầng {i}',
+                    the_tich_be_tong=1.5 if i != 3 else None,
+                    dien_tich=3,
+                    chieu_dai=None,
+                )
+                for i in range(1, 4)
+            ],
+        )
         return bim.finalize(self.s, m['id'])
 
     def test_complete_persisted_import_search_pagination_quantities(self):

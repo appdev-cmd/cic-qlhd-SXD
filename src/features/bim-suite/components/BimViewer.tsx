@@ -554,8 +554,8 @@ export const BimViewer = forwardRef<BimViewerRef, BimViewerProps>(
             </h4>
             <p className="text-xs md:text-sm text-slate-300 max-w-lg mt-2 leading-relaxed">
               Mô hình <span className="font-semibold text-primary-300">“{activeModel.file_name}”</span> đang được chuyển
-              sang định dạng 3D Fragments (.frag) trực tiếp bằng WebAssembly và bóc tách cấu kiện, thuộc tính, khối lượng,
-              vật liệu.
+              sang định dạng 3D Fragments (.frag) trực tiếp bằng WebAssembly và bóc tách cấu kiện, thuộc tính, khối
+              lượng, vật liệu.
             </p>
             {activeModel.status === 'processing' && (
               <div className="mt-4 w-64 max-w-full">

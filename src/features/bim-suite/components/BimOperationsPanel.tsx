@@ -1,6 +1,6 @@
 import { formatNumber, formatDateTime } from '@/lib/utils';
 import { BimTable, BimSelect, BimInput } from '@/features/bim-suite/adapters/controls';
-'use client';
+('use client');
 // Viewer side panel "Vận hành": assets of the register on the loaded models (labels via viewer/facilityAssetLayer,
 // color by maintenance state, show only assets), open work orders, open IoT alerts, and the live IoT section (lazy,
 // components/BimIotOperationsPanel). The asset record opens as a modal (BimAssetRecord). One owner releases the 3D

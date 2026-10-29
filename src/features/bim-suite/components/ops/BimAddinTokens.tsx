@@ -1,4 +1,4 @@
-import {formatDate as sxdFormatDate} from '@/lib/utils';
+import { formatDate as sxdFormatDate } from '@/lib/utils';
 import { formatNumber, formatDateTime } from '@/lib/utils';
 import { BimTable, BimSelect, BimInput } from '@/features/bim-suite/adapters/controls';
 // Upload keys for authoring-tool add-ins (Revit, ArchiCAD, Tekla) of one project. A key is shown once; the database
@@ -84,7 +84,10 @@ export const BimAddinTokens: React.FC<{ projectId: string }> = ({ projectId }) =
             </button>
           </div>
           {created && (
-            <div role="status" className="rounded-xl border border-amber-300 bg-amber-50 p-2.5 text-amber-900 dark:bg-amber-50">
+            <div
+              role="status"
+              className="rounded-xl border border-amber-300 bg-amber-50 p-2.5 text-amber-900 dark:bg-amber-50"
+            >
               <p className="font-semibold">
                 Sao chép khóa ngay. Khóa không hiện lại sau khi đóng thông báo này; hệ thống chỉ lưu mã băm.
               </p>

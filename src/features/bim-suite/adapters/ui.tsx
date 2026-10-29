@@ -1,6 +1,6 @@
-import {Modal as SharedModal} from '@/components/ui/Modal';
+import { Modal as SharedModal } from '@/components/ui/Modal';
 import { BimTable, BimSelect, BimInput } from '@/features/bim-suite/adapters/controls';
-'use client';
+('use client');
 // Thay các component dùng chung của cic-hud (Modal, ConfirmProvider, EmptyState, ErrorBoundary, TableSkeleton,
 // FilterChip, TabNav, Input, Textarea, Select) với cùng tên và props mà mã BIM dùng. Hộp thoại dùng <dialog> gốc nên
 // vẫn nằm trong cây có data-theme và nhận đúng biến --theme-* (portal ra <body> sẽ mất màu theo giao diện).
@@ -47,11 +47,32 @@ export type ModalProps = {
   zIndex?: string;
 };
 
-export function Modal({isOpen,onClose,title,description,size='md',children,footer,className=''}:ModalProps) {
- const [dirty,setDirty]=useState(false);
- useEffect(()=>setDirty(false),[isOpen]);
- if(!isOpen)return null;
- return <SharedModal heading={typeof title==='string'?title:'Chi tiết BIM'} description={description} size={size} dirty={dirty} onClose={onClose} footer={footer} className={className}><div onInputCapture={()=>setDirty(true)}>{children}</div></SharedModal>;
+export function Modal({
+  isOpen,
+  onClose,
+  title,
+  description,
+  size = 'md',
+  children,
+  footer,
+  className = '',
+}: ModalProps) {
+  const [dirty, setDirty] = useState(false);
+  useEffect(() => setDirty(false), [isOpen]);
+  if (!isOpen) return null;
+  return (
+    <SharedModal
+      heading={typeof title === 'string' ? title : 'Chi tiết BIM'}
+      description={description}
+      size={size}
+      dirty={dirty}
+      onClose={onClose}
+      footer={footer}
+      className={className}
+    >
+      <div onInputCapture={() => setDirty(true)}>{children}</div>
+    </SharedModal>
+  );
 }
 
 export type ConfirmOptions = {

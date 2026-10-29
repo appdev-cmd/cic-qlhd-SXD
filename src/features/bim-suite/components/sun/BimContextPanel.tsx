@@ -367,9 +367,7 @@ export const BimContextPanel: React.FC<{
                   <span className="block truncate" data-tooltip={r.ten}>
                     {r.ten}
                   </span>
-                  <span className="text-2xs text-txt-muted">
-                    Lưu {formatDateTime(new Date(r.created_at))}
-                  </span>
+                  <span className="text-2xs text-txt-muted">Lưu {formatDateTime(new Date(r.created_at))}</span>
                 </span>
                 <button
                   type="button"
@@ -396,9 +394,7 @@ export const BimContextPanel: React.FC<{
           </ul>
         </section>
       )}
-      {snapshots.error && (
-        <p className="text-2xs text-amber-700 dark:text-amber-300">{errorText(snapshots.error)}</p>
-      )}
+      {snapshots.error && <p className="text-2xs text-amber-700 dark:text-amber-300">{errorText(snapshots.error)}</p>}
       <p className="text-2xs text-txt-muted">{OSM_ATTRIBUTION}.</p>
     </div>
   );

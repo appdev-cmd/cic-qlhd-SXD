@@ -1,5 +1,5 @@
 import { formatNumber, formatDateTime } from '@/lib/utils';
-'use client';
+('use client');
 // Lọc cấu kiện theo mã Uniclass 2015 đọc từ IfcClassificationReference của tệp IFC (thuoc_tinh.phan_loai do bộ chuyển
 // đổi trích). Thay BimUniclassFilter của cic-hud, vốn đọc mã từ từ điển dữ liệu riêng của dự án HUD. Mã cha chọn cả
 // mã con (Pr_20_85 → Pr_20_85_16_15).

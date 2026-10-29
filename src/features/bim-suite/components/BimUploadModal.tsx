@@ -1,4 +1,4 @@
-import {BimOverlay} from '@/features/bim-suite/adapters/controls';
+import { BimOverlay } from '@/features/bim-suite/adapters/controls';
 import { formatNumber, formatDateTime } from '@/lib/utils';
 import { BimTable, BimSelect, BimInput } from '@/features/bim-suite/adapters/controls';
 // features/bim/components/BimUploadModal.tsx
@@ -76,7 +76,7 @@ const PHASE_LABEL: Record<UploadProgress['phase'], string> = {
 const MAX_SIZE = 500 * 1024 * 1024;
 const PHAN_TICH_DONG_THOI = 2;
 
-const mb = (n: number) => formatNumber((n / 1024 / 1024), 1);
+const mb = (n: number) => formatNumber(n / 1024 / 1024, 1);
 
 const CHIP: Record<TrangThai, { label: string; cls: string }> = {
   phan_tich: { label: 'Đang phân tích', cls: 'bg-slate-100 text-slate-600 dark:bg-slate-700 dark:text-slate-300' },
@@ -423,9 +423,7 @@ export const BimUploadModal: React.FC<BimUploadModalProps> = ({
 
                         <div className="mt-2 grid grid-cols-1 sm:grid-cols-2 gap-2">
                           <label className="block">
-                            <span className="block text-2xs uppercase tracking-wide text-slate-400 mb-0.5">
-                              Bộ môn
-                            </span>
+                            <span className="block text-2xs uppercase tracking-wide text-slate-400 mb-0.5">Bộ môn</span>
                             <BimSelect
                               value={it.discipline}
                               disabled={khoa || !!truoc}

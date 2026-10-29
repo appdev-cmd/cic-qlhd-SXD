@@ -12,9 +12,7 @@ export interface KpiCard {
   tone: 'good' | 'warn' | 'bad' | 'neutral';
 }
 const fmt = (value: number | null | undefined, digits = 1) =>
-  value === null || value === undefined || !Number.isFinite(value)
-    ? '—'
-    : formatNumber(value, digits);
+  value === null || value === undefined || !Number.isFinite(value) ? '—' : formatNumber(value, digits);
 const trend = (
   current: number | null,
   previous: number | null | undefined,

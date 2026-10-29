@@ -1,5 +1,5 @@
 import { formatNumber, formatDateTime } from '@/lib/utils';
-'use client';
+('use client');
 // Weekly BIM report on request: issues, clashes, models, data quality, acceptances, usage, schedule and cost. The
 // snapshot is stored by project writers (bim_field_weekly_report); readers see the stored weeks. No e-mail schedule.
 import React, { useMemo, useState } from 'react';

@@ -1,4 +1,4 @@
-import {formatDate as sxdFormatDate} from '@/lib/utils';
+import { formatDate as sxdFormatDate } from '@/lib/utils';
 import { BimTable, BimSelect, BimInput } from '@/features/bim-suite/adapters/controls';
 import React, { useEffect, useMemo, useState } from 'react';
 import { CalendarClock, X, Play, Pause } from 'lucide-react';

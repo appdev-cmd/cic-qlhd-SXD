@@ -1,4 +1,4 @@
-import {BimDownload} from '@/features/bim-suite/adapters/controls';
+import { BimDownload } from '@/features/bim-suite/adapters/controls';
 import { formatNumber, formatDateTime } from '@/lib/utils';
 import { BimTable, BimSelect, BimInput } from '@/features/bim-suite/adapters/controls';
 // features/bim/components/BimIdsPanel.tsx
@@ -373,10 +373,7 @@ export const BimIdsPanel: React.FC<BimIdsPanelProps> = ({
         const S = STATUS[r.status];
         const expanded = open === i;
         return (
-          <div
-            key={i}
-            className="rounded-lg border border-slate-100 dark:border-slate-700 bg-white dark:bg-slate-800"
-          >
+          <div key={i} className="rounded-lg border border-slate-100 dark:border-slate-700 bg-white dark:bg-slate-800">
             <button
               type="button"
               onClick={() => setOpen(expanded ? null : i)}
@@ -404,9 +401,7 @@ export const BimIdsPanel: React.FC<BimIdsPanelProps> = ({
             {expanded && (
               <div className="px-2 pb-2 pl-9 space-y-1.5">
                 {r.spec.description && <p className="text-2xs text-slate-500">{r.spec.description}</p>}
-                <p className="text-2xs text-slate-400">
-                  Áp dụng: {r.spec.applicability.map(facetLabel).join(' · ')}
-                </p>
+                <p className="text-2xs text-slate-400">Áp dụng: {r.spec.applicability.map(facetLabel).join(' · ')}</p>
                 {r.requirements.map((q, k) => (
                   <div key={k} className="flex items-center gap-1.5">
                     {q.supported ? (

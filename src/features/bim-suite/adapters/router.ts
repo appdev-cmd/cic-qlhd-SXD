@@ -1,5 +1,5 @@
-import {useCallback,useEffect,useRef,useState} from 'react';
-export {useParams,useSearchParams} from 'react-router-dom';
+import { useCallback, useEffect, useRef, useState } from 'react';
+export { useParams, useSearchParams } from 'react-router-dom';
 /** Tab đồng bộ với tham số URL (đọc URL → sessionStorage → mặc định), ghi bằng replaceState. */
 export function useTabSearchParam<T extends string>(
   defaultTab: T,

@@ -1,4 +1,4 @@
-import {formatDate as sxdFormatDate} from '@/lib/utils';
+import { formatDate as sxdFormatDate } from '@/lib/utils';
 import { formatNumber, formatDateTime } from '@/lib/utils';
 import { BimTable, BimSelect, BimInput } from '@/features/bim-suite/adapters/controls';
 // features/bim/components/BimIssuesPanel.tsx
@@ -389,7 +389,9 @@ const RecordReply: React.FC<{ issue: BimIssue; projectId: string; canEdit: boole
   const updateMutation = useUpdateBimIssue(projectId);
   const [text, setText] = useState(issue.noi_dung_tra_loi ?? '');
   const overdue =
-    !issue.noi_dung_tra_loi && issue.han_tra_loi && new Date(issue.han_tra_loi + 'T23:59:59+07:00').getTime() < Date.now();
+    !issue.noi_dung_tra_loi &&
+    issue.han_tra_loi &&
+    new Date(issue.han_tra_loi + 'T23:59:59+07:00').getTime() < Date.now();
   return (
     <div className="space-y-1.5 rounded-xl border border-sky-200 p-2.5 dark:border-sky-800">
       <p className="font-semibold text-slate-700 dark:text-slate-200">
@@ -400,9 +402,7 @@ const RecordReply: React.FC<{ issue: BimIssue; projectId: string; canEdit: boole
         <>
           <p className="whitespace-pre-wrap text-slate-700 dark:text-slate-200">{issue.noi_dung_tra_loi}</p>
           {issue.tra_loi_luc && (
-            <p className="text-2xs text-slate-400">
-              Trả lời lúc {formatDateTime(new Date(issue.tra_loi_luc))}
-            </p>
+            <p className="text-2xs text-slate-400">Trả lời lúc {formatDateTime(new Date(issue.tra_loi_luc))}</p>
           )}
         </>
       ) : (

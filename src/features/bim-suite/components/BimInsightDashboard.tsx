@@ -1,6 +1,6 @@
 import { formatNumber, formatDateTime } from '@/lib/utils';
 import { BimTable, BimSelect, BimInput } from '@/features/bim-suite/adapters/controls';
-'use client';
+('use client');
 // Analytics overview of the models in the viewer: scope (model, floor, Uniclass), key figures, information-quality
 // findings down to the element, document / acceptance / schedule links, quantities by class, and the project schedule
 // and cost figures of phase B5. Ported from cic-hud BimInsightDashboard without IoT, the HUD data standard and

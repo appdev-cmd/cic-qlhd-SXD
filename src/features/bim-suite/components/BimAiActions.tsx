@@ -1,5 +1,5 @@
 import { formatNumber, formatDateTime } from '@/lib/utils';
-'use client';
+('use client');
 // Action log and plan preview of the model assistant (port of cic-hud BimAiActions, without the model metrics line).
 import { CheckCircle2, CircleSlash, FileEdit, ListChecks, XCircle } from 'lucide-react';
 import type { BimAiAction, BimAiActionStatus } from '../ai/runner';
@@ -12,7 +12,7 @@ const STATUS: Record<BimAiActionStatus, { label: string; className: string; Icon
   loi: { label: 'Lỗi', className: 'text-rose-700 dark:text-rose-300', Icon: XCircle },
 };
 
-const seconds = (ms: number) => formatNumber((ms / 1000), 1);
+const seconds = (ms: number) => formatNumber(ms / 1000, 1);
 
 /** Executed actions: status, summary, result count, duration and error. */
 export function BimAiActionList({ actions, title = 'Thao tác đã chạy' }: { actions: BimAiAction[]; title?: string }) {

@@ -10,9 +10,7 @@ import { getIfcLabel, disciplineLabels } from './ifcLabels';
 import { COST_ISSUES, UNIT_LABELS, formatVnd } from './costing';
 
 const num = (v: number | null | undefined, digits = 2) =>
-  v === null || v === undefined || !Number.isFinite(Number(v))
-    ? '-'
-    : formatNumber(Number(v), digits);
+  v === null || v === undefined || !Number.isFinite(Number(v)) ? '-' : formatNumber(Number(v), digits);
 const n0 = (v: unknown) => formatNumber(Number(v || 0), 2);
 /** yyyy-mm-dd[...] → dd/mm/yyyy without time-zone shifts. */
 export const vnDate = (value?: string | null) => {
@@ -242,7 +240,7 @@ export async function buildBimReportDocument(input: BimReportInput, now = new Da
       ),
     );
     children.push(
-      h.p(`Tổng phần đã tính được: ${formatNumber((costTotal || 0), 2)} ₫ (${formatVnd(costTotal || 0)})`, {
+      h.p(`Tổng phần đã tính được: ${formatNumber(costTotal || 0, 2)} ₫ (${formatVnd(costTotal || 0)})`, {
         bold: true,
         alignment: A.RIGHT,
         before: 120,

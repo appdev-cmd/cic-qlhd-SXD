@@ -1,7 +1,6 @@
 'use client';
 import { lazy, useState } from 'react';
 
-
 import {
   Boxes,
   CalendarRange,
@@ -28,13 +27,23 @@ import { BimProposalWorkspace } from './proposal/BimProposalWorkspace';
 import { BimSustainWorkspace } from './sustain/BimSustainWorkspace';
 import { useBimModels } from '../hooks/useBim';
 
-
 // three.js và ThatOpen chỉ chạy trên trình duyệt (WebGL, Worker) và nặng vài MB: tải riêng, không prerender.
 const BimProjectViewer = lazy(() => import('./BimProjectViewer'));
-const BimProposalSplitView = lazy(() => import('./proposal/BimProposalSplitView').then(m => ({default:m.BimProposalSplitView})));
+const BimProposalSplitView = lazy(() =>
+  import('./proposal/BimProposalSplitView').then((m) => ({ default: m.BimProposalSplitView })),
+);
 
 type Tab =
-  'viewer' | 'schedule' | 'cost' | 'sustain' | 'options' | 'assets' | 'handover' | 'check' | 'quality' | 'addin';
+  | 'viewer'
+  | 'schedule'
+  | 'cost'
+  | 'sustain'
+  | 'options'
+  | 'assets'
+  | 'handover'
+  | 'check'
+  | 'quality'
+  | 'addin';
 
 export function BimProjectWorkspace({ projectId, projectName }: { projectId: string; projectName: string }) {
   const access = useBimAccess();
@@ -85,9 +94,7 @@ export function BimProjectWorkspace({ projectId, projectName }: { projectId: str
             </button>
           ))}
         </div>
-        <div className="hidden items-center gap-2 text-2xs text-txt-muted 2xl:flex">
-
-        </div>
+        <div className="hidden items-center gap-2 text-2xs text-txt-muted 2xl:flex"></div>
       </div>
       {/* The viewer stays mounted so loaded models survive switching tabs. */}
       <div hidden={tab !== 'viewer'}>

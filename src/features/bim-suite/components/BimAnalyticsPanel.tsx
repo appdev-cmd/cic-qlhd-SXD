@@ -1,6 +1,6 @@
 import { formatNumber, formatDateTime } from '@/lib/utils';
 import { BimTable, BimSelect, BimInput } from '@/features/bim-suite/adapters/controls';
-'use client';
+('use client');
 // Analytics side panel of the viewer: overview dashboard, information quality, IDS, 5D cost, data quality and reports
 // (weekly report + periodic report of this project), plus the Word export of the model report. Ported from cic-hud
 // BimAnalyticsPanel; the ISO 19650 CDE tab is dropped (CDE lives in the BuildSIA document library), the IoT / HUD
@@ -291,8 +291,7 @@ export const BimAnalyticsPanel: React.FC<BimAnalyticsPanelProps> = ({
             )}
             {!unfiltered && w.truncated && (
               <p className="text-2xs text-amber-700 dark:text-amber-300">
-                Khối lượng theo bộ lọc tính trên {formatNumber(w.loaded, 2)}/{formatNumber(w.total, 2)}{' '}
-                cấu kiện đã đọc.
+                Khối lượng theo bộ lọc tính trên {formatNumber(w.loaded, 2)}/{formatNumber(w.total, 2)} cấu kiện đã đọc.
               </p>
             )}
           </div>

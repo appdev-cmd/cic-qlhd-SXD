@@ -1,4 +1,4 @@
-import {BimOverlay} from '@/features/bim-suite/adapters/controls';
+import { BimOverlay } from '@/features/bim-suite/adapters/controls';
 // features/bim/components/BimQrLabelModal.tsx
 // Nhãn mã QR dán tại cấu kiện ngoài hiện trường: quét bằng điện thoại mở đúng cấu kiện trên mô hình.
 

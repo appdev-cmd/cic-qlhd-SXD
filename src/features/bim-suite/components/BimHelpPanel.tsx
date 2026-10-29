@@ -1,4 +1,4 @@
-import {BimOverlay,BimGuide} from '@/features/bim-suite/adapters/controls';
+import { BimOverlay, BimGuide } from '@/features/bim-suite/adapters/controls';
 // features/bim/components/BimHelpPanel.tsx
 // Hướng dẫn sử dụng nhanh tab Mô hình BIM: quy trình làm việc, công cụ, phím tắt
 

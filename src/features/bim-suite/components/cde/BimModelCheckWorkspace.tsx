@@ -320,7 +320,9 @@ export const BimModelCheckWorkspace: React.FC<{ projectId: string; projectName: 
                           <span
                             className={
                               'rounded-lg px-1.5 py-0.5 text-2xs font-semibold ' +
-                              (result.dat ? 'bg-emerald-50 text-emerald-700 dark:bg-emerald-50' : 'bg-rose-50 text-rose-700 dark:bg-rose-50')
+                              (result.dat
+                                ? 'bg-emerald-50 text-emerald-700 dark:bg-emerald-50'
+                                : 'bg-rose-50 text-rose-700 dark:bg-rose-50')
                             }
                           >
                             {result.dat ? 'Đạt' : 'Chưa đạt'}

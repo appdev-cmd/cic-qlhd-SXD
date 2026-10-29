@@ -1,6 +1,6 @@
 import { formatNumber, formatDateTime } from '@/lib/utils';
 import { BimTable, BimSelect, BimInput } from '@/features/bim-suite/adapters/controls';
-'use client';
+('use client');
 // Workspace tab "Tài sản" (ACC Build › Assets): asset register bound to model elements, work orders, my work, PM plans,
 // QR inspection rounds, fault diagnoses, IFC/CSV/COBie import and operations KPI. BimAssetRecord is the asset record
 // (info & documents, diagnosis, work orders, handover, history) opened from the register, the viewer side panel or a
@@ -574,9 +574,8 @@ export const FacilityOrderEditor: React.FC<{
         ) : (
           history.data?.map((event) => (
             <p key={event.id} className="border-b border-border py-1 dark:border-slate-700">
-              {formatDateTime(new Date(event.created_at))} ·{' '}
-              {ORDER_STATES[event.action as OrderStatus] || event.action} ·{' '}
-              {event.actor_id ? actorNames.data?.get(event.actor_id) || 'Tài khoản dự án' : 'Hệ thống (lịch bảo trì)'}
+              {formatDateTime(new Date(event.created_at))} · {ORDER_STATES[event.action as OrderStatus] || event.action}{' '}
+              · {event.actor_id ? actorNames.data?.get(event.actor_id) || 'Tài khoản dự án' : 'Hệ thống (lịch bảo trì)'}
               {event.after_data.assignee_name ? ` · giao ${String(event.after_data.assignee_name)}` : ''}
             </p>
           ))
@@ -1260,8 +1259,8 @@ export function BimAssetWorkspace({ projectId, projectName, models, onLocateGuid
           <Boxes className="h-4 w-4 text-primary-600" />
           <h2 className="text-sm font-bold text-txt-primary dark:text-white">Tài sản và vận hành</h2>
           <span className="text-2xs text-txt-muted">
-            {formatNumber(assets.length, 2)} tài sản ·{' '}
-            {formatNumber(assets.filter((a) => a.bim_element_id).length, 2)} gắn mô hình
+            {formatNumber(assets.length, 2)} tài sản · {formatNumber(assets.filter((a) => a.bim_element_id).length, 2)}{' '}
+            gắn mô hình
             {canWrite ? '' : ' · chế độ chỉ xem'}
           </span>
         </div>
@@ -1557,9 +1556,15 @@ function AssetRegister({
                       type="button"
                       onClick={() => setSort((s0) => ({ key: c.key, asc: s0.key === c.key ? !s0.asc : true }))}
                       className="flex items-center gap-0.5 hover:text-txt-primary"
-                      data-tooltip={c.key === 'state' ? 'Sắp xếp theo tình trạng' : `Sắp xếp theo ${c.label.toLowerCase()}`}
+                      data-tooltip={
+                        c.key === 'state' ? 'Sắp xếp theo tình trạng' : `Sắp xếp theo ${c.label.toLowerCase()}`
+                      }
                     >
-                      {c.key === 'state' ? <span className="h-2 w-2 rounded-full bg-slate-400 dark:bg-slate-400" /> : c.label}
+                      {c.key === 'state' ? (
+                        <span className="h-2 w-2 rounded-full bg-slate-400 dark:bg-slate-400" />
+                      ) : (
+                        c.label
+                      )}
                       {sort.key === c.key &&
                         (sort.asc ? <ArrowUp className="h-3 w-3" /> : <ArrowDown className="h-3 w-3" />)}
                     </button>
