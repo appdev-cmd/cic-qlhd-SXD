@@ -11,6 +11,8 @@
 /docs/*
 # The in-app help page (src/pages/HelpPage.tsx) bundles the user guide with `?raw`.
 !/docs/HUONG_DAN_QUY_TRINH_THAM_DINH_AI.md
+/01_phap_ly_quy_chuan/*
+!/01_phap_ly_quy_chuan/*.md
 /knowledge-base/
 /output/
 /tmp/

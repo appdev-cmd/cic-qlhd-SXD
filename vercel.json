@@ -7,7 +7,7 @@
   "functions": {
     "api/index.py": {
       "maxDuration": 300,
-      "includeFiles": "{ai/app/**,01_phap_ly_quy_chuan/**,ai/evaluation/legal_retrieval.json}",
+      "includeFiles": "{ai/app/**,01_phap_ly_quy_chuan/*.md,ai/evaluation/legal_retrieval.json}",
       "excludeFiles": "{ai/.deps/**,.appraisal-data/**,public/**,output/**,tests/**,**/__pycache__/**,**/*.pyc}"
     }
   },

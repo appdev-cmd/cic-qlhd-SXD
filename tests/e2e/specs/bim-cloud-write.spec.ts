@@ -7,6 +7,24 @@ test.use({ trace: 'off' });
 test('authenticated cloud IFC upload and saved viewpoint survive a full reload', async ({ page, request }) => {
   test.skip(process.env.E2E_ENABLE_CLOUD_WRITES !== '1', 'Explicit opt-in required for real BIM writes.');
   test.setTimeout(420000);
+  if (process.env.E2E_VERCEL_SHARE_TOKEN) {
+    const base = new URL(String(test.info().project.use.baseURL));
+    expect(base.hostname).toBe(process.env.E2E_VERCEL_SHARE_HOST);
+    const access = await request.get(
+      base.origin + '/?' + new URLSearchParams({ _vercel_share: process.env.E2E_VERCEL_SHARE_TOKEN }),
+      { maxRedirects: 0 },
+    );
+    expect([200, 301, 302, 307, 308]).toContain(access.status());
+    await page
+      .context()
+      .addCookies(
+        (await request.storageState()).cookies.filter(
+          (cookie) =>
+            base.hostname === cookie.domain ||
+            base.hostname.endsWith(cookie.domain.startsWith('.') ? cookie.domain : '.' + cookie.domain),
+        ),
+      );
+  }
   const root = resolve(process.cwd(), '../..');
   const privateConfig = process.env.APPRAISAL_CONFIG_FILE || resolve(homedir(), '.config/buildappraisal/runtime.env');
   const env = Object.fromEntries(
@@ -69,7 +87,7 @@ test('authenticated cloud IFC upload and saved viewpoint survive a full reload',
     return response.json();
   };
   try {
-    await page.goto('/bim');
+    await page.goto('/bim?bimModel=1377ad57-a15b-4e0b-bad8-c4b8516eaf91');
     await expect(page.getByRole('button', { name: 'Tải IFC', exact: true })).toBeVisible({ timeout: 60000 });
     await page.getByRole('button', { name: 'Tải IFC', exact: true }).click();
     const bytes = readFileSync(
@@ -96,7 +114,7 @@ test('authenticated cloud IFC upload and saved viewpoint survive a full reload',
     expect(persisted.element_count).toBeGreaterThan(0);
     expect(persisted.frag_path).toBeTruthy();
     await page.getByRole('button', { name: 'Đóng', exact: true }).last().click();
-    await page.reload();
+    await page.goto('/bim?bimModel=' + modelId);
     await expect(page.getByText(filename, { exact: false }).first()).toBeVisible({ timeout: 60000 });
     await expect(page.locator('[data-bim-loaded-count]')).not.toHaveAttribute('data-bim-loaded-count', '0', {
       timeout: 180000,
