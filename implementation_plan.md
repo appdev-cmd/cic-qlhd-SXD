@@ -3,7 +3,9 @@
 **Ngày lập:** 29/10/2026 (bản chỉnh lần 2, theo yêu cầu: ưu tiên UI/UX đẹp, chuẩn; bản demo chưa cần email, phân quyền hay bảo mật mở rộng).
 **Trạng thái:** ĐÃ DUYỆT qua chat 29/10/2026 ("Làm bộ màu giống bên dự án cic-hud; Làm thẳng"). 
 - **Xong 29/10:** B0 (commit `5b446cd`, 128/128 test Worker đạt) và bộ màu cic-hud và menu trái hai tông (commit `a5224e7`), trên nhánh `feat/ui-ux-cic-hud-palette`.
-- **Tiếp theo:** phần còn lại của U1 (bộ component nền), sau đó U2–U7, B1, B2, B4.
+- **Xong 29/10:** U1, bộ component nền, `DataTable`, `lint:ui` mở rộng, `/dev/ui`, `docs/UI_DESIGN_SYSTEM.md` (commit `f1ed145`).
+- **Tiếp theo:** U2 (khung ứng dụng), sau đó U3–U7, B1, B2, B4.
+- **Ghi nhận cho B2:** trên cloud staging, `GET /cases/{id}` mất khoảng 4 giây, danh sách khoảng 1,5 giây, trong khi xử lý trong tiến trình Worker chỉ mất 20–40 ms. Thời gian dồn vào các vòng truy vấn tới Supabase (Tokyo), cần gộp truy vấn hoặc cache.
 **Quyết định đã chốt:**
 1. **Bộ màu theo cic-hud:** 12 bộ màu hai tông (`config/palettes.ts` của cic-hud — nền menu tối trầm + màu nhấn ánh kim + màu chủ đạo), bộ chọn bộ màu, menu trái nền tối theo bộ màu, nền "bảo vệ mắt" cát ấm của cic-hud. Mặc định cho Sở Xây dựng: **"Lam công vụ"** (teal `#00668c` + vàng đồng), đổi được sang bộ "HUD" hoặc bộ khác.
 2. **Bỏ bước mockup U0:** làm thẳng trên ứng dụng, duyệt trên giao diện thật; vẫn chụp ảnh "trước" để so sánh.
