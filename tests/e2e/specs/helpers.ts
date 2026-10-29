@@ -4,12 +4,15 @@ import { expect, type Page } from '@playwright/test';
 export async function openAs(page: Page, path: string, role = 'Chuyên viên') {
   await page.goto(path);
   const picker = page.getByText('Chọn vai trò để đăng nhập ngay');
-  await expect(picker.or(page.locator('aside')).first()).toBeVisible();
+  // The app frame's <main id="main-content"> only exists after sign-in; the login screen also has an
+  // <aside> (hero), so waiting for "aside" raced with the test-account list loading.
+  const app = page.locator('#main-content');
+  await expect(picker.or(app).first()).toBeVisible();
   if (await picker.isVisible()) {
     await picker.click();
     await page.getByText(role, { exact: true }).click();
   }
-  await expect(page.locator('main, [role="main"]').first()).toBeVisible();
+  await expect(app).toBeVisible();
 }
 
 export async function chooseOption(page: Page, current: string, option: string) {

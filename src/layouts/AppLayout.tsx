@@ -1,512 +1,110 @@
-import React, { useState, useRef, useEffect } from 'react';
-import { NavLink, Outlet, useLocation } from 'react-router-dom';
-import {
-  LayoutDashboard,
-  FolderKanban,
-  Building2,
-  UserCheck,
-  Bot,
-  Coins,
-  MapPin,
-  FileText,
-  Settings,
-  ChevronLeft,
-  ChevronRight,
-  ChevronDown,
-  FileCheck,
-  Sun,
-  Moon,
-  Leaf,
-  ShieldCheck,
-  ZoomIn,
-  ZoomOut,
-  LogOut,
-  Building,
-  Sliders,
-} from 'lucide-react';
-import { cn } from '../lib/utils';
-import { useTheme } from '../context/ThemeContext';
-import { PalettePicker } from '../components/ui/PalettePicker';
+import { useCallback, useEffect, useRef, useState } from 'react';
+import { Outlet, useLocation } from 'react-router-dom';
 import { SlidePanelStack } from '../components/SlidePanelStack';
-import { AiChatWidget } from '../components/ai/AiChatWidget';
-import { Tooltip } from '../components/ui/Tooltip';
 import { useSlidePanel } from '../context/SlidePanelContext';
+import { Sidebar } from '../components/layout/Sidebar';
+import { Topbar } from '../components/layout/Topbar';
+import { CommandPalette } from '../components/layout/CommandPalette';
+import { useWorkCounts } from '../hooks/useWorkCounts';
 
-import { useAuth } from '../context/AuthContext';
-import { PROJECT_PROCEDURES } from '../lib/projectProcedures';
+const COLLAPSED_KEY = 'buildappraisal:sidebar-collapsed';
 
-interface NavItem {
-  to: string;
-  label: string;
-  shortLabel: string;
-  icon: React.ComponentType<{ size?: number; className?: string }>;
-  badge?: string;
-  isAi?: boolean;
-  isNew?: boolean;
-  children?: NavItem[];
+function readCollapsed() {
+  try {
+    return localStorage.getItem(COLLAPSED_KEY) === '1';
+  } catch {
+    return false;
+  }
 }
 
-// Danh sách Menu chuẩn 9 phân hệ nghiệp vụ — đánh số thứ tự chuẩn chỉ theo mẫu quản trị
-const NAV_ITEMS: NavItem[] = [
-  { to: '/dashboard', label: 'Dashboard & Thống kê', shortLabel: 'Dashboard', icon: LayoutDashboard },
-  {
-    to: '/projects',
-    label: 'Quản lý Dự án',
-    shortLabel: 'Dự án',
-    icon: FolderKanban,
-    children: [
-      {
-        to: PROJECT_PROCEDURES.bcnckt.path,
-        label: PROJECT_PROCEDURES.bcnckt.label,
-        shortLabel: 'BCNCKT',
-        icon: ShieldCheck,
-      },
-      { to: PROJECT_PROCEDURES.gpxd.path, label: PROJECT_PROCEDURES.gpxd.label, shortLabel: 'GPXD', icon: FileText },
-      {
-        to: PROJECT_PROCEDURES.nghiem_thu.path,
-        label: PROJECT_PROCEDURES.nghiem_thu.label,
-        shortLabel: 'Nghiệm thu',
-        icon: FileCheck,
-      },
-    ],
-  },
-  { to: '/organizations', label: 'Tổ chức tham gia', shortLabel: 'Tổ chức', icon: Building2 },
-  { to: '/personnel', label: 'Cá nhân hành nghề', shortLabel: 'Cá nhân', icon: UserCheck },
-  { to: '/legal-ai', label: 'Trợ lý AI Pháp luật', shortLabel: 'AI Luật', icon: Bot, isAi: true },
-  { to: '/cost-database', label: 'Giá & Định mức ĐB', shortLabel: 'Giá VLXD', icon: Coins },
-  { to: '/gis-map', label: 'Bản đồ Quy hoạch', shortLabel: 'Bản đồ GIS', icon: MapPin },
-  { to: '/documents', label: 'Văn bản & In ấn A4', shortLabel: 'Văn bản A4', icon: FileText },
-  { to: '/settings', label: 'Cài đặt Hệ thống', shortLabel: 'Cài đặt', icon: Settings },
-];
-
+/** Khung ứng dụng (U2): menu trái hai tông, thanh trên, tìm nhanh Ctrl+K, chuông hạn. */
 export function AppLayout() {
-  const { profile, mode, signOut } = useAuth();
-  const [authError, setAuthError] = useState('');
-  const userName = profile?.full_name || 'Chuyên viên mẫu';
-  const userDepartment = profile?.department || 'Phòng Quản lý Xây dựng';
-  const initials = userName
-    .split(' ')
-    .slice(-2)
-    .map((s) => s[0])
-    .join('');
-  const [isCollapsed, setIsCollapsed] = useState(false);
+  const [collapsed, setCollapsed] = useState(readCollapsed);
   const [isSmallScreen, setIsSmallScreen] = useState(() => window.matchMedia('(max-width: 767px)').matches);
-  const compactMenu = isCollapsed || isSmallScreen;
+  const [paletteOpen, setPaletteOpen] = useState(false);
+  const compact = collapsed || isSmallScreen;
+  const counts = useWorkCounts();
+  const { closeAllPanels } = useSlidePanel();
+  const location = useLocation();
+
   useEffect(() => {
     const media = window.matchMedia('(max-width: 767px)');
     const update = () => setIsSmallScreen(media.matches);
     media.addEventListener('change', update);
     return () => media.removeEventListener('change', update);
   }, []);
-  const [userMenuOpen, setUserMenuOpen] = useState(false);
-  const userMenuRef = useRef<HTMLDivElement>(null);
-  const { theme, setTheme, zoom, setZoom } = useTheme();
-  const { closeAllPanels } = useSlidePanel();
-  const location = useLocation();
+
+  // Đổi phân hệ thì đóng các Slide Panel của phân hệ trước.
   const modulePath =
     location.pathname.startsWith('/projects') || location.pathname.startsWith('/dossiers/')
       ? 'projects'
       : location.pathname.split('/')[1] || 'dashboard';
   const previousModulePath = useRef(modulePath);
-  const [projectsExpanded, setProjectsExpanded] = useState(true);
   useEffect(() => {
     if (previousModulePath.current !== modulePath) {
       closeAllPanels();
       previousModulePath.current = modulePath;
     }
   }, [modulePath, closeAllPanels]);
-  useEffect(() => {
-    if (location.pathname.startsWith('/projects') || location.pathname.startsWith('/dossiers/'))
-      setProjectsExpanded(true);
-  }, [location.pathname]);
 
-  // Đóng popover profile khi click ra ngoài
-  useEffect(() => {
-    function handleClickOutside(event: MouseEvent) {
-      if (userMenuRef.current && !userMenuRef.current.contains(event.target as Node)) {
-        setUserMenuOpen(false);
+  const toggleCollapsed = () =>
+    setCollapsed((value) => {
+      try {
+        localStorage.setItem(COLLAPSED_KEY, value ? '0' : '1');
+      } catch {
+        // chỉ áp trong phiên
       }
-    }
-    if (userMenuOpen) {
-      document.addEventListener('mousedown', handleClickOutside);
-    }
-    return () => {
-      document.removeEventListener('mousedown', handleClickOutside);
+      return !value;
+    });
+
+  // Ctrl+K / Cmd+K ở mọi nơi; "/" khi không gõ trong ô nhập và không có hộp thoại mở.
+  useEffect(() => {
+    const key = (e: KeyboardEvent) => {
+      if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 'k') {
+        e.preventDefault();
+        setPaletteOpen(true);
+        return;
+      }
+      const target = e.target as HTMLElement | null;
+      const typing =
+        !!target &&
+        (target.isContentEditable ||
+          ['INPUT', 'TEXTAREA', 'SELECT'].includes(target.tagName) ||
+          target.closest('[role=dialog]'));
+      if (e.key === '/' && !typing && !e.ctrlKey && !e.metaKey && !e.altKey && !document.body.dataset.modalOpen) {
+        e.preventDefault();
+        setPaletteOpen(true);
+      }
     };
-  }, [userMenuOpen]);
+    window.addEventListener('keydown', key);
+    return () => window.removeEventListener('keydown', key);
+  }, []);
+
+  const closePalette = useCallback(() => setPaletteOpen(false), []);
 
   return (
-    <div className="flex h-screen w-screen overflow-hidden bg-page text-ink select-none">
-      {/* ─── SIDEBAR TRÁI — nền tối hai tông theo bộ màu chủ đạo (--brand-*, đồng bộ cic-hud) ─── */}
-      <aside
-        style={{ width: compactMenu ? '76px' : '272px' }}
-        className="h-full bg-brand-sidebar dark:bg-brand-sidebar text-white dark:text-white border-r border-brand-sidebar-border dark:border-brand-sidebar-border flex flex-col justify-between shrink-0 transition-[width] duration-300 z-30"
+    <div className="flex h-screen w-screen overflow-hidden bg-page dark:bg-slate-950 text-ink dark:text-slate-100 select-none">
+      <a
+        href="#main-content"
+        className="sr-only focus:not-sr-only focus:absolute focus:left-3 focus:top-3 focus:z-[100] focus:rounded-lg focus:bg-surface focus:px-3 focus:py-2 focus:text-sm focus:font-semibold focus:shadow-dropdown"
       >
-        <div className="flex flex-col h-full overflow-hidden">
-          {/* Logo & đơn vị chủ quản */}
-          <div className="h-20 px-3.5 border-b border-brand-sidebar-border dark:border-brand-sidebar-border flex items-center justify-between shrink-0">
-            <div className="flex items-center gap-3 min-w-0 flex-1">
-              <div className="w-11 h-11 shrink-0 rounded-xl border border-brand-accent/60 dark:border-brand-accent/60 bg-brand-sidebar-panel dark:bg-brand-sidebar-panel flex flex-col items-center justify-center shadow-md">
-                <Building size={17} className="text-brand-logo dark:text-brand-logo" />
-                <span className="text-2xs font-black tracking-widest text-brand-accent dark:text-brand-accent leading-none mt-0.5">
-                  SXD
-                </span>
-              </div>
+        Bỏ qua menu, tới nội dung chính
+      </a>
+      <Sidebar compact={compact} collapsed={collapsed} onToggle={toggleCollapsed} counts={counts} />
 
-              {!compactMenu && (
-                <div className="flex flex-col min-w-0 justify-center flex-1 pr-1">
-                  <p className="text-2xs font-bold uppercase tracking-wider leading-tight whitespace-nowrap text-brand-accent dark:text-brand-accent">
-                    UBND Tỉnh Điện Biên
-                  </p>
-                  <h1 className="text-sm font-black uppercase leading-tight tracking-wide whitespace-nowrap mt-0.5 text-white dark:text-white">
-                    Sở Xây dựng
-                  </h1>
-                  <p className="text-2xs font-medium tracking-tight whitespace-nowrap text-white/60 dark:text-white/60">
-                    Hệ thống thẩm định · AI
-                  </p>
-                </div>
-              )}
-            </div>
-
-            <button
-              type="button"
-              onClick={() => setIsCollapsed(!isCollapsed)}
-              aria-label={isCollapsed ? 'Mở rộng menu' : 'Thu gọn menu'}
-              className="hidden md:block p-1.5 rounded-lg text-white/60 dark:text-white/60 hover:bg-white/10 dark:hover:bg-white/10 hover:text-white dark:hover:text-white transition-colors shrink-0"
-            >
-              {isCollapsed ? <ChevronRight size={16} /> : <ChevronLeft size={16} />}
-            </button>
-          </div>
-
-          <nav className="p-3 space-y-1 overflow-y-auto flex-1">
-            {NAV_ITEMS.map((item) => {
-              const Icon = item.icon;
-              const active = location.pathname === item.to;
-              const parentActive =
-                !!item.children &&
-                (location.pathname.startsWith('/projects') || location.pathname.startsWith('/dossiers/'));
-              const highlighted = active || parentActive;
-              return (
-                <div key={item.to}>
-                  <div className="flex items-center gap-1 [&>div:first-child]:flex-1 [&>div:first-child]:min-w-0">
-                    <Tooltip content={item.label} placement="right">
-                      <NavLink
-                        to={item.to}
-                        end
-                        aria-label={item.label}
-                        className={cn(
-                          'relative flex flex-1 items-center gap-3 px-3 py-2.5 rounded-xl text-sm transition-colors',
-                          highlighted
-                            ? 'bg-brand-sidebar-active dark:bg-brand-sidebar-active text-brand-nav-active-text dark:text-brand-nav-active-text font-semibold'
-                            : 'text-white/75 dark:text-white/75 hover:bg-white/[0.07] dark:hover:bg-white/[0.07] hover:text-white dark:hover:text-white',
-                          compactMenu && 'justify-center px-1',
-                        )}
-                      >
-                        {highlighted && (
-                          <span
-                            aria-hidden
-                            className="absolute left-0 top-2 bottom-2 w-1 rounded-r-full bg-brand-accent dark:bg-brand-accent"
-                          />
-                        )}
-                        <Icon
-                          size={18}
-                          className={cn(
-                            'shrink-0',
-                            highlighted
-                              ? 'text-brand-accent dark:text-brand-accent'
-                              : 'text-white/70 dark:text-white/70',
-                          )}
-                        />
-                        {!compactMenu && <span className="flex-1 truncate">{item.label}</span>}
-                        {!compactMenu && item.badge && (
-                          <span className="px-1.5 py-0.5 text-2xs font-black rounded-md leading-none bg-brand-accent dark:bg-brand-accent text-brand-sidebar dark:text-brand-sidebar">
-                            {item.badge}
-                          </span>
-                        )}
-                      </NavLink>
-                    </Tooltip>
-                    {item.children && !compactMenu && (
-                      <Tooltip
-                        content={projectsExpanded ? 'Thu gọn phân hệ dự án' : 'Mở phân hệ dự án'}
-                        placement="right"
-                      >
-                        <button
-                          type="button"
-                          aria-label="Các phân hệ quản lý dự án"
-                          aria-expanded={projectsExpanded}
-                          onClick={() => setProjectsExpanded(!projectsExpanded)}
-                          className="p-1.5 rounded-lg text-white/60 dark:text-white/60 hover:bg-white/10 dark:hover:bg-white/10 hover:text-white dark:hover:text-white"
-                        >
-                          {projectsExpanded ? <ChevronDown size={14} /> : <ChevronRight size={14} />}
-                        </button>
-                      </Tooltip>
-                    )}
-                  </div>
-                  {item.children && (projectsExpanded || compactMenu) && (
-                    <div
-                      className={cn(
-                        'space-y-1 mt-1 [&>div]:block',
-                        !compactMenu &&
-                          'ml-5 pl-2 border-l border-brand-sidebar-border dark:border-brand-sidebar-border',
-                      )}
-                    >
-                      {item.children.map((child) => {
-                        const ChildIcon = child.icon;
-                        const selected = location.pathname === child.to;
-                        return (
-                          <Tooltip key={child.to} content={child.label} placement="right">
-                            <NavLink
-                              to={child.to}
-                              aria-label={child.label}
-                              className={cn(
-                                'flex items-center gap-2 rounded-lg px-2 py-2 text-sm transition-colors',
-                                selected
-                                  ? 'bg-brand-sidebar-panel dark:bg-brand-sidebar-panel text-white dark:text-white font-semibold'
-                                  : 'text-white/70 dark:text-white/70 hover:bg-white/[0.07] dark:hover:bg-white/[0.07] hover:text-white dark:hover:text-white',
-                                compactMenu && 'justify-center',
-                              )}
-                            >
-                              <ChildIcon
-                                size={15}
-                                className={cn(
-                                  'shrink-0',
-                                  selected
-                                    ? 'text-brand-accent dark:text-brand-accent'
-                                    : 'text-white/60 dark:text-white/60',
-                                )}
-                              />
-                              {!compactMenu && <span className="truncate">{child.label}</span>}
-                            </NavLink>
-                          </Tooltip>
-                        );
-                      })}
-                    </div>
-                  )}
-                </div>
-              );
-            })}
-          </nav>
-
-          {/* Chân menu — ghi chú pháp lý */}
-          {!compactMenu && (
-            <div className="m-3 rounded-xl border border-brand-sidebar-border dark:border-brand-sidebar-border bg-brand-sidebar-panel dark:bg-brand-sidebar-panel p-3 text-2xs leading-snug shrink-0">
-              <p className="flex items-center gap-1.5 font-bold text-brand-sidebar-status dark:text-brand-sidebar-status">
-                <span className="h-1.5 w-1.5 rounded-full bg-brand-sidebar-status-dot dark:bg-brand-sidebar-status-dot" />
-                BCNCKT: căn cứ theo thời điểm hồ sơ
-              </p>
-              <p className="mt-1 text-white/60 dark:text-white/60">Kết quả tự động cần chuyên viên rà soát</p>
-            </div>
-          )}
-        </div>
-      </aside>
-
-      {/* ─── NỘI DUNG CHÍNH (HEADER + MAIN VIEW) ─── */}
-      <div className="flex-1 flex flex-col h-full min-w-0 overflow-hidden">
-        {/* Header trên cùng */}
-        <header className="h-16 px-3 sm:px-6 border-b border-border dark:border-slate-800 bg-surface dark:bg-slate-900 flex items-center justify-between gap-3 shrink-0 z-20">
-          {/* Tiêu đề trang / Breadcrumb */}
-          <div className="flex min-w-0 items-center gap-3">
-            <div className="flex min-w-0 items-center gap-2 text-xs font-semibold text-ink-muted dark:text-slate-400">
-              <span className="hidden lg:inline">Hệ thống Nghiệp vụ Thẩm định</span>
-              <span className="hidden lg:inline">/</span>
-              <span className="truncate text-ink dark:text-slate-100 font-bold">
-                {(location.pathname.startsWith('/projects/') ? 'Quản lý Dự án / ' : '') +
-                  (NAV_ITEMS.flatMap((n) => [n, ...(n.children || [])])
-                    .find((n) => n.to === location.pathname)
-                    ?.label.replace(/^\d+\.\s*/, '') ||
-                    (location.pathname.startsWith('/dossiers/') ? 'Quản lý Dự án / Hồ sơ nộp' : 'Bàn điều hành'))}
-              </span>
-            </div>
-
-            <span className="hidden md:inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-success-50 dark:bg-success-900 text-success-700 dark:text-success-200 border border-success-200 dark:border-success-700 text-2xs font-bold">
-              <ShieldCheck size={12} />
-              Cấp phép & Thẩm định Cấp tỉnh
-            </span>
-          </div>
-
-          {/* Công cụ góc phải: Avatar Profile với Popup Cài Đặt Cá Nhân */}
-          <div className="flex items-center gap-3">
-            {/* Profile Cán bộ + Dropdown Cài đặt Cá nhân (Đồng bộ 100% cic-ibst) */}
-            <div className="relative" ref={userMenuRef}>
-              <button
-                type="button"
-                onClick={() => setUserMenuOpen(!userMenuOpen)}
-                className={cn(
-                  'flex items-center gap-2.5 p-1 rounded-xl hover:bg-subtle transition-all cursor-pointer text-left',
-                  userMenuOpen && 'bg-subtle ring-1 ring-border',
-                )}
-              >
-                <div
-                  className="w-8 h-8 rounded-full flex items-center justify-center text-white font-bold text-xs shadow-xs"
-                  style={{ backgroundColor: 'var(--color-primary, #00668c)' }}
-                >
-                  {initials}
-                </div>
-                <div className="hidden sm:block text-left text-xs leading-tight pr-1">
-                  <p className="font-bold text-ink flex items-center gap-1.5">{userName}</p>
-                  <p className="text-3xs text-primary-600 dark:text-primary-400 font-medium">{userDepartment}</p>
-                </div>
-              </button>
-
-              {/* Popup Dropdown CÀI ĐẶT CÁ NHÂN (Chuẩn IBST) */}
-              {userMenuOpen && (
-                <div className="absolute right-0 top-full mt-2 w-80 max-h-[calc(100vh-5rem)] overflow-y-auto rounded-2xl bg-surface dark:bg-slate-800 border border-border dark:border-slate-700 shadow-xl p-4 z-50 animate-fade-in text-xs space-y-4">
-                  {/* Header Thông tin User */}
-                  <div className="flex items-center gap-3 pb-3 border-b border-border">
-                    <div
-                      className="w-10 h-10 rounded-full flex items-center justify-center text-white font-bold text-sm shadow-sm shrink-0"
-                      style={{ backgroundColor: 'var(--color-primary, #00668c)' }}
-                    >
-                      {initials}
-                    </div>
-                    <div className="min-w-0 flex-1">
-                      <p className="font-bold text-ink truncate text-sm">{userName}</p>
-                      <p className="text-3xs font-semibold text-primary-600 dark:text-primary-400 truncate">
-                        {userDepartment}
-                      </p>
-                      <p className="text-3xs text-ink-muted truncate">{profile?.email || 'Chuyên viên'}</p>
-                    </div>
-                  </div>
-
-                  {/* Khối Cài Đặt Cá Nhân */}
-                  <div className="space-y-3.5">
-                    <div className="flex items-center justify-between">
-                      <span className="text-3xs font-bold text-ink-muted uppercase tracking-wider">
-                        Cài đặt cá nhân
-                      </span>
-                      <Sliders size={12} className="text-ink-muted" />
-                    </div>
-
-                    {/* 1. Giao diện nền (Theme Switcher 3 Chế độ) */}
-                    <div className="space-y-1.5">
-                      <div className="text-2xs font-semibold text-ink-secondary">Giao diện nền</div>
-                      <div className="grid grid-cols-3 gap-1 rounded-xl bg-muted p-1">
-                        <button
-                          type="button"
-                          onClick={() => setTheme('light')}
-                          className={cn(
-                            'flex items-center justify-center gap-1.5 py-1.5 rounded-lg text-xs font-semibold transition-all cursor-pointer',
-                            theme === 'light'
-                              ? 'bg-surface text-ink shadow-xs border border-border'
-                              : 'text-ink-muted hover:text-ink',
-                          )}
-                        >
-                          <Sun size={13} className="text-amber-500" />
-                          Sáng
-                        </button>
-
-                        <button
-                          type="button"
-                          onClick={() => setTheme('nature')}
-                          className={cn(
-                            'flex items-center justify-center gap-1.5 py-1.5 rounded-lg text-xs font-semibold transition-all cursor-pointer',
-                            theme === 'nature'
-                              ? 'bg-surface text-ink shadow-xs border border-border'
-                              : 'text-ink-muted hover:text-ink',
-                          )}
-                        >
-                          <Leaf size={13} className="text-emerald-500" />
-                          Bảo vệ
-                        </button>
-
-                        <button
-                          type="button"
-                          onClick={() => setTheme('dark')}
-                          className={cn(
-                            'flex items-center justify-center gap-1.5 py-1.5 rounded-lg text-xs font-semibold transition-all cursor-pointer',
-                            theme === 'dark'
-                              ? 'bg-surface text-ink shadow-xs border border-border'
-                              : 'text-ink-muted hover:text-ink',
-                          )}
-                        >
-                          <Moon size={13} className="text-indigo-400" />
-                          Tối
-                        </button>
-                      </div>
-                    </div>
-
-                    {/* 2. Bộ màu chủ đạo — 12 bộ hai tông, đồng bộ cic-hud */}
-                    <div className="space-y-1.5">
-                      <div className="text-2xs font-semibold text-ink-secondary dark:text-slate-300">
-                        Bộ màu chủ đạo
-                      </div>
-                      <PalettePicker />
-                    </div>
-
-                    {/* 3. Cỡ chữ giao diện (Thu phóng Zoom) */}
-                    <div className="space-y-1.5 pt-2 border-t border-border">
-                      <div className="flex justify-between items-center text-2xs font-semibold text-ink-secondary">
-                        <span>Cỡ chữ giao diện</span>
-                        <span className="font-bold font-mono text-primary-600 dark:text-primary-400">{zoom}%</span>
-                      </div>
-                      <div className="flex items-center gap-2">
-                        <button
-                          type="button"
-                          onClick={() => setZoom(Math.max(90, zoom - 10))}
-                          disabled={zoom <= 90}
-                          data-tooltip="Giảm cỡ chữ 10%"
-                          className="p-1 rounded-lg border border-border bg-subtle hover:bg-muted disabled:opacity-40 transition-colors cursor-pointer"
-                        >
-                          <ZoomOut size={12} />
-                        </button>
-
-                        <input
-                          type="range"
-                          min="90"
-                          max="120"
-                          step="10"
-                          value={zoom}
-                          onChange={(e) => setZoom(Number(e.target.value))}
-                          className="flex-1 h-1.5 rounded-lg bg-muted appearance-none cursor-pointer accent-[var(--color-primary)]"
-                        />
-
-                        <button
-                          type="button"
-                          onClick={() => setZoom(Math.min(120, zoom + 10))}
-                          disabled={zoom >= 120}
-                          data-tooltip="Tăng cỡ chữ 10%"
-                          className="p-1 rounded-lg border border-border bg-subtle hover:bg-muted disabled:opacity-40 transition-colors cursor-pointer"
-                        >
-                          <ZoomIn size={12} />
-                        </button>
-                      </div>
-                    </div>
-                  </div>
-
-                  {/* Nút Đăng xuất */}
-                  <div className="pt-2 border-t border-border">
-                    <button
-                      type="button"
-                      onClick={() => {
-                        setUserMenuOpen(false);
-                        void signOut().catch((e) => setAuthError(e.message));
-                      }}
-                      className="w-full flex items-center justify-center gap-2 py-2 rounded-xl text-rose-600 hover:bg-rose-50 dark:hover:bg-rose-950/30 font-semibold transition-colors cursor-pointer"
-                    >
-                      <LogOut size={14} />
-                      Đăng xuất
-                    </button>
-                  </div>
-                </div>
-              )}
-            </div>
-          </div>
-        </header>
-
-        {/* Nội dung Màn hình thay đổi theo Route */}
-        <main className="flex-1 overflow-y-auto p-3 sm:p-6 bg-page dark:bg-slate-950">
-          {authError && (
-            <p role="alert" className="text-red-700 dark:text-red-300 p-3">
-              {authError}
-            </p>
-          )}
+      <div className="flex h-full min-w-0 flex-1 flex-col overflow-hidden">
+        <Topbar counts={counts} onSearch={() => setPaletteOpen(true)} />
+        <main
+          id="main-content"
+          tabIndex={-1}
+          className="flex-1 overflow-y-auto bg-page dark:bg-slate-950 p-3 sm:p-6 focus:outline-none"
+        >
           <Outlet />
         </main>
       </div>
 
-      {/* SlidePanel Ngăn xếp Đa tầng & Chatbot */}
-      <SlidePanelStack sidebarWidth={compactMenu ? 76 : 272} />
-      <AiChatWidget />
+      <SlidePanelStack sidebarWidth={compact ? 76 : 264} />
+      <CommandPalette open={paletteOpen} onClose={closePalette} />
     </div>
   );
 }

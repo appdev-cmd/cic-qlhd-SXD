@@ -12,7 +12,14 @@ const ALLOW = {
     'src/components/appraisal/DossierGrid.tsx',
     'src/components/MasterTable.tsx',
   ],
-  navigation: ['src/layouts/AppLayout.tsx', 'src/App.tsx'],
+  // App frame: menu, topbar, quick search and deadline bell navigate between pages.
+  navigation: [
+    'src/layouts/AppLayout.tsx',
+    'src/App.tsx',
+    'src/components/layout/Sidebar.tsx',
+    'src/components/layout/CommandPalette.tsx',
+    'src/components/layout/DeadlineBell.tsx',
+  ],
   // Glassmorphism tooltip prescribed by the Universal Tooltip rule.
   translucent: ['src/components/ui/Tooltip.tsx'],
   // Formatting helpers own the locale call.

@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useRef, lazy, Suspense } from 'react';
-import { useParams } from 'react-router-dom';
+import { useLocation, useParams } from 'react-router-dom';
 import { Plus, Download, RefreshCw } from 'lucide-react';
 import { appraisalService as api } from '../services/appraisalService';
 import type { DossierSummary, Health } from '../types/appraisal';
@@ -66,6 +66,17 @@ export function AppraisalPage({ procedure = 'bcnckt', project }: { procedure?: P
     from: '',
     to: '',
   });
+  // Deep link from the deadline bell: /projects/appraisal?sla=overdue applies the SLA filter once.
+  const location = useLocation();
+  useEffect(() => {
+    if (project) return;
+    const sla = new URLSearchParams(location.search).get('sla');
+    if (!sla || !SLA_FILTER_OPTIONS.some((o) => o.value === sla)) return;
+    setFilters((current) => ({ ...current, sla }));
+    setPage(0);
+    window.history.replaceState(window.history.state, '', location.pathname);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [location.search]);
   const lastSearch = useRef(filters.search);
   const queryKey = JSON.stringify([
     'submissions',
