@@ -3,10 +3,13 @@
 import os
 from fastapi import FastAPI
 from fastapi.openapi.docs import get_swagger_ui_html
+from .logging_config import setup as setup_logging
 from .deps import SECRET, start_queue, test_login_guard
 from .routes import system, projects, catalog, cases, documents, review, permits
 from .routes.cases import create_supplement
 from .schemas import AddProjectImage, Supplement
+
+setup_logging()
 
 # API contract is published only outside production; Core exposes it at /api/appraisal/docs (loopback).
 DOCS = os.getenv('APPRAISAL_ENVIRONMENT', 'demo') in ('demo', 'staging')

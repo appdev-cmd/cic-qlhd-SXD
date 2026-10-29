@@ -1,7 +1,14 @@
 """Appraisal vocabulary shared by ingestion, rules and sample generation."""
 
-from datetime import datetime, timezone
+from datetime import date, datetime, timedelta, timezone
 from uuid import uuid4
+
+try:
+    from zoneinfo import ZoneInfo
+
+    VN_TZ = ZoneInfo('Asia/Ho_Chi_Minh')
+except Exception:  # tzdata missing (common on Windows): Vietnam has no DST, a fixed offset is exact.
+    VN_TZ = timezone(timedelta(hours=7), 'ICT')
 
 
 def uid():
@@ -10,6 +17,62 @@ def uid():
 
 def now():
     return datetime.now(timezone.utc).isoformat()
+
+
+def vn_today():
+    """Today's date in Vietnam (legal deadlines are counted in local days, not server or UTC days)."""
+    return datetime.now(VN_TZ).date()
+
+
+def to_vn_date(value):
+    """Vietnam calendar date of an ISO date/datetime string, date or datetime; None when empty.
+
+    Datetimes without an offset are treated as UTC (``now()`` always stores UTC); plain dates are kept as is.
+    """
+    if not value:
+        return None
+    if isinstance(value, datetime):
+        moment = value
+    elif isinstance(value, date):
+        return value
+    else:
+        text = str(value).strip()
+        if len(text) <= 10:
+            return date.fromisoformat(text)
+        try:
+            moment = datetime.fromisoformat(text.replace('Z', '+00:00'))
+        except ValueError:
+            return date.fromisoformat(text[:10])
+    if moment.tzinfo is None:
+        moment = moment.replace(tzinfo=timezone.utc)
+    return moment.astimezone(VN_TZ).date()
+
+
+def latest_review(case):
+    """Current procedure review sheet, else the most recent one moved to history by ``invalidate``."""
+    if case.get('procedureReview'):
+        return case['procedureReview']
+    for entry in reversed(case.get('procedureReviewHistory') or []):
+        if entry:
+            return entry
+    return None
+
+
+def case_subtype(case):
+    """Procedure subtype (GPXD 'new'/'amendment'…, nghiệm thu 'start_notice'/'during'…) of a submission.
+
+    Persisted on the case itself so new uploads and OCR (which retire the review sheet) do not lose it; older
+    payloads fall back to the current review sheet, then the latest one in the history.
+    """
+    if case.get('subtype'):
+        return case['subtype']
+    review = case.get('procedureReview') or {}
+    if review.get('subtype'):
+        return review['subtype']
+    for entry in reversed(case.get('procedureReviewHistory') or []):
+        if (entry or {}).get('subtype'):
+            return entry['subtype']
+    return None
 
 
 REQUIREMENTS = [
@@ -150,6 +213,10 @@ def audit(case, actor, action, detail):
 
 
 def invalidate(case):
+    subtype = case_subtype(case)
+    if subtype:
+        # The review sheet is retired below; the submission keeps its procedure subtype.
+        case['subtype'] = subtype
     if case.get('procedureReview'):
         case.setdefault('procedureReviewHistory', []).append(case['procedureReview'])
         case['procedureReview'] = None

@@ -12,7 +12,7 @@ from typing import Literal
 from fastapi import HTTPException
 from pydantic import BaseModel, ConfigDict, Field
 
-from .domain import now
+from .domain import now, vn_today
 
 PDF_COPY_DAYS = 5
 STATUSES = {
@@ -139,7 +139,7 @@ def apply(case, actor, body, calendar, demo=False):
         raise HTTPException(409, 'Thao tác không phù hợp bước hiện tại: ' + STATUSES[current] + '.')
     if body.action == 'stamp' and not demo and actor['role'] not in LEADERS:
         raise HTTPException(403, 'Chỉ trưởng phòng hoặc lãnh đạo được xác nhận đóng dấu thẩm định.')
-    if body.date.isoformat() > date.today().isoformat():
+    if body.date > vn_today():
         raise HTTPException(422, 'Ngày không được sau ngày hiện tại.')
     record = dict(case.get('stamping') or {'status': current, 'history': []})
     if body.action == 'request' and not body.reference.strip():

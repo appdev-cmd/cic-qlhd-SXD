@@ -5,7 +5,7 @@ import hashlib
 from typing import Literal
 import json
 from fastapi import Depends, HTTPException, Query
-from ..domain import new_case, now, audit, invalidate
+from ..domain import case_subtype, new_case, now, audit, invalidate
 from ..rules import RULE_VERSION
 from ..store import Store, MODE
 from ..legal import legal_overview, legal_checklist
@@ -224,7 +224,7 @@ def case_authority(s, case):
     appraised = False
     if procedure == 'gpxd' and case.get('projectId'):
         appraised = s.page(limit=1, procedure='bcnckt', project_id=case['projectId'], status='reviewed')['total'] > 0
-    return resolve(procedure, project, appraised, (case.get('procedureReview') or {}).get('subtype'))
+    return resolve(procedure, project, appraised, case_subtype(case))
 
 
 def policy_summary(case):

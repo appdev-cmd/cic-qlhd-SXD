@@ -238,7 +238,8 @@ def procedure_review(id: str, subtype: str | None = None, s: Store = Depends(sto
 def _inspection_limit(s, case):
     from ..procedure_review import inspection_limit
 
-    return inspection_limit(s.classification(case).get('grade'), s.inspection_count(case.get('projectId'), case['id']))
+    used = s.inspection_count(case.get('projectId'), case['id'], case.get('dossierId'))
+    return inspection_limit(s.classification(case).get('grade'), used)
 
 
 @router.post('/v1/cases/{id}/procedure-review')
@@ -310,7 +311,8 @@ def stamping(id: str, s: Store = Depends(store)):
 def stamping_action(id: str, body: StampingCommand, s: Store = Depends(store)):
     from ..stamping import apply
 
-    case = edit(s, id, body.revision)
+    # Stamping (khoản 8 Điều 36) only exists after the internal review concluded.
+    case = edit(s, id, body.revision, after_review=True)
     require_appraisal(case)
     label = apply(case, s.actor, body, s.calendar(), MODE == 'demo')
     detail = ' — '.join(x for x in (body.reference, body.note) if x) or label

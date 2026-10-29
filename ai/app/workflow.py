@@ -5,10 +5,8 @@ extension) and every event records its legal basis. ``workflow.validAt`` is the 
 as complete and valid: the statutory period runs from it and restarts when a supplement is received.
 """
 
-from datetime import date
-
 from fastapi import HTTPException
-from .domain import now
+from .domain import now, vn_today
 from .procedure_policy import policy
 
 STATES = {
@@ -125,7 +123,7 @@ def _allowed(case, key, current):
         if current == 'processing':
             return False
         due = (case.get('sla') or {}).get('waitingDueDate')
-        return bool(due) and date.today().isoformat() > due
+        return bool(due) and vn_today().isoformat() > due
     return True
 
 
@@ -177,7 +175,7 @@ def apply(case, actor, action, note, visit_date=None):
         'extend': (rules.get('extend') or {}).get('basis'),
         'stop': (rules.get('supplement') or {}).get('basis'),
     }.get(action)
-    today = date.today().isoformat()
+    today = vn_today().isoformat()
     entry = {
         'from': source,
         'to': target,

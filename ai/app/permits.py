@@ -9,12 +9,13 @@
 The register is derived from the permit records stored on GPXD submissions.
 """
 
+import re
 from datetime import date
 from typing import Literal
 from fastapi import HTTPException
 from pydantic import BaseModel, ConfigDict, Field
 
-from .domain import now, uid
+from .domain import case_subtype, now, uid, vn_today
 
 CONSULT_DAYS = 2
 RETURN_DAYS = 5  # nộp lại bản gốc sau quyết định thu hồi — điểm c khoản 3 Điều 65
@@ -86,7 +87,7 @@ def _require_permit_case(case):
 
 # ─── Consultation (điểm c khoản 2 Điều 54) ────────────────────────────────────────────────────────
 def consultations(case, calendar, today=None):
-    today = today or date.today()
+    today = today or vn_today()
     rows = []
     for item in case.get('permitConsultations', []):
         due = calendar.add(date.fromisoformat(item['sentDate']), CONSULT_DAYS)
@@ -104,7 +105,7 @@ def consult(case, actor, body, calendar):
     _require_permit_case(case)
     if case.get('finalReview'):
         raise HTTPException(409, 'Hồ sơ đã hoàn tất rà soát.')
-    if body.date > date.today():
+    if body.date > vn_today():
         raise HTTPException(422, 'Ngày không được sau ngày hiện tại.')
     items = case.setdefault('permitConsultations', [])
     if body.action == 'send':
@@ -136,7 +137,7 @@ def consult(case, actor, body, calendar):
 
 # ─── Permit records ─────────────────────────────────────────────────────────────────────────────────
 def permit_status(permit, calendar=None, today=None):
-    today = today or date.today()
+    today = today or vn_today()
     events = [e['type'] for e in permit.get('events', [])]
     if 'cancel' in events:
         return 'cancelled'
@@ -181,7 +182,7 @@ def view(case, calendar):
         else None,
         'actions': actions,
         'revokeReasons': REVOKE_REASONS,
-        'subtype': review.get('subtype'),
+        'subtype': case_subtype(case),
         'eligible': eligible,
         'reviewed': reviewed,
     }
@@ -218,8 +219,7 @@ def content(case):
 
 
 def issue(case, actor, body, register, calendar):
-    review = case.get('procedureReview') or {}
-    subtype = review.get('subtype') or 'new'
+    subtype = case_subtype(case) or 'new'
     if subtype in ('amendment', 'extension', 'reissue'):
         base = next((p for p in register if p['number'] == body.basePermit.strip()), None)
         if not base:
@@ -266,14 +266,20 @@ def issue(case, actor, body, register, calendar):
 
 
 def next_number(register, day):
+    """Next free number of the year: highest sequence in the register + 1.
+
+    Revoked or cancelled numbers stay taken and gaps are never refilled, so a number is not reused. Callers
+    hold ``Store.permit_issue_lock`` while reading the register and saving, which makes the choice atomic.
+    """
     year = day.year
-    used = [p['number'] for p in register if p['number'].endswith(f'/{year}/GPXD')]
-    return f'{len(used) + 1:03d}/{year}/GPXD'
+    pattern = re.compile(rf'^\s*(\d+)/{year}/GPXD\s*$', re.IGNORECASE)
+    used = [int(m.group(1)) for p in register if (m := pattern.match(str(p.get('number') or '')))]
+    return f'{max(used, default=0) + 1:03d}/{year}/GPXD'
 
 
 def act(case, actor, body, register, calendar, demo=False):
     _require_permit_case(case)
-    if body.date > date.today():
+    if body.date > vn_today():
         raise HTTPException(422, 'Ngày không được sau ngày hiện tại.')
     if not demo and actor['role'] not in ('head_of_department', 'director', 'admin'):
         raise HTTPException(403, 'Chỉ trưởng phòng hoặc lãnh đạo được cấp, thu hồi, hủy giấy phép.')
@@ -319,7 +325,7 @@ def register(cases, calendar, today=None, starts=None):
 
     ``starts`` maps a permit number to the start date declared in the start notice (thông báo khởi công).
     """
-    today = today or date.today()
+    today = today or vn_today()
     starts = starts or {}
     records = sorted(
         (

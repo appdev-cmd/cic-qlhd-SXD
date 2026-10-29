@@ -4,7 +4,7 @@ from datetime import date
 from typing import Literal
 from pydantic import BaseModel, ConfigDict, Field
 from fastapi import HTTPException
-from .domain import now
+from .domain import case_subtype, now
 from copy import deepcopy
 from .procedure_rules import VERSION, permit_checks, inspection_checks, template_info
 
@@ -188,7 +188,7 @@ def specification(case, subtype=None):
             422, 'Bộ phiếu này áp dụng từ 01/07/2026; cần xác định chế độ chuyển tiếp riêng cho hồ sơ cũ.'
         )
     if procedure == 'gpxd':
-        subtype = subtype or (case.get('procedureReview') or {}).get('subtype', 'new')
+        subtype = subtype or case_subtype(case) or 'new'
         if subtype not in PERMITS:
             raise HTTPException(422, 'Chọn loại thủ tục GPXD hợp lệ.')
         article = PERMITS[subtype][1]
@@ -197,7 +197,7 @@ def specification(case, subtype=None):
             f'Điều 55–56 và Điều {article} Nghị định 217/2026/NĐ-CP; cần đối chiếu quy định thẩm quyền tại địa phương.'
         )
     else:
-        subtype = subtype or (case.get('procedureReview') or {}).get('subtype', 'complete')
+        subtype = subtype or case_subtype(case) or 'complete'
         if subtype not in INSPECTIONS:
             raise HTTPException(422, 'Chọn loại hậu kiểm, nghiệm thu hợp lệ.')
         rows = inspection_checks(subtype)
@@ -287,6 +287,8 @@ def apply(case, actor, body, limit=None):
     if case.get('procedureReview'):
         case.setdefault('procedureReviewHistory', []).append(deepcopy(case['procedureReview']))
     case['procedureReview'] = value
+    # Kept on the submission so SLA, inspection limits and the permit register survive new uploads.
+    case['subtype'] = body.subtype
     case['finalReview'] = None
 
 

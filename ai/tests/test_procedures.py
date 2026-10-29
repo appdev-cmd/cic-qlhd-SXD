@@ -1,12 +1,12 @@
 """Procedural limits (NĐ 217/2026 Điều 36, 37, 54) and competent authority (Điều 32, 53; NĐ 207/2026 Điều 26)."""
 
 import unittest
-from datetime import date, timedelta
+from datetime import timedelta
 
 from fastapi import HTTPException
 
 from app import authority
-from app.domain import new_case
+from app.domain import new_case, vn_today
 from app.store import DEMO_ACTOR
 from app.workflow import apply, options, state
 
@@ -33,7 +33,7 @@ class FeasibilityWorkflowTests(unittest.TestCase):
         self.assertEqual((state(case), case['workflow']['counters']['request_supplement']), ('awaiting_supplement', 1))
         self.assertIn('Điều 36', case['workflow']['history'][-1]['basis'])
         apply(case, HEAD, 'resume', NOTE)
-        self.assertEqual(case['workflow']['validAt'], date.today().isoformat())
+        self.assertEqual(case['workflow']['validAt'], vn_today().isoformat())
         # Supplement already used; later problems go through a single suspension (Mẫu 16).
         self.assertNotIn('request_supplement', actions(case))
         self.assertIn('suspend', actions(case))
@@ -46,7 +46,7 @@ class FeasibilityWorkflowTests(unittest.TestCase):
     def test_extension_once_and_leaders_only(self):
         case = dossier()
         apply(case, HEAD, 'start', NOTE)
-        self.assertEqual(case['workflow']['validAt'], date.today().isoformat())
+        self.assertEqual(case['workflow']['validAt'], vn_today().isoformat())
         self.assertNotIn('extend', actions(case, DEMO_ACTOR))
         apply(case, HEAD, 'extend', NOTE)
         self.assertTrue(case['workflow']['extended'])
@@ -56,9 +56,9 @@ class FeasibilityWorkflowTests(unittest.TestCase):
     def test_stop_only_after_the_supplement_window(self):
         case = dossier()
         apply(case, HEAD, 'request_supplement', NOTE)
-        case['sla'] = {'waitingDueDate': (date.today() + timedelta(days=3)).isoformat()}
+        case['sla'] = {'waitingDueDate': (vn_today() + timedelta(days=3)).isoformat()}
         self.assertNotIn('stop', actions(case))
-        case['sla'] = {'waitingDueDate': (date.today() - timedelta(days=1)).isoformat()}
+        case['sla'] = {'waitingDueDate': (vn_today() - timedelta(days=1)).isoformat()}
         apply(case, HEAD, 'stop', NOTE)
         self.assertEqual(state(case), 'stopped')
         self.assertEqual(actions(case), set())

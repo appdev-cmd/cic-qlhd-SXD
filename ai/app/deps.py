@@ -2,6 +2,7 @@
 
 import os
 import hashlib
+import logging
 from pathlib import Path
 from fastapi import Header, HTTPException
 from .domain import uid, now, audit, invalidate
@@ -13,6 +14,7 @@ from .vertex import VertexError
 from .legal import resolve_profile, legal_checklist
 from .jobs import start as _start_jobs
 
+log = logging.getLogger(__name__)
 SECRET = os.getenv('APPRAISAL_INTERNAL_TOKEN', '')
 if not SECRET:
     raise RuntimeError('APPRAISAL_INTERNAL_TOKEN is required. Use pnpm dev:appraisal.')
@@ -40,7 +42,9 @@ def writable(s):
         raise HTTPException(403, 'Tài khoản không có quyền sửa hồ sơ.')
 
 
-def edit(s, id, revision):
+def edit(s, id, revision, after_review=False):
+    """Load a submission for a write. ``after_review`` admits actions that only exist once the internal
+    review is complete (permit issue/revocation), which the review lock would otherwise refuse."""
     writable(s)
     case = s.get(id)
     if case['revision'] != revision:
@@ -50,7 +54,7 @@ def edit(s, id, revision):
     assigned = case.get('workflow', {}).get('assigneeId')
     if assigned and assigned != s.actor['id'] and s.actor['role'] == 'officer':
         raise HTTPException(403, 'Hồ sơ đã phân công chuyên viên khác.')
-    if case.get('finalReview'):
+    if case.get('finalReview') and not after_review:
         raise HTTPException(409, 'Hồ sơ đã khóa sau rà soát. Cần người có thẩm quyền mở lại trước khi sửa.')
     return case
 
@@ -121,6 +125,7 @@ def run_analysis(s, id, job_id, mode, use_model, snapshot=None):
                     result['provider'] = 'rules+' + provider_id()
                     result['model'] = model_name()
             except Exception as exc:
+                log.warning('Model notes failed for case %s (job %s)', id, job_id, exc_info=True)
                 message = str(exc) if isinstance(exc, VertexError) else 'Lỗi gọi mô hình hoặc kết quả không hợp lệ.'
                 record_connection(False, message)
                 result['aiStatus'] = message + ' Chỉ có kết quả quy tắc; có thể chạy lại.'
@@ -135,6 +140,7 @@ def run_analysis(s, id, job_id, mode, use_model, snapshot=None):
         current['job'].update(status='completed', finishedAt=now())
         save(s, current, expected, 'Hoàn tất kiểm tra', f"{len(result['findings'])} nhận xét; {result['aiStatus']}")
     except Exception:
+        log.exception('Analysis failed for case %s (job %s)', id, job_id)
         try:
             case = s.get(id)
             if case.get('job', {}).get('id') == job_id:
@@ -142,7 +148,7 @@ def run_analysis(s, id, job_id, mode, use_model, snapshot=None):
                 case['job']['status'] = 'failed'
                 save(s, case, expected, 'Kiểm tra thất bại', 'Chưa ghi kết quả mới. Có thể chạy lại.')
         except Exception:
-            pass
+            log.exception('Could not mark the analysis of case %s (job %s) as failed', id, job_id)
 
 
 def investment_of(s, case):

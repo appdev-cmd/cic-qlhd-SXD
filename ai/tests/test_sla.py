@@ -1,11 +1,11 @@
 import tempfile
 import unittest
-from datetime import date
+from datetime import date, datetime, timedelta, timezone
 from pathlib import Path
 from unittest.mock import patch
 
 from app import sla
-from app.domain import new_case, audit
+from app.domain import VN_TZ, new_case, audit, to_vn_date, vn_today
 from app.store import Store, DEMO_ACTOR
 from app.workflow import derive_status, TRANSITIONS
 
@@ -154,6 +154,36 @@ class ComputeTests(unittest.TestCase):
         self.assertEqual(sla.evaluate(closed, cal)['state'], 'closed')
 
 
+class VietnamDayTests(unittest.TestCase):
+    def test_utc_timestamps_map_to_the_vietnam_day(self):
+        self.assertEqual(to_vn_date('2026-10-28T18:30:00+00:00'), date(2026, 10, 29))
+        self.assertEqual(to_vn_date('2026-10-28T16:59:59+00:00'), date(2026, 10, 28))
+        self.assertEqual(to_vn_date('2026-10-28T17:00:00Z'), date(2026, 10, 29))
+        self.assertEqual(to_vn_date('2026-10-28T18:30:00'), date(2026, 10, 29))  # naive = UTC (domain.now)
+        self.assertEqual(to_vn_date('2026-10-28T23:30:00+07:00'), date(2026, 10, 28))
+        self.assertEqual(to_vn_date(datetime(2026, 10, 28, 20, tzinfo=timezone.utc)), date(2026, 10, 29))
+        self.assertEqual(to_vn_date('2026-10-28'), date(2026, 10, 28))
+        self.assertEqual(to_vn_date(date(2026, 10, 28)), date(2026, 10, 28))
+        self.assertIsNone(to_vn_date(None))
+        self.assertIsNone(to_vn_date(''))
+
+    def test_vietnam_zone_and_today(self):
+        self.assertEqual(VN_TZ.utcoffset(datetime(2026, 1, 1)), timedelta(hours=7))
+        self.assertEqual(vn_today(), datetime.now(timezone.utc).astimezone(VN_TZ).date())
+
+    def test_events_after_midnight_vietnam_time_count_on_that_day(self):
+        # Supplement requested at 01:30 on 29/10 Vietnam time (18:30 UTC on 28/10).
+        case = {
+            'workflow': {
+                'state': 'awaiting_supplement',
+                'history': [{'to': 'awaiting_supplement', 'at': '2026-10-28T18:30:00+00:00'}],
+            }
+        }
+        self.assertEqual(sla._entered(case, 'awaiting_supplement'), date(2026, 10, 29))
+        final = {'finalReview': {'decision': 'reviewed', 'at': '2026-10-28T18:30:00+00:00'}}
+        self.assertEqual(sla.outcome(final), ('reviewed', date(2026, 10, 29)))
+
+
 class StatusInvariantTests(unittest.TestCase):
     def test_status_follows_workflow_state(self):
         expected = {
@@ -187,7 +217,7 @@ class StoreIntegrationTests(unittest.TestCase):
         ):
             store = Store(actor=DEMO_ACTOR)
             old = new_case('Hồ sơ quá hạn', 'Điện Biên', DEMO_ACTOR, '2026-01-05', 'project')
-            fresh = new_case('Hồ sơ mới', 'Điện Biên', DEMO_ACTOR, date.today().isoformat(), 'project')
+            fresh = new_case('Hồ sơ mới', 'Điện Biên', DEMO_ACTOR, vn_today().isoformat(), 'project')
             fresh['status'] = 'reviewed'  # stale client value must be ignored
             for case in (old, fresh):
                 audit(case, DEMO_ACTOR, 'Tạo hồ sơ', 'Kiểm thử')

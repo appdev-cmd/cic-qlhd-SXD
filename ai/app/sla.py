@@ -10,10 +10,15 @@ database); the SLA *state* depends on "today" and is evaluated when reading.
 """
 
 import json
+import logging
 import threading
 import time
-from datetime import date, datetime, timedelta
+from datetime import date, timedelta
 from pathlib import Path
+
+from .domain import case_subtype, latest_review, to_vn_date, vn_today
+
+log = logging.getLogger(__name__)
 
 POLICY_VERSION = 'sla-2026.09.29-nd217-steps'
 POLICY_STATUS = 'requires_confirmation'
@@ -179,6 +184,7 @@ def load_calendar(actor_id=None, cloud=False):
         calendar = Calendar([(r['holiday_date'], r['kind'], r['is_confirmed']) for r in rows], 'public.holidays')
     except Exception:
         # Keep deadlines computable; the unconfirmed calendar is surfaced to the user.
+        log.warning('Holiday calendar unavailable, using the bundled calendar', exc_info=True)
         calendar = demo_calendar()
         calendar.version += '+fallback'
     with _lock:
@@ -187,11 +193,8 @@ def load_calendar(actor_id=None, cloud=False):
 
 
 def _day(value):
-    if not value:
-        return None
-    if isinstance(value, date) and not isinstance(value, datetime):
-        return value
-    return date.fromisoformat(str(value)[:10])
+    """Vietnam calendar day of a stored date or UTC timestamp (an event at 01:00 VN is not the previous day)."""
+    return to_vn_date(value)
 
 
 def _entered(case, target):
@@ -227,7 +230,7 @@ def compute(case, calendar, classification, today=None):
     current = workflow.get('state') or 'received'
     group = normalize_group(classification.get('group'))
     grade = normalize_grade(classification.get('grade'))
-    subtype = (case.get('procedureReview') or {}).get('subtype')
+    subtype = case_subtype(case)
     regime = 'nd217'
     if procedure == 'bcnckt':
         from .legal import resolve_profile
@@ -239,7 +242,7 @@ def compute(case, calendar, classification, today=None):
     start = valid or received
     if procedure == 'nghiem_thu' and subtype == 'during':
         # In-construction inspection: the result notice is due 10 working days after the inspection day.
-        visit = _day(workflow.get('visitDate') or (case.get('procedureReview') or {}).get('visitDate'))
+        visit = _day(workflow.get('visitDate') or (latest_review(case) or {}).get('visitDate'))
         start = visit
     legal_due = None
     if start and period.get('days'):
@@ -291,12 +294,12 @@ def compute(case, calendar, classification, today=None):
 
 
 def soon_limit(calendar, today=None):
-    return calendar.add(today or date.today(), DUE_SOON_WORKING_DAYS)
+    return calendar.add(today or vn_today(), DUE_SOON_WORKING_DAYS)
 
 
 def evaluate(sla, calendar, superseded=False, today=None):
     """SLA state relative to today; safe for payloads that predate SLA."""
-    today = today or date.today()
+    today = today or vn_today()
     sla = sla or {}
     due = _day(sla.get('dueDate'))
     finished = _day(sla.get('completedAt'))

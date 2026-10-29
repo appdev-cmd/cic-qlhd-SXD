@@ -1,14 +1,17 @@
 """Hậu kiểm: start notices and in-construction inspections (NĐ 207/2026 Điều 12, 25–27; Luật 135 Điều 48)."""
 
+import tempfile
 import unittest
 from datetime import date
+from pathlib import Path
+from unittest.mock import patch
 
 from fastapi import HTTPException
 
-from app.domain import new_case
+from app.domain import audit, case_subtype, invalidate, new_case
 from app.procedure_review import Review, apply, export_blocks, inspection_limit, specification
 from app.sla import Calendar, compute
-from app.store import DEMO_ACTOR
+from app.store import DEMO_ACTOR, Store
 
 CALENDAR = Calendar([], 'test')
 
@@ -96,6 +99,66 @@ class InspectionTests(unittest.TestCase):
             apply(case, DEMO_ACTOR, body(case, 'during'))
         title, _ = export_blocks(case, 'draft')
         self.assertIn('TRONG QUÁ TRÌNH THI CÔNG', title)
+
+    def test_subtype_survives_new_uploads_and_ocr(self):
+        case = inspection('during')
+        apply(case, DEMO_ACTOR, body(case, 'during', visitDate=date(2026, 9, 15)))
+        self.assertEqual(case['subtype'], 'during')
+        invalidate(case)  # what a new upload or a finished OCR does
+        self.assertIsNone(case['procedureReview'])
+        self.assertEqual(case_subtype(case), 'during')
+        self.assertEqual(specification(case)['subtype'], 'during')
+        sla = compute(case, CALENDAR, {'group': 'B', 'grade': 'II'})
+        self.assertEqual(sla['periodDays'], 10)
+        self.assertEqual(sla['legalDueDate'], CALENDAR.add(date(2026, 9, 15), 10).isoformat())
+
+    def test_subtype_of_payloads_saved_before_the_case_key(self):
+        case = inspection('start_notice')
+        case['procedureReviewHistory'] = [{'subtype': 'during'}, {'subtype': 'start_notice'}]
+        self.assertEqual(case_subtype(case), 'start_notice')
+        case['procedureReview'] = {'subtype': 'during'}
+        self.assertEqual(case_subtype(case), 'during')
+        case['subtype'] = 'complete'
+        self.assertEqual(case_subtype(case), 'complete')
+        self.assertIsNone(case_subtype(inspection('during')))
+
+
+class InspectionCountTests(unittest.TestCase):
+    def test_counts_inspections_carried_out_once_per_dossier(self):
+        with (
+            tempfile.TemporaryDirectory() as directory,
+            patch('app.store.DATA_DIR', Path(directory)),
+            patch.object(Store, 'project', return_value={'id': 'p1', 'projectGroup': 'B', 'buildingGrade': 'II'}),
+        ):
+            store = Store(actor=DEMO_ACTOR)
+
+            def saved(state, subtype='during', project='p1', legacy=False, prior=None):
+                case = new_case('Kiểm tra', 'Điện Biên', DEMO_ACTOR, '2026-09-01', project, procedure='nghiem_thu')
+                if legacy:  # retired review sheet only, as stored before the subtype key existed
+                    case['procedureReviewHistory'] = [{'subtype': subtype}]
+                else:
+                    case['subtype'] = subtype
+                if state:
+                    case['workflow'] = {'state': state}
+                if prior:
+                    case.update(previousSubmissionId=prior['id'], previousRevision=prior['revision'])
+                audit(case, DEMO_ACTOR, 'Tạo', 'Kiểm thử')
+                return store.save(case)
+
+            current = saved('processing')
+            saved('processing')  # counted
+            saved('reviewed', legacy=True)  # counted through the review history
+            first_round = saved('awaiting_supplement')
+            saved('site_visit', prior=first_round)  # same dossier as its first round: counted once
+            saved(None)  # received, inspection not carried out
+            saved('assigned')
+            saved('rejected')
+            saved('stopped')
+            saved('processing', subtype='complete')
+            saved('processing', project='p2')
+            self.assertEqual(store.inspection_count('p1', current['id'], current['dossierId']), 3)
+            self.assertEqual(store.inspection_count('p1', first_round['id'], first_round['dossierId']), 3)
+            self.assertEqual(store.inspection_count(None, current['id']), 0)
 
 
 if __name__ == '__main__':

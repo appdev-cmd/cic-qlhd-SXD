@@ -1,19 +1,24 @@
 """Building permit lifecycle — NĐ 217/2026 Điều 49, 54 (consultation), 63–66."""
 
+import tempfile
+import threading
+import time
 import unittest
 from datetime import date, timedelta
+from pathlib import Path
+from unittest.mock import patch
 
 from fastapi import HTTPException
 
 from app import permits
-from app.domain import new_case
+from app.domain import audit, invalidate, new_case, vn_today
 from app.procedure_policy import intake_days
-from app.sla import Calendar
-from app.store import DEMO_ACTOR
+from app.sla import Calendar, compute
+from app.store import DEMO_ACTOR, Store
 
 HEAD = {**DEMO_ACTOR, 'id': 'head', 'name': 'Trưởng phòng', 'role': 'head_of_department'}
 CALENDAR = Calendar([], 'test')
-TODAY = date.today()
+TODAY = vn_today()
 
 
 def permit_case(subtype='new', project='p1'):
@@ -160,6 +165,105 @@ class PermitTests(unittest.TestCase):
         row = records(case)[0]
         self.assertEqual((row['status'], row['public']), ('cancelled', False))
         self.assertEqual(permits.view(case, CALENDAR)['actions'], [])
+
+    def test_subtype_kept_after_the_review_sheet_is_retired(self):
+        case = permit_case('extension')
+        case['finalReview'] = None
+        self.assertEqual(compute(case, CALENDAR, {})['periodDays'], 5)
+        invalidate(case)
+        self.assertEqual(case['subtype'], 'extension')
+        self.assertEqual(compute(case, CALENDAR, {})['periodDays'], 5)  # not the 10 days of a new permit
+        self.assertEqual(permits.view(case, CALENDAR)['subtype'], 'extension')
+
+
+class PermitNumberTests(unittest.TestCase):
+    def test_next_number_is_the_highest_of_the_year_plus_one(self):
+        day = date(2026, 10, 29)
+        self.assertEqual(permits.next_number([], day), '001/2026/GPXD')
+        register = [
+            {'number': '001/2026/GPXD'},
+            {'number': '007/2026/GPXD'},
+            {'number': '012/2025/GPXD'},
+            {'number': 'GP-12/2026'},
+        ]
+        self.assertEqual(permits.next_number(register, day), '008/2026/GPXD')
+        self.assertEqual(permits.next_number(register, date(2025, 12, 31)), '013/2025/GPXD')
+
+    def test_numbers_are_never_reused_after_revocation_or_a_gap(self):
+        issued = []
+        for _ in range(3):
+            case = permit_case()
+            permits.act(case, HEAD, command('issue'), records(*issued), CALENDAR)
+            issued.append(case)
+        revoked = issued[1]
+        permits.act(
+            revoked, HEAD, command('revoke', reason='unlawful', reference='20/QĐ-SXD'), records(*issued), CALENDAR
+        )
+        manual = permit_case()
+        number = f'010/{TODAY.year}/GPXD'
+        permits.act(manual, HEAD, command('issue', number=number), records(*issued), CALENDAR)
+        issued.append(manual)
+        with self.assertRaises(HTTPException):
+            permits.act(permit_case(), HEAD, command('issue', number=number), records(*issued), CALENDAR)
+        after = permit_case()
+        permits.act(after, HEAD, command('issue'), records(*issued), CALENDAR)
+        issued.append(after)
+        numbers = [c['permit']['number'] for c in issued]
+        self.assertEqual(len(set(numbers)), len(numbers))
+        self.assertEqual(
+            [n.split('/')[0] for n in numbers],
+            ['001', '002', '003', '010', '011'],
+        )
+
+    def test_issue_lock_serializes_number_allocation(self):
+        store = Store(actor=DEMO_ACTOR)
+        register = []
+
+        def allocate():
+            with store.permit_issue_lock():
+                number = permits.next_number(register, TODAY)
+                time.sleep(0.01)  # widen the window between reading the register and saving
+                register.append({'number': number})
+
+        threads = [threading.Thread(target=allocate) for _ in range(8)]
+        for thread in threads:
+            thread.start()
+        for thread in threads:
+            thread.join()
+        numbers = sorted(r['number'] for r in register)
+        self.assertEqual(numbers, [f'{i:03d}/{TODAY.year}/GPXD' for i in range(1, 9)])
+
+    def test_concurrent_issues_through_the_api_get_distinct_numbers(self):
+        from app.routes.permits import permit_action
+
+        with (
+            tempfile.TemporaryDirectory() as directory,
+            patch('app.store.DATA_DIR', Path(directory)),
+            patch.object(Store, 'project', return_value={'id': 'p1'}),
+        ):
+            store = Store(actor=DEMO_ACTOR)
+            ids = []
+            for _ in range(5):
+                case = permit_case()
+                case['workflow'] = {'state': 'reviewed'}
+                audit(case, DEMO_ACTOR, 'Tạo', 'Kiểm thử')
+                ids.append(store.save(case)['id'])
+            results, errors = [], []
+
+            def issue(id):
+                try:
+                    body = permits.PermitCommand(revision=1, action='issue', date=TODAY)
+                    results.append(permit_action(id, body, Store(actor=DEMO_ACTOR))['permit']['number'])
+                except Exception as exc:  # surfaced by the assertion below
+                    errors.append(exc)
+
+            threads = [threading.Thread(target=issue, args=(id,)) for id in ids]
+            for thread in threads:
+                thread.start()
+            for thread in threads:
+                thread.join()
+            self.assertEqual(errors, [])
+            self.assertEqual(sorted(results), [f'{i:03d}/{TODAY.year}/GPXD' for i in range(1, 6)])
 
 
 if __name__ == '__main__':

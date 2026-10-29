@@ -3,6 +3,7 @@
 import base64
 import hashlib
 import json
+import logging
 from io import BytesIO
 from datetime import datetime, timezone
 from urllib.parse import urlparse
@@ -11,7 +12,9 @@ from fastapi import HTTPException
 from psycopg.types.json import Jsonb
 from .store import MODE, db, remote
 from .database import connection
+from .domain import vn_today
 
+log = logging.getLogger(__name__)
 BUCKET = 'appraisal-project-images'
 LABELS = {
     'phoi_canh': 'Phối cảnh 3D',
@@ -92,7 +95,7 @@ def add(s, id, body):
         'title': body.title.strip(),
         'category': body.category,
         'categoryLabel': LABELS[body.category],
-        'date': datetime.now(timezone.utc).date().isoformat(),
+        'date': vn_today().isoformat(),
         'author': s.actor['name'],
         'description': body.description.strip(),
     }
@@ -137,12 +140,14 @@ def add(s, id, body):
                 'select public.save_project_images(%s,%s,%s) as result', (id, body.revision, Jsonb(images))
             ).fetchone()['result']
         return result
-    except Exception:
+    except Exception as exc:
+        # Conflicts and permission errors arrive as HTTPException; anything else is unexpected.
+        log.warning('Saving the gallery of project %s failed: %s', id, exc, exc_info=not isinstance(exc, HTTPException))
         if data:
             try:
                 remote('/storage/v1/object/' + BUCKET, s.token, 'DELETE', json={'prefixes': [storage_path]})
             except HTTPException:
-                pass
+                log.warning('Could not remove orphan image %s after a failed save', storage_path, exc_info=True)
         raise
 
 

@@ -791,6 +791,7 @@ class Builder:
             if subtype:
                 case['procedureReview'] = None
                 case['sampleSubtype'] = subtype
+                case['subtype'] = subtype  # persisted on the submission, like the API does
             if prior:
                 case.update(
                     previousSubmissionId=prior['id'],
@@ -1033,11 +1034,12 @@ class Builder:
 
     def permit(self, case, action, day, note=None):
         """Cấp, thu hồi, nhận lại, hủy giấy phép — Điều 49, 63–65 NĐ 217/2026."""
+        from app.domain import case_subtype
         from app.permits import PermitCommand, act, register
 
         body = {'revision': case['revision'], 'action': action, 'date': day}
         if action == 'issue':
-            subtype = (case.get('procedureReview') or {}).get('subtype')
+            subtype = case_subtype(case)
             body['basePermit' if subtype in ('amendment', 'extension', 'reissue') else 'number'] = note or ''
             body['note'] = 'Giấy phép mô phỏng; chưa ký số, chưa ban hành.'
         if action == 'revoke':

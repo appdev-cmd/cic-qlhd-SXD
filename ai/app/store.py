@@ -31,6 +31,20 @@ DEMO_ACTOR = {
 }
 
 _ready = set()
+_permit_lock = threading.Lock()
+
+# Procedure subtype: the submission's own key, else the current review sheet, else the latest retired one
+# (payloads written before the subtype was stored on the case). Keep in sync with domain.case_subtype.
+SUBTYPE_SQLITE = (
+    "coalesce(json_extract(payload,'$.subtype'),json_extract(payload,'$.procedureReview.subtype'),"
+    "json_extract(payload,'$.procedureReviewHistory[#-1].subtype'))"
+)
+SUBTYPE_PG = (
+    "coalesce(payload->>'subtype',payload->'procedureReview'->>'subtype',"
+    "payload->'procedureReviewHistory'->-1->>'subtype')"
+)
+# Inspections that never took place: not yet accepted for processing, rejected at intake or stopped.
+NOT_INSPECTED = ('received', 'assigned', 'rejected', 'stopped')
 
 
 @contextmanager
@@ -378,26 +392,67 @@ class Store:
         self._successors[id] = bool(rows)
         return self._successors[id]
 
-    def inspection_count(self, project_id, exclude_id):
-        """In-construction inspections already recorded for the project (khoản 3 Điều 27 NĐ 207/2026)."""
+    def inspection_count(self, project_id, exclude_id, dossier_id=None):
+        """In-construction inspections already carried out for the project (khoản 3 Điều 27 NĐ 207/2026).
+
+        One per inspection dossier (its latest submission round), other than the dossier being edited; dossiers
+        still at intake, rejected or stopped are not inspections.
+        """
         if not project_id:
             return 0
+        dossier_id = dossier_id or exclude_id
+        skipped = ','.join("'" + s + "'" for s in NOT_INSPECTED)
         if MODE == 'demo':
             with db() as con:
                 return con.execute(
-                    """select count(*) from cases where json_extract(payload,'$.projectId')=? and id<>?
-                    and json_extract(payload,'$.procedureReview.subtype')='during'""",
-                    (project_id, exclude_id),
+                    """select count(*) from cases c where json_extract(payload,'$.projectId')=? and id<>?
+                    and coalesce(json_extract(payload,'$.dossierId'),id)<>?
+                    and coalesce(json_extract(payload,'$.procedure'),'bcnckt')='nghiem_thu'
+                    and """
+                    + SUBTYPE_SQLITE
+                    + """='during'
+                    and coalesce(json_extract(payload,'$.workflow.state'),
+                      case when json_extract(payload,'$.finalReview.decision')='reviewed' then 'reviewed'
+                      else 'received' end) not in ("""
+                    + skipped
+                    + """)
+                    and not exists(select 1 from cases n where json_extract(n.payload,'$.previousSubmissionId')=c.id)""",
+                    (project_id, exclude_id, dossier_id),
                 ).fetchone()[0]
         (rows,) = read(
             self.actor['id'],
             (
-                """select count(*) as n from public.appraisal_cases where project_id=%s and id<>%s::uuid
-                and procedure='nghiem_thu' and payload->'procedureReview'->>'subtype'='during'""",
-                (project_id, exclude_id),
+                """select count(*) as n from public.appraisal_cases c where project_id=%s and id<>%s::uuid
+                and coalesce(dossier_id,id)<>%s::uuid and procedure='nghiem_thu' and """
+                + SUBTYPE_PG
+                + """='during'
+                and coalesce(payload->'workflow'->>'state',
+                  case when payload->'finalReview'->>'decision'='reviewed' then 'reviewed' else 'received' end)
+                  not in ("""
+                + skipped
+                + """)
+                and not exists(select 1 from public.appraisal_cases n where n.previous_submission_id=c.id)""",
+                (project_id, exclude_id, dossier_id),
             ),
         )
         return rows[0]['n']
+
+    @contextmanager
+    def permit_issue_lock(self):
+        """Serialize permit issuance so reading the register, choosing a number and saving cannot interleave.
+
+        Demo: one worker process, a process lock is enough. Cloud: a transaction-scoped advisory lock per
+        province, held on its own pooled connection until the caller has saved (safe with transaction pooling).
+        """
+        if MODE == 'demo':
+            with _permit_lock:
+                yield
+            return
+        with connection(self.actor['id']) as con:
+            con.execute(
+                "select pg_advisory_xact_lock(hashtext('gpxd-permit-number:' || %s))", (str(self.actor['tenantId']),)
+            )
+            yield
 
     def start_dates(self):
         """Permit number → start date from accepted start notices (thông báo khởi công)."""
@@ -406,7 +461,9 @@ class Store:
                 rows = con.execute(
                     """select json_extract(payload,'$.procedureReview.details.permitNumber'),
                     json_extract(payload,'$.procedureReview.details.startDate') from cases
-                    where json_extract(payload,'$.procedureReview.subtype')='start_notice'
+                    where """
+                    + SUBTYPE_SQLITE
+                    + """='start_notice'
                     and json_extract(payload,'$.procedureReview.conclusion')='eligible'"""
                 ).fetchall()
         else:
@@ -415,7 +472,9 @@ class Store:
                 (
                     """select payload->'procedureReview'->'details'->>'permitNumber' as n,
                     payload->'procedureReview'->'details'->>'startDate' as d from public.appraisal_cases
-                    where procedure='nghiem_thu' and payload->'procedureReview'->>'subtype'='start_notice'
+                    where procedure='nghiem_thu' and """
+                    + SUBTYPE_PG
+                    + """='start_notice'
                     and payload->'procedureReview'->>'conclusion'='eligible'""",
                     (),
                 ),
@@ -685,9 +744,9 @@ class Store:
 
     def sla_counts_query(self, kind='all'):
         """(sql, params, states) counting submissions per SLA state in one aggregate query."""
-        from .sla import date
+        from .domain import vn_today
 
-        conditions = self._sla_conditions(self.calendar(), date.today())
+        conditions = self._sla_conditions(self.calendar(), vn_today())
         sqlite = MODE == 'demo'
         select = ','.join(
             'coalesce(sum(case when ' + sql + ' then 1 else 0 end),0) as n' + str(i)
@@ -738,6 +797,7 @@ class Store:
         sla='',
     ):
         from . import sla as deadlines
+        from .domain import vn_today
 
         fields = [
             'id',
@@ -774,7 +834,7 @@ class Store:
         clauses = []
         values = []
         calendar = self.calendar()
-        today = deadlines.date.today()
+        today = vn_today()
         if sla in deadlines.STATES:
             condition = self._sla_conditions(calendar, today)[sla]
             clauses.append('(' + condition[0] + ')')

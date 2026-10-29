@@ -201,6 +201,33 @@ class StampingTests(unittest.TestCase):
         table = next(b for b in blocks if 'rows' in b)
         self.assertEqual(table['rows'][1][2], 'Mặt bằng tổng thể')
 
+    def test_stamping_route_accepts_reviewed_case(self):
+        """Stamping exists only after the internal review, so the write guard must admit reviewed cases."""
+        import tempfile
+        from pathlib import Path
+        from unittest.mock import patch
+
+        from app.domain import audit, vn_today
+        from app.routes.review import stamping_action
+        from app.store import Store
+
+        with tempfile.TemporaryDirectory() as directory, patch('app.store.DATA_DIR', Path(directory)):
+            store = Store(actor=DEMO_ACTOR)
+            case = new_case('BCNCKT', 'Điện Biên', DEMO_ACTOR, '2026-09-01', None)
+            case['finalReview'] = {'decision': 'reviewed'}
+            case['appraisalSheet'] = {'conclusion': 'eligible'}
+            audit(case, DEMO_ACTOR, 'Tạo', 'Kiểm thử')
+            saved = store.save(case)
+            body = stamping.StampingCommand(
+                revision=saved['revision'],
+                action='stamp',
+                date=vn_today(),
+                noticeReference='Số 01/TB-SXD',
+                drawings=[{'name': 'Mặt bằng tổng thể', 'sheets': 1}],
+            )
+            result = stamping_action(saved['id'], body, Store(actor=DEMO_ACTOR))
+            self.assertEqual(result['stamping']['status'], 'stamped')
+
 
 if __name__ == '__main__':
     unittest.main()

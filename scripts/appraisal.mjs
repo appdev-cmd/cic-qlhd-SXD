@@ -84,8 +84,11 @@ if (command === 'dev') {
             : `Cổng ${number} (${name}) đang được sử dụng. Không tự đổi cổng; kiểm tra phiên đang chạy.`,
         );
     }
-    const ready = async (url, headers = {}) => {
-      const deadline = Date.now() + 30_000;
+    // APPRAISAL_READY_TIMEOUT_MS overrides every step; otherwise a cold Vite start gets more time than the APIs.
+    const configured = Number(process.env.APPRAISAL_READY_TIMEOUT_MS);
+    const timeout = (fallback) => (Number.isFinite(configured) && configured > 0 ? configured : fallback);
+    const ready = async (label, url, limit, headers = {}) => {
+      const deadline = Date.now() + limit;
       while (Date.now() < deadline && !stopping) {
         try {
           const response = await fetch(url, { headers, signal: AbortSignal.timeout(2000) });
@@ -93,14 +96,24 @@ if (command === 'dev') {
         } catch {}
         await new Promise((resolve) => setTimeout(resolve, 250));
       }
-      throw new Error('Dịch vụ chưa khởi động thành công. Kiểm tra log phía trên.');
+      if (stopping) throw new Error(`Đã dừng trong khi chờ ${label}.`);
+      throw new Error(
+        `${label} chưa sẵn sàng sau ${Math.round(limit / 1000)} giây (${url}). ` +
+          'Kiểm tra log phía trên; có thể tăng thời gian chờ bằng biến APPRAISAL_READY_TIMEOUT_MS.',
+      );
     };
     start(python, ['-m', 'uvicorn', 'app.main:app', '--host', '127.0.0.1', '--port', workerPort]);
-    await ready(`http://127.0.0.1:${ports.worker}/v1/runtime`, { 'x-internal-token': env.APPRAISAL_INTERNAL_TOKEN });
+    await ready(`AI Worker (cổng ${ports.worker})`, `http://127.0.0.1:${ports.worker}/v1/runtime`, timeout(30_000), {
+      'x-internal-token': env.APPRAISAL_INTERNAL_TOKEN,
+    });
     start(process.execPath, ['--import', 'tsx', 'services/core/main.ts']);
-    await ready(`http://127.0.0.1:${ports.core}/api/appraisal/runtime`);
+    await ready(
+      `Core API (cổng ${ports.core})`,
+      `http://127.0.0.1:${ports.core}/api/appraisal/runtime`,
+      timeout(30_000),
+    );
     start(process.execPath, [resolve(root, 'node_modules/vite/bin/vite.js')]);
-    await ready(`http://127.0.0.1:${ports.web}/api/appraisal/runtime`);
+    await ready(`Web (cổng ${ports.web})`, `http://127.0.0.1:${ports.web}/api/appraisal/runtime`, timeout(90_000));
     console.log(
       `Sẵn sàng: http://localhost:${ports.web}/projects/appraisal • Web/API chung cổng ${ports.web}. Dừng cả bộ bằng Ctrl+C.`,
     );

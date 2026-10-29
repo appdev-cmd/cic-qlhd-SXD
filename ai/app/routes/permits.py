@@ -48,8 +48,14 @@ def permit_consultation(id: str, body: ConsultationCommand, s: Store = Depends(s
 def permit_action(id: str, body: PermitCommand, s: Store = Depends(store)):
     from ..permits import act
 
-    case = edit(s, id, body.revision)
-    registry = _register(s) if body.action == 'issue' else []
-    label = act(case, s.actor, body, registry, s.calendar(), MODE == 'demo')
-    detail = ' — '.join(x for x in (body.reference, body.note) if x) or label
-    return save(s, case, body.revision, label, detail)
+    detail = ' — '.join(x for x in (body.reference, body.note) if x)
+    if body.action != 'issue':
+        case = edit(s, id, body.revision, after_review=True)
+        label = act(case, s.actor, body, [], s.calendar(), MODE == 'demo')
+        return save(s, case, body.revision, label, detail or label)
+    # Issuing allocates the next permit number: the register is read and the case saved under one lock so two
+    # concurrent issues cannot both take the same number.
+    with s.permit_issue_lock():
+        case = edit(s, id, body.revision, after_review=True)
+        label = act(case, s.actor, body, _register(s), s.calendar(), MODE == 'demo')
+        return save(s, case, body.revision, label, detail or label)

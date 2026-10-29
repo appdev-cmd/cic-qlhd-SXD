@@ -1,6 +1,7 @@
 """Durable OCR jobs with a local private spool; never persist user access tokens."""
 
 import hashlib
+import logging
 import os
 import time
 from pathlib import Path
@@ -10,6 +11,8 @@ from .domain import uid, now, invalidate
 from .ingestion import read_document, extract_facts, checklist_candidates
 from .ocr import available
 from .store import DATA_DIR
+
+log = logging.getLogger(__name__)
 
 
 def spool(job_id):
@@ -84,8 +87,7 @@ def run(s, id, job_id, snapshot, save):
         for req in current['requirements']:
             if req['id'] == target['requirementId'] and target['role'] != 'reference':
                 req.update(status='submitted' if segments else 'needs_supplement', verifiedBy=None)
-        invalidate(current)
-        current['procedureReview'] = None
+        invalidate(current)  # retires the review sheet; the submission keeps its subtype
         current['job'].update(status='completed', finishedAt=now())
         save(
             s,
@@ -98,6 +100,7 @@ def run(s, id, job_id, snapshot, save):
     except InterruptedError:
         terminal = True
     except Exception:
+        log.exception('OCR failed for case %s (job %s)', id, job_id)
         current = s.get(id)
         if current.get('job', {}).get('id') == job_id and current['job']['status'] == 'running':
             expected = current['revision']
