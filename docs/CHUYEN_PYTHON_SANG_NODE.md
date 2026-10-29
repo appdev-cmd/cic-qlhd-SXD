@@ -34,3 +34,5 @@ Migration `node_appraisal_jobs` đã áp dụng cho đúng dự án Supabase, ch
 
 
 Các lỗi chỉ xuất hiện trên cloud đã được sửa: kiểu bigint của kích thước upload; bundle worker/canvas của PDF.js; enum nhật ký trợ lý BIM. Production dùng AI_PROVIDER=gateway, AI_GATEWAY_MODEL=openai/gpt-4o qua OIDC; không cần khóa OpenAI trống trước đây. Không thay đổi gói dịch vụ, ngân sách hay thiết lập thanh toán.
+
+Production `https://cic-qlhd-sxd.vercel.app` tại commit `08cbd2c` đã qua cả hai bài E2E cloud: 12 mô hình, tải IFC mới/lưu góc nhìn/reload; OCR scan tiếng Việt, xác nhận trường tổng mức đầu tư, lưu/mở lại, phân tích và PDF/DOCX. Các hồ sơ kiểm thử được đánh dấu mô phỏng, có audit, không thay bản gốc. CI E2E cố định Ubuntu 24.04 để tương thích phiên bản Playwright đang dùng; không phụ thuộc Python trên runner.

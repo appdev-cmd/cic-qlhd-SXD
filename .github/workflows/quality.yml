@@ -60,7 +60,8 @@ jobs:
           node scripts/export_openapi.mjs
           git diff --exit-code docs/api/openapi.json
   e2e:
-    runs-on: ubuntu-latest
+    # The pinned Playwright version supports Ubuntu 24.04, not the moving latest runner.
+    runs-on: ubuntu-24.04
     timeout-minutes: 20
     needs: quality
     env:
