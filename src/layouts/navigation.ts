@@ -1,6 +1,7 @@
 import type React from 'react';
 import {
   Bot,
+  Box,
   Building2,
   Coins,
   FileCheck,
@@ -113,6 +114,7 @@ export const NAV_GROUPS: NavGroup[] = [
         keywords: 'luat nghi dinh ai',
       },
       { to: '/gis-map', label: 'Bản đồ Quy hoạch', shortLabel: 'Bản đồ', icon: MapPin, keywords: 'gis ban do' },
+      { to: '/bim', label: 'Mô hình BIM', shortLabel: 'BIM', icon: Box, keywords: 'bim ifc revit mo hinh' },
       {
         to: '/documents',
         label: 'Văn bản & In ấn A4',

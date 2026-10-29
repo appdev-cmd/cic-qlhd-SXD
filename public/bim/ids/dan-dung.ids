@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ids:ids xmlns:ids="http://standards.buildingsmart.org/IDS" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://standards.buildingsmart.org/IDS http://standards.buildingsmart.org/IDS/1.0/ids.xsd">
+  <ids:info>
+    <ids:title>Yêu cầu thông tin mô hình – Công trình dân dụng (mẫu)</ids:title>
+    <ids:version>1.0</ids:version>
+    <ids:author>ban-qlda@example.vn</ids:author>
+    <ids:description>Bộ yêu cầu tối thiểu cho mô hình kiến trúc – kết cấu nộp Chủ đầu tư. Chủ đầu tư rà soát, điều chỉnh trước khi đưa vào EIR.</ids:description>
+  </ids:info>
+  <ids:specifications>
+    <ids:specification name="Tường có thông tin chịu lực và ngoài/trong nhà" ifcVersion="IFC2X3 IFC4" description="Phân biệt tường chịu lực và tường bao che để bóc tách khối lượng đúng">
+      <ids:applicability minOccurs="1" maxOccurs="unbounded">
+        <ids:entity><ids:name><ids:simpleValue>IFCWALL</ids:simpleValue></ids:name></ids:entity>
+      </ids:applicability>
+      <ids:requirements>
+        <ids:property dataType="IFCBOOLEAN" cardinality="required">
+          <ids:propertySet><ids:simpleValue>Pset_WallCommon</ids:simpleValue></ids:propertySet>
+          <ids:baseName><ids:simpleValue>LoadBearing</ids:simpleValue></ids:baseName>
+        </ids:property>
+        <ids:property dataType="IFCBOOLEAN" cardinality="required">
+          <ids:propertySet><ids:simpleValue>Pset_WallCommon</ids:simpleValue></ids:propertySet>
+          <ids:baseName><ids:simpleValue>IsExternal</ids:simpleValue></ids:baseName>
+        </ids:property>
+        <ids:material cardinality="required"/>
+      </ids:requirements>
+    </ids:specification>
+    <ids:specification name="Cột, dầm, sàn phải khai báo vật liệu" ifcVersion="IFC2X3 IFC4" description="Vật liệu (mác bê tông, thép) để lập dự toán">
+      <ids:applicability minOccurs="0" maxOccurs="unbounded">
+        <ids:entity>
+          <ids:name>
+            <xs:restriction base="xs:string">
+              <xs:enumeration value="IFCCOLUMN"/>
+              <xs:enumeration value="IFCBEAM"/>
+              <xs:enumeration value="IFCSLAB"/>
+            </xs:restriction>
+          </ids:name>
+        </ids:entity>
+      </ids:applicability>
+      <ids:requirements>
+        <ids:material cardinality="required"/>
+        <ids:attribute cardinality="required"><ids:name><ids:simpleValue>Name</ids:simpleValue></ids:name></ids:attribute>
+      </ids:requirements>
+    </ids:specification>
+    <ids:specification name="Cửa có thông tin chống cháy" ifcVersion="IFC2X3 IFC4" description="Phục vụ thẩm duyệt PCCC">
+      <ids:applicability minOccurs="0" maxOccurs="unbounded">
+        <ids:entity><ids:name><ids:simpleValue>IFCDOOR</ids:simpleValue></ids:name></ids:entity>
+      </ids:applicability>
+      <ids:requirements>
+        <ids:property dataType="IFCLABEL" cardinality="required">
+          <ids:propertySet><ids:simpleValue>Pset_DoorCommon</ids:simpleValue></ids:propertySet>
+          <ids:baseName><ids:simpleValue>FireRating</ids:simpleValue></ids:baseName>
+        </ids:property>
+      </ids:requirements>
+    </ids:specification>
+    <ids:specification name="Không dùng đối tượng chung chung IfcBuildingElementProxy" ifcVersion="IFC2X3 IFC4" description="Cấu kiện phải được phân loại đúng lớp IFC">
+      <ids:applicability minOccurs="0" maxOccurs="0">
+        <ids:entity><ids:name><ids:simpleValue>IFCBUILDINGELEMENTPROXY</ids:simpleValue></ids:name></ids:entity>
+      </ids:applicability>
+      <ids:requirements/>
+    </ids:specification>
+  </ids:specifications>
+</ids:ids>

@@ -8,6 +8,8 @@ import { join, sep } from 'node:path';
 const ALLOW = {
   overlay: ['src/components/ui/Modal.tsx', 'src/components/SlidePanelStack.tsx'],
   table: [
+    // Port adapter preserves source cells and implements persisted resize/sort via useColumnResize/useFilterState.
+    'src/features/bim-suite/adapters/controls.tsx',
     'src/components/ui/DataTable.tsx',
     'src/components/appraisal/DossierGrid.tsx',
     'src/components/MasterTable.tsx',

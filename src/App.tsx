@@ -21,6 +21,7 @@ const DocumentsPage = lazy(() => import('./pages/DocumentsPage').then((module) =
 const SettingsPage = lazy(() => import('./pages/SettingsPage').then((module) => ({ default: module.SettingsPage })));
 const AppraisalPage = lazy(() => import('./pages/AppraisalPage').then((module) => ({ default: module.AppraisalPage })));
 const UiGallery = lazy(() => import('./pages/dev/UiGallery').then((module) => ({ default: module.UiGallery })));
+const BimPage = lazy(() => import('./pages/BimPage').then((module) => ({ default: module.BimPage })));
 
 export function App() {
   return (
@@ -55,6 +56,7 @@ function AuthenticatedApp() {
               <Route path="legal-ai" element={<LegalAiPage />} />
               <Route path="cost-database" element={<CostDatabasePage />} />
               <Route path="gis-map" element={<GisMapPage />} />
+              <Route path="bim" element={<BimPage />} />
               <Route path="documents" element={<DocumentsPage />} />
               <Route path="settings" element={<SettingsPage />} />
               <Route path="dev/ui" element={<UiGallery />} />

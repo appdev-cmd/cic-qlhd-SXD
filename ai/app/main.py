@@ -5,7 +5,7 @@ from fastapi import FastAPI
 from fastapi.openapi.docs import get_swagger_ui_html
 from .logging_config import setup as setup_logging
 from .deps import SECRET, start_queue, test_login_guard
-from .routes import system, projects, catalog, cases, documents, review, permits
+from .routes import system, projects, catalog, cases, documents, review, permits, bim, bim_suite
 from .routes.cases import create_supplement
 from .schemas import AddProjectImage, Supplement
 
@@ -20,7 +20,7 @@ app = FastAPI(
     redoc_url=None,
     openapi_url='/v1/openapi.json' if DOCS else None,
 )
-for module in (system, projects, catalog, cases, documents, review, permits):
+for module in (system, projects, catalog, cases, documents, review, permits, bim, bim_suite):
     app.include_router(module.router)
 
 if DOCS:

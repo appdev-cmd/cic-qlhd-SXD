@@ -1,0 +1,38 @@
+/* Phân hệ BIM chuyển từ cic-hud dùng các lớp màu riêng (bg-primary-600, text-txt-muted, border-border, bg-bg-subtle…).
+   Khối dưới khai báo đúng các tên đó nhưng trỏ vào biến --theme-* của BuildSIA, nên giao diện BIM đổi màu theo
+   bộ chọn "Giao diện" mà không phải sửa từng component. `inline` giữ var(--theme-*) trong utility để giá trị được
+   phân giải theo data-theme của phần tử cha. */
+@theme inline {
+  --color-primary: var(--theme-primary);
+  --color-primary-50: var(--theme-soft-light);
+  --color-primary-100: var(--theme-soft);
+  --color-primary-200: var(--theme-soft-strong);
+  --color-primary-300: var(--theme-border);
+  --color-primary-400: color-mix(in oklab, var(--theme-primary) 70%, white);
+  --color-primary-500: color-mix(in oklab, var(--theme-primary) 88%, white);
+  --color-primary-600: var(--theme-primary);
+  --color-primary-700: var(--theme-primary-hover);
+  --color-primary-800: var(--theme-primary-deep);
+  --color-primary-900: color-mix(in oklab, var(--theme-primary-deep) 80%, black);
+  --color-primary-950: color-mix(in oklab, var(--theme-primary-deep) 60%, black);
+
+  --color-bg-app: #f5f7f8;
+  --color-bg-surface: #ffffff;
+  --color-bg-subtle: #f8fafc;
+  --color-bg-muted: #f1f5f9;
+  --color-bg-elevated: #ffffff;
+  --color-surface: #ffffff;
+  --color-muted: #f1f5f9;
+
+  --color-txt-primary: #243d4c;
+  --color-txt-secondary: #475569;
+  --color-txt-muted: #64748b;
+  --color-txt-placeholder: #94a3b8;
+
+  --color-border: #e2e8f0;
+  --color-border-subtle: #edf1f3;
+}
+
+/* cic-hud bật chế độ tối bằng lớp `.dark`; BuildSIA chưa có chế độ tối. Gắn biến thể dark: vào một thuộc tính
+   không ai đặt để các lớp dark:… của mã chuyển sang không bị prefers-color-scheme của hệ điều hành kích hoạt. */
+@custom-variant dark (&:where([data-color-scheme="dark"], [data-color-scheme="dark"] *));

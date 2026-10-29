@@ -1,0 +1,24 @@
+.bim-suite {
+ --theme-primary: rgb(var(--color-primary-600));
+ --theme-primary-hover: rgb(var(--color-primary-700));
+ --theme-primary-deep: rgb(var(--color-primary-800));
+ --theme-soft: var(--bg-subtle);
+ --theme-soft-light: var(--bg-subtle);
+ --theme-soft-strong: var(--bg-muted);
+ --theme-border: var(--border-default);
+ --theme-logo: rgb(var(--color-primary-600));
+ --theme-toast: #0f172a;
+}
+.bim-suite .doc-button {
+ @apply inline-flex items-center justify-center gap-2 rounded-lg border border-border bg-surface px-3 py-2 text-sm font-semibold text-ink transition-colors hover:bg-subtle disabled:cursor-not-allowed disabled:opacity-50 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-200 dark:hover:bg-slate-700;
+}
+.bim-suite .doc-primary { @apply border-primary-600 bg-primary-600 text-white hover:bg-primary-700 dark:border-primary-500 dark:bg-primary-600 dark:text-white dark:hover:bg-primary-500; }
+.bim-suite .doc-input { @apply rounded-lg border border-border bg-surface px-3 py-2 text-sm text-ink outline-none focus:border-primary-500 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-100; }
+.bim-suite .doc-icon { @apply inline-flex items-center justify-center rounded-lg p-2 text-ink hover:bg-subtle disabled:opacity-40 dark:text-slate-200 dark:hover:bg-slate-800; }
+.bim-suite .bg-bg-surface { background: var(--bg-surface); }
+.bim-suite .bg-bg-app { background: var(--bg-app); }
+.bim-suite .bg-bg-muted { background: var(--bg-muted); }
+.bim-suite .bg-bg-subtle { background: var(--bg-subtle); }
+.bim-suite .text-txt-primary { color: var(--text-primary); }
+.bim-suite .text-txt-secondary { color: var(--text-secondary); }
+.bim-suite .text-txt-muted { color: var(--text-muted); }

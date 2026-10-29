@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ids:ids xmlns:ids="http://standards.buildingsmart.org/IDS" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://standards.buildingsmart.org/IDS http://standards.buildingsmart.org/IDS/1.0/ids.xsd">
+  <ids:info>
+    <ids:title>Yêu cầu thông tin mô hình – Công trình đường sắt (mẫu, IFC 4.3)</ids:title>
+    <ids:version>1.0</ids:version>
+    <ids:description>Tối thiểu cho mô hình tuyến, cầu và nhà ga đường sắt theo IFC 4.3.</ids:description>
+  </ids:info>
+  <ids:specifications>
+    <ids:specification name="Mô hình có tuyến (IfcAlignment)" ifcVersion="IFC4X3_ADD2" description="Làm cơ sở tra lý trình">
+      <ids:applicability minOccurs="1" maxOccurs="unbounded">
+        <ids:entity><ids:name><ids:simpleValue>IFCALIGNMENT</ids:simpleValue></ids:name></ids:entity>
+      </ids:applicability>
+      <ids:requirements>
+        <ids:attribute cardinality="required"><ids:name><ids:simpleValue>Name</ids:simpleValue></ids:name></ids:attribute>
+      </ids:requirements>
+    </ids:specification>
+    <ids:specification name="Kết cấu cầu có vật liệu" ifcVersion="IFC4X3_ADD2">
+      <ids:applicability minOccurs="0" maxOccurs="unbounded">
+        <ids:entity>
+          <ids:name>
+            <xs:restriction base="xs:string">
+              <xs:enumeration value="IFCBEAM"/>
+              <xs:enumeration value="IFCCOLUMN"/>
+              <xs:enumeration value="IFCFOOTING"/>
+              <xs:enumeration value="IFCPILE"/>
+              <xs:enumeration value="IFCBEARING"/>
+            </xs:restriction>
+          </ids:name>
+        </ids:entity>
+      </ids:applicability>
+      <ids:requirements>
+        <ids:material cardinality="required"/>
+      </ids:requirements>
+    </ids:specification>
+    <ids:specification name="Cọc có chiều dài thiết kế" ifcVersion="IFC4X3_ADD2">
+      <ids:applicability minOccurs="0" maxOccurs="unbounded">
+        <ids:entity><ids:name><ids:simpleValue>IFCPILE</ids:simpleValue></ids:name></ids:entity>
+      </ids:applicability>
+      <ids:requirements>
+        <ids:property dataType="IFCPOSITIVELENGTHMEASURE" cardinality="required">
+          <ids:propertySet><ids:simpleValue>Qto_PileBaseQuantities</ids:simpleValue></ids:propertySet>
+          <ids:baseName><ids:simpleValue>Length</ids:simpleValue></ids:baseName>
+        </ids:property>
+      </ids:requirements>
+    </ids:specification>
+  </ids:specifications>
+</ids:ids>

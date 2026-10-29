@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ids:ids xmlns:ids="http://standards.buildingsmart.org/IDS" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://standards.buildingsmart.org/IDS http://standards.buildingsmart.org/IDS/1.0/ids.xsd">
+  <ids:info>
+    <ids:title>Yêu cầu thông tin mô hình – Tu bổ di tích kiến trúc gỗ (mẫu)</ids:title>
+    <ids:version>1.0</ids:version>
+    <ids:description>Cấu kiện gỗ (cột, xà, kẻ, bẩy, hoành...) phải có tên theo thuật ngữ truyền thống, loại gỗ và hiện trạng để lập hồ sơ tu bổ.</ids:description>
+  </ids:info>
+  <ids:specifications>
+    <ids:specification name="Cấu kiện gỗ có tên gọi truyền thống" ifcVersion="IFC2X3 IFC4" description="VD: Cột cái, Cột quân, Xà nách, Kẻ hiên, Bẩy">
+      <ids:applicability minOccurs="1" maxOccurs="unbounded">
+        <ids:entity>
+          <ids:name>
+            <xs:restriction base="xs:string">
+              <xs:enumeration value="IFCCOLUMN"/>
+              <xs:enumeration value="IFCBEAM"/>
+              <xs:enumeration value="IFCMEMBER"/>
+            </xs:restriction>
+          </ids:name>
+        </ids:entity>
+      </ids:applicability>
+      <ids:requirements>
+        <ids:attribute cardinality="required"><ids:name><ids:simpleValue>Name</ids:simpleValue></ids:name></ids:attribute>
+        <ids:material cardinality="required"/>
+      </ids:requirements>
+    </ids:specification>
+    <ids:specification name="Ghi nhận hiện trạng cấu kiện" ifcVersion="IFC4" description="Thuộc tính Pset_Condition.AssessmentCondition: Tốt / Hư hỏng nhẹ / Hư hỏng nặng / Thay mới">
+      <ids:applicability minOccurs="0" maxOccurs="unbounded">
+        <ids:entity>
+          <ids:name>
+            <xs:restriction base="xs:string">
+              <xs:enumeration value="IFCCOLUMN"/>
+              <xs:enumeration value="IFCBEAM"/>
+            </xs:restriction>
+          </ids:name>
+        </ids:entity>
+      </ids:applicability>
+      <ids:requirements>
+        <ids:property dataType="IFCLABEL" cardinality="required">
+          <ids:propertySet><ids:simpleValue>Pset_Condition</ids:simpleValue></ids:propertySet>
+          <ids:baseName><ids:simpleValue>AssessmentCondition</ids:simpleValue></ids:baseName>
+        </ids:property>
+      </ids:requirements>
+    </ids:specification>
+  </ids:specifications>
+</ids:ids>
