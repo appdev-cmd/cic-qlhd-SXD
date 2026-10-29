@@ -259,6 +259,9 @@ export const BimViewer = forwardRef<BimViewerRef, BimViewerProps>(
     return (
       <div
         className={`relative w-full h-full min-h-[450px] bg-slate-100 dark:bg-slate-900 overflow-hidden ${className}`}
+        data-bim-loaded-count={ctx.loadedRef.current.size}
+        data-bim-loading-count={loadingCount}
+        data-bim-failed-count={failedLoads.length}
       >
         <div
           ref={containerRef}

@@ -9,3 +9,5 @@
 *.jpg binary
 *.jpeg binary
 *.webp binary
+public/bim/demo/files/* binary
+public/bim/demo/elements/*.gz binary

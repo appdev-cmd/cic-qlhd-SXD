@@ -28,6 +28,10 @@ Bộ API `/api/appraisal/bim` và SQLite giữ cho chế độ demo. Dữ liệu
 
 ## Chạy và kiểm tra
 
+Bản triển khai Vercel hiện là demo tĩnh, không có Core/Worker phía sau `/api/appraisal`. Bộ dữ liệu trình diễn NOXH HVT được đóng gói trong `public/bim/demo/`: 12 Fragments, IFC/IFCZIP gốc và thuộc tính cấu kiện nén gzip. Giao diện tự mở bộ mô hình này trong chế độ demo; trình xem 3D, chọn cấu kiện, thuộc tính và đo đạc không cần kết nối cloud. Adapter chỉ đọc từ bộ tệp này và từ chối ghi; chức năng cần máy chủ hiển thị yêu cầu kết nối máy chủ, không giả lập lưu dữ liệu thành công. Cloud tiếp tục dùng JWT/RLS và kho tệp riêng như trước.
+
+`scripts/export-bim-demo.py` tạo lại snapshot từ đúng dự án NOXH HVT đã được chuyển, phân trang 1.000 cấu kiện và kiểm tra số lượng. Snapshot không chứa khóa truy cập hay hồ sơ người dùng. Đây là bộ tệp trình diễn được phục vụ công khai cùng website, tách biệt với dữ liệu cloud có phân quyền.
+
 `pnpm dev` khởi động Worker 8200, Core 8201 và Web/API 8208. Các lệnh dev/build tự chuẩn bị WASM, Fragments worker và tám worker BIM từ dependency đã khóa phiên bản, không cần CDN.
 
 - `pnpm lint:ui`, `pnpm typecheck`, `pnpm typecheck:core`, `pnpm build`.

@@ -18,7 +18,8 @@ import { useAuth } from '../context/AuthContext';
 import { supabase } from '../lib/supabase';
 import { useTheme } from '../context/ThemeContext';
 import { useFilterState } from '../hooks/useFilterState';
-import { projectService } from '../services/projectService';
+import { mapProject, projectService } from '../services/projectService';
+import { enableBimStaticDemo, loadBimDemo, type DemoManifest } from '../features/bim-suite/adapters/staticDemo';
 import type { Project } from '../types/project';
 import { cn, formatDateTime, formatNumber } from '../lib/utils';
 import { SearchableSelect } from '../components/ui/SearchableSelect';
@@ -61,7 +62,27 @@ export function BimPage() {
   const [selected, setSelected] = useState<Project | null>(null);
   const [search, setSearch] = useState('');
   const [error, setError] = useState('');
+  const [demo, setDemo] = useState<DemoManifest | null>(null);
   const onSearch = useCallback((value: string) => setSearch(value), []);
+  useEffect(() => {
+    let alive = true;
+    enableBimStaticDemo(false);
+    if (mode === 'demo')
+      loadBimDemo()
+        .then((data) => {
+          if (!alive) return;
+          enableBimStaticDemo(true);
+          setDemo(data);
+          setProjectId(data.project.id);
+        })
+        .catch(() => {
+          /* Local demo installations can still use their own IFC workspace. */
+        });
+    return () => {
+      alive = false;
+      enableBimStaticDemo(false);
+    };
+  }, [mode]);
   useEffect(() => {
     if (mode !== 'cloud') return;
     let alive = true;
@@ -100,6 +121,10 @@ export function BimPage() {
   useEffect(() => {
     let alive = true;
     setSelected(null);
+    if (demo && projectId === demo.project.id) {
+      setSelected(mapProject(demo.project));
+      return;
+    }
     if (projectId)
       projectService
         .getById(projectId)
@@ -112,7 +137,7 @@ export function BimPage() {
     return () => {
       alive = false;
     };
-  }, [projectId]);
+  }, [projectId, demo]);
   const options = [...(selected && !projects.some((p) => p.id === selected.id) ? [selected] : []), ...projects];
   return (
     <div className="space-y-4 text-ink dark:text-slate-100">
@@ -143,7 +168,7 @@ export function BimPage() {
         </p>
       )}
       {selected ? (
-        mode === 'cloud' ? (
+        mode === 'cloud' || demo?.project.id === selected.id ? (
           <ErrorBoundary>
             <Suspense fallback={<p role="status">Đang tải toàn bộ phân hệ BIM…</p>}>
               <SuiteWorkspace key={selected.id} projectId={selected.id} projectName={selected.name} />

@@ -3,6 +3,7 @@
 // đăng nhập cookie của BuildSIA nên mọi truy vấn đi qua RLS theo người dùng.
 // Không dùng Service Worker gắn token như cic-hud: tệp mô hình đọc bằng signed URL ngắn hạn (kế hoạch BIM, mục 2).
 import { supabase as client } from '@/lib/supabase';
+import { isBimStaticDemo, staticBimClient } from './staticDemo';
 
 const tables: Record<string, string> = {
   documents: 'sxd_bim_documents',
@@ -12,6 +13,8 @@ const tables: Record<string, string> = {
 };
 export const supabase = new Proxy(client, {
   get(target, property, receiver) {
+    if (isBimStaticDemo() && property in staticBimClient)
+      return staticBimClient[property as keyof typeof staticBimClient];
     if (property === 'from') return (name: string) => target.from(tables[name] || name);
     const value = Reflect.get(target, property, receiver);
     return typeof value === 'function' ? value.bind(target) : value;
