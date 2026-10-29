@@ -28,6 +28,7 @@
     "test:e2e": "cd tests/e2e && npx playwright test"
   },
   "dependencies": {
+    "@napi-rs/canvas": "^1.0.13",
     "@supabase/supabase-js": "^2.117.1",
     "@tanstack/react-query": "5.105.0",
     "@thatopen/components": "3.4.9",

@@ -115,6 +115,14 @@ try {
       nodeQueueMigration: 'passed',
     }),
   );
+  await client.query(readFileSync('supabase/migrations/20261029040500_bim_assistant_log_feature.sql', 'utf8'));
+  await client.query('BEGIN');
+  await client.query('insert into public.ai_logs(feature,input_text) values($1,$2)', [
+    'bim_assistant',
+    'Isolated fixture',
+  ]);
+  await client.query('ROLLBACK');
+  console.log(JSON.stringify({ bimAssistantAuditFeature: 'passed' }));
 } finally {
   await client.end();
 }

@@ -8,6 +8,19 @@ import { HttpError } from './errors.js';
 import { pageText, type OcrGenerator, type OcrPage } from './ocr.js';
 
 export const MAX_BYTES = 18 * 1024 * 1024;
+let pdfRuntime: Promise<typeof import('pdfjs-dist/legacy/build/pdf.mjs')> | undefined;
+function nativePdf() {
+  return (pdfRuntime ||= (async () => {
+    // Explicit imports let Vercel trace the optional native shims and the otherwise dynamic worker.
+    const canvas = await import('@napi-rs/canvas');
+    for (const key of ['DOMMatrix', 'ImageData', 'Path2D'] as const) {
+      if (!(key in globalThis)) Object.defineProperty(globalThis, key, { value: canvas[key], configurable: true });
+    }
+    const worker = await import('pdfjs-dist/legacy/build/pdf.worker.mjs');
+    Object.defineProperty(globalThis, 'pdfjsWorker', { value: worker, configurable: true });
+    return import('pdfjs-dist/legacy/build/pdf.mjs');
+  })());
+}
 export interface DocumentReadResult {
   segments: DocumentSegment[];
   warnings: string[];
@@ -109,7 +122,7 @@ export async function readDocument(
         throw new HttpError(422, 'Nội dung không phải PDF hợp lệ.');
       if (!bytes.subarray(0, 4).equals(Buffer.from('%PDF')))
         result.warnings.push('PDF có phần đầu bất thường; chỉ đọc phục hồi, giữ nguyên bản.');
-      const { getDocument } = await import('pdfjs-dist/legacy/build/pdf.mjs');
+      const { getDocument } = await nativePdf();
       const task = getDocument({ data: new Uint8Array(bytes), useSystemFonts: true, stopAtErrors: false });
       try {
         const document = await task.promise;
@@ -155,6 +168,10 @@ export async function readDocument(
       } catch (error) {
         if (error instanceof HttpError || options.signal?.aborted || (error as Error)?.name === 'InterruptedError')
           throw error;
+        console.warn('PDF read failed', {
+          errorType: (error as Error)?.name,
+          workerUnavailable: /worker/i.test(String(error)),
+        });
         throw new HttpError(422, 'PDF không hợp lệ hoặc có mật khẩu. Cần bản cho phép đọc.');
       } finally {
         await task.destroy();
