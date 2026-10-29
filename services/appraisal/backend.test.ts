@@ -21,6 +21,53 @@ import { tmpdir } from 'node:os';
 import { join, dirname, basename } from 'node:path';
 import { waitForLocalJobs, processJob } from './jobs.js';
 
+test('AI Gateway uses the same structured PDF contract without exposing credentials or storing responses', async () => {
+  const previous = {
+    provider: process.env.AI_PROVIDER,
+    model: process.env.AI_GATEWAY_MODEL,
+    key: process.env.AI_GATEWAY_API_KEY,
+  };
+  process.env.AI_PROVIDER = 'gateway';
+  process.env.AI_GATEWAY_MODEL = 'openai/gpt-4o';
+  process.env.AI_GATEWAY_API_KEY = 'test-gateway-credential';
+  try {
+    const result = await generate<{ ok: boolean }>(
+      {
+        prompt: 'Copy the test.',
+        content: 'Test only.',
+        schema: {
+          type: 'object',
+          properties: { ok: { type: 'boolean' } },
+          required: ['ok'],
+          additionalProperties: false,
+        },
+        file: { name: 'scan.pdf', mimeType: 'application/pdf', data: new Uint8Array([1, 2, 3]) },
+      },
+      async (url, init) => {
+        assert.equal(url, 'https://ai-gateway.vercel.sh/v1/responses');
+        const body = JSON.parse(String(init?.body));
+        assert.equal(body.model, 'openai/gpt-4o');
+        assert.equal(body.store, false);
+        assert.equal(body.input[0].content[1].type, 'input_file');
+        assert.equal(body.text.format.strict, true);
+        return Response.json({
+          status: 'completed',
+          output: [{ content: [{ type: 'output_text', text: '{"ok":true}' }] }],
+        });
+      },
+    );
+    assert.deepEqual(result, { ok: true });
+  } finally {
+    for (const [name, value] of Object.entries({
+      AI_PROVIDER: previous.provider,
+      AI_GATEWAY_MODEL: previous.model,
+      AI_GATEWAY_API_KEY: previous.key,
+    }))
+      if (value === undefined) delete process.env[name];
+      else process.env[name] = value;
+  }
+});
+
 const identity = '00000000-0000-4000-8000-000000000001';
 function fakePool(failRollback = false) {
   const statements: Array<{ sql: string; values?: unknown[] }> = [];

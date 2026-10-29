@@ -2,6 +2,7 @@ import { existsSync } from 'node:fs';
 import { GoogleAuth } from 'google-auth-library';
 import { Ajv, type AnySchema } from 'ajv';
 import { HttpError } from './errors.js';
+import { getVercelOidcToken, getVercelOidcTokenSync } from '@vercel/oidc';
 
 export type JsonSchema = Record<string, unknown>;
 export interface ModelFile {
@@ -25,6 +26,7 @@ export function providerId(): string {
   return (process.env.AI_PROVIDER || 'openai').toLowerCase();
 }
 export function modelName(): string {
+  if (providerId() === 'gateway') return process.env.AI_GATEWAY_MODEL || '';
   return providerId() === 'vertex' ? process.env.VERTEX_MODEL || 'gemini-3.8-flash' : process.env.OPENAI_MODEL || '';
 }
 function vertexConfig() {
@@ -35,6 +37,15 @@ function vertexConfig() {
   };
 }
 export function configured(): boolean {
+  if (providerId() === 'gateway') {
+    if (!modelName()) return false;
+    if (process.env.AI_GATEWAY_API_KEY) return true;
+    try {
+      return Boolean(getVercelOidcTokenSync());
+    } catch {
+      return false;
+    }
+  }
   if (providerId() === 'openai') return Boolean(process.env.OPENAI_API_KEY && modelName());
   if (providerId() !== 'vertex') return false;
   const c = vertexConfig();
@@ -48,7 +59,7 @@ export function configured(): boolean {
 export function status() {
   return {
     id: providerId(),
-    label: providerId() === 'vertex' ? 'Vertex AI' : 'OpenAI',
+    label: providerId() === 'vertex' ? 'Vertex AI' : providerId() === 'gateway' ? 'Vercel AI Gateway' : 'OpenAI',
     model: modelName(),
     configured: configured(),
     connection: { ...connection },
@@ -160,8 +171,12 @@ export async function generate<T>(request: GenerateRequest, transport: typeof fe
       },
     };
   } else {
-    token = process.env.OPENAI_API_KEY!;
-    url = 'https://api.openai.com/v1/responses';
+    token =
+      providerId() === 'gateway'
+        ? process.env.AI_GATEWAY_API_KEY || (await getVercelOidcToken())
+        : process.env.OPENAI_API_KEY!;
+    url =
+      providerId() === 'gateway' ? 'https://ai-gateway.vercel.sh/v1/responses' : 'https://api.openai.com/v1/responses';
     body = {
       model: modelName(),
       store: false,

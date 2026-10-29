@@ -34,6 +34,7 @@
     "@thatopen/components-front": "3.4.5",
     "@thatopen/fragments": "3.4.8",
     "@types/leaflet": "^1.9.22",
+    "@vercel/oidc": "^4.0.4",
     "@vercel/queue": "^0.10.0",
     "ajv": "^8.20.0",
     "ajv-formats": "^3.0.1",
