@@ -116,7 +116,9 @@
   --bg-active-row: #EDE8DF;
   --bg-stripe: #F8F5EC;
   --bg-overlay: rgba(45, 30, 10, 0.50);
+  --shadow-modal: 0 25px 50px -12px rgb(74 49 16 / 0.18);
   --ring-focus: #00668c;
+  --ring-focus-offset: #FCF9F2;
 
   /* Bộ màu chủ đạo — dự phòng lần vẽ đầu = "Lam công vụ" (src/config/palettes.ts);
      ThemeContext ghi đè theo bộ người dùng chọn. Kênh "r g b" cho Tailwind <alpha-value>. */

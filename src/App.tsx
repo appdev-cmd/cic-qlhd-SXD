@@ -20,6 +20,7 @@ const GisMapPage = lazy(() => import('./pages/GisMapPage').then((module) => ({ d
 const DocumentsPage = lazy(() => import('./pages/DocumentsPage').then((module) => ({ default: module.DocumentsPage })));
 const SettingsPage = lazy(() => import('./pages/SettingsPage').then((module) => ({ default: module.SettingsPage })));
 const AppraisalPage = lazy(() => import('./pages/AppraisalPage').then((module) => ({ default: module.AppraisalPage })));
+const UiGallery = lazy(() => import('./pages/dev/UiGallery').then((module) => ({ default: module.UiGallery })));
 
 export function App() {
   return (
@@ -56,6 +57,7 @@ function AuthenticatedApp() {
               <Route path="gis-map" element={<GisMapPage />} />
               <Route path="documents" element={<DocumentsPage />} />
               <Route path="settings" element={<SettingsPage />} />
+              <Route path="dev/ui" element={<UiGallery />} />
               <Route path="*" element={<Navigate to="/dashboard" replace />} />
             </Route>
           </Routes>

@@ -38,3 +38,28 @@
 .tr-active {
   background-color: var(--bg-active-row) !important;
 }
+
+/* DataTable density (src/components/ui/DataTable.tsx). Comfortable follows the global
+   --density-* tokens when a theme defines them; compact always tightens rows. */
+.dt-root {
+  --dt-cell-py: var(--density-cell-py, 0.625rem);
+  --dt-cell-px: var(--density-cell-px, 0.75rem);
+  --dt-row-h: var(--density-row-h, 2.75rem);
+  --dt-font: 0.8125rem;
+}
+
+.dt-root[data-density='compact'] {
+  --dt-cell-py: 0.3125rem;
+  --dt-cell-px: 0.5rem;
+  --dt-row-h: 2rem;
+  --dt-font: 0.75rem;
+}
+
+.dt-cell {
+  padding: var(--dt-cell-py) var(--dt-cell-px);
+  font-size: var(--dt-font);
+}
+
+.dt-row {
+  height: var(--dt-row-h);
+}

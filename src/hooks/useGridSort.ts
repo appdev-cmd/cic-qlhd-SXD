@@ -1,20 +1,19 @@
 import { useMemo } from 'react';
 import { useFilterState } from './useFilterState';
-export function useGridSort<T>(key: string, rows: T[], columns: { value: (r: T) => string | number }[]) {
+import {
+  fromStoredSort,
+  sortRows,
+  toStoredSort,
+  type SortState,
+  type SortValue,
+  type StoredSort,
+} from '../lib/dataTable';
+
+/** Legacy index-based client sort (persisted as `{ column, descending }`). */
+export function useGridSort<T>(key: string, rows: T[], columns: { value: (r: T) => SortValue }[]) {
   const [sort, setSort] = useFilterState(key, { column: 0, descending: false });
   const sorted = useMemo(
-    () =>
-      [...rows].sort((a, b) => {
-        const get = columns[sort.column]?.value;
-        if (!get) return 0;
-        const x = get(a),
-          y = get(b);
-        const v =
-          typeof x === 'number' && typeof y === 'number'
-            ? x - y
-            : String(x ?? '').localeCompare(String(y ?? ''), 'vi', { numeric: true });
-        return sort.descending ? -v : v;
-      }),
+    () => sortRows(rows, columns[sort.column]?.value, sort.descending ? 'desc' : 'asc'),
     [rows, columns, sort],
   );
   return {
@@ -22,4 +21,15 @@ export function useGridSort<T>(key: string, rows: T[], columns: { value: (r: T) 
     sort,
     toggle: (column: number) => setSort({ column, descending: sort.column === column ? !sort.descending : false }),
   };
+}
+
+/**
+ * Id-based sort state persisted in the same `{ column, descending }` shape, so grids that switch from
+ * index columns to ids "0", "1"… keep the user's stored choice. `null` means unsorted.
+ */
+export function useSortState(key: string, initial: SortState | null = null) {
+  const [stored, setStored] = useFilterState<StoredSort | null>(key, initial ? toStoredSort(initial) : null);
+  const sort = fromStoredSort(stored);
+  const setSort = (next: SortState | null) => setStored(next ? toStoredSort(next) : null);
+  return [sort, setSort] as const;
 }

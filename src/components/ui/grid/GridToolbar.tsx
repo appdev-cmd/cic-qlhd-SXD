@@ -1,6 +1,6 @@
 import React from 'react';
 import { RotateCcw, Search, X } from 'lucide-react';
-import { cn } from '../../../lib/utils';
+import { cn, formatNumber } from '../../../lib/utils';
 import { Tooltip } from '../Tooltip';
 
 /**
@@ -115,7 +115,7 @@ export function GridResetButton({ onClick, label = 'Đặt lại bộ lọc' }: 
 export function GridCount({ total, unit = 'bản ghi', detail }: { total: number; unit?: string; detail?: string }) {
   return (
     <span className="rounded-md border border-border dark:border-slate-700 bg-subtle dark:bg-slate-800 px-2 py-1 text-xs font-semibold text-ink-secondary dark:text-slate-300">
-      {total.toLocaleString('vi-VN')} {unit}
+      {formatNumber(total)} {unit}
       {detail ? ' · ' + detail : ''}
     </span>
   );

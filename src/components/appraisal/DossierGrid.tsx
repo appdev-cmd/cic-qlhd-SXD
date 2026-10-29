@@ -1,13 +1,20 @@
 import React from 'react';
-import { useColumnResize } from '../../hooks/useColumnResize';
-import { useGridSort } from '../../hooks/useGridSort';
+import { DataTable, type Density, type DataTableColumn, type SortState } from '../ui/DataTable';
+import type { Breakpoint } from '../../lib/dataTable';
+
 export interface GridColumn<T> {
   label: string;
   sortKey?: string;
   value: (r: T) => string | number;
   render?: (r: T) => React.ReactNode;
   width?: number;
+  /** Hide this secondary column below the given breakpoint. */
+  hideBelow?: Breakpoint;
+  /** Header help text shown in a Tooltip. */
+  tooltip?: React.ReactNode;
 }
+
+/** Compact grid used across appraisal panels: DataTable with the legacy `GridColumn` API. */
 export function DossierGrid<T extends { id: string }>({
   rows,
   columns,
@@ -17,6 +24,13 @@ export function DossierGrid<T extends { id: string }>({
   fitWidth = false,
   className = '',
   loading = false,
+  emptyMessage = 'Chưa có dữ liệu trong phạm vi đã chọn.',
+  onRowClick,
+  rowLabel,
+  showRowNumbers = false,
+  rowOffset = 0,
+  columnChooser = false,
+  density,
 }: {
   rows: T[];
   columns: GridColumn<T>[];
@@ -25,102 +39,63 @@ export function DossierGrid<T extends { id: string }>({
   onSort?: (key: string, direction: string) => void;
   fitWidth?: boolean;
   className?: string;
-  /** Show a loading message instead of the empty state while the first result is pending. */
+  /** Show skeleton rows instead of the empty state while the first result is pending. */
   loading?: boolean;
+  emptyMessage?: string;
+  /** Row activation by click, Enter or Space. */
+  onRowClick?: (row: T) => void;
+  rowLabel?: (row: T) => string;
+  showRowNumbers?: boolean;
+  /** Rows before the current page so numbering continues across pages. */
+  rowOffset?: number;
+  columnChooser?: boolean;
+  density?: Density;
 }) {
-  const { widths, start } = useColumnResize(storageKey + '-widths', fitWidth);
-  const { sorted, sort, toggle } = useGridSort(storageKey + '-sort', rows, columns);
-  const totalWidth = columns.reduce((n, c, i) => n + (widths[i] || c.width || 180), 0);
+  // Ids are column indexes so widths/sort stored by the previous index-based grid stay valid.
+  const tableColumns: DataTableColumn<T>[] = columns.map((c, index) => ({
+    id: String(index),
+    header: c.label,
+    cell: (row) => (c.render ? c.render(row) : c.value(row)),
+    sortValue: serverSort ? undefined : c.value,
+    sortable: serverSort ? Boolean(c.sortKey) : true,
+    width: c.width ?? 180,
+    minWidth: 80,
+    hideBelow: c.hideBelow,
+    tooltip: c.tooltip,
+  }));
+  const sortIndex = serverSort ? columns.findIndex((c) => c.sortKey && c.sortKey === serverSort.key) : -1;
+  const sort: SortState | null | undefined = serverSort
+    ? sortIndex >= 0
+      ? { columnId: String(sortIndex), direction: serverSort.direction === 'desc' ? 'desc' : 'asc' }
+      : null
+    : undefined;
+
   return (
-    <div
-      className={
-        'overflow-auto rounded-xl border border-border dark:border-border bg-surface dark:bg-surface ' + className
+    <DataTable
+      rows={rows}
+      columns={tableColumns}
+      storageKey={storageKey}
+      sort={sort}
+      onSortChange={
+        serverSort && onSort
+          ? (next) => {
+              const key = columns[Number(next.columnId)]?.sortKey;
+              if (key) onSort(key, next.direction);
+            }
+          : undefined
       }
-    >
-      <table
-        className="w-full table-fixed text-left text-xs text-ink-secondary dark:text-ink-secondary"
-        style={fitWidth ? undefined : { minWidth: totalWidth }}
-      >
-        <thead className="sticky top-0 z-10 bg-subtle dark:bg-subtle">
-          <tr>
-            {columns.map((c, i) => (
-              <th
-                key={c.label}
-                style={{
-                  width: fitWidth
-                    ? `${((widths[i] || c.width || 180) / totalWidth) * 100}%`
-                    : widths[i] || c.width || 180,
-                }}
-                className="relative p-3 font-semibold break-words"
-                aria-sort={
-                  serverSort
-                    ? serverSort.key === c.sortKey
-                      ? serverSort.direction === 'desc'
-                        ? 'descending'
-                        : 'ascending'
-                      : 'none'
-                    : sort.column === i
-                      ? sort.descending
-                        ? 'descending'
-                        : 'ascending'
-                      : 'none'
-                }
-              >
-                <button
-                  type="button"
-                  className="text-left pr-4"
-                  disabled={!!serverSort && !c.sortKey}
-                  onClick={() =>
-                    serverSort && onSort && c.sortKey
-                      ? onSort(
-                          c.sortKey,
-                          serverSort.key === c.sortKey && serverSort.direction === 'asc' ? 'desc' : 'asc',
-                        )
-                      : toggle(i)
-                  }
-                >
-                  {c.label}{' '}
-                  {serverSort
-                    ? serverSort.key === c.sortKey
-                      ? serverSort.direction === 'desc'
-                        ? '↓'
-                        : '↑'
-                      : ''
-                    : sort.column === i
-                      ? sort.descending
-                        ? '↓'
-                        : '↑'
-                      : ''}
-                </button>
-                {(!fitWidth || i < columns.length - 1) && (
-                  <span
-                    role="separator"
-                    aria-label={'Kéo rộng cột ' + c.label}
-                    onPointerDown={(e) => start(i, e)}
-                    className="absolute inset-y-0 right-0 w-2 touch-none cursor-col-resize hover:bg-primary-300 dark:hover:bg-primary-600"
-                  />
-                )}
-              </th>
-            ))}
-          </tr>
-        </thead>
-        <tbody>
-          {(serverSort ? rows : sorted).map((row) => (
-            <tr key={row.id} className="border-t border-border dark:border-border">
-              {columns.map((c) => (
-                <td key={c.label} className="p-3 align-top break-words whitespace-normal">
-                  {c.render ? c.render(row) : c.value(row)}
-                </td>
-              ))}
-            </tr>
-          ))}
-        </tbody>
-      </table>
-      {!rows.length && (
-        <p className="p-8 text-center text-sm text-ink-muted dark:text-ink-muted">
-          {loading ? 'Đang tải dữ liệu…' : 'Chưa có dữ liệu trong phạm vi đã chọn.'}
-        </p>
-      )}
-    </div>
+      defaultSort={{ columnId: '0', direction: 'asc' }}
+      onRowClick={onRowClick ? (row) => onRowClick(row) : undefined}
+      rowLabel={rowLabel}
+      showRowNumbers={showRowNumbers}
+      rowOffset={rowOffset}
+      loading={loading}
+      emptyMessage={emptyMessage}
+      columnChooser={columnChooser}
+      density={density}
+      fitWidth={fitWidth}
+      cellClassName="align-top"
+      className={className}
+    />
   );
 }

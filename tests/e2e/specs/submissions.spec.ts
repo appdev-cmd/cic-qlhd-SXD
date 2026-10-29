@@ -41,7 +41,7 @@ test('child form guard keeps the panel and typed data on Escape and backdrop cli
   await note.fill('Nội dung kiểm thử không lưu — kiểm tra bảo vệ form con.');
 
   await page.keyboard.press('Escape');
-  await expect(dialog.getByText('Có thay đổi chưa lưu.')).toBeVisible();
+  await expect(dialog.getByText('Có thay đổi chưa lưu', { exact: true })).toBeVisible();
   await dialog.getByRole('button', { name: 'Tiếp tục nhập' }).click();
   await expect(note).toHaveValue('Nội dung kiểm thử không lưu — kiểm tra bảo vệ form con.');
 

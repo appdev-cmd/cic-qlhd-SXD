@@ -54,7 +54,7 @@ export function ProjectDetailSlidePanel({
           {project.coverImage && (
             <div
               onClick={() => setActiveTab('gallery')}
-              className="relative w-16 h-16 rounded-xl overflow-hidden shrink-0 border border-border/80 bg-slate-950 cursor-pointer group shadow-xs"
+              className="relative w-16 h-16 rounded-xl overflow-hidden shrink-0 border border-border/80 bg-slate-950 dark:bg-slate-950 cursor-pointer group shadow-xs"
               role="button"
               aria-label="Xem thư viện ảnh"
             >
@@ -67,7 +67,7 @@ export function ProjectDetailSlidePanel({
                 <Eye size={16} />
               </div>
               {project.images && project.images.length > 0 && (
-                <span className="absolute bottom-1 right-1 bg-black/75 backdrop-blur-xs text-white text-[9px] px-1 py-0.2 rounded font-mono flex items-center gap-0.5">
+                <span className="absolute bottom-1 right-1 bg-black/75 backdrop-blur-xs text-white text-2xs px-1 py-0.2 rounded font-mono flex items-center gap-0.5">
                   <Camera size={8} />
                   {project.images.length}
                 </span>
@@ -236,7 +236,7 @@ export function ProjectDetailSlidePanel({
                     <p className="text-2xs text-ink-secondary mt-0.5 flex items-center gap-1.5">
                       <span>Chủ nhiệm / Chủ trì:</span>
                       <strong className="text-ink">{c.leadPersonnelName}</strong>
-                      <span className="w-1.5 h-1.5 rounded-full bg-emerald-500" />
+                      <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 dark:bg-emerald-400" />
                       <span className="text-emerald-600 font-medium">Chưa xác minh chứng chỉ</span>
                     </p>
                   </div>

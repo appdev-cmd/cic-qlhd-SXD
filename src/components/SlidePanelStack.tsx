@@ -270,7 +270,7 @@ export function SlidePanelStack({ sidebarWidth: propSidebarWidth }: SlidePanelSt
 
                 {/* 2. Text dọc chuẩn mực (writingMode: vertical-rl + rotate 180deg) */}
                 <span
-                  className="min-h-0 flex-1 overflow-hidden whitespace-nowrap text-[0.625rem] font-bold tracking-tight select-none"
+                  className="min-h-0 flex-1 overflow-hidden whitespace-nowrap text-2xs font-bold tracking-tight select-none"
                   style={{
                     writingMode: 'vertical-rl',
                     transform: 'rotate(180deg)',
@@ -326,7 +326,7 @@ export function SlidePanelStack({ sidebarWidth: propSidebarWidth }: SlidePanelSt
             >
               <Layers size={13} className="shrink-0" />
               <span
-                className="min-h-0 flex-1 overflow-hidden text-[0.5625rem] font-bold whitespace-nowrap select-none"
+                className="min-h-0 flex-1 overflow-hidden text-2xs font-bold whitespace-nowrap select-none"
                 style={{ writingMode: 'vertical-rl', transform: 'rotate(180deg)' }}
               >
                 Đóng tất

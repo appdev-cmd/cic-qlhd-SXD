@@ -26,7 +26,7 @@ import {
   Coins,
   Camera,
 } from 'lucide-react';
-import { cn, formatCurrency, formatDate } from '../../lib/utils';
+import { cn, formatCurrency, formatDate, formatNumber } from '../../lib/utils';
 import { Tooltip } from '../../components/ui/Tooltip';
 import { SearchableSelect } from '../../components/ui/SearchableSelect';
 import type { Project, ProjectTT39Data, ProjectMemberTT39, ProjectParticipantOrgTT39 } from '../../types/project';
@@ -111,8 +111,8 @@ function LoadedProjectInfo({ project, tt39 }: { project: Project; tt39: ProjectT
           <div>
             <div className="flex items-center gap-2">
               <span className="font-bold text-ink text-xs">Dữ liệu Hồ sơ Dự án theo Thông tư 39/2026/TT-BXD</span>
-              <span className="text-3xs font-semibold px-2 py-0.5 rounded-full bg-emerald-500/10 text-emerald-600 border border-emerald-500/20 flex items-center gap-1">
-                <span className="w-1.5 h-1.5 rounded-full bg-emerald-500" />
+              <span className="text-3xs font-semibold px-2 py-0.5 rounded-full bg-success-50 dark:bg-success-900 text-success-700 dark:text-success-200 border border-success-200 dark:border-success-700 flex items-center gap-1">
+                <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 dark:bg-emerald-400" />
                 Chuẩn hóa CSDL Quốc gia
               </span>
             </div>
@@ -148,7 +148,7 @@ function LoadedProjectInfo({ project, tt39 }: { project: Project; tt39: ProjectT
             {project.images.slice(0, 4).map((img, idx) => (
               <div
                 key={img.id || idx}
-                className="group relative rounded-lg overflow-hidden border border-border bg-slate-900 aspect-video shadow-xs cursor-pointer"
+                className="group relative rounded-lg overflow-hidden border border-border bg-slate-900 dark:bg-slate-900 aspect-video shadow-xs cursor-pointer"
               >
                 <img
                   src={img.url}
@@ -157,7 +157,7 @@ function LoadedProjectInfo({ project, tt39 }: { project: Project; tt39: ProjectT
                   loading="lazy"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-90 group-hover:opacity-60 transition-opacity" />
-                <span className="absolute top-1.5 left-1.5 px-1.5 py-0.5 rounded text-[9px] font-semibold bg-black/60 text-white backdrop-blur-xs border border-white/20">
+                <span className="absolute top-1.5 left-1.5 px-1.5 py-0.5 rounded text-2xs font-semibold bg-black/60 text-white backdrop-blur-xs border border-white/20">
                   {img.categoryLabel}
                 </span>
                 <p className="absolute bottom-1.5 left-1.5 right-1.5 text-white font-medium text-3xs truncate">
@@ -302,7 +302,7 @@ function LoadedProjectInfo({ project, tt39 }: { project: Project; tt39: ProjectT
           <div className="p-3 rounded-lg border border-border bg-subtle/50">
             <span className="text-3xs uppercase tracking-wider text-ink-muted block">Diện tích đất</span>
             <p className="text-sm font-bold font-mono text-ink mt-0.5">
-              {tt39.landArea.toLocaleString('vi-VN')} <span className="text-2xs font-normal">m²</span>
+              {formatNumber(tt39.landArea)} <span className="text-2xs font-normal">m²</span>
             </p>
             <span className="text-3xs text-ink-muted">~ {(tt39.landArea / 10000).toFixed(2)} hecta</span>
           </div>
@@ -310,7 +310,7 @@ function LoadedProjectInfo({ project, tt39 }: { project: Project; tt39: ProjectT
           <div className="p-3 rounded-lg border border-border bg-subtle/50">
             <span className="text-3xs uppercase tracking-wider text-ink-muted block">Diện tích xây dựng</span>
             <p className="text-sm font-bold font-mono text-ink mt-0.5">
-              {tt39.constructionArea.toLocaleString('vi-VN')} <span className="text-2xs font-normal">m²</span>
+              {formatNumber(tt39.constructionArea)} <span className="text-2xs font-normal">m²</span>
             </p>
             <span className="text-3xs text-ink-muted">Mật độ: {tt39.buildingDensity}%</span>
           </div>
@@ -318,7 +318,7 @@ function LoadedProjectInfo({ project, tt39 }: { project: Project; tt39: ProjectT
           <div className="p-3 rounded-lg border border-border bg-subtle/50">
             <span className="text-3xs uppercase tracking-wider text-ink-muted block">Tổng diện tích sàn</span>
             <p className="text-sm font-bold font-mono text-ink mt-0.5">
-              {tt39.grossFloorArea.toLocaleString('vi-VN')} <span className="text-2xs font-normal">m²</span>
+              {formatNumber(tt39.grossFloorArea)} <span className="text-2xs font-normal">m²</span>
             </p>
             <span className="text-3xs text-ink-muted">Hệ số SD đất: {tt39.plotRatio} lần</span>
           </div>
@@ -474,7 +474,7 @@ function LoadedProjectInfo({ project, tt39 }: { project: Project; tt39: ProjectT
             <FileCheck2 size={15} className="text-primary-600" />
             <span className="uppercase tracking-wider text-2xs">6. Danh mục Hồ sơ Pháp lý Đầu vào (Mục I.21 TT39)</span>
           </div>
-          <span className="text-3xs font-semibold px-2 py-0.5 rounded bg-emerald-500/10 text-emerald-600">
+          <span className="text-3xs font-semibold px-2 py-0.5 rounded bg-success-50 dark:bg-success-900 text-success-700 dark:text-success-200">
             {tt39.legalDocs.length} Văn bản kê khai
           </span>
         </div>
@@ -544,7 +544,7 @@ function LoadedProjectInfo({ project, tt39 }: { project: Project; tt39: ProjectT
                   </h5>
                 </div>
                 {org.certGrade && (
-                  <span className="text-3xs font-mono font-bold px-2 py-0.5 rounded bg-emerald-500/10 text-emerald-700 border border-emerald-500/20 shrink-0">
+                  <span className="text-3xs font-mono font-bold px-2 py-0.5 rounded bg-success-50 dark:bg-success-900 text-success-700 dark:text-success-200 border border-success-200 dark:border-success-700 shrink-0">
                     Hạng {org.certGrade}
                   </span>
                 )}

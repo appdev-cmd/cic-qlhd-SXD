@@ -17,6 +17,17 @@ export function formatCurrency(amount: number | string | undefined | null): stri
 }
 
 /**
+ * Định dạng số theo kiểu Việt Nam (dấu chấm phân nhóm nghìn, dấu phẩy thập phân).
+ * Dùng thay cho gọi trực tiếp `toLocaleString`. Ví dụ: 1234567.5 -> 1.234.567,5
+ */
+export function formatNumber(value: number | string | undefined | null, maximumFractionDigits = 2): string {
+  if (value == null || value === '') return '—';
+  const num = typeof value === 'string' ? Number(value) : value;
+  if (!Number.isFinite(num)) return '—';
+  return num.toLocaleString('vi-VN', { maximumFractionDigits });
+}
+
+/**
  * Định dạng số tỷ đồng rút gọn
  * Ví dụ: 12500000000 -> 12,50 tỷ
  */

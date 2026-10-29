@@ -318,7 +318,7 @@ export function AppLayout() {
               </span>
             </div>
 
-            <span className="hidden md:inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 text-3xs font-bold border border-emerald-500/20">
+            <span className="hidden md:inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-success-50 dark:bg-success-900 text-success-700 dark:text-success-200 border border-success-200 dark:border-success-700 text-2xs font-bold">
               <ShieldCheck size={12} />
               Cấp phép & Thẩm định Cấp tỉnh
             </span>

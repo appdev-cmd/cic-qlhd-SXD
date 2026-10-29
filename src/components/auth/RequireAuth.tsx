@@ -63,7 +63,7 @@ function Brand({ large = false }: { large?: boolean }) {
       }
     >
       <Building2 size={large ? 32 : 22} />
-      <span className={(large ? 'text-sm' : 'text-[9px]') + ' font-black tracking-widest mt-1'}>SXD</span>
+      <span className={(large ? 'text-sm' : 'text-2xs') + ' font-black tracking-widest mt-1'}>SXD</span>
     </div>
   );
 }
@@ -166,7 +166,7 @@ export function RequireAuth({ children }: { children: React.ReactNode }) {
             <p className="text-lg font-black tracking-wider">
               BUILD<span className="text-brand-accent dark:text-brand-accent">APPRAISAL AI</span>
             </p>
-            <p className="mt-1 text-[10px] uppercase font-semibold tracking-wider text-white/65 dark:text-white/65">
+            <p className="mt-1 text-2xs uppercase font-semibold tracking-wider text-white/65 dark:text-white/65">
               Hệ thống nghiệp vụ Sở Xây dựng
             </p>
           </div>
@@ -197,7 +197,7 @@ export function RequireAuth({ children }: { children: React.ReactNode }) {
             ))}
           </div>
         </div>
-        <p className="text-[10px] tracking-wider uppercase font-semibold text-white/65 dark:text-white/65">
+        <p className="text-2xs tracking-wider uppercase font-semibold text-white/65 dark:text-white/65">
           Sở Xây dựng tỉnh Điện Biên · BuildAppraisal AI
         </p>
       </aside>
@@ -261,7 +261,7 @@ export function RequireAuth({ children }: { children: React.ReactNode }) {
               UBND tỉnh Điện Biên
             </p>
             <h2 className="text-xl font-black tracking-wider uppercase">Sở Xây dựng</h2>
-            <p className="text-[10px] uppercase tracking-[0.16em] text-ink-muted dark:text-slate-400">
+            <p className="text-2xs uppercase tracking-[0.16em] text-ink-muted dark:text-slate-400">
               Hệ thống thẩm định dự án xây dựng
             </p>
           </header>
@@ -306,7 +306,7 @@ export function RequireAuth({ children }: { children: React.ReactNode }) {
               }}
             >
               {!recovery && (
-                <label className="block text-[11px] font-bold uppercase tracking-wider text-ink-muted dark:text-slate-400">
+                <label className="block text-xs font-bold uppercase tracking-wider text-ink-muted dark:text-slate-400">
                   Tài khoản hoặc Email
                   <div className={field + ' mt-2'}>
                     <User size={17} className="shrink-0" />
@@ -324,7 +324,7 @@ export function RequireAuth({ children }: { children: React.ReactNode }) {
                 </label>
               )}
               {(!forgot || recovery) && (
-                <label className="block text-[11px] font-bold uppercase tracking-wider text-ink-muted dark:text-slate-400">
+                <label className="block text-xs font-bold uppercase tracking-wider text-ink-muted dark:text-slate-400">
                   {recovery ? 'Mật khẩu mới' : 'Mật khẩu'}
                   <div className={field + ' mt-2'}>
                     <Lock size={17} className="shrink-0" />
@@ -355,7 +355,7 @@ export function RequireAuth({ children }: { children: React.ReactNode }) {
                 </label>
               )}
               {recovery && (
-                <label className="block text-[11px] font-bold uppercase tracking-wider text-ink-muted dark:text-slate-400">
+                <label className="block text-xs font-bold uppercase tracking-wider text-ink-muted dark:text-slate-400">
                   Nhập lại mật khẩu
                   <div className={field + ' mt-2'}>
                     <Lock size={17} />
@@ -442,7 +442,7 @@ export function RequireAuth({ children }: { children: React.ReactNode }) {
             ) : (
               accounts.length > 0 && (
                 <div className="mt-6 pt-5 border-t border-border dark:border-slate-700">
-                  <p className="text-center text-[10px] font-bold uppercase tracking-wider text-ink-muted dark:text-slate-400 mb-3">
+                  <p className="text-center text-2xs font-bold uppercase tracking-wider text-ink-muted dark:text-slate-400 mb-3">
                     Hoặc đăng nhập bằng tài khoản thử nghiệm
                   </p>
                   <SearchableSelect
@@ -457,7 +457,7 @@ export function RequireAuth({ children }: { children: React.ReactNode }) {
                       badge: 'TEST',
                     }))}
                   />
-                  <p className="text-center text-[11px] text-ink-muted dark:text-slate-400 mt-3">
+                  <p className="text-center text-xs text-ink-muted dark:text-slate-400 mt-3">
                     Chọn tài khoản để vào thẳng môi trường thử nghiệm.
                   </p>
                 </div>
@@ -478,7 +478,7 @@ export function RequireAuth({ children }: { children: React.ReactNode }) {
               )}
             </div>
           )}
-          <footer className="mt-8 text-center text-[10px] text-ink-muted dark:text-slate-400">
+          <footer className="mt-8 text-center text-2xs text-ink-muted dark:text-slate-400">
             BuildAppraisal AI · Hỗ trợ nghiệp vụ quản lý xây dựng
           </footer>
         </div>

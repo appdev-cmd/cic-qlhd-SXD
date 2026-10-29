@@ -123,7 +123,7 @@ export function ProjectsPage() {
       accessor: (p) => (
         <div className="flex items-center gap-3 py-1">
           {p.coverImage && (
-            <div className="relative w-12 h-12 rounded-lg overflow-hidden shrink-0 border border-border/80 bg-slate-950 group/img shadow-xs">
+            <div className="relative w-12 h-12 rounded-lg overflow-hidden shrink-0 border border-border/80 bg-slate-950 dark:bg-slate-950 group/img shadow-xs">
               <img
                 src={p.coverImage}
                 alt={p.name}
@@ -131,7 +131,7 @@ export function ProjectsPage() {
                 loading="lazy"
               />
               {p.images && p.images.length > 0 && (
-                <span className="absolute bottom-0 right-0 bg-black/75 backdrop-blur-xs text-white text-[9px] px-1 py-0.2 rounded-tl font-mono flex items-center gap-0.5">
+                <span className="absolute bottom-0 right-0 bg-black/75 backdrop-blur-xs text-white text-2xs px-1 py-0.2 rounded-tl font-mono flex items-center gap-0.5">
                   <Camera size={8} />
                   {p.images.length}
                 </span>
@@ -346,6 +346,8 @@ export function ProjectsPage() {
           onSort={(key, direction) => setSorting({ key, direction })}
           columns={columns}
           data={filteredProjects}
+          rowOffset={page * 50}
+          rowLabel={(p) => p.name}
           loading={loading && !filteredProjects.length}
           onRowClick={handleOpenDetail}
           onView={handleOpenDetail}
@@ -362,7 +364,7 @@ export function ProjectsPage() {
                 className="group relative rounded-2xl border border-border bg-surface overflow-hidden shadow-xs hover:shadow-lg transition-all duration-300 flex flex-col cursor-pointer hover:border-primary-500/40"
               >
                 {/* Ảnh bìa phối cảnh nổi bật */}
-                <div className="relative aspect-[16/10] overflow-hidden bg-slate-950">
+                <div className="relative aspect-[16/10] overflow-hidden bg-slate-950 dark:bg-slate-950">
                   <img
                     src={
                       p.coverImage ||
@@ -425,7 +427,7 @@ export function ProjectsPage() {
                         {p.images.slice(0, 4).map((subImg, sIdx) => (
                           <div
                             key={subImg.id || sIdx}
-                            className="aspect-video rounded-md overflow-hidden border border-border bg-slate-900 relative group/sub"
+                            className="aspect-video rounded-md overflow-hidden border border-border bg-slate-900 dark:bg-slate-900 relative group/sub"
                           >
                             <img
                               src={subImg.thumbnailUrl || subImg.url}
@@ -434,7 +436,7 @@ export function ProjectsPage() {
                               loading="lazy"
                             />
                             {sIdx === 3 && p.images && p.images.length > 4 && (
-                              <div className="absolute inset-0 bg-black/75 flex items-center justify-center text-white text-[10px] font-bold">
+                              <div className="absolute inset-0 bg-black/75 flex items-center justify-center text-white text-2xs font-bold">
                                 +{p.images.length - 4}
                               </div>
                             )}
