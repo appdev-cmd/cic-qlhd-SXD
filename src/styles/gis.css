@@ -1,16 +1,17 @@
-/* Styling cho bản đồ Leaflet */
+/* Styling cho Bản đồ GIS & MapLibre GL (chuẩn QLDA-DDCN & SXD Điện Biên) */
 
-.leaflet-container {
+.leaflet-container,
+.maplibregl-map {
   font-family: inherit;
   width: 100%;
   height: 100%;
-  background: var(--bg-muted, #ECE8DF) !important;
+  background: var(--bg-muted, #ece8df);
 }
 
 .project-map-canvas {
   width: 100%;
-  height: min(62vh, 620px);
-  min-height: 440px;
+  height: min(68vh, 660px);
+  min-height: 500px;
   background:
     radial-gradient(ellipse at 52% 45%, rgb(186 230 253 / 0.55), transparent 60%),
     linear-gradient(135deg, #eff6ff 0%, #e0f2fe 45%, #f0f9ff 100%);
@@ -25,85 +26,134 @@
 @media (max-width: 640px) {
   .project-map-canvas {
     height: 58vh;
-    min-height: 360px;
+    min-height: 380px;
   }
 }
 
-/* Custom Popup */
-.leaflet-popup-content-wrapper {
-  background: #ffffff !important;
-  color: #0f172a !important;
-  border-radius: 14px !important;
-  padding: 8px 12px !important;
-  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.25), 0 8px 10px -6px rgba(0, 0, 0, 0.15) !important;
-  border: 1px solid #e2e8f0 !important;
+/* MapLibre GL Custom Popup (Glassmorphism) */
+.custom-gl-popup .maplibregl-popup-content {
+  background: rgba(255, 255, 255, 0.97) !important;
+  backdrop-filter: blur(12px) !important;
+  border-radius: 16px !important;
+  padding: 0 !important;
+  box-shadow:
+    0 20px 25px -5px rgba(15, 23, 42, 0.18),
+    0 8px 10px -6px rgba(15, 23, 42, 0.08),
+    0 0 0 1px rgba(15, 23, 42, 0.06) !important;
+  overflow: hidden;
+  border: none !important;
 }
 
-.dark .leaflet-popup-content-wrapper {
-  background: #0f172a !important;
+.dark .custom-gl-popup .maplibregl-popup-content {
+  background: rgba(15, 23, 42, 0.96) !important;
+  box-shadow:
+    0 20px 25px -5px rgba(0, 0, 0, 0.55),
+    0 8px 10px -6px rgba(0, 0, 0, 0.35),
+    0 0 0 1px rgba(255, 255, 255, 0.12) !important;
   color: #f8fafc !important;
+}
+
+.custom-gl-popup .maplibregl-popup-tip {
+  border-top-color: rgba(255, 255, 255, 0.97) !important;
+  border-bottom-color: rgba(255, 255, 255, 0.97) !important;
+}
+
+.dark .custom-gl-popup .maplibregl-popup-tip {
+  border-top-color: rgba(15, 23, 42, 0.96) !important;
+  border-bottom-color: rgba(15, 23, 42, 0.96) !important;
+}
+
+.custom-gl-popup .maplibregl-popup-close-button {
+  display: none !important;
+}
+
+/* Project Pulsing Pin Marker */
+.project-gl-pin {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background: var(--pin-color, #0284c7);
+  border: 3px solid #ffffff;
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.35);
+  cursor: pointer;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.dark .project-gl-pin {
+  border-color: #1e293b;
+}
+
+.project-gl-pin:hover,
+.project-gl-pin.is-selected {
+  transform: scale(1.3);
+  z-index: 20 !important;
+}
+
+.project-gl-pin::after {
+  content: '';
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  background: var(--pin-color, #0284c7);
+  opacity: 0.4;
+  animation: map-pin-ping 2s cubic-bezier(0, 0, 0.2, 1) infinite;
+  z-index: -1;
+}
+
+@keyframes map-pin-ping {
+  75%,
+  100% {
+    transform: scale(2.35);
+    opacity: 0;
+  }
+}
+
+/* Material Mine Marker */
+.mine-gl-marker {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #f59e0b, #d97706);
+  border: 2.5px solid #ffffff;
+  box-shadow: 0 4px 10px rgba(217, 119, 6, 0.45);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #ffffff;
+  transition: all 0.2s ease;
+}
+
+.dark .mine-gl-marker {
+  border-color: #1e293b;
+}
+
+.mine-gl-marker:hover {
+  transform: scale(1.22);
+  box-shadow: 0 6px 14px rgba(217, 119, 6, 0.65);
+  z-index: 20 !important;
+}
+
+/* MapLibre Navigation Control refinement */
+.maplibregl-ctrl-group {
+  border-radius: 10px !important;
+  overflow: hidden;
+  box-shadow: 0 4px 12px rgba(15, 23, 42, 0.12) !important;
+  border: 1px solid rgba(226, 232, 240, 0.9) !important;
+}
+
+.dark .maplibregl-ctrl-group {
+  background: #1e293b !important;
   border-color: #334155 !important;
 }
 
-.leaflet-popup-tip {
-  background: #ffffff !important;
-}
-
-.dark .leaflet-popup-tip {
-  background: #0f172a !important;
-}
-
-.leaflet-popup-content {
-  margin: 6px 4px !important;
-  line-height: 1.4 !important;
-}
-
-.project-map-popup {
-  display: grid;
-  gap: 5px;
-  min-width: 180px;
-  color: #0f172a;
-  font-size: 12px;
-}
-
-.dark .project-map-popup {
-  color: #f8fafc;
-}
-
-.project-map-popup strong {
-  font-size: 13px;
-}
-
-.project-map-popup-action {
-  justify-self: start;
-  margin-top: 3px;
-  border: 0;
-  border-radius: 6px;
-  background: #0369a1;
-  padding: 5px 9px;
-  color: #ffffff;
-  cursor: pointer;
-  font-weight: 600;
-}
-
-.project-map-popup-action:hover {
-  background: #075985;
-}
-
-/* Custom Tooltip */
-.leaflet-custom-tooltip {
-  background: rgba(15, 23, 42, 0.92) !important;
-  color: #f8fafc !important;
-  border: 1px solid rgba(51, 65, 85, 0.8) !important;
-  border-radius: 8px !important;
-  padding: 6px 10px !important;
-  font-size: 11px !important;
-  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.3) !important;
-  backdrop-filter: blur(8px) !important;
-}
-
-.leaflet-custom-tooltip::before {
-  border-top-color: rgba(15, 23, 42, 0.92) !important;
+.dark .maplibregl-ctrl-group button {
+  filter: invert(1) brightness(1.8);
 }
 
 /* Dark mode filter cho Google Roadmap Tiles */

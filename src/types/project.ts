@@ -22,6 +22,9 @@ export interface Project {
   investorId: string;
   investorName: string;
   location: string;
+  lat?: number | null;
+  lng?: number | null;
+  tt39_data?: ProjectTT39Data | null;
   projectGroup: 'A' | 'B' | 'C' | 'QG';
   buildingGrade: 'I' | 'II' | 'III' | 'IV' | 'DB';
   totalInvestment: number | null; // VNĐ

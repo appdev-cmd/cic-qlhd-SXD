@@ -2,18 +2,34 @@ import type { Project, ProjectTT39Data } from '../types/project';
 import { apiRequest, type Page } from './apiClient';
 
 export function mapProject(row: Record<string, any>): Project {
-  if ('name' in row && 'projectGroup' in row) return row as Project;
+  if ('name' in row && 'projectGroup' in row) {
+    const existing = row as Project;
+    return {
+      ...existing,
+      lat: existing.lat == null ? null : Number(existing.lat),
+      lng: existing.lng == null ? null : Number(existing.lng),
+      tt39_data: existing.tt39_data ?? null,
+    };
+  }
   const group = String(row.group_type ?? '').replace(/^Nhóm\s*/i, '');
   const grade = String(row.grade ?? '').replace(/^Cấp\s*/i, '');
+  const lat = row.lat == null ? null : Number(row.lat);
+  const lng = row.lng == null ? null : Number(row.lng);
   return {
     id: row.id,
     code: row.code,
-    name: row.title,
-    coverImage: row.thumbnail_url || undefined,
+    name: row.title || row.name || 'Dự án',
+    field: row.field || undefined,
+    investmentForm: row.investment_form || row.investmentForm || undefined,
+    decidedByCommune: Boolean(row.decided_by_commune ?? row.decidedByCommune),
+    coverImage: row.thumbnail_url || row.coverImage || undefined,
     images: Array.isArray(row.images) ? row.images : [],
-    investorId: row.investor_id,
-    investorName: row.investor_name || 'Chưa xác định',
-    location: row.location_district || 'Chưa xác định',
+    investorId: row.investor_id || row.investorId || '',
+    investorName: row.investor_name || row.investorName || 'Chưa xác định',
+    location: row.location_district || row.location || 'Chưa xác định',
+    lat: Number.isFinite(lat) ? lat : null,
+    lng: Number.isFinite(lng) ? lng : null,
+    tt39_data: row.tt39_data ?? null,
     projectGroup: (['A', 'B', 'C', 'QG'].includes(group) ? group : null) as Project['projectGroup'],
     buildingGrade: (['I', 'II', 'III', 'IV', 'DB'].includes(grade) ? grade : null) as Project['buildingGrade'],
     totalInvestment: row.investment_cost == null ? null : Number(row.investment_cost),

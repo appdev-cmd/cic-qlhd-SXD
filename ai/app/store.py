@@ -590,7 +590,7 @@ class Store:
             self.actor['id'],
             ('select count(*) as n from public.projects where ' + where, values),
             (
-                'select id,code,title,lat,lng,field,group_type,grade,investment_cost,investor_id,investor_name,location_district,stage,sla_status,submission_date,deadline,lead_reviewer_name,department,province_code,planning_compliance,standard_compliance,fire_safety_status,estimated_savings,thumbnail_url,images,contractors from public.projects where '
+                'select id,code,title,lat,lng,field,group_type,grade,investment_cost,investor_id,investor_name,location_district,stage,sla_status,submission_date,deadline,lead_reviewer_name,department,province_code,planning_compliance,standard_compliance,fire_safety_status,estimated_savings,thumbnail_url,images,contractors,tt39_data from public.projects where '
                 + where
                 + ' order by '
                 + sorts[sort]
@@ -686,6 +686,7 @@ class Store:
             'slaWaitingDue': "payload->'sla'->>'waitingDueDate'",
             'slaOutcome': "payload->'sla'->>'outcome'",
             'slaDueKind': "payload->'sla'->>'dueKind'",
+            'assigneeId': "payload->'workflow'->>'assigneeId'",
         }
         if MODE == 'demo':
             return (
@@ -795,6 +796,7 @@ class Store:
         direction='desc',
         dossier_id=None,
         sla='',
+        scope='',
     ):
         from . import sla as deadlines
         from .domain import vn_today
@@ -825,6 +827,8 @@ class Store:
             'slaWaitingDue',
             'slaOutcome',
             'slaDueKind',
+            'assignee',
+            'assigneeId',
         ]
         sort = sort if sort in fields + ['documentCount', 'procedure'] else 'updatedAt'
         direction = 'asc' if direction == 'asc' else 'desc'
@@ -839,6 +843,21 @@ class Store:
             condition = self._sla_conditions(calendar, today)[sla]
             clauses.append('(' + condition[0] + ')')
             values.extend(condition[1])
+        # Work queues: 'mine' = assigned to me; 'queue' = waiting for my action
+        # (officer: my open dossiers; head of department / director: dossiers waiting for review).
+        if scope in ('mine', 'queue'):
+            open_states = ('received', 'assigned', 'processing', 'site_visit', 'correction')
+            if scope == 'queue' and self.actor.get('role') in ('head_of_department', 'director'):
+                clauses.append(field('workflowState') + '=' + mark)
+                values.append('pending_review')
+            else:
+                clauses.append(field('assigneeId') + '=' + mark)
+                values.append(str(self.actor.get('id')))
+                if scope == 'queue':
+                    clauses.append(
+                        'coalesce(' + field('workflowState') + ",'received') in (" + ','.join([mark] * len(open_states)) + ')'
+                    )
+                    values.extend(open_states)
         if dossier_id:
             if sqlite:
                 clauses.append("""id in (with recursive family(id,depth) as (

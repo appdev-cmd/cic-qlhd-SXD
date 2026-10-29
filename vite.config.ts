@@ -5,11 +5,13 @@ import ports from './config/runtime-ports.json';
 
 export default defineConfig({
   plugins: [react()],
+  worker: { format: 'es' },
+  optimizeDeps: { include: ['@thatopen/components', '@thatopen/components-front', '@thatopen/fragments', 'camera-controls', 'three', 'web-ifc', 'jszip'] },
   build: {rollupOptions:{output:{manualChunks(id){
     if(id.includes('node_modules')){
       if(id.includes('@supabase'))return 'supabase';
       if(id.includes('react-dom')||id.includes('/react/')||id.includes('react-router')||id.includes('scheduler'))return 'react-vendor';
-      if(id.includes('leaflet'))return 'maps';
+      if(id.includes('leaflet')||id.includes('maplibre-gl'))return 'maps';
       if(id.includes('pdfjs-dist'))return 'pdf-reader';
       if(id.includes('recharts')||id.includes('/d3-')||id.includes('victory-vendor'))return 'charts';
     }
@@ -20,6 +22,7 @@ export default defineConfig({
     },
   },
   server: {
+    watch: { ignored: ['**/output/**', '**/tests/e2e/test-results/**'] },
     proxy: { '/api/appraisal': { target: `http://127.0.0.1:${ports.core}`, changeOrigin: false,
       bypass(req) {
         if(req.url?.startsWith('/api/appraisal/test-login') && !['127.0.0.1','::1','::ffff:127.0.0.1'].includes(req.socket.remoteAddress||''))return false;

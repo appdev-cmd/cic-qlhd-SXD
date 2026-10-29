@@ -1,0 +1,11 @@
+import { copyFile, mkdir } from 'node:fs/promises';
+import { resolve, dirname } from 'node:path';
+import { createRequire } from 'node:module';
+const require = createRequire(import.meta.url);
+const root = resolve(import.meta.dirname, '..');
+const fragments = resolve(dirname(require.resolve('@thatopen/fragments')), '..');
+const ifc = dirname(require.resolve('web-ifc'));
+await mkdir(resolve(root, 'public/bim/ifc'), { recursive: true });
+await copyFile(resolve(fragments, 'dist/Worker/worker.min.mjs'), resolve(root, 'public/bim/fragments-worker-3.4.8.js'));
+await copyFile(resolve(ifc, 'web-ifc.wasm'), resolve(root, 'public/bim/ifc/web-ifc.wasm'));
+console.log('Đã chuẩn bị worker Fragments và WebAssembly IFC cục bộ.');
