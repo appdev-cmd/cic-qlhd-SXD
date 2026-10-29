@@ -61,6 +61,8 @@ jobs:
       - run: pnpm typecheck:core
       - name: Web unit tests
         run: node --import tsx --test "src/**/*.test.ts"
+      - name: Node backend migration tests
+        run: pnpm test:backend:node
       - run: pnpm build
       - run: pnpm test:appraisal
       - name: OpenAPI contract is up to date
