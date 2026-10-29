@@ -3,16 +3,17 @@ import { existsSync, readFileSync } from 'node:fs';
 import { homedir } from 'node:os';
 import { resolve } from 'node:path';
 
-test.use({ trace: 'off' });
+test.use({ trace: 'off', actionTimeout: 30000, navigationTimeout: 45000 });
 test('authenticated cloud IFC upload and saved viewpoint survive a full reload', async ({ page, request }) => {
   test.skip(process.env.E2E_ENABLE_CLOUD_WRITES !== '1', 'Explicit opt-in required for real BIM writes.');
   test.setTimeout(420000);
   if (process.env.E2E_VERCEL_SHARE_TOKEN) {
+    console.log('BIM test: authenticating the deployment-scoped preview session.');
     const base = new URL(String(test.info().project.use.baseURL));
     expect(base.hostname).toBe(process.env.E2E_VERCEL_SHARE_HOST);
     const access = await request.get(
       base.origin + '/?' + new URLSearchParams({ _vercel_share: process.env.E2E_VERCEL_SHARE_TOKEN }),
-      { maxRedirects: 0 },
+      { maxRedirects: 0, timeout: 30000 },
     );
     expect([200, 301, 302, 307, 308]).toContain(access.status());
     await page
@@ -56,7 +57,20 @@ test('authenticated cloud IFC upload and saved viewpoint survive a full reload',
   });
   expect(login.status()).toBe(200);
   const session = await login.json();
+  console.log('BIM test: authenticated application session.');
   const headers = { apikey: key, Authorization: 'Bearer ' + session.access_token };
+  const backend = String(test.info().project.use.baseURL);
+  const readiness = await request.get(backend + '/api/appraisal/readiness', {
+    headers: { Authorization: headers.Authorization },
+  });
+  expect(readiness.status()).toBe(200);
+  expect((await readiness.json()).ready).toBe(true);
+  expect((await readiness.json()).mode).toBe('cloud');
+  console.log('BIM test: authenticated backend and restricted database connection ready.');
+  if (new URL(backend).hostname.endsWith('.vercel.app')) {
+    expect((await request.get(backend + '/api/appraisal/projects')).status()).toBe(401);
+    expect((await request.post(backend + '/api/appraisal/test-login', { data: { role: 'admin' } })).status()).toBe(404);
+  }
   page.on('console', (message) => {
     if (message.type() === 'error' && message.text().includes('BrowserIfcConverter')) console.error(message.text());
   });
@@ -88,6 +102,7 @@ test('authenticated cloud IFC upload and saved viewpoint survive a full reload',
   };
   try {
     await page.goto('/bim?bimModel=1377ad57-a15b-4e0b-bad8-c4b8516eaf91');
+    console.log('BIM test: opened the BIM workspace.');
     await expect(page.getByRole('button', { name: 'Tải IFC', exact: true })).toBeVisible({ timeout: 60000 });
     await page.getByRole('button', { name: 'Tải IFC', exact: true }).click();
     const bytes = readFileSync(
@@ -100,6 +115,7 @@ test('authenticated cloud IFC upload and saved viewpoint survive a full reload',
     const start = page.getByRole('button', { name: 'Bắt đầu chuyển đổi', exact: true });
     await expect(start).toBeEnabled({ timeout: 60000 });
     await start.click();
+    console.log('BIM test: upload and conversion started.');
     await expect
       .poll(
         async () => {
@@ -113,7 +129,10 @@ test('authenticated cloud IFC upload and saved viewpoint survive a full reload',
     const persisted = (await models())[0];
     expect(persisted.element_count).toBeGreaterThan(0);
     expect(persisted.frag_path).toBeTruthy();
-    await page.getByRole('button', { name: 'Đóng', exact: true }).last().click();
+    console.log('BIM test: model saved with', persisted.element_count, 'elements.');
+    await expect(page.getByRole('heading', { name: 'Tải lên mô hình BIM (IFC)', exact: true })).toHaveCount(0, {
+      timeout: 30000,
+    });
     await page.goto('/bim?bimModel=' + modelId);
     await expect(page.getByText(filename, { exact: false }).first()).toBeVisible({ timeout: 60000 });
     await expect(page.locator('[data-bim-loaded-count]')).not.toHaveAttribute('data-bim-loaded-count', '0', {
@@ -122,6 +141,7 @@ test('authenticated cloud IFC upload and saved viewpoint survive a full reload',
     await page.locator('button[data-tooltip="Góc nhìn đã lưu"]').click();
     await page.getByRole('textbox', { name: 'Tên góc nhìn mới', exact: true }).fill(viewName);
     await page.getByRole('button', { name: 'Lưu', exact: true }).click();
+    console.log('BIM test: saving the current viewpoint.');
     const views = async () => {
       const response = await request.get(url + '/rest/v1/bim_saved_views', {
         headers,
@@ -141,6 +161,7 @@ test('authenticated cloud IFC upload and saved viewpoint survive a full reload',
     await page.reload();
     await page.locator('button[data-tooltip="Góc nhìn đã lưu"]').click();
     await expect(page.getByText(viewName, { exact: true }).first()).toBeVisible({ timeout: 60000 });
+    console.log('BIM test: model and saved viewpoint restored after reload.');
     expect((await models())[0].element_count).toBe(persisted.element_count);
     await page.screenshot({ path: resolve(root, 'output/appraisal/qa/bim-cloud-write.png'), fullPage: true });
   } finally {

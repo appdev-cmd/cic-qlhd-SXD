@@ -28,7 +28,13 @@ Bộ API `/api/appraisal/bim` và SQLite giữ cho chế độ demo. Dữ liệu
 
 ## Chạy và kiểm tra
 
-Bản triển khai Vercel hiện là demo tĩnh, không có Core/Worker phía sau `/api/appraisal`. Bộ dữ liệu trình diễn NOXH HVT được đóng gói trong `public/bim/demo/`: 12 Fragments, IFC/IFCZIP gốc và thuộc tính cấu kiện nén gzip. Giao diện tự mở bộ mô hình này trong chế độ demo; trình xem 3D, chọn cấu kiện, thuộc tính và đo đạc không cần kết nối cloud. Adapter chỉ đọc từ bộ tệp này và từ chối ghi; chức năng cần máy chủ hiển thị yêu cầu kết nối máy chủ, không giả lập lưu dữ liệu thành công. Cloud tiếp tục dùng JWT/RLS và kho tệp riêng như trước.
+Vercel triển khai cả giao diện Vite và Python Function `api/index.py` tại `/api/appraisal`. Phiên đăng nhập Supabase được kiểm tra ở backend và RLS; tài khoản phải có hồ sơ đang hoạt động, tỉnh và phòng ban. Các endpoint đăng nhập thử nghiệm, tài liệu API nội bộ và đường dẫn Worker trực tiếp không được công bố. Lệnh build Vercel yêu cầu `VITE_APPRAISAL_RUNTIME=cloud` và cấu hình backend; khi backend không sẵn sàng, giao diện báo lỗi thay vì tự chuyển sang demo.
+
+IFC/IFCZIP tải thẳng vào bucket riêng bằng TUS theo phiên đăng nhập, không đi qua giới hạn request của Vercel. Worker trình duyệt dựng Fragments và trích xuất cấu kiện; phiên xử lý được gia hạn mỗi 20 giây, ghi cấu kiện theo lô rồi hoàn tất bằng RPC. Web IFC API và WASM cùng phiên bản 0.0.77; URL WASM có phiên bản để tránh dùng nhầm cache. Góc nhìn, vướng mắc và dữ liệu nghiệp vụ lưu trong database, không phụ thuộc bộ nhớ của Function.
+
+Các biến frontend: `VITE_SUPABASE_URL`, `VITE_SUPABASE_ANON_KEY`, `VITE_APPRAISAL_RUNTIME`. Các biến chỉ dành cho server: `SUPABASE_URL`, `SUPABASE_ANON_KEY`, `APPRAISAL_DATABASE_URL` của vai trò runtime không có quyền quản trị và `APPRAISAL_INTERNAL_TOKEN` ngẫu nhiên. Cấu hình cho từng môi trường preview/production trong Vercel; không đưa khóa quản trị hay mật khẩu database vào biến `VITE_`. Function dùng thư mục tạm cho thao tác tạm thời; database và Storage giữ dữ liệu lâu dài.
+
+Bộ tệp `public/bim/demo/` chỉ dành cho bản trình diễn tĩnh. Build cloud loại bộ tệp này khỏi đầu ra phục vụ website; giao diện cloud đọc mô hình qua quyền tài khoản và URL ký của Storage. `.vercelignore` cho phép mã backend và văn bản pháp lý Markdown, loại dependency cục bộ, dữ liệu riêng và bản PDF/DOCX gốc khỏi gói Function.
 
 `scripts/export-bim-demo.py` tạo lại snapshot từ đúng dự án NOXH HVT đã được chuyển, phân trang 1.000 cấu kiện và kiểm tra số lượng. Snapshot không chứa khóa truy cập hay hồ sơ người dùng. Đây là bộ tệp trình diễn được phục vụ công khai cùng website, tách biệt với dữ liệu cloud có phân quyền.
 
@@ -38,5 +44,6 @@ Bản triển khai Vercel hiện là demo tĩnh, không có Core/Worker phía sa
 - `pnpm test:web`, `pnpm test:appraisal`.
 - `python scripts/check-bim-rls.py`: kiểm tra đọc/ghi trong phạm vi, cách ly người ngoài và vòng đời mô hình; giao dịch được rollback.
 - Trong `tests/e2e`, đặt `E2E_CHANNEL=chrome` rồi chạy `npx playwright test specs/bim.spec.ts --workers=1 --reporter=list` khi bộ dịch vụ đang chạy. Kịch bản mở dữ liệu chuyển sang, chờ nạp mô hình, chuyển các tab nghiệp vụ và kiểm tra lỗi trình duyệt/API.
+- Kiểm thử ghi cloud cần chủ động bật `E2E_ENABLE_CLOUD_WRITES=1`, đặt `E2E_BASE_URL` là deployment cần kiểm tra rồi chạy `specs/bim-cloud-write.spec.ts`. Kịch bản dùng tài khoản kiểm thử từ cấu hình riêng, tải IFC thực tế, đọc lại trạng thái và cấu kiện từ database, tải lại trang, lưu/mở lại góc nhìn, rồi xóa góc nhìn và lưu trữ đúng mô hình kiểm thử bằng tài khoản được cấp quyền. Tắt trace để không lưu phiên đăng nhập vào artifact. Không bật đăng nhập thử nghiệm trên Vercel.
 
 Các migration `20261029015156` đến `20261029024546` đã triển khai cho môi trường cloud đích. Migration đầy đủ được tạo bởi `scripts/generate-bim-suite-migration.py`, dùng cầu nối `supabase/bim-suite-bridge.sql` để giữ phạm vi dự án SXD.
