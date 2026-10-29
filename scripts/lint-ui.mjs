@@ -21,6 +21,8 @@ const ALLOW = {
     'src/components/layout/Sidebar.tsx',
     'src/components/layout/CommandPalette.tsx',
     'src/components/layout/DeadlineBell.tsx',
+    // Dashboard drill-down opens the list filtered by scope/SLA.
+    'src/components/dashboard/RoleOverview.tsx',
   ],
   // Glassmorphism tooltip prescribed by the Universal Tooltip rule.
   translucent: ['src/components/ui/Tooltip.tsx'],

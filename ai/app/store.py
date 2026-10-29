@@ -772,6 +772,193 @@ class Store:
         values = list(row.values()) if isinstance(row, dict) else list(row)
         return [{'id': key, 'total': int(values[i])} for i, key in enumerate(states)]
 
+    PERFORMANCE_STATES = (
+        'on_track',
+        'due_soon',
+        'overdue',
+        'paused',
+        'supplement_overdue',
+        'completed',
+        'completed_late',
+    )
+    QUEUE_STATES = ('received', 'assigned', 'processing', 'site_visit', 'correction')
+
+    def performance_queries(self, kind='all', today=None):
+        """(sql, params) statements for the role dashboards: 30-day KPIs vs the previous 30 days,
+        SLA states per assignee, and the actor's own work per procedure. Read with performance_rows()."""
+        from datetime import timedelta
+
+        from .domain import vn_today
+
+        today = today or vn_today()
+        sqlite = MODE == 'demo'
+        mark = '?' if sqlite else '%s'
+        field, _, _ = self._summary_sql()
+        conditions = self._sla_conditions(self.calendar(), today)
+        table = ' from case_summaries' if sqlite else ' from public.appraisal_cases'
+        where = ''
+        if kind in ('sample', 'real'):
+            where = ' where ' + (
+                'coalesce(sample,0)=' + ('1' if kind == 'sample' else '0')
+                if sqlite
+                else "coalesce((payload->>'sample')::boolean,false)=" + ('true' if kind == 'sample' else 'false')
+            )
+
+        def day(expr):
+            return 'substr(' + expr + ',1,10)'
+
+        def within(expr):
+            return day(expr) + '>=' + mark + ' and ' + day(expr) + '<=' + mark
+
+        if sqlite:
+            span = 'julianday(' + day(field('slaCompletedAt')) + ')-julianday(' + day(field('createdAt')) + ')'
+        else:
+            span = '(' + day(field('slaCompletedAt')) + ')::date-(' + day(field('createdAt')) + ')::date'
+        finished = '(' + conditions['completed'][0] + ') or (' + conditions['completed_late'][0] + ')'
+
+        # 1) KPIs per period: received, completed on time / late, average calendar days to complete.
+        parts, values = [], []
+        periods = [
+            ('current', today - timedelta(days=29), today),
+            ('previous', today - timedelta(days=59), today - timedelta(days=30)),
+        ]
+        for key, start, end in periods:
+            bounds = [start.isoformat(), end.isoformat()]
+            parts.append(
+                'coalesce(sum(case when '
+                + within(field('createdAt'))
+                + ' then 1 else 0 end),0) as '
+                + key
+                + '_received'
+            )
+            values += bounds
+            for state in ('completed', 'completed_late'):
+                parts.append(
+                    'coalesce(sum(case when ('
+                    + conditions[state][0]
+                    + ') and '
+                    + within(field('slaCompletedAt'))
+                    + ' then 1 else 0 end),0) as '
+                    + key
+                    + '_'
+                    + state
+                )
+                values += conditions[state][1] + bounds
+            parts.append(
+                'avg(case when ('
+                + finished
+                + ') and '
+                + within(field('slaCompletedAt'))
+                + ' then '
+                + span
+                + ' end) as '
+                + key
+                + '_days'
+            )
+            values += bounds
+        kpis = ('select ' + ','.join(parts) + table + where, values)
+
+        # 2) SLA states per assignee.
+        sums, sum_values = [], []
+        for state in self.PERFORMANCE_STATES:
+            sums.append('coalesce(sum(case when ' + conditions[state][0] + ' then 1 else 0 end),0) as ' + state)
+            sum_values += conditions[state][1]
+        assignee_id = 'coalesce(' + field('assigneeId') + ",'')"
+        officers = (
+            'select '
+            + assignee_id
+            + ' as id,max('
+            + field('assignee')
+            + ') as name,'
+            + ','.join(sums)
+            + table
+            + where
+            + ' group by '
+            + assignee_id,
+            sum_values,
+        )
+
+        # 3) The actor's own work per procedure (queue = what "Chờ tôi xử lý" lists).
+        procedure = 'coalesce(' + field('procedure') + ",'bcnckt')"
+        state = 'coalesce(' + field('workflowState') + ",'received')"
+        leader = self.actor.get('role') in ('head_of_department', 'director')
+        me = str(self.actor.get('id'))
+        mine_parts = [procedure + ' as procedure']
+        mine_values = []
+        if leader:
+            mine_parts.append('coalesce(sum(case when ' + state + '=' + mark + ' then 1 else 0 end),0) as queue')
+            mine_values.append('pending_review')
+        assigned = field('assigneeId') + '=' + mark
+        mine_parts.append(
+            'coalesce(sum(case when '
+            + assigned
+            + ' and '
+            + state
+            + ' in ('
+            + ','.join([mark] * len(self.QUEUE_STATES))
+            + ') then 1 else 0 end),0) as '
+            + ('own_queue' if leader else 'queue')
+        )
+        mine_values += [me] + list(self.QUEUE_STATES)
+        for key in ('overdue', 'due_soon', 'supplement_overdue'):
+            mine_parts.append(
+                'coalesce(sum(case when ' + assigned + ' and ' + conditions[key][0] + ' then 1 else 0 end),0) as ' + key
+            )
+            mine_values += [me] + conditions[key][1]
+        mine = ('select ' + ','.join(mine_parts) + table + where + ' group by ' + procedure, mine_values)
+        return [kpis, officers, mine]
+
+    @staticmethod
+    def performance_rows(kpi_rows, officer_rows, mine_rows):
+        row = dict(kpi_rows[0]) if kpi_rows else {}
+
+        def period(key):
+            on_time = int(row.get(key + '_completed') or 0)
+            late = int(row.get(key + '_completed_late') or 0)
+            days = row.get(key + '_days')
+            return {
+                'received': int(row.get(key + '_received') or 0),
+                'completed': on_time + late,
+                'completedLate': late,
+                'onTimeRate': round(on_time * 100 / (on_time + late), 1) if on_time + late else None,
+                'averageDays': round(float(days), 1) if days is not None else None,
+            }
+
+        officers = []
+        for r in officer_rows:
+            r = dict(r)
+            item = {'id': r['id'] or None, 'name': r.get('name') or 'Chưa phân công'}
+            item.update({k: int(r.get(k) or 0) for k in Store.PERFORMANCE_STATES})
+            done = item['completed'] + item['completed_late']
+            item['onTimeRate'] = round(item['completed'] * 100 / done, 1) if done else None
+            officers.append(item)
+        officers.sort(key=lambda o: (-(o['overdue'] + o['supplement_overdue']), -o['due_soon'], o['name']))
+        mine = {}
+        for r in mine_rows:
+            r = dict(r)
+            mine[r['procedure']] = {
+                'queue': int(r.get('queue') or 0),
+                'ownQueue': int(r.get('own_queue', r.get('queue')) or 0),
+                'overdue': int(r.get('overdue') or 0),
+                'dueSoon': int(r.get('due_soon') or 0),
+                'supplementOverdue': int(r.get('supplement_overdue') or 0),
+            }
+        return {
+            'period': {'days': 30, 'current': period('current'), 'previous': period('previous')},
+            'officers': officers,
+            'mine': mine,
+        }
+
+    def performance(self, kind='all', today=None):
+        statements = self.performance_queries(kind, today)
+        if MODE == 'demo':
+            with db() as con:
+                con.row_factory = sqlite3.Row
+                results = [[dict(r) for r in con.execute(sql, values).fetchall()] for sql, values in statements]
+        else:
+            results = read(self.actor['id'], *statements)
+        return self.performance_rows(*results)
+
     def sla_counts(self, kind='all'):
         sql, values, states = self.sla_counts_query(kind)
         if MODE == 'demo':

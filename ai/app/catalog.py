@@ -242,7 +242,7 @@ def dashboard(s, kind='all'):
     if MODE == 'demo':
         from .demo_catalog import dashboard as demo_dashboard
 
-        return {**demo_dashboard(kind), 'sla': s.sla_counts(kind)}
+        return {**demo_dashboard(kind), 'sla': s.sla_counts(kind), 'performance': s.performance(kind)}
     where = (
         " where coalesce((payload->>'sample')::boolean,false)=" + ('true' if kind == 'sample' else 'false')
         if kind in ('sample', 'real')
@@ -259,6 +259,9 @@ def dashboard(s, kind='all'):
         top_projects_rows,
         pending_rows,
         sla_cursor_rows,
+        kpi_rows,
+        officer_rows,
+        mine_rows,
     ) = read(
         s.actor['id'],
         (
@@ -298,6 +301,8 @@ def dashboard(s, kind='all'):
             None,
         ),
         (sla_sql, sla_values),
+        # Role dashboards (U5) ride in the same round trip.
+        *s.performance_queries(kind),
     )
     cases = cases_rows[0]
     projects = projects_rows[0]
@@ -321,4 +326,5 @@ def dashboard(s, kind='all'):
         'top_projects': top_projects,
         'recent': pending,
         'sla': sla,
+        'performance': s.performance_rows(kpi_rows, officer_rows, mine_rows),
     }

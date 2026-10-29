@@ -14,7 +14,43 @@ export type DashboardSummary = {
   top_projects: { id: string; name: string; total: number; dossiers: number }[];
   recent: { id: string; name: string; project_id: string; project_name: string; status: string }[];
   sla?: { id: string; total: number }[];
+  performance?: DashboardPerformance;
 };
+
+export interface PeriodStats {
+  received: number;
+  completed: number;
+  completedLate: number;
+  onTimeRate: number | null;
+  averageDays: number | null;
+}
+
+export interface OfficerStats {
+  id: string | null;
+  name: string;
+  on_track: number;
+  due_soon: number;
+  overdue: number;
+  paused: number;
+  supplement_overdue: number;
+  completed: number;
+  completed_late: number;
+  onTimeRate: number | null;
+}
+
+export interface MyWork {
+  queue: number;
+  ownQueue: number;
+  overdue: number;
+  dueSoon: number;
+  supplementOverdue: number;
+}
+
+export interface DashboardPerformance {
+  period: { days: number; current: PeriodStats; previous: PeriodStats };
+  officers: OfficerStats[];
+  mine: Record<string, MyWork>;
+}
 
 export const procedureStyles = [
   { id: 'bcnckt', label: 'Thẩm định BCNCKT', short: 'BCNCKT', color: 'var(--chart-bcnckt)' },

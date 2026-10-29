@@ -107,13 +107,21 @@ export function AppraisalPage({ procedure = 'bcnckt', project }: { procedure?: P
       scope: view === 'mine' || view === 'queue' ? view : '',
       sla: view === 'overdue' || view === 'due_soon' ? view : 'all',
     });
-  // Deep link from the deadline bell: /projects/appraisal?sla=overdue applies the SLA filter once.
+  // Deep links from the deadline bell and dashboard: ?sla=overdue and/or ?scope=mine|queue apply once.
   const location = useLocation();
   useEffect(() => {
     if (project) return;
-    const sla = new URLSearchParams(location.search).get('sla');
-    if (!sla || !SLA_FILTER_OPTIONS.some((o) => o.value === sla)) return;
-    setFilters((current) => ({ ...current, sla }));
+    const params = new URLSearchParams(location.search);
+    const sla = params.get('sla');
+    const scope = params.get('scope');
+    const validSla = !!sla && SLA_FILTER_OPTIONS.some((o) => o.value === sla);
+    const validScope = scope === 'mine' || scope === 'queue';
+    if (!validSla && !validScope) return;
+    setFilters((current) => ({
+      ...current,
+      sla: validSla ? (sla as string) : 'all',
+      scope: validScope ? (scope as string) : '',
+    }));
     setPage(0);
     window.history.replaceState(window.history.state, '', location.pathname);
     // eslint-disable-next-line react-hooks/exhaustive-deps

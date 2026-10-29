@@ -7,6 +7,7 @@ import {
   FileStack,
   Files,
   FolderOpen,
+  FileSpreadsheet,
   RefreshCw,
 } from 'lucide-react';
 import {
@@ -23,6 +24,10 @@ import {
   YAxis,
 } from 'recharts';
 import { apiRequest } from '../../services/apiClient';
+import { RoleOverview, dashboardCsv } from '../dashboard/RoleOverview';
+import { PageHeader } from '../ui/PageHeader';
+import { Button, IconButton } from '../ui/Button';
+import { toast } from '../ui/Toast';
 import { useAuth } from '../../context/AuthContext';
 import { listCache } from '../../lib/listCache';
 import { formatDateTime } from '../../lib/utils';
@@ -105,7 +110,7 @@ export function CloudDashboard() {
   const [selectedMonth, setSelectedMonth] = useState('');
   const [hover, setHover] = useState<{ anchor: Element; content: string } | null>(null);
 
-  const { session } = useAuth();
+  const { session, profile } = useAuth();
   const cacheKey = JSON.stringify(['dashboard', session?.user.id || 'demo']);
   useEffect(() => {
     const controller = new AbortController();
@@ -175,28 +180,53 @@ export function CloudDashboard() {
 
   return (
     <div className="dashboard-visuals space-y-5 text-ink dark:text-slate-100">
-      <header className="flex flex-wrap items-center justify-between gap-4">
-        <div>
-          <h1 className="text-2xl font-bold tracking-tight">Dashboard &amp; Thống kê</h1>
-          <p className={`mt-2 text-sm ${muted}`}>Tổng quan dự án và hồ sơ trong phạm vi quyền của bạn.</p>
-        </div>
-        <div className="flex items-center gap-3">
-          {updated && <span className={`hidden text-xs md:inline ${muted}`}>Cập nhật {formatDateTime(updated)}</span>}
-          <button
-            type="button"
-            disabled={loading}
-            onClick={() => setVersion((current) => current + 1)}
-            className="flex items-center gap-2 rounded-xl border border-border dark:border-slate-700 bg-surface dark:bg-slate-900 px-4 py-2.5 text-sm font-medium text-ink dark:text-slate-200 hover:bg-subtle dark:hover:bg-slate-800 disabled:opacity-60"
-          >
-            <RefreshCw size={15} className={loading ? 'animate-spin motion-reduce:animate-none' : ''} />
-            {loading ? 'Đang tải' : 'Tải lại'}
-          </button>
-        </div>
-      </header>
+      <PageHeader
+        title="Dashboard &amp; Thống kê"
+        description={
+          (profile?.role === 'officer' || !profile ? 'Việc của anh/chị và ' : 'Hiệu suất xử lý và ') +
+          'tổng quan hồ sơ trong phạm vi quyền.' +
+          (updated ? ' Cập nhật ' + formatDateTime(updated) + '.' : '')
+        }
+        actions={
+          <>
+            <Button
+              variant="secondary"
+              leftIcon={<FileSpreadsheet size={16} />}
+              disabled={!data}
+              onClick={() => {
+                const today = new Date().toISOString().slice(0, 10);
+                const csv = dashboardCsv(
+                  data?.performance,
+                  data?.sla,
+                  (id) => SLA_STATES[id as SlaStateId]?.label || id,
+                  formatDateTime(new Date().toISOString()),
+                );
+                const url = URL.createObjectURL(new Blob([csv], { type: 'text/csv;charset=utf-8' }));
+                const link = document.createElement('a');
+                link.href = url;
+                link.download = 'bao-cao-tong-hop-' + today + '.csv';
+                link.click();
+                URL.revokeObjectURL(url);
+                toast.success('Đã xuất báo cáo', { description: 'Mở bằng Excel: ' + link.download });
+              }}
+            >
+              Xuất báo cáo
+            </Button>
+            <IconButton
+              aria-label="Tải lại dashboard"
+              tooltip="Tải lại số liệu"
+              variant="secondary"
+              disabled={loading}
+              icon={<RefreshCw size={16} className={loading ? 'animate-spin motion-reduce:animate-none' : ''} />}
+              onClick={() => setVersion((current) => current + 1)}
+            />
+          </>
+        }
+      />
       {error && (
         <p
           role="alert"
-          className="rounded-xl border border-red-200 dark:border-red-800 bg-red-50 dark:bg-slate-900 p-4 text-sm text-red-700 dark:text-red-300"
+          className="rounded-xl border border-danger-200 dark:border-danger-800 bg-danger-50 dark:bg-danger-900 p-4 text-sm text-danger-700 dark:text-danger-200"
         >
           {error}
         </p>
@@ -209,6 +239,7 @@ export function CloudDashboard() {
 
       {data && (
         <>
+          {data.performance && <RoleOverview performance={data.performance} role={profile?.role} />}
           <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
             {[
               { label: 'Dự án', value: data.projects.total, note: 'Dự án trong phạm vi quản lý', icon: Building2 },
