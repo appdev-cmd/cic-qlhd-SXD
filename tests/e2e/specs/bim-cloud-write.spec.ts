@@ -12,8 +12,10 @@ test('authenticated cloud IFC upload and saved viewpoint survive a full reload',
     const base = new URL(String(test.info().project.use.baseURL));
     expect(base.hostname).toBe(process.env.E2E_VERCEL_SHARE_HOST);
     const access = await request.get(
-      base.origin + '/?' + new URLSearchParams({ _vercel_share: process.env.E2E_VERCEL_SHARE_TOKEN }),
-      { maxRedirects: 0, timeout: 30000 },
+      base.origin +
+        '/api/appraisal/runtime?' +
+        new URLSearchParams({ _vercel_share: process.env.E2E_VERCEL_SHARE_TOKEN }),
+      { maxRedirects: 0, timeout: 30000, headers: { 'x-vercel-set-bypass-cookie': 'true' } },
     );
     expect([200, 301, 302, 307, 308]).toContain(access.status());
     await page
@@ -62,6 +64,8 @@ test('authenticated cloud IFC upload and saved viewpoint survive a full reload',
   const backend = String(test.info().project.use.baseURL);
   const readiness = await request.get(backend + '/api/appraisal/readiness', {
     headers: { Authorization: headers.Authorization },
+    maxRedirects: 0,
+    timeout: 30000,
   });
   expect(readiness.status()).toBe(200);
   expect((await readiness.json()).ready).toBe(true);
